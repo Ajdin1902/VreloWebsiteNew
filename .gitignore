@@ -38,3 +38,7 @@ Thumbs.db
 # Playwright MCP artifacts & smoke screenshots
 .playwright-mcp/
 phase1-shell.png
+
+# TypeScript incremental build cache
+tsconfig.tsbuildinfo
+*.tsbuildinfo
