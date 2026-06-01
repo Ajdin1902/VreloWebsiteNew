@@ -22,6 +22,9 @@
   /* Fonts (CSS vars provided by next/font in Task 4) */
   --font-sans: var(--font-jakarta), system-ui, sans-serif;
   --font-serif: var(--font-fraunces), Georgia, serif;
+
+  /* Animations */
+  --animate-drop-glow: drop-glow 6s ease-in-out infinite;
 }
 
 html {
@@ -32,4 +35,9 @@ html {
 body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+}
+
+@keyframes drop-glow {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.06); }
 }
