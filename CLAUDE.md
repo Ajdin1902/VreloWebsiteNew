@@ -15,8 +15,26 @@ A content/SEO marketing site for Vrelo, an AI-automation studio for DACH small b
 
 ## Status
 - **Phase 1 (foundation) — DONE**, merged to `main`, deployed live.
+- **Phase 2a (homepage) — IN PROGRESS** on branch `feat/phase2a-homepage` (not merged). See "Resume here" below.
 - **Live:** https://vrelo-website.vercel.app · **Repo:** https://github.com/Ajdin1902/VreloWebsiteNew (GitHub↔Vercel connected → push to `main` auto-deploys to production).
-- **Next:** Phase 2 (core pages).
+
+## Resume here (Phase 2a — homepage)
+Branch: **`feat/phase2a-homepage`** · Plan: [docs/superpowers/plans/2026-06-01-vrelo-phase2a-homepage.md](docs/superpowers/plans/2026-06-01-vrelo-phase2a-homepage.md) · Execution: subagent-driven.
+
+**Done (committed on the branch):**
+- ✅ Task 1 — drop-glow keyframe in `globals.css` (`3f3ccd5`)
+- ✅ Task 2 — `Section` primitive `src/components/Section.tsx` + test, tones paper/cool/warm (`e90c9f1`)
+- ✅ Task 3 — `src/components/Hero.tsx` (Direction B deep-water + glowing Merak drop, frontend-design pass) (`b5d34d9`)
+
+**Remaining (resume from Task 4, subagent-driven):**
+- ⬜ Task 4 — sections `Problem` + `WasIchBaue` (`src/components/home/`)
+- ⬜ Task 5 — sections `GeschichteTeaser` + `Steps`
+- ⬜ Task 6 — sections `Proof` + `MerakClose` (warm close; sunset-video slot left for Phase 2c)
+- ⬜ Task 7 — compose `src/app/page.tsx` from Hero + sections (**Hero is built but NOT yet mounted — `/` still shows the Phase-1 placeholder until this task**)
+- ⬜ Task 8 — responsive visual review + frontend-design polish (desktop + mobile screenshots)
+- ⬜ Final whole-branch code review → `finishing-a-development-branch` (merge to `main`)
+
+**Phase 2 is split into 3 plans:** 2a homepage (current) · 2b Leistungen + FAQ · 2c video system + Über mich (build `LazyVideo` once, wire into Über mich + the homepage Merak-close).
 
 ## Tech stack
 - **Next.js 16** (App Router, Turbopack) · **TypeScript**
@@ -59,7 +77,7 @@ Each phase gets its own branch (`feat/phaseN-...`). Frequent commits; commit mes
 
 ## Roadmap
 1. ✅ **Foundation & design system** — Next.js shell, brand tokens, fonts, BrandWord, Header/Footer, placeholder Home.
-2. ⬜ **Core pages** — Hero (Direction B: deep-water + glowing amber drop), homepage section flow, Leistungen, Über mich (with the 4-clip water narrative), FAQ. *Use the `frontend-design` skill here.*
+2. 🔄 **Core pages** — split into **2a** homepage (Hero + section flow) *(in progress)*, **2b** Leistungen + FAQ, **2c** video system + Über mich (4-clip narrative). *Uses the `frontend-design` skill.*
 3. ⬜ **Ratgeber/MDX + SEO** — article system, 3 seed articles, metadata, JSON-LD, sitemap.
 4. ⬜ **Conversion** — contact form, Cal.com scheduler, newsletter (Resend, GDPR double opt-in).
 5. ⬜ **Legal & polish** — Impressum/Datenschutz, video optimization, perf/SEO pass, custom domain (vrelo.de).
