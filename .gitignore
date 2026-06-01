@@ -34,3 +34,7 @@ yarn-error.log*
 Thumbs.db
 .idea/
 *.swp
+
+# Playwright MCP artifacts & smoke screenshots
+.playwright-mcp/
+phase1-shell.png
