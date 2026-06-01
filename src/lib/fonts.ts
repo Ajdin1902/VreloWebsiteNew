@@ -1,3 +1,4 @@
+// next/font downloads and self-hosts these at build time — no external font requests at runtime.
 import { Plus_Jakarta_Sans, Fraunces } from "next/font/google";
 
 export const jakarta = Plus_Jakarta_Sans({

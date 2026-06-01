@@ -18,7 +18,7 @@ export function Footer() {
           <ul className="space-y-2 text-sm">
             {navLinks.map((l) => (
               <li key={l.href}>
-                <Link href={l.href} className="text-gletscher hover:text-honig">
+                <Link href={l.href} className="rounded-sm text-gletscher hover:text-honig focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-tiefes-wasser focus-visible:ring-honig">
                   {l.label}
                 </Link>
               </li>
@@ -38,8 +38,8 @@ export function Footer() {
             <BrandWord>Merak</BrandWord>-Effekt.
           </p>
           <div className="flex gap-4">
-            <Link href="/impressum" className="hover:text-honig">Impressum</Link>
-            <Link href="/datenschutz" className="hover:text-honig">Datenschutz</Link>
+            <Link href="/impressum" className="rounded-sm text-stein hover:text-honig focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-tiefes-wasser focus-visible:ring-honig">Impressum</Link>
+            <Link href="/datenschutz" className="rounded-sm text-stein hover:text-honig focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-tiefes-wasser focus-visible:ring-honig">Datenschutz</Link>
           </div>
         </div>
       </div>

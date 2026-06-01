@@ -7,5 +7,9 @@ export function BrandWord({
   children: ReactNode;
   className?: string;
 }) {
-  return <span className={`font-serif italic ${className}`.trim()}>{children}</span>;
+  return (
+    <span className={["font-serif italic", className].filter(Boolean).join(" ")}>
+      {children}
+    </span>
+  );
 }
