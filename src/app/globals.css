@@ -1,26 +1,35 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Vrelo — cool (~70%) */
+  --color-tiefes-wasser: #0a2538;
+  --color-vrelo-petrol: #1b5063;
+  --color-stein: #a8b5ba;
+  --color-gletscher: #dce7eb;
+
+  /* Merak — warm (~20%) */
+  --color-ember: #8b5e2c;
+  --color-amber: #d4a24c;
+  --color-honig: #e8b86b;
+  --color-sonnenlicht: #f4e4c1;
+
+  /* Neutral (~10%) */
+  --color-tinte: #14181b;
+  --color-papier: #f4efe6;
+  --color-faden: #d4ccbc;
+  --color-stumm: #7a7468;
+
+  /* Fonts (CSS vars provided by next/font in Task 4) */
+  --font-sans: var(--font-jakarta), system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), Georgia, serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background-color: var(--color-papier);
+  color: var(--color-tinte);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
 }
