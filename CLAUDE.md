@@ -21,7 +21,9 @@ A content/SEO marketing site for Vrelo, an AI-automation studio for DACH small b
 - **Known dead links in prod:** `/ueber-mich` `/ratgeber` `/kontakt` still 404 (built in later phases); nav `<Link>` prefetch logs harmless console 404s. `/leistungen` `/faq` resolve once 2b ships.
 
 ## Resume here (Phase 2b — Leistungen + FAQ)
-Branch not yet created (`feat/phase2b-leistungen-faq`). Brainstorm DONE; design locked. **Next:** write spec → `writing-plans` → subagent-driven build. Reuse the `Section` primitive + the `src/components/home/` section pattern from 2a.
+Branch not yet created (`feat/phase2b-leistungen-faq`). Brainstorm + **design spec DONE & approved** → [docs/superpowers/specs/2026-06-02-vrelo-phase2b-leistungen-faq-design.md](docs/superpowers/specs/2026-06-02-vrelo-phase2b-leistungen-faq-design.md) (full German draft copy lives there).
+
+**▶ First todo next session:** turn that spec into an implementation plan via `writing-plans`, then run the subagent-driven build on branch `feat/phase2b-leistungen-faq`. Reuse the `Section` primitive + the `src/components/home/` section pattern from 2a. The summary below is the at-a-glance version of the spec.
 
 **Locked design decisions (2b):**
 - `/leistungen` = stacked detail sections (tonal rhythm): PageIntro → 4 service blocks (Termine & Bestätigungen · Nachfass-Mails · Dateneingabe · Wiederkehrende Kommunikation), alternating Papier / subtle `bg-gletscher/30` → folded-in Referenzen placeholder → warm closing CTA.
