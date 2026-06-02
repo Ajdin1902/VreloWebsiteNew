@@ -7,7 +7,7 @@ export function GeschichteTeaser() {
     <Section tone="warm">
       <p className="text-sm font-medium uppercase tracking-wider text-ember">Die Geschichte</p>
       <blockquote className="mt-4 max-w-3xl font-serif text-2xl italic leading-snug text-ember md:text-3xl">
-        „In Bosnien sind Quellen heilig — wo das Wasser entspringt, beginnt der Fluss.&rdquo;
+        „In Bosnien sind Quellen heilig — wo das Wasser entspringt, beginnt der Fluss.“
       </blockquote>
       <p className="mt-6 max-w-2xl text-lg text-tinte">
         <BrandWord>Vrelo</BrandWord> heißt Quelle. Warum dieser Name — und was er mit
