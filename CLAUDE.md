@@ -14,21 +14,24 @@ Project memory for the **Vrelo** marketing website. Read this first; it links ou
 A content/SEO marketing site for Vrelo, an AI-automation studio for DACH small businesses. Framed as a **personal brand** (first-person „Ich"). Primary goal: convert visitors to a booked call (scheduler) or contact form; secondary: organic search via a German Ratgeber (blog) + a newsletter.
 
 ## Status
-- **Phase 1 (foundation) — DONE**, merged to `main`, deployed live.
-- **Phase 2a (homepage) — DONE**, merged to `main` **locally only** (branch `feat/phase2a-homepage` deleted locally; `origin/feat/phase2a-homepage` still exists). ⚠️ **Local `main` is ahead of `origin/main` and NOT yet pushed → the new homepage is NOT yet deployed.** Push `main` when ready to ship to production.
+- **Phase 1 (foundation) — DONE**, merged + deployed live.
+- **Phase 2a (homepage) — DONE**, merged + pushed to `main`, **deployed live** at https://vrelo-website.vercel.app.
+- **Phase 2b (Leistungen + FAQ) — IN PROGRESS** — brainstorm done, design locked; spec + plan next. See "Resume here".
 - **Live:** https://vrelo-website.vercel.app · **Repo:** https://github.com/Ajdin1902/VreloWebsiteNew (GitHub↔Vercel connected → push to `main` auto-deploys to production).
+- **Known dead links in prod:** `/ueber-mich` `/ratgeber` `/kontakt` still 404 (built in later phases); nav `<Link>` prefetch logs harmless console 404s. `/leistungen` `/faq` resolve once 2b ships.
 
 ## Resume here (Phase 2b — Leistungen + FAQ)
-Next phase: **2b** (Leistungen page + FAQ). No plan written yet — start with brainstorm → writing-plans → new branch `feat/phase2b-...`. The reusable `Section` primitive (paper/cool/warm) and the `src/components/home/` section pattern from 2a are the templates to follow.
+Branch not yet created (`feat/phase2b-leistungen-faq`). Brainstorm DONE; design locked. **Next:** write spec → `writing-plans` → subagent-driven build. Reuse the `Section` primitive + the `src/components/home/` section pattern from 2a.
 
-**Carry-over polish notes from the 2a final review (non-blocking, optional):**
-- `GeschichteTeaser` uses its small eyebrow as the section `<h2>` (the dominant line is a `<blockquote>`); reconsider promoting the quote or rewording the heading.
-- Card border-radius differs: `WasIchBaue` chips `rounded-xl` vs `Steps` cards `rounded-2xl` — pick one site-wide.
-- `CTAButton` hardcodes `focus-visible:ring-offset-papier`; on warm (`bg-sonnenlicht`) sections the offset color is slightly off — add a tone/ringOffset prop when convenient.
+**Locked design decisions (2b):**
+- `/leistungen` = stacked detail sections (tonal rhythm): PageIntro → 4 service blocks (Termine & Bestätigungen · Nachfass-Mails · Dateneingabe · Wiederkehrende Kommunikation), alternating Papier / subtle `bg-gletscher/30` → folded-in Referenzen placeholder → warm closing CTA.
+- `/faq` = PageIntro → native `<details>` accordion grouped into ~3 themes (no client JS) → warm closing CTA.
+- Copy: Claude drafts on-brand German (founder refines later). CTAs → `/kontakt`. JSON-LD/OG/sitemap **deferred to Phase 3** (2b = presentational + minimal per-page title/description only). Inner pages stay Papier — deep-water is Hero-only.
+- New shared components `PageIntro` + `ClosingCta`; typed content in `src/lib/leistungen.ts` + `src/lib/faq.ts`; page sections under `src/components/leistungen/` + `src/components/faq/`.
 
-**Phase 2a delivered:** `Section` primitive (+test), Hero (Direction B deep-water + glowing Merak drop), and the six homepage sections (`Problem`, `WasIchBaue`, `GeschichteTeaser`, `Steps`, `Proof`, `MerakClose`) composed in `src/app/page.tsx`. Responsive review passed (desktop 1280 / mobile 390).
+**Carry-over polish (non-blocking, from 2a review):** `GeschichteTeaser` h2 is the eyebrow (dominant line is a blockquote) — reconsider; unify card radius (`rounded-xl` vs `rounded-2xl`); `CTAButton` hardcodes `ring-offset-papier` (off on warm sections — add a tone prop).
 
-**Phase 2 is split into 3 plans:** ✅ 2a homepage (done) · 2b Leistungen + FAQ (next) · 2c video system + Über mich (build `LazyVideo` once, wire into Über mich + the homepage Merak-close).
+**Phase 2 plans:** ✅ 2a homepage · 🔄 2b Leistungen + FAQ · ⬜ 2c video system + Über mich (build `LazyVideo` once; wire into Über mich + homepage Merak-close).
 
 ## Tech stack
 - **Next.js 16** (App Router, Turbopack) · **TypeScript**
@@ -40,8 +43,8 @@ Next phase: **2b** (Leistungen page + FAQ). No plan written yet — start with b
 
 ## Project structure
 ```
-src/app/            layout.tsx, page.tsx (placeholder Home), globals.css (brand tokens)
-src/components/     BrandWord (+test), CTAButton, Header, Footer
+src/app/            layout.tsx, page.tsx (homepage), globals.css (brand tokens)
+src/components/      BrandWord, CTAButton, Header, Footer, Section, Hero · home/ (6 homepage sections)
 src/lib/            fonts.ts, nav.ts (single source of nav links)
 public/logo/        7 brand SVGs
 Videos/             4 source clips: Beginning→Second_Part→Thrid_Part→End (drop→ripple→delta→sunset = Quelle→Merak)
@@ -57,8 +60,9 @@ npm test         # Vitest
 npm run build    # production build
 npm run lint     # ESLint
 npx tsc --noEmit # type-check
-vercel deploy --prod --scope ajdin42-7733s-projects   # manual deploy (or just push to main)
+git push         # deploy: push to main → Vercel auto-deploys to production
 ```
+Vercel CLI is installed (auth: `ajdin42-7733`). Inspect deploys with `vercel ls vrelo-website --scope ajdin42-7733s-projects` / `vercel logs <url>`; manual deploy `vercel deploy --prod --scope ajdin42-7733s-projects`.
 
 ## How we work
 Greenfield workflow via the superpowers skills, one phase at a time:
@@ -71,13 +75,14 @@ Each phase gets its own branch (`feat/phaseN-...`). Frequent commits; commit mes
 
 ## Roadmap
 1. ✅ **Foundation & design system** — Next.js shell, brand tokens, fonts, BrandWord, Header/Footer, placeholder Home.
-2. 🔄 **Core pages** — split into **2a** homepage (Hero + section flow) *(✅ done, merged locally)*, **2b** Leistungen + FAQ *(next)*, **2c** video system + Über mich (4-clip narrative). *Uses the `frontend-design` skill.*
+2. 🔄 **Core pages** — **2a** homepage *(✅ done, deployed live)*, **2b** Leistungen + FAQ *(🔄 in progress)*, **2c** video system + Über mich (4-clip narrative). *Uses the `frontend-design` skill.*
 3. ⬜ **Ratgeber/MDX + SEO** — article system, 3 seed articles, metadata, JSON-LD, sitemap.
 4. ⬜ **Conversion** — contact form, Cal.com scheduler, newsletter (Resend, GDPR double opt-in).
 5. ⬜ **Legal & polish** — Impressum/Datenschutz, video optimization, perf/SEO pass, custom domain (vrelo.de).
 
 ## Key decisions (locked)
 - German only; personal brand („Ich"); multi-page content/SEO site.
+- German typographic quotes: „…" = U+201E (open) + U+201C (close) — never English "". Gotcha: the Edit tool can silently downgrade these to ASCII; verify bytes (or write via `fs`) when inserting them.
 - Sitemap: `/` `/leistungen` `/ueber-mich` `/ratgeber(+[slug])` `/faq` `/kontakt` `/newsletter(+/bestaetigt)` `/impressum` `/datenschutz`. Referenzen folded into Home + Leistungen.
 - Hero = Direction B (immersive deep-water); rest of site = calm Papier sections; page ends on the *Merak*-Effekt.
 - Videos: full 4-clip sequence on **Über mich**; sunset (`End.mp4`) at the homepage Merak-close; **not** in the hero (LCP). Lazy-load, poster fallback, respect `prefers-reduced-motion`.
