@@ -5,7 +5,10 @@ import { Footer } from "@/components/Footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Vrelo — Durchdachte Automatisierung für kleine Betriebe",
+  title: {
+    default: "Vrelo — Durchdachte Automatisierung für kleine Betriebe",
+    template: "%s — Vrelo",
+  },
   description:
     "Maßgeschneiderte Automatisierungen für kleine Betriebe. Du gewinnst Zeit, Ruhe und einen freien Kopf zurück.",
 };
