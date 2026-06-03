@@ -31,4 +31,16 @@ describe("Section", () => {
     expect(el).toHaveClass("border-t");
     expect(el).toHaveAttribute("id", "proof");
   });
+
+  it("renders the gletscher tint instead of papier when tint is set", () => {
+    const { container } = render(<Section tint>x</Section>);
+    const el = container.querySelector("section");
+    expect(el).toHaveClass("bg-gletscher/30");
+    expect(el).not.toHaveClass("bg-papier");
+  });
+
+  it("keeps the readable text color when tinted", () => {
+    const { container } = render(<Section tint>x</Section>);
+    expect(container.querySelector("section")).toHaveClass("text-tinte");
+  });
 });

@@ -10,17 +10,22 @@ const toneClasses: Record<Tone, string> = {
 
 export function Section({
   tone = "paper",
+  tint = false,
   className = "",
   id,
   children,
 }: {
   tone?: Tone;
+  tint?: boolean;
   className?: string;
   id?: string;
   children: ReactNode;
 }) {
+  // `tint` is a subtle alternation for stacked paper sections (Leistungen).
+  // It replaces the paper background so only one bg utility is emitted.
+  const base = tint ? "bg-gletscher/30 text-tinte" : toneClasses[tone];
   return (
-    <section id={id} className={[toneClasses[tone], className].filter(Boolean).join(" ")}>
+    <section id={id} className={[base, className].filter(Boolean).join(" ")}>
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">{children}</div>
     </section>
   );
