@@ -1,0 +1,40 @@
+import type { Metadata } from "next";
+import { PageIntro } from "@/components/PageIntro";
+import { Section } from "@/components/Section";
+import { ClosingCta } from "@/components/ClosingCta";
+import { LeistungDetail } from "@/components/leistungen/LeistungDetail";
+import { Referenzen } from "@/components/leistungen/Referenzen";
+import { leistungen } from "@/lib/leistungen";
+
+export const metadata: Metadata = {
+  title: "Leistungen",
+  description:
+    "Maßgeschneiderte Automatisierungen für kleine Betriebe: Termine & Bestätigungen, Nachfass-Mails, Dateneingabe und wiederkehrende Kommunikation.",
+};
+
+export default function LeistungenPage() {
+  return (
+    <>
+      <PageIntro
+        eyebrow="Was ich baue"
+        title="Leistungen"
+        lead="Ich baue dir eine saubere Quelle für die Aufgaben, die sich jeden Tag wiederholen — maßgeschneidert für deinen Betrieb, nicht von der Stange. Kein Flickenteppich aus zehn Tools, sondern eine ruhige Lösung, die still im Hintergrund läuft."
+      />
+      {leistungen.map((leistung, index) => (
+        <Section
+          key={leistung.slug}
+          tone="paper"
+          tint={index % 2 === 1}
+          className="border-t border-faden"
+        >
+          <LeistungDetail leistung={leistung} index={index} />
+        </Section>
+      ))}
+      <Referenzen />
+      <ClosingCta
+        heading="Lass uns deine Quelle bauen."
+        lead="Erzähl mir, was dich täglich Zeit kostet — ich zeige dir unverbindlich, was sich automatisieren lässt."
+      />
+    </>
+  );
+}
