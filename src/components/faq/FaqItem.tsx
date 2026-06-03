@@ -1,0 +1,22 @@
+export function FaqItem({
+  question,
+  answer,
+}: {
+  question: string;
+  answer: string;
+}) {
+  return (
+    <details className="group border-b border-faden py-4">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-medium text-tiefes-wasser [&::-webkit-details-marker]:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-papier focus-visible:ring-vrelo-petrol">
+        {question}
+        <span
+          aria-hidden="true"
+          className="text-xl leading-none text-vrelo-petrol transition-transform group-open:rotate-45"
+        >
+          +
+        </span>
+      </summary>
+      <p className="mt-3 max-w-2xl text-tinte">{answer}</p>
+    </details>
+  );
+}
