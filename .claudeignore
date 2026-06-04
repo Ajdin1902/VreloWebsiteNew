@@ -1,0 +1,55 @@
+# .claudeignore — paths not worth scanning while working on this repo.
+# Mirrors .gitignore plus heavy/generated/binary artifacts that add noise.
+# Note: Claude Code does not natively enforce this file; search tools already
+# respect .gitignore. For hard access control use settings.json deny rules.
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output & framework caches
+.next/
+out/
+build/
+dist/
+next-env.d.ts
+tsconfig.tsbuildinfo
+*.tsbuildinfo
+
+# Environment & secrets (never read these)
+.env
+.env.*
+!.env.example
+
+# Vercel
+.vercel
+
+# Lockfiles (large, rarely useful to read directly)
+package-lock.json
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
+
+# Tooling artifacts & local-only state
+.superpowers/
+.playwright-mcp/
+
+# Large binary assets — source video clips & generated derivatives
+Videos/
+public/video/
+
+# Smoke-test / phase screenshots (binary, not source)
+phase*.png
+
+# Git internals
+.git/

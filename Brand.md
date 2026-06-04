@@ -104,12 +104,22 @@ body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
 ### Logo — "Wellspring V"
 Filled V-funnel + drop (the Merak-Effekt) above + thin water surface below. Drop **always points up** — never rotate, distort, shadow, or hollow-outline. Clear space ≥ drop height; min 80 px (8 mm) height. The wordmark "Vrelo" is **live text in Fraunces Italic**, not an outlined SVG.
 
-Assets are copied into the repo at `public/logo/` (originals in `C:\Users\ajdin\OneDrive\AJ19\ADZ\Brand\Vrelo Brand Project\assets\`):
+All assets live in the repo at `public/logo/` (served at `/logo/…`). Source originals: `C:\Users\ajdin\OneDrive\AJ19\Vrelo\Brand\Logo\`, with a browsable gallery at `…\Logo\html\index.html` (open in a browser to preview/download every variant — gallery is source-only, not committed/served).
+
+**Symbol — vector (SVG), a11y-labelled (`role="img"` + `<title>`); prefer these on the site:**
 - `vrelo-symbol-navy-amber.svg` — **standard**, on light/Papier backgrounds
 - `vrelo-symbol-petrol-amber.svg` — signature, on petrol surfaces
 - `vrelo-symbol-paper-amber.svg` — reverse, on petrol/navy/ink backgrounds
 - `vrelo-symbol-mono-{navy,paper,ink}.svg` — mono variants
 - `merak-submark-amber.svg` — sub-mark for emotional contexts, **never a replacement for the Vrelo logo**
+- `vrelo-symbol-navy.png` — raster fallback of the standard symbol (transparent, 440×480)
+
+**Lockups — symbol + Fraunces „Vrelo" wordmark baked into one transparent PNG:**
+- `vrelo-lockup-navy.png` — **standard lockup**, on light/Papier backgrounds (767×285)
+- `vrelo-lockup-paper.png` — reverse lockup, on petrol/navy/dark surfaces
+- `vrelo-lockup-navy-tagline.png` — lockup **with the tagline/claim** baked in
+
+> **When to use a lockup vs. live text:** reach for a lockup when you need the symbol + „Vrelo" as a single flat image — social avatars, OG/share images, email signatures, slide decks. **On the website itself**, prefer the live-text rule (symbol SVG + Fraunces italic „Vrelo", see §3/§4-Typography) so the wordmark stays selectable, scalable text. Lockup wordmark spec: **Fraunces** opsz 144, weight 400, SOFT 100.
 
 ### Visual principles
 Generous breathing room · clean lines, no clutter · calm + clarity · cool water meeting warm light. Never busy, never loud, never salesy.
