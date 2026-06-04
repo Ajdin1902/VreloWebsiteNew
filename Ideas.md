@@ -42,6 +42,20 @@ The homepage is mostly Papier after the Hero. Idea: reintroduce the **deep/cool*
 - **Files:** `src/app/page.tsx`, the `home/` sections, `src/components/Section.tsx` (`tone` prop already supports `cool`).
 - **Watch:** contrast/a11y on dark sections; keep the Hero as the dominant deep-water moment so a mid-page cool band doesn't upstage it.
 
+## 5. Position Vrelo as a long-term automation partner — implicitly
+
+Let the sense „das ist jemand, mit dem ich auch in Zukunft arbeiten kann“ build quietly across the site, without ever saying it. The reader should *finish* the site trusting Vrelo as a lasting partner — not be *told* it on any single screen.
+
+- **Tension to resolve first (read this before writing a word):** the audience is *intimidated by „Tech“/„KI“* and the voice is **Ruhe vor Hype / Mensch vor Marke** (Brand.md §3). So this must NEVER become future-/scale-/agency-pitch language — no „zukunftssicher“, „mit uns skalieren“, „die Zukunft ist KI“, „dein Partner für morgen“. Those are exactly the hype registers the brand bans, and they repel this audience. Partnership is **felt, not claimed** — like the *Merak*-Effekt itself.
+- **The on-brand lever:** the brand vocabulary already implies longevity — **dokumentiert · stabil · wartbar · sauber gebaut · still im Hintergrund**. A system „das bleibt“ *is* the partnership promise. So convey it two ways: (a) **durability** — what's built keeps working and can grow with the business; (b) **„ich bleibe da“** — a human who stays reachable after the project, not an agency that ships and vanishes. Founder-as-craftsman, not vendor.
+- **Subtle levers, by surface (pick a few, don't do all — repetition kills subtlety):**
+  - **Über mich** (`src/lib/ueber-mich.ts`): one line in the founder story signalling he stays — builds relationships, not one-off projects.
+  - **Leistungen** (`src/lib/leistungen.ts`): frame deliverables as „sauber dokumentiert, damit es auch in einem Jahr noch läuft“ — durability as a feature, not a sales line.
+  - **FAQ** (`src/lib/faq.ts`): the single most natural home — e.g. „Was passiert nach dem Projekt?“ → „Du bist nicht allein; ich bleibe erreichbar und das System lässt sich anpassen, wenn sich etwas ändert.“ Quiet, factual, reassuring.
+  - **Merak-close / homepage end** (`src/components/home/MerakClose.tsx`): at most a faint note of continuity — the *beginning* of a calm working relationship, not a CTA shout.
+- **Files:** `src/lib/{ueber-mich,leistungen,faq}.ts`, `src/app/ueber-mich/page.tsx`, `src/components/home/MerakClose.tsx`; SEO metadata only if it reads naturally.
+- **Watch:** **one** such cue per page, max — the whole effect dies if it's everywhere (that's the „annoying“ failure mode the founder flagged). Mind the **≤1 water metaphor** rule if reaching for „die Quelle wächst mit dir“ (evocative, but it spends the page's one water metaphor). Keep `du`-voice, first person, no urgency. Verify any new claim („ich bleibe erreichbar“, ongoing support) is one the founder will actually honor before shipping — same drafts-to-verify discipline as the 2b copy.
+
 ---
 
 ### Cross-cutting notes
