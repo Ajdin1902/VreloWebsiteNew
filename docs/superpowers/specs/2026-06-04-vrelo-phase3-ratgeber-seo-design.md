@@ -44,7 +44,7 @@ draft: true               # draft-to-verify articles; excluded from index + site
 ```
 
 Notes:
-- `draft: true` is the default for the seed articles (founder must verify before go-live). Drafts are excluded from the index, `generateStaticParams`, and the sitemap. (Decision for implementation: drafts 404 in production; optionally visible in dev — keep simple, treat draft = not built.)
+- `draft: true` is the default for the seed articles (founder must verify before go-live). **Draft visibility = dev-only preview:** in `next dev` drafts render and appear in the index (with an „Entwurf“ marker) so the founder can preview them; in a **production** build drafts are NOT statically generated, are excluded from the index + sitemap, and their URL returns 404. Visibility is gated by `process.env.NODE_ENV !== "production"`. Seed articles may legitimately stay drafts indefinitely.
 - Reading time is **computed** from word count (~200 wpm), not stored in frontmatter.
 - No `cover` image field in Phase 3 (header is typographic + brand motif; share image is the generated OG).
 
@@ -62,12 +62,12 @@ export type Article = {
   body: string;          // raw MDX body (frontmatter stripped)
 };
 
-getAllArticles(): Article[]        // published only, newest-first
-getArticleBySlug(slug): Article    // throws if missing or draft
-getArticleSlugs(): string[]        // published slugs, for generateStaticParams
+getAllArticles(): Article[]        // newest-first; excludes drafts in prod, includes in dev
+getArticleBySlug(slug): Article    // throws if missing; draft access guarded by the route
+getArticleSlugs(): string[]        // for generateStaticParams; excludes drafts in prod
 ```
 
-Frontmatter parsing: a small dependency (e.g. `gray-matter`) or a minimal in-repo parser — chosen at implementation, covered by tests. Date sort is descending. Draft filtering applied in all three accessors.
+Frontmatter parsing: a small dependency (e.g. `gray-matter`) or a minimal in-repo parser — chosen at implementation, covered by tests. Date sort is descending. A single `draftsVisible` flag (`NODE_ENV !== "production"`) drives draft inclusion consistently across `getAllArticles`/`getArticleSlugs`; the sitemap always uses production semantics (never lists drafts).
 
 ## 4. Rendering & MDX
 
@@ -80,7 +80,8 @@ Frontmatter parsing: a small dependency (e.g. `gray-matter`) or a minimal in-rep
 
 ### 5.1 `/ratgeber` — index (`src/app/ratgeber/page.tsx`)
 - `PageIntro` (eyebrow „Ratgeber“, Fraunces title, lead).
-- **Layout A:** single column of `ArticleCard` rows, newest-first, separated by `--faden` hairlines. Each row: meta line (`DD. Monat YYYY · N Min · TagPrimary`, uppercase `--stumm`), Fraunces title (links to article), description (~60ch).
+- **Layout A:** single column of `ArticleCard` rows, newest-first, separated by `--faden` hairlines. Each row: meta line (`DD. Monat YYYY · N Min · TagPrimary`, uppercase `--stumm`), Fraunces title (links to article), description (~60ch). Dev-only drafts carry an „Entwurf“ marker.
+- **Empty state:** when there are no visible articles (the production case while all seeds are drafts), render a calm, on-brand placeholder (e.g. „Hier entsteht der Ratgeber.“) instead of an empty list — never a broken/blank page.
 - `ClosingCta` (booking) at the bottom.
 - `metadata` (title „Ratgeber“, description). Static.
 
@@ -91,14 +92,14 @@ Frontmatter parsing: a small dependency (e.g. `gray-matter`) or a minimal in-rep
 - **Body:** `Prose`-rendered MDX in the ~64ch column.
 - `ClosingCta` (booking; marked as the Phase-4 newsletter swap-in point).
 - JSON-LD: `Article` + `BreadcrumbList` (Home › Ratgeber › Title).
-- Unknown/draft slug → `notFound()`.
+- Unknown slug → `notFound()`. Draft slug → renders in dev (with „Entwurf“ marker), `notFound()` in production.
 
 ### 5.3 Nav
 `/ratgeber` is already listed in `src/lib/nav.ts` — it simply becomes a live link. No nav change required; verify Header/Footer render it correctly and the prod 404 note in CLAUDE.md clears.
 
 ## 6. SEO layer
 
-- **Base URL constant:** one module (e.g. `src/lib/site.ts`) exporting `siteUrl` (`https://vrelo-website.vercel.app` now; swap to `vrelo.de` later) + site name. Consumed by metadata, sitemap, JSON-LD, OG.
+- **Base URL constant:** one module (e.g. `src/lib/site.ts`) exporting `siteUrl` (`https://vrelo-website.vercel.app` now; swap to the custom domain **`https://vrelo-ki.de`** when it's connected in Phase 5) + site name. Single point of change. Consumed by metadata, sitemap, JSON-LD, OG.
 - **Per-page metadata:** ensure each route sets title + description + canonical + `openGraph`. Articles derive these from frontmatter via `generateMetadata`.
 - **JSON-LD builders (`src/lib/jsonld.ts`) + `<JsonLd>` component** (`<script type="application/ld+json">`, serialized safely):
   - Home → `ProfessionalService` (name *Vrelo*, founder Ajdin, `areaServed` DACH: DE/AT/CH, url, description).
@@ -152,19 +153,22 @@ All three: first-person „Ich“, „du“ address, calm, outcome-over-mechanis
 2. **`taeglich-stunden-zurueckgewinnen`** — „Wie kleine Betriebe täglich Stunden zurückgewinnen“ · tags Zeit, Praxis.
 3. **`flickenteppich-oder-saubere-quelle`** — „Flickenteppich oder saubere Quelle?“ · tags Grundlagen.
 
+**Slugs are provisional** — the filenames/slugs above may be renamed later; keep the names as-is for now (add redirects if/when they change). **Publishing** an article = set `draft: false` in its frontmatter (no code change). Since all three ship as drafts, the **production** Ratgeber is intentionally empty until the founder verifies and publishes — that is an accepted state, not a bug.
+
 ## 9. Testing & verification
 
 Follows the existing TDD + per-task-commit workflow. The full gate stays green at the end of each task:
 
-- **Unit tests:** loader (frontmatter parse, ISO date sort desc, draft filter across all accessors, slug lookup + throw on miss), reading-time helper, remark-brandword (wraps „Vrelo“/„Merak“, skips code + already-wrapped + other words), JSON-LD builders (correct `@type`/shape for each, FAQPage from `faq.ts`).
-- **Component render tests:** `ArticleCard`, `ArticleHeader`, `Prose` (renders headings/links/blockquote with brand classes; BrandWord present), `JsonLd` (valid JSON, correct script type).
-- **Build/route checks:** `npm test` · `npx tsc --noEmit` · `npm run lint` · `npm run build` — all routes static incl. `/ratgeber` + the 3 article pages + `sitemap.xml` + `robots.txt` + OG images render.
-- **Manual smoke (via `npm start`, per CLAUDE.md):** `/ratgeber` lists articles, an article renders with header B + Prose + working CTA, JSON-LD validates, OG image renders, sitemap/robots resolve.
+- **Unit tests:** loader (frontmatter parse, ISO date sort desc, **draft inclusion toggles with `draftsVisible`** across `getAllArticles`/`getArticleSlugs`, sitemap always excludes drafts, slug lookup + throw on miss), reading-time helper, remark-brandword (wraps „Vrelo“/„Merak“, skips code + already-wrapped + other words), JSON-LD builders (correct `@type`/shape for each, FAQPage from `faq.ts`).
+- **Component render tests:** `ArticleCard`, `ArticleHeader`, `Prose` (renders headings/links/blockquote with brand classes; BrandWord present), `JsonLd` (valid JSON, correct script type), Ratgeber index **empty state** renders the placeholder.
+- **Build/route checks:** `npm test` · `npx tsc --noEmit` · `npm run lint` · `npm run build` — production build is green with `/ratgeber` (empty state), `sitemap.xml`, `robots.txt`, and OG images all rendering; no article pages are generated while seeds are drafts (expected). Optionally flip one seed to `draft: false` temporarily to confirm an article page + its OG build statically, then revert.
+- **Manual smoke:** in **dev** (`npm run dev`) `/ratgeber` lists the 3 drafts (with „Entwurf“ marker) and an article renders with header B + Prose + working CTA; JSON-LD validates; OG image renders; sitemap/robots resolve. In a **prod** build (`npm start`) `/ratgeber` shows the empty state and draft URLs 404.
 
 ## 10. Risks & notes
 
 - **MDX compiler compatibility** with Next 16 / React 19 RSC is the main unknown — de-risk first with a minimal render test before building components on top (see §4).
 - **OG fonts:** `ImageResponse` needs raw font files; adding/subset­ting them is a small but real task — verify in build.
-- **Draft handling:** keep it simple (draft = not built / 404 in prod). Don't over-engineer a preview mode.
+- **Draft handling:** dev-only preview gated by one `draftsVisible` flag (`NODE_ENV !== "production"`). Keep it to that — no auth, no secret preview tokens, no separate preview deployment.
+- **Empty production Ratgeber (expected):** while all seeds are drafts, prod ships an empty Ratgeber (placeholder index, no article pages, no articles in sitemap). This is intended — Phase 3 builds the *system*; the founder publishes content by flipping `draft: false`. The index must degrade gracefully (see §5.1).
 - **No scope creep:** no tag filter/search UI for 3 articles (YAGNI); tags display only. No newsletter form, no contact form, no legal pages.
 - **Brand discipline:** all colors via `@theme` tokens; „Vrelo“/„Merak“ only via BrandWord; verify German typographic quotes (U+201E/U+201C) survive in any committed copy (the Edit-tool downgrade gotcha from CLAUDE.md).
