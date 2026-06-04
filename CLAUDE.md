@@ -17,31 +17,23 @@ A content/SEO marketing site for Vrelo, an AI-automation studio for DACH small b
 - **Phase 1 (foundation) — DONE**, merged + deployed live.
 - **Phase 2a (homepage) — DONE**, merged + pushed to `main`, **deployed live** at https://vrelo-website.vercel.app.
 - **Phase 2b (Leistungen + FAQ) — DONE**, merged + pushed to `main`, **deployed live** (`/leistungen` + `/faq` resolve in prod).
-- **Phase 2c (video system + Über mich) — IN PROGRESS** on branch `feat/phase2c-video-ueber-mich`: brainstorm done, **spec + plan written and committed, NOT yet executed** (see Resume below).
+- **Phase 2c (video system + Über mich) — DONE (built + verified on branch `feat/phase2c-video-ueber-mich`), NOT yet merged/deployed.** All 8 plan tasks executed: `LazyVideo`, optimized video assets in `public/video/`, `/ueber-mich` 4-beat page, sunset wired into `MerakClose`. Full gate green (36 tests · tsc · lint · build all 5 routes static). Visually smoke-checked via `npm start` + Playwright.
 - **Live:** https://vrelo-website.vercel.app · **Repo:** https://github.com/Ajdin1902/VreloWebsiteNew (GitHub↔Vercel connected → push to `main` auto-deploys to production).
 - **Unpushed on `main`:** one doc-only commit (`ffb1ff0`, "mark Phase 2b deployed") — push was deferred; will fold into the next deploy.
-- **Known dead links in prod:** `/ueber-mich` `/ratgeber` `/kontakt` still 404 (2c not deployed yet); nav `<Link>` prefetch logs harmless console 404s.
+- **Known dead links in prod:** `/ratgeber` `/kontakt` (built in later phases) — plus `/ueber-mich` until the 2c branch is merged + deployed. Nav `<Link>` prefetch logs harmless console 404s for these.
 
-## Resume here (Phase 2c — EXECUTE the plan)
-On branch `feat/phase2c-video-ueber-mich`. Brainstorm + spec + plan are **done and committed**; next step is to **execute the 8-task plan** via subagent-driven-development (fresh subagent per task, two-stage review), then finishing-a-development-branch.
-- **Plan:** [docs/superpowers/plans/2026-06-04-vrelo-phase2c-video-ueber-mich.md](docs/superpowers/plans/2026-06-04-vrelo-phase2c-video-ueber-mich.md)
-- **Spec:** [docs/superpowers/specs/2026-06-04-vrelo-phase2c-video-ueber-mich-design.md](docs/superpowers/specs/2026-06-04-vrelo-phase2c-video-ueber-mich-design.md)
+## Resume here
+**First: finish the 2c branch.** Phase 2c is built + verified on `feat/phase2c-video-ueber-mich` but not merged. Merge to `main` (→ auto-deploys; `/ueber-mich` goes live) — confirm with the user before pushing. Then start **Phase 3 — Ratgeber/MDX + SEO** (brainstorm → writing-plans → new branch): article system, ~3 seed articles, metadata/JSON-LD, sitemap.
 
-**What the plan builds:** one reusable `LazyVideo` (Approach A — dumb component, layout owned by parents; `prefers-reduced-motion` → poster `<img>`, IntersectionObserver play/pause, `preload="none"`); an `/ueber-mich` 4-beat narrative (data-driven `src/lib/ueber-mich.ts` → `StoryBeat` → page; story bodies are German `[Platzhalter]` prompts — founder writes the real copy); and wiring the sunset clip into `MerakClose`.
+**Open todos (non-blocking, carry forward):**
+- **Founder copy:** write the real Über-mich story — replace the 4 `[Platzhalter]` bodies + the lead in `src/lib/ueber-mich.ts` / `src/app/ueber-mich/page.tsx`. Same for the 2b German drafts in `src/lib/{leistungen,faq}.ts`; verify the 3 *draft-to-verify* claims (DSGVO-konform, pricing stance, „innerhalb weniger Wochen / in Tagen" timeline).
+- **MerakClose tuning:** the sunset sits behind an `opacity-80` warm tint, so it reads as a very subtle presence — if the founder wants the sunset more visible, lower the overlay opacity (~60–70). Design-polish, not a bug.
+- **Video assets:** re-run `npm run optimize:videos` if source clips change; derivatives live in `public/video/` (committed). All clips are 1920×1080 16:9 → `aspect-video`.
+- **Polish backlog:** see [Ideas.md](Ideas.md) (logo everywhere, hero ripple, „KI" wording, darker palette) — schedule as an end-stage design pass. Plus earlier: `GeschichteTeaser` heading, card-radius unification, `CTAButton` ring-offset tone prop.
 
-**Locked decisions / gotchas for execution:**
-- **No ffmpeg on this box** → Task 1 installs `ffmpeg-static`+`ffprobe-static` (npm, no admin) and runs `scripts/optimize-videos.mjs` to produce `public/video/{quelle,ripples,fluss,merak}.{mp4,webm}` + `-poster.jpg`. **Task 1 is the heaviest step** (transcodes 4 clips, ~minutes, resource-flaky) — watch it. Clip→slug map: Beginning→`quelle`, Second_Part→`ripples`, Thrid_Part→`fluss`, End→`merak`.
-- Aspect ratio of clips is unknown until Task 1 probes it; `StoryBeat` defaults to `aspect-video` — swap if the probe shows otherwise (Task 5 note).
-- jsdom lacks `matchMedia`/`IntersectionObserver`/media playback → Task 2 adds global stubs to `vitest.setup.ts`; `LazyVideo.test.tsx` overrides them per-case.
-- Use `npm start` (not `npm run dev`) to drive any manual/Playwright check — dev's per-request compile hangs navigation in this environment.
+**Phase 2c reference:** [plan](docs/superpowers/plans/2026-06-04-vrelo-phase2c-video-ueber-mich.md) · [spec](docs/superpowers/specs/2026-06-04-vrelo-phase2c-video-ueber-mich-design.md). `LazyVideo` (`src/components/LazyVideo.tsx`) is the reusable video primitive: `useSyncExternalStore` for hydration-safe reduced-motion (poster `<img>`), IntersectionObserver play/pause, `preload="none"`; layout owned by parents (`StoryBeat`, `MerakClose`). Use `npm start` (not `npm run dev`) for any manual/Playwright check in this environment.
 
-**Open todos (non-blocking, carry into a later session):**
-- **Founder copy review:** the 2b German is Claude-drafted — refine wording in `src/lib/{leistungen,faq}.ts`; verify the 3 *draft-to-verify* claims before relying on them publicly: DSGVO-konform, pricing stance, the „innerhalb weniger Wochen / in Tagen" timeline.
-- **Polish (accumulated):** `GeschichteTeaser` h2 is the eyebrow (dominant line is a blockquote) — reconsider; unify card radius (`rounded-xl` vs `rounded-2xl`); `CTAButton` hardcodes `focus-visible:ring-offset-papier` (slightly off on warm/`ClosingCta` sections — add a tone/ringOffset prop).
-
-**Phase 2b shipped:** `/leistungen` (PageIntro → 4 tonal service blocks → Referenzen placeholder → warm ClosingCta) + `/faq` (native `<details>` accordion, 3 themes) + shared `PageIntro`/`ClosingCta`, `Section.tint`, typed `src/lib/{leistungen,faq}.ts`. German draft copy lives in those data files + the [2b spec](docs/superpowers/specs/2026-06-02-vrelo-phase2b-leistungen-faq-design.md) (founder to refine; 3 *draft-to-verify* claims flagged: DSGVO, pricing, timeline).
-
-**Phase 2 plans:** ✅ 2a homepage · ✅ 2b Leistungen + FAQ · 🔄 2c video system + Über mich (spec + plan committed; executing the 8-task plan next).
+**Phase 2 plans:** ✅ 2a homepage · ✅ 2b Leistungen + FAQ · ✅ 2c video system + Über mich (built + verified on branch; pending merge/deploy).
 
 ## Tech stack
 - **Next.js 16** (App Router, Turbopack) · **TypeScript**
@@ -85,7 +77,7 @@ Each phase gets its own branch (`feat/phaseN-...`). Frequent commits; commit mes
 
 ## Roadmap
 1. ✅ **Foundation & design system** — Next.js shell, brand tokens, fonts, BrandWord, Header/Footer, placeholder Home.
-2. 🔄 **Core pages** — **2a** homepage *(✅ done, deployed live)*, **2b** Leistungen + FAQ *(✅ done, deployed live)*, **2c** video system + Über mich (4-clip narrative) *(next)*. *Uses the `frontend-design` skill.*
+2. ✅ **Core pages** — **2a** homepage *(✅ done, deployed live)*, **2b** Leistungen + FAQ *(✅ done, deployed live)*, **2c** video system + Über mich (4-clip narrative) *(✅ built + verified on branch; pending merge/deploy)*. *Uses the `frontend-design` skill.*
 3. ⬜ **Ratgeber/MDX + SEO** — article system, 3 seed articles, metadata, JSON-LD, sitemap.
 4. ⬜ **Conversion** — contact form, Cal.com scheduler, newsletter (Resend, GDPR double opt-in).
 5. ⬜ **Legal & polish** — Impressum/Datenschutz, video optimization, perf/SEO pass, custom domain (vrelo.de).
