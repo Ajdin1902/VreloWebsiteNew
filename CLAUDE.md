@@ -16,24 +16,20 @@ A content/SEO marketing site for Vrelo, an AI-automation studio for DACH small b
 ## Status
 - **Phase 1 (foundation) — DONE**, merged + deployed live.
 - **Phase 2a (homepage) — DONE**, merged + pushed to `main`, **deployed live** at https://vrelo-website.vercel.app.
-- **Phase 2b (Leistungen + FAQ) — IN PROGRESS** — brainstorm done, design locked; spec + plan next. See "Resume here".
+- **Phase 2b (Leistungen + FAQ) — DONE**, merged to `main` **locally only** (branch deleted). ⚠️ **Local `main` is ahead of `origin/main` and NOT pushed → `/leistungen` + `/faq` are NOT yet live.** `git push` to deploy.
 - **Live:** https://vrelo-website.vercel.app · **Repo:** https://github.com/Ajdin1902/VreloWebsiteNew (GitHub↔Vercel connected → push to `main` auto-deploys to production).
-- **Known dead links in prod:** `/ueber-mich` `/ratgeber` `/kontakt` still 404 (built in later phases); nav `<Link>` prefetch logs harmless console 404s. `/leistungen` `/faq` resolve once 2b ships.
+- **Known dead links in prod:** `/ueber-mich` `/ratgeber` `/kontakt` still 404 (built in later phases); nav `<Link>` prefetch logs harmless console 404s. `/leistungen` + `/faq` are **built locally** — they resolve in prod after the next `git push`.
 
-## Resume here (Phase 2b — Leistungen + FAQ)
-Branch not yet created (`feat/phase2b-leistungen-faq`). Brainstorm + **design spec DONE & approved** → [docs/superpowers/specs/2026-06-02-vrelo-phase2b-leistungen-faq-design.md](docs/superpowers/specs/2026-06-02-vrelo-phase2b-leistungen-faq-design.md) (full German draft copy lives there).
+## Resume here (Phase 2c — video system + Über mich)
+Next phase: **2c**. No spec/plan yet — start with brainstorm → writing-plans → new branch `feat/phase2c-…`. Build a reusable `LazyVideo` once, then wire it into **Über mich** (full 4-clip `Videos/` narrative) and the homepage Merak-close (`MerakClose.tsx` already has a marked video slot; `End.mp4` sunset goes there). Honor `prefers-reduced-motion` + poster fallback; not in the Hero (LCP). The 4 source clips are in `Videos/` (Beginning→Second_Part→Thrid_Part→End).
 
-**▶ First todo next session:** turn that spec into an implementation plan via `writing-plans`, then run the subagent-driven build on branch `feat/phase2b-leistungen-faq`. Reuse the `Section` primitive + the `src/components/home/` section pattern from 2a. The summary below is the at-a-glance version of the spec.
+**▶ First, if not done:** `git push` to ship Phase 2b (`/leistungen` + `/faq`) to production.
 
-**Locked design decisions (2b):**
-- `/leistungen` = stacked detail sections (tonal rhythm): PageIntro → 4 service blocks (Termine & Bestätigungen · Nachfass-Mails · Dateneingabe · Wiederkehrende Kommunikation), alternating Papier / subtle `bg-gletscher/30` → folded-in Referenzen placeholder → warm closing CTA.
-- `/faq` = PageIntro → native `<details>` accordion grouped into ~3 themes (no client JS) → warm closing CTA.
-- Copy: Claude drafts on-brand German (founder refines later). CTAs → `/kontakt`. JSON-LD/OG/sitemap **deferred to Phase 3** (2b = presentational + minimal per-page title/description only). Inner pages stay Papier — deep-water is Hero-only.
-- New shared components `PageIntro` + `ClosingCta`; typed content in `src/lib/leistungen.ts` + `src/lib/faq.ts`; page sections under `src/components/leistungen/` + `src/components/faq/`.
+**Carry-over polish (non-blocking, accumulated):** `GeschichteTeaser` h2 is the eyebrow (dominant line is a blockquote) — reconsider; unify card radius (`rounded-xl` vs `rounded-2xl`); `CTAButton` hardcodes `focus-visible:ring-offset-papier` (slightly off on warm/`ClosingCta` sections — add a tone/ringOffset prop).
 
-**Carry-over polish (non-blocking, from 2a review):** `GeschichteTeaser` h2 is the eyebrow (dominant line is a blockquote) — reconsider; unify card radius (`rounded-xl` vs `rounded-2xl`); `CTAButton` hardcodes `ring-offset-papier` (off on warm sections — add a tone prop).
+**Phase 2b shipped:** `/leistungen` (PageIntro → 4 tonal service blocks → Referenzen placeholder → warm ClosingCta) + `/faq` (native `<details>` accordion, 3 themes) + shared `PageIntro`/`ClosingCta`, `Section.tint`, typed `src/lib/{leistungen,faq}.ts`. German draft copy lives in those data files + the [2b spec](docs/superpowers/specs/2026-06-02-vrelo-phase2b-leistungen-faq-design.md) (founder to refine; 3 *draft-to-verify* claims flagged: DSGVO, pricing, timeline).
 
-**Phase 2 plans:** ✅ 2a homepage · 🔄 2b Leistungen + FAQ · ⬜ 2c video system + Über mich (build `LazyVideo` once; wire into Über mich + homepage Merak-close).
+**Phase 2 plans:** ✅ 2a homepage · ✅ 2b Leistungen + FAQ · ⬜ 2c video system + Über mich (build `LazyVideo` once; wire into Über mich + homepage Merak-close).
 
 ## Tech stack
 - **Next.js 16** (App Router, Turbopack) · **TypeScript**
@@ -77,7 +73,7 @@ Each phase gets its own branch (`feat/phaseN-...`). Frequent commits; commit mes
 
 ## Roadmap
 1. ✅ **Foundation & design system** — Next.js shell, brand tokens, fonts, BrandWord, Header/Footer, placeholder Home.
-2. 🔄 **Core pages** — **2a** homepage *(✅ done, deployed live)*, **2b** Leistungen + FAQ *(🔄 in progress)*, **2c** video system + Über mich (4-clip narrative). *Uses the `frontend-design` skill.*
+2. 🔄 **Core pages** — **2a** homepage *(✅ done, deployed live)*, **2b** Leistungen + FAQ *(✅ done, merged locally)*, **2c** video system + Über mich (4-clip narrative) *(next)*. *Uses the `frontend-design` skill.*
 3. ⬜ **Ratgeber/MDX + SEO** — article system, 3 seed articles, metadata, JSON-LD, sitemap.
 4. ⬜ **Conversion** — contact form, Cal.com scheduler, newsletter (Resend, GDPR double opt-in).
 5. ⬜ **Legal & polish** — Impressum/Datenschutz, video optimization, perf/SEO pass, custom domain (vrelo.de).
