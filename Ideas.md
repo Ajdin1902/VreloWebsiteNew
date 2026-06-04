@@ -42,17 +42,9 @@ The homepage is mostly Papier after the Hero. Idea: reintroduce the **deep/cool*
 - **Files:** `src/app/page.tsx`, the `home/` sections, `src/components/Section.tsx` (`tone` prop already supports `cool`).
 - **Watch:** contrast/a11y on dark sections; keep the Hero as the dominant deep-water moment so a mid-page cool band doesn't upstage it.
 
-## 5. Flowing accents along the side of the page
-
-Subtle „Fluss“ motif — flowing lines/gradients down the page margins to reinforce the water metaphor as the eye scrolls (Quelle → Fluss → Merak).
-
-- **Approach:** a fixed/absolute decorative SVG or gradient hairline in the gutter, `aria-hidden`, `pointer-events-none`, very low contrast (use `--color-faden`/`--color-stein` or a faint petrol). Could subtly shift on scroll (motion-safe only).
-- **Watch:** Brand.md — *water metaphor at most ONE per piece*; this is a strong one, so it may **replace** rather than add to other water cues. Must not hurt readability, mobile layout, or performance. Reduced-motion: static or hidden.
-- **Files:** likely a new `src/components/FlowAccent.tsx` mounted in `layout.tsx` or per-page.
-
 ---
 
 ### Cross-cutting notes
-- All of these are **design polish** — schedule after Phase 2c (and probably after the conversion/legal phases), as a dedicated „design pass“ so they're considered together (they interact: darker colours + flow accents + ripple all compete for attention).
+- All of these are **design polish** — schedule after Phase 2c (and probably after the conversion/legal phases), as a dedicated „design pass“ so they're considered together (they interact: darker colours + ripple both compete for attention).
 - Respect existing enforcement: `<BrandWord>` for „Vrelo“/„Merak“, brand `@theme` tokens only (no hand-rolled hex except where already established), `prefers-reduced-motion` for every animation.
 - German typographic quotes „…“ = U+201E/U+201C in any client-facing copy these ideas produce.
