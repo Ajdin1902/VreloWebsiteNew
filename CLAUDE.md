@@ -17,11 +17,23 @@ A content/SEO marketing site for Vrelo, an AI-automation studio for DACH small b
 - **Phase 1 (foundation) — DONE**, merged + deployed live.
 - **Phase 2a (homepage) — DONE**, merged + pushed to `main`, **deployed live** at https://vrelo-website.vercel.app.
 - **Phase 2b (Leistungen + FAQ) — DONE**, merged + pushed to `main`, **deployed live** (`/leistungen` + `/faq` resolve in prod).
+- **Phase 2c (video system + Über mich) — IN PROGRESS** on branch `feat/phase2c-video-ueber-mich`: brainstorm done, **spec + plan written and committed, NOT yet executed** (see Resume below).
 - **Live:** https://vrelo-website.vercel.app · **Repo:** https://github.com/Ajdin1902/VreloWebsiteNew (GitHub↔Vercel connected → push to `main` auto-deploys to production).
-- **Known dead links in prod:** `/ueber-mich` `/ratgeber` `/kontakt` still 404 (built in later phases); nav `<Link>` prefetch logs harmless console 404s.
+- **Unpushed on `main`:** one doc-only commit (`ffb1ff0`, "mark Phase 2b deployed") — push was deferred; will fold into the next deploy.
+- **Known dead links in prod:** `/ueber-mich` `/ratgeber` `/kontakt` still 404 (2c not deployed yet); nav `<Link>` prefetch logs harmless console 404s.
 
-## Resume here (Phase 2c — video system + Über mich)
-Next phase: **2c**. No spec/plan yet — start with brainstorm → writing-plans → new branch `feat/phase2c-…`. Build a reusable `LazyVideo` once, then wire it into **Über mich** (full 4-clip `Videos/` narrative) and the homepage Merak-close (`MerakClose.tsx` already has a marked video slot; `End.mp4` sunset goes there). Honor `prefers-reduced-motion` + poster fallback; not in the Hero (LCP). The 4 source clips are in `Videos/` (Beginning→Second_Part→Thrid_Part→End).
+## Resume here (Phase 2c — EXECUTE the plan)
+On branch `feat/phase2c-video-ueber-mich`. Brainstorm + spec + plan are **done and committed**; next step is to **execute the 8-task plan** via subagent-driven-development (fresh subagent per task, two-stage review), then finishing-a-development-branch.
+- **Plan:** [docs/superpowers/plans/2026-06-04-vrelo-phase2c-video-ueber-mich.md](docs/superpowers/plans/2026-06-04-vrelo-phase2c-video-ueber-mich.md)
+- **Spec:** [docs/superpowers/specs/2026-06-04-vrelo-phase2c-video-ueber-mich-design.md](docs/superpowers/specs/2026-06-04-vrelo-phase2c-video-ueber-mich-design.md)
+
+**What the plan builds:** one reusable `LazyVideo` (Approach A — dumb component, layout owned by parents; `prefers-reduced-motion` → poster `<img>`, IntersectionObserver play/pause, `preload="none"`); an `/ueber-mich` 4-beat narrative (data-driven `src/lib/ueber-mich.ts` → `StoryBeat` → page; story bodies are German `[Platzhalter]` prompts — founder writes the real copy); and wiring the sunset clip into `MerakClose`.
+
+**Locked decisions / gotchas for execution:**
+- **No ffmpeg on this box** → Task 1 installs `ffmpeg-static`+`ffprobe-static` (npm, no admin) and runs `scripts/optimize-videos.mjs` to produce `public/video/{quelle,ripples,fluss,merak}.{mp4,webm}` + `-poster.jpg`. **Task 1 is the heaviest step** (transcodes 4 clips, ~minutes, resource-flaky) — watch it. Clip→slug map: Beginning→`quelle`, Second_Part→`ripples`, Thrid_Part→`fluss`, End→`merak`.
+- Aspect ratio of clips is unknown until Task 1 probes it; `StoryBeat` defaults to `aspect-video` — swap if the probe shows otherwise (Task 5 note).
+- jsdom lacks `matchMedia`/`IntersectionObserver`/media playback → Task 2 adds global stubs to `vitest.setup.ts`; `LazyVideo.test.tsx` overrides them per-case.
+- Use `npm start` (not `npm run dev`) to drive any manual/Playwright check — dev's per-request compile hangs navigation in this environment.
 
 **Open todos (non-blocking, carry into a later session):**
 - **Founder copy review:** the 2b German is Claude-drafted — refine wording in `src/lib/{leistungen,faq}.ts`; verify the 3 *draft-to-verify* claims before relying on them publicly: DSGVO-konform, pricing stance, the „innerhalb weniger Wochen / in Tagen" timeline.
@@ -29,7 +41,7 @@ Next phase: **2c**. No spec/plan yet — start with brainstorm → writing-plans
 
 **Phase 2b shipped:** `/leistungen` (PageIntro → 4 tonal service blocks → Referenzen placeholder → warm ClosingCta) + `/faq` (native `<details>` accordion, 3 themes) + shared `PageIntro`/`ClosingCta`, `Section.tint`, typed `src/lib/{leistungen,faq}.ts`. German draft copy lives in those data files + the [2b spec](docs/superpowers/specs/2026-06-02-vrelo-phase2b-leistungen-faq-design.md) (founder to refine; 3 *draft-to-verify* claims flagged: DSGVO, pricing, timeline).
 
-**Phase 2 plans:** ✅ 2a homepage · ✅ 2b Leistungen + FAQ · ⬜ 2c video system + Über mich (build `LazyVideo` once; wire into Über mich + homepage Merak-close).
+**Phase 2 plans:** ✅ 2a homepage · ✅ 2b Leistungen + FAQ · 🔄 2c video system + Über mich (spec + plan committed; executing the 8-task plan next).
 
 ## Tech stack
 - **Next.js 16** (App Router, Turbopack) · **TypeScript**
