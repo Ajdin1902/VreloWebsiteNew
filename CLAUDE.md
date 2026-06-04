@@ -17,13 +17,12 @@ A content/SEO marketing site for Vrelo, an AI-automation studio for DACH small b
 - **Phase 1 (foundation) — DONE**, merged + deployed live.
 - **Phase 2a (homepage) — DONE**, merged + pushed to `main`, **deployed live** at https://vrelo-website.vercel.app.
 - **Phase 2b (Leistungen + FAQ) — DONE**, merged + pushed to `main`, **deployed live** (`/leistungen` + `/faq` resolve in prod).
-- **Phase 2c (video system + Über mich) — DONE (built + verified on branch `feat/phase2c-video-ueber-mich`), NOT yet merged/deployed.** All 8 plan tasks executed: `LazyVideo`, optimized video assets in `public/video/`, `/ueber-mich` 4-beat page, sunset wired into `MerakClose`. Full gate green (36 tests · tsc · lint · build all 5 routes static). Visually smoke-checked via `npm start` + Playwright.
+- **Phase 2c (video system + Über mich) — DONE**, merged + pushed to `main`, **deployed live** (`/ueber-mich` resolves in prod). Shipped: `LazyVideo`, optimized video assets in `public/video/`, `/ueber-mich` 4-beat page, sunset wired into `MerakClose`. Full gate green (36 tests · tsc · lint · build all 5 routes static).
 - **Live:** https://vrelo-website.vercel.app · **Repo:** https://github.com/Ajdin1902/VreloWebsiteNew (GitHub↔Vercel connected → push to `main` auto-deploys to production).
-- **Unpushed on `main`:** one doc-only commit (`ffb1ff0`, "mark Phase 2b deployed") — push was deferred; will fold into the next deploy.
-- **Known dead links in prod:** `/ratgeber` `/kontakt` (built in later phases) — plus `/ueber-mich` until the 2c branch is merged + deployed. Nav `<Link>` prefetch logs harmless console 404s for these.
+- **Known dead links in prod:** `/ratgeber` `/kontakt` still 404 (built in later phases); nav `<Link>` prefetch logs harmless console 404s.
 
-## Resume here
-**First: finish the 2c branch.** Phase 2c is built + verified on `feat/phase2c-video-ueber-mich` but not merged. Merge to `main` (→ auto-deploys; `/ueber-mich` goes live) — confirm with the user before pushing. Then start **Phase 3 — Ratgeber/MDX + SEO** (brainstorm → writing-plans → new branch): article system, ~3 seed articles, metadata/JSON-LD, sitemap.
+## Resume here (Phase 3 — Ratgeber/MDX + SEO)
+Phases 1–2 are done and deployed live. Next: **Phase 3 — Ratgeber/MDX + SEO** (brainstorm → writing-plans → new branch `feat/phase3-…`): MDX article system, ~3 seed articles, per-article metadata + JSON-LD, sitemap. Folds Ratgeber into the nav (`/ratgeber` is currently a dead link).
 
 **Open todos (non-blocking, carry forward):**
 - **Founder copy:** write the real Über-mich story — replace the 4 `[Platzhalter]` bodies + the lead in `src/lib/ueber-mich.ts` / `src/app/ueber-mich/page.tsx`. Same for the 2b German drafts in `src/lib/{leistungen,faq}.ts`; verify the 3 *draft-to-verify* claims (DSGVO-konform, pricing stance, „innerhalb weniger Wochen / in Tagen" timeline).
@@ -33,7 +32,7 @@ A content/SEO marketing site for Vrelo, an AI-automation studio for DACH small b
 
 **Phase 2c reference:** [plan](docs/superpowers/plans/2026-06-04-vrelo-phase2c-video-ueber-mich.md) · [spec](docs/superpowers/specs/2026-06-04-vrelo-phase2c-video-ueber-mich-design.md). `LazyVideo` (`src/components/LazyVideo.tsx`) is the reusable video primitive: `useSyncExternalStore` for hydration-safe reduced-motion (poster `<img>`), IntersectionObserver play/pause, `preload="none"`; layout owned by parents (`StoryBeat`, `MerakClose`). Use `npm start` (not `npm run dev`) for any manual/Playwright check in this environment.
 
-**Phase 2 plans:** ✅ 2a homepage · ✅ 2b Leistungen + FAQ · ✅ 2c video system + Über mich (built + verified on branch; pending merge/deploy).
+**Phase 2 plans:** ✅ 2a homepage · ✅ 2b Leistungen + FAQ · ✅ 2c video system + Über mich (deployed live).
 
 ## Tech stack
 - **Next.js 16** (App Router, Turbopack) · **TypeScript**
@@ -77,7 +76,7 @@ Each phase gets its own branch (`feat/phaseN-...`). Frequent commits; commit mes
 
 ## Roadmap
 1. ✅ **Foundation & design system** — Next.js shell, brand tokens, fonts, BrandWord, Header/Footer, placeholder Home.
-2. ✅ **Core pages** — **2a** homepage *(✅ done, deployed live)*, **2b** Leistungen + FAQ *(✅ done, deployed live)*, **2c** video system + Über mich (4-clip narrative) *(✅ built + verified on branch; pending merge/deploy)*. *Uses the `frontend-design` skill.*
+2. ✅ **Core pages** — **2a** homepage *(✅ done, deployed live)*, **2b** Leistungen + FAQ *(✅ done, deployed live)*, **2c** video system + Über mich (4-clip narrative) *(✅ done, deployed live)*. *Uses the `frontend-design` skill.*
 3. ⬜ **Ratgeber/MDX + SEO** — article system, 3 seed articles, metadata, JSON-LD, sitemap.
 4. ⬜ **Conversion** — contact form, Cal.com scheduler, newsletter (Resend, GDPR double opt-in).
 5. ⬜ **Legal & polish** — Impressum/Datenschutz, video optimization, perf/SEO pass, custom domain (vrelo.de).
