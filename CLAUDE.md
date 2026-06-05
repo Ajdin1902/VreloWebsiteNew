@@ -15,15 +15,15 @@ A content/SEO marketing site for Vrelo, an AI-automation studio for DACH small b
 
 ## Status
 - **Phases 1–2c — DONE**, merged + deployed live. Homepage, `/leistungen`, `/faq`, `/ueber-mich` all resolve in prod. Video system (`LazyVideo` + `public/video/`) shipped; sunset wired into `MerakClose`. Full gate green at 2c (36 tests · tsc · lint · build, 5 routes static).
-- **Phase 3 (Ratgeber/MDX + SEO) — PLANNED, not built yet.** Brainstorm done; spec + a 23-task TDD plan written and committed on branch `feat/phase3-ratgeber-seo`. Implementation pending.
+- **Phase 3 (Ratgeber/MDX + SEO) — BUILT + gate-green on branch `feat/phase3-ratgeber-seo`, not yet merged/deployed.** MDX article system (`next-mdx-remote` + `gray-matter`), 3 draft seed articles (dev-only), auto-wrap BrandWord remark plugin, site-wide JSON-LD, `sitemap.xml` + `robots.txt`, branded OG images (`ImageResponse` + static Fraunces TTF). Full gate green: 74 tests · tsc · lint · build (11 routes). Pending final review → merge to `main`.
 - **Live:** https://vrelo-website.vercel.app · **Repo:** https://github.com/Ajdin1902/VreloWebsiteNew (GitHub↔Vercel connected → push to `main` auto-deploys to production).
-- **Known dead links in prod:** `/ratgeber` and `/kontakt` 404 until their phases ship (`/ratgeber` resolves once Phase 3 deploys). Nav `<Link>` prefetch logs harmless console 404s.
+- **Known dead links in prod:** `/kontakt` 404s until Phase 4 ships. (`/ratgeber` is built on the Phase 3 branch — resolves once merged; ships an **empty** Ratgeber until the founder publishes a seed article.) Nav `<Link>` prefetch logs harmless console 404s.
 
-## Resume here (execute Phase 3)
-Spec + plan for **Phase 3 — Ratgeber/MDX + SEO** are done. **Next: execute the plan** task-by-task (subagent-driven-development), then finishing-a-development-branch → merge `feat/phase3-ratgeber-seo` to `main`.
-- **Plan:** [docs/superpowers/plans/2026-06-04-vrelo-phase3-ratgeber-seo.md](docs/superpowers/plans/2026-06-04-vrelo-phase3-ratgeber-seo.md) — 23 TDD tasks.
-- **Spec:** [docs/superpowers/specs/2026-06-04-vrelo-phase3-ratgeber-seo-design.md](docs/superpowers/specs/2026-06-04-vrelo-phase3-ratgeber-seo-design.md)
-- **Scope:** `content/ratgeber/*.mdx` rendered via `next-mdx-remote`; 3 draft seed articles (dev-only preview — prod ships an empty Ratgeber until the founder sets `draft: false`); auto-wrap remark plugin for „Vrelo“/„Merak“; site-wide JSON-LD; `sitemap.xml` + `robots.txt`; branded OG images. `/ratgeber` is already in `nav.ts` — it goes live when the index page lands.
+## Resume here (Phase 3 built → review, merge, then Phase 4)
+Phase 3 is implemented and gate-green on `feat/phase3-ratgeber-seo` (all 23 plan tasks done, per-task commits). **Next: final code review → finishing-a-development-branch → merge to `main`** (auto-deploys). Then start **Phase 4 — Conversion**.
+- **Plan:** [docs/superpowers/plans/2026-06-04-vrelo-phase3-ratgeber-seo.md](docs/superpowers/plans/2026-06-04-vrelo-phase3-ratgeber-seo.md) · **Spec:** [docs/superpowers/specs/2026-06-04-vrelo-phase3-ratgeber-seo-design.md](docs/superpowers/specs/2026-06-04-vrelo-phase3-ratgeber-seo-design.md)
+- **Before publishing (founder):** the 3 seed articles are `draft: true` (dev-only; prod Ratgeber is empty until one is published via `draft: false`). Verify the drafts first — two anecdotes were reframed as explicitly hypothetical to avoid invented-testimonial exposure (UWG/DSGVO), and the „Flickenteppich” framing in article 3 needs a founder sign-off (used as client-situation diagnosis, not Vrelo self-description).
+- **OG fonts gotcha:** `ImageResponse`/satori needs a **static** TTF (variable fonts crash it) — the static Fraunces lives at `src/app/_og/Fraunces-SemiBold-static.ttf`.
 
 **Open todos (non-blocking, carry forward):**
 - **Founder copy (draft-to-verify):** write the real Über-mich story — replace the 4 `[Platzhalter]` bodies + the lead in `src/lib/ueber-mich.ts` / `src/app/ueber-mich/page.tsx`. Verify the 2b German drafts in `src/lib/{leistungen,faq}.ts` (DSGVO-konform, pricing stance, „innerhalb weniger Wochen / in Tagen“ timeline). Phase 3 adds 3 Ratgeber seed-article drafts to verify before publishing.
@@ -78,13 +78,13 @@ Each phase gets its own branch (`feat/phaseN-...`). Frequent commits; commit mes
 ## Roadmap
 1. ✅ **Foundation & design system** — Next.js shell, brand tokens, fonts, BrandWord, Header/Footer, placeholder Home.
 2. ✅ **Core pages** — 2a homepage · 2b Leistungen + FAQ · 2c video system + Über mich. *(all done, deployed live)*
-3. ⬜ **Ratgeber/MDX + SEO** — article system, 3 seed articles, metadata, JSON-LD, sitemap, OG images. *(spec + plan done; build pending)*
+3. 🔨 **Ratgeber/MDX + SEO** — article system, 3 seed articles, metadata, JSON-LD, sitemap, OG images. *(built + gate-green on branch; pending review + merge)*
 4. ⬜ **Conversion** — contact form, Cal.com scheduler, newsletter (Resend, GDPR double opt-in).
 5. ⬜ **Legal & polish** — Impressum/Datenschutz, perf/SEO pass, custom domain (vrelo-ki.de).
 
 ## Key decisions (locked)
 - German only; personal brand („Ich“); multi-page content/SEO site.
-- German typographic quotes: „…“ = U+201E (open) + U+201C (close) — never English "". Gotcha: the Edit tool can silently downgrade these to ASCII; verify bytes (or write via `fs`) when inserting them.
+- German typographic quotes: „…“ = U+201E (open) + U+201C (close) — never English “". Gotcha: the Edit tool can silently downgrade these to ASCII; verify bytes (or write via `fs`) when inserting them.
 - Sitemap target IA: `/` `/leistungen` `/ueber-mich` `/ratgeber(+[slug])` `/faq` `/kontakt` `/newsletter(+/bestaetigt)` `/impressum` `/datenschutz`. Referenzen folded into Home + Leistungen.
 - Ratgeber: MDX content collection at `content/ratgeber/*.mdx`; drafts are dev-only (404 + excluded from index/sitemap in prod). Future custom domain: **vrelo-ki.de** (centralized in `src/lib/site.ts`).
 - Hero = Direction B (immersive deep-water); rest of site = calm Papier sections; page ends on the *Merak*-Effekt.
