@@ -4,6 +4,8 @@ import { Section } from "@/components/Section";
 import { ClosingCta } from "@/components/ClosingCta";
 import { FaqAccordion } from "@/components/faq/FaqAccordion";
 import { faqGroups } from "@/lib/faq";
+import { JsonLd } from "@/components/JsonLd";
+import { faqPageLd, breadcrumbLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "Häufige Fragen",
@@ -26,6 +28,8 @@ export default function FaqPage() {
         heading="Offene Frage?"
         lead="Schreib mir kurz, was du wissen willst — ich melde mich persönlich."
       />
+      <JsonLd data={faqPageLd()} />
+      <JsonLd data={breadcrumbLd([{ name: "Start", path: "/" }, { name: "FAQ", path: "/faq" }])} />
     </>
   );
 }

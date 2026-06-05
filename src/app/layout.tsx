@@ -2,15 +2,22 @@ import type { Metadata } from "next";
 import { jakarta, fraunces } from "@/lib/fonts";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { siteUrl } from "@/lib/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     default: "Vrelo — Durchdachte Automatisierung für kleine Betriebe",
     template: "%s — Vrelo",
   },
   description:
     "Maßgeschneiderte Automatisierungen für kleine Betriebe. Du gewinnst Zeit, Ruhe und einen freien Kopf zurück.",
+  openGraph: {
+    type: "website",
+    locale: "de_DE",
+    siteName: "Vrelo",
+  },
 };
 
 export default function RootLayout({

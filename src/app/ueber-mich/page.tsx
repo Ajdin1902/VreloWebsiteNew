@@ -4,6 +4,8 @@ import { Section } from "@/components/Section";
 import { ClosingCta } from "@/components/ClosingCta";
 import { StoryBeat } from "@/components/ueber-mich/StoryBeat";
 import { storyBeats } from "@/lib/ueber-mich";
+import { JsonLd } from "@/components/JsonLd";
+import { personLd, breadcrumbLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "Über mich",
@@ -33,6 +35,8 @@ export default function UeberMichPage() {
         heading="Lern mich unverbindlich kennen."
         lead="Erzähl mir, was dich täglich Zeit kostet — ich zeige dir ehrlich, ob und wie ich helfen kann."
       />
+      <JsonLd data={personLd()} />
+      <JsonLd data={breadcrumbLd([{ name: "Start", path: "/" }, { name: "Über mich", path: "/ueber-mich" }])} />
     </>
   );
 }
