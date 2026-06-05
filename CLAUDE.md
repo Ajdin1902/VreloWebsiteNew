@@ -14,16 +14,26 @@ Project memory for the **Vrelo** marketing website. Read this first; it links ou
 A content/SEO marketing site for Vrelo, an AI-automation studio for DACH small businesses. Framed as a **personal brand** (first-person „Ich“). Primary goal: convert visitors to a booked call (scheduler) or contact form; secondary: organic search via a German Ratgeber (blog) + a newsletter.
 
 ## Status
-- **Phases 1–2c — DONE**, merged + deployed live. Homepage, `/leistungen`, `/faq`, `/ueber-mich` all resolve in prod. Video system (`LazyVideo` + `public/video/`) shipped; sunset wired into `MerakClose`. Full gate green at 2c (36 tests · tsc · lint · build, 5 routes static).
-- **Phase 3 (Ratgeber/MDX + SEO) — BUILT + gate-green on branch `feat/phase3-ratgeber-seo`, not yet merged/deployed.** MDX article system (`next-mdx-remote` + `gray-matter`), 3 draft seed articles (dev-only), auto-wrap BrandWord remark plugin, site-wide JSON-LD, `sitemap.xml` + `robots.txt`, branded OG images (`ImageResponse` + static Fraunces TTF). Full gate green: 74 tests · tsc · lint · build (11 routes). Pending final review → merge to `main`.
+- **Phases 1–3 — DONE**, merged + deployed live. Homepage, `/leistungen`, `/faq`, `/ueber-mich`, `/ratgeber` (empty until a seed article is published), `sitemap.xml` + `robots.txt`, site-wide JSON-LD, branded OG images all resolve in prod. Video system (`LazyVideo` + `public/video/`) shipped; sunset wired into `MerakClose`. Phase 3 (MDX Ratgeber via `next-mdx-remote` + `gray-matter`, auto-wrap BrandWord remark plugin) merged via `e254b37`.
+- **Phase 4a (Kontakt) — BUILT + gate-green on branch `feat/phase4a-kontakt`, not yet merged/deployed.** Consent-gated Cal.com scheduler (`@calcom/embed-react`, click-to-load) + contact form (Server Action → Resend) with honeypot + time-trap spam guards; pure tested core in `src/lib/contact.ts` (`evaluateSubmission` decision). Config-driven: form → `mailto` and scheduler → placeholder when env unset. Minimal German **Impressum + Datenschutzerklärung** drafts (`src/lib/legal/`) so collecting PII is lawful. Full gate green: 100 tests · tsc · lint · build (12 routes static). Pending final review → merge to `main`.
 - **Live:** https://vrelo-website.vercel.app · **Repo:** https://github.com/Ajdin1902/VreloWebsiteNew (GitHub↔Vercel connected → push to `main` auto-deploys to production).
-- **Known dead links in prod:** `/kontakt` 404s until Phase 4 ships. (`/ratgeber` is built on the Phase 3 branch — resolves once merged; ships an **empty** Ratgeber until the founder publishes a seed article.) Nav `<Link>` prefetch logs harmless console 404s.
+- **Known dead links in prod:** `/kontakt` `/impressum` `/datenschutz` 404 until Phase 4a merges (built on `feat/phase4a-kontakt`; resolve once merged). Nav `<Link>` prefetch logs harmless console 404s.
 
-## Resume here (Phase 3 built → review, merge, then Phase 4)
-Phase 3 is implemented and gate-green on `feat/phase3-ratgeber-seo` (all 23 plan tasks done, per-task commits). **Next: final code review → finishing-a-development-branch → merge to `main`** (auto-deploys). Then start **Phase 4 — Conversion**.
-- **Plan:** [docs/superpowers/plans/2026-06-04-vrelo-phase3-ratgeber-seo.md](docs/superpowers/plans/2026-06-04-vrelo-phase3-ratgeber-seo.md) · **Spec:** [docs/superpowers/specs/2026-06-04-vrelo-phase3-ratgeber-seo-design.md](docs/superpowers/specs/2026-06-04-vrelo-phase3-ratgeber-seo-design.md)
-- **Before publishing (founder):** the 3 seed articles are `draft: true` (dev-only; prod Ratgeber is empty until one is published via `draft: false`). Verify the drafts first — two anecdotes were reframed as explicitly hypothetical to avoid invented-testimonial exposure (UWG/DSGVO), and the „Flickenteppich” framing in article 3 needs a founder sign-off (used as client-situation diagnosis, not Vrelo self-description).
+## Resume here (Phase 4a built → review, merge, then Phase 4b)
+Phase 4a is implemented and gate-green on `feat/phase4a-kontakt` (all 13 plan tasks done, per-task commits). **Next: final code review → finishing-a-development-branch → merge to `main`** (auto-deploys). Then start **Phase 4b — Newsletter** (signup + Resend Audience + GDPR double opt-in + email templates).
+
+**Next steps (do in order — continue here):**
+1. **Final code review** of the Phase 4a diff (`git diff main...feat/phase4a-kontakt`) — focus: Server Action spam/validation branches, no secrets committed (only `.env.example`), a11y on `ContactForm`, consent-gate keeps Cal.com from loading pre-click, legal drafts read sanely.
+2. **finishing-a-development-branch** → merge `feat/phase4a-kontakt` into `main` (push auto-deploys to prod). After merge, `/kontakt` `/impressum` `/datenschutz` resolve live.
+3. **Set the four env vars in Vercel** (then redeploy) to flip form/scheduler from graceful-fallback to live: `RESEND_API_KEY`, `CONTACT_FROM` (verified Resend domain), `CONTACT_TO`, `NEXT_PUBLIC_CAL_LINK`. Without them the page is safe but shows `mailto` + scheduler placeholder.
+4. **Founder/lawyer:** verify Impressum + Datenschutz drafts (replace `[Platzhalter]`) before relying on them.
+5. **Then Phase 4b — Newsletter:** brainstorm → spec → plan → subagent-driven build (Resend Audience + double opt-in + `/newsletter` + `/newsletter/bestaetigt` + email templates; fill the Datenschutz „Newsletter“ placeholder section).
+6. **End-stage (after 4b + Phase 5):** run the frontend design-skills polish pass — see [Ideas.md](Ideas.md) #6 (`frontend_design_kowalski` + `design-taste-frontend` + `impeccable`).
+
+- **Plan:** [docs/superpowers/plans/2026-06-05-vrelo-phase4a-kontakt.md](docs/superpowers/plans/2026-06-05-vrelo-phase4a-kontakt.md) · **Spec:** [docs/superpowers/specs/2026-06-05-vrelo-phase4a-kontakt-design.md](docs/superpowers/specs/2026-06-05-vrelo-phase4a-kontakt-design.md)
+- **Before go-live (founder/lawyer):** the Impressum + Datenschutz are **drafts with `[Platzhalter]`** — verify before relying on them. Set the four env vars in Vercel to switch form/scheduler from graceful-fallback to live: `RESEND_API_KEY`, `CONTACT_FROM` (verified Resend domain), `CONTACT_TO`, `NEXT_PUBLIC_CAL_LINK`.
 - **OG fonts gotcha:** `ImageResponse`/satori needs a **static** TTF (variable fonts crash it) — the static Fraunces lives at `src/app/_og/Fraunces-SemiBold-static.ttf`.
+- **Resend mock gotcha (tests):** under Vitest v4 a `vi.mock("resend")` must use a constructable `function`/`class` (an arrow implementation is not a constructor and `new Resend()` throws) — see `src/app/kontakt/actions.test.ts`.
 
 **Open todos (non-blocking, carry forward):**
 - **Founder copy (draft-to-verify):** write the real Über-mich story — replace the 4 `[Platzhalter]` bodies + the lead in `src/lib/ueber-mich.ts` / `src/app/ueber-mich/page.tsx`. Verify the 2b German drafts in `src/lib/{leistungen,faq}.ts` (DSGVO-konform, pricing stance, „innerhalb weniger Wochen / in Tagen“ timeline). Phase 3 adds 3 Ratgeber seed-article drafts to verify before publishing.
@@ -40,7 +50,7 @@ Phase 3 is implemented and gate-green on `feat/phase3-ratgeber-seo` (all 23 plan
 - **Fonts:** self-hosted via `next/font` (`src/lib/fonts.ts`) — Plus Jakarta Sans + Fraunces
 - **Tests:** Vitest + React Testing Library (jsdom)
 - **Deploy:** Vercel (project `ajdin42-7733s-projects/vrelo-website`)
-- **Planned:** MDX via `next-mdx-remote` + `gray-matter` for Ratgeber (Phase 3) · Resend (contact form + newsletter, Phase 4) · Cal.com scheduler (Phase 4)
+- **Conversion (Phase 4a):** `resend` (contact-form email) · `@calcom/embed-react` (consent-gated scheduler). Env documented in `.env.example` (real values in Vercel). Newsletter (Resend Audience + double opt-in) is Phase 4b.
 
 ## Project structure
 ```
@@ -78,9 +88,9 @@ Each phase gets its own branch (`feat/phaseN-...`). Frequent commits; commit mes
 ## Roadmap
 1. ✅ **Foundation & design system** — Next.js shell, brand tokens, fonts, BrandWord, Header/Footer, placeholder Home.
 2. ✅ **Core pages** — 2a homepage · 2b Leistungen + FAQ · 2c video system + Über mich. *(all done, deployed live)*
-3. 🔨 **Ratgeber/MDX + SEO** — article system, 3 seed articles, metadata, JSON-LD, sitemap, OG images. *(built + gate-green on branch; pending review + merge)*
-4. ⬜ **Conversion** — contact form, Cal.com scheduler, newsletter (Resend, GDPR double opt-in).
-5. ⬜ **Legal & polish** — Impressum/Datenschutz, perf/SEO pass, custom domain (vrelo-ki.de).
+3. ✅ **Ratgeber/MDX + SEO** — article system, 3 seed articles, metadata, JSON-LD, sitemap, OG images. *(merged + deployed live)*
+4. 🔨 **Conversion** — 4a Kontakt (contact form + Cal.com scheduler + minimal Impressum/Datenschutz drafts) *(built + gate-green on branch; pending review + merge)* · 4b Newsletter (Resend Audience, GDPR double opt-in) *(next)*.
+5. ⬜ **Legal & polish** — finalize Impressum/Datenschutz (founder/lawyer sign-off), perf/SEO pass, custom domain (vrelo-ki.de).
 
 ## Key decisions (locked)
 - German only; personal brand („Ich“); multi-page content/SEO site.

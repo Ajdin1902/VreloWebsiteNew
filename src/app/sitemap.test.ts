@@ -11,8 +11,13 @@ describe("sitemap", () => {
     expect(urls).toContain(`${siteUrl}/ueber-mich`);
     expect(urls).toContain(`${siteUrl}/faq`);
     expect(urls).toContain(`${siteUrl}/ratgeber`);
-    expect(urls).not.toContain(`${siteUrl}/kontakt`);
-    expect(urls).not.toContain(`${siteUrl}/impressum`);
+  });
+
+  it("includes the new Kontakt + legal routes", () => {
+    const urls = sitemap().map((e) => e.url);
+    expect(urls).toContain(`${siteUrl}/kontakt`);
+    expect(urls).toContain(`${siteUrl}/impressum`);
+    expect(urls).toContain(`${siteUrl}/datenschutz`);
   });
 
   it("never lists draft articles", () => {

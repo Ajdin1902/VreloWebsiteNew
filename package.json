@@ -12,11 +12,13 @@
     "optimize:videos": "node scripts/optimize-videos.mjs"
   },
   "dependencies": {
+    "@calcom/embed-react": "^1.5.3",
     "gray-matter": "^4.0.3",
     "next": "16.2.7",
     "next-mdx-remote": "^6.0.0",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "resend": "^6.12.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
