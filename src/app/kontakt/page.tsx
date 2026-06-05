@@ -37,16 +37,20 @@ export default function KontaktPage() {
           <div className="mt-6">
             {configured ? (
               <ContactForm />
-            ) : (
+            ) : to ? (
               <p className="text-tinte">
                 Schreib mir direkt:{" "}
                 <a
-                  href={`mailto:${to ?? ""}`}
+                  href={`mailto:${to}`}
                   className="text-vrelo-petrol underline underline-offset-2"
                 >
-                  {to ?? "per E-Mail"}
+                  {to}
                 </a>
                 .
+              </p>
+            ) : (
+              <p className="text-tinte">
+                Buch dir oben ein Gespräch — oder ruf mich an. Das Formular schalte ich in Kürze frei.
               </p>
             )}
           </div>

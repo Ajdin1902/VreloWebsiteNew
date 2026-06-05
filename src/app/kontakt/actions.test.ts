@@ -59,4 +59,20 @@ describe("sendContactMessage", () => {
     const r = await sendContactMessage(initial, fd(good));
     expect(r.status).toBe("error");
   });
+
+  it("returns error when Resend resolves with an error object (does not throw)", async () => {
+    send.mockResolvedValueOnce({ data: null, error: { name: "validation_error", message: "bad" } });
+    const r = await sendContactMessage(initial, fd(good));
+    expect(r.status).toBe("error");
+    expect(send).toHaveBeenCalledTimes(1);
+  });
+
+  it("preserves the submitted values on an invalid submission", async () => {
+    const r = await sendContactMessage(initial, fd({ ...good, email: "nope", name: "Aydin" }));
+    expect(r.status).toBe("invalid");
+    if (r.status === "invalid") {
+      expect(r.values.email).toBe("nope");
+      expect(r.values.name).toBe("Aydin");
+    }
+  });
 });

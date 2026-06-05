@@ -18,6 +18,9 @@ export function ContactForm() {
   }
 
   const errors = state.status === "invalid" ? state.errors : {};
+  // Repopulate fields after an error (React 19 resets the form on submit).
+  const values =
+    state.status === "invalid" || state.status === "error" ? state.values : undefined;
   const fieldClass =
     "mt-1 w-full rounded-md border border-faden bg-papier px-3 py-2 text-tinte focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber";
 
@@ -36,38 +39,40 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="cf-name" className="text-sm font-medium text-tiefes-wasser">Name</label>
-        <input id="cf-name" name="name" type="text" className={fieldClass}
+        <input id="cf-name" name="name" type="text" className={fieldClass} defaultValue={values?.name}
           aria-invalid={!!errors.name} aria-describedby={errors.name ? "cf-name-err" : undefined} />
         {errors.name && <p id="cf-name-err" className="mt-1 text-sm text-ember">{errors.name}</p>}
       </div>
 
       <div>
         <label htmlFor="cf-email" className="text-sm font-medium text-tiefes-wasser">E-Mail</label>
-        <input id="cf-email" name="email" type="email" className={fieldClass}
+        <input id="cf-email" name="email" type="email" className={fieldClass} defaultValue={values?.email}
           aria-invalid={!!errors.email} aria-describedby={errors.email ? "cf-email-err" : undefined} />
         {errors.email && <p id="cf-email-err" className="mt-1 text-sm text-ember">{errors.email}</p>}
       </div>
 
       <div>
         <label htmlFor="cf-message" className="text-sm font-medium text-tiefes-wasser">Was frisst gerade deine Zeit?</label>
-        <textarea id="cf-message" name="message" rows={5} className={fieldClass}
+        <textarea id="cf-message" name="message" rows={5} className={fieldClass} defaultValue={values?.message}
           aria-invalid={!!errors.message} aria-describedby={errors.message ? "cf-message-err" : undefined} />
         {errors.message && <p id="cf-message-err" className="mt-1 text-sm text-ember">{errors.message}</p>}
       </div>
 
       <div>
         <label htmlFor="cf-company" className="text-sm font-medium text-tiefes-wasser">Betrieb <span className="text-stumm">(optional)</span></label>
-        <input id="cf-company" name="company" type="text" className={fieldClass} />
+        <input id="cf-company" name="company" type="text" className={fieldClass} defaultValue={values?.company} />
       </div>
 
       <div>
         <label className="flex items-start gap-2 text-sm text-tinte">
-          <input type="checkbox" name="consent" className="mt-1" aria-invalid={!!errors.consent} />
+          <input type="checkbox" name="consent" className="mt-1"
+            aria-invalid={!!errors.consent}
+            aria-describedby={errors.consent ? "cf-consent-err" : undefined} />
           <span>
             Ich habe die <Link href="/datenschutz" className="text-vrelo-petrol underline underline-offset-2">Datenschutzerklärung</Link> gelesen und bin einverstanden.
           </span>
         </label>
-        {errors.consent && <p className="mt-1 text-sm text-ember">{errors.consent}</p>}
+        {errors.consent && <p id="cf-consent-err" className="mt-1 text-sm text-ember">{errors.consent}</p>}
       </div>
 
       {state.status === "error" && <p className="text-sm text-ember">{state.message}</p>}
