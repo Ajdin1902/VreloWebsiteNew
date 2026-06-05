@@ -26,9 +26,12 @@ Phase 4a is merged to `main` and deployed. **Next development phase: Phase 4b �
 1. **Phase 4b — Newsletter:** brainstorm → spec → plan → subagent-driven build (Resend Audience + double opt-in + `/newsletter` + `/newsletter/bestaetigt` + email templates; fill the Datenschutz „Newsletter“ placeholder section in `src/lib/legal/datenschutz.ts`).
 2. **End-stage (after 4b + Phase 5):** run the frontend design-skills polish pass — see [Ideas.md](Ideas.md) #6 (`frontend_design_kowalski` + `design-taste-frontend` + `impeccable`).
 
-**Phase 4a go-live follow-ups (not code — owner action, non-blocking):**
-- **Set the four env vars in Vercel** (then redeploy) to flip form/scheduler from graceful-fallback to live: `RESEND_API_KEY`, `CONTACT_FROM` (verified Resend domain), `CONTACT_TO`, `NEXT_PUBLIC_CAL_LINK`. Without them `/kontakt` is safe but shows `mailto` + scheduler placeholder.
-- **Founder/lawyer:** verify the Impressum + Datenschutz **drafts** (replace `[Platzhalter]`) before relying on them. Also make the EU OS-Plattform URL in `src/lib/legal/impressum.ts` a real clickable link when going live (the `LegalPage` renderer currently emits plain `<p>` text only — needs a richer body type for inline links).
+**Phase 4a go-live follow-ups — TODO (not code — owner action, non-blocking):**
+- [ ] **Set the four env vars in Vercel** (then redeploy) to flip form/scheduler from graceful-fallback to live: `RESEND_API_KEY`, `CONTACT_FROM` (verified Resend domain), `CONTACT_TO`, `NEXT_PUBLIC_CAL_LINK`. Without them `/kontakt` is safe but shows `mailto` + scheduler placeholder.
+- [ ] **Verify a Resend sending domain** (SPF/DKIM) for `CONTACT_FROM` — until then the form is configured-but-won't-send; the `mailto` fallback covers the gap. Ties to **vrelo-ki.de** (Phase 5).
+- [ ] **Provide the Cal.com link** (`NEXT_PUBLIC_CAL_LINK`, e.g. `vrelo/kennenlernen`) — until set the scheduler shows the „folgt in Kürze“ placeholder.
+- [ ] **Founder/lawyer:** verify the Impressum + Datenschutz **drafts** (replace every `[Platzhalter]`) before relying on them.
+- [ ] **At legal go-live:** make the EU OS-Plattform URL in `src/lib/legal/impressum.ts` a real clickable link (the `LegalPage` renderer currently emits plain `<p>` text only — needs a richer body type for inline links).
 
 - **Phase 4a plan/spec (reference):** [docs/superpowers/plans/2026-06-05-vrelo-phase4a-kontakt.md](docs/superpowers/plans/2026-06-05-vrelo-phase4a-kontakt.md) · [docs/superpowers/specs/2026-06-05-vrelo-phase4a-kontakt-design.md](docs/superpowers/specs/2026-06-05-vrelo-phase4a-kontakt-design.md)
 - **OG fonts gotcha:** `ImageResponse`/satori needs a **static** TTF (variable fonts crash it) — the static Fraunces lives at `src/app/_og/Fraunces-SemiBold-static.ttf`.
