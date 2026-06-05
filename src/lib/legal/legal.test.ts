@@ -20,4 +20,13 @@ describe("legal content", () => {
     expect(all).toContain("[Platzhalter");
     expect(all).toMatch(/Newsletter/i);
   });
+
+  it("datenschutz Newsletter section describes double opt-in, Resend and Widerruf (no placeholder)", () => {
+    const nl = datenschutz.sections.find((s) => /Newsletter/i.test(s.heading));
+    expect(nl).toBeDefined();
+    expect(nl!.body).not.toContain("[Platzhalter");
+    expect(nl!.body).toMatch(/Double-Opt-In|Bestätigung/i);
+    expect(nl!.body).toMatch(/Resend/);
+    expect(nl!.body).toMatch(/Widerruf|abbestellen|Abmeldelink/i);
+  });
 });
