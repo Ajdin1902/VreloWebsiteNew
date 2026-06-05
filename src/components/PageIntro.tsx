@@ -7,7 +7,7 @@ export function PageIntro({
 }: {
   eyebrow?: string;
   title: string;
-  lead: string;
+  lead?: string;
 }) {
   return (
     <Section tone="paper">
@@ -17,7 +17,7 @@ export function PageIntro({
       <h1 className="mt-3 max-w-3xl text-4xl font-semibold text-tiefes-wasser md:text-5xl">
         {title}
       </h1>
-      <p className="mt-5 max-w-2xl text-lg text-tinte">{lead}</p>
+      {lead ? <p className="mt-5 max-w-2xl text-lg text-tinte">{lead}</p> : null}
     </Section>
   );
 }

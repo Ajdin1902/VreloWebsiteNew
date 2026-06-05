@@ -15,16 +15,20 @@ A content/SEO marketing site for Vrelo, an AI-automation studio for DACH small b
 
 ## Status
 - **Phases 1–3 — DONE**, merged + deployed live. Homepage, `/leistungen`, `/faq`, `/ueber-mich`, `/ratgeber` (empty until a seed article is published), `sitemap.xml` + `robots.txt`, site-wide JSON-LD, branded OG images all resolve in prod. Video system (`LazyVideo` + `public/video/`) shipped; sunset wired into `MerakClose`. Phase 3 (MDX Ratgeber via `next-mdx-remote` + `gray-matter`, auto-wrap BrandWord remark plugin) merged via `e254b37`.
-- **Phase 4a (Kontakt) — DONE, merged + deployed live** (merge `067b271`). Consent-gated Cal.com scheduler (`@calcom/embed-react`, click-to-load) + contact form (Server Action → Resend) with honeypot + time-trap spam guards; pure tested core in `src/lib/contact.ts` (`evaluateSubmission` decision). Config-driven: form → `mailto` and scheduler → placeholder when env unset (safe until the four Vercel env vars are set). Minimal German **Impressum + Datenschutzerklärung** drafts (`src/lib/legal/`, with `[Platzhalter]`) so collecting PII is lawful. Final review fixes applied (Resend `{error}` handling, form-value preservation, consent a11y). Full gate green: 102 tests · tsc · lint · build (12 routes static).
+- **Phase 4a (Kontakt) — DONE, merged + deployed live** (merge `067b271`). Consent-gated Cal.com scheduler (`@calcom/embed-react`, click-to-load) + contact form (Server Action → Resend) with honeypot + time-trap spam guards; pure tested core in `src/lib/contact.ts` (`evaluateSubmission` decision). Config-driven: form → `mailto` and scheduler → placeholder when env unset (safe until the four Vercel env vars are set). Minimal German **Impressum + Datenschutzerklärung** drafts (`src/lib/legal/`, with `[Platzhalter]`) so collecting PII is lawful. Final review fixes applied (Resend `{error}` handling, form-value preservation, consent a11y).
+- **Phase 4b (Newsletter) — BUILT + gate-green on branch `feat/phase4b-newsletter`, not yet merged/deployed.** GDPR double opt-in via a **stateless HMAC-signed token** (no DB — the token is the pending state); `/newsletter` page + compact Footer form (Server Action → Resend confirm email) → `/newsletter/bestaetigt` verifies the token and adds the contact to a **Resend Audience** (`contacts.create`). Pure tested core in `src/lib/newsletter.ts` (`signToken`/`verifyToken`/`evaluateSignup`); branded confirm email in `src/lib/email/newsletter-confirm.ts`. Config-driven graceful degradation when env unset. Datenschutz „Newsletter“ section filled. Full gate green: 133 tests · tsc · lint · build (`/newsletter` static, `/newsletter/bestaetigt` dynamic).
 - **Live:** https://vrelo-website.vercel.app · **Repo:** https://github.com/Ajdin1902/VreloWebsiteNew (GitHub↔Vercel connected → push to `main` auto-deploys to production).
-- **Nav note:** `<Link>` prefetch can log harmless console 404s for not-yet-built routes (e.g. `/newsletter` until 4b).
+- **Known dead links in prod:** `/newsletter` `/newsletter/bestaetigt` 404 until Phase 4b merges. Nav `<Link>` prefetch logs harmless console 404s.
 
-## Resume here (Phase 4a merged → next: Phase 4b Newsletter)
-Phase 4a is merged to `main` and deployed. **Next development phase: Phase 4b — Newsletter** (signup + Resend Audience + GDPR double opt-in + email templates) via the usual brainstorm → spec → plan → subagent-driven build cycle.
+## Resume here (Phase 4b built → review, merge, then Phase 5)
+Phase 4b is implemented and gate-green on `feat/phase4b-newsletter` (all 15 plan tasks done, per-task commits). **Next: final code review → finishing-a-development-branch → merge to `main`** (auto-deploys). Then start **Phase 5 — Legal & polish + custom domain**.
 
 **Next steps (do in order — continue here):**
-1. **Phase 4b — Newsletter:** brainstorm → spec → plan → subagent-driven build (Resend Audience + double opt-in + `/newsletter` + `/newsletter/bestaetigt` + email templates; fill the Datenschutz „Newsletter“ placeholder section in `src/lib/legal/datenschutz.ts`).
-2. **End-stage (after 4b + Phase 5):** run the frontend design-skills polish pass — see [Ideas.md](Ideas.md) #6 (`frontend_design_kowalski` + `design-taste-frontend` + `impeccable`).
+1. **Final code review** of the Phase 4b diff (`git diff main...feat/phase4b-newsletter`) — focus: token sign/verify (tamper/expiry), Server Action + confirm spam/validation/Resend-error branches, no secrets committed, a11y on `NewsletterForm`, privacy (always-same „check inbox“ message), Datenschutz newsletter text reads sanely.
+2. **finishing-a-development-branch** → merge `feat/phase4b-newsletter` into `main` (push auto-deploys). After merge, `/newsletter` + `/newsletter/bestaetigt` resolve live.
+3. **Phase 4b Resend setup (owner, see todos below):** create the Resend Audience → `NEWSLETTER_AUDIENCE_ID`; set `NEWSLETTER_SECRET`; verify the sending domain. Then the newsletter flips from graceful-fallback to live. Sending issues = Resend Broadcasts.
+4. **Then Phase 5 — Legal & polish:** finalize Impressum/Datenschutz (founder/lawyer sign-off), perf/SEO pass, custom domain **vrelo-ki.de** (swap `siteUrl` in `src/lib/site.ts`).
+5. **End-stage (after Phase 5):** run the frontend design-skills polish pass — see [Ideas.md](Ideas.md) #6 (`frontend_design_kowalski` + `design-taste-frontend` + `impeccable`).
 
 **Phase 4a go-live follow-ups — TODO (not code — owner action, non-blocking):**
 - [ ] **Set the four env vars in Vercel** (then redeploy) to flip form/scheduler from graceful-fallback to live: `RESEND_API_KEY`, `CONTACT_FROM` (verified Resend domain), `CONTACT_TO`, `NEXT_PUBLIC_CAL_LINK`. Without them `/kontakt` is safe but shows `mailto` + scheduler placeholder.
@@ -33,7 +37,14 @@ Phase 4a is merged to `main` and deployed. **Next development phase: Phase 4b �
 - [ ] **Founder/lawyer:** verify the Impressum + Datenschutz **drafts** (replace every `[Platzhalter]`) before relying on them.
 - [ ] **At legal go-live:** make the EU OS-Plattform URL in `src/lib/legal/impressum.ts` a real clickable link (the `LegalPage` renderer currently emits plain `<p>` text only — needs a richer body type for inline links).
 
+**Phase 4b go-live / Resend setup — TODO (owner action; the newsletter signup pipeline is code, but Resend itself is configured + operated by you):**
+- [ ] **Create a Resend Audience** in the Resend dashboard → copy its id into the `NEWSLETTER_AUDIENCE_ID` env var in Vercel. This Audience *is* the stored subscriber list (no DB on our side; we only `contacts.create` confirmed emails into it).
+- [ ] **Set `NEWSLETTER_SECRET`** in Vercel (a long random string; signs the double-opt-in token). Rotating it invalidates outstanding unconfirmed links.
+- [ ] **Verify the Resend sending domain** for `CONTACT_FROM` (reused as the newsletter sender) so the confirmation email actually delivers — same SPF/DKIM step as 4a; ties to **vrelo-ki.de**.
+- [ ] **Sending newsletters is NOT built in 4b** — 4b only collects + confirms subscribers into the Audience. To send an issue, compose a **Resend Broadcast** (Resend dashboard or Broadcasts API) targeting the Audience; Resend adds the managed unsubscribe link automatically (flips the contact's `unsubscribed` flag). A future phase can automate Broadcasts if wanted.
+
 - **Phase 4a plan/spec (reference):** [docs/superpowers/plans/2026-06-05-vrelo-phase4a-kontakt.md](docs/superpowers/plans/2026-06-05-vrelo-phase4a-kontakt.md) · [docs/superpowers/specs/2026-06-05-vrelo-phase4a-kontakt-design.md](docs/superpowers/specs/2026-06-05-vrelo-phase4a-kontakt-design.md)
+- **Phase 4b plan/spec (reference):** spec done → [docs/superpowers/specs/2026-06-05-vrelo-phase4b-newsletter-design.md](docs/superpowers/specs/2026-06-05-vrelo-phase4b-newsletter-design.md); plan is the next step (writing-plans).
 - **OG fonts gotcha:** `ImageResponse`/satori needs a **static** TTF (variable fonts crash it) — the static Fraunces lives at `src/app/_og/Fraunces-SemiBold-static.ttf`.
 - **Resend mock gotcha (tests):** under Vitest v4 a `vi.mock("resend")` must use a constructable `function`/`class` (an arrow implementation is not a constructor and `new Resend()` throws) — see `src/app/kontakt/actions.test.ts`.
 
@@ -91,7 +102,7 @@ Each phase gets its own branch (`feat/phaseN-...`). Frequent commits; commit mes
 1. ✅ **Foundation & design system** — Next.js shell, brand tokens, fonts, BrandWord, Header/Footer, placeholder Home.
 2. ✅ **Core pages** — 2a homepage · 2b Leistungen + FAQ · 2c video system + Über mich. *(all done, deployed live)*
 3. ✅ **Ratgeber/MDX + SEO** — article system, 3 seed articles, metadata, JSON-LD, sitemap, OG images. *(merged + deployed live)*
-4. 🔨 **Conversion** — 4a Kontakt (contact form + Cal.com scheduler + minimal Impressum/Datenschutz drafts) *(✅ merged + deployed live)* · 4b Newsletter (Resend Audience, GDPR double opt-in) *(next)*.
+4. 🔨 **Conversion** — 4a Kontakt (contact form + Cal.com scheduler + minimal Impressum/Datenschutz drafts) *(✅ merged + deployed live)* · 4b Newsletter (stateless double opt-in + Resend Audience) *(built + gate-green on branch; pending review + merge)*.
 5. ⬜ **Legal & polish** — finalize Impressum/Datenschutz (founder/lawyer sign-off), perf/SEO pass, custom domain (vrelo-ki.de).
 
 ## Key decisions (locked)

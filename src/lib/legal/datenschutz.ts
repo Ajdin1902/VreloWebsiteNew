@@ -27,7 +27,7 @@ export const datenschutz: LegalDoc = {
     },
     {
       heading: "Newsletter",
-      body: "[Platzhalter: wird mit dem Newsletter ergänzt.]",
+      body: "Du kannst dich für meinen Newsletter anmelden. Dabei verarbeite ich deine E-Mail-Adresse, um dir die Inhalte zuzusenden. Die Anmeldung erfolgt im Double-Opt-In-Verfahren: Nach der Eingabe erhältst du eine E-Mail mit einem Bestätigungslink; erst nach deiner Bestätigung wird deine Adresse in die Empfängerliste aufgenommen. Vorher wird nichts gespeichert. Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Der Versand und die Verwaltung der Empfängerliste erfolgen über den Dienstleister Resend (Auftragsverarbeiter). Du kannst deine Einwilligung jederzeit widerrufen — über den Abmeldelink in jeder Newsletter-E-Mail. Danach wird deine Adresse aus der Empfängerliste entfernt.",
     },
     {
       heading: "Deine Rechte (Betroffenenrechte)",
