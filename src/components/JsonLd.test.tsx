@@ -10,4 +10,15 @@ describe("JsonLd", () => {
     expect(script).not.toBeNull();
     expect(JSON.parse(script!.innerHTML)).toEqual({ "@type": "Thing", name: "X" });
   });
+
+  it("escapes '<' so a </script> in the data cannot break out of the tag", () => {
+    const data = { "@type": "Article", headline: "Achtung </script><img src=x>" };
+    const { container } = render(<JsonLd data={data} />);
+    const script = container.querySelector('script[type="application/ld+json"]')!;
+    // raw markup must not contain a literal closing-script sequence
+    expect(script.innerHTML).not.toContain("</script>");
+    expect(script.innerHTML).toContain("\\u003c");
+    // and it still parses back to the original value (< -> <)
+    expect(JSON.parse(script.innerHTML)).toEqual(data);
+  });
 });
