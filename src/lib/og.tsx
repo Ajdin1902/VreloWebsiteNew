@@ -5,7 +5,8 @@ import { ImageResponse } from "next/og";
 export const OG_SIZE = { width: 1200, height: 630 };
 
 function frauncesFont(): Buffer {
-  return fs.readFileSync(path.join(process.cwd(), "src", "app", "_og", "Fraunces-SemiBold.ttf"));
+  // Static (non-variable) TTF required by satori — variable fonts are not supported.
+  return fs.readFileSync(path.join(process.cwd(), "src", "app", "_og", "Fraunces-SemiBold-static.ttf"));
 }
 
 export function renderOg(opts: { eyebrow: string; title: string }) {
