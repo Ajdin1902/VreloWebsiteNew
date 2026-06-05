@@ -33,7 +33,14 @@ Phase 4a is merged to `main` and deployed. **Next development phase: Phase 4b �
 - [ ] **Founder/lawyer:** verify the Impressum + Datenschutz **drafts** (replace every `[Platzhalter]`) before relying on them.
 - [ ] **At legal go-live:** make the EU OS-Plattform URL in `src/lib/legal/impressum.ts` a real clickable link (the `LegalPage` renderer currently emits plain `<p>` text only — needs a richer body type for inline links).
 
+**Phase 4b go-live / Resend setup — TODO (owner action; the newsletter signup pipeline is code, but Resend itself is configured + operated by you):**
+- [ ] **Create a Resend Audience** in the Resend dashboard → copy its id into the `NEWSLETTER_AUDIENCE_ID` env var in Vercel. This Audience *is* the stored subscriber list (no DB on our side; we only `contacts.create` confirmed emails into it).
+- [ ] **Set `NEWSLETTER_SECRET`** in Vercel (a long random string; signs the double-opt-in token). Rotating it invalidates outstanding unconfirmed links.
+- [ ] **Verify the Resend sending domain** for `CONTACT_FROM` (reused as the newsletter sender) so the confirmation email actually delivers — same SPF/DKIM step as 4a; ties to **vrelo-ki.de**.
+- [ ] **Sending newsletters is NOT built in 4b** — 4b only collects + confirms subscribers into the Audience. To send an issue, compose a **Resend Broadcast** (Resend dashboard or Broadcasts API) targeting the Audience; Resend adds the managed unsubscribe link automatically (flips the contact's `unsubscribed` flag). A future phase can automate Broadcasts if wanted.
+
 - **Phase 4a plan/spec (reference):** [docs/superpowers/plans/2026-06-05-vrelo-phase4a-kontakt.md](docs/superpowers/plans/2026-06-05-vrelo-phase4a-kontakt.md) · [docs/superpowers/specs/2026-06-05-vrelo-phase4a-kontakt-design.md](docs/superpowers/specs/2026-06-05-vrelo-phase4a-kontakt-design.md)
+- **Phase 4b plan/spec (reference):** spec done → [docs/superpowers/specs/2026-06-05-vrelo-phase4b-newsletter-design.md](docs/superpowers/specs/2026-06-05-vrelo-phase4b-newsletter-design.md); plan is the next step (writing-plans).
 - **OG fonts gotcha:** `ImageResponse`/satori needs a **static** TTF (variable fonts crash it) — the static Fraunces lives at `src/app/_og/Fraunces-SemiBold-static.ttf`.
 - **Resend mock gotcha (tests):** under Vitest v4 a `vi.mock("resend")` must use a constructable `function`/`class` (an arrow implementation is not a constructor and `new Resend()` throws) — see `src/app/kontakt/actions.test.ts`.
 
