@@ -5,6 +5,8 @@ import { ClosingCta } from "@/components/ClosingCta";
 import { LeistungDetail } from "@/components/leistungen/LeistungDetail";
 import { Referenzen } from "@/components/leistungen/Referenzen";
 import { leistungen } from "@/lib/leistungen";
+import { JsonLd } from "@/components/JsonLd";
+import { breadcrumbLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
   title: "Leistungen",
@@ -35,6 +37,7 @@ export default function LeistungenPage() {
         heading="Lass uns deine Quelle bauen."
         lead="Erzähl mir, was dich täglich Zeit kostet — ich zeige dir unverbindlich, was sich automatisieren lässt."
       />
+      <JsonLd data={breadcrumbLd([{ name: "Start", path: "/" }, { name: "Leistungen", path: "/leistungen" }])} />
     </>
   );
 }

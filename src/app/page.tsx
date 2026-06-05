@@ -5,6 +5,8 @@ import { GeschichteTeaser } from "@/components/home/GeschichteTeaser";
 import { Steps } from "@/components/home/Steps";
 import { Proof } from "@/components/home/Proof";
 import { MerakClose } from "@/components/home/MerakClose";
+import { JsonLd } from "@/components/JsonLd";
+import { professionalServiceLd, breadcrumbLd } from "@/lib/jsonld";
 
 export default function Home() {
   return (
@@ -16,6 +18,8 @@ export default function Home() {
       <Steps />
       <Proof />
       <MerakClose />
+      <JsonLd data={professionalServiceLd()} />
+      <JsonLd data={breadcrumbLd([{ name: "Start", path: "/" }])} />
     </>
   );
 }
