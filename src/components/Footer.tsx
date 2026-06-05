@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { navLinks } from "@/lib/nav";
 import { BrandWord } from "@/components/BrandWord";
+import { NewsletterForm } from "@/components/newsletter/NewsletterForm";
 
 export function Footer() {
   return (
@@ -25,10 +26,10 @@ export function Footer() {
             ))}
           </ul>
         </nav>
-        {/* Newsletter signup is added in Phase 4; placeholder slot for now */}
         <div className="text-sm text-stein">
           <p className="mb-2 text-gletscher">Newsletter</p>
-          <p>Automatisierungs-Ideen mit KI — ruhig erklärt. (bald verfügbar)</p>
+          <p className="mb-3">Automatisierungs-Ideen mit KI — ruhig erklärt.</p>
+          <NewsletterForm compact />
         </div>
       </div>
       <div className="border-t border-vrelo-petrol">
