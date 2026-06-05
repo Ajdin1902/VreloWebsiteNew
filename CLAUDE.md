@@ -21,6 +21,15 @@ A content/SEO marketing site for Vrelo, an AI-automation studio for DACH small b
 
 ## Resume here (Phase 4a built → review, merge, then Phase 4b)
 Phase 4a is implemented and gate-green on `feat/phase4a-kontakt` (all 13 plan tasks done, per-task commits). **Next: final code review → finishing-a-development-branch → merge to `main`** (auto-deploys). Then start **Phase 4b — Newsletter** (signup + Resend Audience + GDPR double opt-in + email templates).
+
+**Next steps (do in order — continue here):**
+1. **Final code review** of the Phase 4a diff (`git diff main...feat/phase4a-kontakt`) — focus: Server Action spam/validation branches, no secrets committed (only `.env.example`), a11y on `ContactForm`, consent-gate keeps Cal.com from loading pre-click, legal drafts read sanely.
+2. **finishing-a-development-branch** → merge `feat/phase4a-kontakt` into `main` (push auto-deploys to prod). After merge, `/kontakt` `/impressum` `/datenschutz` resolve live.
+3. **Set the four env vars in Vercel** (then redeploy) to flip form/scheduler from graceful-fallback to live: `RESEND_API_KEY`, `CONTACT_FROM` (verified Resend domain), `CONTACT_TO`, `NEXT_PUBLIC_CAL_LINK`. Without them the page is safe but shows `mailto` + scheduler placeholder.
+4. **Founder/lawyer:** verify Impressum + Datenschutz drafts (replace `[Platzhalter]`) before relying on them.
+5. **Then Phase 4b — Newsletter:** brainstorm → spec → plan → subagent-driven build (Resend Audience + double opt-in + `/newsletter` + `/newsletter/bestaetigt` + email templates; fill the Datenschutz „Newsletter“ placeholder section).
+6. **End-stage (after 4b + Phase 5):** run the frontend design-skills polish pass — see [Ideas.md](Ideas.md) #6 (`frontend_design_kowalski` + `design-taste-frontend` + `impeccable`).
+
 - **Plan:** [docs/superpowers/plans/2026-06-05-vrelo-phase4a-kontakt.md](docs/superpowers/plans/2026-06-05-vrelo-phase4a-kontakt.md) · **Spec:** [docs/superpowers/specs/2026-06-05-vrelo-phase4a-kontakt-design.md](docs/superpowers/specs/2026-06-05-vrelo-phase4a-kontakt-design.md)
 - **Before go-live (founder/lawyer):** the Impressum + Datenschutz are **drafts with `[Platzhalter]`** — verify before relying on them. Set the four env vars in Vercel to switch form/scheduler from graceful-fallback to live: `RESEND_API_KEY`, `CONTACT_FROM` (verified Resend domain), `CONTACT_TO`, `NEXT_PUBLIC_CAL_LINK`.
 - **OG fonts gotcha:** `ImageResponse`/satori needs a **static** TTF (variable fonts crash it) — the static Fraunces lives at `src/app/_og/Fraunces-SemiBold-static.ttf`.
