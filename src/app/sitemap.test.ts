@@ -20,6 +20,12 @@ describe("sitemap", () => {
     expect(urls).toContain(`${siteUrl}/datenschutz`);
   });
 
+  it("includes /newsletter but not the transactional confirm route", () => {
+    const urls = sitemap().map((e) => e.url);
+    expect(urls).toContain(`${siteUrl}/newsletter`);
+    expect(urls).not.toContain(`${siteUrl}/newsletter/bestaetigt`);
+  });
+
   it("never lists draft articles", () => {
     // all seed articles are drafts → no /ratgeber/<slug> entries
     const urls = sitemap().map((e) => e.url);
