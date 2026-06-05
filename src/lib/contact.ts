@@ -46,3 +46,46 @@ export function isHoneypotTripped(honeypot: string): boolean {
 export function isTooFast(renderedAt: number, now: number): boolean {
   return now - renderedAt < MIN_FILL_MS;
 }
+
+export type ContactFields = {
+  name: string;
+  email: string;
+  message: string;
+  company: string;
+  consent: boolean;
+  honeypot: string;
+  renderedAt: number;
+};
+
+export type ContactEmail = { subject: string; text: string; replyTo: string };
+
+export function buildContactEmail(f: {
+  name: string;
+  email: string;
+  message: string;
+  company: string;
+}): ContactEmail {
+  const lines = [
+    `Name: ${f.name}`,
+    `E-Mail: ${f.email}`,
+    f.company.trim() ? `Betrieb: ${f.company}` : null,
+    "",
+    "Nachricht:",
+    f.message,
+  ].filter((l): l is string => l !== null);
+  return { subject: "Neue Anfrage über vrelo-website", text: lines.join("\n"), replyTo: f.email.trim() };
+}
+
+export type Decision =
+  | { action: "drop" }
+  | { action: "reject"; message: string }
+  | { action: "invalid"; errors: ContactErrors }
+  | { action: "send"; email: ContactEmail };
+
+export function evaluateSubmission(f: ContactFields, now: number): Decision {
+  if (isHoneypotTripped(f.honeypot)) return { action: "drop" };
+  if (isTooFast(f.renderedAt, now)) return { action: "reject", message: "Bitte versuch es gleich noch einmal." };
+  const errors = validateContact(f);
+  if (Object.keys(errors).length > 0) return { action: "invalid", errors };
+  return { action: "send", email: buildContactEmail(f) };
+}
