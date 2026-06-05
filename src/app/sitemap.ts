@@ -5,7 +5,16 @@ import { getAllArticles } from "@/lib/ratgeber";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-  const staticRoutes = ["", "/leistungen", "/ueber-mich", "/faq", "/ratgeber"].map((p) => ({
+  const staticRoutes = [
+    "",
+    "/leistungen",
+    "/ueber-mich",
+    "/faq",
+    "/ratgeber",
+    "/kontakt",
+    "/impressum",
+    "/datenschutz",
+  ].map((p) => ({
     url: `${siteUrl}${p}`,
     lastModified: now,
   }));
