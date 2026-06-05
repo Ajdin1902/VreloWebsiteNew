@@ -56,6 +56,17 @@ Let the sense „das ist jemand, mit dem ich auch in Zukunft arbeiten kann“ bu
 - **Files:** `src/lib/{ueber-mich,leistungen,faq}.ts`, `src/app/ueber-mich/page.tsx`, `src/components/home/MerakClose.tsx`; SEO metadata only if it reads naturally.
 - **Watch:** **one** such cue per page, max — the whole effect dies if it's everywhere (that's the „annoying“ failure mode the founder flagged). Mind the **≤1 water metaphor** rule if reaching for „die Quelle wächst mit dir“ (evocative, but it spends the page's one water metaphor). Keep `du`-voice, first person, no urgency. Verify any new claim („ich bleibe erreichbar“, ongoing support) is one the founder will actually honor before shipping — same drafts-to-verify discipline as the 2b copy.
 
+## 6. End-stage frontend polish pass — run the design skills
+
+Once the content/conversion/legal phases are in, do a dedicated **frontend upgrade pass** by invoking the design skills together, so the whole site levels up cohesively (not page-by-page drift):
+- **`frontend_design_kowalski`** — UI polish, component craft, animation/interaction detail (the invisible details that make it feel great).
+- **`design-taste-frontend`** (the "taste skill") — anti-slop, audit-first redesign; removes templated/generic AI aesthetics.
+- **`impeccable`** — visual hierarchy, spacing, typography, motion, micro-interactions, a11y, design-system/token hardening.
+
+- **How to run it:** brainstorm the design direction first (one cohesive vision), then apply the three skills as a single polish pass — ideally folding in the other Ideas here (logo everywhere, hero ripple, darker palette, implicit partner framing) so they're considered together rather than competing.
+- **Non-negotiables to preserve:** brand `@theme` tokens only (no hand-rolled hex), `<BrandWord>` for „Vrelo“/„Merak“, `prefers-reduced-motion` on every animation, German typographic quotes „…“ (U+201E/U+201C), Hero stays the LCP focal point, calm-over-loud per Brand.md.
+- **Schedule:** end-stage (after Phase 4 conversion + Phase 5 legal), as the final design pass before/with custom-domain launch.
+
 ---
 
 ### Cross-cutting notes
