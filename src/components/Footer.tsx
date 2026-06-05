@@ -2,6 +2,7 @@ import Link from "next/link";
 import { navLinks } from "@/lib/nav";
 import { BrandWord } from "@/components/BrandWord";
 import { NewsletterForm } from "@/components/newsletter/NewsletterForm";
+import { isNewsletterConfigured } from "@/lib/newsletter";
 
 export function Footer() {
   return (
@@ -29,7 +30,11 @@ export function Footer() {
         <div className="text-sm text-stein">
           <p className="mb-2 text-gletscher">Newsletter</p>
           <p className="mb-3">Automatisierungs-Ideen mit KI — ruhig erklärt.</p>
-          <NewsletterForm compact />
+          {isNewsletterConfigured() ? (
+            <NewsletterForm compact />
+          ) : (
+            <p className="text-xs text-stein">Bald verfügbar.</p>
+          )}
         </div>
       </div>
       <div className="border-t border-vrelo-petrol">

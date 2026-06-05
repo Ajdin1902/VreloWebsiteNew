@@ -1,6 +1,10 @@
 // src/lib/email/newsletter-confirm.ts
 export type ConfirmEmail = { subject: string; html: string; text: string };
 
+// NOTE: `confirmUrl` is assembled from trusted constants only (siteUrl + a
+// fixed path + encodeURIComponent(token), where the token is base64url). It is
+// NOT user-controlled, so interpolating it into the HTML is safe. If a
+// user-supplied value (e.g. a returnTo param) is ever added, escape it first.
 export function buildConfirmEmail({ confirmUrl }: { confirmUrl: string }): ConfirmEmail {
   const subject = "Bitte bestätige deine Newsletter-Anmeldung";
 

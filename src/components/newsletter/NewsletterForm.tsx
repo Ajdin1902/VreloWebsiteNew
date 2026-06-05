@@ -46,7 +46,7 @@ export function NewsletterForm({ compact = false }: { compact?: boolean }) {
       </div>
 
       <label className={`flex items-start gap-2 ${consentClass}`}>
-        <input type="checkbox" name="consent" className="mt-1"
+        <input id="nl-consent" type="checkbox" name="consent" className="mt-1"
           aria-invalid={!!errors.consent} aria-describedby={errors.consent ? "nl-consent-err" : undefined} />
         <span>
           Ich möchte den Newsletter erhalten und habe die{" "}
