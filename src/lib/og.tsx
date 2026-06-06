@@ -24,7 +24,10 @@ export function renderOg(opts: { eyebrow: string; title: string }) {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-          <div style={{ width: 26, height: 34, borderRadius: "50% 50% 50% 50% / 60% 60% 40% 40%", backgroundColor: "#D4A24C" }} />
+          <svg width="44" height="48" viewBox="8 4 94 100">
+            <path d="M 14 36 L 55 98 L 96 36 L 82 36 L 55 77 L 28 36 Z" fill="#0A2538" />
+            <path d="M 55 8 C 60 8, 65 14, 65 18 C 65 24, 60.5 27.5, 55 27.5 C 49.5 27.5, 45 24, 45 18 C 45 14, 50 8, 55 8 Z" fill="#D4A24C" />
+          </svg>
           <div style={{ fontSize: 26, letterSpacing: 4, textTransform: "uppercase", color: "#7A7468" }}>
             {opts.eyebrow}
           </div>
