@@ -8,16 +8,16 @@ export function Hero() {
       <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-6 py-24 md:grid-cols-[1.1fr_0.9fr] md:py-32 lg:py-40">
         {/* Left: the message */}
         <div>
-          <h1 className="max-w-2xl text-[2.25rem] font-semibold leading-[1.13] tracking-[-0.02em] text-papier md:text-[3.25rem] md:leading-[1.1] lg:text-[3.75rem]">
+          <h1 className="hero-reveal-h1 max-w-2xl text-[2.25rem] font-semibold leading-[1.13] tracking-[-0.02em] text-papier md:text-[3.25rem] md:leading-[1.1] lg:text-[3.75rem]">
             <BrandWord>Vrelo</BrandWord> errichtet die Quelle.{" "}
             <br className="hidden sm:block" />
             Du erlebst den <BrandWord>Merak</BrandWord>-Effekt.
           </h1>
-          <p className="mt-7 max-w-lg text-[1.05rem] leading-relaxed tracking-[-0.005em] text-stein md:text-xl md:leading-relaxed">
+          <p className="hero-reveal-sub mt-7 max-w-lg text-[1.05rem] leading-relaxed tracking-[-0.005em] text-stein md:text-xl md:leading-relaxed">
             Maßgeschneiderte Automatisierungen für kleine Betriebe. Sie übernehmen den
             wiederkehrenden Kleinkram — du gewinnst Zeit, Ruhe und einen freien Kopf zurück.
           </p>
-          <div className="mt-10">
+          <div className="hero-reveal-cta mt-10">
             <CTAButton href="/kontakt" tone="dark" />
           </div>
         </div>

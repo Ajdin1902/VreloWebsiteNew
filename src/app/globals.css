@@ -106,3 +106,35 @@ body {
     filter: none;
   }
 }
+
+/* Hero entrance: staggered arrive-on-load. The H1 (LCP element) only rises —
+   opacity stays 1 so it paints immediately (no LCP delay); the sub + CTA fade
+   in. transform/opacity only → no CLS. Disabled under reduced-motion. */
+@keyframes hero-rise {
+  from { transform: translateY(24px); }
+  to   { transform: translateY(0); }
+}
+@keyframes hero-reveal {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-reveal-h1 {
+  animation: hero-rise 0.75s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.hero-reveal-sub {
+  opacity: 0;
+  animation: hero-reveal 0.75s cubic-bezier(0.22, 0.61, 0.36, 1) 0.14s both;
+}
+.hero-reveal-cta {
+  opacity: 0;
+  animation: hero-reveal 0.75s cubic-bezier(0.22, 0.61, 0.36, 1) 0.28s both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-reveal-h1,
+  .hero-reveal-sub,
+  .hero-reveal-cta {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
