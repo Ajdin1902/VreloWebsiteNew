@@ -69,7 +69,10 @@ Once the content/conversion/legal phases are in, do a dedicated **frontend upgra
 - **Non-negotiables to preserve:** brand `@theme` tokens only (no hand-rolled hex), `<BrandWord>` for „Vrelo“/„Merak“, `prefers-reduced-motion` on every animation, German typographic quotes „…“ (U+201E/U+201C), Hero stays the LCP focal point, calm-over-loud per Brand.md.
 - **Schedule:** end-stage (after Phase 4 conversion + Phase 5 legal), as the final design pass before/with custom-domain launch.
 
-## 7. CTA button effect — ripple / shine (decide what's possible)
+## 7. CTA button effect — ripple / shine (decide what's possible) — ✅ DONE (shipped)
+
+> Shipped: **sheen sweep + slight lift on hover** (option D), primary variant only, in `.cta-fx` (`globals.css`); `filter: drop-shadow` (not box-shadow) so the focus-visible ring is untouched; disabled under reduced-motion. Spec: `docs/superpowers/specs/2026-06-06-vrelo-cta-effect-design.md`. (Click-ripple option C was not chosen.)
+
 
 Give the primary CTA (`Quelle erkunden`) a small, premium interaction so it feels alive — without breaking the calm. **Decide the technique during brainstorm**; options, cheapest → richest:
 - **Sheen/“shine” sweep:** a soft light streak that sweeps across the button on hover (CSS gradient + `transform`/`mask`, `motion-safe` only). Cheapest, very on-brand (light on water), no JS.
@@ -79,7 +82,10 @@ Give the primary CTA (`Quelle erkunden`) a small, premium interaction so it feel
 - **Files:** `src/components/CTAButton.tsx` (already has `variant` + `tone` props — add an effect there so every CTA benefits), keyframes in `src/app/globals.css`.
 - **Watch:** `prefers-reduced-motion` disables it; keep it quiet (Brand.md “Ruhe vor Hype”); don't harm the `focus-visible` ring or tap latency; `@theme` tokens only (amber/honig), no new hex.
 
-## 8. Hero text entrance animation — slow reveal on load
+## 8. Hero text entrance animation — slow reveal on load — ✅ DONE (shipped)
+
+> Shipped: **V3 staggered fade-up** (24px, 0.75s, H1 0 / sub .14s / CTA .28s) in `globals.css` (`hero-reveal-h1/-sub/-cta`). LCP-safe: the H1 **rises only** (opacity stays 1 → paints immediately); sub + CTA fade + rise; transform/opacity only → no CLS; disabled under reduced-motion. Spec: `docs/superpowers/specs/2026-06-06-vrelo-hero-text-reveal-design.md`.
+
 
 The hero H1 / sub / CTA currently appear instantly. Make them **arrive** with a soft, sequential reveal (reference: the PayPal DE homepage — text fades up gently, staggered, on load).
 - **Effect:** fade-in + small upward translate (~12–20px), **staggered** (H1 → sub → CTA, ~80–120ms apart), ~500–700ms ease-out. Calm, single pass (no loop). Pairs with the water panel already being alive.
