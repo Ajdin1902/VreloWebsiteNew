@@ -11,6 +11,12 @@ describe("legal content", () => {
     expect(body).toContain("[Platzhalter");
   });
 
+  it("impressum links the EU OS-Plattform URL with markdown syntax", () => {
+    const os = impressum.sections.find((s) => /EU-Streitschlichtung/i.test(s.heading));
+    expect(os).toBeDefined();
+    expect(os!.body).toContain("[https://ec.europa.eu/consumers/odr](https://ec.europa.eu/consumers/odr)");
+  });
+
   it("datenschutz covers the contact form, Resend, Cal.com, rights, and a newsletter placeholder", () => {
     const all = datenschutz.sections.map((s) => `${s.heading}\n${s.body}`).join("\n");
     expect(all).toMatch(/Verantwortlich/i);
