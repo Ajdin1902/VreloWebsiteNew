@@ -37,6 +37,7 @@ All six roadmap phases plus the post-Phase-6 polish are merged and deployed. **N
   - **taste (`design-taste-frontend`)** — eyebrow restraint (5 section eyebrows → 2: only „Was ich baue" + „Die Geschichte"; the headline carries the rest); tightened hero subtext; em-dash → German **en-dash** (Halbgeviertstrich „ – ") across the copy.
   - **high-end craft (`high-end-visual-design`)** — spatial rhythm (`Section` `py-24 md:py-32`); haptic card depth (`.card-depth`: soft deep-water-tinted shadow + inset top edge-light) on the petrol cards; hero panel shadow retinted black → deep-water (`.shadow-deepwater`); button-in-button CTA (nested trailing-arrow circle, hover-shift) + text-link arrow hover; `tracking-tight` on the sans section headings.
   - **impeccable (`impeccable`, `polish`)** — WCAG **AA contrast** fixes: „Was ich baue" eyebrow `text-stein`→`text-gletscher` (4.20→7.02 on petrol); **ember token darkened `#8b5e2c`→`#7e5527`** so small ember text on sonnenlicht clears AA (4.47→5.20; large headings unaffected). Type refinement: `text-balance` on headings, `text-pretty` on body.
+- **Water imagery (home + key pages)** — cohesive Nano Banana water photography (brand water world, cool-dominant), all `next/image`, below the fold (Hero stays LCP), German alt text, browser-verified. **Home:** `GeschichteTeaser` is 2-col with the Bosnian karst spring (`geschichte-quelle.webp`); `WasIchBaue` is 2-col with a portrait drop panel (`was-ich-baue.webp`). **Pages:** `PageIntro` gained an **optional `image` prop** (`{ src, alt, ratio }` → `next/image fill` in a rounded `.shadow-deepwater` panel) driving banners on `/leistungen` (21:9), `/ueber-mich` (16:9), `/kontakt` (21:9), `/ratgeber` (16:9). Prompts that generated them live in [image_prompt.md](image_prompt.md). **Not yet wired (next time):** the Ratgeber **per-article covers** (4 variants ready — need a `cover` frontmatter field + `ArticleHeader`/index-card rendering) and the **optional** images (Fließen/Steps band, section-texture background, FAQ, Newsletter).
 
 ## Gotchas
 - **German quotes** „…“ = U+201E (open) + U+201C (close) — never ASCII `"`. The Edit tool can silently downgrade them; verify bytes (or write via `fs`/Write) when inserting them.
@@ -47,6 +48,7 @@ All six roadmap phases plus the post-Phase-6 polish are merged and deployed. **N
 - **RSC boundary:** you cannot pass a component **as a prop** (`as={Link}`) from a Server Component into a Client Component — wrap it as a child instead.
 - **`backdrop-filter` containing block:** any element with `backdrop-filter`/`backdrop-blur` becomes the containing block for `fixed` descendants — portal full-screen overlays out to `document.body` (see `MobileNav`).
 - **Manual/Playwright checks:** use `npm start` (not `npm run dev`) in this environment.
+- **Images:** optimized **WebP derivatives live in `public/images/`** (committed; converted from PNG via `sharp`, quality 80 — ~10MB of source → ~283KB). The **`Images/` source drop folder is gitignored, root-anchored (`/Images/`)** — an unanchored `Images/` also matches `public/images/` because Git is case-insensitive on Windows. Prompt catalog for regenerating: [image_prompt.md](image_prompt.md).
 - **`LazyVideo`** (`src/components/LazyVideo.tsx`) is the reusable video primitive — hydration-safe reduced-motion (poster `<img>` via `useSyncExternalStore`), IntersectionObserver play/pause, `preload="none"`; parents own layout. All clips are 1920×1080 16:9 → `aspect-video`. Re-run `npm run optimize:videos` if source clips change (derivatives in `public/video/`, committed).
 
 ## Owner cutover — TODO (not code; owner/founder action)
@@ -70,6 +72,7 @@ All six roadmap phases plus the post-Phase-6 polish are merged and deployed. **N
 
 ## Open todos (non-blocking, carry forward)
 - **Founder copy (draft-to-verify):** write the real Über-mich story — replace the 4 `[Platzhalter]` bodies + lead in `src/lib/ueber-mich.ts` / `src/app/ueber-mich/page.tsx`. Verify the German drafts in `src/lib/{leistungen,faq}.ts` (DSGVO stance, pricing, timeline). Verify the 3 Ratgeber seed-article drafts before publishing.
+- **Remaining imagery (assets ready in the local `Images/` folder + [image_prompt.md](image_prompt.md)):** wire the Ratgeber **per-article covers** (4 variants — add a `cover` frontmatter field + render in `ArticleHeader` and the index cards); optionally add the **Fließen** band on `Steps`, the **section-texture** background, and the **FAQ** / **Newsletter** headers. Convert any new ones PNG→WebP into `public/images/`.
 - **MerakClose tuning:** the sunset sits behind an `opacity-80` warm tint (reads subtle) — lower to ~60–70 if the founder wants it more visible.
 - **Live nudges:** hero-bloom `blur` 2.5–4px on the full-size panel; homepage petrol divider `/15`↔`/20`; `MobileNav` is initial-focus + Esc + focus-return but not a full Tab focus-trap (acceptable v1).
 - **Polish backlog:** see [Ideas.md](Ideas.md).
@@ -89,10 +92,13 @@ src/components/      BrandWord, BrandLockup, CTAButton, Header, MobileNav, Foote
                      RippleImage, Reveal, LazyVideo, PageIntro · home/ · leistungen/ · faq/ · ueber-mich/
 src/lib/            fonts.ts, nav.ts, site.ts, contact.ts, newsletter.ts, legal/, email/, content data
 public/video/       optimized clips + posters (derivatives, committed)
+public/images/      optimized WebP imagery for home + page banners (derivatives, committed)
 public/logo/        brand assets (see Brand.md §4)
 Videos/             4 source clips: Beginning→Second_Part→Thrid_Part→End (drop→ripple→delta→sunset)
+Images/             source image drop folder (gitignored; optimize → public/images/)
 docs/superpowers/   specs/ and plans/
 Brand.md            brand brief
+image_prompt.md     image-generation prompt catalog (home, pages, Ratgeber motifs)
 ```
 Brand enforcement lives in two places: the **`<BrandWord>`** component (forces Fraunces italic for „Vrelo“/„Merak“) and the **Tailwind `@theme` tokens** (palette discipline). Use them; don't hand-roll colors or italics.
 
