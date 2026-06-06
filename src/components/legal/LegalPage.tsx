@@ -1,5 +1,6 @@
 import { PageIntro } from "@/components/PageIntro";
 import { Section } from "@/components/Section";
+import { parseInlineLinks } from "@/lib/legal/inline-links";
 import type { LegalDoc } from "@/lib/legal/impressum";
 
 export function LegalPage({ doc }: { doc: LegalDoc }) {
@@ -11,7 +12,23 @@ export function LegalPage({ doc }: { doc: LegalDoc }) {
           {doc.sections.map((s) => (
             <div key={s.heading}>
               <h2 className="font-serif text-xl font-medium text-tiefes-wasser">{s.heading}</h2>
-              <p className="mt-2 whitespace-pre-line leading-relaxed text-tinte/90">{s.body}</p>
+              <p className="mt-2 whitespace-pre-line leading-relaxed text-tinte/90">
+                {parseInlineLinks(s.body).map((part, i) =>
+                  part.type === "link" ? (
+                    <a
+                      key={i}
+                      href={part.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-vrelo-petrol underline underline-offset-2"
+                    >
+                      {part.label}
+                    </a>
+                  ) : (
+                    <span key={i}>{part.value}</span>
+                  ),
+                )}
+              </p>
             </div>
           ))}
         </div>
