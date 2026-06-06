@@ -24,16 +24,18 @@ export function Hero() {
 
         {/* Right: the rippling water panel with the drop that seeds it */}
         <div className="relative">
-          {/* The amber drop — single warm focal point, above the panel, seeds the ripple. */}
+          <RippleImage
+            src="/video/hero-quelle.jpg"
+            alt=""
+            seedXFraction={0.5}
+            seedYFraction={0.5}
+            className="aspect-[16/10] w-full rounded-2xl shadow-[0_18px_60px_rgba(0,0,0,0.35)] ring-1 ring-gletscher/10 md:aspect-[4/5]"
+          />
+          {/* The amber drop — single warm focal point, centered on the ripple
+              origin; a seamless warm bloom that seeds the ripple from the middle. */}
           <div
             aria-hidden
-            className="hero-drop pointer-events-none absolute -top-6 right-10 z-10 h-16 w-16 rounded-full motion-safe:animate-drop-glow md:right-16 md:h-20 md:w-20"
-          />
-          <RippleImage
-            src="/video/ripples-poster.jpg"
-            alt=""
-            seedXFraction={0.72}
-            className="aspect-[16/10] w-full rounded-2xl shadow-[0_18px_60px_rgba(0,0,0,0.35)] ring-1 ring-gletscher/10 md:aspect-[4/5]"
+            className="hero-drop pointer-events-none absolute left-1/2 top-1/2 z-10 aspect-square w-[40%] -translate-x-1/2 -translate-y-1/2 rounded-full motion-safe:animate-drop-glow"
           />
         </div>
       </div>

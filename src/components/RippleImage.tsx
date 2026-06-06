@@ -10,6 +10,7 @@ type Props = {
   alt: string;
   className?: string;
   seedXFraction?: number; // where the drop sits, 0..1 across the panel
+  seedYFraction?: number; // where the drop sits, 0..1 down the panel (UV: 0 bottom, 1 top)
   seedIntervalMs?: number;
 };
 
@@ -21,6 +22,7 @@ export function RippleImage({
   alt,
   className = "",
   seedXFraction = 0.7,
+  seedYFraction = 0.5,
   seedIntervalMs = 5000,
 }: Props) {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -165,7 +167,7 @@ export function RippleImage({
 
     // The amber drop seeds a ripple at its x-position on a slow interval.
     const seedTimer = window.setInterval(() => {
-      add(seedXFraction, 0.96, performance.now() / 1000);
+      add(seedXFraction, seedYFraction, performance.now() / 1000);
     }, seedIntervalMs);
 
     const frame = () => {
@@ -197,7 +199,7 @@ export function RippleImage({
       canvas.removeEventListener("pointerdown", onPointer);
       loseContext();
     };
-  }, [src, seedXFraction, seedIntervalMs]);
+  }, [src, seedXFraction, seedYFraction, seedIntervalMs]);
 
   return (
     <div ref={wrapRef} className={`relative overflow-hidden ${className}`}>
