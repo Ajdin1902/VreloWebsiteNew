@@ -43,6 +43,13 @@ All six roadmap phases plus the post-Phase-6 polish are merged and deployed. **N
   - **Footer:** the „Newsletter“ heading + its fallback now link to `/newsletter` (the page isn't in the top nav, so the footer is its entry point).
   - **Not yet wired:** the Ratgeber **per-article covers** (4 variants ready — need a `cover` frontmatter field + `ArticleHeader`/index-card rendering).
 
+## Next session — planned work (resume here)
+1. **Real copy + subpage review** — go page by page and replace placeholders / verify drafts: Über-mich (4 `[Platzhalter]` + lead in `src/lib/ueber-mich.ts`), the Leistungen + FAQ German drafts (`src/lib/{leistungen,faq}.ts`), the 3 Ratgeber seed articles, and the legal `[Platzhalter]` (`src/lib/legal/*`). (Supersedes the "Founder copy" item in Open todos.)
+2. **Ratgeber article structure + images** — wire the per-article cover system: add a `cover` frontmatter field, render it in `ArticleHeader` + the index cards (4 ready variants in the local `Images/` folder; motifs in [image_prompt.md](image_prompt.md); convert PNG→WebP into `public/images/`). Lock the article page layout (cover, meta, prose) while here.
+3. **Ratgeber authoring skill** — build a custom skill that scaffolds a new Ratgeber MDX article end-to-end: frontmatter (title/description/date/cover/draft), BrandWord-aware body in the brand voice, and the matching cover-image prompt from `image_prompt.md`. Goal: produce a consistent, on-brand article on demand.
+4. **Kontakt form** — finalize the contact form: set the Resend env + Cal link (see Owner cutover), then verify `ContactForm` end-to-end (Server Action → Resend), spam guards, and the success/error states live.
+5. **Design-skill pass on all subpages** — run the trio (taste → high-end-visual-design → impeccable) over every subpage (Leistungen, Über-mich, FAQ, Ratgeber + article, Kontakt, Newsletter, legal), same as the homepage pass; browser-verify + AA contrast.
+
 ## Gotchas
 - **German quotes** „…“ = U+201E (open) + U+201C (close) — never ASCII `"`. The Edit tool can silently downgrade them; verify bytes (or write via `fs`/Write) when inserting them.
 - **German dash** the Gedankenstrich is the **en-dash with spaces** „ – “ (U+2013), not the em-dash „—“ (U+2014). Use `–` in client copy.
