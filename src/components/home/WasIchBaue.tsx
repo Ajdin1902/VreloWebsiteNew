@@ -14,7 +14,7 @@ export function WasIchBaue() {
     <Section tone="petrol">
       <Reveal as="p" delayMs={0} id="was-ich-baue-label" className="text-sm font-medium uppercase tracking-wider text-stein">Was ich baue</Reveal>
       <Reveal as="h2" delayMs={80} className="mt-3 max-w-2xl text-3xl font-semibold text-papier md:text-4xl">
-        Eine saubere Quelle — kein Flickenteppich.
+        Eine saubere Quelle – kein Flickenteppich.
       </Reveal>
       <Reveal as="p" delayMs={160} className="mt-5 max-w-2xl text-lg text-gletscher">
         Ich baue maßgeschneiderte Automatisierungen, die den wiederkehrenden Kleinkram

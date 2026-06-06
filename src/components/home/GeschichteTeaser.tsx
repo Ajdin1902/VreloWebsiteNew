@@ -8,10 +8,10 @@ export function GeschichteTeaser() {
     <Section tone="warm">
       <Reveal as="p" delayMs={0} className="text-sm font-medium uppercase tracking-wider text-ember">Die Geschichte</Reveal>
       <Reveal as="blockquote" delayMs={80} className="mt-4 max-w-3xl font-serif text-2xl italic leading-snug text-ember md:text-3xl">
-        „In Bosnien sind Quellen heilig — wo das Wasser entspringt, beginnt der Fluss.“
+        „In Bosnien sind Quellen heilig – wo das Wasser entspringt, beginnt der Fluss.“
       </Reveal>
       <Reveal as="p" delayMs={160} className="mt-6 max-w-2xl text-lg text-tinte">
-        <BrandWord>Vrelo</BrandWord> heißt Quelle. Warum dieser Name — und was er mit
+        <BrandWord>Vrelo</BrandWord> heißt Quelle. Warum dieser Name – und was er mit
         deinem Betrieb zu tun hat.
       </Reveal>
       <Reveal delayMs={240} className="mt-8 block">
