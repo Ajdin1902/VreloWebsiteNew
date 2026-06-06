@@ -69,6 +69,24 @@ Once the content/conversion/legal phases are in, do a dedicated **frontend upgra
 - **Non-negotiables to preserve:** brand `@theme` tokens only (no hand-rolled hex), `<BrandWord>` for „Vrelo“/„Merak“, `prefers-reduced-motion` on every animation, German typographic quotes „…“ (U+201E/U+201C), Hero stays the LCP focal point, calm-over-loud per Brand.md.
 - **Schedule:** end-stage (after Phase 4 conversion + Phase 5 legal), as the final design pass before/with custom-domain launch.
 
+## 7. CTA button effect — ripple / shine (decide what's possible)
+
+Give the primary CTA (`Quelle erkunden`) a small, premium interaction so it feels alive — without breaking the calm. **Decide the technique during brainstorm**; options, cheapest → richest:
+- **Sheen/“shine” sweep:** a soft light streak that sweeps across the button on hover (CSS gradient + `transform`/`mask`, `motion-safe` only). Cheapest, very on-brand (light on water), no JS.
+- **Amber glow pulse on hover/focus:** a gentle `box-shadow` bloom (reuse the warm-bloom register from the hero drop). Trivial, subtle.
+- **Material-style click ripple:** a ripple emanating from the click point (small JS to place the ripple origin, or a CSS `:active` radial). More “interactive”, slightly more code; risk of feeling generic/Material — tune to brand (amber, soft) so it doesn't read templated.
+- **Possible tie-in:** echo the hero’s water-ripple language at micro scale, so the CTA “ripples the source”. Could share tokens/keyframes with `.hero-drop` / the ripple work.
+- **Files:** `src/components/CTAButton.tsx` (already has `variant` + `tone` props — add an effect there so every CTA benefits), keyframes in `src/app/globals.css`.
+- **Watch:** `prefers-reduced-motion` disables it; keep it quiet (Brand.md “Ruhe vor Hype”); don't harm the `focus-visible` ring or tap latency; `@theme` tokens only (amber/honig), no new hex.
+
+## 8. Hero text entrance animation — slow reveal on load
+
+The hero H1 / sub / CTA currently appear instantly. Make them **arrive** with a soft, sequential reveal (reference: the PayPal DE homepage — text fades up gently, staggered, on load).
+- **Effect:** fade-in + small upward translate (~12–20px), **staggered** (H1 → sub → CTA, ~80–120ms apart), ~500–700ms ease-out. Calm, single pass (no loop). Pairs with the water panel already being alive.
+- **Approach:** CSS keyframes + per-element `animation-delay` (no JS needed), or a tiny intersection/`mounted` flag. Prefer CSS-only. Keyframe lives in `src/app/globals.css` beside `drop-glow`/`fade-in`; apply in `src/components/Hero.tsx`.
+- **Watch (important):** the H1 is the **LCP text** — don't start it at `opacity:0` in a way that delays LCP or hurts CLS. Mitigate: keep the translate tiny, start opacity high-ish (e.g. from `.001`→1 fast) or animate `transform` only; **`prefers-reduced-motion` → show final state instantly** (no reveal). Reserve space so nothing reflows. Keep it to the hero only (don't turn the whole site into fly-ins).
+- **Files:** `src/components/Hero.tsx`, `src/app/globals.css`. Consider a reusable `reveal` utility if other sections later want a scroll-reveal (YAGNI for now — hero only).
+
 ---
 
 ### Cross-cutting notes
