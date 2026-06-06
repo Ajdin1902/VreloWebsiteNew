@@ -8,19 +8,19 @@ const steps = [
 
 export function Steps() {
   return (
-    <Section tone="paper" className="border-t border-faden">
-      <p className="text-sm font-medium uppercase tracking-wider text-stumm">So läuft&apos;s ab</p>
-      <h2 className="mt-3 text-3xl font-semibold text-tiefes-wasser md:text-4xl">
+    <Section tone="petrol">
+      <p className="text-sm font-medium uppercase tracking-wider text-stein">So läuft&apos;s ab</p>
+      <h2 className="mt-3 text-3xl font-semibold text-papier md:text-4xl">
         In drei ruhigen Schritten.
       </h2>
       <ol className="mt-10 grid gap-6 md:grid-cols-3">
         {steps.map((s) => (
-          <li key={s.num} className="rounded-2xl border border-faden bg-papier p-6">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-vrelo-petrol font-serif text-lg italic text-papier">
+          <li key={s.num} className="rounded-2xl border border-gletscher/20 bg-tiefes-wasser/40 p-6">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber font-serif text-lg italic text-tiefes-wasser">
               {s.num}
             </div>
-            <h3 className="mt-4 text-xl font-semibold text-tiefes-wasser">{s.title}</h3>
-            <p className="mt-2 text-tinte">{s.desc}</p>
+            <h3 className="mt-4 text-xl font-semibold text-papier">{s.title}</h3>
+            <p className="mt-2 text-gletscher">{s.desc}</p>
           </li>
         ))}
       </ol>
