@@ -21,9 +21,11 @@ export function CTAButton({
     variant === "primary"
       ? "bg-amber text-tiefes-wasser hover:bg-honig"
       : "border border-stein text-tiefes-wasser hover:bg-gletscher";
+  // Sheen-sweep + lift on hover, primary only (defined in globals.css, motion-safe).
+  const fx = variant === "primary" ? " cta-fx" : "";
   return (
-    <Link href={href} className={`${base} ${styles}`}>
-      {children}
+    <Link href={href} className={`${base} ${styles}${fx}`}>
+      <span className="relative z-[1]">{children}</span>
     </Link>
   );
 }
