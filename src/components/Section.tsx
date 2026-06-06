@@ -1,11 +1,12 @@
 import type { ReactNode } from "react";
 
-type Tone = "paper" | "cool" | "warm";
+type Tone = "paper" | "cool" | "warm" | "petrol";
 
 const toneClasses: Record<Tone, string> = {
   paper: "bg-papier text-tinte",
   cool: "bg-tiefes-wasser text-gletscher",
   warm: "bg-sonnenlicht text-tinte",
+  petrol: "bg-vrelo-petrol text-gletscher",
 };
 
 export function Section({

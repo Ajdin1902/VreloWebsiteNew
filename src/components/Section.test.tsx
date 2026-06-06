@@ -18,6 +18,13 @@ describe("Section", () => {
     expect(container.querySelector("section")).toHaveClass("bg-tiefes-wasser");
   });
 
+  it("applies the petrol tone classes", () => {
+    const { container } = render(<Section tone="petrol">x</Section>);
+    const el = container.querySelector("section");
+    expect(el).toHaveClass("bg-vrelo-petrol");
+    expect(el).toHaveClass("text-gletscher");
+  });
+
   it("applies the warm tone classes", () => {
     const { container } = render(<Section tone="warm">x</Section>);
     expect(container.querySelector("section")).toHaveClass("bg-sonnenlicht");

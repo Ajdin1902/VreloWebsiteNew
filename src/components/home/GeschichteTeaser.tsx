@@ -5,7 +5,7 @@ import { BrandWord } from "@/components/BrandWord";
 export function GeschichteTeaser() {
   return (
     <Section tone="warm">
-      <h2 className="text-sm font-medium uppercase tracking-wider text-ember">Die Geschichte</h2>
+      <p className="text-sm font-medium uppercase tracking-wider text-ember">Die Geschichte</p>
       <blockquote className="mt-4 max-w-3xl font-serif text-2xl italic leading-snug text-ember md:text-3xl">
         „In Bosnien sind Quellen heilig — wo das Wasser entspringt, beginnt der Fluss.“
       </blockquote>

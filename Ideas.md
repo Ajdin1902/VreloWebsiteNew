@@ -2,6 +2,8 @@
 
 Unscheduled ideas to consider for a future polish/design phase (likely after the core pages exist). Not committed to any phase yet. Each item notes the relevant files, brand tokens, and things to watch so a future session can pick it up without re-deriving context. See [Brand.md](Brand.md) for the rules every idea must respect (70/20/10 palette, `<BrandWord>` italics, outcome-over-mechanism voice).
 
+> **Status (Phase 6, `feat/design-polish`):** #1 (logo everywhere — header/footer lockup + favicon + OG; mobile drawer), #2 (hero ripple — done as an interactive WebGL water panel where the drop *seeds* the ripple, not the CSS ring originally sketched), #4 (darker palette — Option C: petrol bands on „Was ich baue" + „Wie ich arbeite"), #5 (partner framing — FAQ/Leistungen/Merak-close cues, draft-to-verify), and #6 (the design pass itself) are **BUILT and gate-green**, awaiting merge. #3 (the „KI" wording) is **still open / deferred**.
+
 ---
 
 ## 1. Add the logo throughout the site

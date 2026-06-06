@@ -24,7 +24,8 @@ export function MerakClose() {
       </h2>
       <p className="mt-6 max-w-xl text-lg text-tinte">
         Das ist der <BrandWord>Merak</BrandWord>-Effekt. Kein Druck — schau dir
-        unverbindlich an, was möglich ist.
+        unverbindlich an, was möglich ist. Der Anfang einer ruhigen Zusammenarbeit, kein
+        Verkaufsgespräch.
       </p>
       <div className="mt-8">
         <CTAButton href="/kontakt" />

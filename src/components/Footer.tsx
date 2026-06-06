@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { navLinks } from "@/lib/nav";
 import { BrandWord } from "@/components/BrandWord";
+import { BrandLockup } from "@/components/BrandLockup";
 import { NewsletterForm } from "@/components/newsletter/NewsletterForm";
 import { isNewsletterConfigured } from "@/lib/newsletter";
 
@@ -9,10 +10,8 @@ export function Footer() {
     <footer className="mt-24 bg-tiefes-wasser text-gletscher">
       <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 md:grid-cols-3">
         <div>
-          <div className="text-2xl">
-            <BrandWord>Vrelo</BrandWord>
-          </div>
-          <p className="mt-2 text-sm text-stein">
+          <BrandLockup variant="paper" />
+          <p className="mt-3 text-sm text-stein">
             Durchdachte Automatisierung für kleine Betriebe.
           </p>
         </div>
