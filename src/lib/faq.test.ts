@@ -24,4 +24,11 @@ describe("faq data", () => {
     const questions = faqGroups.flatMap((g) => g.entries.map((e) => e.question));
     expect(new Set(questions).size).toBe(questions.length);
   });
+
+  it("answers what happens after the project (the long-term-partner cue)", () => {
+    const all = faqGroups.flatMap((g) => g.entries);
+    const after = all.find((e) => /Was passiert nach dem Projekt/i.test(e.question));
+    expect(after).toBeDefined();
+    expect(after!.answer).toMatch(/erreichbar|anpass/i);
+  });
 });

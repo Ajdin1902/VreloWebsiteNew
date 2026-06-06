@@ -20,6 +20,11 @@ export const faqGroups: FaqGroup[] = [
         answer:
           "Ja, komplett remote. Die Zusammenarbeit läuft über kurze Calls und klare Absprachen — egal, wo dein Betrieb sitzt.",
       },
+      {
+        question: "Was passiert nach dem Projekt?",
+        answer:
+          "Du bist nicht allein: Ich bleibe erreichbar, und weil alles sauber dokumentiert ist, lässt sich dein System anpassen, wenn sich etwas in deinem Betrieb ändert.",
+      },
     ],
   },
   {
