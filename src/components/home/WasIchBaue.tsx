@@ -10,12 +10,12 @@ const leistungen = [
 
 export function WasIchBaue() {
   return (
-    <Section tone="paper" className="border-t border-faden">
-      <p id="was-ich-baue-label" className="text-sm font-medium uppercase tracking-wider text-stumm">Was ich baue</p>
-      <h2 className="mt-3 max-w-2xl text-3xl font-semibold text-tiefes-wasser md:text-4xl">
+    <Section tone="petrol">
+      <p id="was-ich-baue-label" className="text-sm font-medium uppercase tracking-wider text-stein">Was ich baue</p>
+      <h2 className="mt-3 max-w-2xl text-3xl font-semibold text-papier md:text-4xl">
         Eine saubere Quelle — kein Flickenteppich.
       </h2>
-      <p className="mt-5 max-w-2xl text-lg text-tinte">
+      <p className="mt-5 max-w-2xl text-lg text-gletscher">
         Ich baue maßgeschneiderte Automatisierungen, die den wiederkehrenden Kleinkram
         still im Hintergrund übernehmen.
       </p>
@@ -23,7 +23,7 @@ export function WasIchBaue() {
         {leistungen.map((leistung) => (
           <li
             key={leistung}
-            className="rounded-xl border border-faden bg-gletscher/40 px-4 py-3 text-tiefes-wasser"
+            className="rounded-2xl border border-gletscher/20 bg-tiefes-wasser/40 px-4 py-3 text-gletscher"
           >
             {leistung}
           </li>
@@ -31,7 +31,7 @@ export function WasIchBaue() {
       </ul>
       <Link
         href="/leistungen"
-        className="mt-8 inline-block rounded-sm font-medium text-vrelo-petrol underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-papier focus-visible:ring-vrelo-petrol"
+        className="mt-8 inline-block rounded-sm font-medium text-honig underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-vrelo-petrol focus-visible:ring-honig"
       >
         Alle Leistungen ansehen <span aria-hidden="true">→</span>
       </Link>
