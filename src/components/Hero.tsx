@@ -15,7 +15,7 @@ export function Hero() {
           </h1>
           <p className="hero-reveal-sub mt-7 max-w-lg text-[1.05rem] leading-relaxed tracking-[-0.005em] text-stein md:text-xl md:leading-relaxed">
             Maßgeschneiderte Automatisierungen für kleine Betriebe. Sie übernehmen den
-            wiederkehrenden Kleinkram — du gewinnst Zeit, Ruhe und einen freien Kopf zurück.
+            Kleinkram – du gewinnst Zeit, Ruhe und einen freien Kopf.
           </p>
           <div className="hero-reveal-cta mt-10">
             <CTAButton href="/kontakt" tone="dark" />
@@ -29,9 +29,10 @@ export function Hero() {
             alt=""
             seedXFraction={0.5}
             seedYFraction={0.5}
+            seedIntervalMs={3000}
             className="aspect-[16/10] w-full rounded-2xl shadow-[0_18px_60px_rgba(0,0,0,0.35)] ring-1 ring-gletscher/10 md:aspect-[4/5]"
           />
-          {/* The amber drop — single warm focal point, centered on the ripple
+          {/* The amber drop – single warm focal point, centered on the ripple
               origin; a seamless warm bloom that seeds the ripple from the middle. */}
           <div
             aria-hidden
