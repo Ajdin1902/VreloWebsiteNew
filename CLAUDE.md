@@ -32,9 +32,16 @@ All six roadmap phases plus the post-Phase-6 polish are merged and deployed. **N
 - **Motion polish** — CTA sheen+lift (`.cta-fx`; uses `filter: drop-shadow` so the focus-visible ring is never clobbered; primary variant only). Hero text reveal-on-load (`.hero-reveal-*`; **H1 transform-only** so LCP paints immediately). Two-way homepage scroll-reveal (shared **`Reveal`** primitive; hidden state gated behind `html.reveal-ready` so **no-JS renders everything visible**).
 - **Homepage narrative reorder** — Hero → Problem → Was ich baue → So läuft's ab → Proof → Geschichte → Merak. `WasIchBaue` + `Steps` form one continuous petrol block (hairline `border-t border-gletscher/15` seam); the warm **Geschichte → Merak** pair is the emotional finale.
 - **Mobile-nav fix** — the drawer is portaled to `document.body`. The Header's `backdrop-blur` was making it the containing block for `fixed` descendants, so `fixed inset-0` sized to the header bar (~64px) and links overflowed with no background (the "transparent drawer" bug).
+- **Hero ripple cadence** — the Hero seeds the water ripple every **3s** (`seedIntervalMs={3000}`); `RippleImage` default stays 5s.
+- **Homepage design-polish trio** — three design skills run over the homepage, redesign-preserve (keep the locked brand, calm-over-loud), browser-verified at 1440 + 390:
+  - **taste (`design-taste-frontend`)** — eyebrow restraint (5 section eyebrows → 2: only „Was ich baue" + „Die Geschichte"; the headline carries the rest); tightened hero subtext; em-dash → German **en-dash** (Halbgeviertstrich „ – ") across the copy.
+  - **high-end craft (`high-end-visual-design`)** — spatial rhythm (`Section` `py-24 md:py-32`); haptic card depth (`.card-depth`: soft deep-water-tinted shadow + inset top edge-light) on the petrol cards; hero panel shadow retinted black → deep-water (`.shadow-deepwater`); button-in-button CTA (nested trailing-arrow circle, hover-shift) + text-link arrow hover; `tracking-tight` on the sans section headings.
+  - **impeccable (`impeccable`, `polish`)** — WCAG **AA contrast** fixes: „Was ich baue" eyebrow `text-stein`→`text-gletscher` (4.20→7.02 on petrol); **ember token darkened `#8b5e2c`→`#7e5527`** so small ember text on sonnenlicht clears AA (4.47→5.20; large headings unaffected). Type refinement: `text-balance` on headings, `text-pretty` on body.
 
 ## Gotchas
 - **German quotes** „…“ = U+201E (open) + U+201C (close) — never ASCII `"`. The Edit tool can silently downgrade them; verify bytes (or write via `fs`/Write) when inserting them.
+- **German dash** the Gedankenstrich is the **en-dash with spaces** „ – " (U+2013), not the em-dash „—" (U+2014). Use `–` in client copy.
+- **ember token = `#7e5527`** (darkened from Brand.md's `#8b5e2c`) so small ember text on sonnenlicht clears WCAG AA. Accessibility override — confirm with the founder before reverting to the exact brand hex.
 - **OG images:** `ImageResponse`/satori needs a **static** TTF (variable fonts crash it) — `src/app/_og/Fraunces-SemiBold-static.ttf`.
 - **Resend mock (tests):** under Vitest v4 a `vi.mock("resend")` must use a constructable `function`/`class` (an arrow impl is not a constructor) — see `src/app/kontakt/actions.test.ts`.
 - **RSC boundary:** you cannot pass a component **as a prop** (`as={Link}`) from a Server Component into a Client Component — wrap it as a child instead.
