@@ -17,24 +17,31 @@ A content/SEO marketing site for Vrelo, an AI-automation studio for DACH small b
 - **Phases 1–3 — DONE**, merged + deployed live. Homepage, `/leistungen`, `/faq`, `/ueber-mich`, `/ratgeber` (empty until a seed article is published), `sitemap.xml` + `robots.txt`, site-wide JSON-LD, branded OG images all resolve in prod. Video system (`LazyVideo` + `public/video/`) shipped; sunset wired into `MerakClose`. Phase 3 (MDX Ratgeber via `next-mdx-remote` + `gray-matter`, auto-wrap BrandWord remark plugin) merged via `e254b37`.
 - **Phase 4a (Kontakt) — DONE, merged + deployed live** (merge `067b271`). Consent-gated Cal.com scheduler (`@calcom/embed-react`, click-to-load) + contact form (Server Action → Resend) with honeypot + time-trap spam guards; pure tested core in `src/lib/contact.ts` (`evaluateSubmission` decision). Config-driven: form → `mailto` and scheduler → placeholder when env unset (safe until the four Vercel env vars are set). Minimal German **Impressum + Datenschutzerklärung** drafts (`src/lib/legal/`, with `[Platzhalter]`) so collecting PII is lawful. Final review fixes applied (Resend `{error}` handling, form-value preservation, consent a11y).
 - **Phase 4b (Newsletter) — DONE, merged + deployed live** (merge `969647b`). GDPR double opt-in via a **stateless HMAC-signed token** (no DB — the token is the pending state); `/newsletter` page + compact Footer form (Server Action → Resend confirm email) → `/newsletter/bestaetigt` verifies the token and adds the contact to a **Resend Audience** (`contacts.create`). Pure tested core in `src/lib/newsletter.ts` (`signToken`/`verifyToken`/`evaluateSignup`); branded confirm email in `src/lib/email/newsletter-confirm.ts`. Config-driven graceful degradation (form + Footer fall back to „bald verfügbar“ when env unset). Datenschutz „Newsletter“ section filled. Final review fixes applied (Footer config-guard, optional PageIntro lead, checkbox a11y id). Full gate green: 133 tests · tsc · lint · build.
+- **Phase 5 (Legal & polish) — BUILT + gate-green on branch `feat/phase5-legal-polish`, not yet merged.** Legal pages now render **clickable inline links** (Markdown-style `[label](url)` via a pure tested `parseInlineLinks` → `LegalPage`; the EU OS-Plattform URL in the Impressum is now a real link). `siteUrl` is **env-driven** (`NEXT_PUBLIC_SITE_URL` + `normalizeBase` fallback + a `canonical()` helper) so the vrelo-ki.de cutover is a Vercel env change, not a code edit. Focused SEO pass: **Twitter/X `summary_large_image` cards** + explicit **per-page canonicals** on all 9 routes. Full gate green: 151 tests · tsc · lint · build. **No domain flip / no real legal copy** — those stay owner steps (below).
 - **Live:** https://vrelo-website.vercel.app · **Repo:** https://github.com/Ajdin1902/VreloWebsiteNew (GitHub↔Vercel connected → push to `main` auto-deploys to production).
 - **Deploy verified (post-4b):** latest prod deployment ● Ready; all routes 200 live — `/` `/kontakt` `/impressum` `/datenschutz` `/newsletter` `/newsletter/bestaetigt`. The whole target IA now resolves in prod. (`<Link>` prefetch may still log harmless console 404s.)
 
-## Resume here (Phase 4 complete → next: Phase 5 Legal & polish)
-Phases 1–4 are merged + deployed. **Next development phase: Phase 5 — Legal & polish + custom domain** via the usual brainstorm → spec → plan → subagent-driven build cycle.
+## Resume here (Phase 5 built → review, merge, then owner cutover + end-stage)
+Phase 5 is implemented and gate-green on `feat/phase5-legal-polish`. **Next: final code review → finishing-a-development-branch → merge to `main`** (auto-deploys; the live site keeps the Vercel URL because `NEXT_PUBLIC_SITE_URL` stays unset).
 
 **Next steps (do in order — continue here):**
-1. **Phase 5 — Legal & polish:** founder/lawyer finalize Impressum + Datenschutz (replace `[Platzhalter]`, make the EU OS-Plattform URL clickable); perf/SEO pass; connect custom domain **vrelo-ki.de** (swap `siteUrl` in `src/lib/site.ts`). Brainstorm → spec → plan first.
-2. **End-stage (after Phase 5):** run the frontend design-skills polish pass — see [Ideas.md](Ideas.md) #6 (`frontend_design_kowalski` + `design-taste-frontend` + `impeccable`).
+1. **Merge Phase 5**, then do the **owner cutover** (connect vrelo-ki.de + set `NEXT_PUBLIC_SITE_URL`) — see the Phase 5 owner todos below.
+2. **End-stage:** run the frontend design-skills polish pass — see [Ideas.md](Ideas.md) #6 (`frontend_design_kowalski` + `design-taste-frontend` + `impeccable`). This is the last planned build phase.
 
-See the owner go-live todos below (Vercel env for Kontakt + Newsletter; Resend Audience + Broadcasts) — those flip the conversion features from safe-fallback to fully live.
+See the owner go-live todos below (Kontakt + Newsletter env; Resend Audience + Broadcasts; the domain cutover) — those flip the conversion features + custom domain from safe-fallback to fully live.
+
+**Phase 5 owner go-live cutover — TODO (not code — owner action):**
+- [ ] **Connect the domain:** add `vrelo-ki.de` (+ `www`) to the Vercel project → set the DNS records Vercel shows at the registrar → wait for SSL.
+- [ ] **Flip the base URL:** set `NEXT_PUBLIC_SITE_URL=https://vrelo-ki.de` in Vercel → redeploy. Canonicals/OG/sitemap/robots follow automatically (no code change).
+- [ ] **Redirect:** optionally 308-redirect the old `*.vercel.app` URL to the apex via Vercel domain settings.
+- [ ] **Founder/lawyer:** replace every `[Platzhalter]` in `src/lib/legal/{impressum,datenschutz}.ts` with real data + verified wording (the EU OS link now renders clickable; add more links with `[label](https://…)` syntax as needed).
+- [ ] **Post-cutover:** resubmit `https://vrelo-ki.de/sitemap.xml` in Google Search Console.
 
 **Phase 4a go-live follow-ups — TODO (not code — owner action, non-blocking):**
 - [ ] **Set the four env vars in Vercel** (then redeploy) to flip form/scheduler from graceful-fallback to live: `RESEND_API_KEY`, `CONTACT_FROM` (verified Resend domain), `CONTACT_TO`, `NEXT_PUBLIC_CAL_LINK`. Without them `/kontakt` is safe but shows `mailto` + scheduler placeholder.
 - [ ] **Verify a Resend sending domain** (SPF/DKIM) for `CONTACT_FROM` — until then the form is configured-but-won't-send; the `mailto` fallback covers the gap. Ties to **vrelo-ki.de** (Phase 5).
 - [ ] **Provide the Cal.com link** (`NEXT_PUBLIC_CAL_LINK`, e.g. `vrelo/kennenlernen`) — until set the scheduler shows the „folgt in Kürze“ placeholder.
-- [ ] **Founder/lawyer:** verify the Impressum + Datenschutz **drafts** (replace every `[Platzhalter]`) before relying on them.
-- [ ] **At legal go-live:** make the EU OS-Plattform URL in `src/lib/legal/impressum.ts` a real clickable link (the `LegalPage` renderer currently emits plain `<p>` text only — needs a richer body type for inline links).
+- [ ] **Founder/lawyer:** verify the Impressum + Datenschutz **drafts** (replace every `[Platzhalter]`) before relying on them. (The EU OS-Plattform URL renders clickable as of Phase 5 — `LegalPage` supports Markdown `[label](url)` links.)
 
 **Phase 4b go-live / Resend setup — TODO (owner action; the newsletter signup pipeline is code, but Resend itself is configured + operated by you):**
 - [ ] **Create a Resend Audience** in the Resend dashboard → copy its id into the `NEWSLETTER_AUDIENCE_ID` env var in Vercel. This Audience *is* the stored subscriber list (no DB on our side; we only `contacts.create` confirmed emails into it).
@@ -44,6 +51,7 @@ See the owner go-live todos below (Vercel env for Kontakt + Newsletter; Resend A
 
 - **Phase 4a plan/spec (reference):** [docs/superpowers/plans/2026-06-05-vrelo-phase4a-kontakt.md](docs/superpowers/plans/2026-06-05-vrelo-phase4a-kontakt.md) · [docs/superpowers/specs/2026-06-05-vrelo-phase4a-kontakt-design.md](docs/superpowers/specs/2026-06-05-vrelo-phase4a-kontakt-design.md)
 - **Phase 4b plan/spec (reference, shipped):** [docs/superpowers/plans/2026-06-05-vrelo-phase4b-newsletter.md](docs/superpowers/plans/2026-06-05-vrelo-phase4b-newsletter.md) · [docs/superpowers/specs/2026-06-05-vrelo-phase4b-newsletter-design.md](docs/superpowers/specs/2026-06-05-vrelo-phase4b-newsletter-design.md)
+- **Phase 5 plan/spec (reference):** [docs/superpowers/plans/2026-06-06-vrelo-phase5-legal-polish.md](docs/superpowers/plans/2026-06-06-vrelo-phase5-legal-polish.md) · [docs/superpowers/specs/2026-06-06-vrelo-phase5-legal-polish-design.md](docs/superpowers/specs/2026-06-06-vrelo-phase5-legal-polish-design.md)
 - **OG fonts gotcha:** `ImageResponse`/satori needs a **static** TTF (variable fonts crash it) — the static Fraunces lives at `src/app/_og/Fraunces-SemiBold-static.ttf`.
 - **Resend mock gotcha (tests):** under Vitest v4 a `vi.mock("resend")` must use a constructable `function`/`class` (an arrow implementation is not a constructor and `new Resend()` throws) — see `src/app/kontakt/actions.test.ts`.
 
@@ -102,7 +110,7 @@ Each phase gets its own branch (`feat/phaseN-...`). Frequent commits; commit mes
 2. ✅ **Core pages** — 2a homepage · 2b Leistungen + FAQ · 2c video system + Über mich. *(all done, deployed live)*
 3. ✅ **Ratgeber/MDX + SEO** — article system, 3 seed articles, metadata, JSON-LD, sitemap, OG images. *(merged + deployed live)*
 4. ✅ **Conversion** — 4a Kontakt (contact form + Cal.com scheduler + minimal Impressum/Datenschutz drafts) · 4b Newsletter (stateless double opt-in + Resend Audience). *(both merged + deployed live)*
-5. 🔨 **Legal & polish** — finalize Impressum/Datenschutz (founder/lawyer sign-off), perf/SEO pass, custom domain (vrelo-ki.de). *(next)*
+5. 🔨 **Legal & polish** — clickable legal links + env-driven `siteUrl` + focused SEO (Twitter cards, per-page canonicals). *(built + gate-green on branch; pending review + merge.* Real legal copy + the vrelo-ki.de cutover are owner steps.)*
 
 ## Key decisions (locked)
 - German only; personal brand („Ich“); multi-page content/SEO site.
