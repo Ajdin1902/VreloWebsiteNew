@@ -45,7 +45,7 @@ export function RippleImage({
 
     const glc = gl;
     let raf = 0;
-    let seedTimer: number | undefined;
+    // seedTimer declared below after resize setup
     let disposed = false;
 
     const vsrc =
@@ -154,7 +154,7 @@ export function RippleImage({
     window.addEventListener("resize", resize);
 
     // The amber drop seeds a ripple at its x-position on a slow interval.
-    seedTimer = window.setInterval(() => {
+    const seedTimer = window.setInterval(() => {
       add(seedXFraction, 0.96, performance.now() / 1000);
     }, seedIntervalMs);
 
