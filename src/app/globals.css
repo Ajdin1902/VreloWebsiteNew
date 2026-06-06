@@ -46,3 +46,12 @@ body {
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
+/* Hero surfaces — kept here so the palette stays in one place (no inline hex). */
+.hero-deepwater {
+  background: radial-gradient(ellipse 140% 110% at 80% 0%, #1b5063 0%, #0d3147 30%, #0a2538 58%, #071c2b 100%);
+}
+.hero-drop {
+  background: radial-gradient(circle at 50% 38%, #f9f0de, #f4e4c1 22%, #d4a24c 58%, rgba(212,162,76,0) 74%);
+  box-shadow: 0 0 80px 22px rgba(212,162,76,0.38), 0 0 20px 6px rgba(244,228,193,0.22);
+}
