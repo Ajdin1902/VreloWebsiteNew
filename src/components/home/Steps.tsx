@@ -1,4 +1,5 @@
 import { Section } from "@/components/Section";
+import { Reveal } from "@/components/Reveal";
 
 const steps = [
   { num: "1", title: "Hinschauen", desc: "Wir finden gemeinsam die Aufgaben, die dich täglich Zeit kosten." },
@@ -9,11 +10,11 @@ const steps = [
 export function Steps() {
   return (
     <Section tone="petrol">
-      <p className="text-sm font-medium uppercase tracking-wider text-stein">So läuft&apos;s ab</p>
-      <h2 className="mt-3 text-3xl font-semibold text-papier md:text-4xl">
+      <Reveal as="p" delayMs={0} className="text-sm font-medium uppercase tracking-wider text-stein">So läuft&apos;s ab</Reveal>
+      <Reveal as="h2" delayMs={80} className="mt-3 text-3xl font-semibold text-papier md:text-4xl">
         In drei ruhigen Schritten.
-      </h2>
-      <ol className="mt-10 grid gap-6 md:grid-cols-3">
+      </Reveal>
+      <Reveal as="ol" delayMs={160} className="mt-10 grid gap-6 md:grid-cols-3">
         {steps.map((s) => (
           <li key={s.num} className="rounded-2xl border border-gletscher/20 bg-tiefes-wasser/40 p-6">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber font-serif text-lg italic text-tiefes-wasser">
@@ -23,7 +24,7 @@ export function Steps() {
             <p className="mt-2 text-gletscher">{s.desc}</p>
           </li>
         ))}
-      </ol>
+      </Reveal>
     </Section>
   );
 }

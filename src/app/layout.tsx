@@ -36,6 +36,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="de" className={`${jakarta.variable} ${fraunces.variable}`}>
+      <head>
+        {/* Enable scroll-reveal hidden states only when JS is available, before
+            first paint — so no-JS renders everything visible (no FOUC). */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "document.documentElement.classList.add('reveal-ready')",
+          }}
+        />
+      </head>
       <body className="flex min-h-screen flex-col">
         <Header />
         <main className="flex-1">{children}</main>
