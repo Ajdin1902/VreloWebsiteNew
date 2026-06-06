@@ -29,6 +29,7 @@ export function Hero() {
             alt=""
             seedXFraction={0.5}
             seedYFraction={0.5}
+            seedIntervalMs={3000}
             className="aspect-[16/10] w-full rounded-2xl shadow-[0_18px_60px_rgba(0,0,0,0.35)] ring-1 ring-gletscher/10 md:aspect-[4/5]"
           />
           {/* The amber drop — single warm focal point, centered on the ripple
