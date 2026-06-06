@@ -1,6 +1,7 @@
 // src/app/kontakt/page.tsx
 import type { Metadata } from "next";
 import { PageIntro } from "@/components/PageIntro";
+import { PageImage } from "@/components/PageImage";
 import { Section } from "@/components/Section";
 import { JsonLd } from "@/components/JsonLd";
 import { SchedulerEmbed } from "@/components/kontakt/SchedulerEmbed";
@@ -25,11 +26,6 @@ export default function KontaktPage() {
         eyebrow="Kontakt"
         title="Lass uns deine Quelle bauen."
         lead="Erzähl mir, was dich täglich Zeit kostet — ich melde mich und sage dir ehrlich, ob und wie ich helfen kann."
-        image={{
-          src: "/images/kontakt-banner.webp",
-          alt: "Eine ruhige Wasseroberfläche im warmen Morgenlicht; ein erster sanfter Ring breitet sich aus.",
-          ratio: "aspect-[21/9]",
-        }}
       />
 
       <Section tone="paper">
@@ -62,6 +58,14 @@ export default function KontaktPage() {
             )}
           </div>
         </div>
+      </Section>
+
+      <Section tone="paper" className="border-t border-faden">
+        <PageImage
+          src="/images/kontakt-banner.webp"
+          alt="Eine ruhige Wasseroberfläche im warmen Morgenlicht; ein erster sanfter Ring breitet sich aus."
+          ratio="aspect-[21/9]"
+        />
       </Section>
 
       <JsonLd data={breadcrumbLd([{ name: "Start", path: "/" }, { name: "Kontakt", path: "/kontakt" }])} />
