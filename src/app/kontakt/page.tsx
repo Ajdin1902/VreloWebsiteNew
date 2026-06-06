@@ -7,8 +7,10 @@ import { SchedulerEmbed } from "@/components/kontakt/SchedulerEmbed";
 import { ContactForm } from "@/components/kontakt/ContactForm";
 import { calLink, isContactConfigured, contactTo } from "@/lib/contact";
 import { breadcrumbLd } from "@/lib/jsonld";
+import { canonical } from "@/lib/site";
 
 export const metadata: Metadata = {
+  alternates: { canonical: canonical("/kontakt") },
   title: "Kontakt",
   description:
     "Buch ein unverbindliches Kennenlern-Gespräch oder schreib mir, was dich täglich Zeit kostet.",

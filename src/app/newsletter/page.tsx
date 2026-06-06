@@ -6,8 +6,10 @@ import { JsonLd } from "@/components/JsonLd";
 import { NewsletterForm } from "@/components/newsletter/NewsletterForm";
 import { isNewsletterConfigured } from "@/lib/newsletter";
 import { breadcrumbLd } from "@/lib/jsonld";
+import { canonical } from "@/lib/site";
 
 export const metadata: Metadata = {
+  alternates: { canonical: canonical("/newsletter") },
   title: "Newsletter",
   description:
     "Praktische Automatisierungs-Ideen mit KI — ruhig erklärt. Melde dich für den Vrelo-Newsletter an.",

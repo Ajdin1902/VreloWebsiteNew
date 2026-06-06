@@ -18,4 +18,27 @@ describe("LegalPage", () => {
     expect(screen.getByRole("heading", { name: "Abschnitt A" })).toBeInTheDocument();
     expect(screen.getByText("Inhalt A")).toBeInTheDocument();
   });
+
+  it("renders a markdown link in a section body as an external anchor", () => {
+    render(
+      <LegalPage
+        doc={{
+          title: "T",
+          intro: "i",
+          sections: [{ heading: "H", body: "siehe [Vrelo](https://example.de) hier" }],
+        }}
+      />,
+    );
+    const link = screen.getByRole("link", { name: "Vrelo" });
+    expect(link).toHaveAttribute("href", "https://example.de");
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
+  it("still renders plain bodies as text (no link)", () => {
+    render(
+      <LegalPage doc={{ title: "T", intro: "i", sections: [{ heading: "H", body: "nur Text" }] }} />,
+    );
+    expect(screen.getByText("nur Text")).toBeInTheDocument();
+  });
 });

@@ -7,8 +7,10 @@ import { Referenzen } from "@/components/leistungen/Referenzen";
 import { leistungen } from "@/lib/leistungen";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbLd } from "@/lib/jsonld";
+import { canonical } from "@/lib/site";
 
 export const metadata: Metadata = {
+  alternates: { canonical: canonical("/leistungen") },
   title: "Leistungen",
   description:
     "Maßgeschneiderte Automatisierungen für kleine Betriebe: Termine & Bestätigungen, Nachfass-Mails, Dateneingabe und wiederkehrende Kommunikation.",
