@@ -8,7 +8,9 @@
   --color-gletscher: #dce7eb;
 
   /* Merak — warm (~20%) */
-  --color-ember: #8b5e2c;
+  /* ember darkened from #8b5e2c for WCAG AA: small ember text on sonnenlicht
+     was 4.47 (just under 4.5); #7e5527 clears AA (5.2 on cream). */
+  --color-ember: #7e5527;
   --color-amber: #d4a24c;
   --color-honig: #e8b86b;
   --color-sonnenlicht: #f4e4c1;
