@@ -22,6 +22,11 @@ export default function FaqPage() {
         eyebrow="FAQ"
         title="Häufige Fragen"
         lead="Was kleine Betriebe vor der Zusammenarbeit am häufigsten fragen. Deine Frage ist nicht dabei? Schreib mir einfach."
+        image={{
+          src: "/images/faq-banner.webp",
+          alt: "Klares, ruhiges Wasser über hellen, glatten Kieselsteinen.",
+          ratio: "aspect-[16/9]",
+        }}
       />
       <Section tone="paper" className="border-t border-faden">
         <FaqAccordion groups={faqGroups} />
