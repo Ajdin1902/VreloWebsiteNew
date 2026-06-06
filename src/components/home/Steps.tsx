@@ -9,7 +9,7 @@ const steps = [
 
 export function Steps() {
   return (
-    <Section tone="petrol" className="relative overflow-hidden border-t border-gletscher/15">
+    <Section tone="petrol" className="relative isolate overflow-hidden border-t border-gletscher/15">
       {/* Subtle flowing-water backdrop (Fließen); petrol tint keeps cards + text legible. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
@@ -18,7 +18,7 @@ export function Steps() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover"
       />
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-vrelo-petrol/80" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-vrelo-petrol/70" />
       <Reveal as="h2" delayMs={0} className="text-balance text-3xl font-semibold tracking-tight text-papier md:text-4xl">
         In drei ruhigen Schritten.
       </Reveal>

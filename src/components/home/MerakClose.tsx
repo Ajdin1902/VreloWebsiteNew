@@ -6,7 +6,7 @@ import { Reveal } from "@/components/Reveal";
 
 export function MerakClose() {
   return (
-    <Section tone="warm" className="relative overflow-hidden">
+    <Section tone="warm" className="relative isolate overflow-hidden">
       {/* Sunset clip (merak) behind the close. Below the fold → no LCP cost.
           Reduced-motion falls back to the poster still inside LazyVideo. */}
       <LazyVideo

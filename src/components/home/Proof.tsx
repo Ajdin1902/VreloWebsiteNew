@@ -3,7 +3,7 @@ import { Reveal } from "@/components/Reveal";
 
 export function Proof() {
   return (
-    <Section tone="paper" className="relative overflow-hidden border-t border-faden">
+    <Section tone="paper" className="relative isolate overflow-hidden border-t border-faden">
       {/* Faint cool water texture; heavy papier tint keeps the dark text AA-readable. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
