@@ -93,6 +93,10 @@ The hero H1 / sub / CTA currently appear instantly. Make them **arrive** with a 
 - **Watch (important):** the H1 is the **LCP text** — don't start it at `opacity:0` in a way that delays LCP or hurts CLS. Mitigate: keep the translate tiny, start opacity high-ish (e.g. from `.001`→1 fast) or animate `transform` only; **`prefers-reduced-motion` → show final state instantly** (no reveal). Reserve space so nothing reflows. Keep it to the hero only (don't turn the whole site into fly-ins).
 - **Files:** `src/components/Hero.tsx`, `src/app/globals.css`. Consider a reusable `reveal` utility if other sections later want a scroll-reveal (YAGNI for now — hero only).
 
+## 9. Homepage scroll-reveal — ✅ DONE (shipped)
+
+> Shipped: **two-way staggered scroll-reveal** on every homepage section below the hero. New shared **`Reveal`** client primitive (`src/components/Reveal.tsx`): `IntersectionObserver` toggles `data-shown` on enter **and** exit; `as` prop (no wrapper); `delayMs` stagger. Reveal CSS in `globals.css`, gated behind `html.reveal-ready` (inline script in `layout.tsx`) so no-JS renders everything visible (no FOUC); `prefers-reduced-motion` → all visible; transform/opacity only → no CLS. Hero excluded (it has its own load reveal). Behavior chosen via live demo: two-way (not one-way or scroll-scrubbed-focus), homepage-only, staggered elements. **Gotcha learned:** a Server Component cannot pass a component **as a prop** (`as={Link}`) into a Client Component — wrap the `<Link>` as a child of `Reveal` instead. Spec: `docs/superpowers/specs/2026-06-06-vrelo-scroll-reveal-design.md`. **Future (deferred):** the `Reveal` primitive is reusable if other pages ever want scroll-reveal (kept homepage-only for now to protect readability on dense pages).
+
 ---
 
 ### Cross-cutting notes
