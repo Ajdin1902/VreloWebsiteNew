@@ -27,7 +27,7 @@ export function Section({
   const base = tint ? "bg-gletscher/30 text-tinte" : toneClasses[tone];
   return (
     <section id={id} className={[base, className].filter(Boolean).join(" ")}>
-      <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">{children}</div>
+      <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">{children}</div>
     </section>
   );
 }

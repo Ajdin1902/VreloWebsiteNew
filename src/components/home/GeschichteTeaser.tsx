@@ -17,9 +17,15 @@ export function GeschichteTeaser() {
       <Reveal delayMs={240} className="mt-8 block">
         <Link
           href="/ueber-mich"
-          className="inline-block rounded-sm font-medium text-ember underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-sonnenlicht focus-visible:ring-ember"
+          className="group inline-block rounded-sm font-medium text-ember underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-sonnenlicht focus-visible:ring-ember"
         >
-          Die ganze Geschichte <span aria-hidden="true">→</span>
+          Die ganze Geschichte{" "}
+          <span
+            aria-hidden="true"
+            className="inline-block transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] motion-safe:group-hover:translate-x-0.5"
+          >
+            →
+          </span>
         </Link>
       </Reveal>
     </Section>
