@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import { navLinks } from "@/lib/nav";
 import { BrandLockup } from "@/components/BrandLockup";
@@ -10,6 +11,12 @@ import { CTAButton } from "@/components/CTAButton";
 // Hidden at md+ (the desktop nav in Header takes over). a11y: aria-expanded,
 // role=dialog + aria-modal, Esc to close, focus moves in and returns to the
 // trigger, body scroll locked while open. The open transition is motion-safe.
+//
+// The drawer is portaled to document.body: the Header uses backdrop-blur, and
+// an element with backdrop-filter becomes the containing block for fixed-position
+// descendants. Without the portal, `fixed inset-0` would size to the header bar
+// (~64px) instead of the viewport, so the links would overflow with no
+// background behind them (the "transparent drawer" bug).
 export function MobileNav() {
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -51,8 +58,9 @@ export function MobileNav() {
         <span className="block h-0.5 w-6 bg-tiefes-wasser" />
       </button>
 
-      {open ? (
-        <div
+      {open
+        ? createPortal(
+            <div
           id="mobile-nav-panel"
           ref={panelRef}
           role="dialog"
@@ -90,8 +98,10 @@ export function MobileNav() {
           <div className="mt-auto pt-8">
             <CTAButton href="/kontakt" tone="dark" />
           </div>
-        </div>
-      ) : null}
+            </div>,
+            document.body,
+          )
+        : null}
     </div>
   );
 }

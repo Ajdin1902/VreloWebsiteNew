@@ -38,4 +38,15 @@ describe("MobileNav", () => {
     fireEvent.click(screen.getByRole("link", { name: "FAQ" }));
     expect(screen.queryByRole("dialog")).toBeNull();
   });
+
+  it("portals the drawer to document.body (escapes the header's containing block)", () => {
+    // The header uses backdrop-blur, which makes it a containing block for
+    // fixed-position descendants — the drawer must portal out of the component
+    // subtree so `fixed inset-0` covers the viewport with a solid background.
+    const { container } = render(<MobileNav />);
+    fireEvent.click(screen.getByRole("button", { name: /menü öffnen/i }));
+    const dialog = screen.getByRole("dialog");
+    expect(container.contains(dialog)).toBe(false);
+    expect(document.body.contains(dialog)).toBe(true);
+  });
 });
