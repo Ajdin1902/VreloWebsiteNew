@@ -13,7 +13,7 @@ describe("Hero", () => {
   it("renders the ripple water panel image", () => {
     render(<Hero />);
     const img = screen.getByTestId("ripple-img") as HTMLImageElement;
-    expect(img.getAttribute("src")).toBe("/video/ripples-poster.jpg");
+    expect(img.getAttribute("src")).toBe("/video/hero-quelle.jpg");
   });
 
   it("uses the token-hardened deep-water background (no inline gradient)", () => {
