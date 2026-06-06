@@ -23,6 +23,11 @@ export default function NewsletterPage() {
         eyebrow="Newsletter"
         title="Automatisierungs-Ideen, ruhig erklärt."
         lead="Ab und zu eine praktische Idee, wie du mit KI Zeit zurückgewinnst — ohne Hype, ohne Spam. Jederzeit abbestellbar."
+        image={{
+          src: "/images/newsletter-banner.webp",
+          alt: "Ein ruhiger, klarer Wasserlauf fließt gleichmäßig in die Ferne.",
+          ratio: "aspect-[16/9]",
+        }}
       />
       <Section tone="paper">
         <div className="mx-auto max-w-xl">
