@@ -27,12 +27,22 @@ export function Footer() {
           </ul>
         </nav>
         <div className="text-sm text-stein">
-          <p className="mb-2 text-gletscher">Newsletter</p>
-          <p className="mb-3">Automatisierungs-Ideen mit KI — ruhig erklärt.</p>
+          <Link
+            href="/newsletter"
+            className="mb-2 inline-block rounded-sm text-gletscher hover:text-honig focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-tiefes-wasser focus-visible:ring-honig"
+          >
+            Newsletter
+          </Link>
+          <p className="mb-3">Automatisierungs-Ideen mit KI – ruhig erklärt.</p>
           {isNewsletterConfigured() ? (
             <NewsletterForm compact />
           ) : (
-            <p className="text-xs text-stein">Bald verfügbar.</p>
+            <Link
+              href="/newsletter"
+              className="rounded-sm text-honig underline underline-offset-4 hover:text-honig focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-tiefes-wasser focus-visible:ring-honig"
+            >
+              Zum Newsletter <span aria-hidden="true">→</span>
+            </Link>
           )}
         </div>
       </div>
