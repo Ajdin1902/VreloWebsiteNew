@@ -7,8 +7,10 @@ import { JsonLd } from "@/components/JsonLd";
 import { RatgeberIndex } from "@/components/ratgeber/RatgeberIndex";
 import { getAllArticles } from "@/lib/ratgeber";
 import { breadcrumbLd } from "@/lib/jsonld";
+import { canonical } from "@/lib/site";
 
 export const metadata: Metadata = {
+  alternates: { canonical: canonical("/ratgeber") },
   title: "Ratgeber",
   description:
     "Praxisnahe Notizen zur ruhigen Automatisierung für kleine Betriebe — wie du wiederkehrende Arbeit abgibst und Kopffreiheit zurückgewinnst.",

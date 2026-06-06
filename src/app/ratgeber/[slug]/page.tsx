@@ -10,7 +10,7 @@ import { proseComponents } from "@/components/Prose";
 import { remarkBrandword } from "@/lib/remark-brandword";
 import { getArticleSlugs, getArticleBySlug, draftsVisible, type Article } from "@/lib/ratgeber";
 import { articleLd, breadcrumbLd } from "@/lib/jsonld";
-import { siteUrl } from "@/lib/site";
+import { canonical } from "@/lib/site";
 
 export function generateStaticParams() {
   return getArticleSlugs().map((slug) => ({ slug }));
@@ -36,7 +36,7 @@ export async function generateMetadata(
   return {
     title: article.title,
     description: article.description,
-    alternates: { canonical: `${siteUrl}/ratgeber/${article.slug}` },
+    alternates: { canonical: canonical(`/ratgeber/${article.slug}`) },
     openGraph: { title: article.title, description: article.description, type: "article" },
   };
 }

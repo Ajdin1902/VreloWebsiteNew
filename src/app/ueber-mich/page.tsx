@@ -6,8 +6,10 @@ import { StoryBeat } from "@/components/ueber-mich/StoryBeat";
 import { storyBeats } from "@/lib/ueber-mich";
 import { JsonLd } from "@/components/JsonLd";
 import { personLd, breadcrumbLd } from "@/lib/jsonld";
+import { canonical } from "@/lib/site";
 
 export const metadata: Metadata = {
+  alternates: { canonical: canonical("/ueber-mich") },
   title: "Über mich",
   description:
     "Wer hinter Vrelo steckt: meine Geschichte von der Quelle bis zum Merak-Effekt — und warum ich Automatisierungen für kleine Betriebe baue.",
