@@ -9,7 +9,7 @@ const steps = [
 
 export function Steps() {
   return (
-    <Section tone="petrol">
+    <Section tone="petrol" className="border-t border-gletscher/15">
       <Reveal as="p" delayMs={0} className="text-sm font-medium uppercase tracking-wider text-stein">So läuft&apos;s ab</Reveal>
       <Reveal as="h2" delayMs={80} className="mt-3 text-3xl font-semibold text-papier md:text-4xl">
         In drei ruhigen Schritten.
