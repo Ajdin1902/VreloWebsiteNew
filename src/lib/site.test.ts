@@ -16,6 +16,9 @@ describe("normalizeBase", () => {
   it("falls back to the Vercel URL when unset", () => {
     expect(normalizeBase(undefined)).toBe("https://vrelo-website.vercel.app");
   });
+  it("falls back when set but empty", () => {
+    expect(normalizeBase("")).toBe("https://vrelo-website.vercel.app");
+  });
   it("uses a provided value", () => {
     expect(normalizeBase("https://vrelo-ki.de")).toBe("https://vrelo-ki.de");
   });

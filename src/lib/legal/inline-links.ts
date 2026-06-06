@@ -3,9 +3,12 @@ export type InlinePart =
   | { type: "text"; value: string }
   | { type: "link"; label: string; href: string };
 
-// Matches [label](https://href) — href must be http(s) and contain no
-// whitespace or closing paren. Anything else stays literal text.
-const LINK_RE = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
+// Matches [label](https://href) — href must be http(s). The label excludes
+// newlines; the href stops at whitespace or `)` (so URLs containing `)` would
+// truncate — fine for our links). Anything else stays literal text.
+// The /g flag is required by matchAll(), which clones the regex internally, so
+// LINK_RE.lastIndex is never mutated across calls.
+const LINK_RE = /\[([^\]\n]+)\]\((https?:\/\/[^\s)]+)\)/g;
 
 export function parseInlineLinks(text: string): InlinePart[] {
   const parts: InlinePart[] = [];

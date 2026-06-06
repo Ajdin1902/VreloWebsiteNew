@@ -5,7 +5,9 @@
 const FALLBACK_BASE = "https://vrelo-website.vercel.app";
 
 export function normalizeBase(value: string | undefined): string {
-  return (value ?? FALLBACK_BASE).replace(/\/+$/, "");
+  // `||` (not `??`) so a set-but-empty env var ("") also falls back, rather
+  // than producing siteUrl = "" and breaking every canonical.
+  return (value || FALLBACK_BASE).replace(/\/+$/, "");
 }
 
 export const siteUrl = normalizeBase(process.env.NEXT_PUBLIC_SITE_URL);
