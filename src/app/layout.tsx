@@ -18,6 +18,15 @@ export const metadata: Metadata = {
     locale: "de_DE",
     siteName: "Vrelo",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: {
+      default: "Vrelo — Durchdachte Automatisierung für kleine Betriebe",
+      template: "%s — Vrelo",
+    },
+    description:
+      "Maßgeschneiderte Automatisierungen für kleine Betriebe. Du gewinnst Zeit, Ruhe und einen freien Kopf zurück.",
+  },
 };
 
 export default function RootLayout({
