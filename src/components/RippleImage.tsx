@@ -45,8 +45,11 @@ export function RippleImage({
 
     const glc = gl;
     let raf = 0;
-    // seedTimer declared below after resize setup
     let disposed = false;
+
+    // Best-effort context teardown so a failed init or unmount doesn't strand
+    // GPU resources (helps fast remounts / src changes on long-lived pages).
+    const loseContext = () => glc.getExtension("WEBGL_lose_context")?.loseContext();
 
     const vsrc =
       "attribute vec2 p; varying vec2 vUv; void main(){ vUv=p*0.5+0.5; gl_Position=vec4(p,0.0,1.0); }";
@@ -89,6 +92,12 @@ export function RippleImage({
     glc.attachShader(prog, sh(glc.VERTEX_SHADER, vsrc));
     glc.attachShader(prog, sh(glc.FRAGMENT_SHADER, fsrc));
     glc.linkProgram(prog);
+    // If the driver couldn't compile/link (flaky/limited GPU), don't run a broken
+    // draw loop forever — degrade to the static image, same as the no-WebGL path.
+    if (!glc.getProgramParameter(prog, glc.LINK_STATUS)) {
+      loseContext();
+      return;
+    }
     glc.useProgram(prog);
 
     const buf = glc.createBuffer();
@@ -112,6 +121,7 @@ export function RippleImage({
     const tImg = new Image();
     tImg.crossOrigin = "anonymous";
     tImg.onload = () => {
+      if (disposed) return; // unmounted before the texture finished loading
       imgAspect = tImg.width / tImg.height;
       glc.bindTexture(glc.TEXTURE_2D, tex);
       glc.pixelStorei(glc.UNPACK_FLIP_Y_WEBGL, true);
@@ -185,6 +195,7 @@ export function RippleImage({
       window.removeEventListener("resize", resize);
       canvas.removeEventListener("pointermove", onPointer);
       canvas.removeEventListener("pointerdown", onPointer);
+      loseContext();
     };
   }, [src, seedXFraction, seedIntervalMs]);
 
