@@ -20,4 +20,14 @@ describe("CTAButton", () => {
     expect(link).toHaveClass("focus-visible:ring-offset-tiefes-wasser");
     expect(link).not.toHaveClass("focus-visible:ring-offset-papier");
   });
+
+  it("applies the sheen+lift effect class on the primary variant", () => {
+    render(<CTAButton href="/x" />);
+    expect(screen.getByRole("link")).toHaveClass("cta-fx");
+  });
+
+  it("does not apply the effect class on the ghost variant", () => {
+    render(<CTAButton href="/x" variant="ghost" />);
+    expect(screen.getByRole("link")).not.toHaveClass("cta-fx");
+  });
 });
