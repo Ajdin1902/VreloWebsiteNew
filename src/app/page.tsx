@@ -20,9 +20,9 @@ export default function Home() {
       <Hero />
       <Problem />
       <WasIchBaue />
-      <GeschichteTeaser />
       <Steps />
       <Proof />
+      <GeschichteTeaser />
       <MerakClose />
       <JsonLd data={professionalServiceLd()} />
       <JsonLd data={breadcrumbLd([{ name: "Start", path: "/" }])} />
