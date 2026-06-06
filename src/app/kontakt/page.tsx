@@ -25,6 +25,11 @@ export default function KontaktPage() {
         eyebrow="Kontakt"
         title="Lass uns deine Quelle bauen."
         lead="Erzähl mir, was dich täglich Zeit kostet — ich melde mich und sage dir ehrlich, ob und wie ich helfen kann."
+        image={{
+          src: "/images/kontakt-banner.webp",
+          alt: "Eine ruhige Wasseroberfläche im warmen Morgenlicht; ein erster sanfter Ring breitet sich aus.",
+          ratio: "aspect-[21/9]",
+        }}
       />
 
       <Section tone="paper">

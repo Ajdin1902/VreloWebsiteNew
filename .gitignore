@@ -39,6 +39,11 @@ Thumbs.db
 .playwright-mcp/
 phase*.png
 
+# Source image drop folder (originals; optimized derivatives live in public/images/).
+# Root-anchored + case note: Git is case-insensitive on Windows, so an unanchored
+# "Images/" would also match public/images/ — the leading slash keeps it root-only.
+/Images/
+
 # TypeScript incremental build cache
 tsconfig.tsbuildinfo
 *.tsbuildinfo

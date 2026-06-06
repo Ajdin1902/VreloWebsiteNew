@@ -22,6 +22,11 @@ export default function UeberMichPage() {
         eyebrow="Die Person hinter der Arbeit"
         title="Über mich"
         lead="[Platzhalter] Ein, zwei einleitende Sätze: wer du bist und warum es dir bei Vrelo um Ruhe, Zeit und einen freien Kopf geht."
+        image={{
+          src: "/images/ueber-mich-banner.webp",
+          alt: "Ein türkisfarbener Quellfluss entspringt im Morgenlicht am Fuß bosnischer Kalksteinberge.",
+          ratio: "aspect-[16/9]",
+        }}
       />
       {storyBeats.map((beat, index) => (
         <Section
