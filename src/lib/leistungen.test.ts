@@ -25,4 +25,9 @@ describe("leistungen data", () => {
     const slugs = leistungen.map((l) => l.slug);
     expect(new Set(slugs).size).toBe(slugs.length);
   });
+
+  it("frames durability somewhere (the 'it still runs in a year' cue)", () => {
+    const text = leistungen.map((l) => `${l.body} ${l.outcomes.join(" ")}`).join(" ");
+    expect(text).toMatch(/dokumentiert|in einem Jahr|läuft/i);
+  });
 });

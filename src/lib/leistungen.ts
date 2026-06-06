@@ -32,7 +32,7 @@ export const leistungen: Leistung[] = [
     slug: "kommunikation",
     title: "Wiederkehrende Kommunikation",
     punchline: "Routine-Nachrichten schreiben sich von selbst.",
-    body: "Wiederkehrende E-Mails und Benachrichtigungen — Bestätigungen, Status-Updates, Rückmeldungen — laufen automatisch. Persönlich genug, dass niemand den Unterschied merkt.",
+    body: "Wiederkehrende E-Mails und Benachrichtigungen — Bestätigungen, Status-Updates, Rückmeldungen — laufen automatisch. Persönlich genug, dass niemand den Unterschied merkt. Sauber dokumentiert, damit es auch in einem Jahr noch läuft.",
     outcomes: ["immer rechtzeitig", "persönlich & automatisch", "mehr Zeit für echte Gespräche"],
   },
 ];
