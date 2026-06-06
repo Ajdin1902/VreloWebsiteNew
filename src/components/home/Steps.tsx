@@ -10,12 +10,12 @@ const steps = [
 export function Steps() {
   return (
     <Section tone="petrol" className="border-t border-gletscher/15">
-      <Reveal as="h2" delayMs={0} className="text-3xl font-semibold text-papier md:text-4xl">
+      <Reveal as="h2" delayMs={0} className="text-3xl font-semibold tracking-tight text-papier md:text-4xl">
         In drei ruhigen Schritten.
       </Reveal>
       <Reveal as="ol" delayMs={80} className="mt-10 grid gap-6 md:grid-cols-3">
         {steps.map((s) => (
-          <li key={s.num} className="rounded-2xl border border-gletscher/20 bg-tiefes-wasser/40 p-6">
+          <li key={s.num} className="card-depth rounded-2xl border border-gletscher/20 bg-tiefes-wasser/40 p-6">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber font-serif text-lg italic text-tiefes-wasser">
               {s.num}
             </div>

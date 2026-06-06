@@ -30,7 +30,7 @@ export function Hero() {
             seedXFraction={0.5}
             seedYFraction={0.5}
             seedIntervalMs={3000}
-            className="aspect-[16/10] w-full rounded-2xl shadow-[0_18px_60px_rgba(0,0,0,0.35)] ring-1 ring-gletscher/10 md:aspect-[4/5]"
+            className="shadow-deepwater aspect-[16/10] w-full rounded-2xl ring-1 ring-gletscher/10 md:aspect-[4/5]"
           />
           {/* The amber drop – single warm focal point, centered on the ripple
               origin; a seamless warm bloom that seeds the ripple from the middle. */}
