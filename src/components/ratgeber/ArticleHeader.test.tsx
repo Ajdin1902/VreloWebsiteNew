@@ -8,6 +8,7 @@ const article: Article = {
   slug: "x", title: "Der Titel", description: "d",
   date: "2026-05-28", tags: ["Termine", "Automatisierung"],
   draft: false, readingMinutes: 6, body: "b",
+  cover: "/images/ratgeber-termine.webp", coverAlt: "Wasser.",
 };
 
 describe("ArticleHeader", () => {

@@ -12,6 +12,8 @@ title: "Beispielartikel"
 description: "Eine kurze Beschreibung."
 date: "2026-05-20"
 tags: ["Zeit", "Praxis"]
+cover: "/images/ratgeber-zeit.webp"
+coverAlt: "Ruhiges Wasser im Abendlicht."
 draft: true
 ---
 
@@ -43,18 +45,36 @@ describe("parseArticle", () => {
     expect(a.readingMinutes).toBeGreaterThanOrEqual(1);
     expect(a.body).toContain("Erster Absatz");
     expect(a.body).not.toContain("title:");
+    expect(a.cover).toBe("/images/ratgeber-zeit.webp");
+    expect(a.coverAlt).toBe("Ruhiges Wasser im Abendlicht.");
   });
 
   it("defaults draft to false and tags to [] when absent", () => {
-    const a = parseArticle("x.mdx", `---\ntitle: "T"\ndescription: "D"\ndate: "2026-01-01"\n---\nBody`);
+    const a = parseArticle(
+      "x.mdx",
+      `---\ntitle: "T"\ndescription: "D"\ndate: "2026-01-01"\ncover: "/images/ratgeber-system.webp"\ncoverAlt: "Wasser."\n---\nBody`,
+    );
     expect(a.draft).toBe(false);
     expect(a.tags).toEqual([]);
+  });
+
+  it("throws when cover is missing", () => {
+    expect(() =>
+      parseArticle("x.mdx", `---\ntitle: "T"\ndescription: "D"\ndate: "2026-01-01"\ncoverAlt: "Wasser."\n---\nBody`),
+    ).toThrow(/cover/);
+  });
+
+  it("throws when coverAlt is missing", () => {
+    expect(() =>
+      parseArticle("x.mdx", `---\ntitle: "T"\ndescription: "D"\ndate: "2026-01-01"\ncover: "/images/ratgeber-system.webp"\n---\nBody`),
+    ).toThrow(/coverAlt/);
   });
 });
 
 describe("selectArticles", () => {
   const base: Omit<Article, "slug" | "date"> = {
     title: "t", description: "d", tags: [], draft: false, readingMinutes: 1, body: "b",
+    cover: "/images/ratgeber-termine.webp", coverAlt: "Wasser.",
   };
   const articles: Article[] = [
     { ...base, slug: "old", date: "2026-01-01" },

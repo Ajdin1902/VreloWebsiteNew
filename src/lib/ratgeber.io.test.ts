@@ -8,9 +8,9 @@ let dir: string;
 
 beforeAll(() => {
   dir = fs.mkdtempSync(path.join(os.tmpdir(), "ratgeber-"));
-  fs.writeFileSync(path.join(dir, "alpha.mdx"), `---\ntitle: "Alpha"\ndescription: "A"\ndate: "2026-03-01"\ntags: ["X"]\n---\nKörper A`);
-  fs.writeFileSync(path.join(dir, "beta.mdx"), `---\ntitle: "Beta"\ndescription: "B"\ndate: "2026-04-01"\n---\nKörper B`);
-  fs.writeFileSync(path.join(dir, "entwurf.mdx"), `---\ntitle: "Entwurf"\ndescription: "E"\ndate: "2026-05-01"\ndraft: true\n---\nKörper E`);
+  fs.writeFileSync(path.join(dir, "alpha.mdx"), `---\ntitle: "Alpha"\ndescription: "A"\ndate: "2026-03-01"\ntags: ["X"]\ncover: "/images/ratgeber-termine.webp"\ncoverAlt: "Wasser."\n---\nKörper A`);
+  fs.writeFileSync(path.join(dir, "beta.mdx"), `---\ntitle: "Beta"\ndescription: "B"\ndate: "2026-04-01"\ncover: "/images/ratgeber-zeit.webp"\ncoverAlt: "Wasser."\n---\nKörper B`);
+  fs.writeFileSync(path.join(dir, "entwurf.mdx"), `---\ntitle: "Entwurf"\ndescription: "E"\ndate: "2026-05-01"\ndraft: true\ncover: "/images/ratgeber-system.webp"\ncoverAlt: "Wasser."\n---\nKörper E`);
 });
 
 afterAll(() => fs.rmSync(dir, { recursive: true, force: true }));
