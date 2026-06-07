@@ -4,6 +4,7 @@ import { Section } from "@/components/Section";
 import { ClosingCta } from "@/components/ClosingCta";
 import { LeistungDetail } from "@/components/leistungen/LeistungDetail";
 import { Referenzen } from "@/components/leistungen/Referenzen";
+import { Reveal } from "@/components/Reveal";
 import { leistungen } from "@/lib/leistungen";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbLd } from "@/lib/jsonld";
@@ -36,7 +37,9 @@ export default function LeistungenPage() {
           tint={index % 2 === 1}
           className="border-t border-faden"
         >
-          <LeistungDetail leistung={leistung} index={index} />
+          <Reveal>
+            <LeistungDetail leistung={leistung} index={index} />
+          </Reveal>
         </Section>
       ))}
       <Referenzen />

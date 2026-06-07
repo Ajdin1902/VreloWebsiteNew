@@ -19,7 +19,11 @@
   --color-tinte: #14181b;
   --color-papier: #f4efe6;
   --color-faden: #d4ccbc;
-  --color-stumm: #7a7468;
+  /* Darkened from #7a7468 for WCAG AA: stumm is the small uppercase eyebrow/label
+     color (PageIntro, Referenzen, FAQ themes, Ratgeber meta) and 4.05:1 on papier
+     failed AA. #696359 clears it (~5.2:1) while staying the same warm grey. Same
+     accessibility override as the ember token — confirm hue with the founder. */
+  --color-stumm: #696359;
 
   /* Fonts (CSS vars provided by next/font in Task 4) */
   --font-sans: var(--font-jakarta), system-ui, sans-serif;
