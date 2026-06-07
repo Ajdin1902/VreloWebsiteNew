@@ -2,12 +2,15 @@ import { describe, it, expect } from "vitest";
 import { leistungen } from "./leistungen";
 
 describe("leistungen data", () => {
-  it("lists the four homepage service categories in order", () => {
+  it("lists the service categories in customer-journey order", () => {
     expect(leistungen.map((l) => l.title)).toEqual([
+      "Anfragen & Leads",
       "Termine & Bestätigungen",
+      "Angebote & Rechnungen",
       "Nachfass-Mails",
       "Dateneingabe",
       "Wiederkehrende Kommunikation",
+      "Bewertungen einsammeln",
     ]);
   });
 

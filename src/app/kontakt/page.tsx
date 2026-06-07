@@ -25,7 +25,7 @@ export default function KontaktPage() {
       <PageIntro
         eyebrow="Kontakt"
         title="Lass uns deine Quelle bauen."
-        lead="Erzähl mir, was dich täglich Zeit kostet — ich melde mich und sage dir ehrlich, ob und wie ich helfen kann."
+        lead="Erzähl mir, was dich täglich Zeit kostet – ich melde mich und sage dir ehrlich, ob und wie ich helfen kann."
       />
 
       <Section tone="paper">
@@ -53,7 +53,7 @@ export default function KontaktPage() {
               </p>
             ) : (
               <p className="text-tinte">
-                Buch dir oben ein Gespräch — oder ruf mich an. Das Formular schalte ich in Kürze frei.
+                Buch dir oben ein Gespräch – oder ruf mich an. Das Formular schalte ich in Kürze frei.
               </p>
             )}
           </div>

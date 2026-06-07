@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   alternates: { canonical: canonical("/faq") },
   title: "Häufige Fragen",
   description:
-    "Antworten auf die häufigsten Fragen zu Zusammenarbeit, Technik, Sicherheit und Kosten — für kleine Betriebe, die wiederkehrende Aufgaben automatisieren wollen.",
+    "Antworten auf die häufigsten Fragen zu Zusammenarbeit, Technik, Sicherheit und Kosten – für kleine Betriebe, die wiederkehrende Aufgaben automatisieren wollen.",
 };
 
 export default function FaqPage() {
@@ -36,7 +36,7 @@ export default function FaqPage() {
       </Section>
       <ClosingCta
         heading="Offene Frage?"
-        lead="Schreib mir kurz, was du wissen willst — ich melde mich persönlich."
+        lead="Schreib mir kurz, was du wissen willst – ich melde mich persönlich."
       />
       <JsonLd data={faqPageLd()} />
       <JsonLd data={breadcrumbLd([{ name: "Start", path: "/" }, { name: "FAQ", path: "/faq" }])} />

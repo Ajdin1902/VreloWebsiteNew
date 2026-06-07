@@ -66,7 +66,7 @@ export default async function ArticlePage(
       </Section>
       <ClosingCta
         heading="Lass uns deine Quelle bauen."
-        lead="Erzähl mir, was dich täglich Zeit kostet — ich zeige dir unverbindlich, was sich automatisieren lässt."
+        lead="Erzähl mir, was dich täglich Zeit kostet – ich zeige dir unverbindlich, was sich automatisieren lässt."
       />
       <JsonLd data={articleLd(article)} />
       <JsonLd

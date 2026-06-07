@@ -3,11 +3,12 @@ import Image from "next/image";
 import { Section } from "@/components/Section";
 import { Reveal } from "@/components/Reveal";
 
+// A curated four-chip highlight of the services; the full set lives on /leistungen.
 const leistungen = [
+  "Anfragen & Leads",
   "Termine & Bestätigungen",
-  "Nachfass-Mails",
-  "Dateneingabe",
-  "Wiederkehrende Kommunikation",
+  "Angebote & Rechnungen",
+  "Bewertungen einsammeln",
 ];
 
 export function WasIchBaue() {

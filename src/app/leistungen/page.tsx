@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   alternates: { canonical: canonical("/leistungen") },
   title: "Leistungen",
   description:
-    "Maßgeschneiderte Automatisierungen für kleine Betriebe: Termine & Bestätigungen, Nachfass-Mails, Dateneingabe und wiederkehrende Kommunikation.",
+    "Maßgeschneiderte Automatisierungen für kleine Betriebe: von Anfragen & Leads über Termine, Angebote & Rechnungen und Nachfass-Mails bis zu Datensync, wiederkehrender Kommunikation und Bewertungen.",
 };
 
 export default function LeistungenPage() {
@@ -22,7 +22,7 @@ export default function LeistungenPage() {
       <PageIntro
         eyebrow="Was ich baue"
         title="Leistungen"
-        lead="Ich baue dir eine saubere Quelle für die Aufgaben, die sich jeden Tag wiederholen — maßgeschneidert für deinen Betrieb, nicht von der Stange. Kein Flickenteppich aus zehn Tools, sondern eine ruhige Lösung, die still im Hintergrund läuft."
+        lead="Ich baue dir eine saubere Quelle für die Aufgaben, die sich jeden Tag wiederholen – maßgeschneidert für deinen Betrieb, nicht von der Stange. Kein Flickenteppich aus zehn Tools, sondern eine ruhige Lösung, die still im Hintergrund läuft."
         image={{
           src: "/images/leistungen-banner.webp",
           alt: "Klares Wasser fließt durch saubere, geordnete Steinkanäle.",
@@ -42,7 +42,7 @@ export default function LeistungenPage() {
       <Referenzen />
       <ClosingCta
         heading="Lass uns deine Quelle bauen."
-        lead="Erzähl mir, was dich täglich Zeit kostet — ich zeige dir unverbindlich, was sich automatisieren lässt."
+        lead="Erzähl mir, was dich täglich Zeit kostet – ich zeige dir unverbindlich, was sich automatisieren lässt."
       />
       <JsonLd data={breadcrumbLd([{ name: "Start", path: "/" }, { name: "Leistungen", path: "/leistungen" }])} />
     </>

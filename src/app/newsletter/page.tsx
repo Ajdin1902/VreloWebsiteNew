@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   alternates: { canonical: canonical("/newsletter") },
   title: "Newsletter",
   description:
-    "Praktische Automatisierungs-Ideen mit KI — ruhig erklärt. Melde dich für den Vrelo-Newsletter an.",
+    "Praktische Automatisierungs-Ideen mit KI – ruhig erklärt. Melde dich für den Vrelo-Newsletter an.",
 };
 
 export default function NewsletterPage() {
@@ -22,7 +22,7 @@ export default function NewsletterPage() {
       <PageIntro
         eyebrow="Newsletter"
         title="Automatisierungs-Ideen, ruhig erklärt."
-        lead="Ab und zu eine praktische Idee, wie du mit KI Zeit zurückgewinnst — ohne Hype, ohne Spam. Jederzeit abbestellbar."
+        lead="Ab und zu eine praktische Idee, wie du mit KI Zeit zurückgewinnst – ohne Hype, ohne Spam. Jederzeit abbestellbar."
         image={{
           src: "/images/newsletter-banner.webp",
           alt: "Ein ruhiger, klarer Wasserlauf fließt gleichmäßig in die Ferne.",
