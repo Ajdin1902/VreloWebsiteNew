@@ -11,15 +11,27 @@ function renderBody(body: string) {
   ));
 }
 
-export function StoryBeat({
-  beat,
-  index,
-}: {
-  beat: StoryBeatType;
-  index: number;
-}) {
-  const number = String(index + 1).padStart(2, "0");
+export function StoryBeat({ beat }: { beat: StoryBeatType }) {
   const headingId = `beat-${beat.slug}`;
+  const hasVideo = beat.video !== false;
+
+  const text = (
+    <>
+      <h2
+        id={headingId}
+        className="text-balance text-2xl font-semibold tracking-tight text-tiefes-wasser md:text-3xl"
+      >
+        {beat.heading}
+      </h2>
+      {renderBody(beat.body)}
+    </>
+  );
+
+  // A beat without a video renders as a single, readable text column.
+  if (!hasVideo) {
+    return <div className="max-w-2xl">{text}</div>;
+  }
+
   // DOM order is always video-then-text (mobile-consistent); `side` flips
   // the column order on desktop only.
   const videoFirst = beat.side === "left";
@@ -35,20 +47,7 @@ export function StoryBeat({
           className="w-full rounded-2xl object-cover shadow-deepwater"
         />
       </div>
-      <div className={videoFirst ? "md:order-2" : "md:order-1"}>
-        <div className="flex items-baseline gap-3">
-          <span aria-hidden="true" className="font-serif text-xl italic text-vrelo-petrol">
-            {number}
-          </span>
-          <h2
-            id={headingId}
-            className="text-balance text-2xl font-semibold tracking-tight text-tiefes-wasser md:text-3xl"
-          >
-            {beat.heading}
-          </h2>
-        </div>
-        {renderBody(beat.body)}
-      </div>
+      <div className={videoFirst ? "md:order-2" : "md:order-1"}>{text}</div>
     </div>
   );
 }

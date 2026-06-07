@@ -24,9 +24,8 @@ export function MerakClose() {
         Stell dir den Montagmorgen vor, an dem schon zwei Stunden Arbeit erledigt sind.
       </Reveal>
       <Reveal as="p" delayMs={80} className="mt-6 max-w-xl text-pretty text-lg text-tinte">
-        Das ist der <BrandWord>Merak</BrandWord>-Effekt. Kein Druck – schau dir
-        unverbindlich an, was möglich ist. Der Anfang einer ruhigen Zusammenarbeit, kein
-        Verkaufsgespräch.
+        Das ist der <BrandWord>Merak</BrandWord>-Effekt. Schau dir unverbindlich an, was
+        möglich ist. Der Anfang einer ruhigen Zusammenarbeit, kein Verkaufsgespräch.
       </Reveal>
       <Reveal delayMs={160} className="mt-8">
         <CTAButton href="/kontakt" />

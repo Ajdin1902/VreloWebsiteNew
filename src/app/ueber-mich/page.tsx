@@ -37,7 +37,7 @@ export default function UeberMichPage() {
           className="border-t border-faden"
         >
           <Reveal>
-            <StoryBeat beat={beat} index={index} />
+            <StoryBeat beat={beat} />
           </Reveal>
         </Section>
       ))}
