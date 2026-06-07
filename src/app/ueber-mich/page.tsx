@@ -3,6 +3,7 @@ import { PageIntro } from "@/components/PageIntro";
 import { Section } from "@/components/Section";
 import { ClosingCta } from "@/components/ClosingCta";
 import { StoryBeat } from "@/components/ueber-mich/StoryBeat";
+import { Reveal } from "@/components/Reveal";
 import { storyBeats } from "@/lib/ueber-mich";
 import { JsonLd } from "@/components/JsonLd";
 import { personLd, breadcrumbLd } from "@/lib/jsonld";
@@ -35,7 +36,9 @@ export default function UeberMichPage() {
           tint={index % 2 === 1}
           className="border-t border-faden"
         >
-          <StoryBeat beat={beat} index={index} />
+          <Reveal>
+            <StoryBeat beat={beat} index={index} />
+          </Reveal>
         </Section>
       ))}
       <ClosingCta
