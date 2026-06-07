@@ -35,4 +35,9 @@ describe("LeistungDetail", () => {
     expect(h2?.id).toMatch(/\S/);
     expect(ul?.getAttribute("aria-labelledby")).toBe(h2?.id);
   });
+
+  it("wraps the service in a card-depth panel", () => {
+    const { container } = render(<LeistungDetail leistung={sample} index={0} />);
+    expect(container.firstElementChild).toHaveClass("card-depth");
+  });
 });

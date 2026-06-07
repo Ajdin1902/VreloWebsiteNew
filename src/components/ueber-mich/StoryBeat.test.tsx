@@ -5,20 +5,20 @@ import type { StoryBeat as StoryBeatType } from "@/lib/ueber-mich";
 
 const beat: StoryBeatType = {
   slug: "quelle",
-  eyebrow: "Quelle",
   heading: "Woher ich komme",
   body: "[Platzhalter] Test-Text.",
   side: "left",
 };
 
 describe("StoryBeat", () => {
-  it("renders the eyebrow, heading, body, and numeral", () => {
-    render(<StoryBeat beat={beat} index={0} />);
+  it("renders the numeral, heading, and body, without an eyebrow line", () => {
+    const { container } = render(<StoryBeat beat={beat} index={0} />);
     expect(screen.getByRole("heading", { level: 2 })).toHaveTextContent(
       "Woher ich komme"
     );
     expect(screen.getByText("[Platzhalter] Test-Text.")).toBeInTheDocument();
     expect(screen.getByText("01")).toBeInTheDocument();
+    expect(container.querySelector(".uppercase")).toBeNull();
   });
 
   it("renders a video referencing the beat's clip slug", () => {
