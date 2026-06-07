@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { Section } from "@/components/Section";
+import { PageImage } from "@/components/PageImage";
 import { ClosingCta } from "@/components/ClosingCta";
 import { JsonLd } from "@/components/JsonLd";
 import { ArticleHeader } from "@/components/ratgeber/ArticleHeader";
@@ -51,6 +52,9 @@ export default async function ArticlePage(
   return (
     <>
       <Section tone="paper">
+        <div className="mx-auto mb-10 max-w-4xl">
+          <PageImage src={article.cover} alt={article.coverAlt} ratio="aspect-[16/9]" />
+        </div>
         <ArticleHeader article={article} />
         <div className="mx-auto mt-10 max-w-2xl">
           <MDXRemote
