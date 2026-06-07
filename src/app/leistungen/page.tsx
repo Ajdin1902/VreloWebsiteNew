@@ -4,6 +4,7 @@ import { Section } from "@/components/Section";
 import { ClosingCta } from "@/components/ClosingCta";
 import { LeistungDetail } from "@/components/leistungen/LeistungDetail";
 import { Referenzen } from "@/components/leistungen/Referenzen";
+import { MehrMoeglich } from "@/components/leistungen/MehrMoeglich";
 import { Reveal } from "@/components/Reveal";
 import { leistungen } from "@/lib/leistungen";
 import { JsonLd } from "@/components/JsonLd";
@@ -42,6 +43,7 @@ export default function LeistungenPage() {
           </Reveal>
         </Section>
       ))}
+      <MehrMoeglich />
       <Referenzen />
       <ClosingCta
         heading="Lass uns deine Quelle bauen."
