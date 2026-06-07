@@ -1,13 +1,7 @@
 // src/app/sitemap.test.ts
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import sitemap from "./sitemap";
 import { siteUrl } from "@/lib/site";
-
-// Isolate from the real content dir: seed articles currently lack cover/coverAlt
-// (added in Task 4). getAllArticles is the filesystem boundary — mock it here.
-vi.mock("@/lib/ratgeber", () => ({
-  getAllArticles: vi.fn(() => []),
-}));
 
 describe("sitemap", () => {
   it("includes the core live routes and excludes unbuilt ones", () => {
@@ -33,7 +27,7 @@ describe("sitemap", () => {
   });
 
   it("never lists draft articles", () => {
-    // getAllArticles is mocked to return [] → no /ratgeber/<slug> entries
+    // all seed articles are drafts → no /ratgeber/<slug> entries
     const urls = sitemap().map((e) => e.url);
     expect(urls.some((u) => u.startsWith(`${siteUrl}/ratgeber/`))).toBe(false);
   });
