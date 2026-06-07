@@ -21,7 +21,7 @@ export default function UeberMichPage() {
       <PageIntro
         eyebrow="Die Person hinter der Arbeit"
         title="Über mich"
-        lead="[Platzhalter] Ein, zwei einleitende Sätze: wer du bist und warum es dir bei Vrelo um Ruhe, Zeit und einen freien Kopf geht."
+        lead="Ich bin Ajdin Dzafic (ausgesprochen: Eidien Dschafitsch), Inhaber von Vrelo (ausgesprochen: Vrehlo). Kennst du diesen schönen Moment nach einem langen, stressigen Arbeitstag – sich hinzusetzen, den Kopf auszuschalten und die Ruhe einfach zu genießen? Noch besser gepaart mit einer schönen Aussicht oder besonderen Mitmenschen? Was, wenn das alles möglich wäre – nur ohne den ganzen Stress aus dem Arbeitsalltag? (Spoiler-Alert: Stress wird es immer geben, aber den unnötigen Stress kann man sich sparen.)"
         image={{
           src: "/images/ueber-mich-banner.webp",
           alt: "Ein türkisfarbener Quellfluss entspringt im Morgenlicht am Fuß bosnischer Kalksteinberge.",
