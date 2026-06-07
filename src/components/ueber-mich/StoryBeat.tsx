@@ -5,7 +5,7 @@ import type { StoryBeat as StoryBeatType } from "@/lib/ueber-mich";
 // A story-beat body is plain text; blank lines separate paragraphs.
 function renderBody(body: string) {
   return body.split(/\n{2,}/).map((para, i) => (
-    <p key={i} className={`${i === 0 ? "mt-4" : "mt-3"} max-w-xl text-tinte`}>
+    <p key={i} className={`${i === 0 ? "mt-4" : "mt-3"} max-w-xl text-pretty text-tinte`}>
       {withBrandWords(para)}
     </p>
   ));
@@ -32,22 +32,21 @@ export function StoryBeat({
           webm={`/video/${beat.slug}.webm`}
           poster={`/video/${beat.slug}-poster.jpg`}
           aspect="aspect-video"
-          className="w-full rounded-2xl object-cover"
+          className="w-full rounded-2xl object-cover shadow-deepwater"
         />
       </div>
       <div className={videoFirst ? "md:order-2" : "md:order-1"}>
-        <p aria-hidden="true" className="font-serif text-lg italic text-vrelo-petrol">
-          {number}
-        </p>
-        <p className="mt-2 text-sm font-medium uppercase tracking-wider text-stumm">
-          {beat.eyebrow}
-        </p>
-        <h2
-          id={headingId}
-          className="mt-2 text-2xl font-semibold text-tiefes-wasser md:text-3xl"
-        >
-          {beat.heading}
-        </h2>
+        <div className="flex items-baseline gap-3">
+          <span aria-hidden="true" className="font-serif text-xl italic text-vrelo-petrol">
+            {number}
+          </span>
+          <h2
+            id={headingId}
+            className="text-balance text-2xl font-semibold tracking-tight text-tiefes-wasser md:text-3xl"
+          >
+            {beat.heading}
+          </h2>
+        </div>
         {renderBody(beat.body)}
       </div>
     </div>
