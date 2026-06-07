@@ -7,6 +7,7 @@ import type { Article } from "@/lib/ratgeber";
 const a = (slug: string, title: string): Article => ({
   slug, title, description: "d", date: "2026-05-01", tags: [],
   draft: false, readingMinutes: 1, body: "b",
+  cover: "/images/ratgeber-termine.webp", coverAlt: "Wasser.",
 });
 
 describe("RatgeberIndex", () => {

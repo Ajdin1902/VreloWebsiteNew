@@ -10,6 +10,8 @@ export type Article = {
   tags: string[];
   draft: boolean;
   readingMinutes: number;
+  cover: string; // public path, e.g. "/images/ratgeber-termine.webp"
+  coverAlt: string; // German alt text
   body: string; // raw MDX body, frontmatter stripped
 };
 
@@ -29,14 +31,25 @@ export function formatDate(iso: string): string {
 
 export function parseArticle(filename: string, raw: string): Article {
   const { data, content } = matter(raw);
+  const slug = filename.replace(/\.mdx?$/, "");
+  const cover = String(data.cover ?? "").trim();
+  const coverAlt = String(data.coverAlt ?? "").trim();
+  if (!cover) {
+    throw new Error(`Ratgeber article "${slug}" is missing required frontmatter: cover`);
+  }
+  if (!coverAlt) {
+    throw new Error(`Ratgeber article "${slug}" is missing required frontmatter: coverAlt`);
+  }
   return {
-    slug: filename.replace(/\.mdx?$/, ""),
+    slug,
     title: String(data.title ?? ""),
     description: String(data.description ?? ""),
     date: String(data.date ?? ""),
     tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
     draft: data.draft === true,
     readingMinutes: readingMinutes(content),
+    cover,
+    coverAlt,
     body: content,
   };
 }

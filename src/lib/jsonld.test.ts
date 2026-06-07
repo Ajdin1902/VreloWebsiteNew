@@ -31,6 +31,7 @@ describe("jsonld builders", () => {
     const a: Article = {
       slug: "x", title: "T", description: "D", date: "2026-05-01",
       tags: [], draft: false, readingMinutes: 3, body: "b",
+      cover: "/images/ratgeber-termine.webp", coverAlt: "Wasser.",
     };
     const ld = articleLd(a);
     expect(ld["@type"]).toBe("Article");
