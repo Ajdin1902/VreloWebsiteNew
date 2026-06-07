@@ -19,7 +19,6 @@ export function ArticleCard({ article }: { article: Article }) {
           alt={article.coverAlt}
           ratio="aspect-[16/9]"
           sizes="(min-width: 640px) 160px, 100vw"
-          className="rounded-xl"
         />
       </div>
       <div className="min-w-0">
