@@ -12,7 +12,6 @@ export const storyBeats: StoryBeat[] = [
     heading: "Woher ich komme",
     body: "Mein Name kommt – wie auch der Name Vrelo – aus Bosnien und Herzegowina. Vrelo bedeutet Quelle: der Ursprung, aus dem ein Fluss klar und beständig entspringt. Genau dieses Bild steht hinter meiner Arbeit.\n\nWenn ich dort bin, passiert etwas Faszinierendes: Der Arbeitsstress fällt ab, und es bleibt Raum für das Wesentliche. Die Frage, die mich seitdem begleitet: Wie lässt sich dieses Gefühl in den Arbeitsalltag holen? Die Antwort liegt darin, die vielen täglichen Aufgaben loszuwerden, die Zeit und Konzentration rauben. Es braucht eine saubere, definierte Quelle, aus der die Tätigkeiten strukturiert und automatisiert laufen. Möglich ist das – im Tagesgeschäft fehlt nur die Zeit, es sauber aufzusetzen. Genau hier setzt Vrelo an.",
     side: "left",
-    video: false,
   },
   {
     slug: "ripples",
