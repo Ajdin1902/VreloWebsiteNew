@@ -1,5 +1,15 @@
 import { LazyVideo } from "@/components/LazyVideo";
+import { withBrandWords } from "@/components/BrandWord";
 import type { StoryBeat as StoryBeatType } from "@/lib/ueber-mich";
+
+// A story-beat body is plain text; blank lines separate paragraphs.
+function renderBody(body: string) {
+  return body.split(/\n{2,}/).map((para, i) => (
+    <p key={i} className={`${i === 0 ? "mt-4" : "mt-3"} max-w-xl text-tinte`}>
+      {withBrandWords(para)}
+    </p>
+  ));
+}
 
 export function StoryBeat({
   beat,
@@ -38,7 +48,7 @@ export function StoryBeat({
         >
           {beat.heading}
         </h2>
-        <p className="mt-4 max-w-xl text-tinte">{beat.body}</p>
+        {renderBody(beat.body)}
       </div>
     </div>
   );

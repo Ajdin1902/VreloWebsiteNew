@@ -30,4 +30,27 @@ describe("StoryBeat", () => {
       container.querySelector('source[src="/video/quelle.webm"]')
     ).toBeInTheDocument();
   });
+
+  it("splits a blank-line-separated body into multiple paragraphs", () => {
+    const multi: StoryBeatType = {
+      ...beat,
+      body: "Erster Absatz hier.\n\nZweiter Absatz hier.",
+    };
+    render(<StoryBeat beat={multi} index={0} />);
+    expect(screen.getByText("Erster Absatz hier.")).toBeInTheDocument();
+    expect(screen.getByText("Zweiter Absatz hier.")).toBeInTheDocument();
+  });
+
+  it("wraps Vrelo and Merak in a Fraunces-italic BrandWord", () => {
+    const branded: StoryBeatType = {
+      ...beat,
+      body: "Genau hier kommt Vrelo ins Spiel: mehr Merak im Alltag.",
+    };
+    render(<StoryBeat beat={branded} index={0} />);
+    for (const word of ["Vrelo", "Merak"]) {
+      const el = screen.getByText(word);
+      expect(el.tagName).toBe("SPAN");
+      expect(el).toHaveClass("italic");
+    }
+  });
 });

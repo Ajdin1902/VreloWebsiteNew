@@ -11,11 +11,12 @@ describe("storyBeats", () => {
     ]);
   });
 
-  it("each beat has an eyebrow, heading, and a placeholder body for the founder", () => {
+  it("each beat has an eyebrow, heading, and a real (non-placeholder) body", () => {
     for (const beat of storyBeats) {
       expect(beat.eyebrow.length).toBeGreaterThan(0);
       expect(beat.heading.length).toBeGreaterThan(0);
-      expect(beat.body).toContain("[Platzhalter]");
+      expect(beat.body.length).toBeGreaterThan(80);
+      expect(beat.body).not.toContain("[Platzhalter]");
     }
   });
 

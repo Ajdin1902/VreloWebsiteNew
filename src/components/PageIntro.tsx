@@ -1,5 +1,6 @@
 import { Section } from "@/components/Section";
 import { PageImage } from "@/components/PageImage";
+import { withBrandWords } from "@/components/BrandWord";
 
 export function PageIntro({
   eyebrow,
@@ -22,7 +23,7 @@ export function PageIntro({
       <h1 className="mt-3 max-w-3xl text-4xl font-semibold text-tiefes-wasser md:text-5xl">
         {title}
       </h1>
-      {lead ? <p className="mt-5 max-w-2xl text-lg text-tinte">{lead}</p> : null}
+      {lead ? <p className="mt-5 max-w-2xl text-lg text-tinte">{withBrandWords(lead)}</p> : null}
       {image ? (
         <PageImage src={image.src} alt={image.alt} ratio={image.ratio} className="mt-10" />
       ) : null}

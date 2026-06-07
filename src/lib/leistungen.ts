@@ -11,7 +11,7 @@ export const leistungen: Leistung[] = [
     slug: "termine",
     title: "Termine & Bestätigungen",
     punchline: "Schluss mit Hinterhertelefonieren.",
-    body: "Termine werden automatisch bestätigt, erinnert und nachgehalten. Deine Kund:innen bekommen rechtzeitig Bescheid — und du musst nicht mehr daran denken.",
+    body: "Termine werden automatisch bestätigt, erinnert und nachgehalten. Deine Kunden bekommen rechtzeitig Bescheid — und du musst nicht mehr daran denken.",
     outcomes: ["weniger No-Shows", "automatische Erinnerungen", "kein Nachtelefonieren"],
   },
   {
