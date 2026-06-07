@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   alternates: { canonical: canonical("/ueber-mich") },
   title: "Über mich",
   description:
-    "Wer hinter Vrelo steckt: meine Geschichte von der Quelle bis zum Merak-Effekt — und warum ich Automatisierungen für kleine Betriebe baue.",
+    "Wer hinter Vrelo steckt: meine Geschichte von der Quelle bis zum Merak-Effekt – und warum ich Automatisierungen für kleine Betriebe baue.",
 };
 
 export default function UeberMichPage() {
@@ -40,7 +40,7 @@ export default function UeberMichPage() {
       ))}
       <ClosingCta
         heading="Lern mich unverbindlich kennen."
-        lead="Erzähl mir, was dich täglich Zeit kostet — ich zeige dir ehrlich, ob und wie ich helfen kann."
+        lead="Erzähl mir, was dich täglich Zeit kostet – ich zeige dir ehrlich, ob und wie ich helfen kann."
       />
       <JsonLd data={personLd()} />
       <JsonLd data={breadcrumbLd([{ name: "Start", path: "/" }, { name: "Über mich", path: "/ueber-mich" }])} />
