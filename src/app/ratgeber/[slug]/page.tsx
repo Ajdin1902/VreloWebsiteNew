@@ -51,7 +51,7 @@ export default async function ArticlePage(
 
   return (
     <>
-      <Section tone="paper">
+      <Section tone="reading">
         <div className="mx-auto mb-10 max-w-4xl">
           <PageImage src={article.cover} alt={article.coverAlt} ratio="aspect-[16/9]" />
         </div>

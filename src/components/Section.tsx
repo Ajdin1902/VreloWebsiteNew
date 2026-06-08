@@ -1,9 +1,11 @@
 import type { ReactNode } from "react";
 
-type Tone = "paper" | "cool" | "warm" | "petrol";
+type Tone = "paper" | "reading" | "cool" | "warm" | "petrol";
 
 const toneClasses: Record<Tone, string> = {
   paper: "bg-papier text-tinte",
+  // Deeper warm paper for long-form reading (Ratgeber articles only).
+  reading: "bg-lesepapier text-tinte",
   cool: "bg-tiefes-wasser text-gletscher",
   warm: "bg-sonnenlicht text-tinte",
   petrol: "bg-vrelo-petrol text-gletscher",
