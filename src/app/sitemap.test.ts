@@ -2,6 +2,7 @@
 import { describe, it, expect } from "vitest";
 import sitemap from "./sitemap";
 import { siteUrl } from "@/lib/site";
+import { getAllArticles } from "@/lib/ratgeber";
 
 describe("sitemap", () => {
   it("includes the core live routes and excludes unbuilt ones", () => {
@@ -26,9 +27,20 @@ describe("sitemap", () => {
     expect(urls).not.toContain(`${siteUrl}/newsletter/bestaetigt`);
   });
 
-  it("never lists draft articles", () => {
-    // all seed articles are drafts → no /ratgeber/<slug> entries
+  it("lists every published article and never a draft", () => {
     const urls = sitemap().map((e) => e.url);
-    expect(urls.some((u) => u.startsWith(`${siteUrl}/ratgeber/`))).toBe(false);
+    const published = getAllArticles({ includeDrafts: false });
+    const draftSlugs = getAllArticles({ includeDrafts: true })
+      .filter((a) => !published.some((p) => p.slug === a.slug))
+      .map((a) => a.slug);
+
+    // Published articles appear with their canonical /ratgeber/<slug> URL.
+    for (const a of published) {
+      expect(urls).toContain(`${siteUrl}/ratgeber/${a.slug}`);
+    }
+    // Drafts (if any) are always excluded — the sitemap uses production semantics.
+    for (const slug of draftSlugs) {
+      expect(urls).not.toContain(`${siteUrl}/ratgeber/${slug}`);
+    }
   });
 });
