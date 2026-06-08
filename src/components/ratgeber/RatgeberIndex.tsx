@@ -7,7 +7,7 @@ export function RatgeberIndex({ articles }: { articles: Article[] }) {
     return <p className="font-serif text-xl italic text-stumm">Hier entsteht der Ratgeber.</p>;
   }
   return (
-    <div className="mx-auto max-w-3xl">
+    <div className="max-w-3xl">
       {articles.map((article) => (
         <ArticleCard key={article.slug} article={article} />
       ))}

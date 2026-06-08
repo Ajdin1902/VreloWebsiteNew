@@ -11,16 +11,16 @@ export const proseComponents = {
     <h3 className="mt-8 font-serif text-xl font-medium text-tiefes-wasser" {...p} />
   ),
   p: (p: ComponentProps<"p">) => (
-    <p className="mt-4 leading-relaxed text-tinte/90" {...p} />
+    <p className="mt-5 text-lg leading-relaxed text-tinte/90" {...p} />
   ),
   a: (p: ComponentProps<"a">) => (
     <a className="text-vrelo-petrol underline underline-offset-2 hover:text-ember" {...p} />
   ),
   ul: (p: ComponentProps<"ul">) => (
-    <ul className="mt-4 list-disc space-y-1 pl-5 text-tinte/90" {...p} />
+    <ul className="mt-5 list-disc space-y-2 pl-5 text-lg text-tinte/90" {...p} />
   ),
   ol: (p: ComponentProps<"ol">) => (
-    <ol className="mt-4 list-decimal space-y-1 pl-5 text-tinte/90" {...p} />
+    <ol className="mt-5 list-decimal space-y-2 pl-5 text-lg text-tinte/90" {...p} />
   ),
   li: (p: ComponentProps<"li">) => <li className="leading-relaxed" {...p} />,
   blockquote: (p: ComponentProps<"blockquote">) => (
