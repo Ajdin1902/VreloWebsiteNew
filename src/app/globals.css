@@ -17,12 +17,16 @@
 
   /* Neutral (~10%) */
   --color-tinte: #14181b;
-  --color-papier: #f4efe6;
+  /* Deepened from #f4efe6 (L 0.867) to cut full-page reading glare on long-form
+     Ratgeber pages. #ece3d2 (L 0.774) is the darkest tone that keeps every text
+     token at WCAG AA with no other change (stumm 4.67, ember 5.13, tinte 14.0).
+     Site-wide base — confirm with the founder before deepening further. */
+  --color-papier: #ece3d2;
   --color-faden: #d4ccbc;
   /* Darkened from #7a7468 for WCAG AA: stumm is the small uppercase eyebrow/label
-     color (PageIntro, Referenzen, FAQ themes, Ratgeber meta) and 4.05:1 on papier
-     failed AA. #696359 clears it (~5.2:1) while staying the same warm grey. Same
-     accessibility override as the ember token — confirm hue with the founder. */
+     color (PageIntro, Referenzen, FAQ themes, Ratgeber meta). On the deepened
+     papier (#ece3d2) #696359 is 4.67:1 — still clears AA. Same accessibility
+     override as the ember token — confirm hue with the founder. */
   --color-stumm: #696359;
 
   /* Fonts (CSS vars provided by next/font in Task 4) */

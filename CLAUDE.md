@@ -60,7 +60,8 @@ All six roadmap phases plus the post-Phase-6 polish are merged and deployed. Sin
 
 ## Gotchas
 - **German quotes** „…“ = U+201E (open) + U+201C (close) — never ASCII `"`. The Edit tool can silently downgrade them; verify bytes (or write via `fs`/Write) when inserting them.
-- **stumm token = `#696359`** (darkened from Brand.md's `#7a7468`) so small uppercase eyebrow/label text clears WCAG AA on papier (4.05→5.19). Accessibility override like ember — confirm hue with the founder before reverting.
+- **papier token = `#ece3d2`** (deepened from `#f4efe6`, L 0.867→0.774) to cut full-page reading glare on the long-form Ratgeber. It's the **darkest tone that keeps every text token at AA with no other change** (stumm 4.67, ember 5.13, tinte 14.0); going darker (e.g. sepia `#e7ddc9`) drops stumm below 4.5 and would need stumm re-darkened too. Site-wide base — confirm before deepening further.
+- **stumm token = `#696359`** (darkened from Brand.md's `#7a7468`) so small uppercase eyebrow/label text clears WCAG AA on papier — **4.67:1 on the deepened `#ece3d2`** (was 5.19 on the old `#f4efe6`). Accessibility override like ember — confirm hue with the founder before reverting.
 - **German dash** the Gedankenstrich is the **en-dash with spaces** „ – “ (U+2013), not the em-dash „—“ (U+2014). Use `–` in client copy.
 - **ember token = `#7e5527`** (darkened from Brand.md's `#8b5e2c`) so small ember text on sonnenlicht clears WCAG AA. Accessibility override — confirm with the founder before reverting to the exact brand hex.
 - **OG images:** `ImageResponse`/satori needs a **static** TTF (variable fonts crash it) — `src/app/_og/Fraunces-SemiBold-static.ttf`.
