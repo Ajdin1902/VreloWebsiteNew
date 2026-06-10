@@ -27,21 +27,13 @@ All six roadmap phases plus the post-Phase-6 polish are merged and deployed. Sin
 5. **Legal & polish** — legal pages render clickable inline links (`parseInlineLinks` → `LegalPage`, Markdown `[label](url)`); **env-driven `siteUrl`** (`NEXT_PUBLIC_SITE_URL` + `normalizeBase` fallback + `canonical()`); Twitter `summary_large_image` cards + per-page canonicals.
 6. **End-stage design pass** — interactive **WebGL water Hero** (`RippleImage`: static `<img>` is the LCP, deferred WebGL canvas ripples under the pointer, amber drop seeds a ripple; degrades to the still image on reduced-motion / no-WebGL / shader-link-failure); **`BrandLockup`** logo in Header + Footer; full-screen **`MobileNav`** drawer; petrol palette rhythm (`WasIchBaue` + `Steps` are `tone="petrol"`; *tiefes-wasser* reserved for Hero + Footer); partner-framing copy (draft-to-verify); favicon `src/app/icon.svg`.
 
-### Post-Phase-6 follow-ups (all `@theme`-token-based, reduced-motion-safe, CLS-safe)
-- **Hero refinement** — right panel = `public/video/hero-quelle.jpg` (a frame from `Videos/Beginning.mp4`); `.hero-drop` is a centered seamless warm bloom; `RippleImage` gained `seedYFraction` so the Hero seeds the ripple from panel center `(0.5, 0.5)`.
-- **Motion polish** — CTA sheen+lift (`.cta-fx`; uses `filter: drop-shadow` so the focus-visible ring is never clobbered; primary variant only). Hero text reveal-on-load (`.hero-reveal-*`; **H1 transform-only** so LCP paints immediately). Two-way homepage scroll-reveal (shared **`Reveal`** primitive; hidden state gated behind `html.reveal-ready` so **no-JS renders everything visible**).
-- **Homepage narrative reorder** — Hero → Problem → Was ich baue → So läuft's ab → Proof → Geschichte → Merak. `WasIchBaue` + `Steps` form one continuous petrol block (hairline `border-t border-gletscher/15` seam); the warm **Geschichte → Merak** pair is the emotional finale.
-- **Mobile-nav fix** — the drawer is portaled to `document.body`. The Header's `backdrop-blur` was making it the containing block for `fixed` descendants, so `fixed inset-0` sized to the header bar (~64px) and links overflowed with no background (the "transparent drawer" bug).
-- **Hero ripple cadence** — the Hero seeds the water ripple every **3s** (`seedIntervalMs={3000}`); `RippleImage` default stays 5s.
-- **Homepage design-polish trio** — three design skills run over the homepage, redesign-preserve (keep the locked brand, calm-over-loud), browser-verified at 1440 + 390:
-  - **taste (`design-taste-frontend`)** — eyebrow restraint (5 section eyebrows → 2: only „Was ich baue“ + „Die Geschichte“; the headline carries the rest); tightened hero subtext; em-dash → German **en-dash** (Halbgeviertstrich „ – “) across the copy.
-  - **high-end craft (`high-end-visual-design`)** — spatial rhythm (`Section` `py-24 md:py-32`); haptic card depth (`.card-depth`: soft deep-water-tinted shadow + inset top edge-light) on the petrol cards; hero panel shadow retinted black → deep-water (`.shadow-deepwater`); button-in-button CTA (nested trailing-arrow circle, hover-shift) + text-link arrow hover; `tracking-tight` on the sans section headings.
-  - **impeccable (`impeccable`, `polish`)** — WCAG **AA contrast** fixes: „Was ich baue“ eyebrow `text-stein`→`text-gletscher` (4.20→7.02 on petrol); **ember token darkened `#8b5e2c`→`#7e5527`** so small ember text on sonnenlicht clears AA (4.47→5.20; large headings unaffected). Type refinement: `text-balance` on headings, `text-pretty` on body.
-- **Water imagery (home + pages)** — cohesive Nano Banana water photography (brand water world, cool-dominant), below the fold (Hero stays LCP), German alt text, browser-verified. Prompts in [image_prompt.md](image_prompt.md); optimized WebP in `public/images/`.
-  - **Foreground (`next/image`):** shared **`PageImage`** component (rounded `.shadow-deepwater` panel, `next/image fill`). Home `GeschichteTeaser` 2-col with the Bosnian karst spring; `WasIchBaue` 2-col with a portrait drop panel. `PageIntro` has an **optional `image` prop** (`{ src, alt, ratio }`, renders `PageImage`) driving **top banners** on `/leistungen` (21:9), `/ueber-mich` (16:9), `/ratgeber` (16:9), `/newsletter` (16:9). On **`/kontakt` (21:9) + `/faq` (16:9) the image sits at the page bottom** (content-first: scheduler/questions lead, image closes) via `PageImage` in a trailing `Section`.
-  - **Section backdrops (decorative `<img>` + tint):** `Steps` has a faint **Fließen** backdrop (`bg-vrelo-petrol/70` tint), `Proof` a faint texture (`bg-papier/88`). Pattern mirrors `MerakClose` — **requires `isolate` on the `Section`** (see Gotchas) or the `-z` image hides behind the section bg. Fixing that also un-hid the **MerakClose sunset**, which had been invisible since launch.
-  - **Footer:** the „Newsletter“ heading + its fallback now link to `/newsletter` (the page isn't in the top nav, so the footer is its entry point).
-  - **Shipped (2026-06-07):** the Ratgeber **per-article covers** — banner above the article title + 16:9 index thumbnail; `cover`/`coverAlt` are required frontmatter; 3 seed covers in `public/images/ratgeber-{termine,zeit,system}.webp`. One spare cover + an index-header variant remain in `Images/`. (See *Recently shipped* below.)
+### Post-Phase-6 design system (durable patterns)
+All `@theme`-token-based, reduced-motion-safe, CLS-safe, browser-verified 1440/390. Granular live-tuning knobs live under *Open todos → Live nudges*; reusable warnings under *Gotchas*.
+- **Hero:** `RippleImage` — static `<img>` is the LCP, deferred WebGL ripples under the pointer, amber drop seeds it every **3s**; degrades to the still on reduced-motion / no-WebGL / shader-link-failure. Hero text reveal is **H1 transform-only** so LCP paints immediately.
+- **Scroll-motion:** shared **`Reveal`** primitive (two-way fade-up; hidden state gated behind `html.reveal-ready` so **no-JS renders everything visible**).
+- **Depth/craft utilities:** `.card-depth` (deep-water shadow + inset edge-light), `.shadow-deepwater`, `.cta-fx` (CTA sheen+lift via `filter: drop-shadow`, primary only), button-in-button CTA; `text-balance` on headings, `text-pretty` on body; eyebrow restraint.
+- **Imagery:** shared **`PageImage`** (`next/image fill`, rounded deepwater panel); `PageIntro` optional `image` prop drives page banners; cohesive Nano Banana water photography below the fold (Hero stays LCP, German alt) — source in [image_prompt.md](image_prompt.md) → optimized WebP in `public/images/`. Decorative section backdrops (`Steps`/`Proof`/`MerakClose`) **require `isolate`** (see Gotchas).
+- **Homepage order:** Hero → Problem → Was ich baue → Steps → Proof → Geschichte → Merak (petrol `WasIchBaue`+`Steps` block; warm Geschichte→Merak finale).
 
 ## Next session — planned work (resume here)
 1. **Legal copy** — replace every `[Platzhalter]` in `src/lib/legal/{impressum,datenschutz}.ts` with real, verified copy (founder/lawyer); also sweep its em-dashes → en-dashes (deferred from the route-page sweep).
@@ -56,12 +48,7 @@ All six roadmap phases plus the post-Phase-6 polish are merged and deployed. Sin
 > - **Ratgeber copy polish** (copy-editing/stop-slop/ogilvy) — generic-masculine „Inhaber“ fix; thinned water-metaphor density; varied a repeated „Das klingt … “ cadence; de-duplicated the body-close + CTA-band double ask (bodies now end on a short thematic lead-in, the band makes the ask).
 > - **Ratgeber design+copy analysis** done with the design + copywriting skills (browser-verified 1440/390 + AA); all P1/P2 findings actioned. No spec file — inline analysis.
 >
-> **Recently shipped (2026-06-07, post-launch refinements — all deployed):**
-> - **Ratgeber per-article covers** — `cover`+`coverAlt` are **required** MDX frontmatter (`parseArticle` throws if missing; guarded by `src/lib/ratgeber.covers.test.ts`); render as a banner above the title + a 16:9 index thumbnail. Seed covers: `public/images/ratgeber-{termine,zeit,system}.webp`. `PageImage` gained an optional `sizes` prop.
-> - **Real copy** — Über-mich (4 beats Quelle/Wellen/Fluss/Merak + lead; refined to a **warm-professional, trust-building** tone via the copywriting skills — cut the jokey asides, led with credibility, leaned into *Merak*; beats are now **numberless**, and „Woher ich komme“ is text-only-capable). Leistungen 4→**7 services** (`src/lib/leistungen.ts`; homepage `WasIchBaue` shows a curated four). FAQ founder answers (`src/lib/faq.ts`). Em-dash → en-dash swept across all route pages (legal excepted). `withBrandWords` (`src/components/BrandWord.tsx`) italicizes „Vrelo“/„Merak“ in every lead + `ClosingCta`.
-> - **Subpage design polish** (Leistungen/Über-mich/FAQ, redesign-preserve) — `.card-depth` panels, the `Reveal` scroll-motion brought to the subpages, `text-balance`/`text-pretty`, eyebrow restraint; **`stumm` token darkened for AA** (see Gotchas).
-> - **Leistungen capstone** `MehrMoeglich` (`src/components/leistungen/MehrMoeglich.tsx`) — a petrol `card-depth` panel after the 7 cards framing them as examples + the restraint promise. **Page CTAs** — per-page `ClosingCta` leads; homepage `MerakClose` close tightened.
-> Specs/plans for these: `docs/superpowers/{specs,plans}/2026-06-07-*`.
+> **Earlier (2026-06-07, all deployed):** real copy across Über-mich (4 numberless beats Quelle/Wellen/Fluss/Merak, warm-professional), Leistungen (4→**7 services** in `src/lib/leistungen.ts` + the `MehrMoeglich` petrol capstone; homepage shows a curated four), FAQ founder answers (`src/lib/faq.ts`); per-page `ClosingCta` leads; `withBrandWords` italicizes „Vrelo“/„Merak“ in leads; subpage design polish (`.card-depth`, `Reveal`, `text-balance`/`text-pretty`); **`stumm` token darkened for AA**; Ratgeber per-article covers (`PageImage` got a `sizes` prop). Specs/plans: `docs/superpowers/{specs,plans}/2026-06-07-*`.
 
 ## Gotchas
 - **German quotes** „…“ = U+201E (open) + U+201C (close) — never ASCII `"`. The Edit tool can silently downgrade them; verify bytes (or write via `fs`/Write) when inserting them.
@@ -116,10 +103,12 @@ All six roadmap phases plus the post-Phase-6 polish are merged and deployed. Sin
 src/app/            layout.tsx, page.tsx (homepage), globals.css (brand tokens), per-route pages
 src/components/      BrandWord, BrandLockup, CTAButton, Header, MobileNav, Footer, Section, Hero,
                      RippleImage, Reveal, LazyVideo, PageIntro · home/ · leistungen/ · faq/ · ueber-mich/
-src/lib/            fonts.ts, nav.ts, site.ts, contact.ts, newsletter.ts, legal/, email/, content data
+src/lib/            fonts.ts, nav.ts, site.ts, contact.ts, newsletter.ts, ratgeber.ts, legal/, email/, content data
+content/ratgeber/   the Ratgeber MDX articles (frontmatter + body)
 public/video/       optimized clips + posters (derivatives, committed)
-public/images/      optimized WebP imagery for home + page banners (derivatives, committed)
+public/images/      optimized WebP imagery for home + page banners + ratgeber covers (derivatives, committed)
 public/logo/        brand assets (see Brand.md §4)
+.claude/skills/     project skills — ratgeber-article (scaffold a new Ratgeber article; see Next session)
 Videos/             4 source clips: Beginning→Second_Part→Thrid_Part→End (drop→ripple→delta→sunset)
 Images/             source image drop folder (gitignored; optimize → public/images/)
 docs/superpowers/   specs/ and plans/
