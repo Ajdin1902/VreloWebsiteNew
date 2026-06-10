@@ -46,8 +46,9 @@ All six roadmap phases plus the post-Phase-6 polish are merged and deployed. Sin
 ## Next session — planned work (resume here)
 1. **Legal copy** — replace every `[Platzhalter]` in `src/lib/legal/{impressum,datenschutz}.ts` with real, verified copy (founder/lawyer); also sweep its em-dashes → en-dashes (deferred from the route-page sweep).
 2. **Design-skill pass on the remaining subpages** — Leistungen/Über-mich/FAQ + **Ratgeber (index + articles)** are **done**; remaining: **Kontakt, Newsletter, legal** (taste → high-end-visual-design → impeccable, redesign-preserve; browser-verify 1440/390 + AA).
-3. **Ratgeber authoring skill** — a custom skill that scaffolds a Ratgeber MDX article end-to-end: frontmatter (incl. **required `cover` + `coverAlt`**), BrandWord-aware body in the brand voice, and the matching cover-image prompt from `image_prompt.md`.
-4. **Kontakt form go-live** — set the Resend env + Cal link (see Owner cutover), then verify `ContactForm` end-to-end (Server Action → Resend) + spam guards + success/error states live.
+3. **Kontakt form go-live** — set the Resend env + Cal link (see Owner cutover), then verify `ContactForm` end-to-end (Server Action → Resend) + spam guards + success/error states live.
+
+> **To write a new Ratgeber article, use the project skill `.claude/skills/ratgeber-article/`** — interactive intake → full first draft in brand voice → frontmatter (incl. required `cover`/`coverAlt`, `draft: true`) → cover prompt from `image_prompt.md` §9 + a generation checklist. The covers test (`ratgeber.covers.test.ts`) requires the cover WebP to actually exist, so `npm test` fails until you drop it in.
 
 > **Recently shipped (2026-06-08, post-launch — all deployed):**
 > - **Ratgeber is live** — flipped the 3 seeds to `draft: false` (covers now visible in prod; listed in `/ratgeber` index + sitemap). Renamed „Flickenteppich“ → „Durcheinander“ everywhere: Leistungen lead + `WasIchBaue` heading + article 3 (title/body, with gender agreement der→das/er→es), slug now `durcheinander-oder-saubere-quelle`. Em-dash → en-dash swept across all 3 articles.
