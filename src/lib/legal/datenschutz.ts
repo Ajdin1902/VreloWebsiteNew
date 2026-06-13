@@ -3,11 +3,11 @@ import type { LegalDoc } from "./impressum";
 export const datenschutz: LegalDoc = {
   title: "Datenschutzerklärung",
   intro:
-    "Entwurf — bitte vor Veröffentlichung rechtlich prüfen lassen. Diese Erklärung informiert über die Verarbeitung personenbezogener Daten auf dieser Website.",
+    "Entwurf – bitte vor Veröffentlichung rechtlich prüfen lassen. Diese Erklärung informiert über die Verarbeitung personenbezogener Daten auf dieser Website.",
   sections: [
     {
       heading: "Verantwortlicher",
-      body: "Verantwortlich im Sinne der DSGVO:\n[Platzhalter: Name, Anschrift, E-Mail] (siehe Impressum).",
+      body: "Verantwortlich im Sinne der DSGVO:\nAjdin Dzafic\n[Platzhalter: Anschrift]\n[Platzhalter: E-Mail]\n(vollständige Angaben siehe Impressum).",
     },
     {
       heading: "Hosting",
@@ -27,7 +27,7 @@ export const datenschutz: LegalDoc = {
     },
     {
       heading: "Newsletter",
-      body: "Du kannst dich für meinen Newsletter anmelden. Dabei verarbeite ich deine E-Mail-Adresse, um dir die Inhalte zuzusenden. Die Anmeldung erfolgt im Double-Opt-In-Verfahren: Nach der Eingabe erhältst du eine E-Mail mit einem Bestätigungslink; erst nach deiner Bestätigung wird deine Adresse in die Empfängerliste aufgenommen. Vorher wird nichts gespeichert. Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Der Versand und die Verwaltung der Empfängerliste erfolgen über den Dienstleister Resend (Auftragsverarbeiter). Du kannst deine Einwilligung jederzeit widerrufen — über den Abmeldelink in jeder Newsletter-E-Mail. Danach wird deine Adresse aus der Empfängerliste entfernt.",
+      body: "Du kannst dich für meinen Newsletter anmelden. Dabei verarbeite ich deine E-Mail-Adresse, um dir die Inhalte zuzusenden. Die Anmeldung erfolgt im Double-Opt-In-Verfahren: Nach der Eingabe erhältst du eine E-Mail mit einem Bestätigungslink; erst nach deiner Bestätigung wird deine Adresse in die Empfängerliste aufgenommen. Vorher wird nichts gespeichert. Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Der Versand und die Verwaltung der Empfängerliste erfolgen über den Dienstleister Resend (Auftragsverarbeiter). Du kannst deine Einwilligung jederzeit widerrufen – über den Abmeldelink in jeder Newsletter-E-Mail. Danach wird deine Adresse aus der Empfängerliste entfernt.",
     },
     {
       heading: "Deine Rechte (Betroffenenrechte)",

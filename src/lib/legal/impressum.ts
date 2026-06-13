@@ -4,11 +4,11 @@ export type LegalDoc = { title: string; intro: string; sections: LegalSection[] 
 export const impressum: LegalDoc = {
   title: "Impressum",
   intro:
-    "Entwurf — bitte vor Veröffentlichung rechtlich prüfen lassen. Angaben gemäß § 5 DDG.",
+    "Entwurf – bitte vor Veröffentlichung rechtlich prüfen lassen. Angaben gemäß § 5 DDG.",
   sections: [
     {
       heading: "Anbieter",
-      body: "[Platzhalter: Vor- und Nachname]\n[Platzhalter: Straße und Hausnummer]\n[Platzhalter: PLZ und Ort]\nDeutschland",
+      body: "Ajdin Dzafic\n[Platzhalter: Straße und Hausnummer]\n[Platzhalter: PLZ und Ort]\nDeutschland",
     },
     {
       heading: "Kontakt",
@@ -20,7 +20,7 @@ export const impressum: LegalDoc = {
     },
     {
       heading: "Verantwortlich für den Inhalt",
-      body: "[Platzhalter: Name], Anschrift wie oben.",
+      body: "Ajdin Dzafic, Anschrift wie oben.",
     },
     {
       heading: "EU-Streitschlichtung",
