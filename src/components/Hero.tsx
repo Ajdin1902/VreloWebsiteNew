@@ -1,6 +1,5 @@
-import { BrandWord } from "@/components/BrandWord";
+import Image from "next/image";
 import { CTAButton } from "@/components/CTAButton";
-import { RippleImage } from "@/components/RippleImage";
 
 export function Hero() {
   return (
@@ -9,35 +8,44 @@ export function Hero() {
         {/* Left: the message */}
         <div>
           <h1 className="hero-reveal-h1 max-w-2xl text-balance text-[2.25rem] font-semibold leading-[1.13] tracking-[-0.02em] text-papier md:text-[3.25rem] md:leading-[1.1] lg:text-[3.75rem]">
-            <BrandWord>Vrelo</BrandWord> errichtet die Quelle.{" "}
+            Wiederkehrende Aufgaben kosten dich jede Woche mehrere Stunden.{" "}
             <br className="hidden sm:block" />
-            Du erlebst den <BrandWord>Merak</BrandWord>-Effekt.
+            Ich gebe sie dir zurück.
           </h1>
           <p className="hero-reveal-sub mt-7 max-w-lg text-pretty text-[1.05rem] leading-relaxed tracking-[-0.005em] text-stein md:text-xl md:leading-relaxed">
-            Maßgeschneiderte Automatisierungen für kleine Betriebe. Sie übernehmen den
-            Kleinkram – du gewinnst Zeit, Ruhe und einen freien Kopf.
+            Ich baue maßgeschneiderte Automatisierungen für kleine Betriebe – Termine,
+            Nachfass-Mails und Dateneingabe laufen von selbst. So gewinnst du Ruhe und
+            einen freien Kopf.
           </p>
           <div className="hero-reveal-cta mt-10">
             <CTAButton href="/kontakt" tone="dark" />
           </div>
         </div>
 
-        {/* Right: the rippling water panel with the drop that seeds it */}
+        {/* Right: the Merak „work done" scene — a static photo (LCP) with a slow
+            ambient zoom + a few dust motes drifting in the window light. This is
+            the gentle life that replaces the old WebGL ripple; decorative, so the
+            image is alt="" and the H1 carries the meaning. Reduced-motion stills it. */}
         <div className="relative">
-          <RippleImage
-            src="/video/hero-quelle.jpg"
-            alt=""
-            seedXFraction={0.5}
-            seedYFraction={0.5}
-            seedIntervalMs={3000}
-            className="shadow-deepwater aspect-[16/10] w-full rounded-2xl ring-1 ring-gletscher/10 md:aspect-[4/5]"
-          />
-          {/* The amber drop – single warm focal point, centered on the ripple
-              origin; a seamless warm bloom that seeds the ripple from the middle. */}
-          <div
-            aria-hidden
-            className="hero-drop pointer-events-none absolute left-1/2 top-1/2 z-10 aspect-square w-[40%] -translate-x-1/2 -translate-y-1/2 rounded-full motion-safe:animate-drop-glow"
-          />
+          <div className="shadow-deepwater relative aspect-[16/10] w-full overflow-hidden rounded-2xl ring-1 ring-gletscher/10 md:aspect-[4/5]">
+            <Image
+              data-testid="hero-image"
+              src="/images/hero-merak.webp"
+              alt=""
+              fill
+              priority
+              sizes="(min-width: 768px) 45vw, 100vw"
+              className="hero-scene-img object-cover"
+            />
+            {/* Soft dust motes catching the golden-hour light. */}
+            <div aria-hidden className="hero-dust pointer-events-none absolute inset-0">
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+            </div>
+          </div>
         </div>
       </div>
     </section>

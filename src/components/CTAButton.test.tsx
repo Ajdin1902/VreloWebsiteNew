@@ -5,7 +5,7 @@ import { CTAButton } from "./CTAButton";
 describe("CTAButton", () => {
   it("links to the given href with the default label", () => {
     render(<CTAButton href="/kontakt" />);
-    const link = screen.getByRole("link", { name: "Quelle erkunden" });
+    const link = screen.getByRole("link", { name: "Ruhe gewinnen" });
     expect(link).toHaveAttribute("href", "/kontakt");
   });
 

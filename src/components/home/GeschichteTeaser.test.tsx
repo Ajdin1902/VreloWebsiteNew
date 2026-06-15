@@ -9,8 +9,12 @@ describe("GeschichteTeaser", () => {
     expect(screen.getByText("Die Geschichte")).toBeInTheDocument();
   });
 
-  it("keeps the Bosnian source quote", () => {
+  it("is a brief mention that links to the full story on Über mich", () => {
     render(<GeschichteTeaser />);
-    expect(screen.getByText(/Quellen heilig/)).toBeInTheDocument();
+    expect(screen.getByText(/heißt Quelle/)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Die ganze Geschichte/ })).toHaveAttribute(
+      "href",
+      "/ueber-mich",
+    );
   });
 });

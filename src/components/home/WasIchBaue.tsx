@@ -18,11 +18,11 @@ export function WasIchBaue() {
         <div>
           <Reveal as="p" delayMs={0} id="was-ich-baue-label" className="text-sm font-medium uppercase tracking-wider text-gletscher">Was ich baue</Reveal>
           <Reveal as="h2" delayMs={80} className="mt-3 max-w-2xl text-balance text-3xl font-semibold tracking-tight text-papier md:text-4xl">
-            Eine saubere Quelle – kein Durcheinander.
+            Ich nehme dir die immer gleichen Aufgaben ab.
           </Reveal>
           <Reveal as="p" delayMs={160} className="mt-5 max-w-2xl text-pretty text-lg text-gletscher">
-            Ich baue maßgeschneiderte Automatisierungen, die den wiederkehrenden Kleinkram
-            still im Hintergrund übernehmen.
+            Maßgeschneiderte Automatisierungen, die den wiederkehrenden Kleinkram still im
+            Hintergrund übernehmen – nichts, das du lernen oder warten musst.
           </Reveal>
         </div>
         <Reveal delayMs={120} className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl shadow-deepwater ring-1 ring-gletscher/10">

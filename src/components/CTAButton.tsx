@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 
 export function CTAButton({
   href,
-  children = "Quelle erkunden",
+  children = "Ruhe gewinnen",
   variant = "primary",
   tone = "papier",
 }: {

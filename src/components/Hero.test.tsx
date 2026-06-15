@@ -3,17 +3,17 @@ import { render, screen } from "@testing-library/react";
 import { Hero } from "./Hero";
 
 describe("Hero", () => {
-  it("keeps the H1 with the Vrelo and Merak brand words", () => {
+  it("leads the H1 with the pain-first headline", () => {
     render(<Hero />);
     const h1 = screen.getByRole("heading", { level: 1 });
-    expect(h1).toHaveTextContent(/Vrelo errichtet die Quelle/);
-    expect(h1).toHaveTextContent(/Merak-Effekt/);
+    expect(h1).toHaveTextContent(/Wiederkehrende Aufgaben kosten dich jede Woche mehrere Stunden/);
+    expect(h1).toHaveTextContent(/Ich gebe sie dir zurück/);
   });
 
-  it("renders the ripple water panel image", () => {
+  it("renders the Merak scene image", () => {
     render(<Hero />);
-    const img = screen.getByTestId("ripple-img") as HTMLImageElement;
-    expect(img.getAttribute("src")).toBe("/video/hero-quelle.jpg");
+    const img = screen.getByTestId("hero-image") as HTMLImageElement;
+    expect(img.getAttribute("src") || "").toMatch(/hero-merak/);
   });
 
   it("uses the token-hardened deep-water background (no inline gradient)", () => {
@@ -25,16 +25,16 @@ describe("Hero", () => {
 
   it("keeps a single primary CTA", () => {
     render(<Hero />);
-    expect(screen.getByRole("link", { name: "Quelle erkunden" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Ruhe gewinnen" })).toBeInTheDocument();
   });
 
   it("applies the staggered reveal classes (H1 rise-only, sub + CTA fade-up)", () => {
     render(<Hero />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveClass("hero-reveal-h1");
     expect(
-      screen.getByText(/Maßgeschneiderte Automatisierungen/),
+      screen.getByText(/maßgeschneiderte Automatisierungen/),
     ).toHaveClass("hero-reveal-sub");
-    const ctaWrapper = screen.getByRole("link", { name: "Quelle erkunden" })
+    const ctaWrapper = screen.getByRole("link", { name: "Ruhe gewinnen" })
       .parentElement as HTMLElement;
     expect(ctaWrapper).toHaveClass("hero-reveal-cta");
   });

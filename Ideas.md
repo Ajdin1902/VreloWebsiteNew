@@ -6,6 +6,19 @@ Unscheduled ideas for future polish/design phases. Not committed to any phase. E
 
 ---
 
+## Landing-page principles (apply when adjusting the hero / top part)
+
+A conversion framework for the homepage **top fold** (`src/components/Hero.tsx` + its copy). Each element earns its place by doing one job — read top to bottom, every line should make the next one more believable. Keep within the brand voice (outcome over mechanism, calm over hype, generic masculine, `<BrandWord>` italics, German typography „…“ + en-dash). These four are the **structure**; the [Brand.md](Brand.md) voice rules are the **tone** — both apply.
+
+1. **Headline — grab attention with a clear outcome or their problem.** Promise the result the owner wants, or name the repetitive task that eats their day, directly. Not the mechanism („Automatisierung mit n8n“) but the payoff/pain („Du verbringst jeden Tag eine Stunde mit immer derselben Aufgabe.“ → or the outcome version). One idea, said plainly.
+2. **Subheadline — clarify the promise, add the useful context.** Answer the „wie/für wen/was genau“ the headline raises: who it's for, what changes, why it's safe (no big project, nothing to learn/maintain). This is where „KI-gestützt, das du nicht verstehen musst“-type reassurance can live (see #1 below).
+3. **Image — prove it by visualising the outcome / what they get.** The hero image should make the promise concrete — show the *result* (a clear head / an empty to-do list / the work running itself), not decoration. ⚠️ Today the hero is the `RippleImage` WebGL water panel (atmosphere, not proof) and it's the **LCP** — any change must keep the static `<img>` as LCP and the reduced-motion/no-WebGL fallback (see CLAUDE.md → Gotchas). Treat „make the image prove the outcome“ as a design question to resolve before swapping it.
+4. **CTA — say what they get and how.** Spell out the next step and its payoff, not a bare „Senden“. E.g. „Kostenloses Erstgespräch buchen — wir finden die eine Aufgabe, die dir am meisten Zeit kostet.“ The button states the *what*; a sub-line or the surrounding copy can state the *how*.
+
+> These principles describe the **target**, not the current state. Schedule the hero rework as one cohesive pass (copy + image + CTA interact) via brainstorming → a plan — not piecemeal drift.
+
+---
+
 ## ✅ Shipped (kept for the record)
 Implementation detail now lives in the code + CLAUDE.md; specs in `docs/superpowers/specs/`.
 - **Logo everywhere** — `BrandLockup` in Header + Footer, favicon `src/app/icon.svg`, branded OG images; full-screen `MobileNav` drawer.

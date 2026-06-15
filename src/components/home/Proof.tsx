@@ -17,7 +17,9 @@ export function Proof() {
         Ruhig gebaut. Verlässlich im Betrieb.
       </Reveal>
       <Reveal as="p" delayMs={80} className="mt-5 max-w-2xl text-pretty text-lg text-tinte">
-        Hier stehen bald echte Referenzen und Stimmen aus kleinen Betrieben.
+        Echte Referenzen folgen in Kürze. Bis dahin gilt: ein Ansprechpartner, ein sauber
+        dokumentiertes System – und Arbeit, die auch dann läuft, wenn ich nicht
+        danebenstehe.
       </Reveal>
       {/* TODO: replace with real Referenzen/testimonials when available */}
     </Section>

@@ -163,6 +163,44 @@ body {
   }
 }
 
+/* Merak hero scene — gentle life on the static photo: a slow ambient zoom on the
+   image + a few soft dust motes drifting in the window light. Decorative only;
+   transform/opacity only (no CLS); disabled under reduced-motion. */
+.hero-scene-img {
+  animation: hero-pan 24s ease-in-out infinite;
+  transform-origin: 35% 40%;
+  will-change: transform;
+}
+@keyframes hero-pan {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+.hero-dust span {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(250, 242, 225, 0.9), rgba(244, 228, 193, 0) 70%);
+  opacity: 0;
+  filter: blur(0.5px);
+  animation: dust-float 16s linear infinite;
+}
+.hero-dust span:nth-child(1) { left: 20%; top: 56%; animation-duration: 17s; animation-delay: 0s; }
+.hero-dust span:nth-child(2) { left: 31%; top: 40%; width: 4px; height: 4px; animation-duration: 21s; animation-delay: 4s; }
+.hero-dust span:nth-child(3) { left: 43%; top: 60%; width: 5px; height: 5px; animation-duration: 15s; animation-delay: 8s; }
+.hero-dust span:nth-child(4) { left: 50%; top: 34%; width: 7px; height: 7px; animation-duration: 23s; animation-delay: 2s; }
+.hero-dust span:nth-child(5) { left: 26%; top: 30%; width: 3px; height: 3px; animation-duration: 19s; animation-delay: 11s; }
+@keyframes dust-float {
+  0%   { opacity: 0; transform: translate(0, 8px) scale(0.8); }
+  12%  { opacity: 0.75; }
+  85%  { opacity: 0.45; }
+  100% { opacity: 0; transform: translate(14px, -64px) scale(1.1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-scene-img { animation: none; }
+  .hero-dust { display: none; }
+}
+
 /* Two-way scroll reveal (homepage). Hidden state is gated behind .reveal-ready
    (set by the root-layout inline script) so no-JS renders everything visible. */
 .reveal-ready .reveal {

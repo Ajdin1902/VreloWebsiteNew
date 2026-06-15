@@ -15,6 +15,7 @@ Reusable prompts for generating site imagery with Nano Banana (Gemini 2.5 Flash 
 
 | # | Image | Page / placement | Aspect | Export (2×) |
 |---|---|---|---|---|
+| 0 | **Merak hero ("work done" scene)** | `/` Hero panel (static — replaces `RippleImage`) | **4:5** (center-crop 16:10 on mobile) | ~1280 × 1600 |
 | 1 | Bosnian spring | `/` Geschichte | **3:2** | 1800 × 1200 |
 | 2 | Saubere Quelle | `/` Was ich baue | **4:5** | 1280 × 1600 |
 | 3 | Fließen *(opt)* | `/` Steps | **21:9** | 2520 × 1080 |
@@ -32,6 +33,15 @@ Legal pages (`/impressum`, `/datenschutz`) and `/newsletter/bestaetigt` get no i
 ---
 
 ## Home
+
+### 0 · Hero (Merak — "work done" scene) — `4:5`
+> ✅ **Rendered & wired (2026-06-15):** `public/images/hero-merak.webp` → `Hero.tsx` (static, slow CSS zoom + drifting dust motes; `RippleImage` dropped from the hero). Prompt kept below for re-rolls.
+>
+> **The one deliberate break from the abstract-water world.** The hero shows the *Merak* payoff as a concrete, warm real-life scene — the workday finished, time given back — not abstract water. Fully warm (no cool blue). Still **no people** (brand rule holds). Decided with founder 2026-06-15 after ruling out the warm-water/abstract variants.
+
+> Fine-art photograph of a calm, tidy desk at golden hour, just after the workday has ended. A laptop sits closed, a single cup of coffee beside it, perhaps a small notebook and pen — everything ordered and unhurried. Warm low golden-hour sunlight streams in from a window to one side, soft long light and a gentle glow across the wood. Warm amber, honey and sonnenlicht tones, warm off-white (Papier) walls, soft shadows. The feeling of calm, of work finished early and time given back — quiet, restful, content. Soft natural light, shallow depth of field, fine detail, minimal, premium, generous negative space, centered interest (so the mobile 16:10 crop still works). Warm Merak palette throughout — golden, honey and warm neutral, no cool blue. No people, no hands, no faces, no text, no letters, no logos, no watermark, no clutter, no on-screen UI. 4:5 aspect ratio.
+
+> **Wiring notes:** this scene is **not water**, so the hero **drops the `RippleImage` WebGL effect** (and the amber-drop seed) — it becomes a **static image** (`next/image` or a plain `<img>` in the rounded panel; reuse the `PageImage` pattern if it fits). Render → optimize → place at e.g. `public/images/hero-merak.jpg`, wire into `Hero.tsx`. The hero image stays **decorative (`alt=""`)** — the H1 carries the meaning. Keep interest centered (desktop panel 4:5, mobile crops to 16:10). The **current** cool drop+rings hero (`/video/hero-quelle.jpg`) then moves to *Was ich baue*, replacing the near-duplicate `was-ich-baue.webp` (keep its German alt there).
 
 ### 1 · Geschichte (Bosnian spring) — `3:2`
 > Fine-art photograph of a hidden karst spring in the Bosnian highlands, crystal-clear turquoise water welling up from beneath pale grey limestone rock, faint concentric ripples spreading from the source, soft moss and a few smooth stones at the water's edge. Calm, still, sacred atmosphere. Warm low golden morning light grazing across the water from the side, a single soft amber-honey highlight on the surface, deep teal-navy shadows in the water. Muted, restrained palette: deep teal-navy and petrol blue meeting warm golden light. Medium-format, 50mm, shallow depth of field, fine natural detail, gentle, premium, meditative, generous negative space. No people, no text, no letters, no logos, no watermark, no buildings, no boats. 3:2 aspect ratio.
