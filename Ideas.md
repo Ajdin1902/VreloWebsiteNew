@@ -58,6 +58,12 @@ For 6-min reads, the body can run long between subheads. Add a second `>` pull-q
 ### 7. Grow the Ratgeber (SEO engine)
 Use the project skill **`.claude/skills/ratgeber-article/`** to publish new articles regularly — it scaffolds frontmatter + a brand-voice draft + the cover prompt. Each needs a cover WebP (`image_prompt.md` §9 motifs) before `npm test` passes / publishing. The Ratgeber is the long-tail organic-search play.
 
+### 8. Homepage end-of-page sequence (decide later)
+Question raised 2026-06-15, deferred. Current order: `Proof → GeschichteTeaser → MerakClose`. The concern: the Geschichte teaser (a small „about“ link to `/ueber-mich`) sits between `Proof` and the CTA, delaying the ask. **Principle to honor:** the page should *end on the CTA / the feeling* (MerakClose), and nothing secondary should sit between trust (`Proof`) and the ask. So the fix is **not** „MerakClose then Geschichte“ (that ends the page on the story-link). Better options, in `src/app/page.tsx` (just reorder the components):
+- **A (lean rec.):** keep `MerakClose` last; move `GeschichteTeaser` up to after `Steps` → `… Steps → Geschichte → Proof → MerakClose`. CTA comes right after Proof and still closes the page. Watch the colour rhythm (warm Geschichte between petrol Steps and paper Proof).
+- **B:** drop `GeschichteTeaser` from the homepage entirely (Über mich is in the nav) → shortest path `Proof → MerakClose`.
+- **C (the original swap):** `Proof → MerakClose → Geschichte` — CTA earlier but page ends on the story; not recommended.
+
 ---
 
 ### Cross-cutting notes

@@ -22,7 +22,10 @@ export function Steps() {
       <Reveal as="h2" delayMs={0} className="text-balance text-3xl font-semibold tracking-tight text-papier md:text-4xl">
         In drei ruhigen Schritten.
       </Reveal>
-      <Reveal as="ol" delayMs={80} className="mt-10 grid gap-6 md:grid-cols-3">
+      <Reveal as="p" delayMs={80} className="mt-5 max-w-2xl text-pretty text-lg text-gletscher">
+        Der erste Schritt ist klein – den Rest übernehme ich.
+      </Reveal>
+      <Reveal as="ol" delayMs={160} className="mt-10 grid gap-6 md:grid-cols-3">
         {steps.map((s) => (
           <li key={s.num} className="card-depth rounded-2xl border border-gletscher/20 bg-tiefes-wasser/40 p-6">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber font-serif text-lg italic text-tiefes-wasser">
