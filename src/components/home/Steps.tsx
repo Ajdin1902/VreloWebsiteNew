@@ -19,12 +19,16 @@ export function Steps() {
         className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover"
       />
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-vrelo-petrol/70" />
-      <Reveal as="h2" delayMs={0} className="text-balance text-3xl font-semibold tracking-tight text-papier md:text-4xl">
-        In drei ruhigen Schritten.
-      </Reveal>
-      <Reveal as="p" delayMs={80} className="mt-5 max-w-2xl text-pretty text-lg text-gletscher">
-        Der erste Schritt ist klein – den Rest übernehme ich.
-      </Reveal>
+
+      {/* Centered spine: intro on the spine, the three cards keep their grid + left text. */}
+      <div className="mx-auto max-w-[44rem] text-center">
+        <Reveal as="h2" delayMs={0} className="text-balance text-3xl font-semibold tracking-tight text-papier md:text-4xl">
+          In drei ruhigen Schritten.
+        </Reveal>
+        <Reveal as="p" delayMs={80} className="mt-5 text-pretty text-lg text-gletscher">
+          Der erste Schritt ist klein – den Rest übernehme ich.
+        </Reveal>
+      </div>
       <Reveal as="ol" delayMs={160} className="mt-10 grid gap-6 md:grid-cols-3">
         {steps.map((s) => (
           <li key={s.num} className="card-depth rounded-2xl border border-gletscher/20 bg-tiefes-wasser/40 p-6">

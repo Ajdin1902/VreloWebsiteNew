@@ -13,15 +13,18 @@ export function Proof() {
         className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover"
       />
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-papier/88" />
-      <Reveal as="h2" delayMs={0} className="max-w-2xl text-balance text-3xl font-semibold tracking-tight text-tiefes-wasser md:text-4xl">
-        Ruhig gebaut. Verlässlich im Betrieb.
-      </Reveal>
-      <Reveal as="p" delayMs={80} className="mt-5 max-w-2xl text-pretty text-lg text-tinte">
-        Echte Referenzen folgen in Kürze. Bis dahin gilt: ein Ansprechpartner, ein sauber
-        dokumentiertes System – und Arbeit, die auch dann läuft, wenn ich nicht
-        danebenstehe.
-      </Reveal>
-      {/* TODO: replace with real Referenzen/testimonials when available */}
+      {/* Centered spine: keeps the trust line on the page's central axis. */}
+      <div className="mx-auto max-w-[44rem] text-center">
+        <Reveal as="h2" delayMs={0} className="text-balance text-3xl font-semibold tracking-tight text-tiefes-wasser md:text-4xl">
+          Ruhig gebaut. Verlässlich im Betrieb.
+        </Reveal>
+        <Reveal as="p" delayMs={80} className="mx-auto mt-5 max-w-xl text-pretty text-lg text-tinte">
+          Echte Referenzen folgen in Kürze. Bis dahin gilt: ein Ansprechpartner, ein sauber
+          dokumentiertes System – und Arbeit, die auch dann läuft, wenn ich nicht
+          danebenstehe.
+        </Reveal>
+        {/* TODO: replace with real Referenzen/testimonials when available */}
+      </div>
     </Section>
   );
 }

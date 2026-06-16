@@ -75,6 +75,15 @@ body {
 .hero-deepwater {
   background: radial-gradient(ellipse 140% 110% at 80% 0%, #1b5063 0%, #0d3147 30%, #0a2538 58%, #071c2b 100%);
 }
+/* Petrol scrim over the full-bleed hero photo so the papier headline stays
+   legible. Darkens toward the bottom where the CTA sits. */
+.hero-overlay-scrim {
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--color-tiefes-wasser) 39%, transparent) 0%,
+    color-mix(in oklab, var(--color-tiefes-wasser) 60%, transparent) 100%
+  );
+}
 /* Seamless warm bloom: a visible core that feathers fully to transparent (no
    hard rim) + a soft outer glow + a slight blur. Centered on the ripple origin. */
 .hero-drop {

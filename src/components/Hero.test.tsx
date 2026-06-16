@@ -12,7 +12,7 @@ describe("Hero", () => {
   it("renders the Merak scene image", () => {
     render(<Hero />);
     const img = screen.getByTestId("hero-image") as HTMLImageElement;
-    expect(img.getAttribute("src") || "").toMatch(/hero-merak/);
+    expect(img.getAttribute("src") || "").toMatch(/hero-flow/);
   });
 
   it("uses the token-hardened deep-water background (no inline gradient)", () => {

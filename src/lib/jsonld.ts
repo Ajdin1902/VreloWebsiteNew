@@ -3,7 +3,7 @@ import { siteUrl, siteName } from "./site";
 import { faqGroups } from "./faq";
 import type { Article } from "./ratgeber";
 
-const FOUNDER = "Ajdin Džafić";
+const FOUNDER = "Ajdin Dzafic";
 
 export function professionalServiceLd() {
   return {
@@ -24,6 +24,12 @@ export function personLd() {
     name: FOUNDER,
     jobTitle: "Gründer",
     worksFor: { "@type": "Organization", name: siteName },
+    hasCredential: {
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: "degree",
+      name: "Master of Science (M.Sc.) in Wirtschaftsinformatik",
+    },
+    alumniOf: { "@type": "CollegeOrUniversity", name: "OTH Regensburg" },
     url: `${siteUrl}/ueber-mich`,
   };
 }

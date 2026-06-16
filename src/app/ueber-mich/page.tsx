@@ -20,9 +20,8 @@ export default function UeberMichPage() {
   return (
     <>
       <PageIntro
-        eyebrow="Die Person hinter der Arbeit"
         title="Über mich"
-        lead="Ich bin Ajdin Dzafic, Inhaber von Vrelo (ausgesprochen: Vrehlo). Kennst du den Moment nach einem langen Arbeitstag, in dem du dich hinsetzt, abschaltest und die Ruhe einfach genießt – am besten mit guter Aussicht oder den richtigen Menschen? Genau dieses Gefühl möchte ich in deinen Arbeitsalltag bringen. Nicht indem der Stress ganz verschwindet, weil das einfach nicht realistisch ist, sondern indem der unnötige Teil davon wegfällt."
+        lead="Ich bin Ajdin Dzafic, Gründer von Vrelo, mit einem Master of Science in Wirtschaftsinformatik von der OTH Regensburg. Seit Jahren automatisiere ich Prozesse – und die größte Freude war für mich immer der Abschluss eines Projekts. Der Grund: Niemand musste sich mehr um wiederkehrende, zeitraubende Aufgaben kümmern. Sie liefen von selbst. Das brachte Ruhe. Genau hier liegt die Motivation hinter Vrelo."
         image={{
           src: "/images/ueber-mich-banner.webp",
           alt: "Ein türkisfarbener Quellfluss entspringt im Morgenlicht am Fuß bosnischer Kalksteinberge.",
@@ -43,7 +42,7 @@ export default function UeberMichPage() {
       ))}
       <ClosingCta
         heading="Lern mich unverbindlich kennen."
-        lead="Hast du auch einen stressigen Arbeitsalltag voller Kleinkram? Willst du auch wieder ein Gefühl von Merak? Ich zeige dir unverbindlich, wie wir dahin kommen."
+        lead="Hast du auch einen stressigen Arbeitsalltag voller Kleinkram? Willst du auch wieder ein Gefühl von Merak? Ich zeige dir, wie wir dahin kommen."
       />
       <JsonLd data={personLd()} />
       <JsonLd data={breadcrumbLd([{ name: "Start", path: "/" }, { name: "Über mich", path: "/ueber-mich" }])} />

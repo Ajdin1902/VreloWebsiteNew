@@ -39,6 +39,9 @@ Thumbs.db
 .playwright-mcp/
 phase*.png
 
+# impeccable live-mode local config/journal (dev tool, not project source)
+.impeccable/
+
 # Source image drop folder (originals; optimized derivatives live in public/images/).
 # Root-anchored + case note: Git is case-insensitive on Windows, so an unanchored
 # "Images/" would also match public/images/ — the leading slash keeps it root-only.
