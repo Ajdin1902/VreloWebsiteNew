@@ -3,11 +3,10 @@ import { render, screen } from "@testing-library/react";
 import { Hero } from "./Hero";
 
 describe("Hero", () => {
-  it("leads the H1 with the pain-first headline", () => {
+  it("leads the H1 with the short pain headline", () => {
     render(<Hero />);
     const h1 = screen.getByRole("heading", { level: 1 });
-    expect(h1).toHaveTextContent(/Wiederkehrende Aufgaben kosten dich jede Woche mehrere Stunden/);
-    expect(h1).toHaveTextContent(/Ich gebe sie dir zurück/);
+    expect(h1).toHaveTextContent(/Manuelle Aufgaben rauben dir die Zeit/);
   });
 
   it("renders the Merak scene image", () => {
@@ -25,7 +24,7 @@ describe("Hero", () => {
 
   it("keeps a single primary CTA", () => {
     render(<Hero />);
-    expect(screen.getByRole("link", { name: "Ruhe gewinnen" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Zeit zurückgewinnen" })).toBeInTheDocument();
   });
 
   it("applies the staggered reveal classes (H1 rise-only, sub + CTA fade-up)", () => {
@@ -34,7 +33,7 @@ describe("Hero", () => {
     expect(
       screen.getByText(/maßgeschneiderte Automatisierungen/),
     ).toHaveClass("hero-reveal-sub");
-    const ctaWrapper = screen.getByRole("link", { name: "Ruhe gewinnen" })
+    const ctaWrapper = screen.getByRole("link", { name: "Zeit zurückgewinnen" })
       .parentElement as HTMLElement;
     expect(ctaWrapper).toHaveClass("hero-reveal-cta");
   });

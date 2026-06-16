@@ -8,14 +8,12 @@ export function Hero() {
         {/* Left: the message */}
         <div>
           <h1 className="hero-reveal-h1 max-w-2xl text-balance text-[2.25rem] font-semibold leading-[1.13] tracking-[-0.02em] text-papier md:text-[3.25rem] md:leading-[1.1] lg:text-[3.75rem]">
-            Wiederkehrende Aufgaben kosten dich jede Woche mehrere Stunden.{" "}
-            <br className="hidden sm:block" />
-            Ich gebe sie dir zurück.
+            Manuelle Aufgaben rauben dir die Zeit.
           </h1>
           <p className="hero-reveal-sub mt-7 max-w-lg text-pretty text-[1.05rem] leading-relaxed tracking-[-0.005em] text-stein md:text-xl md:leading-relaxed">
             Ich baue maßgeschneiderte Automatisierungen für kleine Betriebe – Termine,
-            Nachfass-Mails und Dateneingabe laufen von selbst. So gewinnst du Ruhe und
-            einen freien Kopf.
+            Mails und Datenpflege laufen von selbst. So gewinnst du jede Woche Stunden
+            zurück.
           </p>
           <div className="hero-reveal-cta mt-10">
             <CTAButton href="/kontakt" tone="dark" />
