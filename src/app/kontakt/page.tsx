@@ -5,6 +5,7 @@ import { PageImage } from "@/components/PageImage";
 import { Section } from "@/components/Section";
 import { JsonLd } from "@/components/JsonLd";
 import { ContactForm } from "@/components/kontakt/ContactForm";
+import { CardHeading } from "@/components/kontakt/CardHeading";
 import { darkLinkClass } from "@/components/kontakt/onDarkLink";
 import { isContactConfigured, contactTo } from "@/lib/contact";
 import { breadcrumbLd } from "@/lib/jsonld";
@@ -30,25 +31,28 @@ export default function KontaktPage() {
 
       <Section tone="paper">
         <div className="mx-auto max-w-xl rounded-2xl bg-tiefes-wasser p-8 shadow-deepwater card-depth md:p-10">
-          <h2 className="font-serif text-2xl font-medium text-papier">Schreib mir.</h2>
-          <p className="mt-2 text-sm text-gletscher">Ein, zwei Sätze genügen. Ich antworte persönlich.</p>
-          <div className="mt-6">
-            {configured ? (
-              <ContactForm />
-            ) : to ? (
-              <p className="text-gletscher">
-                Schreib mir direkt:{" "}
-                <a href={`mailto:${to}`} className={darkLinkClass}>
-                  {to}
-                </a>
-                .
-              </p>
-            ) : (
-              <p className="text-gletscher">
-                Ruf mich an oder schreib mir – das Formular schalte ich in Kürze frei.
-              </p>
-            )}
-          </div>
+          {configured ? (
+            <ContactForm />
+          ) : (
+            <>
+              <CardHeading />
+              <div className="mt-6">
+                {to ? (
+                  <p className="text-gletscher">
+                    Schreib mir direkt:{" "}
+                    <a href={`mailto:${to}`} className={darkLinkClass}>
+                      {to}
+                    </a>
+                    .
+                  </p>
+                ) : (
+                  <p className="text-gletscher">
+                    Ruf mich an oder schreib mir – das Formular schalte ich in Kürze frei.
+                  </p>
+                )}
+              </div>
+            </>
+          )}
         </div>
       </Section>
 
