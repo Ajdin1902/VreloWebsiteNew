@@ -5,6 +5,7 @@ import { PageImage } from "@/components/PageImage";
 import { Section } from "@/components/Section";
 import { JsonLd } from "@/components/JsonLd";
 import { ContactForm } from "@/components/kontakt/ContactForm";
+import { darkLinkClass } from "@/components/kontakt/onDarkLink";
 import { isContactConfigured, contactTo } from "@/lib/contact";
 import { breadcrumbLd } from "@/lib/jsonld";
 import { canonical } from "@/lib/site";
@@ -37,10 +38,7 @@ export default function KontaktPage() {
             ) : to ? (
               <p className="text-gletscher">
                 Schreib mir direkt:{" "}
-                <a
-                  href={`mailto:${to}`}
-                  className="text-gletscher underline underline-offset-2 hover:text-papier"
-                >
+                <a href={`mailto:${to}`} className={darkLinkClass}>
                   {to}
                 </a>
                 .

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useActionState, useState } from "react";
 import { sendContactMessage, type ContactState } from "@/app/kontakt/actions";
 import { ContactSuccess } from "./ContactSuccess";
+import { darkLinkClass } from "./onDarkLink";
 
 const initial: ContactState = { status: "idle" };
 
@@ -68,7 +69,7 @@ export function ContactForm() {
             aria-invalid={!!errors.consent}
             aria-describedby={errors.consent ? "cf-consent-err" : undefined} />
           <span>
-            Ich habe die <Link href="/datenschutz" className="text-gletscher underline underline-offset-2 hover:text-papier">Datenschutzerklärung</Link> gelesen und bin einverstanden.
+            Ich habe die <Link href="/datenschutz" className={darkLinkClass}>Datenschutzerklärung</Link> gelesen und bin einverstanden.
           </span>
         </label>
         {errors.consent && <p id="cf-consent-err" className="mt-1 text-sm text-signal">{errors.consent}</p>}
