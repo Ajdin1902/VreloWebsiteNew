@@ -58,14 +58,14 @@ export default function KontaktPage() {
 
       <Section tone="paper" className="border-t border-faden">
         <figure>
+          <figcaption className="mb-5 text-center font-serif text-xl italic text-tiefes-wasser md:text-2xl">
+            Der erste Tropfen genügt.
+          </figcaption>
           <PageImage
             src="/images/kontakt-banner.webp"
             alt="Eine ruhige Wasseroberfläche im warmen Morgenlicht; ein erster sanfter Ring breitet sich aus."
             ratio="aspect-[21/9]"
           />
-          <figcaption className="mt-4 text-center font-serif italic text-stumm">
-            Der erste Tropfen genügt.
-          </figcaption>
         </figure>
       </Section>
 
