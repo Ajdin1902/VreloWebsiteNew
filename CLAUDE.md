@@ -14,7 +14,7 @@ Project memory for the **Vrelo** marketing website. Read this first; it links ou
 A content/SEO marketing site for Vrelo, an AI-automation studio for DACH small businesses. Framed as a **personal brand** (first-person „Ich“). Primary goal: convert visitors to a booked call (scheduler) or contact form; secondary: organic search via a German Ratgeber (blog) + a newsletter.
 
 ## Status — built, merged & live; refining post-launch
-All six roadmap phases plus the post-Phase-6 polish are merged and deployed. Since launch the work has been **copy + design refinement** (see *Changelog* below) — all live. The main blocker to go-live is **owner cutover** (domain, env vars, legal sign-off, Resend) — see the TODO blocks below.
+All six roadmap phases plus the post-Phase-6 polish are merged and deployed. Since launch the work has been **copy + design refinement** (see *Changelog* below) — all live. The main blocker to go-live is **owner cutover** (domain, env vars, legal sign-off, Resend) — see the TODO blocks below. **Domain `vrelo-ki.de` is now registered** at **united-domains** (= registrar + DNS + mailbox host); cutover is underway.
 
 - **Live:** https://vrelo-website.vercel.app · **Repo:** https://github.com/Ajdin1902/VreloWebsiteNew — GitHub↔Vercel connected, so **push to `main` auto-deploys to production**.
 - All target-IA routes resolve 200 in prod: `/` `/leistungen` `/ueber-mich` `/ratgeber(+[slug])` `/faq` `/kontakt` `/newsletter(+/bestaetigt)` `/impressum` `/datenschutz` `/sitemap.xml` `/robots.txt`.
@@ -39,9 +39,8 @@ All `@theme`-token-based, reduced-motion-safe, CLS-safe, browser-verified 1440/3
 ## Next session — planned work (resume here)
 > Homepage is **live** on a centered spine with a full-bleed flowing-water hero (`hero-flow.webp`, Direction C), 2026-06-16. No open homepage layout items.
 1. **Legal copy** — replace every `[Platzhalter]` in `src/lib/legal/{impressum,datenschutz}.ts` with real, verified copy (founder/lawyer); also sweep its em-dashes → en-dashes (deferred from the route-page sweep).
-2. **Design-skill pass on the remaining subpages** — Leistungen/Über-mich/FAQ + **Ratgeber (index + articles)** are **done**; remaining: **Kontakt, Newsletter, legal** (taste → high-end-visual-design → impeccable, redesign-preserve; browser-verify 1440/390 + AA).
-3. **Kontakt form go-live** — set the Resend env + Cal link (see Owner cutover), then verify `ContactForm` end-to-end (Server Action → Resend) + spam guards + success/error states live.
-4. **Cleanup (optional):** the centered-spine pass orphaned **`RippleImage`** (+ its test), `/images/was-ich-baue.webp`, and `/video/hero-quelle.jpg` — all now unused. Remove or keep-for-reuse — decide later.
+2. **Design-skill pass on the remaining subpages** — Leistungen/Über-mich/FAQ + **Ratgeber (index + articles)** are **done**; remaining: **Kontakt, Newsletter, legal** (taste → high-end-visual-design → impeccable, redesign-preserve; browser-verify 1440/390 + AA). **Kontakt direction (founder, 2026-06-19):** rework the form's structure *and* its success/confirmation state — the bright papier reads too light to write on, so give the form (and the confirmation view) a **darker background** for writing comfort (keep input/label text AA on the darker surface).
+3. **Cleanup (optional):** the centered-spine pass orphaned **`RippleImage`** (+ its test), `/images/was-ich-baue.webp`, and `/video/hero-quelle.jpg` — all now unused. Remove or keep-for-reuse — decide later.
 
 > **To write a new Ratgeber article, use the project skill `.claude/skills/ratgeber-article/`** — interactive intake → full first draft in brand voice → frontmatter (incl. required `cover`/`coverAlt`, `draft: true`) → cover prompt from `image_prompt.md` §9 + a generation checklist. The covers test (`ratgeber.covers.test.ts`) requires the cover WebP to actually exist, so `npm test` fails until you drop it in.
 
@@ -69,16 +68,14 @@ All `@theme`-token-based, reduced-motion-safe, CLS-safe, browser-verified 1440/3
 
 ## Owner cutover — TODO (not code; owner/founder action)
 
-**Domain + base URL + legal:**
-- [ ] Add `vrelo-ki.de` (+ `www`) to the Vercel project → set the DNS records at the registrar → wait for SSL.
+**Domain + base URL + legal:** (domain `vrelo-ki.de` registered at **united-domains** — registrar + DNS + mail host; all DNS records below go in the united-domains panel.)
+- [ ] Add `vrelo-ki.de` (+ `www`) to the Vercel project → set the DNS records at united-domains → wait for SSL.
 - [ ] Set `NEXT_PUBLIC_SITE_URL=https://vrelo-ki.de` in Vercel → redeploy. Canonicals/OG/sitemap/robots follow automatically (no code change).
 - [ ] Optionally 308-redirect the old `*.vercel.app` URL to the apex.
 - [ ] **Founder/lawyer:** replace every `[Platzhalter]` in `src/lib/legal/{impressum,datenschutz}.ts` with real, verified copy (add links with `[label](https://…)` syntax).
 - [ ] Post-cutover: resubmit `https://vrelo-ki.de/sitemap.xml` in Google Search Console.
 
-**Kontakt — flip from safe-fallback to live (set in Vercel, then redeploy):**
-- [ ] `RESEND_API_KEY`, `CONTACT_FROM` (verified Resend domain), `CONTACT_TO`, `NEXT_PUBLIC_CAL_LINK` (e.g. `vrelo/kennenlernen`).
-- [ ] Verify a Resend sending domain (SPF/DKIM) for `CONTACT_FROM`. Until then the form is configured-but-won't-send; the `mailto` fallback covers the gap.
+**Kontakt — ✅ LIVE (2026-06-19).** Resend domain `vrelo-ki.de` verified; `RESEND_API_KEY` + `CONTACT_FROM` (`Vrelo <kontakt@vrelo-ki.de>`) + `CONTACT_TO` set in Vercel (Production), redeployed, tested end-to-end (mail received). The form flips live once all three are set (`isContactConfigured()`); the send sets `replyTo` = visitor. **⚠️ `CONTACT_TO` is currently the test inbox `ajdin@vrelo-ki.de` — switch to `kontakt@vrelo-ki.de` (or Yahoo) at launch.** Key fact for the record: this go-live needs the domain *verified in Resend*, **not** pointed at Vercel — it shipped independently of the domain cutover. Still open: `NEXT_PUBLIC_CAL_LINK` (Cal.com scheduler) is unset — separate from the form; the page shows „Online-Terminbuchung folgt in Kürze“ until set.
 
 **Newsletter — Resend setup:**
 - [ ] Create a Resend **Audience** → put its id in `NEWSLETTER_AUDIENCE_ID` (this Audience *is* the subscriber list; no DB on our side — we only `contacts.create` confirmed emails into it).
