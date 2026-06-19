@@ -31,6 +31,12 @@
      accessibility override as the ember token — confirm hue with the founder. */
   --color-stumm: #696359;
 
+  /* On-dark form error text. The `ember` error color is dark-on-light and fails
+     on the dark contact card; signal is its light counterpart — a soft warm coral
+     (not alarm-red, to stay calm), 8.02:1 on tiefes-wasser. Founder-confirm hue
+     like stumm/ember. */
+  --color-signal: #f0a79a;
+
   /* Fonts (CSS vars provided by next/font in Task 4) */
   --font-sans: var(--font-jakarta), system-ui, sans-serif;
   --font-serif: var(--font-fraunces), Georgia, serif;
@@ -69,6 +75,14 @@ body {
 }
 .shadow-deepwater {
   box-shadow: 0 18px 60px rgba(7, 28, 43, 0.45);
+}
+
+/* Concentric amber glow for the Kontakt confirmation mark — a drop's ripple.
+   Palette values kept here (not in markup) per the no-inline-hex convention. */
+.success-ring {
+  box-shadow:
+    0 0 0 8px rgba(212, 162, 76, 0.10),
+    0 0 0 18px rgba(212, 162, 76, 0.05);
 }
 
 /* Hero surfaces — kept here so the palette stays in one place (no inline hex). */
