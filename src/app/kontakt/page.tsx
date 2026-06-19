@@ -30,7 +30,7 @@ export default function KontaktPage() {
       />
 
       <Section tone="paper">
-        <div className="mx-auto max-w-xl rounded-2xl bg-tiefes-wasser p-8 shadow-deepwater card-depth md:p-10">
+        <div className="mx-auto max-w-xl rounded-2xl bg-tiefes-wasser p-8 shadow-deepwater md:p-10">
           {configured ? (
             <ContactForm />
           ) : (
