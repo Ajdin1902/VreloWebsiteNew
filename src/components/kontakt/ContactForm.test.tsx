@@ -8,7 +8,7 @@ describe("ContactForm", () => {
     render(<ContactForm />);
     expect(screen.getByLabelText(/Name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/E-Mail/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Was frisst gerade deine Zeit/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/Was raubt dir gerade deine Zeit/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Betrieb/i)).toBeInTheDocument();
     const consentLink = screen.getByRole("link", { name: /Datenschutz/i });
     expect(consentLink).toHaveAttribute("href", "/datenschutz");
