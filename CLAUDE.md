@@ -39,9 +39,10 @@ All `@theme`-token-based, reduced-motion-safe, CLS-safe, browser-verified 1440/3
 ## Next session — planned work (resume here)
 > Homepage is **live** on a centered spine with a full-bleed flowing-water hero (`hero-flow.webp`, Direction C), 2026-06-16. No open homepage layout items.
 1. **Legal copy** — replace every `[Platzhalter]` in `src/lib/legal/{impressum,datenschutz}.ts` with real, verified copy (founder/lawyer); also sweep its em-dashes → en-dashes (deferred from the route-page sweep).
-2. **Design-skill pass on the remaining subpages** — Leistungen/Über-mich/FAQ + **Ratgeber** + **Kontakt** are **done**; remaining: **Newsletter, legal** (taste → high-end-visual-design → impeccable, redesign-preserve; browser-verify 1440/390 + AA).
-3. **Re-add the Cal.com scheduler to `/kontakt`** — the redesign dropped it (form-only); the `SchedulerEmbed` component + `calLink()` are preserved, just unrendered. Re-render it once `NEXT_PUBLIC_CAL_LINK` is set.
-4. **Cleanup (optional):** the centered-spine pass orphaned **`RippleImage`** (+ its test), `/images/was-ich-baue.webp`, and `/video/hero-quelle.jpg` — all now unused. Remove or keep-for-reuse — decide later.
+2. **Design-skill pass on the remaining subpages** — Leistungen/Über-mich/FAQ + **Kontakt** are **done**; remaining: **Ratgeber (revisit — founder wants a dedicated pass, esp. the article reading experience), Newsletter, legal** (taste → high-end-visual-design → impeccable, redesign-preserve; browser-verify 1440/390 + AA).
+3. **Remove the eyebrow/kicker labels above all headlines** (site-wide, founder 2026-06-19) — the small uppercase tracked label above page/section headings (`PageIntro` `eyebrow`, e.g. „Kontakt“/„Leistungen“, plus any section eyebrows). Drop the labels + their now-unused props/styles, then browser-verify. (Also a known AI-design tell.)
+4. **Re-add the Cal.com scheduler to `/kontakt`** — the redesign dropped it (form-only); the `SchedulerEmbed` component + `calLink()` are preserved, just unrendered. Re-render it once `NEXT_PUBLIC_CAL_LINK` is set.
+5. **Cleanup (optional):** the centered-spine pass orphaned **`RippleImage`** (+ its test), `/images/was-ich-baue.webp`, and `/video/hero-quelle.jpg` — all now unused. Remove or keep-for-reuse — decide later.
 
 > **To write a new Ratgeber article, use the project skill `.claude/skills/ratgeber-article/`** — interactive intake → full first draft in brand voice → frontmatter (incl. required `cover`/`coverAlt`, `draft: true`) → cover prompt from `image_prompt.md` §9 + a generation checklist. The covers test (`ratgeber.covers.test.ts`) requires the cover WebP to actually exist, so `npm test` fails until you drop it in.
 
