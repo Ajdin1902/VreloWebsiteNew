@@ -1,7 +1,7 @@
 // src/app/kontakt/page.tsx
 import type { Metadata } from "next";
 import { PageIntro } from "@/components/PageIntro";
-import { PageImage } from "@/components/PageImage";
+import { RippleImage } from "@/components/RippleImage";
 import { Section } from "@/components/Section";
 import { JsonLd } from "@/components/JsonLd";
 import { ContactForm } from "@/components/kontakt/ContactForm";
@@ -60,10 +60,12 @@ export default function KontaktPage() {
           <figcaption className="mb-5 text-center font-serif text-xl italic text-tiefes-wasser md:text-2xl">
             Der erste Tropfen genügt.
           </figcaption>
-          <PageImage
+          <RippleImage
             src="/images/kontakt-banner.webp"
             alt="Eine ruhige Wasseroberfläche im warmen Morgenlicht; ein erster sanfter Ring breitet sich aus."
-            ratio="aspect-[21/9]"
+            className="aspect-[21/9] w-full rounded-2xl shadow-deepwater ring-1 ring-gletscher/10"
+            seedXFraction={0.5}
+            seedYFraction={0.46}
           />
         </figure>
       </Section>
