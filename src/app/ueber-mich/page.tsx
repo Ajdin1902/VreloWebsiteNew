@@ -21,7 +21,7 @@ export default function UeberMichPage() {
     <>
       <PageIntro
         title="Über mich"
-        lead="Ich bin Ajdin Dzafic, Gründer von Vrelo, mit einem Master of Science in Wirtschaftsinformatik von der OTH Regensburg. Seit Jahren automatisiere ich Prozesse – und die größte Freude war für mich immer der Abschluss eines Projekts. Der Grund: Niemand musste sich mehr um wiederkehrende, zeitraubende Aufgaben kümmern. Sie liefen von selbst. Das brachte Ruhe. Genau hier liegt die Motivation hinter Vrelo."
+        lead="Ich bin Ajdin Dzafic, Gründer von Vrelo, jahrelanger Prozessautomatisierer mit einem Master of Science in Wirtschaftsinformatik – und Kaffeeliebhaber. Das Schönste an meiner Arbeit war für mich immer der Moment am Ende eines Projekts: Niemand musste sich mehr um die wiederkehrenden, zeitraubenden Aufgaben kümmern. Sie liefen von selbst. Das brachte Ruhe. Genau das ist die Motivation hinter Vrelo."
         image={{
           src: "/images/ueber-mich-banner.webp",
           alt: "Ein türkisfarbener Quellfluss entspringt im Morgenlicht am Fuß bosnischer Kalksteinberge.",
