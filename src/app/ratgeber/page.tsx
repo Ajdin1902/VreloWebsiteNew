@@ -23,11 +23,6 @@ export default function RatgeberPage() {
       <PageIntro
         title="Gedanken zur ruhigen Automatisierung"
         lead="Praxisnahe Notizen für kleine Betriebe – wie du wiederkehrende Arbeit abgibst und Zeit, Ruhe und einen freien Kopf zurückgewinnst."
-        image={{
-          src: "/images/ratgeber-banner.webp",
-          alt: "Weiches Sonnenlicht fällt durch klares, tiefes Wasser.",
-          ratio: "aspect-[16/9]",
-        }}
       />
       <Section tone="paper">
         <RatgeberIndex articles={articles} />

@@ -244,3 +244,16 @@ body {
     transition: none;
   }
 }
+
+/* Ratgeber article drop-cap: a large Fraunces initial on the first paragraph of
+   the article body. Pure CSS; degrades to a normal capital if Fraunces fails.
+   petrol on lesepapier clears AA. */
+.article-body > p:first-of-type::first-letter {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  float: left;
+  font-size: 3.4rem;
+  line-height: 0.8;
+  padding: 0.35rem 0.6rem 0 0;
+  color: var(--color-vrelo-petrol);
+}

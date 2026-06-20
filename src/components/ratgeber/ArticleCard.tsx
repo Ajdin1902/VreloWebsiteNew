@@ -1,6 +1,5 @@
 // src/components/ratgeber/ArticleCard.tsx
 import Link from "next/link";
-import { PageImage } from "@/components/PageImage";
 import { formatDate, type Article } from "@/lib/ratgeber";
 
 export function ArticleCard({ article }: { article: Article }) {
@@ -12,24 +11,24 @@ export function ArticleCard({ article }: { article: Article }) {
   ].filter(Boolean).join(" · ");
 
   return (
-    <article className="flex flex-col gap-4 border-t border-faden py-8 first:border-t-0 sm:flex-row sm:gap-6">
-      <div className="sm:w-40 sm:flex-none">
-        <PageImage
-          src={article.cover}
-          alt={article.coverAlt}
-          ratio="aspect-[16/9]"
-          sizes="(min-width: 640px) 160px, 100vw"
+    <article className="border-t border-faden py-8 first:border-t-0">
+      <div className="flex items-center gap-3">
+        {/* amber drop motif — points up, per Brand.md */}
+        <span
+          aria-hidden
+          className="block h-4 w-3 shrink-0 rounded-[50%_50%_50%_50%/60%_60%_40%_40%] bg-amber"
         />
-      </div>
-      <div className="min-w-0">
         <p className="text-xs font-semibold uppercase tracking-wider text-stumm">{meta}</p>
-        <h2 className="mt-2 font-serif text-2xl font-medium text-tiefes-wasser">
-          <Link href={`/ratgeber/${article.slug}`} className="hover:text-vrelo-petrol">
-            {article.title}
-          </Link>
-        </h2>
-        <p className="mt-2 max-w-2xl text-tinte/80">{article.description}</p>
       </div>
+      <h2 className="mt-3 font-serif text-2xl font-medium text-tiefes-wasser">
+        <Link
+          href={`/ratgeber/${article.slug}`}
+          className="rounded-sm hover:text-vrelo-petrol focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-papier focus-visible:ring-vrelo-petrol"
+        >
+          {article.title}
+        </Link>
+      </h2>
+      <p className="mt-2 max-w-2xl text-tinte/80">{article.description}</p>
     </article>
   );
 }

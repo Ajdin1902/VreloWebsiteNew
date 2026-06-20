@@ -12,6 +12,7 @@ import { remarkBrandword } from "@/lib/remark-brandword";
 import { getArticleSlugs, getArticleBySlug, draftsVisible, type Article } from "@/lib/ratgeber";
 import { articleLd, breadcrumbLd } from "@/lib/jsonld";
 import { canonical } from "@/lib/site";
+import Link from "next/link";
 
 export function generateStaticParams() {
   return getArticleSlugs().map((slug) => ({ slug }));
@@ -52,16 +53,24 @@ export default async function ArticlePage(
   return (
     <>
       <Section tone="reading">
-        <div className="mx-auto mb-10 max-w-4xl">
-          <PageImage src={article.cover} alt={article.coverAlt} ratio="aspect-[16/9]" />
-        </div>
         <ArticleHeader article={article} />
-        <div className="mx-auto mt-10 max-w-2xl">
+        <div className="mx-auto mt-8 max-w-2xl">
+          <PageImage src={article.cover} alt={article.coverAlt} ratio="aspect-[21/9]" />
+        </div>
+        <div className="article-body mx-auto mt-10 max-w-2xl">
           <MDXRemote
             source={article.body}
             components={proseComponents}
             options={{ mdxOptions: { remarkPlugins: [remarkBrandword] } }}
           />
+        </div>
+        <div className="mx-auto mt-12 max-w-2xl">
+          <Link
+            href="/ratgeber"
+            className="rounded-sm text-sm font-medium text-stumm underline-offset-4 hover:text-vrelo-petrol hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-lesepapier focus-visible:ring-vrelo-petrol"
+          >
+            <span aria-hidden="true">← </span>Zurück zum Ratgeber
+          </Link>
         </div>
       </Section>
       <ClosingCta

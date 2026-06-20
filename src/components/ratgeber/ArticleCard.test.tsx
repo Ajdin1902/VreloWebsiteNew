@@ -11,14 +11,15 @@ const article: Article = {
 };
 
 describe("ArticleCard", () => {
-  it("links the title to the article and shows meta", () => {
-    render(<ArticleCard article={article} />);
+  it("renders a typographic row: link, meta, lede, no thumbnail", () => {
+    const { container } = render(<ArticleCard article={article} />);
     const link = screen.getByRole("link", { name: "Mein Artikel" });
     expect(link).toHaveAttribute("href", "/ratgeber/mein-artikel");
     expect(screen.getByText(/28\. Mai 2026/)).toBeInTheDocument();
     expect(screen.getByText(/6 Min/)).toBeInTheDocument();
     expect(screen.getByText(/Termine/)).toBeInTheDocument();
-    expect(screen.getByAltText("Ruhige Wasserringe.")).toBeInTheDocument();
+    expect(screen.getByText("Worum es geht.")).toBeInTheDocument();
+    expect(container.querySelector("img")).toBeNull();
   });
 
   it("shows an Entwurf marker for drafts", () => {
