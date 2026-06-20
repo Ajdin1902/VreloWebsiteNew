@@ -67,9 +67,9 @@ export default async function ArticlePage(
         <div className="mx-auto mt-12 max-w-2xl">
           <Link
             href="/ratgeber"
-            className="text-sm font-medium text-stumm underline-offset-4 hover:text-vrelo-petrol hover:underline"
+            className="rounded-sm text-sm font-medium text-stumm underline-offset-4 hover:text-vrelo-petrol hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-lesepapier focus-visible:ring-vrelo-petrol"
           >
-            ← Zurück zum Ratgeber
+            <span aria-hidden="true">← </span>Zurück zum Ratgeber
           </Link>
         </div>
       </Section>
