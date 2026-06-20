@@ -21,7 +21,10 @@ export function ArticleCard({ article }: { article: Article }) {
         <p className="text-xs font-semibold uppercase tracking-wider text-stumm">{meta}</p>
       </div>
       <h2 className="mt-3 font-serif text-2xl font-medium text-tiefes-wasser">
-        <Link href={`/ratgeber/${article.slug}`} className="hover:text-vrelo-petrol">
+        <Link
+          href={`/ratgeber/${article.slug}`}
+          className="rounded-sm hover:text-vrelo-petrol focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-papier focus-visible:ring-vrelo-petrol"
+        >
           {article.title}
         </Link>
       </h2>
