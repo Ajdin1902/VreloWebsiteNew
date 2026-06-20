@@ -9,9 +9,9 @@ export function ArticleHeader({ article }: { article: Article }) {
         aria-hidden
         className="mx-auto mb-3 block h-4 w-3 rounded-[50%_50%_50%_50%/60%_60%_40%_40%] bg-amber"
       />
-      <p className="text-xs font-semibold uppercase tracking-wider text-stumm">
-        Ratgeber{article.draft ? " · Entwurf" : ""}
-      </p>
+      {article.draft && (
+        <p className="text-xs font-semibold uppercase tracking-wider text-stumm">Entwurf</p>
+      )}
       <h1 className="mt-3 font-serif text-3xl font-medium text-tiefes-wasser md:text-4xl">
         {article.title}
       </h1>

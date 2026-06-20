@@ -20,7 +20,7 @@ export default async function NewsletterConfirmPage({
   const result = token ? await confirmSubscription(token) : { status: "invalid" as const };
   return (
     <>
-      <PageIntro eyebrow="Newsletter" title="Anmeldung bestätigen" />
+      <PageIntro title="Anmeldung bestätigen" />
       <Section tone="paper">
         <div className="mx-auto max-w-xl">
           <ConfirmResult status={result.status} />

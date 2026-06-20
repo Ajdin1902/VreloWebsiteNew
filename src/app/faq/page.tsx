@@ -20,7 +20,6 @@ export default function FaqPage() {
   return (
     <>
       <PageIntro
-        eyebrow="FAQ"
         title="Häufige Fragen"
         lead="Was kleine Betriebe vor der Zusammenarbeit am häufigsten fragen. Deine Frage ist nicht dabei? Schreib mir einfach."
       />

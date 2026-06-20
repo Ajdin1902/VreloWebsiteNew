@@ -24,7 +24,6 @@ export default function KontaktPage() {
   return (
     <>
       <PageIntro
-        eyebrow="Kontakt"
         title="Lass uns deine Quelle bauen."
         lead="Erzähl mir, was dich täglich Zeit kostet – ich melde mich und sage dir ehrlich, ob und wie ich helfen kann."
       />

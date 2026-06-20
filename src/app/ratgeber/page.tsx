@@ -21,7 +21,6 @@ export default function RatgeberPage() {
   return (
     <>
       <PageIntro
-        eyebrow="Ratgeber"
         title="Gedanken zur ruhigen Automatisierung"
         lead="Praxisnahe Notizen für kleine Betriebe – wie du wiederkehrende Arbeit abgibst und Zeit, Ruhe und einen freien Kopf zurückgewinnst."
         image={{

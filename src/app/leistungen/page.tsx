@@ -22,7 +22,6 @@ export default function LeistungenPage() {
   return (
     <>
       <PageIntro
-        eyebrow="Was ich baue"
         title="Leistungen"
         lead="Ich baue dir eine saubere Quelle für die Aufgaben, die sich jeden Tag wiederholen – maßgeschneidert für deinen Betrieb, nicht von der Stange. Kein Durcheinander aus zehn Tools, sondern eine ruhige Lösung, die still im Hintergrund läuft."
         image={{

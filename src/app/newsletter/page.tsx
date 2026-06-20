@@ -20,7 +20,6 @@ export default function NewsletterPage() {
   return (
     <>
       <PageIntro
-        eyebrow="Newsletter"
         title="Automatisierungs-Ideen, ruhig erklärt."
         lead="Ab und zu eine praktische Idee, wie du mit KI Zeit zurückgewinnst – ohne Hype, ohne Spam. Jederzeit abbestellbar."
         image={{
