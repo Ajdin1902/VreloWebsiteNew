@@ -24,7 +24,9 @@ export default function RatgeberPage() {
         title="Gedanken zur ruhigen Automatisierung"
         lead="Praxisnahe Notizen für kleine Betriebe – wie du wiederkehrende Arbeit abgibst und Zeit, Ruhe und einen freien Kopf zurückgewinnst."
       />
-      <Section tone="paper">
+      {/* Pull the list up under the intro: both are paper, so the doubled
+          Section padding (intro bottom + list top) leaves too big a gap. */}
+      <Section tone="paper" className="-mt-24 md:-mt-32">
         <RatgeberIndex articles={articles} />
       </Section>
       <ClosingCta
