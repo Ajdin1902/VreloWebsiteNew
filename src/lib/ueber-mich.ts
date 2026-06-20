@@ -10,7 +10,7 @@ export const storyBeats: StoryBeat[] = [
   {
     slug: "quelle",
     heading: "Woher ich komme",
-    body: "Mein Name kommt – wie auch der Name Vrelo – aus Bosnien und Herzegowina. Vrelo bedeutet Quelle: der Ursprung, aus dem ein Fluss klar und beständig entspringt. Das steht hinter meiner Arbeit.\n\nWenn ich dort bin, fällt der Arbeitsstress ab, und es bleibt Raum für das Wesentliche. Die Frage, die mich seitdem begleitet: Wie lässt sich dieses Gefühl in den Arbeitsalltag holen? Die Antwort liegt darin, die vielen täglichen Aufgaben loszuwerden, die Zeit und Konzentration rauben. Es braucht eine saubere, definierte Quelle, aus der die Tätigkeiten strukturiert und automatisiert laufen. Möglich ist das – im Tagesgeschäft fehlt nur die Zeit, es sauber aufzusetzen. Hier setzt Vrelo an.",
+    body: "Mein Name kommt – wie auch der Name Vrelo – aus Bosnien und Herzegowina. Vrelo bedeutet Quelle: der Ursprung, aus dem ein Fluss klar und beständig entspringt. Das steht hinter meiner Arbeit.\n\nWenn ich dort bin, fällt die Hektik ab, und es bleibt Raum für das Wesentliche. Die Frage, die mich seitdem begleitet: Wie lässt sich dieses Gefühl in den Arbeitsalltag holen? Die Antwort liegt darin, die vielen täglichen Aufgaben loszuwerden, die Zeit und Konzentration rauben. Es braucht eine saubere, definierte Quelle, aus der die Tätigkeiten strukturiert und automatisiert laufen. Möglich ist das – im Tagesgeschäft fehlt nur die Zeit, es sauber aufzusetzen. Hier setzt Vrelo an.",
     side: "left",
   },
   {
@@ -28,7 +28,7 @@ export const storyBeats: StoryBeat[] = [
   {
     slug: "merak",
     heading: "Wonach es sich anfühlt",
-    body: "Was mich antreibt, ist ein bestimmter Moment: wenn mitten im Arbeitstag Ruhe einkehrt, weil etwas einfach läuft. Je weniger unnötigen Stress wir bei der Arbeit haben, desto mehr Zeit und Fokus bleiben für das, was wirklich zählt – beruflich wie privat. Das ist die eigentliche Kraft der Automatisierung.\n\nDiesen Moment der Ruhe nennen wir Merak. Eine direkte Übersetzung ins Deutsche gibt es nicht – vielleicht, weil solche Momente viel zu selten geworden sind. Was ich dir aber sicher sagen kann: Vrelo kann diesen Merak bei dir erreichen. Melde dich, und wir schauen in Ruhe gemeinsam, wo wir anfangen.",
+    body: "Was mich antreibt, ist ein bestimmter Moment: wenn mitten im Arbeitstag Ruhe einkehrt, weil etwas einfach läuft. Je weniger unnötige Reibung wir bei der Arbeit haben, desto mehr Zeit und Fokus bleiben für das, was wirklich zählt – beruflich wie privat. Das ist die eigentliche Kraft der Automatisierung.\n\nDiesen Moment der Ruhe nennen wir Merak. Eine direkte Übersetzung ins Deutsche gibt es nicht – vielleicht, weil solche Momente viel zu selten geworden sind. Was ich dir aber sicher sagen kann: Vrelo kann dir genau dieses Gefühl zurückgeben. Melde dich, und wir schauen in Ruhe gemeinsam, wo wir anfangen.",
     side: "right",
   },
 ];

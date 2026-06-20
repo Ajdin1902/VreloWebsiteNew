@@ -42,7 +42,7 @@ export default function UeberMichPage() {
       ))}
       <ClosingCta
         heading="Lern mich unverbindlich kennen."
-        lead="Hast du auch einen stressigen Arbeitsalltag voller Kleinkram? Willst du auch wieder ein Gefühl von Merak? Ich zeige dir, wie wir dahin kommen."
+        lead="Fressen die immer gleichen Aufgaben deine Zeit – und du hättest gern wieder dieses Gefühl von Ruhe, von Merak? Lass uns unverbindlich reden; wir finden gemeinsam den ersten Schritt."
       />
       <JsonLd data={personLd()} />
       <JsonLd data={breadcrumbLd([{ name: "Start", path: "/" }, { name: "Über mich", path: "/ueber-mich" }])} />
