@@ -33,9 +33,9 @@ describe("proseComponents.blockquote (pull-quote)", () => {
     );
     const bq = container.querySelector("blockquote")!;
     expect(bq).toBeTruthy();
-    expect(bq.className).toContain("text-center");
-    expect(bq.className).not.toContain("border-l");
-    expect(bq.querySelector("span[aria-hidden]")).toBeTruthy();
+    expect(bq).toHaveClass("text-center");
+    expect(bq).not.toHaveClass("border-l");
+    expect(bq.querySelector('span[aria-hidden="true"]')).toBeTruthy();
     expect(bq.textContent).toContain("Ein ruhiger Satz.");
   });
 });
