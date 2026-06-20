@@ -7,7 +7,7 @@ export function ArticleHeader({ article }: { article: Article }) {
     formatDate(article.date),
     `${article.readingMinutes} Min Lesezeit`,
     ...article.tags,
-  ].join(" · ");
+  ].filter(Boolean).join(" · ");
 
   return (
     <header className="mx-auto max-w-2xl">

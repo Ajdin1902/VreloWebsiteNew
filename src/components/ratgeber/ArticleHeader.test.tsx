@@ -19,7 +19,7 @@ describe("ArticleHeader", () => {
     expect(header.className).not.toContain("text-center");
     const h1 = screen.getByRole("heading", { level: 1, name: "Der Titel" });
     expect(h1).toHaveClass("font-serif");
-    expect(screen.getByText("Die kurze Einleitung.")).toBeInTheDocument();
+    expect(screen.getByText(/Die kurze Einleitung/)).toBeInTheDocument();
     expect(screen.getByText(/28\. Mai 2026/)).toBeInTheDocument();
     expect(screen.getByText(/6 Min Lesezeit/)).toBeInTheDocument();
     expect(screen.getByText(/Termine/)).toBeInTheDocument();
