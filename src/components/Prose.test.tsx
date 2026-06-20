@@ -18,16 +18,24 @@ describe("proseComponents", () => {
     expect(screen.getByText("Link")).toHaveClass("text-vrelo-petrol");
   });
 
-  it("styles blockquote in ember italic", () => {
-    const BQ = proseComponents.blockquote;
-    render(<BQ>Zitat</BQ>);
-    const el = screen.getByText("Zitat");
-    expect(el.tagName).toBe("BLOCKQUOTE");
-    expect(el).toHaveClass("text-ember");
-    expect(el).toHaveClass("italic");
-  });
-
   it("exposes BrandWord to MDX scope", () => {
     expect(proseComponents.BrandWord).toBeTypeOf("function");
+  });
+});
+
+describe("proseComponents.blockquote (pull-quote)", () => {
+  it("renders a centered pull-quote with an amber drop mark and no left stripe", () => {
+    const Blockquote = proseComponents.blockquote;
+    const { container } = render(
+      <Blockquote>
+        <p>Ein ruhiger Satz.</p>
+      </Blockquote>,
+    );
+    const bq = container.querySelector("blockquote")!;
+    expect(bq).toBeTruthy();
+    expect(bq.className).toContain("text-center");
+    expect(bq.className).not.toContain("border-l");
+    expect(bq.querySelector("span[aria-hidden]")).toBeTruthy();
+    expect(bq.textContent).toContain("Ein ruhiger Satz.");
   });
 });

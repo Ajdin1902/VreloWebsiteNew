@@ -23,7 +23,16 @@ export const proseComponents = {
     <ol className="mt-5 list-decimal space-y-2 pl-5 text-lg text-tinte/90" {...p} />
   ),
   li: (p: ComponentProps<"li">) => <li className="leading-relaxed" {...p} />,
-  blockquote: (p: ComponentProps<"blockquote">) => (
-    <blockquote className="my-6 border-l-2 border-amber pl-4 font-serif text-lg italic text-ember" {...p} />
+  blockquote: ({ children, ...rest }: ComponentProps<"blockquote">) => (
+    <blockquote
+      className="my-10 text-center [&_p]:mt-0 [&_p]:font-serif [&_p]:text-2xl [&_p]:italic [&_p]:leading-relaxed [&_p]:text-tiefes-wasser"
+      {...rest}
+    >
+      <span
+        aria-hidden
+        className="mx-auto mb-3 block h-4 w-3 rounded-[50%_50%_50%_50%/60%_60%_40%_40%] bg-amber"
+      />
+      {children}
+    </blockquote>
   ),
 };
