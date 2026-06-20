@@ -19,8 +19,8 @@ export function WasIchBaue() {
           Ich nehme dir die immer gleichen Aufgaben ab.
         </Reveal>
         <Reveal as="p" delayMs={80} className="mt-5 text-pretty text-lg text-gletscher">
-          Maßgeschneiderte Automatisierungen, die den wiederkehrenden Kleinkram still im
-          Hintergrund übernehmen – nichts, das du lernen oder warten musst.
+          Ein Ansprechpartner, der weiß, wo es bei dir hakt – und eine Lösung, die du
+          weder lernen noch warten musst.
         </Reveal>
       </div>
       <Reveal as="ul" delayMs={200} aria-labelledby="was-ich-baue-heading" className="mx-auto mt-10 grid max-w-2xl gap-3 sm:grid-cols-2">
