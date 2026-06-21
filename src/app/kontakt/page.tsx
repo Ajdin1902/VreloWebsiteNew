@@ -28,7 +28,9 @@ export default function KontaktPage() {
         lead="Erzähl mir, was dich täglich Zeit kostet – ich melde mich und sage dir ehrlich, ob und wie ich helfen kann."
       />
 
-      <Section tone="paper">
+      {/* Pull the form card up under the intro: two stacked paper Sections
+          otherwise double their py padding into an oversized gap. */}
+      <Section tone="paper" className="-mt-24 md:-mt-32">
         <div className="mx-auto max-w-xl rounded-2xl bg-tiefes-wasser p-8 shadow-deepwater md:p-10">
           {configured ? (
             <ContactForm />

@@ -33,7 +33,10 @@ export default function UeberMichPage() {
           key={beat.slug}
           tone="paper"
           tint={index % 2 === 1}
-          className="border-t border-faden"
+          // Pull the first beat up under the intro: two stacked paper Sections
+          // otherwise double their py padding into an oversized gap. Gentle here
+          // so the border-t divider keeps breathing room below the banner.
+          className={`border-t border-faden${index === 0 ? " -mt-12 md:-mt-16" : ""}`}
         >
           <Reveal>
             <StoryBeat beat={beat} />

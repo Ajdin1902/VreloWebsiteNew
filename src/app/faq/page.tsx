@@ -23,7 +23,10 @@ export default function FaqPage() {
         title="Häufige Fragen"
         lead="Was kleine Betriebe vor der Zusammenarbeit am häufigsten fragen. Deine Frage ist nicht dabei? Schreib mir einfach."
       />
-      <Section tone="paper" className="border-t border-faden">
+      {/* Pull the accordion up under the intro: two stacked paper Sections
+          otherwise double their py padding into an oversized gap. Gentle so the
+          border-t divider keeps breathing room below the intro. */}
+      <Section tone="paper" className="-mt-12 border-t border-faden md:-mt-16">
         <FaqAccordion groups={faqGroups} />
       </Section>
       <Section tone="paper" className="border-t border-faden">
