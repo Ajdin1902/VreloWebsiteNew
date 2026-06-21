@@ -12,4 +12,15 @@ describe("buildConfirmEmail", () => {
     expect(e.html).toContain(`href="${url}"`);
     expect(e.text).toMatch(/ignorier/i); // "ignore if you didn't sign up"
   });
+
+  it("includes a greeting, a sign-off, and the brand one-liner", () => {
+    const e = buildConfirmEmail({ confirmUrl: url });
+    const oneLiner = "Aus einem Tropfen fließt ein Fluss – aus einer Idee deine Zeit zurück.";
+    expect(e.text).toMatch(/^Hallo,/);
+    expect(e.text).toMatch(/Bis bald/);
+    expect(e.text).toMatch(/Ajdin von Vrelo/);
+    expect(e.text).toContain(oneLiner);
+    expect(e.html).toMatch(/Bis bald/);
+    expect(e.html).toContain(oneLiner);
+  });
 });

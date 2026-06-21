@@ -22,20 +22,17 @@ export default function NewsletterPage() {
       <PageIntro
         title="Automatisierungs-Ideen, ruhig erklärt."
         lead="Ab und zu eine praktische Idee, wie du mit KI Zeit zurückgewinnst – ohne Hype, ohne Spam. Jederzeit abbestellbar."
-        image={{
-          src: "/images/newsletter-banner.webp",
-          alt: "Ein ruhiger, klarer Wasserlauf fließt gleichmäßig in die Ferne.",
-          ratio: "aspect-[16/9]",
-        }}
       />
-      <Section tone="paper">
-        <div className="mx-auto max-w-xl">
-          {configured ? (
-            <NewsletterForm />
-          ) : (
-            <p className="text-tinte">Der Newsletter ist bald verfügbar.</p>
-          )}
-        </div>
+      {/* Pull the card up under the intro: two stacked paper Sections otherwise
+          double their py padding into an oversized gap. */}
+      <Section tone="paper" className="-mt-24 md:-mt-32">
+        {configured ? (
+          <NewsletterForm />
+        ) : (
+          <div className="mx-auto max-w-xl rounded-2xl bg-tiefes-wasser p-8 text-center shadow-deepwater md:p-10">
+            <p className="text-gletscher">Der Newsletter ist bald verfügbar.</p>
+          </div>
+        )}
       </Section>
       <JsonLd data={breadcrumbLd([{ name: "Start", path: "/" }, { name: "Newsletter", path: "/newsletter" }])} />
     </>

@@ -20,8 +20,14 @@ describe("NewsletterForm", () => {
     expect(hp).toHaveAttribute("aria-hidden", "true");
   });
 
-  it("renders a compact variant", () => {
+  it("renders the dark card heading in the full variant", () => {
+    render(<NewsletterForm />);
+    expect(screen.getByRole("heading", { name: /Trag dich ein/i })).toBeInTheDocument();
+  });
+
+  it("renders a compact variant without the card heading", () => {
     const { container } = render(<NewsletterForm compact />);
     expect(container.querySelector('input[name="email"]')).not.toBeNull();
+    expect(screen.queryByRole("heading", { name: /Trag dich ein/i })).toBeNull();
   });
 });
