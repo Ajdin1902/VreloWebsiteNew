@@ -21,7 +21,7 @@ export default function NewsletterPage() {
     <>
       <PageIntro
         title="Automatisierungs-Ideen, ruhig erklärt."
-        lead="Ab und zu eine praktische Idee, wie du mit KI Zeit zurückgewinnst – ohne Hype, ohne Spam. Jederzeit abbestellbar."
+        lead="Jede Woche eine praktische Idee, wie du mit KI Zeit zurückgewinnst – ohne Hype, ohne Spam. Jederzeit abbestellbar."
       />
       {/* Pull the card up under the intro: two stacked paper Sections otherwise
           double their py padding into an oversized gap. */}
