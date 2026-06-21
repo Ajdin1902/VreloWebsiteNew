@@ -5,12 +5,12 @@ import { createHmac, timingSafeEqual } from "crypto";
 export function newsletterSecret(): string | undefined {
   return process.env.NEWSLETTER_SECRET;
 }
-export function newsletterAudienceId(): string | undefined {
-  return process.env.NEWSLETTER_AUDIENCE_ID;
+export function newsletterSegmentId(): string | undefined {
+  return process.env.NEWSLETTER_SEGMENT_ID;
 }
 
 export function isNewsletterConfigured(): boolean {
-  return Boolean(resendKey() && contactFrom() && newsletterSecret() && newsletterAudienceId());
+  return Boolean(resendKey() && contactFrom() && newsletterSecret() && newsletterSegmentId());
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

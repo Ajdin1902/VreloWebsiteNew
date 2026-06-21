@@ -2,7 +2,7 @@
 import { Resend } from "resend";
 import {
   isNewsletterConfigured,
-  newsletterAudienceId,
+  newsletterSegmentId,
   verifyToken,
 } from "@/lib/newsletter";
 import { resendKey } from "@/lib/contact";
@@ -20,9 +20,9 @@ export async function confirmSubscription(token: string): Promise<ConfirmResultD
   try {
     const resend = new Resend(resendKey());
     const { error } = await resend.contacts.create({
-      audienceId: newsletterAudienceId()!,
       email: verified.email,
       unsubscribed: false,
+      segments: [{ id: newsletterSegmentId()! }],
     });
     if (error) return { status: "error" };
     return { status: "ok" };

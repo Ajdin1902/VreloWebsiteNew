@@ -14,7 +14,7 @@ export function NewsletterForm({ compact = false }: { compact?: boolean }) {
   if (state.status === "ok") {
     return (
       <p className={compact ? "text-sm text-gletscher" : "font-serif text-xl text-ember"}>
-        Fast geschafft — schau in dein Postfach und bestätige deine Anmeldung.
+        Fast geschafft – schau in dein Postfach und bestätige deine Anmeldung.
       </p>
     );
   }

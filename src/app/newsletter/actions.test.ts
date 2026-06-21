@@ -26,7 +26,7 @@ beforeEach(() => {
   vi.stubEnv("RESEND_API_KEY", "re_test");
   vi.stubEnv("CONTACT_FROM", "Vrelo <kontakt@example.de>");
   vi.stubEnv("NEWSLETTER_SECRET", "s3cret");
-  vi.stubEnv("NEWSLETTER_AUDIENCE_ID", "aud_1");
+  vi.stubEnv("NEWSLETTER_SEGMENT_ID", "seg_1");
 });
 afterEach(() => vi.unstubAllEnvs());
 

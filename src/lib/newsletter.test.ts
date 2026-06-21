@@ -2,7 +2,7 @@
 import { describe, it, expect, afterEach, vi } from "vitest";
 import {
   newsletterSecret,
-  newsletterAudienceId,
+  newsletterSegmentId,
   isNewsletterConfigured,
   isValidNewsletterEmail,
   validateNewsletterSignup,
@@ -13,18 +13,18 @@ afterEach(() => vi.unstubAllEnvs());
 describe("newsletter env", () => {
   it("reads process.env at call time", () => {
     vi.stubEnv("NEWSLETTER_SECRET", "s3cret");
-    vi.stubEnv("NEWSLETTER_AUDIENCE_ID", "aud_1");
+    vi.stubEnv("NEWSLETTER_SEGMENT_ID", "seg_1");
     expect(newsletterSecret()).toBe("s3cret");
-    expect(newsletterAudienceId()).toBe("aud_1");
+    expect(newsletterSegmentId()).toBe("seg_1");
   });
 
-  it("isNewsletterConfigured needs key+from+secret+audience", () => {
+  it("isNewsletterConfigured needs key+from+secret+segment", () => {
     expect(isNewsletterConfigured()).toBe(false);
     vi.stubEnv("RESEND_API_KEY", "re_test");
     vi.stubEnv("CONTACT_FROM", "Vrelo <kontakt@example.de>");
     vi.stubEnv("NEWSLETTER_SECRET", "s3cret");
     expect(isNewsletterConfigured()).toBe(false);
-    vi.stubEnv("NEWSLETTER_AUDIENCE_ID", "aud_1");
+    vi.stubEnv("NEWSLETTER_SEGMENT_ID", "seg_1");
     expect(isNewsletterConfigured()).toBe(true);
   });
 });

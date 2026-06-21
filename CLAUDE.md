@@ -85,11 +85,7 @@ All `@theme`-token-based, reduced-motion-safe, CLS-safe, browser-verified 1440/3
 
 **Kontakt — ✅ LIVE (2026-06-19).** Resend domain `vrelo-ki.de` verified; `RESEND_API_KEY` + `CONTACT_FROM` (`Vrelo <kontakt@vrelo-ki.de>`) + `CONTACT_TO` set in Vercel (Production), redeployed, tested end-to-end (mail received). The form flips live once all three are set (`isContactConfigured()`); the send sets `replyTo` = visitor. **⚠️ `CONTACT_TO` is currently the test inbox `ajdin@vrelo-ki.de` — switch to `kontakt@vrelo-ki.de` (or Yahoo) at launch.** Key fact for the record: this go-live needs the domain *verified in Resend*, **not** pointed at Vercel — it shipped independently of the domain cutover. Still open: `NEXT_PUBLIC_CAL_LINK` (Cal.com scheduler) is unset — separate from the form; the page shows „Online-Terminbuchung folgt in Kürze“ until set.
 
-**Newsletter — Resend setup:**
-- [ ] Create a Resend **Audience** → put its id in `NEWSLETTER_AUDIENCE_ID` (this Audience *is* the subscriber list; no DB on our side — we only `contacts.create` confirmed emails into it).
-- [ ] Set `NEWSLETTER_SECRET` (a long random string; signs the double-opt-in token — rotating it invalidates outstanding unconfirmed links).
-- [ ] Reuses the same verified `CONTACT_FROM` sending domain.
-- [ ] **Sending newsletters is not built** — 4b only collects + confirms subscribers. To send an issue, compose a Resend **Broadcast** targeting the Audience (Resend adds the managed unsubscribe link). A future phase could automate Broadcasts.
+**Newsletter — Resend setup** (going live on the **current domain** `vrelo-website.vercel.app` first; subscriber push starts after the `vrelo-ki.de` cutover). Full step-by-step: [docs/newsletter-golive-runbook.md](docs/newsletter-golive-runbook.md). In short: set `NEWSLETTER_SEGMENT_ID` (your Resend **Segment** UUID — Resend renamed Audiences→Segments; our code uses `contacts.create({ segments:[{id}] })`) + `NEWSLETTER_SECRET` (server-only, keep stable) in Vercel, redeploy → form flips live (reuses the verified `CONTACT_FROM`; `NEXT_PUBLIC_SITE_URL` stays unset → links use the `vercel.app` alias). At domain cutover set `NEXT_PUBLIC_SITE_URL` and keep the secret. **Sending issues is not built** — to send, compose a Resend **Broadcast** to the segment.
 
 ## Open todos (non-blocking, carry forward)
 - **Copywriting skills:** `/ogilvy` `/copywriting` `/copy-editing` `/stop-slop` are installed globally (from `github.com/boraoztunc/skills`, 2026-06-07) — use them for any client-copy work (drafted the Über-mich refinement this way).
