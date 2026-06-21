@@ -57,7 +57,8 @@ export default function KontaktPage() {
         </div>
       </Section>
 
-      <Section tone="paper" className="border-t border-faden">
+      {/* Decorative banner; pulled up to keep the gap tidy without a divider line. */}
+      <Section tone="paper" className="-mt-24 md:-mt-32">
         <figure>
           <figcaption className="mb-5 text-center font-serif text-xl italic text-tiefes-wasser md:text-2xl">
             Der erste Tropfen genügt.

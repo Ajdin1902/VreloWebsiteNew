@@ -24,12 +24,11 @@ export default function FaqPage() {
         lead="Was kleine Betriebe vor der Zusammenarbeit am häufigsten fragen. Deine Frage ist nicht dabei? Schreib mir einfach."
       />
       {/* Pull the accordion up under the intro: two stacked paper Sections
-          otherwise double their py padding into an oversized gap. Gentle so the
-          border-t divider keeps breathing room below the intro. */}
-      <Section tone="paper" className="-mt-12 border-t border-faden md:-mt-16">
+          otherwise double their py padding into an oversized gap. */}
+      <Section tone="paper" className="-mt-24 md:-mt-32">
         <FaqAccordion groups={faqGroups} />
       </Section>
-      <Section tone="paper" className="border-t border-faden">
+      <Section tone="paper" className="-mt-24 md:-mt-32">
         <PageImage
           src="/images/faq-banner.webp"
           alt="Klares, ruhiges Wasser über hellen, glatten Kieselsteinen."
