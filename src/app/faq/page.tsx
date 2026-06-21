@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { PageIntro } from "@/components/PageIntro";
-import { PageImage } from "@/components/PageImage";
 import { Section } from "@/components/Section";
 import { ClosingCta } from "@/components/ClosingCta";
 import { FaqAccordion } from "@/components/faq/FaqAccordion";
@@ -27,13 +26,6 @@ export default function FaqPage() {
           otherwise double their py padding into an oversized gap. */}
       <Section tone="paper" className="-mt-24 md:-mt-32">
         <FaqAccordion groups={faqGroups} />
-      </Section>
-      <Section tone="paper" className="-mt-24 md:-mt-32">
-        <PageImage
-          src="/images/faq-banner.webp"
-          alt="Klares, ruhiges Wasser über hellen, glatten Kieselsteinen."
-          ratio="aspect-[16/9]"
-        />
       </Section>
       <ClosingCta
         heading="Offene Frage?"
