@@ -35,10 +35,10 @@ export default function LeistungenPage() {
           key={leistung.slug}
           tone="paper"
           tint={index % 2 === 1}
-          // Pull the first detail up under the intro: two stacked paper Sections
-          // otherwise double their py padding into an oversized gap. Gentle here
-          // so the border-t divider keeps breathing room below the banner.
-          className={`border-t border-faden${index === 0 ? " -mt-12 md:-mt-16" : ""}`}
+          // Details are separated by the alternating tint, not a divider line.
+          // Pull the first detail up under the intro so the stacked paper Sections
+          // don't double their py padding into an oversized gap.
+          className={index === 0 ? "-mt-24 md:-mt-32" : ""}
         >
           <Reveal>
             <LeistungDetail leistung={leistung} index={index} />
