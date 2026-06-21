@@ -17,7 +17,7 @@ export function ConfirmResult({ status }: { status: ConfirmResultData["status"] 
           </div>
           <p className="font-serif text-2xl text-tiefes-wasser">Bestätigt – du bist dabei.</p>
           <p className="mx-auto mt-3 max-w-[42ch] text-sm leading-relaxed text-stumm">
-            Ab jetzt bekommst du ab und zu eine ruhige Idee, wie du mit KI Zeit zurückgewinnst – ohne Hype, ohne Spam.
+            Ab jetzt fließen dir wöchentlich neue KI-Ideen ins Postfach.
           </p>
         </div>
         <RippleImage

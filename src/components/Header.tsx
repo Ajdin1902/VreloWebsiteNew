@@ -23,7 +23,7 @@ export function Header() {
           <BrandLockup variant="navy" />
         </Link>
 
-        <ul className="hidden items-center gap-7 md:flex">
+        <ul className="hidden items-center gap-5 md:flex lg:gap-7">
           {navLinks.map((l) => {
             const active = pathname === l.href;
             return (
