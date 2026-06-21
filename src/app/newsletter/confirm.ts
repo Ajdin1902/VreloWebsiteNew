@@ -24,9 +24,13 @@ export async function confirmSubscription(token: string): Promise<ConfirmResultD
       unsubscribed: false,
       segments: [{ id: newsletterSegmentId()! }],
     });
-    if (error) return { status: "error" };
+    if (error) {
+      console.error("[newsletter] contacts.create failed", error);
+      return { status: "error" };
+    }
     return { status: "ok" };
-  } catch {
+  } catch (e) {
+    console.error("[newsletter] contacts.create threw", e);
     return { status: "error" };
   }
 }
