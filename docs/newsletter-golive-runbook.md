@@ -6,6 +6,8 @@
 
 **Already in place** (from the Kontakt go-live): `RESEND_API_KEY`, `CONTACT_FROM` (`Vrelo <kontakt@vrelo-ki.de>`), and the Resend-verified sending domain `vrelo-ki.de`. The newsletter reuses all of these. The sending address is `@vrelo-ki.de` regardless of where the site is hosted, so no extra DNS is needed.
 
+> **⚠️ API key permission (real gotcha, 2026-06-21).** The contact form only *sends* mail, so the original key was created with **Sending access**. The newsletter **creates a contact**, which needs **Full access** — a sending-only key fails confirm with `401 restricted_api_key: "This API key is restricted to only send emails"`. The key was upgraded to Full access (full access still covers sending, so one key serves both). If newsletter confirm 401s, check the key's permission first.
+
 > **Resend model note.** Resend migrated **Audiences → Segments** (contacts are now independent and live in zero/one/many segments). Our code adds confirmed contacts to a **segment** via `contacts.create({ segments: [{ id }] })`. So the value you need is a **Segment ID**, not an audience id.
 
 ---
