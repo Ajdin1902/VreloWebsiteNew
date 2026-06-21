@@ -21,10 +21,9 @@ export default async function NewsletterConfirmPage({
   return (
     <>
       <PageIntro title="Anmeldung bestätigen" />
-      <Section tone="paper">
-        <div className="mx-auto max-w-xl">
-          <ConfirmResult status={result.status} />
-        </div>
+      {/* Pull up under the intro (stacked paper Sections otherwise double their padding). */}
+      <Section tone="paper" className="-mt-24 md:-mt-32">
+        <ConfirmResult status={result.status} />
       </Section>
     </>
   );

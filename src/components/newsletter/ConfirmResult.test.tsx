@@ -4,9 +4,10 @@ import { render, screen } from "@testing-library/react";
 import { ConfirmResult } from "./ConfirmResult";
 
 describe("ConfirmResult", () => {
-  it("shows a success message for ok", () => {
+  it("shows a success message and the ripple water banner for ok", () => {
     render(<ConfirmResult status="ok" />);
     expect(screen.getByText(/Bestätigt/i)).toBeInTheDocument();
+    expect(screen.getByAltText(/Wasserlauf/i)).toBeInTheDocument();
   });
   it("shows a calm error + link back for invalid", () => {
     render(<ConfirmResult status="invalid" />);
