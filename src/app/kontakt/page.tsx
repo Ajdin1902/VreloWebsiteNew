@@ -6,7 +6,7 @@ import { WaterSection } from "@/components/WaterSection";
 import { JsonLd } from "@/components/JsonLd";
 import { ContactForm } from "@/components/kontakt/ContactForm";
 import { CardHeading } from "@/components/kontakt/CardHeading";
-import { darkLinkClass } from "@/components/kontakt/onDarkLink";
+import { lightLinkClass } from "@/components/kontakt/onDarkLink";
 import { isContactConfigured, contactTo } from "@/lib/contact";
 import { breadcrumbLd } from "@/lib/jsonld";
 import { canonical } from "@/lib/site";
@@ -32,7 +32,7 @@ export default function KontaktPage() {
           with the ripple banner below in the same section. The -mt pulls it up
           under the intro so the gap isn't doubled. */}
       <WaterSection className="-mt-24 md:-mt-32">
-        <div className="mx-auto max-w-xl rounded-2xl bg-tiefes-wasser p-8 shadow-deepwater ring-1 ring-gletscher/15 md:p-10">
+        <div className="mx-auto max-w-xl rounded-2xl bg-honig p-8 shadow-deepwater md:p-10">
           {configured ? (
             <ContactForm />
           ) : (
@@ -40,15 +40,15 @@ export default function KontaktPage() {
               <CardHeading />
               <div className="mt-6">
                 {to ? (
-                  <p className="text-gletscher">
+                  <p className="text-tinte">
                     Schreib mir direkt:{" "}
-                    <a href={`mailto:${to}`} className={darkLinkClass}>
+                    <a href={`mailto:${to}`} className={lightLinkClass}>
                       {to}
                     </a>
                     .
                   </p>
                 ) : (
-                  <p className="text-gletscher">
+                  <p className="text-tinte">
                     Ruf mich an oder schreib mir – das Formular schalte ich in Kürze frei.
                   </p>
                 )}
