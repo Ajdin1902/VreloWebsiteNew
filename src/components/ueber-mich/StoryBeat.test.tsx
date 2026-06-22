@@ -49,6 +49,18 @@ describe("StoryBeat", () => {
     expect(screen.getByText("Zweiter Absatz hier.")).toBeInTheDocument();
   });
 
+  it("uses on-dark text classes when onDark is set", () => {
+    const { container } = render(<StoryBeat beat={beat} onDark />);
+    expect(screen.getByRole("heading", { level: 2 })).toHaveClass("text-papier");
+    expect(container.querySelector("p")).toHaveClass("text-gletscher");
+  });
+
+  it("uses dark-ink text classes by default (light beat)", () => {
+    const { container } = render(<StoryBeat beat={beat} />);
+    expect(screen.getByRole("heading", { level: 2 })).toHaveClass("text-tiefes-wasser");
+    expect(container.querySelector("p")).toHaveClass("text-tinte");
+  });
+
   it("wraps Vrelo and Merak in a Fraunces-italic BrandWord", () => {
     const branded: StoryBeatType = {
       ...beat,
