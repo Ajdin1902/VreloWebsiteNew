@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useActionState, useState } from "react";
 import { subscribeToNewsletter, type NewsletterState } from "@/app/newsletter/actions";
 import { NewsletterSuccess } from "./NewsletterSuccess";
-import { darkLinkClass } from "@/components/kontakt/onDarkLink";
+import { lightLinkClass } from "@/components/kontakt/onDarkLink";
 
 const initial: NewsletterState = { status: "idle" };
 
@@ -30,15 +30,18 @@ export function NewsletterForm({ compact = false }: { compact?: boolean }) {
   const values = state.status === "invalid" || state.status === "error" ? state.values : undefined;
 
   // Compact (footer) keeps its prior on-dark-footer styling untouched; the full
-  // variant matches the Kontakt dark card (gletscher fields, signal errors).
+  // variant is the honey (honig) card — on-light text, papier input wells, navy button.
   const inputClass = compact
     ? "mt-1 w-full rounded-md border border-faden bg-papier px-3 py-2 text-tinte focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
-    : "mt-1 w-full rounded-md border border-gletscher/25 bg-gletscher/10 px-3 py-2 text-papier focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-tiefes-wasser";
-  const labelClass = compact ? "text-sm text-gletscher" : "text-sm font-medium text-gletscher";
-  const consentClass = compact ? "text-xs text-stein" : "text-sm text-gletscher";
-  const errorClass = compact ? "text-sm text-ember" : "text-sm text-signal";
-  const buttonOffset = compact ? "focus-visible:ring-offset-papier" : "focus-visible:ring-offset-tiefes-wasser";
-  const consentLinkClass = compact ? "underline underline-offset-2" : darkLinkClass;
+    : "mt-1 w-full rounded-md border border-tiefes-wasser/20 bg-papier px-3 py-2 text-tinte focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vrelo-petrol focus-visible:ring-offset-2 focus-visible:ring-offset-honig";
+  const labelClass = compact ? "text-sm text-gletscher" : "text-sm font-medium text-tiefes-wasser";
+  const consentClass = compact ? "text-xs text-stein" : "text-sm text-tinte";
+  const errorClass = compact ? "text-sm text-ember" : "text-sm text-signal-tief";
+  const consentLinkClass = compact ? "underline underline-offset-2" : lightLinkClass;
+  // Button: amber on the dark footer, navy on the honey card.
+  const buttonClass = compact
+    ? "bg-amber text-tiefes-wasser hover:bg-honig focus-visible:ring-amber focus-visible:ring-offset-papier"
+    : "bg-tiefes-wasser text-papier hover:bg-vrelo-petrol focus-visible:ring-tiefes-wasser focus-visible:ring-offset-honig";
 
   const form = (
     <form action={formAction} className="space-y-3" noValidate>
@@ -72,7 +75,7 @@ export function NewsletterForm({ compact = false }: { compact?: boolean }) {
       {state.status === "error" && <p className={errorClass}>{state.message}</p>}
 
       <button type="submit" disabled={pending}
-        className={`inline-flex items-center justify-center rounded-lg bg-amber px-5 py-2.5 text-sm font-semibold text-tiefes-wasser transition-colors hover:bg-honig disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber ${buttonOffset}`}>
+        className={`inline-flex items-center justify-center rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${buttonClass}`}>
         {pending ? "Wird gesendet …" : "Anmelden"}
       </button>
     </form>
@@ -81,9 +84,9 @@ export function NewsletterForm({ compact = false }: { compact?: boolean }) {
   if (compact) return form;
 
   return (
-    <div className="mx-auto max-w-xl rounded-2xl bg-tiefes-wasser p-8 shadow-deepwater ring-1 ring-gletscher/15 md:p-10">
-      <h2 className="font-serif text-2xl font-medium text-papier">Trag dich ein.</h2>
-      <p className="mt-2 text-sm text-gletscher">Eine E-Mail genügt. Jederzeit wieder abbestellbar.</p>
+    <div className="mx-auto max-w-xl rounded-2xl bg-honig p-8 shadow-deepwater md:p-10">
+      <h2 className="font-serif text-2xl font-medium text-tiefes-wasser">Trag dich ein.</h2>
+      <p className="mt-2 text-sm text-tiefes-wasser/80">Eine E-Mail genügt. Jederzeit wieder abbestellbar.</p>
       <div className="mt-6">{form}</div>
     </div>
   );

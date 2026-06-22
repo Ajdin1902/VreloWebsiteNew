@@ -29,8 +29,8 @@ export default function NewsletterPage() {
         {configured ? (
           <NewsletterForm />
         ) : (
-          <div className="mx-auto max-w-xl rounded-2xl bg-tiefes-wasser p-8 text-center shadow-deepwater ring-1 ring-gletscher/15 md:p-10">
-            <p className="text-gletscher">Der Newsletter ist bald verfügbar.</p>
+          <div className="mx-auto max-w-xl rounded-2xl bg-honig p-8 text-center shadow-deepwater md:p-10">
+            <p className="text-tinte">Der Newsletter ist bald verfügbar.</p>
           </div>
         )}
       </WaterSection>
