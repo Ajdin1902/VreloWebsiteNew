@@ -30,10 +30,10 @@ export function NewsletterForm({ compact = false }: { compact?: boolean }) {
   const values = state.status === "invalid" || state.status === "error" ? state.values : undefined;
 
   // Compact (footer) keeps its prior on-dark-footer styling untouched; the full
-  // variant is the honey (honig) card — on-light text, papier input wells, navy button.
+  // variant is the amber card — on-light text, papier input wells, navy button.
   const inputClass = compact
     ? "mt-1 w-full rounded-md border border-faden bg-papier px-3 py-2 text-tinte focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
-    : "mt-1 w-full rounded-md border border-tiefes-wasser/20 bg-papier px-3 py-2 text-tinte focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vrelo-petrol focus-visible:ring-offset-2 focus-visible:ring-offset-honig";
+    : "mt-1 w-full rounded-md border border-tiefes-wasser/20 bg-papier px-3 py-2 text-tinte focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vrelo-petrol focus-visible:ring-offset-2 focus-visible:ring-offset-amber";
   const labelClass = compact ? "text-sm text-gletscher" : "text-sm font-medium text-tiefes-wasser";
   const consentClass = compact ? "text-xs text-stein" : "text-sm text-tinte";
   const errorClass = compact ? "text-sm text-ember" : "text-sm text-signal-tief";
@@ -41,7 +41,7 @@ export function NewsletterForm({ compact = false }: { compact?: boolean }) {
   // Button: amber on the dark footer, navy on the honey card.
   const buttonClass = compact
     ? "bg-amber text-tiefes-wasser hover:bg-honig focus-visible:ring-amber focus-visible:ring-offset-papier"
-    : "bg-tiefes-wasser text-papier hover:bg-vrelo-petrol focus-visible:ring-tiefes-wasser focus-visible:ring-offset-honig";
+    : "bg-tiefes-wasser text-papier hover:bg-vrelo-petrol focus-visible:ring-tiefes-wasser focus-visible:ring-offset-amber";
 
   const form = (
     <form action={formAction} className="space-y-3" noValidate>
@@ -84,7 +84,7 @@ export function NewsletterForm({ compact = false }: { compact?: boolean }) {
   if (compact) return form;
 
   return (
-    <div className="mx-auto max-w-xl rounded-2xl bg-honig p-8 shadow-deepwater md:p-10">
+    <div className="mx-auto max-w-xl rounded-2xl bg-amber p-8 shadow-deepwater md:p-10">
       <h2 className="font-serif text-2xl font-medium text-tiefes-wasser">Trag dich ein.</h2>
       <p className="mt-2 text-sm text-tiefes-wasser/80">Eine E-Mail genügt. Jederzeit wieder abbestellbar.</p>
       <div className="mt-6">{form}</div>

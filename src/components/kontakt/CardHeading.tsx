@@ -1,5 +1,5 @@
 // src/components/kontakt/CardHeading.tsx
-// The honey (honig) Kontakt card's heading + reassurance line. Shared by the form
+// The amber Kontakt card's heading + reassurance line. Shared by the form
 // (ContactForm) and the unconfigured fallback (page.tsx) so they stay in sync,
 // and so the success view (ContactSuccess) can replace it cleanly on submit.
 export function CardHeading() {

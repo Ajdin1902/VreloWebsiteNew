@@ -6,7 +6,7 @@ describe("link helpers", () => {
     expect(darkLinkClass).toContain("text-gletscher");
   });
 
-  it("lightLinkClass uses petrol (on-light honey cards)", () => {
-    expect(lightLinkClass).toContain("text-vrelo-petrol");
+  it("lightLinkClass uses navy on the amber cards (petrol fails AA on amber)", () => {
+    expect(lightLinkClass).toContain("text-tiefes-wasser");
   });
 });

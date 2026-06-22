@@ -32,7 +32,7 @@ export default function KontaktPage() {
           with the ripple banner below in the same section. The -mt pulls it up
           under the intro so the gap isn't doubled. */}
       <WaterSection className="-mt-24 md:-mt-32">
-        <div className="mx-auto max-w-xl rounded-2xl bg-honig p-8 shadow-deepwater md:p-10">
+        <div className="mx-auto max-w-xl rounded-2xl bg-amber p-8 shadow-deepwater md:p-10">
           {configured ? (
             <ContactForm />
           ) : (

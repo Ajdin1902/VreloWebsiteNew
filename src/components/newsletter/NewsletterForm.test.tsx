@@ -20,14 +20,14 @@ describe("NewsletterForm", () => {
     expect(hp).toHaveAttribute("aria-hidden", "true");
   });
 
-  it("renders the honey card heading in the full variant", () => {
+  it("renders the amber card heading in the full variant", () => {
     render(<NewsletterForm />);
     expect(screen.getByRole("heading", { name: /Trag dich ein/i })).toBeInTheDocument();
   });
 
-  it("renders the full variant on a honey card", () => {
+  it("renders the full variant on an amber card", () => {
     const { container } = render(<NewsletterForm />);
-    expect(container.querySelector(".rounded-2xl")).toHaveClass("bg-honig");
+    expect(container.querySelector(".rounded-2xl")).toHaveClass("bg-amber");
   });
 
   it("renders a compact variant without the card heading", () => {

@@ -5,7 +5,7 @@
 export const darkLinkClass =
   "text-gletscher underline underline-offset-2 hover:text-papier transition-colors";
 
-// On-light counterpart for the honey (honig) form cards: petrol text that
-// deepens to navy on hover.
+// On-light counterpart for the **amber** form cards: navy text (petrol fails AA
+// on the saturated amber) that warms to petrol on hover.
 export const lightLinkClass =
-  "text-vrelo-petrol underline underline-offset-2 hover:text-tiefes-wasser transition-colors";
+  "text-tiefes-wasser underline underline-offset-2 hover:text-vrelo-petrol transition-colors";

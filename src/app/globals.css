@@ -36,10 +36,11 @@
      (not alarm-red, to stay calm), 8.02:1 on tiefes-wasser. Founder-confirm hue
      like stumm/ember. */
   --color-signal: #f0a79a;
-  /* On-LIGHT form error text — the counterpart to `signal` for the honey (honig)
+  /* On-LIGHT form error text — the counterpart to `signal` for the **amber**
      form cards. A deep brick red that stays calm (not alarm-red) and clears WCAG AA
-     on honig (#e8b86b) and on the papier input wells. Founder-confirm hue. */
-  --color-signal-tief: #8f3526;
+     on the saturated `amber` (#d4a24c) card — 4.95:1 — (lighter reds fail on amber).
+     Founder-confirm hue. */
+  --color-signal-tief: #6b1f14;
 
   /* Fonts (CSS vars provided by next/font in Task 4) */
   --font-sans: var(--font-jakarta), system-ui, sans-serif;

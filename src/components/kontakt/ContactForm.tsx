@@ -23,7 +23,7 @@ export function ContactForm() {
   const values =
     state.status === "invalid" || state.status === "error" ? state.values : undefined;
   const fieldClass =
-    "mt-1 w-full rounded-md border border-tiefes-wasser/20 bg-papier px-3 py-2 text-tinte focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vrelo-petrol focus-visible:ring-offset-2 focus-visible:ring-offset-honig";
+    "mt-1 w-full rounded-md border border-tiefes-wasser/20 bg-papier px-3 py-2 text-tinte focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vrelo-petrol focus-visible:ring-offset-2 focus-visible:ring-offset-amber";
 
   return (
     <>
@@ -81,7 +81,7 @@ export function ContactForm() {
       {state.status === "error" && <p className="text-sm text-signal-tief">{state.message}</p>}
 
       <button type="submit" disabled={pending}
-        className="inline-flex items-center justify-center rounded-lg bg-tiefes-wasser px-5 py-2.5 text-sm font-semibold text-papier transition-colors hover:bg-vrelo-petrol disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-honig focus-visible:ring-tiefes-wasser">
+        className="inline-flex items-center justify-center rounded-lg bg-tiefes-wasser px-5 py-2.5 text-sm font-semibold text-papier transition-colors hover:bg-vrelo-petrol disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-amber focus-visible:ring-tiefes-wasser">
         {pending ? "Wird gesendet …" : "Nachricht senden"}
       </button>
       </form>

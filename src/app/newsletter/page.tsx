@@ -29,7 +29,7 @@ export default function NewsletterPage() {
         {configured ? (
           <NewsletterForm />
         ) : (
-          <div className="mx-auto max-w-xl rounded-2xl bg-honig p-8 text-center shadow-deepwater md:p-10">
+          <div className="mx-auto max-w-xl rounded-2xl bg-amber p-8 text-center shadow-deepwater md:p-10">
             <p className="text-tinte">Der Newsletter ist bald verfügbar.</p>
           </div>
         )}
