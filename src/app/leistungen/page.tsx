@@ -30,21 +30,25 @@ export default function LeistungenPage() {
           ratio: "aspect-[21/9]",
         }}
       />
-      {leistungen.map((leistung, index) => (
-        <Section
-          key={leistung.slug}
-          tone="paper"
-          tint={index % 2 === 1}
-          // Details are separated by the alternating tint, not a divider line.
-          // Pull the first detail up under the intro so the stacked paper Sections
-          // don't double their py padding into an oversized gap.
-          className={index === 0 ? "-mt-24 md:-mt-32" : ""}
-        >
-          <Reveal>
-            <LeistungDetail leistung={leistung} index={index} />
-          </Reveal>
-        </Section>
-      ))}
+      {leistungen.map((leistung, index) => {
+        // Every other detail sits on a petrol-dark band; the light card floats
+        // on it. Same parity that used to drive the faint tint. The petrol/paper
+        // contrast is the divider — no line.
+        const onDark = index % 2 === 1;
+        return (
+          <Section
+            key={leistung.slug}
+            tone={onDark ? "petrol" : "paper"}
+            // Pull the first detail up under the intro so the stacked paper
+            // Sections don't double their py padding into an oversized gap.
+            className={index === 0 ? "-mt-24 md:-mt-32" : ""}
+          >
+            <Reveal>
+              <LeistungDetail leistung={leistung} index={index} onDark={onDark} />
+            </Reveal>
+          </Section>
+        );
+      })}
       <MehrMoeglich />
       <Referenzen />
       <ClosingCta

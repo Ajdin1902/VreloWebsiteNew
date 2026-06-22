@@ -40,4 +40,14 @@ describe("LeistungDetail", () => {
     const { container } = render(<LeistungDetail leistung={sample} index={0} />);
     expect(container.firstElementChild).toHaveClass("card-depth");
   });
+
+  it("uses a fully opaque card on dark bands", () => {
+    const { container } = render(<LeistungDetail leistung={sample} index={1} onDark />);
+    expect(container.querySelector(".card-depth")).toHaveClass("bg-papier");
+  });
+
+  it("uses a translucent card on light bands by default", () => {
+    const { container } = render(<LeistungDetail leistung={sample} index={0} />);
+    expect(container.querySelector(".card-depth")).toHaveClass("bg-papier/80");
+  });
 });

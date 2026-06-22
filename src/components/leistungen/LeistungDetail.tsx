@@ -3,14 +3,19 @@ import type { Leistung } from "@/lib/leistungen";
 export function LeistungDetail({
   leistung,
   index,
+  onDark = false,
 }: {
   leistung: Leistung;
   index: number;
+  onDark?: boolean;
 }) {
   const labelId = `leistung-${leistung.slug}`;
   const number = String(index + 1).padStart(2, "0");
+  // The card stays light; on a petrol band it goes fully opaque so the petrol
+  // doesn't bleed through and muddy the papier.
+  const cardBg = onDark ? "bg-papier" : "bg-papier/80";
   return (
-    <div className="card-depth rounded-2xl bg-papier/80 p-6 ring-1 ring-faden md:p-8">
+    <div className={`card-depth rounded-2xl ${cardBg} p-6 ring-1 ring-faden md:p-8`}>
       <div className="flex items-baseline gap-3">
         <span aria-hidden="true" className="font-serif text-xl italic text-vrelo-petrol">
           {number}
