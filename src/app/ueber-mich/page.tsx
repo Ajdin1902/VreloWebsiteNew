@@ -28,21 +28,26 @@ export default function UeberMichPage() {
           ratio: "aspect-[3/2]",
         }}
       />
-      {storyBeats.map((beat, index) => (
-        <Section
-          key={beat.slug}
-          tone="paper"
-          tint={index % 2 === 1}
-          // Beats are separated by the alternating tint, not a divider line.
-          // Pull the first beat up under the intro so the stacked paper Sections
-          // don't double their py padding into an oversized gap.
-          className={index === 0 ? "-mt-24 md:-mt-32" : ""}
-        >
-          <Reveal>
-            <StoryBeat beat={beat} />
-          </Reveal>
-        </Section>
-      ))}
+      {storyBeats.map((beat, index) => {
+        // Every other beat (Ripples, Merak) is a petrol-dark anchor, giving the
+        // page a light/dark reading rhythm; the rest stay paper. Same parity that
+        // used to drive the faint tint.
+        const onDark = index % 2 === 1;
+        return (
+          <Section
+            key={beat.slug}
+            tone={onDark ? "petrol" : "paper"}
+            // The petrol/paper contrast is the divider — no line. Pull the first
+            // beat up under the intro so the stacked paper Sections don't double
+            // their py padding into an oversized gap.
+            className={index === 0 ? "-mt-24 md:-mt-32" : ""}
+          >
+            <Reveal>
+              <StoryBeat beat={beat} onDark={onDark} />
+            </Reveal>
+          </Section>
+        );
+      })}
       <ClosingCta
         heading="Lern mich unverbindlich kennen."
         lead="Fressen die immer gleichen Aufgaben deine Zeit – und du hättest gern wieder dieses Gefühl von Ruhe, von Merak? Lass uns unverbindlich reden; wir finden gemeinsam den ersten Schritt."
