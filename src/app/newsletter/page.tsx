@@ -1,7 +1,7 @@
 // src/app/newsletter/page.tsx
 import type { Metadata } from "next";
 import { PageIntro } from "@/components/PageIntro";
-import { Section } from "@/components/Section";
+import { WaterSection } from "@/components/WaterSection";
 import { JsonLd } from "@/components/JsonLd";
 import { NewsletterForm } from "@/components/newsletter/NewsletterForm";
 import { isNewsletterConfigured } from "@/lib/newsletter";
@@ -23,17 +23,17 @@ export default function NewsletterPage() {
         title="Automatisierungs-Ideen, ruhig erklärt."
         lead="Jede Woche eine praktische Idee, wie du mit KI Zeit zurückgewinnst – ohne Hype, ohne Spam. Jederzeit abbestellbar."
       />
-      {/* Pull the card up under the intro: two stacked paper Sections otherwise
-          double their py padding into an oversized gap. */}
-      <Section tone="paper" className="-mt-24 md:-mt-32">
+      {/* Petrol water section: the dark form card floats on flowing water. The
+          -mt pulls it up under the intro so the gap isn't doubled. */}
+      <WaterSection className="-mt-24 md:-mt-32">
         {configured ? (
           <NewsletterForm />
         ) : (
-          <div className="mx-auto max-w-xl rounded-2xl bg-tiefes-wasser p-8 text-center shadow-deepwater md:p-10">
+          <div className="mx-auto max-w-xl rounded-2xl bg-tiefes-wasser p-8 text-center shadow-deepwater ring-1 ring-gletscher/15 md:p-10">
             <p className="text-gletscher">Der Newsletter ist bald verfügbar.</p>
           </div>
         )}
-      </Section>
+      </WaterSection>
       <JsonLd data={breadcrumbLd([{ name: "Start", path: "/" }, { name: "Newsletter", path: "/newsletter" }])} />
     </>
   );

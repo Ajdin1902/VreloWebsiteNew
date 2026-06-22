@@ -9,4 +9,9 @@ describe("NewsletterSuccess", () => {
     expect(screen.getByRole("status")).toHaveTextContent(/Fast geschafft/i);
     expect(screen.getByAltText(/Wasserlauf/i)).toBeInTheDocument();
   });
+
+  it("renders the thank-you heading on-dark (petrol section)", () => {
+    render(<NewsletterSuccess />);
+    expect(screen.getByText("Fast geschafft.")).toHaveClass("text-papier");
+  });
 });

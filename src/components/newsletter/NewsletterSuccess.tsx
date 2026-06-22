@@ -13,8 +13,8 @@ export function NewsletterSuccess() {
         >
           <span className="h-2.5 w-2.5 rounded-full bg-amber" />
         </div>
-        <p className="font-serif text-2xl text-tiefes-wasser">Fast geschafft.</p>
-        <p className="mx-auto mt-3 max-w-[42ch] text-sm leading-relaxed text-stumm">
+        <p className="font-serif text-2xl text-papier">Fast geschafft.</p>
+        <p className="mx-auto mt-3 max-w-[42ch] text-sm leading-relaxed text-gletscher">
           Schau in dein Postfach und bestätige deine Anmeldung. Danach bist du dabei.
         </p>
       </div>

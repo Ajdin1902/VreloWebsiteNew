@@ -81,7 +81,7 @@ export function NewsletterForm({ compact = false }: { compact?: boolean }) {
   if (compact) return form;
 
   return (
-    <div className="mx-auto max-w-xl rounded-2xl bg-tiefes-wasser p-8 shadow-deepwater md:p-10">
+    <div className="mx-auto max-w-xl rounded-2xl bg-tiefes-wasser p-8 shadow-deepwater ring-1 ring-gletscher/15 md:p-10">
       <h2 className="font-serif text-2xl font-medium text-papier">Trag dich ein.</h2>
       <p className="mt-2 text-sm text-gletscher">Eine E-Mail genügt. Jederzeit wieder abbestellbar.</p>
       <div className="mt-6">{form}</div>
