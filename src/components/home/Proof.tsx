@@ -1,6 +1,25 @@
 import { Section } from "@/components/Section";
 import { Reveal } from "@/components/Reveal";
 
+const values = [
+  {
+    title: "Ein Ansprechpartner.",
+    body: "Du redest immer mit mir – kein Team, keine Tickets, keine Warteschleife.",
+  },
+  {
+    title: "Praxiserprobt.",
+    body: "Seit über drei Jahren automatisiere ich Prozesse in einem internationalen Unternehmen – du bekommst diese Erfahrung in jedem System.",
+  },
+  {
+    title: "Maßgeschneidert statt von der Stange.",
+    body: "Ein System, das zu deinem Betrieb passt – sauber gebaut und dokumentiert.",
+  },
+  {
+    title: "Du wartest nichts.",
+    body: "Einrichten, absichern, am Laufen halten – das übernehme ich. Du musst nichts lernen.",
+  },
+];
+
 export function Proof() {
   return (
     <Section tone="paper" className="relative isolate overflow-hidden border-t border-faden">
@@ -13,18 +32,29 @@ export function Proof() {
         className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover"
       />
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-papier/88" />
-      {/* Centered spine: keeps the trust line on the page's central axis. */}
+
+      {/* Centered spine: heading + connector on the central axis. */}
       <div className="mx-auto max-w-[44rem] text-center">
         <Reveal as="h2" delayMs={0} className="text-balance text-3xl font-semibold tracking-tight text-tiefes-wasser md:text-4xl">
           Ruhig gebaut. Verlässlich im Betrieb.
         </Reveal>
-        <Reveal as="p" delayMs={80} className="mx-auto mt-5 max-w-xl text-pretty text-lg text-tinte">
-          Echte Referenzen folgen in Kürze. Bis dahin gilt: ein Ansprechpartner, ein sauber
-          dokumentiertes System – und Arbeit, die auch dann läuft, wenn ich nicht
-          danebenstehe.
+        <Reveal as="p" delayMs={80} className="mt-5 text-pretty text-lg text-tinte">
+          Worauf du dich verlassen kannst:
         </Reveal>
-        {/* TODO: replace with real Referenzen/testimonials when available */}
       </div>
+
+      <Reveal as="ul" delayMs={160} className="mx-auto mt-10 grid max-w-3xl gap-5 text-left sm:grid-cols-2">
+        {values.map((v) => (
+          <li key={v.title} className="card-depth rounded-2xl border border-faden bg-papier p-6">
+            <h3 className="text-xl font-semibold text-vrelo-petrol">{v.title}</h3>
+            <p className="mt-2 text-tinte">{v.body}</p>
+          </li>
+        ))}
+      </Reveal>
+
+      <Reveal as="p" delayMs={240} className="mx-auto mt-8 max-w-xl text-center text-sm text-stumm">
+        Erste Kundenreferenzen folgen, sobald die laufenden Projekte abgeschlossen sind.
+      </Reveal>
     </Section>
   );
 }
