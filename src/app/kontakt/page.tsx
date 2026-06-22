@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import { PageIntro } from "@/components/PageIntro";
 import { RippleImage } from "@/components/RippleImage";
-import { Section } from "@/components/Section";
+import { WaterSection } from "@/components/WaterSection";
 import { JsonLd } from "@/components/JsonLd";
 import { ContactForm } from "@/components/kontakt/ContactForm";
 import { CardHeading } from "@/components/kontakt/CardHeading";
@@ -28,10 +28,11 @@ export default function KontaktPage() {
         lead="Erzähl mir, was dich täglich Zeit kostet – ich melde mich und sage dir ehrlich, ob und wie ich helfen kann."
       />
 
-      {/* Pull the form card up under the intro: two stacked paper Sections
-          otherwise double their py padding into an oversized gap. */}
-      <Section tone="paper" className="-mt-24 md:-mt-32">
-        <div className="mx-auto max-w-xl rounded-2xl bg-tiefes-wasser p-8 shadow-deepwater md:p-10">
+      {/* One petrol water room: the dark form card floats on flowing water,
+          with the ripple banner below in the same section. The -mt pulls it up
+          under the intro so the gap isn't doubled. */}
+      <WaterSection className="-mt-24 md:-mt-32">
+        <div className="mx-auto max-w-xl rounded-2xl bg-tiefes-wasser p-8 shadow-deepwater ring-1 ring-gletscher/15 md:p-10">
           {configured ? (
             <ContactForm />
           ) : (
@@ -55,12 +56,9 @@ export default function KontaktPage() {
             </>
           )}
         </div>
-      </Section>
 
-      {/* Decorative banner; pulled up to keep the gap tidy without a divider line. */}
-      <Section tone="paper" className="-mt-24 md:-mt-32">
-        <figure>
-          <figcaption className="mb-5 text-center font-serif text-xl italic text-tiefes-wasser md:text-2xl">
+        <figure className="mt-16 md:mt-20">
+          <figcaption className="mb-5 text-center font-serif text-xl italic text-papier md:text-2xl">
             Der erste Tropfen genügt.
           </figcaption>
           <RippleImage
@@ -71,7 +69,7 @@ export default function KontaktPage() {
             seedYFraction={0.46}
           />
         </figure>
-      </Section>
+      </WaterSection>
 
       <JsonLd data={breadcrumbLd([{ name: "Start", path: "/" }, { name: "Kontakt", path: "/kontakt" }])} />
     </>
