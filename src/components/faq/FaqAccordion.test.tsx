@@ -30,4 +30,18 @@ describe("FaqAccordion", () => {
     expect(screen.getByText("Frage A?")).toBeInTheDocument();
     expect(screen.getByText("Frage C?")).toBeInTheDocument();
   });
+
+  it("renders the middle group on a petrol section, the others on paper", () => {
+    const three: FaqGroup[] = [
+      { theme: "Eins", entries: [{ question: "F1?", answer: "A1." }] },
+      { theme: "Zwei", entries: [{ question: "F2?", answer: "A2." }] },
+      { theme: "Drei", entries: [{ question: "F3?", answer: "A3." }] },
+    ];
+    const { container } = render(<FaqAccordion groups={three} />);
+    const sections = container.querySelectorAll("section");
+    expect(sections).toHaveLength(3);
+    expect(sections[0]).toHaveClass("bg-papier");
+    expect(sections[1]).toHaveClass("bg-vrelo-petrol");
+    expect(sections[2]).toHaveClass("bg-papier");
+  });
 });

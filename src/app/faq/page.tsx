@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { PageIntro } from "@/components/PageIntro";
-import { Section } from "@/components/Section";
 import { ClosingCta } from "@/components/ClosingCta";
 import { FaqAccordion } from "@/components/faq/FaqAccordion";
 import { faqGroups } from "@/lib/faq";
@@ -22,11 +21,9 @@ export default function FaqPage() {
         title="Häufige Fragen"
         lead="Was kleine Betriebe vor der Zusammenarbeit am häufigsten fragen. Deine Frage ist nicht dabei? Schreib mir einfach."
       />
-      {/* Pull the accordion up under the intro: two stacked paper Sections
-          otherwise double their py padding into an oversized gap. */}
-      <Section tone="paper" className="-mt-24 md:-mt-32">
-        <FaqAccordion groups={faqGroups} />
-      </Section>
+      {/* FaqAccordion emits one Section per theme group (alternating petrol/paper);
+          its first group is pulled up under the intro. */}
+      <FaqAccordion groups={faqGroups} />
       <ClosingCta
         heading="Offene Frage?"
         lead="Schreib mir kurz, was du wissen willst – ich melde mich persönlich."
