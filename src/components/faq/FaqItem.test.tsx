@@ -11,4 +11,18 @@ describe("FaqItem", () => {
     expect(container.querySelector("summary")).toHaveTextContent("Arbeitest du remote?");
     expect(screen.getByText("Ja, komplett remote.")).toBeInTheDocument();
   });
+
+  it("uses on-dark classes when onDark is set", () => {
+    const { container } = render(
+      <FaqItem question="Frage?" answer="Antwort." onDark />
+    );
+    expect(container.querySelector("summary")).toHaveClass("text-papier");
+    expect(container.querySelector("p")).toHaveClass("text-gletscher");
+  });
+
+  it("uses light-page classes by default", () => {
+    const { container } = render(<FaqItem question="Frage?" answer="Antwort." />);
+    expect(container.querySelector("summary")).toHaveClass("text-tiefes-wasser");
+    expect(container.querySelector("p")).toHaveClass("text-tinte");
+  });
 });
