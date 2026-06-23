@@ -29,11 +29,11 @@ export default function KontaktPage() {
         lead="Erzähl mir, was dich täglich Zeit kostet – ich melde mich und sage dir ehrlich, ob und wie ich helfen kann."
       />
 
-      {/* One petrol water room: the booking option floats on the water, the
-          amber form card below it is the main writing surface, and the ripple
-          banner closes the section. The -mt pulls it up under the intro so the
-          gap isn't doubled. */}
-      <WaterSection className="-mt-24 md:-mt-32">
+      {/* The petrol water room holds the two ways to reach me: the booking
+          option floats on the water, the amber form card below it is the main
+          writing surface. The -mt eases it up under the intro (not all the way,
+          so the booking subheadline keeps some breathing room at the top). */}
+      <WaterSection className="-mt-12 md:-mt-16">
         <SchedulerEmbed calLink={calLink()} />
 
         <div className="mx-auto mt-12 max-w-xl rounded-2xl bg-amber p-8 shadow-deepwater md:mt-16 md:p-10">
@@ -60,20 +60,33 @@ export default function KontaktPage() {
             </>
           )}
         </div>
-
-        <figure className="mt-16 md:mt-20">
-          <figcaption className="mb-5 text-center font-serif text-xl italic text-papier md:text-2xl">
-            Der erste Tropfen genügt.
-          </figcaption>
-          <RippleImage
-            src="/images/kontakt-banner.webp"
-            alt="Eine ruhige Wasseroberfläche im warmen Morgenlicht; ein erster sanfter Ring breitet sich aus."
-            className="aspect-[21/9] w-full rounded-2xl shadow-deepwater ring-1 ring-gletscher/10"
-            seedXFraction={0.5}
-            seedYFraction={0.46}
-          />
-        </figure>
       </WaterSection>
+
+      {/* The ripple banner closes the page back on paper — the water motif stays
+          in the photo, but the page returns to papier before the dark footer.
+          The -mt collapses the doubled gap after the water room. Padding is
+          asymmetric on purpose: the Footer carries a global mt-24 (96px), so the
+          bottom pb is ~96px smaller than the top pt to make the *visible* space
+          above the caption and below the banner match. */}
+      <div className="bg-papier -mt-24 md:-mt-32">
+        <div className="mx-auto max-w-6xl px-6 pt-32 pb-8 md:pt-40 md:pb-16">
+          <figure>
+            <figcaption className="mb-5 text-center font-serif text-xl italic text-tiefes-wasser md:text-2xl">
+              Der erste Tropfen genügt.
+            </figcaption>
+            <RippleImage
+              src="/images/kontakt-banner.webp"
+              alt="Eine ruhige Wasseroberfläche im warmen Morgenlicht; ein erster sanfter Ring breitet sich aus."
+              className="aspect-[21/9] w-full rounded-2xl shadow-deepwater ring-1 ring-tiefes-wasser/10"
+              seedXFraction={0.5}
+              seedYFraction={0.46}
+            />
+            <p className="mt-5 text-center font-serif text-xl italic text-tiefes-wasser md:text-2xl">
+              Den Rest bringe ich ins Fließen.
+            </p>
+          </figure>
+        </div>
+      </div>
 
       <JsonLd data={breadcrumbLd([{ name: "Start", path: "/" }, { name: "Kontakt", path: "/kontakt" }])} />
     </>
