@@ -23,9 +23,10 @@ export default function NewsletterPage() {
         title="Automatisierungs-Ideen, ruhig erklärt."
         lead="Jede Woche eine praktische Idee, wie du mit KI Zeit zurückgewinnst – ohne Hype, ohne Spam. Jederzeit abbestellbar."
       />
-      {/* Petrol water section: the dark form card floats on flowing water. The
-          -mt pulls it up under the intro so the gap isn't doubled. */}
-      <WaterSection className="-mt-24 md:-mt-32">
+      {/* Petrol water section: the amber form card floats on flowing water. The
+          -mt eases it up under the intro (not all the way, so the form keeps
+          some breathing room at the top — matches Kontakt). */}
+      <WaterSection className="-mt-12 md:-mt-16">
         {configured ? (
           <NewsletterForm />
         ) : (
