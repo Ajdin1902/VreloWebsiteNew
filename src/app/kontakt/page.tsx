@@ -6,8 +6,9 @@ import { WaterSection } from "@/components/WaterSection";
 import { JsonLd } from "@/components/JsonLd";
 import { ContactForm } from "@/components/kontakt/ContactForm";
 import { CardHeading } from "@/components/kontakt/CardHeading";
+import { SchedulerEmbed } from "@/components/kontakt/SchedulerEmbed";
 import { lightLinkClass } from "@/components/kontakt/onDarkLink";
-import { isContactConfigured, contactTo } from "@/lib/contact";
+import { isContactConfigured, contactTo, calLink } from "@/lib/contact";
 import { breadcrumbLd } from "@/lib/jsonld";
 import { canonical } from "@/lib/site";
 
@@ -28,11 +29,14 @@ export default function KontaktPage() {
         lead="Erzähl mir, was dich täglich Zeit kostet – ich melde mich und sage dir ehrlich, ob und wie ich helfen kann."
       />
 
-      {/* One petrol water room: the dark form card floats on flowing water,
-          with the ripple banner below in the same section. The -mt pulls it up
-          under the intro so the gap isn't doubled. */}
+      {/* One petrol water room: the booking option floats on the water, the
+          amber form card below it is the main writing surface, and the ripple
+          banner closes the section. The -mt pulls it up under the intro so the
+          gap isn't doubled. */}
       <WaterSection className="-mt-24 md:-mt-32">
-        <div className="mx-auto max-w-xl rounded-2xl bg-amber p-8 shadow-deepwater md:p-10">
+        <SchedulerEmbed calLink={calLink()} />
+
+        <div className="mx-auto mt-12 max-w-xl rounded-2xl bg-amber p-8 shadow-deepwater md:mt-16 md:p-10">
           {configured ? (
             <ContactForm />
           ) : (
