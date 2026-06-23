@@ -63,7 +63,27 @@ Legal pages (`/impressum`, `/datenschutz`) and `/newsletter/bestaetigt` get no i
 
 ---
 
-## Pages
+## Full-bleed page heroes (PageHero) — `16:9`, scrim-tolerant, hi-res
+
+> **Added 2026-06-23.** `/ueber-mich`, `/leistungen`, `/faq`, `/ratgeber` now open with a **full-bleed `PageHero`** (`src/components/PageHero.tsx`): the image fills `min-h-[68vh]` with the page title overlaid on the `.hero-overlay-scrim`, like the home Hero. These **supersede** the contained-panel placements #5/#6/#8/#10 below for these four pages. Regenerate larger — the originals are ~1264–1584w and soften full-bleed.
+>
+> **Hero spec (append to every prompt in this section):** wide, **center-safe**, calm and low-detail through the middle so a light overlay title reads over a dark petrol scrim; cool-dominant and dark enough in the center to stay AA-legible under Papier text. Decorative (`alt=""`) — the H1 carries the meaning. **Render at max, target export ~2560 × 1440 (upscale 2×).** Then: WebP (`sharp`, q80) → replace the same filename → re-check title contrast (AA) at 1440 + 390.
+>
+> Every prompt also keeps the **shared palette line, style, and universal negative** from the top of this file, and ends with `16:9 aspect ratio`.
+
+### H1 · /ueber-mich hero — turquoise spring (replaces #6) — `16:9`
+> Wide fine-art photorealistic photograph of a clear turquoise karst spring welling up among dark moss-covered limestone rocks, faint concentric rings spreading softly from the source across calm petrol-and-turquoise water; the centre of the frame is calm, darker deep-water and low in detail so an overlaid title stays legible. Soft natural side light, shallow depth of field, deep teal-navy shadows, one small warm amber-honey glint on a ripple. Cool-dominant brand palette: deep teal-navy `#0A2538`, petrol `#1B5063`, glacier turquoise, a single warm amber-honey highlight `#D4A24C`, warm off-white; cool dominant, warm only as a small accent. Calm, minimal, meditative, generous negative space, center-safe. No people, no text, no letters, no logos, no watermark. 16:9 aspect ratio.
+
+### H2 · /leistungen hero — water channels (replaces #5) — `16:9`
+> Wide fine-art photograph of clear water flowing through clean, minimal, precisely-cut pale stone channels that meet at the centre of the frame, ordered and geometric like a calm modern spring-house or aqueduct — water given a clean path. Deep teal-navy and petrol water, glassy and controlled, a sense of architecture, structure and quiet precision; the central water darker and low-contrast so an overlaid title reads over it. Soft directional daylight, shallow depth of field, fine detail, one small warm amber-honey glint where light catches a ripple. Cool-dominant brand palette: deep teal-navy `#0A2538`, petrol `#1B5063`, glacier turquoise, a single warm amber-honey highlight `#D4A24C`, warm off-white. Minimal, premium, calm, center-safe, generous negative space. No people, no text, no letters, no logos, no watermark. 16:9 aspect ratio.
+
+### H3 · /faq hero — clear pebbles (replaces #10) — `16:9`
+> Wide fine-art photograph of exceptionally clear, still water over pale smooth pebbles, every stone sharp through the calm surface — transparency and clarity — with dark moss-shadowed deeper water across the upper-centre of the frame so an overlaid title stays legible against it. Cool teal-petrol tones, two tiny warm amber-honey pebble glints as the only warm accent, soft daylight, shallow depth of field. Cool-dominant brand palette: deep teal-navy `#0A2538`, petrol `#1B5063`, glacier turquoise, a single warm amber-honey highlight `#D4A24C`, warm off-white. Minimal, premium, calm, center-safe, generous negative space. No people, no text, no letters, no logos, no watermark. 16:9 aspect ratio.
+
+### H4 · /ratgeber hero — light through water (replaces #8) — `16:9`
+> Wide fine-art photograph of soft sunlight god-rays filtering down through clear, calm, deep teal-petrol water toward a faint pale sandy bed far below, gentle caustics and fine particles catching the light — clarity, depth, quiet understanding. Dark and low-contrast overall so a light overlaid title reads easily, with one soft warm amber shaft of light as the single warm accent. Cool turquoise-to-navy gradient. Cool-dominant brand palette: deep teal-navy `#0A2538`, petrol `#1B5063`, glacier turquoise, a single warm amber-honey highlight `#D4A24C`, warm off-white. Shallow depth of field, premium, meditative, center-safe, generous dark negative space. No people, no text, no letters, no logos, no watermark. 16:9 aspect ratio.
+
+---
 
 ### 5 · /leistungen — architecture of the source — `21:9`
 > Fine-art top-down photograph of clear water flowing through clean, minimal, precisely-cut pale stone channels, ordered and geometric like a calm spring-house or modern aqueduct, the channels and water meeting at the centre of the frame. Water deep teal-navy and petrol blue, glassy and controlled, a sense of architecture, structure and quiet precision: water given a clean path. Soft directional daylight, shallow depth of field, fine detail, one small warm amber-honey glint where light catches a ripple. Minimal, premium, calm, centered composition with generous negative space. Muted palette: deep teal-navy and petrol with a single warm highlight. No people, no text, no letters, no logos, no watermark. 21:9 aspect ratio.

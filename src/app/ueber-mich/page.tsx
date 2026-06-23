@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageIntro } from "@/components/PageIntro";
+import { PageHero } from "@/components/PageHero";
 import { Section } from "@/components/Section";
 import { ClosingCta } from "@/components/ClosingCta";
 import { StoryBeat } from "@/components/ueber-mich/StoryBeat";
@@ -19,27 +19,22 @@ export const metadata: Metadata = {
 export default function UeberMichPage() {
   return (
     <>
-      <PageIntro
+      <PageHero
         title="Über mich"
+        src="/images/ueber-mich-banner.webp"
         lead="Ich bin Ajdin Dzafic, Gründer von Vrelo, jahrelanger Prozessautomatisierer mit einem Master of Science in Wirtschaftsinformatik – und Kaffeeliebhaber. Das Schönste an meiner Arbeit war für mich immer der Moment am Ende eines Projekts: Niemand musste sich mehr um die wiederkehrenden, zeitraubenden Aufgaben kümmern. Sie liefen von selbst. Das brachte Ruhe. Genau das ist die Motivation hinter Vrelo."
-        image={{
-          src: "/images/ueber-mich-banner.webp",
-          alt: "Eine klare, türkisfarbene Quelle zwischen moosbewachsenen Felsen; im ruhigen Wasser breitet sich ein sanfter Ring aus.",
-          ratio: "aspect-[3/2]",
-        }}
       />
+
       {storyBeats.map((beat, index) => {
         // Every other beat (Ripples, Merak) is a petrol-dark anchor, giving the
-        // page a light/dark reading rhythm; the rest stay paper. Same parity that
-        // used to drive the faint tint.
+        // page a light/dark reading rhythm; the rest stay paper.
         const onDark = index % 2 === 1;
         return (
           <Section
             key={beat.slug}
             tone={onDark ? "petrol" : "paper"}
-            // The petrol/paper contrast is the divider — no line. Pull the first
-            // beat up under the intro so the stacked paper Sections don't double
-            // their py padding into an oversized gap.
+            // Pull the first beat up under the lead so the stacked paper Sections
+            // don't double their py padding into an oversized gap.
             className={index === 0 ? "-mt-24 md:-mt-32" : ""}
           >
             <Reveal>
@@ -48,6 +43,7 @@ export default function UeberMichPage() {
           </Section>
         );
       })}
+
       <ClosingCta
         heading="Lern mich unverbindlich kennen."
         lead="Fressen die immer gleichen Aufgaben deine Zeit – und du hättest gern wieder dieses Gefühl von Ruhe, von Merak? Lass uns unverbindlich reden; wir finden gemeinsam den ersten Schritt."

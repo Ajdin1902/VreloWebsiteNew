@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageIntro } from "@/components/PageIntro";
+import { PageHero } from "@/components/PageHero";
 import { ClosingCta } from "@/components/ClosingCta";
 import { FaqAccordion } from "@/components/faq/FaqAccordion";
 import { faqGroups } from "@/lib/faq";
@@ -17,8 +17,9 @@ export const metadata: Metadata = {
 export default function FaqPage() {
   return (
     <>
-      <PageIntro
+      <PageHero
         title="Häufige Fragen"
+        src="/images/faq-banner.webp"
         lead="Was kleine Betriebe vor der Zusammenarbeit am häufigsten fragen. Deine Frage ist nicht dabei? Schreib mir einfach."
       />
       {/* FaqAccordion emits one Section per theme group (alternating petrol/paper);

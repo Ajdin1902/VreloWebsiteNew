@@ -1,6 +1,6 @@
 // src/app/ratgeber/page.tsx
 import type { Metadata } from "next";
-import { PageIntro } from "@/components/PageIntro";
+import { PageHero } from "@/components/PageHero";
 import { Section } from "@/components/Section";
 import { ClosingCta } from "@/components/ClosingCta";
 import { JsonLd } from "@/components/JsonLd";
@@ -20,8 +20,9 @@ export default function RatgeberPage() {
   const articles = getAllArticles();
   return (
     <>
-      <PageIntro
+      <PageHero
         title="Gedanken zur ruhigen Automatisierung"
+        src="/images/ratgeber-banner.webp"
         lead="Praxisnahe Notizen für kleine Betriebe – wie du wiederkehrende Arbeit abgibst und Zeit, Ruhe und einen freien Kopf zurückgewinnst."
       />
       {/* Pull the list up under the intro: both are paper, so the doubled

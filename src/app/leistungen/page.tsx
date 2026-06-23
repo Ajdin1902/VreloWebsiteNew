@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageIntro } from "@/components/PageIntro";
+import { PageHero } from "@/components/PageHero";
 import { Section } from "@/components/Section";
 import { ClosingCta } from "@/components/ClosingCta";
 import { LeistungDetail } from "@/components/leistungen/LeistungDetail";
@@ -21,14 +21,10 @@ export const metadata: Metadata = {
 export default function LeistungenPage() {
   return (
     <>
-      <PageIntro
+      <PageHero
         title="Leistungen"
+        src="/images/leistungen-banner.webp"
         lead="Ich baue dir eine saubere Quelle für die Aufgaben, die sich jeden Tag wiederholen – maßgeschneidert für deinen Betrieb, nicht von der Stange. Kein Durcheinander aus zehn Tools, sondern eine ruhige Lösung, die still im Hintergrund läuft."
-        image={{
-          src: "/images/leistungen-banner.webp",
-          alt: "Klares Wasser fließt durch saubere, geordnete Steinkanäle.",
-          ratio: "aspect-[21/9]",
-        }}
       />
       {leistungen.map((leistung, index) => {
         // Every other detail sits on a petrol-dark band; the light card floats
