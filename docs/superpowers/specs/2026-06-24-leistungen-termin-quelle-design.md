@@ -25,9 +25,9 @@ Items #1 (Anfragen & Leads), #2 (Termine) and #4 (Nachfass-Mails) in `src/lib/le
 - **label:** „Mein Angebot“
 - **name:** „Die Termin-Quelle“
 - **promise:** „Aus jeder Anfrage wird ein Termin – von selbst, während du arbeitest.“
-- **body:** „Eine Anfrage kommt herein – und bleibt im Tagesgeschäft liegen, bis der Wettbewerber schneller war. Die Termin-Quelle schließt diese Lücke: Jede Anfrage bekommt in unter fünf Minuten eine persönliche Antwort, wird qualifiziert, bekommt einen Termin direkt in deinen Kalender – und wer sich nicht meldet, wird höflich nachgefasst. Alles sauber protokolliert, maßgeschneidert auf deinen Betrieb. Nichts, das du lernen oder warten musst.“
-- **flow:** [„Antwort in 5 Minuten“, „Qualifizieren“, „Termin buchen“, „Nachfassen“, „Protokoll“]
-- **outcome:** „Du gewinnst mehr Termine aus den Anfragen, die du ohnehin schon hast – und einen ruhigen Kopf, weil nichts mehr durchs Raster fällt.“
+- **body:** „Eine Anfrage kommt herein – und bleibt im Tagesgeschäft liegen, bis der Wettbewerber schneller war. Die Termin-Quelle schließt diese Lücke: Jede Anfrage bekommt in unter fünf Minuten eine persönliche Antwort und wird zum Termin – maßgeschneidert auf deinen Betrieb, sauber protokolliert. Nichts, das du lernen oder warten musst.” *(copy-edit: chips carry the step sequence, so the body no longer enumerates it.)*
+- **flow:** [„Antwort < 5 Minuten”, „Qualifizieren”, „Termin buchen”, „Nachfassen”, „Protokoll”]
+- **outcome:** „Du gewinnst mehr Termine aus den Anfragen, die du ohnehin schon hast – und einen ruhigen Kopf, weil keine Anfrage mehr verloren geht.” *(avoids the „durchs Raster” echo with the Nachfass-Mails service below.)*
 - **foundingNote:** „Meine ersten drei Kunden bekommen eine zusätzliche Zusage – frag mich einfach danach.“
 - **cta:** { label: „Lass uns deine Termin-Quelle bauen“, href: „/kontakt“ }
 
