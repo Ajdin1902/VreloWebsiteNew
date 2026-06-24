@@ -3,6 +3,7 @@ import { PageHero } from "@/components/PageHero";
 import { Section } from "@/components/Section";
 import { ClosingCta } from "@/components/ClosingCta";
 import { LeistungDetail } from "@/components/leistungen/LeistungDetail";
+import { TerminQuelleAngebot } from "@/components/leistungen/TerminQuelleAngebot";
 import { Referenzen } from "@/components/leistungen/Referenzen";
 import { MehrMoeglich } from "@/components/leistungen/MehrMoeglich";
 import { Reveal } from "@/components/Reveal";
@@ -26,6 +27,23 @@ export default function LeistungenPage() {
         src="/images/leistungen-banner.webp"
         lead="Ich baue dir eine saubere Quelle für die Aufgaben, die sich jeden Tag wiederholen – maßgeschneidert für deinen Betrieb, nicht von der Stange. Kein Durcheinander aus zehn Tools, sondern eine ruhige Lösung, die still im Hintergrund läuft."
       />
+      {/* The flagship: the named, packaged offer lifted above the generic menu. */}
+      <Section tone="paper" className="-mt-24 md:-mt-32">
+        <Reveal>
+          <TerminQuelleAngebot />
+        </Reveal>
+      </Section>
+      {/* Reframe the 7 services as the toolbox beneath the flagship. */}
+      <Section tone="paper" className="-mt-24 md:-mt-32">
+        <Reveal>
+          <h2 className="text-balance text-2xl font-semibold tracking-tight text-tiefes-wasser md:text-3xl">
+            Die einzelnen Bausteine
+          </h2>
+          <p className="mt-3 max-w-2xl text-pretty text-tinte">
+            Die Termin-Quelle bündelt die wichtigsten davon. Jeden Baustein gibt es auch einzeln.
+          </p>
+        </Reveal>
+      </Section>
       {leistungen.map((leistung, index) => {
         // Every other detail sits on a petrol-dark band; the light card floats
         // on it. Same parity that used to drive the faint tint. The petrol/paper
