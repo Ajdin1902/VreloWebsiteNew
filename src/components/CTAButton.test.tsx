@@ -30,4 +30,12 @@ describe("CTAButton", () => {
     render(<CTAButton href="/x" variant="ghost" />);
     expect(screen.getByRole("link")).not.toHaveClass("cta-fx");
   });
+
+  it("renders a navy (inverse) fill for warm/light surfaces where amber blends", () => {
+    render(<CTAButton href="/x" variant="inverse" />);
+    const link = screen.getByRole("link");
+    expect(link).toHaveClass("bg-tiefes-wasser");
+    expect(link).toHaveClass("text-papier");
+    expect(link).toHaveClass("cta-fx");
+  });
 });

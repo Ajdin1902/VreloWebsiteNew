@@ -18,4 +18,10 @@ describe("ClosingCta", () => {
     render(<ClosingCta heading="h" lead="l" ctaHref="/newsletter" />);
     expect(screen.getByRole("link")).toHaveAttribute("href", "/newsletter");
   });
+
+  it("keeps the ember heading and uses a navy (inverse) CTA for contrast on the warm band", () => {
+    render(<ClosingCta heading="Los." lead="l" />);
+    expect(screen.getByRole("heading", { level: 2, name: "Los." })).toHaveClass("text-ember");
+    expect(screen.getByRole("link")).toHaveClass("bg-tiefes-wasser");
+  });
 });
