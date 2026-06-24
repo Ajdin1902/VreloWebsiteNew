@@ -21,7 +21,10 @@ export function PageHero({
   return (
     <>
       <section className="relative isolate flex min-h-[68vh] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
-        <Image src={src} alt="" fill priority={priority} sizes="100vw" className="-z-20 object-cover" />
+        {/* quality 65 (vs default 75): the petrol scrim hides the difference, but
+            it cuts every optimized hero variant ~25-35% — lighter cold-MISS and
+            warm loads on all four content-page heroes. */}
+        <Image src={src} alt="" fill priority={priority} quality={65} sizes="100vw" className="-z-20 object-cover" />
         <div aria-hidden className="hero-overlay-scrim absolute inset-0 -z-10" />
         <h1 className="max-w-4xl text-balance text-4xl font-semibold text-papier [text-shadow:0_2px_16px_rgb(10_37_56_/_0.45)] md:text-5xl">
           {title}
