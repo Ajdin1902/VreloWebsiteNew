@@ -1,8 +1,6 @@
 // src/lib/leadCheckEmail.ts
-import { isHoneypotTripped, isTooFast } from "./contact";
+import { EMAIL_RE, isHoneypotTripped, isTooFast } from "./contact";
 import { computeResult, type LeadCheckAnswers, type LeadCheckResult } from "./leadCheck";
-
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function validateLeadCheckEmail(email: string): string | undefined {
   if (!EMAIL_RE.test(email.trim())) return "Bitte gib eine gültige E-Mail-Adresse an.";
