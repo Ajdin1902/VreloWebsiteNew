@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { parseSendArgs, assertSendable } from "./args.mjs";
+import { parseSendArgs, assertSendable, hasActiveBroadcast } from "./args.mjs";
 
 describe("parseSendArgs", () => {
   it("parses preview mode", () => {
@@ -40,5 +40,26 @@ describe("assertSendable", () => {
   });
   it("allows a non-draft issue", () => {
     expect(() => assertSendable({ slug: "s", draft: false })).not.toThrow();
+  });
+});
+
+describe("hasActiveBroadcast", () => {
+  const list = [
+    { name: "old-issue", status: "sent" },
+    { name: "draft-issue", status: "draft" },
+  ];
+  it("returns true for a name already sent/scheduled", () => {
+    expect(hasActiveBroadcast(list, "old-issue")).toBe(true);
+    expect(hasActiveBroadcast([{ name: "x", status: "scheduled" }], "x")).toBe(true);
+  });
+  it("returns false for an unknown name", () => {
+    expect(hasActiveBroadcast(list, "new-issue")).toBe(false);
+  });
+  it("returns false when the only match is a draft", () => {
+    expect(hasActiveBroadcast(list, "draft-issue")).toBe(false);
+  });
+  it("handles null/empty input", () => {
+    expect(hasActiveBroadcast(null, "x")).toBe(false);
+    expect(hasActiveBroadcast([], "x")).toBe(false);
   });
 });

@@ -47,3 +47,13 @@ export function assertSendable(issue) {
     throw new Error(`Issue "${issue.slug}" is draft: true. Flip it to draft: false before broadcasting.`);
   }
 }
+
+// Resend broadcast statuses that mean "already going out" — used to refuse a duplicate --send.
+const ACTIVE_BROADCAST_STATUSES = new Set(["sent", "scheduled", "sending", "queued"]);
+
+/** True if `broadcasts` already contains one with this name in a sent/scheduled/in-flight state. */
+export function hasActiveBroadcast(broadcasts, name) {
+  return (broadcasts ?? []).some(
+    (b) => b && b.name === name && ACTIVE_BROADCAST_STATUSES.has(b.status),
+  );
+}
