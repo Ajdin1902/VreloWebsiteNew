@@ -40,6 +40,12 @@ describe("parseIssue", () => {
     expect(i.draft).toBe(false);
     expect(i.previewText).toBe("");
   });
+
+  it("normalizes an unquoted YAML date to ISO YYYY-MM-DD", () => {
+    const unquoted = `---\nsubject: "Hallo"\ndate: 2026-06-30\n---\nText.`;
+    const i = parseIssue("x.md", unquoted);
+    expect(i.date).toBe("2026-06-30");
+  });
 });
 
 describe("selectIssues", () => {

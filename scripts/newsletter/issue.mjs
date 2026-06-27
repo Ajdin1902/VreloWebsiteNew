@@ -11,7 +11,10 @@ export function parseIssue(filename, raw) {
   const { data, content } = matter(raw);
   const slug = filename.replace(/\.md$/, "");
   const subject = String(data.subject ?? "").trim();
-  const date = String(data.date ?? "").trim();
+  const date =
+    data.date instanceof Date
+      ? data.date.toISOString().slice(0, 10)
+      : String(data.date ?? "").trim();
   if (!subject) throw new Error(`Newsletter issue "${slug}" is missing required frontmatter: subject`);
   if (!date) throw new Error(`Newsletter issue "${slug}" is missing required frontmatter: date`);
   return {
