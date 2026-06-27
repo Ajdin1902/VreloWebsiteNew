@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { CTAButton } from "@/components/CTAButton";
 import { terminQuelle } from "@/lib/termin-quelle";
 
@@ -50,6 +51,15 @@ export function TerminQuelleAngebot() {
           {o.cta.label}
         </CTAButton>
       </div>
+      <p className="mt-4 text-sm text-gletscher">
+        {o.leadCheck.prompt}{" "}
+        <Link
+          href={o.leadCheck.href}
+          className="font-medium text-papier underline decoration-amber/60 underline-offset-4 transition-colors hover:decoration-amber focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-vrelo-petrol"
+        >
+          {o.leadCheck.label}
+        </Link>
+      </p>
     </div>
   );
 }

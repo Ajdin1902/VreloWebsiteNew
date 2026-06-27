@@ -11,6 +11,7 @@ export type TerminQuelleAngebot = {
   outcome: string;
   foundingNote: string;
   cta: { label: string; href: string };
+  leadCheck: { prompt: string; label: string; href: string };
 };
 
 export const terminQuelle: TerminQuelleAngebot = {
@@ -23,4 +24,9 @@ export const terminQuelle: TerminQuelleAngebot = {
     "Du gewinnst mehr Termine aus den Anfragen, die du ohnehin schon hast – und einen ruhigen Kopf, weil keine Anfrage mehr verloren geht.",
   foundingNote: "Meine ersten drei Kunden bekommen eine zusätzliche Zusage – frag mich einfach danach.",
   cta: { label: "Lass uns deine Termin-Quelle bauen", href: "/kontakt" },
+  leadCheck: {
+    prompt: "Neugierig, was bei dir drin ist?",
+    label: "Mach den 2-Minuten-Check",
+    href: "/lead-check",
+  },
 };

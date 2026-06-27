@@ -23,7 +23,7 @@ export type ContactErrors = Partial<
   Record<"name" | "email" | "message" | "consent", string>
 >;
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function validateContact(f: {
   name: string;
