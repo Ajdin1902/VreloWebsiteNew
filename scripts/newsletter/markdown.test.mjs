@@ -38,6 +38,13 @@ Erste Zeile.
     expect(html).toContain('src="https://vrelo-ki.de/images/newsletter/m.png"');
     expect(html).toContain('alt="Meme: ein Entwickler"');
   });
+  it("renders an image directly under a heading in the same block", () => {
+    const meme = `## Meme der Woche\n![Meme: x](/images/newsletter/m.png)`;
+    const html = renderBlocks(meme, { siteUrl: "https://vrelo-ki.de" });
+    expect(html).toMatch(/<h2[^>]*>Meme der Woche<\/h2>/);
+    expect(html).toContain('<img src="https://vrelo-ki.de/images/newsletter/m.png"');
+    expect(html).not.toMatch(/<p[^>]*>!\[/);
+  });
 });
 
 describe("toPlainText", () => {

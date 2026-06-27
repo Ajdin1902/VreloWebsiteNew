@@ -28,27 +28,43 @@ function absolutize(src, siteUrl) {
   return src.startsWith("/") ? `${siteUrl}${src}` : src;
 }
 
+function paragraph(lines) {
+  const body = lines.map(renderInline).join("<br>");
+  return `<p style="font-size:15px;line-height:1.7;color:${INK};margin:0 0 14px">${body}</p>`;
+}
+
 export function renderBlocks(body, { siteUrl }) {
+  const out = [];
   const blocks = body.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean);
-  return blocks
-    .map((block) => {
-      if (block.startsWith("## ")) {
-        const [head, ...rest] = block.split("\n");
-        const h2 = `<h2 style="font-family:Georgia,'Times New Roman',serif;color:${DEEP};font-size:17px;margin:26px 0 8px">${renderInline(head.slice(3))}</h2>`;
-        if (rest.length === 0) return h2;
-        const body = rest.map(renderInline).join("<br>");
-        return `${h2}\n<p style="font-size:15px;line-height:1.7;color:${INK};margin:0 0 14px">${body}</p>`;
+  for (const block of blocks) {
+    let para = [];
+    const flush = () => {
+      if (para.length) {
+        out.push(paragraph(para));
+        para = [];
       }
-      const img = block.match(IMG_ONLY);
+    };
+    for (const line of block.split("\n")) {
+      if (line.startsWith("## ")) {
+        flush();
+        out.push(
+          `<h2 style="font-family:Georgia,'Times New Roman',serif;color:${DEEP};font-size:17px;margin:26px 0 8px">${renderInline(line.slice(3))}</h2>`,
+        );
+        continue;
+      }
+      const img = line.match(IMG_ONLY);
       if (img) {
-        const alt = escapeHtml(img[1]);
-        const src = absolutize(img[2], siteUrl);
-        return `<img src="${src}" alt="${alt}" style="display:block;max-width:100%;height:auto;border-radius:8px;margin:10px 0" />`;
+        flush();
+        out.push(
+          `<img src="${absolutize(img[2], siteUrl)}" alt="${escapeHtml(img[1])}" style="display:block;max-width:100%;height:auto;border-radius:8px;margin:10px 0" />`,
+        );
+        continue;
       }
-      const lines = block.split("\n").map(renderInline).join("<br>");
-      return `<p style="font-size:15px;line-height:1.7;color:${INK};margin:0 0 14px">${lines}</p>`;
-    })
-    .join("\n");
+      para.push(line);
+    }
+    flush();
+  }
+  return out.join("\n");
 }
 
 export function toPlainText(body) {
