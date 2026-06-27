@@ -18,6 +18,7 @@ Bei einem Kunden laufen alle Projektphasen über ein stilles System: Sobald ein 
 ## Meme der Woche
 ![Meme: „Ich automatisiere das schnell“ – darunter ein Kalender mit drei vergangenen Wochen](/images/newsletter/2026-06-30-meme.png)
 
-Wenn du wissen willst, wo bei dir die erste Aufgabe wegfallen könnte: Schreib mir einfach auf diese Mail zurück. Ich schaue es mir in Ruhe an.
+Wenn du wissen willst, wo bei dir die erste Aufgabe wegfallen könnte: Schreib mir einfach auf diese Mail zurück.
 
+Bis zum nächsten Mal
 – Ajdin
