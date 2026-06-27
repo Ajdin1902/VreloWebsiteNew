@@ -35,7 +35,9 @@ export function LeadCheck({ calLink }: { calLink: string | undefined }) {
   };
 
   return (
-    <div>
+    // A contained paper panel so the question doesn't float on the bare band —
+    // the same card-depth surface the homepage Problem list uses.
+    <div className="card-depth rounded-2xl border border-faden bg-papier p-6 md:p-10">
       <p className="text-sm text-stumm">Frage {index + 1} von {STEPS.length}</p>
       <div className="mt-4">
         <Question step={step} onAnswer={handleAnswer} onBack={() => setIndex((i) => Math.max(0, i - 1))} showBack={index > 0} />
