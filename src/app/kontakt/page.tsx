@@ -64,12 +64,11 @@ export default function KontaktPage() {
 
       {/* The ripple banner closes the page back on paper — the water motif stays
           in the photo, but the page returns to papier before the dark footer.
-          The -mt collapses the doubled gap after the water room. Padding is
-          asymmetric on purpose: the Footer carries a global mt-24 (96px), so the
-          bottom pb is ~96px smaller than the top pt to make the *visible* space
-          above the caption and below the banner match. */}
+          The -mt collapses the doubled gap after the water room; symmetric pt/pb
+          keep the space above the caption and below the banner matched (the
+          Footer no longer carries a margin, so the banner butts it directly). */}
       <div className="bg-papier -mt-24 md:-mt-32">
-        <div className="mx-auto max-w-6xl px-6 pt-32 pb-8 md:pt-40 md:pb-16">
+        <div className="mx-auto max-w-6xl px-6 pt-32 pb-32 md:pt-40 md:pb-40">
           <figure>
             <figcaption className="mb-5 text-center font-serif text-xl italic text-tiefes-wasser md:text-2xl">
               Der erste Tropfen genügt.
