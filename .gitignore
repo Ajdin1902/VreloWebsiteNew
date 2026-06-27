@@ -50,3 +50,6 @@ phase*.png
 # TypeScript incremental build cache
 tsconfig.tsbuildinfo
 *.tsbuildinfo
+
+# Newsletter preview output
+.preview/
