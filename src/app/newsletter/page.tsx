@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   alternates: { canonical: canonical("/newsletter") },
   title: "Newsletter",
   description:
-    "Praktische Automatisierungs-Ideen mit KI – ruhig erklärt. Melde dich für den Vrelo-Newsletter an.",
+    "Jede Woche eine kurze Mail: eine Idee aus der KI-Welt, ein Tipp, wie ich es selbst nutze – und ein Meme. Ruhig erklärt, ohne Hype.",
 };
 
 export default function NewsletterPage() {
@@ -21,7 +21,7 @@ export default function NewsletterPage() {
     <>
       <PageIntro
         title="Automatisierungs-Ideen, ruhig erklärt."
-        lead="Jede Woche eine praktische Idee, wie du mit KI Zeit zurückgewinnst – ohne Hype, ohne Spam. Jederzeit abbestellbar."
+        lead="Jede Woche eine kurze Mail: eine Idee aus der KI-Welt, ein Tipp zum Ausprobieren, wie ich es selbst im Alltag nutze – und zum Schluss ein Meme. Ruhig erklärt, ohne Hype, jederzeit abbestellbar."
       />
       {/* Petrol water section: the amber form card floats on flowing water. The
           -mt eases it up under the intro (not all the way, so the form keeps
