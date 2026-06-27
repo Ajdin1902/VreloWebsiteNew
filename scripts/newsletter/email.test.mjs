@@ -50,4 +50,18 @@ describe("buildIssueEmail", () => {
     const m = buildIssueEmail({ ...issue, previewText: "" }, { siteUrl: "https://vrelo-ki.de" });
     expect(m.html).not.toContain("display:none");
   });
+  it("shows the navy lockup logo in the header", () => {
+    expect(mail.html).toContain("https://vrelo-ki.de/logo/vrelo-lockup-navy.png");
+  });
+  it("does not tint a section when there is no Tipp der Woche", () => {
+    expect(mail.html).not.toContain("#f4e4c1"); // base issue has no Tipp section
+  });
+  it("wraps the Tipp der Woche section in a warm sonnenlicht callout", () => {
+    const m = buildIssueEmail(
+      { ...issue, body: "## Der Tipp der Woche\nMach das heute." },
+      { siteUrl: "https://vrelo-ki.de" },
+    );
+    expect(m.html).toContain("background:#f4e4c1");
+    expect(m.html).toMatch(/background:#f4e4c1[\s\S]*?<h2[^>]*>Der Tipp der Woche<\/h2>/);
+  });
 });
