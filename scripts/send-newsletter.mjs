@@ -10,7 +10,7 @@ import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { getIssueBySlug } from "./newsletter/issue.mjs";
 import { buildIssueEmail } from "./newsletter/email.mjs";
-import { parseSendArgs, assertSendable } from "./newsletter/args.mjs";
+import { parseSendArgs, assertSendable, hasActiveBroadcast } from "./newsletter/args.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -68,6 +68,12 @@ if (args.mode === "test") {
 assertSendable(issue);
 const segmentId = process.env.NEWSLETTER_SEGMENT_ID;
 if (!segmentId) fail("Missing NEWSLETTER_SEGMENT_ID. Set it in .env.local.");
+
+const { data: existing, error: listErr } = await resend.broadcasts.list();
+if (listErr) fail(`Could not check existing broadcasts: ${JSON.stringify(listErr)}`);
+if (hasActiveBroadcast(existing?.data ?? [], issue.slug)) {
+  fail(`A broadcast named "${issue.slug}" is already sent or scheduled. Refusing to send it again. Rename the issue, or delete that broadcast in Resend, to override.`);
+}
 
 const { data: created, error: createErr } = await resend.broadcasts.create({
   segmentId,
