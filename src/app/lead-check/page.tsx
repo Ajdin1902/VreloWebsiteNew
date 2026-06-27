@@ -1,7 +1,6 @@
 // src/app/lead-check/page.tsx
 import type { Metadata } from "next";
-import { PageIntro } from "@/components/PageIntro";
-import { Section } from "@/components/Section";
+import { PageHero } from "@/components/PageHero";
 import { LeadCheck } from "@/components/lead-check/LeadCheck";
 import { calLink } from "@/lib/contact";
 
@@ -15,16 +14,20 @@ export const metadata: Metadata = {
 export default function LeadCheckPage() {
   return (
     <>
-      <PageIntro
-        eyebrow="Der Lead-Reaktions-Check"
+      <PageHero
         title="Wie viel lässt du jede Woche liegen?"
+        src="/images/lead-check-banner.webp"
         lead="In zwei Minuten siehst du, wie viele Abschlüsse mit deinem heutigen Posteingang mehr drin wären – wenn jede Anfrage sofort eine Antwort bekäme. Sechs Fragen, kein Login, dein Ergebnis sofort."
       />
-      <Section tone="paper" className="-mt-12 md:-mt-16">
-        <div className="mx-auto max-w-2xl">
+      {/* A faint cool band so the warm paper wizard card lifts off the page —
+          the petrol/papier two-tone of the other subpages, in a soft key.
+          Pulled tight under the paper lead so the card sits close instead of
+          inheriting the section's full top padding. */}
+      <div className="-mt-10 bg-gletscher/30 md:-mt-12">
+        <div className="mx-auto max-w-2xl px-6 pb-24 pt-4 md:pb-32 md:pt-6">
           <LeadCheck calLink={calLink()} />
         </div>
-      </Section>
+      </div>
     </>
   );
 }

@@ -56,7 +56,7 @@ export function Result({
         </p>
       ) : null}
 
-      <details className="rounded-lg border border-tiefes-wasser/15 bg-gletscher/30 p-4">
+      <details className="rounded-lg border border-tiefes-wasser/15 bg-papier p-4">
         <summary className="cursor-pointer text-sm font-medium text-tiefes-wasser">Wie wir rechnen</summary>
         <p className="mt-3 text-sm text-tinte">
           Grundlage ist die Lead-Response-Forschung (HBR/InsideSales): nach der Fünf-Minuten-Marke fällt die
