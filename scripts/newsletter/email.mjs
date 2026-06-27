@@ -1,13 +1,13 @@
 // scripts/newsletter/email.mjs
 // Wrap a rendered issue body in the branded Papier/petrol email shell.
-import { renderBlocks, toPlainText } from "./markdown.mjs";
+import { renderBlocks, toPlainText, escapeHtml } from "./markdown.mjs";
 
 const UNSUB = "{{{RESEND_UNSUBSCRIBE_URL}}}";
 
 export function buildIssueEmail(issue, { siteUrl }) {
   const bodyHtml = renderBlocks(issue.body, { siteUrl });
   const preheader = issue.previewText
-    ? `<span style="display:none;max-height:0;overflow:hidden;opacity:0">${issue.previewText}</span>`
+    ? `<span style="display:none;max-height:0;overflow:hidden;opacity:0">${escapeHtml(issue.previewText)}</span>`
     : "";
 
   const html = `<!doctype html>

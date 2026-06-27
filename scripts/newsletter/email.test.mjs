@@ -42,4 +42,12 @@ describe("buildIssueEmail", () => {
   it("italicizes the brand word in the body", () => {
     expect(mail.html).toMatch(/<em[^>]*>Vrelo<\/em>/);
   });
+  it("escapes special characters in the preheader", () => {
+    const m = buildIssueEmail({ ...issue, previewText: "Tipps & Tricks" }, { siteUrl: "https://vrelo-ki.de" });
+    expect(m.html).toContain("Tipps &amp; Tricks");
+  });
+  it("omits the preheader span when previewText is empty", () => {
+    const m = buildIssueEmail({ ...issue, previewText: "" }, { siteUrl: "https://vrelo-ki.de" });
+    expect(m.html).not.toContain("display:none");
+  });
 });
