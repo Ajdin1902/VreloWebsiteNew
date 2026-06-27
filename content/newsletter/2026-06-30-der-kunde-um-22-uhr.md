@@ -16,7 +16,7 @@ Wenn du jede Woche fast denselben Text tippst – Terminbestätigung, Nachfrage,
 Bei einem Kunden laufen alle Projektphasen über ein stilles System: Sobald ein Schritt fertig ist, legt sich die nächste Aufgabe mit der richtigen Frist von selbst an. Niemand muss mehr daran denken, was als Nächstes dran ist. Genau diese Art unsichtbaren Helfer baue ich am liebsten – man bemerkt ihn erst, wenn er einem fehlt.
 
 ## Meme der Woche
-![Meme: „Ich automatisiere das schnell“ – darunter ein Kalender mit drei vergangenen Wochen](/images/newsletter/2026-06-30-meme.png)
+![Das bekannte Bernie-Sanders-Meme mit der Bildunterschrift „I am once again asking – will you sign up to my newsletter“](/images/newsletter/2026-06-30-meme.png)
 
 Wenn du wissen willst, wo bei dir die erste Aufgabe wegfallen könnte: Schreib mir einfach auf diese Mail zurück.
 
