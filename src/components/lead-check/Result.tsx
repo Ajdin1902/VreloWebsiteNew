@@ -1,7 +1,6 @@
 // src/components/lead-check/Result.tsx
 "use client";
 
-import { withBrandWords } from "@/components/BrandWord";
 import { SchedulerEmbed } from "@/components/kontakt/SchedulerEmbed";
 import { ResultEmailForm } from "./ResultEmailForm";
 import type { LeadCheckAnswers, LeadCheckResult } from "@/lib/leadCheck";
@@ -33,9 +32,7 @@ export function Result({
 
       {fast ? (
         <p className="text-balance font-serif text-2xl text-tiefes-wasser md:text-3xl">
-          {withBrandWords(
-            "Du reagierst schon schnell. Dann geht es bei der Termin-Quelle eher darum, dass das so bleibt – auch wenn mehr reinkommt.",
-          )}
+          Du reagierst schon schnell. Dann geht es bei der Termin-Quelle eher darum, dass das so bleibt – auch wenn mehr reinkommt.
         </p>
       ) : (
         <div>
@@ -82,9 +79,7 @@ export function Result({
 
       <div className="rounded-2xl bg-vrelo-petrol p-8 md:p-10">
         <p className="text-balance font-serif text-xl text-papier md:text-2xl">
-          {withBrandWords(
-            "Willst du, dass das von selbst läuft – auch wenn du im Termin sitzt? Genau das ist die Termin-Quelle.",
-          )}
+          Willst du, dass das von selbst läuft – auch wenn du im Termin sitzt? Genau das ist die Termin-Quelle.
         </p>
         <div className="mt-6">
           <SchedulerEmbed calLink={calLink} />
