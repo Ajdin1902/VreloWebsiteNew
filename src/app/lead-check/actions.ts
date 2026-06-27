@@ -20,15 +20,19 @@ export type LeadCheckEmailState =
 
 const GENERIC_ERROR = "Da ist etwas schiefgelaufen. Schreib mir gern direkt.";
 
+function pick<T extends string>(raw: string, allowed: readonly T[], fallback: T): T {
+  return (allowed as readonly string[]).includes(raw) ? (raw as T) : fallback;
+}
+
 function parse(formData: FormData): LeadCheckFields {
   const get = (k: string) => String(formData.get(k) ?? "");
   const provisionRaw = get("provision");
   const answers: LeadCheckAnswers = {
     anfragenProWoche: Number(get("anfragenProWoche")) || 0,
-    reaktionszeit: get("reaktionszeit") as Reaktionszeit,
-    abendsWochenende: get("abendsWochenende") as AbendsWochenende,
-    imTermin: get("imTermin") as ImTermin,
-    nachfassen: get("nachfassen") as Nachfassen,
+    reaktionszeit: pick(get("reaktionszeit"), ["unter5min", "unter1std", "selberTag", "1bis2tage", "wennZeit"], "selberTag"),
+    abendsWochenende: pick(get("abendsWochenende"), ["immer", "manchmal", "nein"], "manchmal"),
+    imTermin: pick(get("imTermin"), ["automatisch", "wartet", "gehtUnter"], "wartet"),
+    nachfassen: pick(get("nachfassen"), ["mehrmals", "einmal", "selten", "nie"], "einmal"),
     provision: provisionRaw ? Number(provisionRaw) : undefined,
   };
   return {

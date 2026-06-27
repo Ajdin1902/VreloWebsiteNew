@@ -72,4 +72,17 @@ describe("submitLeadCheckEmail", () => {
     expect(r.status).toBe("error");
     expect(send).not.toHaveBeenCalled();
   });
+
+  it("returns error when Resend throws", async () => {
+    send.mockRejectedValueOnce(new Error("network error"));
+    const r = await submitLeadCheckEmail(initial, fd(good));
+    expect(r.status).toBe("error");
+  });
+
+  it("falls back to safe defaults for unknown enum values (no NaN in the email)", async () => {
+    const r = await submitLeadCheckEmail(initial, fd({ ...good, reaktionszeit: "garbage" }));
+    expect(r.status).toBe("ok");
+    const arg = send.mock.calls[0][0];
+    expect(arg.text).not.toContain("NaN");
+  });
 });
