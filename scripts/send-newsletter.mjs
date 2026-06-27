@@ -1,6 +1,6 @@
 // scripts/send-newsletter.mjs
 // Author issues in content/newsletter/<slug>.md, then:
-//   npm run newsletter -- --preview <slug>            # writes .preview/<slug>.html
+//   npm run newsletter -- --preview <slug>            # writes .preview/newsletter-<slug>.html
 //   npm run newsletter -- --test you@example.de <slug> # one test email to you
 //   npm run newsletter -- --send <slug>                # broadcast to the segment
 //   npm run newsletter -- --send <slug> --at 2026-07-01T08:00:00Z  # schedule
@@ -14,6 +14,7 @@ import { parseSendArgs, assertSendable } from "./newsletter/args.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
+/** @returns {never} */
 function fail(msg) {
   console.error(msg);
   process.exit(1);
@@ -26,9 +27,14 @@ try {
   fail(String(e.message));
 }
 
-const issue = getIssueBySlug(args.slug, { dir: resolve(root, "content/newsletter") });
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://vrelo-ki.de";
-const mail = buildIssueEmail(issue, { siteUrl });
+let issue, mail;
+try {
+  issue = getIssueBySlug(args.slug, { dir: resolve(root, "content/newsletter") });
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://vrelo-ki.de";
+  mail = buildIssueEmail(issue, { siteUrl });
+} catch (e) {
+  fail(String(e.message));
+}
 
 if (args.mode === "preview") {
   const out = resolve(root, ".preview", `newsletter-${issue.slug}.html`);
