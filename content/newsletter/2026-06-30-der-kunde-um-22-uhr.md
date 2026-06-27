@@ -1,5 +1,5 @@
 ---
-subject: "Der Kunde, der um 22 Uhr schrieb"
+subject: "Zehn Minuten am Tag – eine Arbeitswoche im Jahr"
 previewText: "Eine kleine Beobachtung, ein Tipp – und ein Meme."
 date: "2026-06-30"
 draft: true
