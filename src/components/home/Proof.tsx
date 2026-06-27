@@ -23,7 +23,11 @@ const values = [
 export function Proof() {
   return (
     <Section tone="paper" className="relative isolate overflow-hidden border-t border-faden">
-      {/* Faint cool water texture; heavy papier tint keeps the dark text AA-readable. */}
+      {/* Soft brand-teal surface: a tint of the brand petrol over paper (color-mix
+          30 %) — cool but warmer/greener than gletscher, clearly Vrelo. Breaks the
+          warm-paper run and sets up the cool→warm close into the warm MerakClose
+          below; warm papier value-cards lift off it, dark text stays AA. A faint
+          water texture sits beneath the tint (the site's water motif) for depth. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/images/section-texture.webp"
@@ -31,7 +35,10 @@ export function Proof() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover"
       />
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-papier/88" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 bg-[color-mix(in_oklab,var(--color-vrelo-petrol)_30%,var(--color-papier))] opacity-90"
+      />
 
       {/* Centered spine: heading + connector on the central axis. */}
       <div className="mx-auto max-w-[44rem] text-center">
@@ -52,7 +59,7 @@ export function Proof() {
         ))}
       </Reveal>
 
-      <Reveal as="p" delayMs={240} className="mx-auto mt-8 max-w-xl text-center text-sm text-stumm">
+      <Reveal as="p" delayMs={240} className="mx-auto mt-8 max-w-xl text-center text-sm text-tinte">
         Erste Kundenreferenzen folgen, sobald die laufenden Projekte abgeschlossen sind.
       </Reveal>
     </Section>
