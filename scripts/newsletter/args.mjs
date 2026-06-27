@@ -13,7 +13,7 @@ export function parseSendArgs(argv) {
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (MODES.includes(a)) {
-      if (mode === "test") {
+      if (a === "--test") {
         const next = argv[i + 1];
         if (!next || !next.includes("@")) throw new Error(`--test needs an email address: --test you@example.de <slug>`);
         testEmail = next;
@@ -22,10 +22,14 @@ export function parseSendArgs(argv) {
       continue;
     }
     if (a === "--at") {
-      scheduledAt = argv[i + 1];
+      if (mode !== "send") throw new Error(`--at is only valid with --send.`);
+      const next = argv[i + 1];
+      if (!next) throw new Error(`--at needs an ISO timestamp: --at 2026-07-01T08:00:00Z`);
+      scheduledAt = next;
       i++;
       continue;
     }
+    if (a.startsWith("--")) throw new Error(`Unknown argument: ${a}`);
     rest.push(a);
   }
 

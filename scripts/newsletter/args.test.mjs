@@ -23,6 +23,15 @@ describe("parseSendArgs", () => {
   it("throws when slug is missing", () => {
     expect(() => parseSendArgs(["--preview"])).toThrow(/slug/i);
   });
+  it("throws when --at has no value", () => {
+    expect(() => parseSendArgs(["--send", "s", "--at"])).toThrow(/timestamp/i);
+  });
+  it("throws when --at is used outside send mode", () => {
+    expect(() => parseSendArgs(["--preview", "s", "--at", "2026-07-01T08:00:00Z"])).toThrow(/only valid with --send/);
+  });
+  it("throws on an unknown flag", () => {
+    expect(() => parseSendArgs(["--preview", "--bogus", "s"])).toThrow(/unknown argument/i);
+  });
 });
 
 describe("assertSendable", () => {
