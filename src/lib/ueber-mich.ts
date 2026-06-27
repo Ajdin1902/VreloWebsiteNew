@@ -15,7 +15,7 @@ export const storyBeats: StoryBeat[] = [
   },
   {
     slug: "ripples",
-    heading: "Der Moment, der alles ins Rollen brachte",
+    heading: "Der Moment, der alles ins Fließen brachte",
     body: "Seit über drei Jahren baue ich Automatisierungen, die in einem international renommierten Unternehmen täglich im Einsatz sind. Tag für Tag habe ich dort gesehen, wie viel Arbeitszeit in mühsamen, wiederkehrenden Aufgaben verschwindet – Aufgaben, die jemand machen muss, aber niemand machen will.\n\nDieser Kleinkram kostet nicht nur Zeit. Er nimmt den Spaß an der eigentlichen Arbeit und sorgt für Stress, der nicht sein müsste. Weil ich dabei ständig im Austausch mit der fachlichen Seite war, weiß ich, wo es wirklich hakt – und wie man es richtig löst. Daraus ist Vrelo entstanden.",
     side: "right",
   },

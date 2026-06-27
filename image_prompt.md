@@ -150,6 +150,19 @@ Banner above the article title; cool-dominant, low contrast + dark so a German h
 
 ---
 
+## Über-mich story videos (the four clips)
+
+The `/ueber-mich` story beats use short looping **video** clips (not stills), one per beat — slugs `quelle · ripples · fluss · merak`. Raw sources live in `Videos/` (tracked); `scripts/optimize-videos.mjs` derives `public/video/<slug>.{mp4,webm}` + `-poster.jpg`. The four follow the water arc — **drop → pond ripples → braided delta → sunset lake** — and must stay photoreal, muted, golden-hour/dusk, cool-dominant with one small warm amber accent (same world as the stills above). *The original generation prompts for the first set were not saved; only the re-rolled `fluss` is recorded here.*
+
+### fluss — „Wie ich heute arbeite“ (realistic delta), re-rolled 2026-06-27 — `16:9`, ~8 s
+Tool: Seedance / Veo (video). Concept: a braided river delta = many flows running at once (the work, calmly carrying itself). The first version read as neon/CGI — this prompt keeps the concept but shoots it real.
+> Realistic aerial drone footage slowly descending over a vast glacial braided river delta at soft golden hour. Dozens of thin natural river channels wind through dark volcanic sand and silt, many separate streams flowing calmly in the same direction and merging. Naturalistic, muted color: the glacial water in soft teal and petrol tones — not neon, not electric blue — dark earth between the channels, with one warm amber-honey glint where the low sun catches the water. Calm, slow, smooth, unhurried camera movement. Cinematic fine-art nature-documentary look, soft natural light, gentle film grain, restrained understated color grade, photorealistic. Tranquil, minimal, generous negative space. No people, no boats, no buildings, no text, no logos, no watermark. 16:9.
+
+**Negative:** `neon, electric blue, oversaturated, glowing, HDR, CGI, 3D render, cartoon, illustration, harsh contrast, people, text, watermark`
+**Wiring:** replace the raw in place (`Videos/Thrid_Part.mp4`) → regenerate with the `optimize-videos.mjs` encode params → `public/video/fluss.*`. For grade-match, feed `ripples-poster.jpg` / `merak-poster.jpg` as a colour reference.
+
+---
+
 ## Workflow notes
 
 1. **Palette lock:** generate the home **Bosnian-spring (#1)** first, then feed it back as a reference image on every other prompt ("match this color grade, light and mood"). Every image then shares one palette.
