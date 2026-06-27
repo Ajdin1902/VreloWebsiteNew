@@ -20,6 +20,8 @@ describe("LeadCheck", () => {
     answerAll();
     expect(screen.getByText(/Deine Lead-Reaktion/)).toBeInTheDocument();
     expect(screen.getByText(/168\.000/)).toBeInTheDocument();
+    // Skipping the provision step → result is flagged as the default estimate
+    expect(screen.getByText(/Gerechnet mit 4\.000/)).toBeInTheDocument();
   });
 
   it("lets the user go back to a previous step", () => {

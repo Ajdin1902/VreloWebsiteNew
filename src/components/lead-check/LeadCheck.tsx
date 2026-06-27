@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { STEPS, computeResult, DEFAULT_PROVISION, type LeadCheckAnswers } from "@/lib/leadCheck";
+import { STEPS, computeResult, type LeadCheckAnswers } from "@/lib/leadCheck";
 import { Question } from "./Question";
 import { Result } from "./Result";
 
@@ -27,7 +27,7 @@ export function LeadCheck({ calLink }: { calLink: string | undefined }) {
   const handleAnswer = (value: string | number | undefined) => {
     setAnswers((prev) => {
       if (step.id === "provision") {
-        return { ...prev, provision: typeof value === "number" ? value : DEFAULT_PROVISION };
+        return { ...prev, provision: typeof value === "number" ? value : undefined };
       }
       return { ...prev, [step.id]: value };
     });

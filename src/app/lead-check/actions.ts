@@ -4,13 +4,7 @@
 import { Resend } from "resend";
 import { isContactConfigured, contactFrom, contactTo, resendKey } from "@/lib/contact";
 import { evaluateLeadCheckSubmission, type LeadCheckFields } from "@/lib/leadCheckEmail";
-import type {
-  LeadCheckAnswers,
-  Reaktionszeit,
-  AbendsWochenende,
-  ImTermin,
-  Nachfassen,
-} from "@/lib/leadCheck";
+import type { LeadCheckAnswers } from "@/lib/leadCheck";
 
 export type LeadCheckEmailState =
   | { status: "idle" }
