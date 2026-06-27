@@ -6,7 +6,11 @@ const INK = "#14181b";
 const DEEP = "#0a2538";
 
 export function escapeHtml(s) {
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 // Applied to already-escaped text. Case-sensitive on capitalized brand words.
@@ -16,6 +20,9 @@ function brandword(s) {
 
 export function renderInline(text) {
   let s = escapeHtml(text);
+  // Images are block-level; swallow any stray inline image to its alt text so it
+  // never becomes an orphaned "!" + broken link. Must run before the link rule.
+  s = s.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, "$1");
   s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, `<a href="$2" style="color:${PETROL}">$1</a>`);
   s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
   s = s.replace(/\*([^*]+)\*/g, '<em style="font-style:italic">$1</em>');
@@ -44,7 +51,8 @@ export function renderBlocks(body, { siteUrl }) {
         para = [];
       }
     };
-    for (const line of block.split("\n")) {
+    for (const rawLine of block.split("\n")) {
+      const line = rawLine.trim();
       if (line.startsWith("## ")) {
         flush();
         out.push(
@@ -56,11 +64,11 @@ export function renderBlocks(body, { siteUrl }) {
       if (img) {
         flush();
         out.push(
-          `<img src="${absolutize(img[2], siteUrl)}" alt="${escapeHtml(img[1])}" style="display:block;max-width:100%;height:auto;border-radius:8px;margin:10px 0" />`,
+          `<img src="${escapeHtml(absolutize(img[2], siteUrl))}" alt="${escapeHtml(img[1])}" style="display:block;max-width:100%;height:auto;border-radius:8px;margin:10px 0" />`,
         );
         continue;
       }
-      para.push(line);
+      if (line) para.push(line);
     }
     flush();
   }

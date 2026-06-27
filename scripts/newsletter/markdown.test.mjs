@@ -6,6 +6,9 @@ describe("escapeHtml", () => {
   it("escapes the three dangerous chars", () => {
     expect(escapeHtml("a < b & c > d")).toBe("a &lt; b &amp; c &gt; d");
   });
+  it("escapes double quotes", () => {
+    expect(escapeHtml('sag "hallo"')).toBe("sag &quot;hallo&quot;");
+  });
 });
 
 describe("renderInline", () => {
@@ -18,6 +21,12 @@ describe("renderInline", () => {
     expect(renderInline("Mit Vrelo zum Merak.")).toMatch(/<em[^>]*>Vrelo<\/em>/);
     expect(renderInline("Mit Vrelo zum Merak.")).toMatch(/<em[^>]*>Merak<\/em>/);
     expect(renderInline("Besuch vrelo-ki.de")).not.toContain("<em");
+  });
+  it("swallows a stray inline image to its alt text (no broken link)", () => {
+    const out = renderInline("Text ![Bild](/x.png) mehr");
+    expect(out).toContain("Bild");
+    expect(out).not.toContain("<a");
+    expect(out).not.toContain("!<");
   });
 });
 
@@ -44,6 +53,14 @@ Erste Zeile.
     expect(html).toMatch(/<h2[^>]*>Meme der Woche<\/h2>/);
     expect(html).toContain('<img src="https://vrelo-ki.de/images/newsletter/m.png"');
     expect(html).not.toMatch(/<p[^>]*>!\[/);
+  });
+  it("matches an image line that has a trailing space", () => {
+    const html = renderBlocks("## H\n![a](/x.png) ", { siteUrl: "https://vrelo-ki.de" });
+    expect(html).toContain('<img src="https://vrelo-ki.de/x.png"');
+  });
+  it("escapes & in an image src", () => {
+    const html = renderBlocks("![a](/x.png?u=1&v=2)", { siteUrl: "https://s" });
+    expect(html).toContain("u=1&amp;v=2");
   });
 });
 
