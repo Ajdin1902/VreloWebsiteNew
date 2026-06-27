@@ -1,7 +1,7 @@
 // src/components/lead-check/Question.tsx
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Step } from "@/lib/leadCheck";
 
 const optionClass =
@@ -26,6 +26,13 @@ export function Question({
 }) {
   const isOptional = step.kind === "number" && "optional" in step && step.optional === true;
   const [num, setNum] = useState<string>("");
+
+  // Reset the input when the parent advances to a different step (the parent
+  // reuses this component instance rather than remounting it).
+  useEffect(() => {
+    setNum("");
+  }, [step.id]);
+
   const inputId = `lc-${step.id}`;
 
   return (
@@ -59,7 +66,12 @@ export function Question({
           />
           {isOptional && "hint" in step ? <p className="mt-2 text-sm text-stumm">{step.hint}</p> : null}
           <div className="mt-5 flex flex-wrap gap-3">
-            <button type="button" className={primaryBtn} onClick={() => onAnswer(num === "" ? undefined : Number(num))}>
+            <button
+              type="button"
+              className={`${primaryBtn} disabled:cursor-not-allowed disabled:opacity-60`}
+              disabled={!isOptional && num.trim() === ""}
+              onClick={() => onAnswer(num === "" ? undefined : Number(num))}
+            >
               Weiter
             </button>
             {isOptional ? (

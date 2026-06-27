@@ -30,4 +30,14 @@ describe("Question", () => {
     fireEvent.click(screen.getByRole("button", { name: "Überspringen" }));
     expect(onAnswer).toHaveBeenCalledWith(undefined);
   });
+
+  it("disables Weiter on a required number step until a value is entered", () => {
+    const onAnswer = vi.fn();
+    render(<Question step={numberStep} onAnswer={onAnswer} onBack={vi.fn()} showBack={false} />);
+    fireEvent.click(screen.getByRole("button", { name: "Weiter" }));
+    expect(onAnswer).not.toHaveBeenCalled();
+    fireEvent.change(screen.getByLabelText(numberStep.label), { target: { value: "12" } });
+    fireEvent.click(screen.getByRole("button", { name: "Weiter" }));
+    expect(onAnswer).toHaveBeenCalledWith(12);
+  });
 });
