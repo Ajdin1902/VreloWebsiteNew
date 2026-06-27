@@ -9,7 +9,8 @@
     "lint": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "optimize:videos": "node scripts/optimize-videos.mjs"
+    "optimize:videos": "node scripts/optimize-videos.mjs",
+    "newsletter": "node --env-file-if-exists=.env.local scripts/send-newsletter.mjs"
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",

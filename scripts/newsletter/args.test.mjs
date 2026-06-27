@@ -1,0 +1,65 @@
+import { describe, it, expect } from "vitest";
+import { parseSendArgs, assertSendable, hasActiveBroadcast } from "./args.mjs";
+
+describe("parseSendArgs", () => {
+  it("parses preview mode", () => {
+    expect(parseSendArgs(["--preview", "my-slug"])).toEqual({ mode: "preview", slug: "my-slug" });
+  });
+  it("parses test mode with an email", () => {
+    expect(parseSendArgs(["--test", "me@x.de", "my-slug"])).toEqual({ mode: "test", slug: "my-slug", testEmail: "me@x.de" });
+  });
+  it("parses send mode with optional scheduledAt", () => {
+    expect(parseSendArgs(["--send", "my-slug", "--at", "2026-07-01T08:00:00Z"])).toEqual({ mode: "send", slug: "my-slug", scheduledAt: "2026-07-01T08:00:00Z" });
+  });
+  it("throws without a mode", () => {
+    expect(() => parseSendArgs(["my-slug"])).toThrow(/--preview|--test|--send/);
+  });
+  it("throws on two modes", () => {
+    expect(() => parseSendArgs(["--preview", "--send", "s"])).toThrow(/one of/);
+  });
+  it("throws when --test has no email", () => {
+    expect(() => parseSendArgs(["--test", "my-slug"])).toThrow(/email/i);
+  });
+  it("throws when slug is missing", () => {
+    expect(() => parseSendArgs(["--preview"])).toThrow(/slug/i);
+  });
+  it("throws when --at has no value", () => {
+    expect(() => parseSendArgs(["--send", "s", "--at"])).toThrow(/timestamp/i);
+  });
+  it("throws when --at is used outside send mode", () => {
+    expect(() => parseSendArgs(["--preview", "s", "--at", "2026-07-01T08:00:00Z"])).toThrow(/only valid with --send/);
+  });
+  it("throws on an unknown flag", () => {
+    expect(() => parseSendArgs(["--preview", "--bogus", "s"])).toThrow(/unknown argument/i);
+  });
+});
+
+describe("assertSendable", () => {
+  it("rejects a draft issue", () => {
+    expect(() => assertSendable({ slug: "s", draft: true })).toThrow(/draft/i);
+  });
+  it("allows a non-draft issue", () => {
+    expect(() => assertSendable({ slug: "s", draft: false })).not.toThrow();
+  });
+});
+
+describe("hasActiveBroadcast", () => {
+  const list = [
+    { name: "old-issue", status: "sent" },
+    { name: "draft-issue", status: "draft" },
+  ];
+  it("returns true for a name already sent/scheduled", () => {
+    expect(hasActiveBroadcast(list, "old-issue")).toBe(true);
+    expect(hasActiveBroadcast([{ name: "x", status: "scheduled" }], "x")).toBe(true);
+  });
+  it("returns false for an unknown name", () => {
+    expect(hasActiveBroadcast(list, "new-issue")).toBe(false);
+  });
+  it("returns false when the only match is a draft", () => {
+    expect(hasActiveBroadcast(list, "draft-issue")).toBe(false);
+  });
+  it("handles null/empty input", () => {
+    expect(hasActiveBroadcast(null, "x")).toBe(false);
+    expect(hasActiveBroadcast([], "x")).toBe(false);
+  });
+});
