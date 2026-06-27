@@ -1,7 +1,7 @@
 // src/components/lead-check/Question.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { Step } from "@/lib/leadCheck";
 
 const optionClass =
@@ -27,11 +27,14 @@ export function Question({
   const isOptional = step.kind === "number" && "optional" in step && step.optional === true;
   const [num, setNum] = useState<string>("");
 
-  // Reset the input when the parent advances to a different step (the parent
-  // reuses this component instance rather than remounting it).
-  useEffect(() => {
+  // Reset the input when the parent advances to a different step (it reuses this
+  // component instance). Adjusting state during render is React's sanctioned
+  // alternative to a setState-in-effect.
+  const [seenStepId, setSeenStepId] = useState(step.id);
+  if (step.id !== seenStepId) {
+    setSeenStepId(step.id);
     setNum("");
-  }, [step.id]);
+  }
 
   const inputId = `lc-${step.id}`;
 

@@ -13,6 +13,9 @@ export function ResultEmailForm({ answers }: { answers: LeadCheckAnswers }) {
   const [state, formAction, pending] = useActionState(submitLeadCheckEmail, initial);
   const [renderedAt] = useState(() => Date.now());
 
+  const errorMsg =
+    state.status === "invalid" ? state.error : state.status === "error" ? state.message : undefined;
+
   if (state.status === "ok") {
     return <p className="text-gletscher">Danke {"–"} die Zusammenfassung ist unterwegs.</p>;
   }
@@ -38,6 +41,9 @@ export function ResultEmailForm({ answers }: { answers: LeadCheckAnswers }) {
           name="email"
           type="email"
           placeholder="deine@mail.de"
+          required
+          aria-invalid={errorMsg != null}
+          aria-describedby={errorMsg ? "lc-email-err" : undefined}
           className="min-w-[14rem] flex-1 rounded-md border border-papier/30 bg-tiefes-wasser/40 px-3 py-2 text-papier placeholder:text-gletscher/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-vrelo-petrol"
         />
         <button
@@ -48,8 +54,7 @@ export function ResultEmailForm({ answers }: { answers: LeadCheckAnswers }) {
           {pending ? "Wird gesendet …" : "Schicken"}
         </button>
       </div>
-      {state.status === "invalid" ? <p className="text-sm text-signal">{state.error}</p> : null}
-      {state.status === "error" ? <p className="text-sm text-signal">{state.message}</p> : null}
+      {errorMsg ? <p id="lc-email-err" className="text-sm text-signal">{errorMsg}</p> : null}
     </form>
   );
 }
