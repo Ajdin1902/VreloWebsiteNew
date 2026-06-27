@@ -46,6 +46,8 @@ Issues are `.md` files in `content/newsletter/` (frontmatter: `subject`, `previe
 - **Broadcasts** target `NEWSLETTER_SEGMENT_ID` (Resend `broadcasts.create({segmentId,…})` → `broadcasts.send(id)`). `--send` refuses a `draft: true` issue.
 - The unsubscribe link is the literal `{{{RESEND_UNSUBSCRIBE_URL}}}` token — Resend fills it on broadcast; it stays literal in preview/test (expected).
 - Needs Node ≥ 22.9 (`--env-file-if-exists`). Secrets load from `.env.local`.
+- `--send` refuses a slug that already has a sent/scheduled broadcast (checks `broadcasts.list()`), so an accidental re-run can't double-email the segment.
+- Broadcast **reply-to is `CONTACT_FROM`** — since issues invite „schreib mir einfach zurück“, that inbox must be monitored.
 
 ## Next session — planned work (resume here)
 > Homepage is **live** on a centered spine with a full-bleed flowing-water hero (`hero-flow.webp`, Direction C).
