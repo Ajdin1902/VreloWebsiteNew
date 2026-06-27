@@ -97,3 +97,73 @@ export const STEPS: readonly Step[] = [
     hint: "Wir rechnen mit dem Branchenschnitt. Ist dein Schnitt anders? Hier anpassen.",
   },
 ];
+
+// --- scoring model (append to src/lib/leadCheck.ts) ---
+
+export type Score = "schnell" | "solide" | "langsam";
+
+export type LeadCheckResult = {
+  currentLossPct: number;
+  score: Score;
+  anfragenProJahr: number;
+  verloreneAnfragenProJahr: number;
+  recoverableTermine: number;
+  zusaetzlicheAbschluesse: number;
+  eurUpside: number;
+  provisionUsed: number;
+  provisionWasDefault: boolean;
+};
+
+export const ACHIEVABLE_LOSS = 0.1;
+export const CLOSE_RATE = 0.2;
+const MAX_ANFRAGEN = 200;
+const MIN_PROVISION = 100;
+const MAX_PROVISION = 1_000_000;
+
+const BASE_LOSS: Record<Reaktionszeit, number> = {
+  unter5min: 0.1,
+  unter1std: 0.25,
+  selberTag: 0.4,
+  "1bis2tage": 0.6,
+  wennZeit: 0.75,
+};
+const ABENDS_MOD: Record<AbendsWochenende, number> = { immer: 0, manchmal: 0.05, nein: 0.1 };
+const TERMIN_MOD: Record<ImTermin, number> = { automatisch: 0, wartet: 0.05, gehtUnter: 0.1 };
+const NACHFASS_MOD: Record<Nachfassen, number> = { mehrmals: -0.1, einmal: 0, selten: 0.05, nie: 0.1 };
+
+function clamp(n: number, lo: number, hi: number): number {
+  return Math.max(lo, Math.min(hi, n));
+}
+
+export function computeResult(a: LeadCheckAnswers): LeadCheckResult {
+  const anfragenWoche = clamp(Number.isFinite(a.anfragenProWoche) ? a.anfragenProWoche : 0, 0, MAX_ANFRAGEN);
+  const provisionWasDefault = a.provision == null || !Number.isFinite(a.provision);
+  const provisionUsed = provisionWasDefault
+    ? DEFAULT_PROVISION
+    : clamp(a.provision as number, MIN_PROVISION, MAX_PROVISION);
+
+  const rawLoss =
+    BASE_LOSS[a.reaktionszeit] + ABENDS_MOD[a.abendsWochenende] + TERMIN_MOD[a.imTermin] + NACHFASS_MOD[a.nachfassen];
+  const currentLoss = clamp(rawLoss, 0.1, 0.85);
+
+  const anfragenProJahr = Math.round(anfragenWoche * 52);
+  const verloreneAnfragenProJahr = Math.round(anfragenProJahr * currentLoss);
+  const recoverableShare = Math.max(0, currentLoss - ACHIEVABLE_LOSS);
+  const recoverableTermine = Math.round(anfragenProJahr * recoverableShare);
+  const zusaetzlicheAbschluesse = Math.round(recoverableTermine * CLOSE_RATE);
+  const eurUpside = zusaetzlicheAbschluesse * provisionUsed;
+
+  const score: Score = currentLoss <= 0.2 ? "schnell" : currentLoss <= 0.45 ? "solide" : "langsam";
+
+  return {
+    currentLossPct: Math.round(currentLoss * 100),
+    score,
+    anfragenProJahr,
+    verloreneAnfragenProJahr,
+    recoverableTermine,
+    zusaetzlicheAbschluesse,
+    eurUpside,
+    provisionUsed,
+    provisionWasDefault,
+  };
+}
