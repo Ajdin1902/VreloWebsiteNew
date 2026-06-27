@@ -30,7 +30,7 @@ Client copy is German; code/comments are English. The article must read like the
 
 4. **Choose the cover** — match the article's theme to a motif in `image_prompt.md` §9, fill the base prompt, and write `coverAlt` (German) to describe that motif. Keep dark + low-contrast so the headline reads over it.
 
-5. **Run the self-check** (`references/voice-and-structure.md` → „Self-check“). This is the gate. Optionally run `copy-editing` + `stop-slop` for a polish pass.
+5. **Run the self-check** (`references/voice-and-structure.md` → „Self-check“). This is the gate. Then **always run the `copy-editing` skill** over the draft — go line by line and tighten anything that can be said better, cut repetition and filler. **Keep it lean:** prefer the shorter length, never pad to hit a word count, and never make the same point twice in different words. (Optionally `stop-slop` too.)
 
 6. **Show the draft, then write** `content/ratgeber/<slug>.mdx`.
 
@@ -66,6 +66,7 @@ Kebab-case the title, fold umlauts: `ä→ae · ö→oe · ü→ue · ß→ss`, 
 - **ASCII quotes.** German quotes are „…“ (U+201E open, U+201C close). The Write/Edit tools silently downgrade the closing one — after writing, verify the open/close counts match (or write via a small `fs` script).
 - **Gendered forms.** Generic masculine only (Kunden, Inhaber, Kollegen) — never `:innen`/feminine plurals.
 - **Water-metaphor flooding.** At most ONE water metaphor (Quelle/Fluss) per article.
+- **Too long / repetitive.** Default to the shorter length; say each point once. If a section restates an earlier one or pads to fill space, cut it. A tight 600-word article beats a padded 1100-word one.
 - **Ending on a CTA.** The CTA band already asks; the body should close on the article's point, not „melde dich unverbindlich…“.
 - **Missing cover frontmatter.** `cover` + `coverAlt` are required — `parseArticle` throws without them.
 - **Committing before the cover image exists.** The covers test requires the real WebP file, not just the frontmatter — `npm test` fails until `public/images/ratgeber-<slug>.webp` is present. Generate the cover before committing the article.

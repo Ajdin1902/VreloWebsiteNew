@@ -20,7 +20,7 @@ The operational subset of the Vrelo voice for blog articles. Source of depth: `B
 3. **Exactly one `>` blockquote** — a single distilled line (the article's thesis in one breath). Renders as the ember pull-quote.
 4. **Short thematic close** — land the article's point, ideally on the *Merak* feeling. Hand off to the page's CTA band; do NOT write a „melde dich unverbindlich, kein Druck…“ pitch in the body (that duplicates the band).
 
-Length: short ≈ 600–750 words (~4 min), standard ≈ 900–1100 words (~6 min). `readingMinutes` is computed from the body.
+Length: short ≈ 600–750 words (~4 min), standard ≈ 900–1100 words (~6 min). `readingMinutes` is computed from the body. **Default to short** unless the topic genuinely needs more — a lean article that says each thing once respects the reader's time and reads more like the founder. Length is a ceiling, never a target: stop when the point is made.
 
 ## Markdown the renderer supports (`src/components/Prose.tsx`)
 `##` / `###` headings · `-`/`1.` lists · `>` blockquote · `[label](url)` links · `**bold**` · `*italic*`. Body renders at 18px on the deeper article reading surface. No raw HTML, no images inside the body (the cover is the only image).
@@ -39,4 +39,5 @@ Run every line; fix before writing.
 - [ ] Frontmatter complete: `title, description (≤~155), date, tags, cover, coverAlt, draft: true`.
 - [ ] `slug` == filename stem == `<slug>` in the `cover` path; slug doesn't already exist in `content/ratgeber/`.
 - [ ] Body closes on the article's point, not a CTA.
+- [ ] Lean and non-repetitive — each point made once, no padding, no section restating an earlier one. Ran the `copy-editing` skill and tightened every line that could be sharper.
 - [ ] Cover image exists at `public/images/ratgeber-<slug>.webp` **before committing** — the covers test (`ratgeber.covers.test.ts`) checks the file exists for every article, so `npm test` fails without it. (The `.mdx` can be written first; just don't commit until the WebP is there.)
