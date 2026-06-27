@@ -34,4 +34,10 @@ describe("TerminQuelleAngebot", () => {
     const { container } = render(<TerminQuelleAngebot />);
     expect(container.textContent ?? "").not.toMatch(/€|\bEUR\b|\d+\s?Euro/i);
   });
+
+  it("links to the Lead-Reaktions-Check", () => {
+    render(<TerminQuelleAngebot />);
+    const link = screen.getByRole("link", { name: /2-Minuten-Check/ });
+    expect(link).toHaveAttribute("href", "/lead-check");
+  });
 });
