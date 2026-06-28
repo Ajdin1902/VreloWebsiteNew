@@ -52,11 +52,13 @@ describe("Reveal", () => {
     });
   });
 
-  it("toggles data-shown two-way as it enters and leaves the viewport", () => {
+  it("reveals once, then stops observing and never re-hides (one-way)", () => {
     const { container } = render(<Reveal>x</Reveal>);
     const el = container.firstElementChild as HTMLElement;
     expect(el).toHaveAttribute("data-shown", "false");
 
+    // Enters the viewport → shown, and the observer disconnects so the
+    // transform/IO feedback loop at the leave-threshold can never start.
     act(() => {
       ioCallback(
         [{ isIntersecting: true, target: el } as unknown as IntersectionObserverEntry],
@@ -64,13 +66,15 @@ describe("Reveal", () => {
       );
     });
     expect(el).toHaveAttribute("data-shown", "true");
+    expect(disconnect).toHaveBeenCalled();
 
+    // A later "left the viewport" event must NOT re-hide it.
     act(() => {
       ioCallback(
         [{ isIntersecting: false, target: el } as unknown as IntersectionObserverEntry],
         {} as IntersectionObserver,
       );
     });
-    expect(el).toHaveAttribute("data-shown", "false");
+    expect(el).toHaveAttribute("data-shown", "true");
   });
 });

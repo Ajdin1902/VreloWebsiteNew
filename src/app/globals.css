@@ -229,7 +229,9 @@ body {
   .hero-dust { display: none; }
 }
 
-/* Two-way scroll reveal (homepage). Hidden state is gated behind .reveal-ready
+/* One-way scroll reveal: fade + rise in once, then stay (the component disconnects
+   after the first reveal — re-hiding would oscillate, since IntersectionObserver
+   measures the transformed box). Hidden state is gated behind .reveal-ready
    (set by the root-layout inline script) so no-JS renders everything visible. */
 .reveal-ready .reveal {
   opacity: 0;
