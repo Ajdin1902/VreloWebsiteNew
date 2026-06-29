@@ -27,37 +27,56 @@ try {
   fail(String(e.message));
 }
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://vrelo-ki.de";
+
 let issue, mail;
 try {
   issue = getIssueBySlug(args.slug, { dir: resolve(root, "content/newsletter") });
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://vrelo-ki.de";
   mail = buildIssueEmail(issue, { siteUrl });
 } catch (e) {
   fail(String(e.message));
 }
 
+// Resend substitutes the {{{RESEND_UNSUBSCRIBE_URL}}} merge tag per-recipient
+// only on a real broadcast (--send). Preview/test go through plain send (no
+// broadcast engine), so the raw tag would show through — swap it for a real
+// link so the footer renders cleanly while checking. The broadcast path keeps
+// the literal tag untouched (Resend needs it for one-click unsubscribe).
+function fillTestUnsub(m) {
+  const url = `${siteUrl}/newsletter`;
+  return {
+    ...m,
+    html: m.html.replaceAll("{{{RESEND_UNSUBSCRIBE_URL}}}", url),
+    text: m.text.replaceAll("{{{RESEND_UNSUBSCRIBE_URL}}}", url),
+  };
+}
+
 if (args.mode === "preview") {
+  const preview = fillTestUnsub(mail);
   const out = resolve(root, ".preview", `newsletter-${issue.slug}.html`);
   mkdirSync(dirname(out), { recursive: true });
-  writeFileSync(out, mail.html, "utf8");
-  console.log(`Preview written: ${out}\nSubject: ${mail.subject}`);
+  writeFileSync(out, preview.html, "utf8");
+  console.log(`Preview written: ${out}\nSubject: ${preview.subject}`);
   process.exit(0);
 }
 
 const apiKey = process.env.RESEND_API_KEY;
-const from = process.env.CONTACT_FROM;
-if (!apiKey || !from) fail("Missing RESEND_API_KEY or CONTACT_FROM. Set them in .env.local.");
+// The newsletter sends from its own address (NEWSLETTER_FROM); replies + bounces
+// land there (replyTo = from below). Falls back to CONTACT_FROM if unset.
+const from = process.env.NEWSLETTER_FROM || process.env.CONTACT_FROM;
+if (!apiKey || !from) fail("Missing RESEND_API_KEY or NEWSLETTER_FROM/CONTACT_FROM. Set them in .env.local.");
 
 const { Resend } = await import("resend");
 const resend = new Resend(apiKey);
 
 if (args.mode === "test") {
+  const test = fillTestUnsub(mail);
   const { data, error } = await resend.emails.send({
     from,
     to: args.testEmail,
-    subject: mail.subject,
-    html: mail.html,
-    text: mail.text,
+    subject: test.subject,
+    html: test.html,
+    text: test.text,
   });
   if (error) fail(`Test send failed: ${JSON.stringify(error)}`);
   console.log(`Test sent to ${args.testEmail} (id ${data?.id}).`);
