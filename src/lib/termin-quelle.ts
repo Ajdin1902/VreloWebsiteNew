@@ -12,6 +12,7 @@ export type TerminQuelleAngebot = {
   foundingNote: string;
   cta: { label: string; href: string };
   leadCheck: { prompt: string; label: string; href: string };
+  demo: { prompt: string; label: string; href: string };
 };
 
 export const terminQuelle: TerminQuelleAngebot = {
@@ -28,5 +29,10 @@ export const terminQuelle: TerminQuelleAngebot = {
     prompt: "Neugierig, was bei dir drin ist?",
     label: "Mach den 2-Minuten-Check",
     href: "/lead-check",
+  },
+  demo: {
+    prompt: "Lieber selbst erleben?",
+    label: "Termin-Quelle live ausprobieren",
+    href: "/demo",
   },
 };

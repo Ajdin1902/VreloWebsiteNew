@@ -32,3 +32,10 @@ describe("terminQuelle offer copy", () => {
     expect(serialized).not.toMatch(/€|\bEUR\b|\d+\s?Euro/i);
   });
 });
+
+describe("terminQuelle demo link", () => {
+  it("exposes a demo entry pointing at /demo", () => {
+    expect(terminQuelle.demo.href).toBe("/demo");
+    expect(terminQuelle.demo.label.length).toBeGreaterThan(0);
+  });
+});
