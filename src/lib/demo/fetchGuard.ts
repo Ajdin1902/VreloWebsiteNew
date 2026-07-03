@@ -1,3 +1,7 @@
+import dns from "node:dns/promises";
+import net from "node:net";
+import { Agent, fetch as undiciFetch } from "undici";
+
 /** Parse a URL, allowing only http/https and rejecting embedded credentials. */
 export function parseHttpUrl(raw: string): URL | null {
   let u: URL;
@@ -133,4 +137,100 @@ export function isBlockedIp(ip: string): boolean {
   if (b[0] === 0xfe && (b[1] & 0xc0) === 0x80) return true;
 
   return false;
+}
+
+export const MAX_FETCH_BYTES = 200_000;
+const FETCH_TIMEOUT_MS = 5000;
+
+/** Resolve a hostname and throw unless every resolved address is public. Returns one vetted IP. */
+export async function assertResolvesPublic(hostname: string): Promise<string> {
+  if (net.isIP(hostname)) {
+    if (isBlockedIp(hostname)) throw new Error("blocked-ip");
+    return hostname;
+  }
+  const records = await dns.lookup(hostname, { all: true });
+  if (records.length === 0) throw new Error("no-records");
+  for (const r of records) {
+    if (isBlockedIp(r.address)) throw new Error("blocked-ip");
+  }
+  return records[0].address;
+}
+
+/** Strip HTML to readable text, collapse whitespace, cap length. */
+export function extractReadableText(html: string): string {
+  const stripped = html
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  return stripped.slice(0, MAX_FETCH_BYTES);
+}
+
+/**
+ * SSRF-safe fetch of readable text: validate URL, resolve+vet DNS, PIN the
+ * connection to the vetted IP (no re-resolve → no DNS rebinding), disallow
+ * redirects, cap bytes + time. Returns extracted text or throws.
+ *
+ * Node's global fetch is undici, whose `node:https` `agent` option is ignored;
+ * we therefore use undici's own Agent + `connect.lookup`, pinned to the vetted
+ * IP so the actual TCP connect can never be re-resolved to a private host,
+ * while SNI/Host stay the original hostname.
+ */
+export async function safeFetchText(rawUrl: string): Promise<string> {
+  const url = parseHttpUrl(rawUrl);
+  if (!url) throw new Error("bad-url");
+  const ip = await assertResolvesPublic(url.hostname);
+  const family = net.isIPv6(ip) ? 6 : 4;
+
+  const dispatcher = new Agent({
+    connect: {
+      // Pin every TCP connect to the vetted IP. Node 20+ Happy-Eyeballs calls
+      // lookup with { all: true } (array form); we also serve the single form.
+      lookup: (_hostname, options, callback) => {
+        if (options && options.all) {
+          callback(null, [{ address: ip, family }]);
+        } else {
+          callback(null, ip, family);
+        }
+      },
+    },
+  });
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+  try {
+    const res = await undiciFetch(url, {
+      dispatcher,
+      redirect: "manual",
+      signal: controller.signal,
+      headers: { "user-agent": "VreloDemoBot/1.0" },
+    });
+    // A redirect could point at a private host that bypasses our pin — never follow.
+    if (res.status >= 300 && res.status < 400) throw new Error("redirect-blocked");
+    if (!res.ok || !res.body) throw new Error("bad-response");
+
+    const reader = res.body.getReader();
+    const chunks: Uint8Array[] = [];
+    let total = 0;
+    try {
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        if (value) {
+          chunks.push(value);
+          total += value.length;
+          if (total >= MAX_FETCH_BYTES) break;
+        }
+      }
+    } finally {
+      await reader.cancel().catch(() => {});
+    }
+    const html = Buffer.concat(chunks).subarray(0, MAX_FETCH_BYTES).toString("utf8");
+    return extractReadableText(html);
+  } finally {
+    clearTimeout(timer);
+    await dispatcher.close().catch(() => {});
+  }
 }

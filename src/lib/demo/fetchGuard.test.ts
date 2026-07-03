@@ -1,5 +1,6 @@
-import { describe, it, expect } from "vitest";
-import { parseHttpUrl, isBlockedIp } from "./fetchGuard";
+import { describe, it, expect, vi } from "vitest";
+import dns from "node:dns/promises";
+import { parseHttpUrl, isBlockedIp, assertResolvesPublic, extractReadableText, MAX_FETCH_BYTES } from "./fetchGuard";
 
 describe("parseHttpUrl", () => {
   it("accepts http/https", () => {
@@ -50,5 +51,38 @@ describe("isBlockedIp", () => {
   it("blocks the unspecified address and deprecated IPv4-compatible loopback", () => {
     expect(isBlockedIp("::")).toBe(true);
     expect(isBlockedIp("::1")).toBe(true);
+  });
+});
+
+describe("assertResolvesPublic", () => {
+  it("resolves and returns a vetted public IP", async () => {
+    vi.spyOn(dns, "lookup").mockResolvedValueOnce([{ address: "93.184.216.34", family: 4 }] as never);
+    await expect(assertResolvesPublic("example.de")).resolves.toBe("93.184.216.34");
+  });
+  it("throws when the hostname resolves to a private IP", async () => {
+    vi.spyOn(dns, "lookup").mockResolvedValueOnce([{ address: "169.254.169.254", family: 4 }] as never);
+    await expect(assertResolvesPublic("evil.example")).rejects.toThrow();
+  });
+  it("throws when ANY resolved IP is private (mixed A records)", async () => {
+    vi.spyOn(dns, "lookup").mockResolvedValueOnce([
+      { address: "93.184.216.34", family: 4 },
+      { address: "127.0.0.1", family: 4 },
+    ] as never);
+    await expect(assertResolvesPublic("evil.example")).rejects.toThrow();
+  });
+});
+
+describe("extractReadableText", () => {
+  it("strips tags, scripts, styles and collapses whitespace", () => {
+    const html = "<html><head><style>.x{color:red}</style><script>alert(1)</script></head><body><h1>Baufi</h1>\n\n<p>für  Familien</p></body></html>";
+    const text = extractReadableText(html);
+    expect(text).toContain("Baufi");
+    expect(text).toContain("für Familien");
+    expect(text).not.toContain("alert");
+    expect(text).not.toContain("color:red");
+  });
+  it("caps output length", () => {
+    const html = "<p>" + "a ".repeat(20000) + "</p>";
+    expect(extractReadableText(html).length).toBeLessThanOrEqual(MAX_FETCH_BYTES);
   });
 });
