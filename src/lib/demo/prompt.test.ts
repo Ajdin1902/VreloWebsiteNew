@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { buildSystemPrompt, prepareChat, MAX_TURNS, MAX_MSG_LEN } from "./prompt";
+import { sandboxSlots } from "./slots";
 import type { DemoSeed } from "./seed";
 
 const seed: DemoSeed = { business: "Baufinanzierung für Familien", appointmentType: "baufinanzierung", tone: "locker" };
@@ -14,6 +15,11 @@ describe("buildSystemPrompt", () => {
   it("switches to Du for a locker tone and Sie for foermlich", () => {
     expect(buildSystemPrompt({ ...seed, tone: "locker" })).toContain("Du");
     expect(buildSystemPrompt({ ...seed, tone: "foermlich" })).toContain("Sie");
+  });
+  it("includes provided sandbox slots so the bot proposes grounded times", () => {
+    const slots = sandboxSlots(new Date("2026-07-06T09:00:00Z"));
+    const p = buildSystemPrompt(seed, slots);
+    expect(p).toContain(slots[0]);
   });
 });
 
