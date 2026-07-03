@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 // Static guard: the demo route handlers must not pass request bodies / content to console.
-const ROUTES = ["src/app/demo/chat/route.ts", "src/app/demo/extract/route.ts"];
+const ROUTES = ["src/app/demo/chat/route.ts", "src/app/demo/extract/route.ts", "src/app/demo/summary/route.ts"];
 
 describe("no-PII logging", () => {
   for (const rel of ROUTES) {
