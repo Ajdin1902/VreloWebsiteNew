@@ -30,7 +30,23 @@ export async function POST(req: Request): Promise<Response> {
       system: decision.system,
       messages: decision.messages,
     });
-    return new Response(s.toReadableStream(), {
+    const encoder = new TextEncoder();
+    const body = new ReadableStream<Uint8Array>({
+      async start(controller) {
+        try {
+          s.on("text", (delta: string) => controller.enqueue(encoder.encode(delta)));
+          await s.finalMessage();
+        } catch {
+          // No-PII: swallow upstream errors; the client just receives a shorter reply.
+        } finally {
+          controller.close();
+        }
+      },
+      cancel() {
+        s.abort();
+      },
+    });
+    return new Response(body, {
       headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store" },
     });
   } catch {

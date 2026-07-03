@@ -19,19 +19,22 @@ function post(body: unknown, headers: Record<string, string> = {}): Request {
     body: JSON.stringify(body),
   });
 }
-// A minimal fake of the SDK's streaming helper: a ReadableStream of text deltas.
-function fakeStream() {
-  return new ReadableStream({
-    start(c) {
-      c.enqueue("Hallo");
-      c.close();
-    },
-  });
-}
-
 beforeEach(() => {
   enforceLimits.mockReset().mockResolvedValue({ ok: true });
-  stream.mockReset().mockReturnValue({ toReadableStream: () => fakeStream() });
+  stream.mockReset().mockImplementation(() => {
+    let onText: ((t: string) => void) | undefined;
+    return {
+      on(event: string, cb: (t: string) => void) {
+        if (event === "text") onText = cb;
+        return this;
+      },
+      async finalMessage() {
+        onText?.("Hallo, worum geht es?");
+        return {};
+      },
+      abort() {},
+    };
+  });
   vi.stubEnv("ANTHROPIC_API_KEY", "sk-ant-test");
 });
 afterEach(() => vi.unstubAllEnvs());
@@ -60,5 +63,14 @@ describe("POST /demo/chat", () => {
     const res = await POST(post({ seed, messages }));
     expect(res.status).toBe(200);
     expect(stream).not.toHaveBeenCalled();
+  });
+  it("streams the assistant's plain text, not raw SDK JSON events", async () => {
+    const res = await POST(post({ seed, messages: [{ role: "user", content: "Hallo" }] }));
+    expect(res.status).toBe(200);
+    expect(res.headers.get("content-type")).toContain("text/plain");
+    const text = await res.text();
+    expect(text).toContain("worum geht es");
+    expect(text).not.toContain("content_block"); // must not be raw SDK events
+    expect(text).not.toMatch(/"type"\s*:/);
   });
 });
