@@ -97,7 +97,7 @@ export function Setup({ onReady }: { onReady: (seed: DemoSeed) => void }) {
         onClick={() => onReady({ business, appointmentType, tone, sourceUrl: url || undefined })}
         className="cta-fx mt-6 w-full rounded-lg bg-tiefes-wasser px-4 py-3 text-papier"
       >
-        Los geht's
+        Los geht’s
       </button>
     </div>
   );
