@@ -39,4 +39,16 @@ describe("isBlockedIp", () => {
     expect(isBlockedIp("93.184.216.34")).toBe(false); // example.com
     expect(isBlockedIp("2606:2800:220:1:248:1893:25c8:1946")).toBe(false);
   });
+  it("blocks IPv4-mapped IPv6 in canonical hex form (the form the URL parser emits)", () => {
+    expect(isBlockedIp("::ffff:7f00:1")).toBe(true); // 127.0.0.1
+    expect(isBlockedIp("::ffff:a9fe:a9fe")).toBe(true); // 169.254.169.254 (cloud metadata)
+  });
+  it("blocks NAT64 and 6to4 forms that embed a private/loopback v4", () => {
+    expect(isBlockedIp("64:ff9b::7f00:1")).toBe(true); // NAT64 -> 127.0.0.1
+    expect(isBlockedIp("2002:7f00:1::")).toBe(true); // 6to4 -> 127.0.0.x
+  });
+  it("blocks the unspecified address and deprecated IPv4-compatible loopback", () => {
+    expect(isBlockedIp("::")).toBe(true);
+    expect(isBlockedIp("::1")).toBe(true);
+  });
 });
