@@ -72,6 +72,17 @@ describe("transcriptToText", () => {
     const messages: ChatMessage[] = [{ role: "user", content: "z".repeat(10000) }];
     expect(transcriptToText(messages).length).toBe(4000);
   });
+
+  it("keeps the newest chars when over the cap (booking is last)", () => {
+    const messages: ChatMessage[] = [
+      { role: "user", content: "a".repeat(5000) },
+      { role: "assistant", content: "TERMIN-BESTAETIGT" },
+    ];
+    const text = transcriptToText(messages);
+    expect(text.length).toBe(4000);
+    expect(text).toContain("TERMIN-BESTAETIGT"); // newest kept
+    expect(text.startsWith("Kunde: aaaa")).toBe(false); // oldest dropped
+  });
 });
 
 describe("buildSummarySystem", () => {

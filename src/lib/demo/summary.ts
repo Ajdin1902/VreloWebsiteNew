@@ -23,7 +23,9 @@ export function transcriptToText(messages: ChatMessage[]): string {
   return messages
     .map((m) => `${m.role === "user" ? "Kunde" : "Assistent"}: ${m.content}`)
     .join("\n")
-    .slice(0, MAX_TRANSCRIPT_CHARS);
+    // Keep the NEWEST chars (booking/confirmation are last and most summary-relevant),
+    // mirroring prepareChat's newest-first windowing.
+    .slice(-MAX_TRANSCRIPT_CHARS);
 }
 
 export function parseNotes(text: string): Terminnotiz {
