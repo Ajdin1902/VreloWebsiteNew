@@ -15,7 +15,7 @@ export function Demo({ calLink }: { calLink: string | undefined }) {
   const [firstMessage, setFirstMessage] = useState("");
 
   if (phase === "setup") return <Setup onReady={(s) => { setSeed(s); setPhase("switch"); }} />;
-  if (phase === "switch") return <RoleSwitch onStart={(m) => { setFirstMessage(m); setPhase("chat"); }} />;
+  if (phase === "switch" && seed) return <RoleSwitch seed={seed} onStart={(m) => { setFirstMessage(m); setPhase("chat"); }} />;
   if (phase === "chat" && seed) return <Chat seed={seed} firstMessage={firstMessage} onDone={() => setPhase("reveal")} />;
   return <Protokoll calLink={calLink} />;
 }
