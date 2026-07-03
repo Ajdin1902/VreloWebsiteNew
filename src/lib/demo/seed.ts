@@ -8,6 +8,14 @@ export type DemoSeed = {
   sourceUrl?: string;
 };
 
+/** Untrusted input to {@link sanitizeSeed} — field values may be anything (JSON, form, URL-derived). */
+export type RawSeedInput = {
+  business?: unknown;
+  appointmentType?: unknown;
+  tone?: unknown;
+  sourceUrl?: unknown;
+};
+
 export const MAX_BUSINESS_LEN = 600;
 
 const APPOINTMENT_TYPES: readonly AppointmentType[] = ["erstberatung", "baufinanzierung", "versicherung", "frei"];
@@ -36,7 +44,7 @@ function cleanUrl(raw: unknown): string | undefined {
   }
 }
 
-export function sanitizeSeed(raw: Partial<DemoSeed>): DemoSeed {
+export function sanitizeSeed(raw: RawSeedInput): DemoSeed {
   return {
     business: cleanText(raw.business, MAX_BUSINESS_LEN),
     appointmentType: pick(raw.appointmentType, APPOINTMENT_TYPES, "frei"),
