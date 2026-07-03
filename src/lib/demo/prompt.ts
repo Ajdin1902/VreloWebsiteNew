@@ -44,13 +44,10 @@ export function prepareChat(input: { seed: DemoSeed; messages: ChatMessage[] }):
 
   // Normalize: keep only valid roles, trim, cap each message, drop empties.
   const cleaned: ChatMessage[] = [];
-  let budget = MAX_TRANSCRIPT_CHARS;
   for (const m of raw) {
     if (m?.role !== "user" && m?.role !== "assistant") continue;
     const content = String(m.content ?? "").trim().slice(0, MAX_MSG_LEN);
     if (!content) continue;
-    if (budget - content.length < 0) break;
-    budget -= content.length;
     cleaned.push({ role: m.role, content });
   }
 
@@ -59,5 +56,14 @@ export function prepareChat(input: { seed: DemoSeed; messages: ChatMessage[] }):
   if (userTurns > MAX_TURNS) {
     return { action: "stop", message: "Das war die Demo – so würde das Gespräch mit deinem Kunden weiterlaufen." };
   }
-  return { action: "generate", system: buildSystemPrompt(seed), messages: cleaned };
+  // Context clamp: keep the NEWEST messages within the transcript char budget
+  // (drop oldest history first — never discard the current turn).
+  const windowed: ChatMessage[] = [];
+  let budget = MAX_TRANSCRIPT_CHARS;
+  for (let i = cleaned.length - 1; i >= 0; i--) {
+    budget -= cleaned[i].content.length;
+    if (budget < 0) break;
+    windowed.unshift(cleaned[i]);
+  }
+  return { action: "generate", system: buildSystemPrompt(seed), messages: windowed };
 }

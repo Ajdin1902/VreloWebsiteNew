@@ -45,4 +45,17 @@ describe("prepareChat", () => {
     const d = prepareChat({ seed, messages: [msg("assistant", "hi")] });
     expect(d.action).toBe("reject");
   });
+
+  it("keeps the newest turns and drops the oldest when the transcript exceeds the char budget", () => {
+    // 11 messages (6 user + 5 assistant) of ~499 chars = ~5.5k > MAX_TRANSCRIPT_CHARS (4000).
+    const many = Array.from({ length: 11 }, (_, i) => msg(i % 2 === 0 ? "user" : "assistant", `m${i}-` + "a".repeat(495)));
+    const d = prepareChat({ seed, messages: many });
+    expect(d.action).toBe("generate"); // 6 user turns == MAX_TURNS, so not stopped
+    if (d.action === "generate") {
+      const total = d.messages.reduce((n, m) => n + m.content.length, 0);
+      expect(total).toBeLessThanOrEqual(4000);
+      expect(d.messages[d.messages.length - 1].content).toContain("m10"); // newest kept
+      expect(d.messages.some((m) => m.content.startsWith("m0-"))).toBe(false); // oldest dropped
+    }
+  });
 });
