@@ -33,11 +33,11 @@ export function parseNotes(text: string): Terminnotiz {
     if (start < 0 || end < 0) return EMPTY_NOTIZ;
     const o = JSON.parse(text.slice(start, end + 1));
     return {
-      name: String(o?.name ?? "").slice(0, 120),
-      anliegen: String(o?.anliegen ?? "").slice(0, 300),
-      termin: String(o?.termin ?? "").slice(0, 120),
+      name: String(o?.name ?? "").trim().slice(0, 120),
+      anliegen: String(o?.anliegen ?? "").trim().slice(0, 300),
+      termin: String(o?.termin ?? "").trim().slice(0, 120),
       offenePunkte: Array.isArray(o?.offenePunkte)
-        ? o.offenePunkte.slice(0, 6).map((s: unknown) => String(s).slice(0, 200))
+        ? o.offenePunkte.slice(0, 6).map((s: unknown) => String(s).trim().slice(0, 200)).filter(Boolean)
         : [],
     };
   } catch {

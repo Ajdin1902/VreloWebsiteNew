@@ -49,6 +49,13 @@ describe("parseNotes", () => {
     const n = parseNotes('{"offenePunkte":[{"a":1},null,"echt"]}');
     expect(n.offenePunkte).toEqual(["[object Object]", "null", "echt"]);
   });
+
+  it("trims whitespace-only fields to empty and drops blank bullets", () => {
+    const n = parseNotes('{"name":"  ","anliegen":"Baufi","offenePunkte":["  ","echt"]}');
+    expect(n.name).toBe("");
+    expect(n.anliegen).toBe("Baufi");
+    expect(n.offenePunkte).toEqual(["echt"]);
+  });
 });
 
 describe("transcriptToText", () => {
