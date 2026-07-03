@@ -10,6 +10,7 @@ vi.mock("@/lib/demo/anthropic", () => ({
 }));
 
 import { POST } from "./route";
+import { MAX_TURNS } from "@/lib/demo/prompt";
 
 const seed = { business: "Baufi", appointmentType: "baufinanzierung", tone: "locker" };
 function post(body: unknown, headers: Record<string, string> = {}): Request {
@@ -59,7 +60,7 @@ describe("POST /demo/chat", () => {
     expect(stream).not.toHaveBeenCalled();
   });
   it("returns a 200 stop message (not the model) once the turn cap is hit", async () => {
-    const messages = Array.from({ length: 7 }, () => ({ role: "user", content: "x" }));
+    const messages = Array.from({ length: MAX_TURNS + 1 }, () => ({ role: "user", content: "x" }));
     const res = await POST(post({ seed, messages }));
     expect(res.status).toBe(200);
     expect(stream).not.toHaveBeenCalled();
