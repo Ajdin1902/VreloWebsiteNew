@@ -13,7 +13,7 @@ export function Protokoll({ calLink }: { calLink: string | undefined }) {
         <li>✓ Termin gebucht &amp; protokolliert</li>
       </ul>
       <a href="/kontakt" className="cta-fx mt-8 inline-block rounded-lg bg-tiefes-wasser px-6 py-3 text-papier">
-        Genau das für deinen Betrieb – jetzt Gespräch vereinbaren
+        Genau das für deinen Betrieb – lass uns reden
       </a>
       {calLink ? <p className="mt-3 text-xs text-stumm">15 Minuten, unverbindlich.</p> : null}
     </div>

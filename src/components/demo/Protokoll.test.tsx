@@ -6,7 +6,7 @@ describe("Protokoll", () => {
   it("shows the reveal and links to the Cal call when configured", () => {
     render(<Protokoll calLink="ajdin19/vrelo-kennenlernen" />);
     expect(screen.getByText(/Das hat dein Kunde gerade erlebt/i)).toBeTruthy();
-    const cta = screen.getByRole("link", { name: /kennenlernen|Gespräch|bauen/i });
+    const cta = screen.getByRole("link", { name: /reden|deinen Betrieb/i });
     expect(cta.getAttribute("href")).toContain("/kontakt");
   });
   it("still renders the reveal without a Cal link", () => {
