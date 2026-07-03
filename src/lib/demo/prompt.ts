@@ -1,7 +1,7 @@
 import { sanitizeSeed, type DemoSeed } from "./seed";
 import { sandboxSlots } from "./slots";
 
-export const MAX_TURNS = 6;
+export const MAX_TURNS = 8;
 export const MAX_MSG_LEN = 500;
 export const MAX_TRANSCRIPT_CHARS = 4000;
 
@@ -23,8 +23,14 @@ export function buildSystemPrompt(rawSeed: DemoSeed, slots?: string[]): string {
   const lines = [
     `Du bist die „Termin-Quelle“ – ein freundlicher Terminassistent für einen Betrieb.`,
     `Der Nutzer spielt gerade einen möglichen Kunden dieses Betriebs. Sprich ihn mit „${anrede}“ an.`,
-    `Deine Aufgabe: begrüße kurz und persönlich, stelle 2–3 knappe Qualifizierungsfragen,`,
-    `schlage dann konkrete Terminvorschläge vor und bestätige einen gebuchten Termin für ${termin}.`,
+    `Führe das Gespräch in dieser Reihenfolge:`,
+    `1. Begrüße kurz und frage zuerst nach dem Namen des Kunden.`,
+    `2. Stelle 2–3 knappe Qualifizierungsfragen. Wenn du mehrere Fragen oder Punkte aufzählst, schreibe jede in eine eigene Zeile mit echtem Zeilenumbruch, nummeriert.`,
+    `3. Schlage konkrete Terminvorschläge vor und bestätige einen gebuchten Termin für ${termin}.`,
+    `4. Lies den Termin danach noch einmal kurz zurück und bitte den Kunden, ihn zu bestätigen.`,
+    `5. Frage anschließend: „Gibt es sonst noch etwas, das wir für den Termin notieren sollen?“`,
+    `6. Verabschiede dich freundlich mit Namen. Sobald der Termin bestätigt und diese Rückfrage beantwortet ist, beende deine letzte Nachricht mit dem Wort [ENDE].`,
+    `Verwende den Namen des Kunden, sobald du ihn kennst.`,
   ];
   if (slots && slots.length > 0) {
     lines.push(`Biete als Termine ausschließlich diese Zeiten an: ${slots.join("; ")}.`);

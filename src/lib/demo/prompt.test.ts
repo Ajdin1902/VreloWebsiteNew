@@ -21,6 +21,14 @@ describe("buildSystemPrompt", () => {
     const p = buildSystemPrompt(seed, slots);
     expect(p).toContain(slots[0]);
   });
+  it("instructs the bot to ask the client name, reconfirm, ask for anything else, and end with [ENDE]", () => {
+    const p = buildSystemPrompt(seed);
+    expect(p).toContain("Namen");          // ask for the name
+    expect(p).toContain("eigene Zeile");   // one list item per line
+    expect(p).toContain("bestätigen");     // reconfirm the appointment
+    expect(p).toContain("sonst noch");     // the anything-else question
+    expect(p).toContain("[ENDE]");         // close sentinel
+  });
 });
 
 describe("prepareChat", () => {
@@ -53,14 +61,16 @@ describe("prepareChat", () => {
   });
 
   it("keeps the newest turns and drops the oldest when the transcript exceeds the char budget", () => {
-    // 11 messages (6 user + 5 assistant) of ~499 chars = ~5.5k > MAX_TRANSCRIPT_CHARS (4000).
-    const many = Array.from({ length: 11 }, (_, i) => msg(i % 2 === 0 ? "user" : "assistant", `m${i}-` + "a".repeat(495)));
+    // MAX_TURNS user + (MAX_TURNS-1) assistant messages of ~499 chars each far exceed
+    // MAX_TRANSCRIPT_CHARS (4000); sits exactly on the userTurns === MAX_TURNS boundary (not stopped).
+    const count = MAX_TURNS * 2 - 1;
+    const many = Array.from({ length: count }, (_, i) => msg(i % 2 === 0 ? "user" : "assistant", `m${i}-` + "a".repeat(495)));
     const d = prepareChat({ seed, messages: many });
-    expect(d.action).toBe("generate"); // 6 user turns == MAX_TURNS, so not stopped
+    expect(d.action).toBe("generate"); // MAX_TURNS user turns == cap, so not stopped
     if (d.action === "generate") {
       const total = d.messages.reduce((n, m) => n + m.content.length, 0);
       expect(total).toBeLessThanOrEqual(4000);
-      expect(d.messages[d.messages.length - 1].content).toContain("m10"); // newest kept
+      expect(d.messages[d.messages.length - 1].content).toContain(`m${count - 1}-`); // newest kept
       expect(d.messages.some((m) => m.content.startsWith("m0-"))).toBe(false); // oldest dropped
     }
   });
