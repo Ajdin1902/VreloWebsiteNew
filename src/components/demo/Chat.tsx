@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import type { DemoSeed } from "@/lib/demo/seed";
 import type { ChatMessage } from "@/lib/demo/prompt";
 
-const MAX_TURNS = 6;
+const MAX_TURNS = 8;
 
-export function Chat({ seed, firstMessage, onDone }: { seed: DemoSeed; firstMessage: string; onDone: () => void }) {
+export function Chat({ seed, firstMessage, onDone }: { seed: DemoSeed; firstMessage: string; onDone: (history: ChatMessage[]) => void }) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
@@ -30,12 +30,17 @@ export function Chat({ seed, firstMessage, onDone }: { seed: DemoSeed; firstMess
           const { done, value } = await reader.read();
           if (done) break;
           acc += decoder.decode(value, { stream: true });
-          setMessages([...nextHistory, { role: "assistant", content: acc }]);
+          // Never flash the sentinel while streaming — hide it (and anything after) as it arrives.
+          setMessages([...nextHistory, { role: "assistant", content: acc.replace(/\[ENDE\][\s\S]*$/i, "") }]);
         }
       }
-      const finalHistory = [...nextHistory, { role: "assistant" as const, content: acc }];
+      const raw = acc;
+      const cleaned = raw.replace(/\s*\[ENDE\]\s*$/i, "").replace(/\[ENDE\]/gi, "");
+      setMessages([...nextHistory, { role: "assistant", content: cleaned }]);
+      const finalHistory = [...nextHistory, { role: "assistant" as const, content: cleaned }];
       const userTurns = finalHistory.filter((m) => m.role === "user").length;
-      if (userTurns >= MAX_TURNS) onDone();
+      const ended = /\[ENDE\]/i.test(raw);
+      if (ended || userTurns >= MAX_TURNS) onDone(finalHistory);
     } finally {
       setBusy(false);
     }
@@ -54,7 +59,7 @@ export function Chat({ seed, firstMessage, onDone }: { seed: DemoSeed; firstMess
     <div className="card-depth rounded-2xl border border-faden bg-papier p-6 md:p-8">
       <div className="flex flex-col gap-3">
         {messages.map((m, i) => (
-          <div key={i} className={m.role === "user" ? "self-end rounded-2xl bg-tiefes-wasser px-4 py-2 text-papier" : "self-start rounded-2xl bg-gletscher/40 px-4 py-2 text-tinte"}>
+          <div key={i} className={`whitespace-pre-line leading-relaxed ${m.role === "user" ? "self-end rounded-2xl bg-tiefes-wasser px-4 py-2 text-papier" : "self-start rounded-2xl bg-gletscher/40 px-4 py-2 text-tinte"}`}>
             {m.content}
           </div>
         ))}
