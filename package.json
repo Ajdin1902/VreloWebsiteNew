@@ -13,13 +13,17 @@
     "newsletter": "node --env-file-if-exists=.env.local scripts/send-newsletter.mjs"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.110.0",
     "@calcom/embed-react": "^1.5.3",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.38.0",
     "gray-matter": "^4.0.3",
     "next": "16.2.7",
     "next-mdx-remote": "^6.0.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "resend": "^6.12.4"
+    "resend": "^6.12.4",
+    "undici": "^7.27.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

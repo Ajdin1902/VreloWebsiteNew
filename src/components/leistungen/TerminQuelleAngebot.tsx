@@ -60,6 +60,15 @@ export function TerminQuelleAngebot() {
           {o.leadCheck.label}
         </Link>
       </p>
+      <p className="mt-2 text-sm text-gletscher">
+        {o.demo.prompt}{" "}
+        <Link
+          href={o.demo.href}
+          className="font-medium text-papier underline decoration-amber/60 underline-offset-4 transition-colors hover:decoration-amber focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-vrelo-petrol"
+        >
+          {o.demo.label}
+        </Link>
+      </p>
     </div>
   );
 }
