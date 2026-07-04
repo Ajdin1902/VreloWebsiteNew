@@ -27,6 +27,13 @@ describe("Hero", () => {
     expect(screen.getByRole("link", { name: "Zeit zurückgewinnen" })).toBeInTheDocument();
   });
 
+  it("names the concrete next step under the CTA (friction-reducing microcopy)", () => {
+    render(<Hero />);
+    expect(
+      screen.getByText(/Kostenloses Erstgespräch – 30 Minuten, unverbindlich/),
+    ).toBeInTheDocument();
+  });
+
   it("applies the staggered reveal classes (H1 rise-only, sub + CTA fade-up)", () => {
     render(<Hero />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveClass("hero-reveal-h1");

@@ -20,4 +20,10 @@ describe("Header", () => {
     render(<Header />);
     expect(screen.getByRole("button", { name: /menü öffnen/i })).toBeInTheDocument();
   });
+
+  it("keeps a compact CTA reachable on mobile (one tap, outside the drawer)", () => {
+    render(<Header />);
+    const compact = screen.getByRole("link", { name: "Erstgespräch" });
+    expect(compact).toHaveAttribute("href", "/kontakt");
+  });
 });

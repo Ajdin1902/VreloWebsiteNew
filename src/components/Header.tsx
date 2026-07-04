@@ -46,7 +46,12 @@ export function Header() {
           <CTAButton href="/kontakt" />
         </div>
 
-        <MobileNav />
+        {/* Mobile: keep conversion one tap away — a compact CTA beside the burger
+            (the full-label CTA above is desktop-only, the drawer costs two taps). */}
+        <div className="flex items-center gap-1 md:hidden">
+          <CTAButton href="/kontakt">Erstgespräch</CTAButton>
+          <MobileNav />
+        </div>
       </nav>
     </header>
   );
