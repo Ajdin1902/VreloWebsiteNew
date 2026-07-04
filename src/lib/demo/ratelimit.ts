@@ -1,6 +1,20 @@
+import { createHash } from "crypto";
 import { Redis } from "@upstash/redis";
 import { Ratelimit } from "@upstash/ratelimit";
 import { dailyBudget } from "./config";
+
+// Salt the IP hash so the stored key is a pseudonym, not the raw address.
+// A deployment can set DEMO_IP_SALT to a secret for stronger (keyed) pseudonymisation.
+const IP_SALT = process.env.DEMO_IP_SALT || "vrelo-demo-rl-v1";
+
+/**
+ * Pseudonymise a client IP before it becomes a rate-limit key, so the raw
+ * address is never written to Upstash. Deterministic (same IP → same key),
+ * so per-IP counting still works.
+ */
+export function hashIp(ip: string): string {
+  return createHash("sha256").update(`${IP_SALT}:${ip}`).digest("hex");
+}
 
 let redis: Redis | null = null;
 let limiter: Ratelimit | null = null;
@@ -33,7 +47,7 @@ export async function enforceLimits(ip: string, opts: { charge: boolean }): Prom
   const c = clients();
   if (!c) return { ok: true };
   try {
-    const rl = await c.limiter.limit(ip);
+    const rl = await c.limiter.limit(hashIp(ip));
     if (!rl.success) return { ok: false, reason: "rate" };
 
     if (opts.charge) {

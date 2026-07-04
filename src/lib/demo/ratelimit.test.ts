@@ -19,7 +19,7 @@ vi.mock("@upstash/ratelimit", () => ({
   ),
 }));
 
-import { enforceLimits } from "./ratelimit";
+import { enforceLimits, hashIp } from "./ratelimit";
 
 beforeEach(() => {
   limit.mockReset().mockResolvedValue({ success: true });
@@ -35,6 +35,11 @@ describe("enforceLimits", () => {
   it("allows a normal request", async () => {
     const r = await enforceLimits("1.2.3.4", { charge: true });
     expect(r.ok).toBe(true);
+  });
+  it("keys the limiter by the hashed IP, never the raw address", async () => {
+    await enforceLimits("1.2.3.4", { charge: true });
+    expect(limit).toHaveBeenCalledWith(hashIp("1.2.3.4"));
+    expect(limit).not.toHaveBeenCalledWith("1.2.3.4");
   });
   it("blocks when the per-IP limiter is exhausted", async () => {
     limit.mockResolvedValueOnce({ success: false });
@@ -54,5 +59,20 @@ describe("enforceLimits", () => {
     limit.mockRejectedValueOnce(new Error("network"));
     const r = await enforceLimits("1.2.3.4", { charge: true });
     expect(r.ok).toBe(true);
+  });
+});
+
+describe("hashIp", () => {
+  it("returns a 64-char hex SHA-256 digest", () => {
+    expect(hashIp("203.0.113.7")).toMatch(/^[0-9a-f]{64}$/);
+  });
+  it("is deterministic — the same IP maps to the same key (counting still works)", () => {
+    expect(hashIp("203.0.113.7")).toBe(hashIp("203.0.113.7"));
+  });
+  it("maps different IPs to different keys", () => {
+    expect(hashIp("203.0.113.7")).not.toBe(hashIp("203.0.113.8"));
+  });
+  it("never leaks the raw IP into the key", () => {
+    expect(hashIp("203.0.113.7")).not.toContain("203.0.113.7");
   });
 });
