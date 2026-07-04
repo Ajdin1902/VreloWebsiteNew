@@ -21,7 +21,7 @@ export function PageIntro({
         <p className="text-sm font-medium uppercase tracking-wider text-stumm">{eyebrow}</p>
       ) : null}
       <h1 className="mt-3 max-w-3xl text-balance text-4xl font-semibold text-tiefes-wasser md:text-5xl">
-        {title}
+        {withBrandWords(title)}
       </h1>
       {lead ? <p className="mt-5 max-w-2xl text-pretty text-lg text-tinte">{withBrandWords(lead)}</p> : null}
       {image ? (
