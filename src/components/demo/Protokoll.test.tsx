@@ -53,6 +53,17 @@ describe("Protokoll", () => {
     expect(screen.queryByText(/Bestätigungsmail/i)).toBeNull();
   });
 
+  it("renders the Terminnotiz and preview for an email-only note (name/anliegen/termin empty)", async () => {
+    vi.spyOn(global, "fetch").mockResolvedValue(
+      jsonResponse({ name: "", anliegen: "", termin: "", offenePunkte: [], email: "only@example.de" }),
+    );
+    render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={transcript} />);
+
+    expect(await screen.findByRole("heading", { name: "Terminnotiz" })).toBeTruthy();
+    expect(screen.getAllByText("only@example.de").length).toBeGreaterThan(0);
+    expect(screen.getByText(/Bestätigungsmail/i)).toBeTruthy();
+  });
+
   it("degrades gracefully to transcript-only when the summary fetch rejects", async () => {
     vi.spyOn(global, "fetch").mockRejectedValue(new Error("boom"));
     render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={transcript} />);

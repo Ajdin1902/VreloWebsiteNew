@@ -22,6 +22,11 @@ describe("parseNotes", () => {
     expect(n.email.length).toBe(160);
   });
 
+  it("trims surrounding whitespace from a short email", () => {
+    const n = parseNotes(JSON.stringify({ name: "", anliegen: "", termin: "", offenePunkte: [], email: "  a@b.de  " }));
+    expect(n.email).toBe("a@b.de");
+  });
+
   it("tolerates surrounding prose", () => {
     const n = parseNotes('Hier: {"name":"Alen","anliegen":"","termin":"","offenePunkte":[]} fertig');
     expect(n.name).toBe("Alen");
