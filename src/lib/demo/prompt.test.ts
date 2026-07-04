@@ -28,6 +28,7 @@ describe("buildSystemPrompt", () => {
     expect(p).toContain("bestätigen");     // reconfirm the appointment
     expect(p).toContain("sonst noch");     // the anything-else question
     expect(p).toContain("[ENDE]");         // close sentinel
+    expect(p).toContain("E-Mail");         // ask for the client's email at the close
   });
 });
 

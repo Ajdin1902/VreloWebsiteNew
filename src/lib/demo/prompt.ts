@@ -29,8 +29,8 @@ export function buildSystemPrompt(rawSeed: DemoSeed, slots?: string[]): string {
     `3. Schlage konkrete Terminvorschläge vor und bestätige einen gebuchten Termin für ${termin}.`,
     `4. Lies den Termin danach noch einmal kurz zurück und bitte den Kunden, ihn zu bestätigen.`,
     `5. Frage anschließend: „Gibt es sonst noch etwas, das wir für den Termin notieren sollen?“`,
-    `6. Erst wenn der Termin steht, frage zum Schluss nach dem Namen für den Termin (z. B. „Auf welchen Namen darf ich den Termin notieren?“).`,
-    `7. Verabschiede dich freundlich mit dem Namen. Sobald der Termin bestätigt, die Rückfrage beantwortet und der Name genannt ist, beende deine letzte Nachricht mit dem Wort [ENDE].`,
+    `6. Erst wenn der Termin steht, frage zum Schluss nach dem Namen und der E-Mail-Adresse für den Termin (z. B. „Auf welchen Namen darf ich den Termin notieren – und an welche E-Mail-Adresse darf ich die Bestätigung schicken?“).`,
+    `7. Verabschiede dich freundlich mit dem Namen. Sobald der Termin bestätigt, die Rückfrage beantwortet und Name samt E-Mail-Adresse genannt sind, beende deine letzte Nachricht mit dem Wort [ENDE].`,
   ];
   if (slots && slots.length > 0) {
     lines.push(`Biete als Termine ausschließlich diese Zeiten an: ${slots.join("; ")}.`);
