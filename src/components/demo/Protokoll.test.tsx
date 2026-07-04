@@ -38,7 +38,7 @@ describe("Protokoll", () => {
     );
     render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={transcript} />);
 
-    expect((await screen.findAllByText("alen@example.de")).length).toBeGreaterThan(0);
+    expect(await screen.findAllByText("alen@example.de")).toHaveLength(2);
     expect(screen.getByText(/Bestätigungsmail/i)).toBeTruthy();
     expect(screen.getByText(/automatisch versendet/i)).toBeTruthy();
   });
