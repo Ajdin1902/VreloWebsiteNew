@@ -14,4 +14,13 @@ describe("Steps", () => {
     expect(screen.getByText("Bauen")).toBeInTheDocument();
     expect(screen.getByText("Fließen")).toBeInTheDocument();
   });
+
+  it("offers the mid-page CTA with the concrete next step", () => {
+    render(<Steps />);
+    const cta = screen.getByRole("link", { name: "Zeit zurückgewinnen" });
+    expect(cta).toHaveAttribute("href", "/kontakt");
+    expect(
+      screen.getByText(/Kostenloses Erstgespräch – 30 Minuten, unverbindlich/),
+    ).toBeInTheDocument();
+  });
 });

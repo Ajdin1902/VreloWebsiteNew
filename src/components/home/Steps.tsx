@@ -1,5 +1,6 @@
 import { Section } from "@/components/Section";
 import { Reveal } from "@/components/Reveal";
+import { CTAButton } from "@/components/CTAButton";
 
 const steps = [
   { num: "1", title: "Hinschauen", desc: "Wir finden gemeinsam die Aufgaben, die dich täglich Zeit kosten." },
@@ -39,6 +40,14 @@ export function Steps() {
             <p className="mt-2 text-gletscher">{s.desc}</p>
           </li>
         ))}
+      </Reveal>
+      {/* Mid-page CTA: "der erste Schritt ist klein" is the moment a reader asks
+          how to start — offer the start right here instead of only at the close. */}
+      <Reveal delayMs={240} className="mt-10 text-center">
+        <CTAButton href="/kontakt" tone="petrol" />
+        <p className="mt-3 text-sm text-gletscher">
+          Kostenloses Erstgespräch – 30 Minuten, unverbindlich.
+        </p>
       </Reveal>
     </Section>
   );

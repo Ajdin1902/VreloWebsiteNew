@@ -14,6 +14,11 @@ describe("CTAButton", () => {
     expect(screen.getByRole("link")).toHaveClass("focus-visible:ring-offset-papier");
   });
 
+  it("offsets the focus ring against petrol sections when tone='petrol'", () => {
+    render(<CTAButton href="/x" tone="petrol" />);
+    expect(screen.getByRole("link")).toHaveClass("focus-visible:ring-offset-vrelo-petrol");
+  });
+
   it("offsets the focus ring against the dark surface when tone='dark'", () => {
     render(<CTAButton href="/x" tone="dark" />);
     const link = screen.getByRole("link");

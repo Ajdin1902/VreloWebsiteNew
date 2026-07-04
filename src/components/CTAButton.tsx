@@ -10,12 +10,14 @@ export function CTAButton({
   href: string;
   children?: ReactNode;
   variant?: "primary" | "ghost" | "inverse";
-  tone?: "papier" | "dark";
+  tone?: "papier" | "dark" | "petrol";
 }) {
   const offset =
     tone === "dark"
       ? "focus-visible:ring-offset-tiefes-wasser"
-      : "focus-visible:ring-offset-papier";
+      : tone === "petrol"
+        ? "focus-visible:ring-offset-vrelo-petrol"
+        : "focus-visible:ring-offset-papier";
   const base = `group inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${offset} focus-visible:ring-amber`;
   // inverse = navy fill for warm/light surfaces (e.g. the ClosingCta warm band)
   // where amber would blend; the resting shadow lifts it off the warm bg.

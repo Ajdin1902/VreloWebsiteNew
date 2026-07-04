@@ -36,6 +36,10 @@ export function Hero() {
       </p>
       <div className="hero-reveal-cta mt-9">
         <CTAButton href="/kontakt" tone="dark" />
+        {/* Friction reducer: name the concrete next step so the click is predictable. */}
+        <p className="mt-3 text-sm text-gletscher">
+          Kostenloses Erstgespräch – 30 Minuten, unverbindlich.
+        </p>
       </div>
     </section>
   );
