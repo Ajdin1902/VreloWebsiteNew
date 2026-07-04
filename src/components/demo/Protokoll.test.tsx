@@ -19,7 +19,7 @@ beforeEach(() => vi.restoreAllMocks());
 describe("Protokoll", () => {
   it("renders the Terminnotiz and the transcript on a successful summary fetch", async () => {
     vi.spyOn(global, "fetch").mockResolvedValue(
-      jsonResponse({ name: "Alen", anliegen: "Baufinanzierung", termin: "Mo 6.7. 10:00", offenePunkte: ["Unterlagen mitbringen"] }),
+      jsonResponse({ name: "Alen", anliegen: "Baufinanzierung", termin: "Mo 6.7. 10:00", offenePunkte: ["Unterlagen mitbringen"], email: "" }),
     );
     render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={transcript} />);
 
@@ -30,6 +30,27 @@ describe("Protokoll", () => {
 
     const cta = screen.getByRole("link", { name: /reden|kontakt/i });
     expect(cta.getAttribute("href")).toContain("/kontakt");
+  });
+
+  it("renders the email row and a simulated confirmation-mail preview when an email is present", async () => {
+    vi.spyOn(global, "fetch").mockResolvedValue(
+      jsonResponse({ name: "Alen", anliegen: "Baufinanzierung", termin: "Mo 6.7. 10:00", offenePunkte: [], email: "alen@example.de" }),
+    );
+    render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={transcript} />);
+
+    expect((await screen.findAllByText("alen@example.de")).length).toBeGreaterThan(0);
+    expect(screen.getByText(/Bestätigungsmail/i)).toBeTruthy();
+    expect(screen.getByText(/automatisch versendet/i)).toBeTruthy();
+  });
+
+  it("hides the mail preview when no email was captured", async () => {
+    vi.spyOn(global, "fetch").mockResolvedValue(
+      jsonResponse({ name: "Alen", anliegen: "Baufinanzierung", termin: "Mo 6.7. 10:00", offenePunkte: [], email: "" }),
+    );
+    render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={transcript} />);
+
+    expect(await screen.findByText("Alen")).toBeTruthy();
+    expect(screen.queryByText(/Bestätigungsmail/i)).toBeNull();
   });
 
   it("degrades gracefully to transcript-only when the summary fetch rejects", async () => {
@@ -54,7 +75,7 @@ describe("Protokoll", () => {
 
   it("skips the Terminnotiz card when the returned summary is empty", async () => {
     vi.spyOn(global, "fetch").mockResolvedValue(
-      jsonResponse({ name: "", anliegen: "", termin: "", offenePunkte: [] }),
+      jsonResponse({ name: "", anliegen: "", termin: "", offenePunkte: [], email: "" }),
     );
     render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={transcript} />);
 

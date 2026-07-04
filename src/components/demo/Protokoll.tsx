@@ -6,7 +6,33 @@ import type { ChatMessage } from "@/lib/demo/prompt";
 import { type Terminnotiz } from "@/lib/demo/summary";
 
 function isEmptyNotiz(n: Terminnotiz): boolean {
-  return !n.name && !n.anliegen && !n.termin && n.offenePunkte.length === 0;
+  return !n.name && !n.anliegen && !n.termin && n.offenePunkte.length === 0 && !n.email;
+}
+
+function MailVorschau({ notiz }: { notiz: Terminnotiz }) {
+  const anrede = notiz.name ? `Guten Tag ${notiz.name},` : "Guten Tag,";
+  const terminSatz = notiz.termin
+    ? `Ihr Termin am ${notiz.termin} ist bestätigt.`
+    : "Ihr Termin ist bestätigt.";
+  return (
+    <div className="mt-4 rounded-xl border border-faden bg-papier p-5 text-left">
+      <p className="text-xs uppercase tracking-wide text-stumm">Bestätigungsmail (Vorschau)</p>
+      <dl className="mt-3 space-y-1 text-sm">
+        <div className="flex gap-2">
+          <dt className="text-stumm">An:</dt>
+          <dd className="text-tinte">{notiz.email}</dd>
+        </div>
+        <div className="flex gap-2">
+          <dt className="text-stumm">Betreff:</dt>
+          <dd className="text-tinte">Ihr Termin – Bestätigung</dd>
+        </div>
+      </dl>
+      <p className="mt-3 whitespace-pre-line leading-relaxed text-tinte">
+        {`${anrede}\n${terminSatz} Wir freuen uns auf das Gespräch.`}
+      </p>
+      <p className="mt-3 text-xs text-stumm">In der Live-Version wird diese Bestätigung automatisch versendet.</p>
+    </div>
+  );
 }
 
 type State = { status: "loading" } | { status: "ready"; notiz: Terminnotiz | null };
@@ -51,6 +77,7 @@ export function Protokoll({ calLink, seed, transcript }: { calLink: string | und
       {state.status === "loading" ? (
         <p className="mt-6 text-sm text-stumm">Einen Moment – ich fasse das Gespräch zusammen …</p>
       ) : notiz ? (
+        <>
         <div className="mt-6 rounded-xl border border-faden bg-papier p-5 text-left">
           <h3 className="font-serif text-lg text-tinte">Terminnotiz</h3>
           <dl className="mt-3 space-y-2 text-sm">
@@ -72,6 +99,12 @@ export function Protokoll({ calLink, seed, transcript }: { calLink: string | und
                 <dd className="text-tinte">{notiz.termin}</dd>
               </div>
             ) : null}
+            {notiz.email ? (
+              <div>
+                <dt className="text-xs uppercase tracking-wide text-stumm">E-Mail</dt>
+                <dd className="text-tinte">{notiz.email}</dd>
+              </div>
+            ) : null}
             {notiz.offenePunkte.length > 0 ? (
               <div>
                 <dt className="text-xs uppercase tracking-wide text-stumm">Offene Punkte</dt>
@@ -86,6 +119,8 @@ export function Protokoll({ calLink, seed, transcript }: { calLink: string | und
             ) : null}
           </dl>
         </div>
+        {notiz.email ? <MailVorschau notiz={notiz} /> : null}
+        </>
       ) : (
         <p className="mt-6 text-sm text-tinte">Termin gebucht &amp; protokolliert.</p>
       )}
