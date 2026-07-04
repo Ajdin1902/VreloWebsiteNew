@@ -7,8 +7,19 @@ const seed: DemoSeed = { business: "Baufi für Familien", appointmentType: "bauf
 
 describe("parseNotes", () => {
   it("extracts fields from a clean JSON string", () => {
-    const n = parseNotes('{"name":"Alen","anliegen":"Baufi","termin":"Mo 10:00","offenePunkte":["Unterlagen"]}');
-    expect(n).toEqual({ name: "Alen", anliegen: "Baufi", termin: "Mo 10:00", offenePunkte: ["Unterlagen"] });
+    const n = parseNotes('{"name":"Alen","anliegen":"Baufi","termin":"Mo 10:00","offenePunkte":["Unterlagen"],"email":"a@b.de"}');
+    expect(n).toEqual({ name: "Alen", anliegen: "Baufi", termin: "Mo 10:00", offenePunkte: ["Unterlagen"], email: "a@b.de" });
+  });
+
+  it("defaults email to empty when absent", () => {
+    const n = parseNotes('{"name":"Alen","anliegen":"","termin":"","offenePunkte":[]}');
+    expect(n.email).toBe("");
+  });
+
+  it("trims and caps email to 160 chars", () => {
+    const long = "x".repeat(400) + "@b.de";
+    const n = parseNotes(JSON.stringify({ name: "", anliegen: "", termin: "", offenePunkte: [], email: "  " + long + "  " }));
+    expect(n.email.length).toBe(160);
   });
 
   it("tolerates surrounding prose", () => {
