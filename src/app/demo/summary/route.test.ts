@@ -40,7 +40,7 @@ describe("POST /demo/summary", () => {
     const res = await POST(post({ seed, messages }));
     expect(res.status).toBe(200);
     const json = await res.json();
-    expect(json).toEqual({ name: "Alen", anliegen: "Baufi", termin: "Mo 10:00", offenePunkte: ["Unterlagen"] });
+    expect(json).toEqual({ name: "Alen", anliegen: "Baufi", termin: "Mo 10:00", offenePunkte: ["Unterlagen"], email: "" });
     expect(create).toHaveBeenCalledTimes(1);
     expect(enforceLimits).toHaveBeenCalledWith(expect.anything(), { charge: true });
   });
