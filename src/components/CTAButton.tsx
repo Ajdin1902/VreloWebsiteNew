@@ -43,7 +43,10 @@ export function CTAButton({
             variant === "inverse" ? "bg-papier/15" : "bg-tiefes-wasser/10"
           } text-xs leading-none transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] motion-safe:group-hover:translate-x-0.5`}
         >
-          →
+          {/* Plus Jakarta Sans draws → entirely above the baseline, which lands
+              its ink ~1.75px below the flex-centered line box's middle — nudge
+              up so the glyph is optically centered in the circle. */}
+          <span className="relative -top-[1.75px]">→</span>
         </span>
       ) : null}
     </Link>
