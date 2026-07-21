@@ -8,7 +8,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Wie läuft ein Projekt mit dir ab?",
         answer:
-          "In drei ruhigen Schritten: Wir schauen gemeinsam hin, wo dir Zeit verloren geht. Ich baue daraus eine saubere, dokumentierte Lösung. Danach läuft sie von selbst – für Anpassungen bleibe ich erreichbar.",
+          "In drei klaren Schritten: Wir schauen gemeinsam hin, wo dir Zeit verloren geht. Ich baue daraus eine saubere, dokumentierte Lösung. Danach läuft sie von selbst – für Anpassungen bleibe ich erreichbar.",
       },
       {
         question: "Für welche Betriebe baust du?",
