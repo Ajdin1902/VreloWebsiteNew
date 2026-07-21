@@ -6,7 +6,7 @@ describe("Proof", () => {
   it("renders the heading, four value cards, and the references footnote", () => {
     render(<Proof />);
     expect(
-      screen.getByRole("heading", { name: /Ruhig gebaut\. Verlässlich im Betrieb\./i }),
+      screen.getByRole("heading", { name: /Sorgfältig gebaut\. Verlässlich im Betrieb\./i }),
     ).toBeInTheDocument();
     for (const title of [
       "Ein Ansprechpartner.",

@@ -24,7 +24,7 @@ export function Steps() {
       {/* Centered spine: intro on the spine, the three cards keep their grid + left text. */}
       <div className="mx-auto max-w-[44rem] text-center">
         <Reveal as="h2" delayMs={0} className="text-balance text-3xl font-semibold tracking-tight text-papier md:text-4xl">
-          In drei ruhigen Schritten.
+          In drei klaren Schritten.
         </Reveal>
         <Reveal as="p" delayMs={80} className="mt-5 text-pretty text-lg text-gletscher">
           Der erste Schritt ist klein – den Rest übernehme ich.

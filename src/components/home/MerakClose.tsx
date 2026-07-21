@@ -27,7 +27,7 @@ export function MerakClose() {
         </Reveal>
         <Reveal as="p" delayMs={80} className="mx-auto mt-6 max-w-xl text-pretty text-lg text-tinte">
           Das ist der <BrandWord>Merak</BrandWord>-Effekt. Schau dir unverbindlich an, was
-          möglich ist. Der Anfang einer ruhigen Zusammenarbeit, kein Verkaufsgespräch.
+          möglich ist. Der Anfang einer Zusammenarbeit, die bleibt – kein Verkaufsgespräch.
         </Reveal>
         <Reveal delayMs={160} className="mt-8">
           <CTAButton href="/kontakt" />

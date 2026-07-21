@@ -25,7 +25,7 @@ export default function LeistungenPage() {
       <PageHero
         title="Leistungen"
         src="/images/leistungen-banner.webp"
-        lead="Ich baue dir eine saubere Quelle für die Aufgaben, die sich jeden Tag wiederholen – maßgeschneidert für deinen Betrieb, nicht von der Stange. Kein Durcheinander aus zehn Tools, sondern eine ruhige Lösung, die still im Hintergrund läuft."
+        lead="Ich baue dir eine saubere Quelle für die Aufgaben, die sich jeden Tag wiederholen – maßgeschneidert für deinen Betrieb, nicht von der Stange. Kein Durcheinander aus zehn Tools, sondern eine Lösung, die still im Hintergrund läuft."
       />
       {/* The flagship: the named, packaged offer lifted above the generic menu. */}
       <Section tone="paper" className="-mt-24 md:-mt-32">
