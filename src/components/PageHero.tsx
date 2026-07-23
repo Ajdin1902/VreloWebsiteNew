@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { ReactNode } from "react";
 import { Section } from "@/components/Section";
 import { withBrandWords } from "@/components/BrandWord";
 
@@ -12,11 +13,14 @@ export function PageHero({
   lead,
   src,
   priority = true,
+  actions,
 }: {
   title: string;
   lead: string;
   src: string;
   priority?: boolean;
+  /** Optional CTA row rendered under the lead (focus-mode landing pages). */
+  actions?: ReactNode;
 }) {
   return (
     <>
@@ -39,6 +43,7 @@ export function PageHero({
         <p className="max-w-2xl text-pretty font-serif text-xl leading-[1.5] text-tiefes-wasser md:text-[1.6rem] first-letter:float-left first-letter:pr-2 first-letter:pt-1 first-letter:text-[2.8em] first-letter:font-medium first-letter:leading-[0.7] first-letter:text-vrelo-petrol">
           {withBrandWords(lead)}
         </p>
+        {actions ? <div className="mt-8">{actions}</div> : null}
       </Section>
     </>
   );

@@ -44,4 +44,15 @@ describe("SchedulerEmbed", () => {
     expect(screen.getByText(/folgt in Kürze/i)).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Termin anzeigen/i })).toBeNull();
   });
+
+  it("keeps the Kontakt wording when no hint is passed", () => {
+    render(<SchedulerEmbed calLink={undefined} />);
+    expect(screen.getByText(/über das Formular unten/i)).toBeInTheDocument();
+  });
+
+  it("lets a page override the not-configured hint", () => {
+    render(<SchedulerEmbed calLink={undefined} fallbackHint="Schreib mir über das Kontaktformular." />);
+    expect(screen.getByText("Schreib mir über das Kontaktformular.")).toBeInTheDocument();
+    expect(screen.queryByText(/über das Formular unten/i)).not.toBeInTheDocument();
+  });
 });
