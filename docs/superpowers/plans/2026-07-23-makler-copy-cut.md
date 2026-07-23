@@ -843,4 +843,4 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>"
 ## Follow-ups (not this plan)
 
 - Update `Website/CLAUDE.md`'s `/makler` in-flight block once this lands, including the fact that the page now carries one deliberate currency figure.
-- The „Bridge spacing" observation recorded in `CLAUDE.md` is resolved by this plan: the `Bridge` section no longer exists.
+- The „Bridge spacing“ observation recorded in `CLAUDE.md` is resolved by this plan: the `Bridge` section no longer exists.
