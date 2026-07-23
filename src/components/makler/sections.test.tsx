@@ -88,17 +88,19 @@ describe("TerminSection", () => {
     expect(anchor?.className).toMatch(/\bscroll-mt-/);
   });
 
-  it("offers the written route when no scheduler is configured", () => {
+  it("shows the calm hint when no scheduler is configured", () => {
     render(<TerminSection calLink={undefined} />);
     expect(screen.getByText(makler.close.fallbackHint)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: makler.close.fallback.label })).toHaveAttribute(
-      "href",
-      "/kontakt",
-    );
   });
 
-  it("shows no explanatory paragraph above the scheduler", () => {
-    render(<TerminSection calLink={undefined} />);
+  it("leads straight to booking – no written escape hatch, no hedge heading", () => {
+    render(<TerminSection calLink="ajdin19/vrelo-kennenlernen" />);
+    // The old "Zum Kontaktformular" fallback and "Lieber direkt sprechen?"
+    // prompt are gone; the section heading is the only ask.
+    expect(screen.queryByRole("link", { name: /Kontaktformular/i })).toBeNull();
+    expect(screen.queryByText(/Lieber direkt sprechen/i)).toBeNull();
+    expect(makler.close).not.toHaveProperty("fallback");
     expect(makler.close).not.toHaveProperty("body");
+    expect(screen.getByRole("button", { name: /Termin anzeigen/i })).toBeInTheDocument();
   });
 });

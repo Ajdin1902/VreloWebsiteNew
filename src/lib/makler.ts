@@ -55,7 +55,6 @@ export type MaklerPage = {
   close: {
     title: string;
     fallbackHint: string;
-    fallback: { prompt: string; label: string; href: string };
   };
 };
 
@@ -219,6 +218,5 @@ export const makler: MaklerPage = {
   close: {
     title: "Lass uns 30 Minuten sprechen",
     fallbackHint: "Schreib mir so lange einfach über das Kontaktformular.",
-    fallback: { prompt: "Lieber schreiben?", label: "Zum Kontaktformular", href: "/kontakt" },
   },
 };

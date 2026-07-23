@@ -15,11 +15,15 @@ const CAL_ORIGIN = "https://cal.eu";
 export function SchedulerEmbed({
   calLink,
   fallbackHint = "Schreib mir so lange einfach über das Formular unten.",
+  prompt = "Lieber direkt sprechen?",
 }: {
   calLink: string | undefined;
   /** Where to send the visitor when no scheduler is configured. Defaults to the
       Kontakt page wording, where a form does sit below the embed. */
   fallbackHint?: string;
+  /** The heading above the click-to-load button. Pass "" to omit it where the
+      surrounding section already asks for the call (e.g. /makler). */
+  prompt?: string;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -35,8 +39,12 @@ export function SchedulerEmbed({
   if (!open) {
     return (
       <div className="mx-auto max-w-xl text-center">
-        <p className="font-serif text-xl text-papier md:text-2xl">Lieber direkt sprechen?</p>
-        <p className="mt-2 text-gletscher">Buch dir ein unverbindliches Kennenlern-Gespräch.</p>
+        {prompt ? (
+          <p className="font-serif text-xl text-papier md:text-2xl">{prompt}</p>
+        ) : null}
+        <p className={prompt ? "mt-2 text-gletscher" : "text-gletscher"}>
+          Buch dir ein unverbindliches Kennenlern-Gespräch.
+        </p>
         <button
           type="button"
           onClick={() => setOpen(true)}
