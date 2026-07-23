@@ -41,8 +41,9 @@ describe("makler copy", () => {
   });
 
   it("names no price outside the server note", () => {
-    const { voraussetzungen: _skip, ...rest } = makler;
-    expect(strings(rest).filter((s) => CURRENCY.test(s))).toEqual([]);
+    const serverNote = new Set(strings(makler.voraussetzungen));
+    const elsewhere = all.filter((s) => !serverNote.has(s));
+    expect(elsewhere.filter((s) => CURRENCY.test(s))).toEqual([]);
   });
 
   it("allows exactly one currency figure – the client's own server cost", () => {
