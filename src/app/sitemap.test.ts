@@ -43,4 +43,11 @@ describe("sitemap", () => {
       expect(urls).not.toContain(`${siteUrl}/ratgeber/${slug}`);
     }
   });
+
+  it("excludes the direct-link outreach pages", () => {
+    const urls = sitemap().map((e) => e.url);
+    expect(urls).not.toContain(`${siteUrl}/makler`);
+    expect(urls).not.toContain(`${siteUrl}/lead-check`);
+    expect(urls).not.toContain(`${siteUrl}/demo`);
+  });
 });
