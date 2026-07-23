@@ -1,13 +1,13 @@
 // src/app/makler/page.tsx
 import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
-import { CTAButton } from "@/components/CTAButton";
 import { MaklerHeader } from "@/components/makler/MaklerHeader";
 import { MaklerFooter } from "@/components/makler/MaklerFooter";
 import { ProblemSection } from "@/components/makler/ProblemSection";
 import { TerminQuelleBlock } from "@/components/makler/TerminQuelleBlock";
-import { Bridge } from "@/components/makler/Bridge";
+import { MidCta } from "@/components/makler/MidCta";
 import { DocumentConciergeBlock } from "@/components/makler/DocumentConciergeBlock";
+import { Voraussetzungen } from "@/components/makler/Voraussetzungen";
 import { WarumIch } from "@/components/makler/WarumIch";
 import { Garantie } from "@/components/makler/Garantie";
 import { Einwaende } from "@/components/makler/Einwaende";
@@ -34,17 +34,12 @@ export default function MaklerPage() {
         title={makler.hero.title}
         lead={makler.hero.lead}
         src="/images/lead-check-banner.webp"
-        actions={
-          <div className="flex flex-col items-start gap-3">
-            <CTAButton href={makler.hero.cta.href}>{makler.hero.cta.label}</CTAButton>
-            <p className="text-sm text-stumm">{makler.hero.ctaNote}</p>
-          </div>
-        }
       />
       <ProblemSection />
       <TerminQuelleBlock />
-      <Bridge />
+      <MidCta />
       <DocumentConciergeBlock product={makler.documentConcierge} />
+      <Voraussetzungen />
       <WarumIch />
       <Garantie />
       <Einwaende />
