@@ -15,12 +15,14 @@ export type MaklerProduct = {
   eyebrow: string;
   name: string;
   promise: string;
-  body: string;
+  /** Deleted on /makler – the page shows, it does not explain. */
+  body?: string;
   /** Short chips rendered as an arrow-separated mechanism row. */
   chips?: string[];
   /** Numbered flow cards (the Document Concierge's seven steps). */
   flow?: MaklerFlowStep[];
-  solves?: MaklerBullet[];
+  /** Benefit headlines only; the explanatory bodies were cut. */
+  solves?: string[];
   outcome?: string;
   /** The try-it-out invitation (Termin-Quelle → /demo). */
   proof?: { prompt: string; body: string; label: string; href: string };
@@ -32,19 +34,16 @@ export type MaklerProduct = {
 };
 
 export type MaklerPage = {
-  hero: {
-    title: string;
-    lead: string;
-    cta: { label: string; href: string };
-    /** Shortened CTA label for the narrow header – the full one wraps at 390px. */
-    ctaShort: string;
-    ctaNote: string;
-  };
+  /** The single CTA definition, shared by the header and the mid-page band.
+      Shortened label for the narrow header – the full one wraps at 390px. */
+  cta: { label: string; short: string; href: string; note: string };
+  hero: { title: string; lead: string };
   problem: { title: string; intro: string; leaks: MaklerBullet[]; close: string };
   terminQuelle: MaklerProduct;
-  bridge: { title: string; body: string };
+  midCta: { line: string };
   documentConcierge: MaklerProduct;
-  warumIch: { title: string; intro: string; points: MaklerBullet[] };
+  voraussetzungen: { title: string; items: MaklerBullet[] };
+  warumIch: { title: string; intro: string; points: string[] };
   garantie: {
     title: string;
     intro: string;
@@ -55,19 +54,22 @@ export type MaklerPage = {
   einwaende: { title: string; items: { question: string; answer: string }[] };
   close: {
     title: string;
-    body: string;
     fallbackHint: string;
     fallback: { prompt: string; label: string; href: string };
   };
 };
 
 export const makler: MaklerPage = {
+  cta: {
+    label: "Erstgespräch vereinbaren",
+    short: "Erstgespräch",
+    href: "#termin",
+    note: "Kostenloses Erstgespräch – 30 Minuten, unverbindlich.",
+  },
+
   hero: {
     title: "Jede Anfrage, die wartet, ist ein Termin weniger.",
-    lead: "Ich baue unabhängigen Maklern und Finanzberatern zwei Systeme: eines, das jede Anfrage in unter fünf Minuten beantwortet und in einen Termin verwandelt – und eines, das die Unterlagen deiner Kunden vollständig einsammelt, ohne dass du hinterhertelefonierst. Du lernst nichts, du wartest nichts, du bekommst das Ergebnis.",
-    cta: { label: "Erstgespräch vereinbaren", href: "#termin" },
-    ctaShort: "Erstgespräch",
-    ctaNote: "Kostenloses Erstgespräch – 30 Minuten, unverbindlich.",
+    lead: "Zwei Systeme: eines macht aus jeder Anfrage einen Termin, eines sammelt die Unterlagen ein. Beide baue ich dir, beide laufen ohne dich.",
   },
 
   problem: {
@@ -91,25 +93,12 @@ export const makler: MaklerPage = {
     eyebrow: "Schritt eins",
     name: "Die Termin-Quelle",
     promise: "Aus jeder Anfrage wird ein Termin – von selbst, während du arbeitest.",
-    body: "Jede Anfrage bekommt in unter fünf Minuten eine persönliche Antwort. Rund um die Uhr, auch nachts und am Wochenende. Das System stellt zwei, drei ruhige Rückfragen, bietet freie Zeiten aus deinem Kalender an, bucht den Termin und fasst nach, wenn jemand still bleibt. Gebaut auf deine Anfragequellen, deinen Ton, deinen Kalender – kein Baukasten von der Stange.",
     chips: ["Antwort in unter 5 Minuten", "Qualifizieren", "Termin buchen", "Nachfassen", "Protokoll"],
     solves: [
-      {
-        title: "Antwortet, wenn du schläfst",
-        body: "Die meisten Anfragen kommen abends und am Wochenende. Genau dann ist die Termin-Quelle wach.",
-      },
-      {
-        title: "Fragt nach, bevor du Zeit investierst",
-        body: "Zwei bis drei Rückfragen klären die Eckdaten. Du gehst nur noch in Gespräche, die passen können.",
-      },
-      {
-        title: "Beendet das Termin-Pingpong",
-        body: "Der passende Termin landet direkt in deinem Kalender. Kein Hin und Her über fünf Mails.",
-      },
-      {
-        title: "Bleibt dran, ohne zu nerven",
-        body: "Meldet sich jemand nicht, fragt das System höflich nach. Die meisten Kontakte brauchen mehrere Anläufe – die übernimmt es für dich.",
-      },
+      "Antwortet, wenn du schläfst",
+      "Fragt nach, bevor du Zeit investierst",
+      "Beendet das Termin-Pingpong",
+      "Bleibt dran, ohne zu nerven",
     ],
     outcome:
       "Mehr Termine aus den Anfragen, die du ohnehin schon hast. Und ein ruhiger Kopf, weil keine mehr liegen bleibt.",
@@ -122,16 +111,14 @@ export const makler: MaklerPage = {
     demoVideo: null,
   },
 
-  bridge: {
-    title: "Der Termin steht. Und dann?",
-    body: "Dann beginnt der Teil, der wirklich Wochen frisst: die Unterlagen. Dafür baue ich das zweite System.",
+  midCta: {
+    line: "Klingt das nach deiner Woche?",
   },
 
   documentConcierge: {
     eyebrow: "Schritt zwei",
     name: "Der Document Concierge",
     promise: "Du fragst nie wieder nach einer Unterlage.",
-    body: "Du legst einen Fall in einem 20-Sekunden-Formular an – Name, Kontakt, Art des Falls. Ab da übernimmt das System: Es schickt deinem Kunden eine ruhige Checkliste mit einem einzigen sicheren Upload-Link, prüft jede hochgeladene Datei darauf, ob sie plausibel das richtige und lesbare Dokument ist, und schickt offensichtlich falsche oder unscharfe Uploads freundlich zurück – bevor sie bei dir landen. Was fehlt, fragt es in ruhigem Abstand nach. Bleibt ein Kunde stecken, hört es auf und sagt dir Bescheid, statt ins Leere zu mahnen.",
     flow: [
       { title: "Fall anlegen", body: "20 Sekunden: Name, Kontakt, Art des Falls. Mehr machst du nicht." },
       { title: "Checkliste raus", body: "Dein Kunde bekommt sie auf seinem Kanal, mit einem sicheren Upload-Link." },
@@ -151,27 +138,29 @@ export const makler: MaklerPage = {
     demoVideo: null,
   },
 
+  voraussetzungen: {
+    title: "Was du dazu brauchst: fast nichts",
+    items: [
+      {
+        title: "Deinen eigenen Server",
+        body: "Ich richte ihn ein und baue alles darauf. Er läuft auf deinem eigenen Konto – unter 10 € im Monat, und er gehört dir. Deshalb liegen deine Daten auch bei dir und nicht bei mir.",
+      },
+      {
+        title: "Wartung nur, wenn du willst",
+        body: "Monatlich kündbar. Kündigst du, läuft alles weiter – du verlierst nur meine Aufmerksamkeit und die laufenden Verbesserungen, nie die Sicherheit.",
+      },
+    ],
+  },
+
   warumIch: {
     title: "Warum ich",
     intro:
       "Zwei Systeme, ein Verantwortlicher. Was das im Alltag für dich bedeutet:",
     points: [
-      {
-        title: "Ein Ansprechpartner",
-        body: "Du sprichst mit dem, der baut. Keine Agentur-Kette, kein Ticket-System, keine Übergabe an jemanden, den du nie kennengelernt hast.",
-      },
-      {
-        title: "Maßgeschneidert, nicht von der Stange",
-        body: "Ich baue auf deine Anfragequellen, deinen Ton, deinen Kalender, deine Fallarten. Ein Baukasten würde dich zwingen, dich anzupassen. Hier ist es umgekehrt.",
-      },
-      {
-        title: "Klartext statt Technik-Deutsch",
-        body: "Ich erkläre dir, was das System tut, in Sätzen, die du deinem Steuerberater weitererzählen könntest.",
-      },
-      {
-        title: "Du lernst und wartest nichts",
-        body: "Kein neues Werkzeug auf deinem Schreibtisch. Das System läuft im Hintergrund, ich halte es am Laufen. Du bekommst Termine und vollständige Akten.",
-      },
+      "Ein Ansprechpartner",
+      "Maßgeschneidert, nicht von der Stange",
+      "Klartext statt Technik-Deutsch",
+      "Du lernst und wartest nichts",
     ],
   },
 
@@ -220,26 +209,15 @@ export const makler: MaklerPage = {
           "Das System ersetzt dich nicht. Es nimmt den immer gleichen ersten Schritt ab und reicht dir den qualifizierten Termin. Die Beratung und den Abschluss machst weiter du.",
       },
       {
-        question: "Klingt das nicht wie ein Roboter?",
-        answer:
-          "Der Ton wird auf dich abgestimmt, und du gibst die Antworten vor der Inbetriebnahme frei. Es klingt nach dir. Dass ein digitaler Assistent antwortet, wird dabei offen gesagt – verstecken wäre der schlechtere Weg.",
-      },
-      {
         question: "Was ist mit den Daten meiner Kunden?",
         answer:
           "Deine Kundendaten laufen EU-gehostet und DSGVO-konform, mit Auftragsverarbeitungsvertrag. Beim Document Concierge läuft das System auf deinem eigenen Server und die Dokumente landen in deiner eigenen Cloud – bei mir liegt keine einzige Datei.",
-      },
-      {
-        question: "Wird das ein großes, riskantes Projekt?",
-        answer:
-          "Nein. Der erste Schritt ist ein Gespräch, danach ein Angebot mit klarem Umfang. Gebaut wird in Wochen, nicht in Quartalen, und die Schlussrechnung zahlst du erst nach deiner Abnahme.",
       },
     ],
   },
 
   close: {
     title: "Lass uns 30 Minuten sprechen",
-    body: "Im Erstgespräch schauen wir uns an, wo bei dir die Anfragen hereinkommen und wo die Zeit wirklich hängt. Danach weißt du, was ich bauen würde, wie lange es dauert und was es kostet. Passt es nicht, sage ich dir das.",
     fallbackHint: "Schreib mir so lange einfach über das Kontaktformular.",
     fallback: { prompt: "Lieber schreiben?", label: "Zum Kontaktformular", href: "/kontakt" },
   },
