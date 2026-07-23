@@ -12,7 +12,7 @@ describe("MaklerHeader", () => {
 
   it("carries a CTA pointing at the booking section on the page", () => {
     render(<MaklerHeader />);
-    const cta = screen.getByRole("link", { name: makler.hero.cta.label });
+    const cta = screen.getByRole("link", { name: makler.cta.label });
     expect(cta).toHaveAttribute("href", "#termin");
   });
 
@@ -20,10 +20,10 @@ describe("MaklerHeader", () => {
     // The full label wraps to two lines at 390px and collides with the logo,
     // which also grows the sticky header past the #termin scroll offset.
     render(<MaklerHeader />);
-    const short = screen.getByRole("link", { name: makler.hero.ctaShort });
+    const short = screen.getByRole("link", { name: makler.cta.short });
     expect(short).toHaveAttribute("href", "#termin");
     expect(short.parentElement).toHaveClass("sm:hidden");
-    expect(screen.getByRole("link", { name: makler.hero.cta.label }).parentElement).toHaveClass(
+    expect(screen.getByRole("link", { name: makler.cta.label }).parentElement).toHaveClass(
       "hidden",
       "sm:block",
     );

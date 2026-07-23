@@ -20,7 +20,6 @@ export function TerminSection({ calLink }: { calLink: string | undefined }) {
         <h2 className="text-balance text-3xl font-semibold tracking-tight text-papier md:text-4xl">
           {c.title}
         </h2>
-        <p className="mt-4 text-pretty text-lg text-gletscher">{c.body}</p>
       </div>
       <div className="mt-12">
         <SchedulerEmbed calLink={calLink} fallbackHint={c.fallbackHint} />

@@ -21,8 +21,6 @@ export function TerminQuelleBlock() {
         <p className="mt-3 text-pretty font-serif text-2xl italic text-amber md:text-3xl">
           {p.promise}
         </p>
-        <p className="mt-6 max-w-2xl text-pretty leading-relaxed text-gletscher">{p.body}</p>
-
         <ol aria-label="Ablauf" className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-3">
           {p.chips!.map((step, i) => (
             <li key={step} className="flex items-center gap-2">
@@ -38,14 +36,18 @@ export function TerminQuelleBlock() {
           ))}
         </ol>
 
-        <dl className="mt-10 grid gap-6 sm:grid-cols-2">
+        <ul aria-label="Was es dir abnimmt" className="mt-10 grid gap-3 sm:grid-cols-2">
           {p.solves!.map((s) => (
-            <div key={s.title}>
-              <dt className="font-semibold text-papier">{s.title}</dt>
-              <dd className="mt-1 text-pretty leading-relaxed text-gletscher">{s.body}</dd>
-            </div>
+            <li key={s} className="flex items-start gap-2">
+              {/* Decorative marker: amber is only 3.8:1 on petrol, so it may not
+                  carry meaning — the label itself is papier. */}
+              <span aria-hidden="true" className="mt-0.5 text-amber">
+                →
+              </span>
+              <span className="font-medium text-papier">{s}</span>
+            </li>
           ))}
-        </dl>
+        </ul>
 
         <p className="mt-10 max-w-2xl text-pretty text-lg font-medium text-papier">{p.outcome}</p>
 

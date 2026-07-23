@@ -15,6 +15,17 @@ describe("TerminQuelleBlock", () => {
     expect(list.querySelectorAll("li")).toHaveLength(makler.terminQuelle.chips!.length);
   });
 
+  it("lists the benefits as headlines only – no explanatory bodies", () => {
+    render(<TerminQuelleBlock />);
+    const list = screen.getByRole("list", { name: "Was es dir abnimmt" });
+    // The arrow marker is aria-hidden decoration; the meaningful label is the
+    // last span. Assert the four headlines are present and nothing more.
+    for (const s of makler.terminQuelle.solves!) {
+      expect(screen.getByText(s)).toBeInTheDocument();
+    }
+    expect(list.querySelectorAll("li")).toHaveLength(makler.terminQuelle.solves!.length);
+  });
+
   it("invites the visitor into the live demo", () => {
     render(<TerminQuelleBlock />);
     const demo = screen.getByRole("link", { name: makler.terminQuelle.proof!.label });

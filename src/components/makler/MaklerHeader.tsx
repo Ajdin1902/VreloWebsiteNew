@@ -22,10 +22,10 @@ export function MaklerHeader() {
             logo, which also grows the sticky header past the #termin anchor's
             scroll offset. Same split the site Header uses. */}
         <div className="hidden sm:block">
-          <CTAButton href={makler.hero.cta.href}>{makler.hero.cta.label}</CTAButton>
+          <CTAButton href={makler.cta.href}>{makler.cta.label}</CTAButton>
         </div>
         <div className="sm:hidden">
-          <CTAButton href={makler.hero.cta.href}>{makler.hero.ctaShort}</CTAButton>
+          <CTAButton href={makler.cta.href}>{makler.cta.short}</CTAButton>
         </div>
       </div>
     </header>

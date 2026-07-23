@@ -20,7 +20,6 @@ export function DocumentConciergeBlock({ product }: { product: MaklerProduct }) 
           <p className="mt-3 text-pretty font-serif text-2xl italic text-vrelo-petrol md:text-3xl">
             {p.promise}
           </p>
-          <p className="mt-6 text-pretty leading-relaxed text-tinte">{p.body}</p>
         </Reveal>
 
         {p.demoVideo ? (
