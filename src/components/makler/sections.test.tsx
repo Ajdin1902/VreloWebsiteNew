@@ -1,7 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { ProblemSection } from "./ProblemSection";
-import { Bridge } from "./Bridge";
+import { MidCta } from "./MidCta";
+import { Voraussetzungen } from "./Voraussetzungen";
 import { WarumIch } from "./WarumIch";
 import { Garantie } from "./Garantie";
 import { Einwaende } from "./Einwaende";
@@ -17,19 +18,44 @@ describe("ProblemSection", () => {
   });
 });
 
-describe("Bridge", () => {
-  it("frames the second product as the next step", () => {
-    render(<Bridge />);
-    expect(screen.getByRole("heading", { level: 2, name: makler.bridge.title })).toBeInTheDocument();
+describe("MidCta", () => {
+  it("asks for the call once, pointing at the booking anchor", () => {
+    render(<MidCta />);
+    const cta = screen.getByRole("link", { name: makler.cta.label });
+    expect(cta).toHaveAttribute("href", "#termin");
+  });
+
+  it("carries the friction-reducing note", () => {
+    render(<MidCta />);
+    expect(screen.getByText(makler.cta.note)).toBeInTheDocument();
+  });
+});
+
+describe("Voraussetzungen", () => {
+  it("states both requirements", () => {
+    render(<Voraussetzungen />);
+    for (const item of makler.voraussetzungen.items) {
+      expect(screen.getByText(item.title)).toBeInTheDocument();
+      expect(screen.getByText(item.body)).toBeInTheDocument();
+    }
+  });
+
+  it("names the server cost and says the server is his", () => {
+    const { container } = render(<Voraussetzungen />);
+    expect(container.textContent).toContain("unter 10 €");
+    expect(container.textContent).toContain("deinem eigenen Konto");
   });
 });
 
 describe("WarumIch", () => {
-  it("lists every differentiator", () => {
+  it("lists the differentiators as headlines only", () => {
     render(<WarumIch />);
+    const list = screen.getByRole("list", { name: "Was das für dich bedeutet" });
+    // The arrow marker is aria-hidden; the label lives in its own span.
     for (const p of makler.warumIch.points) {
-      expect(screen.getByRole("heading", { level: 3, name: p.title })).toBeInTheDocument();
+      expect(screen.getByText(p)).toBeInTheDocument();
     }
+    expect(list.querySelectorAll("li")).toHaveLength(makler.warumIch.points.length);
   });
 });
 
@@ -44,9 +70,10 @@ describe("Garantie", () => {
 });
 
 describe("Einwaende", () => {
-  it("renders every objection as a disclosure", () => {
+  it("renders exactly four objections as disclosures", () => {
     const { container } = render(<Einwaende />);
-    expect(container.querySelectorAll("details")).toHaveLength(makler.einwaende.items.length);
+    expect(container.querySelectorAll("details")).toHaveLength(4);
+    expect(makler.einwaende.items).toHaveLength(4);
   });
 });
 
@@ -68,5 +95,10 @@ describe("TerminSection", () => {
       "href",
       "/kontakt",
     );
+  });
+
+  it("shows no explanatory paragraph above the scheduler", () => {
+    render(<TerminSection calLink={undefined} />);
+    expect(makler.close).not.toHaveProperty("body");
   });
 });
