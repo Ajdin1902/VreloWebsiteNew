@@ -12,14 +12,22 @@ const CAL_ORIGIN = "https://cal.eu";
 // Sits on the petrol water above the form card: on-dark text, amber CTA. Cal's
 // iframe loads only after the click, so there's no third-party request on page
 // load (keeps the Datenschutz story clean).
-export function SchedulerEmbed({ calLink }: { calLink: string | undefined }) {
+export function SchedulerEmbed({
+  calLink,
+  fallbackHint = "Schreib mir so lange einfach über das Formular unten.",
+}: {
+  calLink: string | undefined;
+  /** Where to send the visitor when no scheduler is configured. Defaults to the
+      Kontakt page wording, where a form does sit below the embed. */
+  fallbackHint?: string;
+}) {
   const [open, setOpen] = useState(false);
 
   if (!calLink) {
     return (
       <div className="mx-auto max-w-xl text-center">
         <p className="font-serif text-xl text-papier md:text-2xl">Online-Terminbuchung folgt in Kürze.</p>
-        <p className="mt-2 text-gletscher">Schreib mir so lange einfach über das Formular unten.</p>
+        <p className="mt-2 text-gletscher">{fallbackHint}</p>
       </div>
     );
   }
