@@ -53,7 +53,12 @@ describe("Einwaende", () => {
 describe("TerminSection", () => {
   it("carries the anchor the header CTA points at", () => {
     const { container } = render(<TerminSection calLink={undefined} />);
-    expect(container.querySelector("#termin")).not.toBeNull();
+    const anchor = container.querySelector("#termin");
+    expect(anchor).not.toBeNull();
+    // The scroll offset must live on the anchored element itself — CSS
+    // scroll-margin-top is not inherited from an ancestor, so it has to
+    // co-locate with id="termin" to clear the sticky header on #termin links.
+    expect(anchor?.className).toMatch(/\bscroll-mt-/);
   });
 
   it("offers the written route when no scheduler is configured", () => {

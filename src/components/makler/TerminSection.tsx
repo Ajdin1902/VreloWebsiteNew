@@ -7,11 +7,16 @@ import { makler } from "@/lib/makler";
 // persuasion and booking; its iframe still loads only on click, so there is no
 // third-party request on page load (the Datenschutz stance holds). The written
 // route stays available underneath for anyone who would rather not book.
+//
+// scroll-mt must live on the element that actually carries id="termin" —
+// CSS scroll-margin-top only applies to the anchor target itself, it is not
+// inherited from an ancestor, so putting it on <WaterSection> instead would
+// leave /makler#termin scrolling flush under the sticky header.
 export function TerminSection({ calLink }: { calLink: string | undefined }) {
   const c = makler.close;
   return (
-    <WaterSection className="scroll-mt-20">
-      <div id="termin" className="mx-auto max-w-[44rem] text-center">
+    <WaterSection>
+      <div id="termin" className="scroll-mt-24 mx-auto max-w-[44rem] text-center">
         <h2 className="text-balance text-3xl font-semibold tracking-tight text-papier md:text-4xl">
           {c.title}
         </h2>

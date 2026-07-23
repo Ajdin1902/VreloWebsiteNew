@@ -14,16 +14,19 @@ export function WarumIch() {
         </h2>
         <p className="mt-4 text-pretty text-lg text-tinte">{w.intro}</p>
       </div>
-      <dl className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">
+      <ul className="mx-auto mt-12 grid max-w-4xl gap-6 sm:grid-cols-2">
         {w.points.map((p, i) => (
-          <Reveal key={p.title} delayMs={i * 60} className="card-depth rounded-2xl bg-papier p-6">
-            <dt>
-              <h3 className="font-semibold text-tiefes-wasser">{p.title}</h3>
-            </dt>
-            <dd className="mt-2 text-pretty leading-relaxed text-tinte">{p.body}</dd>
+          <Reveal
+            as="li"
+            key={p.title}
+            delayMs={i * 60}
+            className="card-depth rounded-2xl bg-papier p-6"
+          >
+            <h3 className="font-semibold text-tiefes-wasser">{p.title}</h3>
+            <p className="mt-2 text-pretty leading-relaxed text-tinte">{p.body}</p>
           </Reveal>
         ))}
-      </dl>
+      </ul>
     </Section>
   );
 }
