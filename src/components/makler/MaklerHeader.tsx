@@ -18,7 +18,15 @@ export function MaklerHeader() {
         >
           <BrandLockup variant="navy" />
         </Link>
-        <CTAButton href={makler.hero.cta.href}>{makler.hero.cta.label}</CTAButton>
+        {/* The full label wraps to two lines at 390px and butts against the
+            logo, which also grows the sticky header past the #termin anchor's
+            scroll offset. Same split the site Header uses. */}
+        <div className="hidden sm:block">
+          <CTAButton href={makler.hero.cta.href}>{makler.hero.cta.label}</CTAButton>
+        </div>
+        <div className="sm:hidden">
+          <CTAButton href={makler.hero.cta.href}>{makler.hero.ctaShort}</CTAButton>
+        </div>
       </div>
     </header>
   );

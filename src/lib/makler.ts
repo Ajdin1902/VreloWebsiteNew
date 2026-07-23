@@ -36,6 +36,8 @@ export type MaklerPage = {
     title: string;
     lead: string;
     cta: { label: string; href: string };
+    /** Shortened CTA label for the narrow header – the full one wraps at 390px. */
+    ctaShort: string;
     ctaNote: string;
   };
   problem: { title: string; intro: string; leaks: MaklerBullet[]; close: string };
@@ -64,6 +66,7 @@ export const makler: MaklerPage = {
     title: "Jede Anfrage, die wartet, ist ein Termin weniger.",
     lead: "Ich baue unabhängigen Maklern und Finanzberatern zwei Systeme: eines, das jede Anfrage in unter fünf Minuten beantwortet und in einen Termin verwandelt – und eines, das die Unterlagen deiner Kunden vollständig einsammelt, ohne dass du hinterhertelefonierst. Du lernst nichts, du wartest nichts, du bekommst das Ergebnis.",
     cta: { label: "Erstgespräch vereinbaren", href: "#termin" },
+    ctaShort: "Erstgespräch",
     ctaNote: "Kostenloses Erstgespräch – 30 Minuten, unverbindlich.",
   },
 
@@ -142,7 +145,7 @@ export const makler: MaklerPage = {
       "Vollständige, geprüfte Akten in deiner eigenen Cloud – und kein einziges Telefonat, in dem du um eine Gehaltsabrechnung bittest.",
     trust: {
       title: "Wo die Unterlagen liegen",
-      body: "Die Dokumente deiner Kunden landen in deiner eigenen Cloud, nicht bei mir. Mein System ist der Bote, nicht der Tresor: Eine Datei berührt meine Seite nur auf dem Weg zu dir und wird danach gelöscht. Gehostet in der EU, verschlüsselt übertragen, mit Auftragsverarbeitungsvertrag. Bei Gehaltsabrechnungen und SCHUFA-Auskünften ist das keine Formalie, sondern die Grundbedingung.",
+      body: "Die Unterlagen deiner Kunden verlassen nie deine eigene Umgebung. Das System läuft auf deinem eigenen Server, die Upload-Seite ebenso, und die Dateien landen in deiner eigenen Cloud – bei mir liegt keine einzige. Alles in der EU, verschlüsselt übertragen, mit Auftragsverarbeitungsvertrag. Bei Gehaltsabrechnungen und SCHUFA-Auskünften ist das keine Formalie, sondern die Grundbedingung.",
     },
     note: "Den Document Concierge baue ich für dich – nach deinen Fallarten, deinen Checklisten, deiner Cloud. Es gibt ihn nicht als fertige Software zum Anklicken. Deshalb siehst du hier den Ablauf; alles Weitere zeige ich dir im Gespräch.",
     demoVideo: null,
@@ -174,7 +177,8 @@ export const makler: MaklerPage = {
 
   garantie: {
     title: "Ich gehe in Vorleistung, nicht du.",
-    intro: "Du zahlst nicht im Voraus für etwas, das noch nicht läuft. Die Absicherung sitzt an drei Stellen:",
+    intro:
+      "Du zahlst die Schlussrechnung erst, wenn das System bei dir sauber läuft. Die Absicherung sitzt an drei Stellen:",
     promises: [
       {
         title: "Du zahlst die Schlussrechnung erst nach deiner eigenen Abnahme.",
@@ -223,7 +227,7 @@ export const makler: MaklerPage = {
       {
         question: "Was ist mit den Daten meiner Kunden?",
         answer:
-          "Alles läuft EU-gehostet und DSGVO-konform, mit Auftragsverarbeitungsvertrag. Beim Document Concierge liegen die Dokumente in deiner eigenen Cloud – meine Seite ist nur der Weg dorthin und löscht danach.",
+          "Deine Kundendaten laufen EU-gehostet und DSGVO-konform, mit Auftragsverarbeitungsvertrag. Beim Document Concierge läuft das System auf deinem eigenen Server und die Dokumente landen in deiner eigenen Cloud – bei mir liegt keine einzige Datei.",
       },
       {
         question: "Wird das ein großes, riskantes Projekt?",

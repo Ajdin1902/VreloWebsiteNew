@@ -10,7 +10,7 @@ import { makler } from "@/lib/makler";
 export function TerminQuelleBlock() {
   const p = makler.terminQuelle;
   return (
-    <Section tone="paper">
+    <Section tone="paper" className="-mt-24 md:-mt-32">
       <Reveal className="shadow-deepwater mx-auto max-w-3xl rounded-3xl bg-vrelo-petrol p-8 ring-1 ring-amber/40 md:p-12">
         <span className="inline-block rounded-full bg-amber px-3 py-1 text-xs font-semibold uppercase tracking-wide text-tiefes-wasser">
           {p.eyebrow}

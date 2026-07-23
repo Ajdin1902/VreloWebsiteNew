@@ -8,7 +8,7 @@ import { makler } from "@/lib/makler";
 export function ProblemSection() {
   const p = makler.problem;
   return (
-    <Section tone="paper">
+    <Section tone="paper" className="-mt-24 md:-mt-32">
       <div className="mx-auto max-w-[44rem] text-center">
         <h2 className="text-balance text-3xl font-semibold tracking-tight text-tiefes-wasser md:text-4xl">
           {p.title}
