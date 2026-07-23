@@ -26,6 +26,14 @@ describe("SchedulerEmbed", () => {
     expect(screen.getByText(/Lieber direkt sprechen/i)).toHaveClass("text-papier");
   });
 
+  it("omits the prompt heading when a page passes an empty prompt", () => {
+    render(<SchedulerEmbed calLink="ajdin19/vrelo-kennenlernen" prompt="" />);
+    expect(screen.queryByText(/Lieber direkt sprechen/i)).toBeNull();
+    // The direct invitation and the click-to-load button still stand.
+    expect(screen.getByText(/unverbindliches Kennenlern-Gespräch/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Termin anzeigen/i })).toBeInTheDocument();
+  });
+
   it("mounts the Cal embed only after the user clicks", async () => {
     render(<SchedulerEmbed calLink="ajdin19/vrelo-kennenlernen" />);
     await userEvent.click(screen.getByRole("button", { name: /Termin anzeigen/i }));

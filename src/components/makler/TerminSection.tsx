@@ -1,12 +1,12 @@
-import Link from "next/link";
 import { WaterSection } from "@/components/WaterSection";
 import { SchedulerEmbed } from "@/components/kontakt/SchedulerEmbed";
 import { makler } from "@/lib/makler";
 
 // The close. The Cal embed sits on the page itself so there is no hop between
 // persuasion and booking; its iframe still loads only on click, so there is no
-// third-party request on page load (the Datenschutz stance holds). The written
-// route stays available underneath for anyone who would rather not book.
+// third-party request on page load (the Datenschutz stance holds). No written
+// fallback and no "Lieber direkt sprechen?" hedge — the section heading already
+// asks for the call, so the visitor is led straight to booking it.
 //
 // scroll-mt must live on the element that actually carries id="termin" —
 // CSS scroll-margin-top only applies to the anchor target itself, it is not
@@ -21,18 +21,11 @@ export function TerminSection({ calLink }: { calLink: string | undefined }) {
           {c.title}
         </h2>
       </div>
-      <div className="mt-12">
-        <SchedulerEmbed calLink={calLink} fallbackHint={c.fallbackHint} />
+      {/* prompt="" drops the SchedulerEmbed's own "Lieber direkt sprechen?"
+          heading, which duplicates the section heading above. */}
+      <div className="mt-10">
+        <SchedulerEmbed calLink={calLink} fallbackHint={c.fallbackHint} prompt="" />
       </div>
-      <p className="mt-8 text-center text-sm text-gletscher">
-        {c.fallback.prompt}{" "}
-        <Link
-          href={c.fallback.href}
-          className="font-medium text-papier underline decoration-amber/60 underline-offset-4 transition-colors hover:decoration-amber focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-vrelo-petrol"
-        >
-          {c.fallback.label}
-        </Link>
-      </p>
     </WaterSection>
   );
 }
