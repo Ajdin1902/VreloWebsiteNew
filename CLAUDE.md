@@ -16,6 +16,8 @@ A content/SEO marketing site for Vrelo, an AI-automation studio for DACH small b
 ## Status
 Built, merged and live; work since launch is copy + design refinement. **Kontakt, Cal.com scheduler, Newsletter (signup + sending) and the `/demo` sandbox are all LIVE.** Remaining go-live blockers are owner actions, not code — see *Owner cutover* below.
 
+⏳ **In flight — `feat/ratgeber-cluster`:** 8 neue Ratgeber-Artikel als `draft: true`, rückdatiert 2026-06-04 … 07-30, Makler-gerichtet + kommerzielle Suchintention (Spec+Plan unter `docs/superpowers/`). **Alle 9 Cover liegen** (`public/images/ratgeber-<slug>.webp`, q80, 1376×768 wie die drei Live-Cover) → `npm test` wieder grün (107/534). Offen: der Claude-Artikel (Task 11 — braucht echte Antworten des Gründers, nichts Erfundenes) und das bewusste 8× `draft: false`.
+
 - **Live:** https://vrelo-website.vercel.app · **Repo:** https://github.com/Ajdin1902/VreloWebsiteNew — push to `main` auto-deploys to production.
 - **Routes (all 200 in prod):** `/` `/leistungen` `/ueber-mich` `/ratgeber(+[slug])` `/faq` `/kontakt` `/newsletter(+/bestaetigt)` `/impressum` `/datenschutz` `/sitemap.xml` `/robots.txt`. Plus three **`noindex`, direct-link-only** pages, deliberately absent from nav and sitemap: **`/lead-check`**, **`/demo`**, **`/makler`**.
 
@@ -40,7 +42,7 @@ All `@theme`-token-based, reduced-motion-safe, CLS-safe, browser-verified 1440/3
 - **Focus routes (`ChromeGate`):** routes listed in `focusRoutes` (`src/lib/nav.ts`) render **without the site Header/Footer** and bring their own minimal chrome — for single-purpose outreach pages where every nav link is an exit before the CTA. `Header`/`Footer` live in the root layout, so a nested layout cannot remove them; `ChromeGate` is a client component reading `usePathname()` that returns `null` on those routes. Chosen over route groups to avoid moving twelve route folders for zero functional gain. **`Header`/`Footer` must be passed as children, never as a prop** (RSC boundary). Currently only `/makler`; `/lead-check` and `/demo` deliberately keep full chrome.
 - **Lead-Reaktions-Check (`/lead-check`):** 6-question broker lead-magnet; gain-led result (€ upside of sub-5-minute response) → petrol bridge to the Cal `SchedulerEmbed` + optional email capture. **Pure-core split:** scoring model in `src/lib/leadCheck.ts` (`computeResult` — loss tiers, 10 % floor, **20 % close-rate**: the locked numbers), email payload in `src/lib/leadCheckEmail.ts`. The Server Action **recomputes server-side** (never trusts client math) and sanitises enums via `pick()`. Entry point: a secondary CTA from `TerminQuelleAngebot`.
 - **Interaktive Termin-Quelle-Demo (`/demo`):** role-reversal sandbox — the broker describes his business (optionally via an SSRF-guarded URL fetch + Haiku summary), then plays his own client against a **Claude-Haiku** booking bot; ends on a reveal + `/kontakt` CTA. **A simulation, not the real n8n engine.** Pure-core in `src/lib/demo/` + three `nodejs`-runtime routes; **config-gated** (no `ANTHROPIC_API_KEY` → calm „bald verfügbar“ card). The bot runs a 7-step flow (name + e-mail asked last, once the Termin stands) and closes on a literal **`[ENDE]` sentinel**; `MAX_TURNS` (8) is the server-authoritative backstop. The reveal POSTs the transcript to the **fail-safe** `/demo/summary` route → a „Terminnotiz“ card + a simulated „Bestätigungsmail (Vorschau)“ — **display-only, nothing stored or sent** (matches the Datenschutz stance); any error → `EMPTY_NOTIZ` 200, never 5xx. Security posture (SSRF resolve-then-pin, denial-of-wallet breaker, no-PII logging, prompt-injection containment) is documented in `docs/superpowers/specs/2026-07-02-termin-quelle-interaktiv-demo-design.md` and guarded by `logging.test.ts`.
-- **Landing-page copy modules:** page copy lives in one typed module per page (`src/lib/termin-quelle.ts`, `src/lib/makler.ts`) — components hold no German strings. `src/lib/makler.test.ts` is the reusable **copy-guard** pattern: walks the exported object and fails on ASCII quotes, em-dashes, unbalanced „…“, or a price token.
+- **Landing-page copy modules:** page copy lives in one typed module per page (`src/lib/termin-quelle.ts`, `src/lib/makler.ts`) — components hold no German strings. `src/lib/makler.test.ts` is the reusable **copy-guard** pattern: walks the exported object and fails on ASCII quotes, em-dashes, unbalanced „…“, or a price token. The same pattern now guards **prose**: `src/lib/ratgeberCopy.ts` (pure) + `ratgeber.corpus.test.ts` walk every Ratgeber body for the same rules plus gendered forms. Judgement rules (one water-metaphor *concept*, Merak landing, no CTA close) stay human — a hard threshold there fails legitimate copy.
 
 ## Newsletter (send) — built & live
 Author issues as `.md` in `content/newsletter/` (frontmatter `subject`/`previewText`/`date`/`draft`; body = the 4 fixed sections). **Editorial rules + runbook live in the `sending-newsletter` skill** + `Knowledge/marketing/newsletter.md`. Ship: `npm run newsletter -- --preview <slug>` / `--test you@x.de <slug>` / `--send <slug>` (`--at <iso>` schedules).
@@ -52,6 +54,8 @@ Author issues as `.md` in `content/newsletter/` (frontmatter `subject`/`previewT
 ## Gotchas
 - **German quotes** „…“ = U+201E (open) + U+201C (close) — never ASCII `"`. Edit/Write silently downgrade the closing quote (and turn `\xNN` code-escapes typed into content into literal control bytes). Verify bytes after writing, then repair with **codepoint escapes** (literal smart chars in the `-e` program don't survive): `perl -CSD -i -pe 's/\x{201E}([^\x{201E}"]*)"/\x{201E}$1\x{201C}/g; s/\x{2014}/\x{2013}/g' FILE`. ⚠ That first pattern is greedy across a line: it will also eat a legitimate ASCII `"` further along the same line. Repair line-ranges, then re-audit.
 - **German dash** the Gedankenstrich is the **en-dash with spaces** „ – “ (U+2013), not the em-dash „—“ (U+2014). Use `–` in client copy.
+- **Quote constants must be codepoint escapes, never literal characters.** `ratgeberCopy.ts` writes `"\u201C"` / `"\u201D"` deliberately: Write/Edit downgrade a literal U+201C to U+201D, which would silently make `CLOSE_QUOTE === WRONG_CLOSE` and leave a detector that can never fire. Same reason its bad-quote *test fixture* is an escape — a typography repair pass over the test file would otherwise „fix“ the fixture and the test would assert against clean input. (This bit twice in one session.)
+- **The three May-2026 Ratgeber articles are exempt from the slug-matches-cover rule** — they use short cover names (`ratgeber-system/zeit/termine`) that predate it. `ratgeber.corpus.test.ts` carries an explicit `LEGACY` set; renaming live assets was judged out of scope. Don't „fix“ the test by widening it.
 - **CRLF vs. the Edit tool:** several existing test files (e.g. `src/components/kontakt/SchedulerEmbed.test.tsx`) are stored CRLF. The Edit tool matches on LF and fails to find the string. Append via a small script doing a CRLF-aware replace, then verify the file is intact.
 - **`scroll-margin-top` must sit on the anchored element itself.** `scroll-mt-*` on an ancestor `Section` does nothing — the browser scrolls to the element carrying the `id`, so a sticky header covers the heading. Put the class on the same element as the `id` (see `TerminSection`).
 - **`<dt>` forbids heading content.** `<h3>` inside `<dt>` is invalid HTML; use `<ul>`/`<li>` when the items are cards rather than term/definition pairs.
@@ -88,8 +92,7 @@ Author issues as `.md` in `content/newsletter/` (frontmatter `subject`/`previewT
 **Already live, for the record:** Kontakt (Resend domain verified — this shipped independently of the domain cutover) · Cal.com scheduler (`NEXT_PUBLIC_CAL_LINK` set in Production + Development; **Preview unset**, add via dashboard for branch previews) · Newsletter signup + sending (`newsletter@` mailbox live and monitored) · `/demo` (Anthropic spend limit + usage alert set, DPA auto-incorporated, `ANTHROPIC_API_KEY` **server-only**, rate-limit IP salted-SHA-256 hashed via optional `DEMO_IP_SALT`).
 
 ## Open todos (non-blocking, carry forward)
-- **Folder-rename cleanup:** the folder is now `Website/`, but seven docs still reference `Vrelo Website New` / `Vrelo%20Website%20New` — `../Clients/CLAUDE.md`, the `delivering-vrelo-projects` skill, two `../Clients/docs/superpowers/` files, `../Vrelo/raw/docs/Clients-Delivery-System.md`, `docs/superpowers/plans/2026-06-20-ratgeber-editorial.md`, and this file's own history. Leave `VreloWebsiteNew` (the GitHub remote) untouched.
-- **Copywriting skills:** `/ogilvy` `/copywriting` `/copy-editing` `/stop-slop` are installed globally — use them for any client-copy work.
+- **Folder-rename cleanup:** the folder is now `Website/`; stale `Vrelo Website New` refs survive in ~7 docs outside this repo (`grep -r "Vrelo Website New" ..`). Leave `VreloWebsiteNew` (the GitHub remote) untouched.
 - **Live nudges:** Steps `Fließen` tint `bg-vrelo-petrol/70`; MerakClose sunset tint `opacity-80`; hero-bloom `blur` 2.5–4px; homepage petrol divider `/15`↔`/20`; `MobileNav` is not a full Tab focus-trap (acceptable v1).
 - **Polish backlog:** [Ideas.md](Ideas.md) — incl. an optional dedicated `/demo` hero image (reuses `lead-check-banner.webp` for now).
 
@@ -104,9 +107,8 @@ Author issues as `.md` in `content/newsletter/` (frontmatter `subject`/`previewT
 ## Project structure
 ```
 src/app/            layout.tsx, page.tsx (homepage), globals.css (brand tokens), per-route pages
-src/components/     BrandWord, BrandLockup, CTAButton, ChromeGate, Header, MobileNav, Footer, Section,
-                    Hero, PageHero, PageIntro, RippleImage, Reveal, LazyVideo, WaterSection
-                    · home/ · leistungen/ · faq/ · ueber-mich/ · kontakt/ · lead-check/ · demo/ · makler/
+src/components/     shared primitives (BrandWord, CTAButton, ChromeGate, Section, PageHero, Reveal, …)
+                    + one folder per route (home/ leistungen/ faq/ ueber-mich/ kontakt/ lead-check/ demo/ makler/)
 src/lib/            fonts.ts, nav.ts (navLinks + focusRoutes), site.ts, contact.ts, newsletter.ts,
                     ratgeber.ts, legal/, email/, per-page copy modules (termin-quelle.ts, makler.ts, leadCheck.ts)
 content/ratgeber/   the Ratgeber MDX articles (frontmatter + body)
@@ -143,7 +145,7 @@ Greenfield workflow via the superpowers skills, one feature/phase at a time, eac
 3. **build** → verified on test/tsc/lint/build, then code review
 4. **finishing-a-development-branch** → merge to `main`
 
-Frequent commits; commit messages end `Co-Authored-By: Claude Opus 4.8`.
+Frequent commits; commit messages end with a `Co-Authored-By:` line naming the model that actually wrote them.
 
 ## Key decisions (locked)
 - German only; personal brand („Ich“); multi-page content/SEO site; calm-over-loud per Brand.md.
@@ -161,10 +163,7 @@ Frequent commits; commit messages end `Co-Authored-By: Claude Opus 4.8`.
 - Legal pages are drafts-to-review (founder/lawyer must verify before go-live).
 
 > **Changelog** (newest first, one line each; git has the detail):
-> - **2026-07-23** — `/makler` outreach landing page built on `feat/makler-landingpage` (see *In flight* above): `ChromeGate` focus-route chrome suppression, typed copy module + copy guard, two product blocks, embedded Cal close; `PageHero` gained `actions`, `SchedulerEmbed` gained `fallbackHint`.
+> - **2026-07-28** — Ratgeber-Cluster auf `feat/ratgeber-cluster`: Typografie-Copy-Guard (pure core + Korpus-Test) + 8 rückdatierte Artikel, drafts; Preisregel = Marktspannen ja, Vrelo-Preis nie (HQ §4).
+> - **2026-07-23** — `/makler` landing page (details in its own section above): `ChromeGate`, typed copy module + copy guard; `PageHero` gained `actions`, `SchedulerEmbed` gained `fallbackHint`.
 > - **2026-07-04** — CTA conversion pass (hero + mid-page Steps CTA microcopy, compact mobile header CTA, `CTAButton tone="petrol"`); `/demo` shipped live and cleared for outreach.
-> - **2026-06-27** — Newsletter sending built & live; `/lead-check` merged; homepage/Über-mich polish (Proof brand-teal band, pages close flush to the footer).
-> - **2026-06-24** — `TerminQuelleAngebot` flagship block on `/leistungen`; `ClosingCta` navy inverse CTA; `PageHero quality={65}`.
-> - **2026-06-22/23** — subpage design pass (full-bleed `PageHero` heroes, petrol/papier reading rhythm, `WaterSection` gold form cards); Cal.com scheduler live.
-> - **2026-06-20** — Ratgeber editorial redesign (CSS drop-cap needs the `.article-body` wrapper); homepage/Über-mich copy pass.
-> - **2026-06-07 → 06-16** — landing page + centered spine; Ratgeber live; real copy across Über-mich / Leistungen / FAQ; `stumm` darkened for AA.
+> - **Juni 2026** — Aufbau: Landing page + centered spine, Ratgeber live, subpage design pass (`PageHero`, petrol/papier rhythm, `WaterSection`), `TerminQuelleAngebot`, Cal.com scheduler, Newsletter-Versand, `/lead-check`, `stumm` für AA abgedunkelt.
