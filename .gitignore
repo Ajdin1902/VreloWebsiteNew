@@ -58,3 +58,6 @@ tsconfig.tsbuildinfo
 
 # Newsletter preview output
 .preview/
+
+# Browser "Save page as" debris (*_files/ next to a saved .html) must never reach public/.
+public/images/*_files/
