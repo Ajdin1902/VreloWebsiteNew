@@ -148,21 +148,27 @@ export function Protokoll({ calLink, seed, transcript }: { calLink: string | und
         <p className="mt-6 text-sm text-tinte">Termin gebucht &amp; protokolliert.</p>
       )}
 
-      {transcript.length > 0 ? (
-        <div className="mt-6 flex flex-col gap-2 text-left">
-          {transcript.map((m, i) => (
-            <div key={i} className="rounded-xl bg-gletscher/30 px-4 py-2">
-              <span className="block text-xs uppercase tracking-wide text-stumm">{m.role === "user" ? "Kunde" : "Assistent"}</span>
-              <span className="whitespace-pre-line leading-relaxed text-tinte">{m.content}</span>
-            </div>
-          ))}
-        </div>
-      ) : null}
-
       <a href="/kontakt" className="cta-fx mt-8 inline-block rounded-lg bg-tiefes-wasser px-6 py-3 text-papier">
         Genau das für deinen Betrieb – lass uns reden
       </a>
-      {calLink ? <p className="mt-3 text-xs text-stumm">15 Minuten, unverbindlich.</p> : null}
+
+      {transcript.length > 0 ? (
+        <details className="mt-6 rounded-xl border border-faden bg-papier p-4 text-left">
+          <summary className="cursor-pointer text-sm font-medium text-tiefes-wasser">
+            Gespräch nachlesen
+          </summary>
+          <div className="mt-3 flex flex-col gap-2">
+            {transcript.map((m, i) => (
+              <div key={i} className="rounded-xl bg-gletscher/30 px-4 py-2">
+                <span className="block text-xs uppercase tracking-wide text-stumm">
+                  {m.role === "user" ? "Kunde" : "Assistent"}
+                </span>
+                <span className="whitespace-pre-line leading-relaxed text-tinte">{m.content}</span>
+              </div>
+            ))}
+          </div>
+        </details>
+      ) : null}
     </div>
   );
 }

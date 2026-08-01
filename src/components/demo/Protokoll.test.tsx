@@ -137,4 +137,40 @@ describe("Protokoll", () => {
     ).not.toThrow();
     await screen.findByText("Alen");
   });
+
+  it("puts the closing CTA above the transcript", async () => {
+    vi.spyOn(global, "fetch").mockResolvedValue(
+      jsonResponse({ name: "Alen", anliegen: "", termin: "", offenePunkte: [], email: "" }),
+    );
+    render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={transcript} />);
+    await screen.findByText("Alen");
+
+    const cta = screen.getByRole("link", { name: /reden|kontakt/i });
+    const verlauf = screen.getByText("Gespräch nachlesen").closest("details");
+    expect(verlauf).not.toBeNull();
+    // DOCUMENT_POSITION_FOLLOWING = the transcript comes after the CTA.
+    expect(cta.compareDocumentPosition(verlauf!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  it("keeps the transcript inside a collapsed details block", async () => {
+    vi.spyOn(global, "fetch").mockResolvedValue(
+      jsonResponse({ name: "Alen", anliegen: "", termin: "", offenePunkte: [], email: "" }),
+    );
+    render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={transcript} />);
+    await screen.findByText("Alen");
+
+    const details = screen.getByText("Hallo").closest("details");
+    expect(details).not.toBeNull();
+    expect(details!.open).toBe(false);
+  });
+
+  it("renders no transcript block at all when the transcript is empty", async () => {
+    vi.spyOn(global, "fetch").mockResolvedValue(
+      jsonResponse({ name: "Alen", anliegen: "", termin: "", offenePunkte: [], email: "" }),
+    );
+    render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={[]} />);
+    await screen.findByText("Alen");
+
+    expect(screen.queryByText("Gespräch nachlesen")).toBeNull();
+  });
 });
