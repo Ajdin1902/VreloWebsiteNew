@@ -137,61 +137,66 @@ export function Protokoll({ calLink, seed, transcript }: { calLink: string | und
         Antwort in Sekunden, rund um die Uhr, qualifiziert, Termin gebucht – und genau das landet automatisch als Terminnotiz bei dir.
       </p>
 
-      {state.status === "loading" ? (
-        <p className="mt-6 text-sm text-stumm">Einen Moment – ich fasse das Gespräch zusammen …</p>
-      ) : notiz ? (
-        <>
-          <div className="mt-6 rounded-xl border border-faden bg-papier p-5 text-left">
-            <h3 className="font-serif text-lg text-tinte">Terminnotiz</h3>
-            <dl className="mt-3 space-y-2 text-sm">
-              {notiz.name ? (
-                <div>
-                  <dt className="text-xs uppercase tracking-wide text-stumm">Name</dt>
-                  <dd className="text-tinte">{notiz.name}</dd>
-                </div>
-              ) : null}
-              {notiz.anliegen ? (
-                <div>
-                  <dt className="text-xs uppercase tracking-wide text-stumm">Anliegen</dt>
-                  <dd className="text-tinte">{notiz.anliegen}</dd>
-                </div>
-              ) : null}
-              {notiz.termin ? (
-                <div>
-                  <dt className="text-xs uppercase tracking-wide text-stumm">Termin</dt>
-                  <dd className="text-tinte">{notiz.termin}</dd>
-                </div>
-              ) : null}
-              {notiz.email ? (
-                <div>
-                  <dt className="text-xs uppercase tracking-wide text-stumm">E-Mail</dt>
-                  <dd className="text-tinte">{notiz.email}</dd>
-                </div>
-              ) : null}
-              {notiz.offenePunkte.length > 0 ? (
-                <div>
-                  <dt className="text-xs uppercase tracking-wide text-stumm">Offene Punkte</dt>
-                  <dd>
-                    <ul className="mt-1 list-disc space-y-1 pl-5 text-tinte">
-                      {notiz.offenePunkte.map((p, i) => (
-                        <li key={i}>{p}</li>
-                      ))}
-                    </ul>
-                  </dd>
-                </div>
-              ) : null}
-            </dl>
-          </div>
-          {notiz.email ? <MailVorschau notiz={notiz} /> : null}
-        </>
-      ) : (
-        <p className="mt-6 text-sm text-tinte">Termin gebucht &amp; protokolliert.</p>
-      )}
+      <div aria-live="polite" aria-busy={state.status === "loading"}>
+        {state.status === "loading" ? (
+          <p className="mt-6 text-sm text-stumm">Einen Moment – ich fasse das Gespräch zusammen …</p>
+        ) : notiz ? (
+          <>
+            <div className="mt-6 rounded-xl border border-faden bg-papier p-5 text-left">
+              <h3 className="font-serif text-lg text-tinte">Terminnotiz</h3>
+              <dl className="mt-3 space-y-2 text-sm">
+                {notiz.name ? (
+                  <div>
+                    <dt className="text-xs uppercase tracking-wide text-stumm">Name</dt>
+                    <dd className="text-tinte">{notiz.name}</dd>
+                  </div>
+                ) : null}
+                {notiz.anliegen ? (
+                  <div>
+                    <dt className="text-xs uppercase tracking-wide text-stumm">Anliegen</dt>
+                    <dd className="text-tinte">{notiz.anliegen}</dd>
+                  </div>
+                ) : null}
+                {notiz.termin ? (
+                  <div>
+                    <dt className="text-xs uppercase tracking-wide text-stumm">Termin</dt>
+                    <dd className="text-tinte">{notiz.termin}</dd>
+                  </div>
+                ) : null}
+                {notiz.email ? (
+                  <div>
+                    <dt className="text-xs uppercase tracking-wide text-stumm">E-Mail</dt>
+                    <dd className="text-tinte">{notiz.email}</dd>
+                  </div>
+                ) : null}
+                {notiz.offenePunkte.length > 0 ? (
+                  <div>
+                    <dt className="text-xs uppercase tracking-wide text-stumm">Offene Punkte</dt>
+                    <dd>
+                      <ul className="mt-1 list-disc space-y-1 pl-5 text-tinte">
+                        {notiz.offenePunkte.map((p, i) => (
+                          <li key={i}>{p}</li>
+                        ))}
+                      </ul>
+                    </dd>
+                  </div>
+                ) : null}
+              </dl>
+            </div>
+            {notiz.email ? <MailVorschau notiz={notiz} /> : null}
+          </>
+        ) : (
+          <p className="mt-6 text-sm text-tinte">Termin gebucht &amp; protokolliert.</p>
+        )}
+      </div>
 
       <AbschlussCta calLink={calLink} />
 
       {transcript.length > 0 ? (
-        <details className="mt-6 rounded-xl border border-faden bg-papier p-4 text-left">
+        <details
+          open={state.status === "ready" && !notiz}
+          className="mt-6 rounded-xl border border-faden bg-papier p-4 text-left"
+        >
           <summary className="cursor-pointer text-sm font-medium text-tiefes-wasser">
             Gespräch nachlesen
           </summary>

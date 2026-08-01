@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { Protokoll } from "./Protokoll";
 import type { DemoSeed } from "@/lib/demo/seed";
 import type { ChatMessage } from "@/lib/demo/prompt";
@@ -96,6 +97,16 @@ describe("Protokoll", () => {
     expect(cta.getAttribute("href")).toContain("/kontakt");
   });
 
+  it("auto-expands the transcript as fail-safe proof when the summary fetch fails", async () => {
+    vi.spyOn(global, "fetch").mockRejectedValue(new Error("boom"));
+    render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={transcript} />);
+
+    await screen.findByText(/Termin gebucht/i);
+    const details = screen.getByText("Hallo").closest("details");
+    expect(details).not.toBeNull();
+    expect(details!.open).toBe(true);
+  });
+
   it("degrades gracefully to transcript-only on a non-200 summary response", async () => {
     vi.spyOn(global, "fetch").mockResolvedValue({ ok: false, status: 503, json: async () => ({}) } as Response);
     render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={transcript} />);
@@ -164,6 +175,11 @@ describe("Protokoll", () => {
     expect(verlauf).not.toBeNull();
     // DOCUMENT_POSITION_FOLLOWING = the transcript comes after the CTA.
     expect(cta.compareDocumentPosition(verlauf!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+
+    // Pins proof above the ask: a refactor hoisting AbschlussCta above the
+    // summary would pass every other test while destroying this branch's premise.
+    const notiz = screen.getByRole("heading", { name: "Terminnotiz" });
+    expect(notiz.compareDocumentPosition(cta) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 
   it("keeps the transcript inside a collapsed details block", async () => {
@@ -198,6 +214,10 @@ describe("Protokoll", () => {
     expect(screen.getByRole("button", { name: /Termin anzeigen/i })).toBeInTheDocument();
     // No third-party request on render – the /demo Datenschutz section says so.
     expect(screen.queryByTestId("cal-embed")).toBeNull();
+
+    await userEvent.click(screen.getByRole("button", { name: /Termin anzeigen/i }));
+    expect(screen.getByTestId("cal-embed")).toBeInTheDocument();
+    expect(calMock.props?.calLink).toBe("https://cal.example/x");
   });
 
   it("shows the booking CTA while the summary is still loading", () => {
@@ -207,14 +227,6 @@ describe("Protokoll", () => {
     render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={transcript} />);
 
     expect(screen.getByText(/Einen Moment/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Termin anzeigen/i })).toBeInTheDocument();
-  });
-
-  it("keeps the booking CTA when the summary fetch fails", async () => {
-    vi.spyOn(global, "fetch").mockRejectedValue(new Error("boom"));
-    render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={transcript} />);
-    await screen.findByText(/Termin gebucht/i);
-
     expect(screen.getByRole("button", { name: /Termin anzeigen/i })).toBeInTheDocument();
   });
 
