@@ -72,7 +72,7 @@ Alles unterhalb der Überschrift ist `SchedulerEmbed` **unverändert**, montiert
 Zwei bewusste Entscheidungen:
 
 - **`/kontakt` verschwindet nicht**, sondern wird zum kleinen Textlink unter dem Band degradiert. Wer gerade gesehen hat, wie ein Bot einen Termin bucht, will vielleicht trotzdem lieber schreiben – und der Block ist damit nie eine Sackgasse.
-- **Ohne `calLink` ebenfalls keine Sackgasse.** `SchedulerEmbed` rendert dann von sich aus „Online-Terminbuchung folgt in Kürze.“ plus den übergebenen `fallbackHint`; der zeigt auf das Kontaktformular. Praktisch relevant: `NEXT_PUBLIC_CAL_LINK` ist in der Vercel-**Preview**-Umgebung nicht gesetzt, Branch-Previews laufen also durch diesen Pfad.
+- **Ohne `calLink` ebenfalls keine Sackgasse.** Dann entfällt das Band ganz und der bisherige `/kontakt`-Button rendert unverändert. Ein Petrol-Band, das sich nur entschuldigt („Online-Terminbuchung folgt in Kürze.“) und daneben zweimal auf dasselbe Formular zeigt, wäre schlechter als der Zustand von heute. Praktisch relevant: `NEXT_PUBLIC_CAL_LINK` ist in der Vercel-**Preview**-Umgebung nicht gesetzt, Branch-Previews laufen also durch diesen Pfad.
 
 **Copy:** der heutige Button heißt „Genau das für deinen Betrieb – lass uns reden“. „Lass uns reden“ ist jetzt Aufgabe des Buttons, die Band-Überschrift verkürzt sich also auf „Genau das für deinen Betrieb.“ – kein Gedankenstrich nötig. Die bisherige Zeile „15 Minuten, unverbindlich.“ entfällt, weil `SchedulerEmbed` bereits „unverbindliches Kennenlern-Gespräch“ sagt.
 
