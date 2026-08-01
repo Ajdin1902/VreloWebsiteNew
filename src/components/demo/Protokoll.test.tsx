@@ -14,7 +14,16 @@ function jsonResponse(body: unknown): Response {
   return { ok: true, json: async () => body } as unknown as Response;
 }
 
-beforeEach(() => vi.restoreAllMocks());
+// jsdom does not implement scrollIntoView, so there is no property to spy on –
+// install the mock on the prototype instead. Kept per-test so assertions never
+// see calls from a previous render.
+let scrollSpy: ReturnType<typeof vi.fn<(arg?: boolean | ScrollIntoViewOptions) => void>>;
+
+beforeEach(() => {
+  vi.restoreAllMocks();
+  scrollSpy = vi.fn();
+  Element.prototype.scrollIntoView = scrollSpy;
+});
 
 describe("Protokoll", () => {
   it("renders the Terminnotiz and the transcript on a successful summary fetch", async () => {
@@ -92,5 +101,40 @@ describe("Protokoll", () => {
 
     expect(await screen.findByText("Hallo")).toBeTruthy();
     expect(screen.queryByRole("heading", { name: "Terminnotiz" })).toBeNull();
+  });
+
+  it("scrolls itself into view and focuses its heading on mount", async () => {
+    vi.spyOn(global, "fetch").mockResolvedValue(
+      jsonResponse({ name: "Alen", anliegen: "", termin: "", offenePunkte: [], email: "" }),
+    );
+    render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={transcript} />);
+
+    expect(scrollSpy).toHaveBeenCalledWith({ behavior: "smooth", block: "start" });
+    const heading = await screen.findByRole("heading", { name: /Das hat dein Kunde gerade erlebt/i });
+    expect(document.activeElement).toBe(heading);
+  });
+
+  it("scrolls without animation when the visitor prefers reduced motion", async () => {
+    vi.spyOn(window, "matchMedia").mockReturnValue({ matches: true } as MediaQueryList);
+    vi.spyOn(global, "fetch").mockResolvedValue(
+      jsonResponse({ name: "Alen", anliegen: "", termin: "", offenePunkte: [], email: "" }),
+    );
+    render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={transcript} />);
+
+    expect(scrollSpy).toHaveBeenCalledWith({ behavior: "auto", block: "start" });
+    await screen.findByText("Alen");
+  });
+
+  it("does not throw in a browser without scrollIntoView", async () => {
+    // The real jsdom baseline: the API is absent. Guards the optional call.
+    Reflect.deleteProperty(Element.prototype, "scrollIntoView");
+    vi.spyOn(global, "fetch").mockResolvedValue(
+      jsonResponse({ name: "Alen", anliegen: "", termin: "", offenePunkte: [], email: "" }),
+    );
+
+    expect(() =>
+      render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={transcript} />),
+    ).not.toThrow();
+    await screen.findByText("Alen");
   });
 });

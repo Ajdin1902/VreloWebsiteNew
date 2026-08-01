@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { DemoSeed } from "@/lib/demo/seed";
 import type { ChatMessage } from "@/lib/demo/prompt";
 import { type Terminnotiz } from "@/lib/demo/summary";
@@ -40,6 +40,24 @@ type State = { status: "loading" } | { status: "ready"; notiz: Terminnotiz | nul
 export function Protokoll({ calLink, seed, transcript }: { calLink: string | undefined; seed: DemoSeed; transcript: ChatMessage[] }) {
   const [state, setState] = useState<State>({ status: "loading" });
 
+  const cardRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  // The reveal replaces the chat card in place, so the browser keeps the scroll
+  // position from the bottom of a long conversation – the summary would render
+  // above the viewport and go unseen. Pull the card into view and hand focus to
+  // its heading so the phase change is announced rather than merely visual.
+  // Both APIs are optional-called: jsdom has no scrollIntoView, and matchMedia
+  // is absent in some non-browser renderers.
+  // Runs once: the reveal is a terminal phase, it never re-mounts.
+  useEffect(() => {
+    const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    cardRef.current?.scrollIntoView?.({ behavior: reduced ? "auto" : "smooth", block: "start" });
+    // preventScroll: focusing an element scrolls it into view by default, which
+    // would cut the smooth scroll short.
+    headingRef.current?.focus({ preventScroll: true });
+  }, []);
+
   useEffect(() => {
     let alive = true;
     (async () => {
@@ -67,9 +85,14 @@ export function Protokoll({ calLink, seed, transcript }: { calLink: string | und
 
   const notiz = state.status === "ready" ? state.notiz : null;
 
+  // scroll-mt-24 must sit on the element the browser actually scrolls to.
+  // /demo keeps the site chrome and its header is `sticky top-0`, so a
+  // scroll-margin on an ancestor would do nothing.
   return (
-    <div className="card-depth rounded-2xl border border-faden bg-papier p-6 md:p-10">
-      <h2 className="font-serif text-2xl text-tinte">Das hat dein Kunde gerade erlebt.</h2>
+    <div ref={cardRef} className="card-depth scroll-mt-24 rounded-2xl border border-faden bg-papier p-6 md:p-10">
+      <h2 ref={headingRef} tabIndex={-1} className="font-serif text-2xl text-tinte focus:outline-none">
+        Das hat dein Kunde gerade erlebt.
+      </h2>
       <p className="mt-3 max-w-prose text-stumm">
         Antwort in Sekunden, rund um die Uhr, qualifiziert, Termin gebucht – und genau das landet automatisch als Terminnotiz bei dir.
       </p>
