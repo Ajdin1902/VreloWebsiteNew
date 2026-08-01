@@ -4,6 +4,17 @@ import { Protokoll } from "./Protokoll";
 import type { DemoSeed } from "@/lib/demo/seed";
 import type { ChatMessage } from "@/lib/demo/prompt";
 
+// Stub the Cal embed – these tests assert our gating and layout, not Cal
+// internals. vi.hoisted is required under Vitest v4: a plain top-level const
+// referenced inside the factory throws "Cannot access before initialization".
+const calMock = vi.hoisted(() => ({ props: null as Record<string, unknown> | null }));
+vi.mock("@calcom/embed-react", () => ({
+  default: (props: Record<string, unknown>) => {
+    calMock.props = props;
+    return <div data-testid="cal-embed" />;
+  },
+}));
+
 const seed = { business: "Baufi", appointmentType: "baufinanzierung", tone: "locker" } as DemoSeed;
 const transcript: ChatMessage[] = [
   { role: "user", content: "Hallo" },
@@ -37,7 +48,8 @@ describe("Protokoll", () => {
     expect(screen.getByText("Unterlagen mitbringen")).toBeTruthy();
     expect(screen.getByText("Hallo")).toBeTruthy();
 
-    const cta = screen.getByRole("link", { name: /reden|kontakt/i });
+    expect(screen.getByRole("button", { name: /Termin anzeigen/i })).toBeInTheDocument();
+    const cta = screen.getByRole("link", { name: /kontaktformular/i });
     expect(cta.getAttribute("href")).toContain("/kontakt");
   });
 
@@ -79,7 +91,8 @@ describe("Protokoll", () => {
 
     expect(await screen.findByText("Hallo")).toBeTruthy();
     expect(screen.queryByText("Alen")).toBeNull();
-    const cta = screen.getByRole("link", { name: /reden|kontakt/i });
+    expect(screen.getByRole("button", { name: /Termin anzeigen/i })).toBeInTheDocument();
+    const cta = screen.getByRole("link", { name: /kontaktformular/i });
     expect(cta.getAttribute("href")).toContain("/kontakt");
   });
 
@@ -89,7 +102,8 @@ describe("Protokoll", () => {
 
     expect(await screen.findByText("Hallo")).toBeTruthy();
     expect(screen.queryByRole("heading", { name: "Terminnotiz" })).toBeNull();
-    const cta = screen.getByRole("link", { name: /reden|kontakt/i });
+    expect(screen.getByRole("button", { name: /Termin anzeigen/i })).toBeInTheDocument();
+    const cta = screen.getByRole("link", { name: /kontaktformular/i });
     expect(cta.getAttribute("href")).toContain("/kontakt");
   });
 
@@ -145,7 +159,7 @@ describe("Protokoll", () => {
     render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={transcript} />);
     await screen.findByText("Alen");
 
-    const cta = screen.getByRole("link", { name: /reden|kontakt/i });
+    const cta = screen.getByRole("button", { name: /Termin anzeigen/i });
     const verlauf = screen.getByText("Gespräch nachlesen").closest("details");
     expect(verlauf).not.toBeNull();
     // DOCUMENT_POSITION_FOLLOWING = the transcript comes after the CTA.
@@ -172,5 +186,47 @@ describe("Protokoll", () => {
     await screen.findByText("Alen");
 
     expect(screen.queryByText("Gespräch nachlesen")).toBeNull();
+  });
+
+  it("offers direct booking without mounting the Cal iframe before the click", async () => {
+    vi.spyOn(global, "fetch").mockResolvedValue(
+      jsonResponse({ name: "Alen", anliegen: "", termin: "", offenePunkte: [], email: "" }),
+    );
+    render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={transcript} />);
+    await screen.findByText("Alen");
+
+    expect(screen.getByRole("button", { name: /Termin anzeigen/i })).toBeInTheDocument();
+    // No third-party request on render – the /demo Datenschutz section says so.
+    expect(screen.queryByTestId("cal-embed")).toBeNull();
+  });
+
+  it("shows the booking CTA while the summary is still loading", () => {
+    // A promise that never settles: no state update, so no act() warning, and
+    // the component stays pinned in its loading state for the assertion.
+    vi.spyOn(global, "fetch").mockReturnValue(new Promise<Response>(() => {}));
+    render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={transcript} />);
+
+    expect(screen.getByText(/Einen Moment/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Termin anzeigen/i })).toBeInTheDocument();
+  });
+
+  it("keeps the booking CTA when the summary fetch fails", async () => {
+    vi.spyOn(global, "fetch").mockRejectedValue(new Error("boom"));
+    render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={transcript} />);
+    await screen.findByText(/Termin gebucht/i);
+
+    expect(screen.getByRole("button", { name: /Termin anzeigen/i })).toBeInTheDocument();
+  });
+
+  it("falls back to the Kontakt CTA when no scheduler is configured", async () => {
+    vi.spyOn(global, "fetch").mockResolvedValue(
+      jsonResponse({ name: "Alen", anliegen: "", termin: "", offenePunkte: [], email: "" }),
+    );
+    render(<Protokoll calLink={undefined} seed={seed} transcript={transcript} />);
+    await screen.findByText("Alen");
+
+    expect(screen.queryByRole("button", { name: /Termin anzeigen/i })).toBeNull();
+    const cta = screen.getByRole("link", { name: /reden/i });
+    expect(cta.getAttribute("href")).toContain("/kontakt");
   });
 });

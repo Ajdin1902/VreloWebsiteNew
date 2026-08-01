@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { DemoSeed } from "@/lib/demo/seed";
 import type { ChatMessage } from "@/lib/demo/prompt";
 import { type Terminnotiz } from "@/lib/demo/summary";
+import { SchedulerEmbed } from "@/components/kontakt/SchedulerEmbed";
 
 function isEmptyNotiz(n: Terminnotiz): boolean {
   return !n.name && !n.anliegen && !n.termin && n.offenePunkte.length === 0 && !n.email;
@@ -31,6 +32,45 @@ function MailVorschau({ notiz }: { notiz: Terminnotiz }) {
         {`${anrede}\n${terminSatz} Wir freuen uns auf das Gespräch.`}
       </p>
       <p className="mt-3 text-xs text-stumm">In der Live-Version wird diese Bestätigung automatisch versendet.</p>
+    </div>
+  );
+}
+
+// The close of the demo. He has just watched a booking happen in seconds, so
+// the ask is a booking – not a trip to /kontakt and a form. SchedulerEmbed is
+// reused untouched: it pins the cal.eu origin (the default cal.com origin 404s
+// Vrelo's EU account) and mounts the iframe only on click, which keeps the
+// /demo Datenschutz section true. It is styled on-dark, hence the petrol band.
+//
+// Without a calLink the band would only apologise while pointing twice at the
+// same form, so that case keeps the original Kontakt button. This is the live
+// path on Vercel Preview, where NEXT_PUBLIC_CAL_LINK is unset.
+function AbschlussCta({ calLink }: { calLink: string | undefined }) {
+  if (!calLink) {
+    return (
+      <a href="/kontakt" className="cta-fx mt-8 inline-block rounded-lg bg-tiefes-wasser px-6 py-3 text-papier">
+        Genau das für deinen Betrieb – lass uns reden
+      </a>
+    );
+  }
+
+  return (
+    <div className="mt-8">
+      <div className="rounded-xl bg-vrelo-petrol px-5 py-8 text-center md:px-6">
+        <p className="text-balance font-serif text-xl italic text-papier md:text-2xl">
+          Genau das für deinen Betrieb.
+        </p>
+        <div className="mt-5">
+          <SchedulerEmbed calLink={calLink} prompt="" />
+        </div>
+      </div>
+      <p className="mt-3 text-center text-sm text-stumm">
+        Lieber schreiben?{" "}
+        <a href="/kontakt" className="text-vrelo-petrol underline underline-offset-2">
+          Zum Kontaktformular
+        </a>
+        .
+      </p>
     </div>
   );
 }
@@ -148,9 +188,7 @@ export function Protokoll({ calLink, seed, transcript }: { calLink: string | und
         <p className="mt-6 text-sm text-tinte">Termin gebucht &amp; protokolliert.</p>
       )}
 
-      <a href="/kontakt" className="cta-fx mt-8 inline-block rounded-lg bg-tiefes-wasser px-6 py-3 text-papier">
-        Genau das für deinen Betrieb – lass uns reden
-      </a>
+      <AbschlussCta calLink={calLink} />
 
       {transcript.length > 0 ? (
         <details className="mt-6 rounded-xl border border-faden bg-papier p-4 text-left">
