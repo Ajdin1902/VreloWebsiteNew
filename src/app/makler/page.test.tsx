@@ -69,7 +69,7 @@ describe("/makler", () => {
     const { container } = render(<MaklerPage />);
     const text = container.textContent ?? "";
     expect(text.match(/€/g) ?? []).toHaveLength(1);
-    expect(text).toContain("unter 10 €");
+    expect(text).toContain("rund 30 €");
     expect(text).not.toMatch(/netto|\/\s*Monat|pro Monat/i);
   });
 });

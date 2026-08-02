@@ -42,7 +42,7 @@ describe("Voraussetzungen", () => {
 
   it("names the server cost and says the server is his", () => {
     const { container } = render(<Voraussetzungen />);
-    expect(container.textContent).toContain("unter 10 €");
+    expect(container.textContent).toContain("rund 30 €");
     expect(container.textContent).toContain("deinem eigenen Konto");
   });
 });

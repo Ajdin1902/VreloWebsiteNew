@@ -142,7 +142,7 @@ export const makler: MaklerPage = {
     items: [
       {
         title: "Deinen eigenen Server",
-        body: "Ich richte ihn ein und baue alles darauf. Er läuft auf deinem eigenen Konto – unter 10 € im Monat, und er gehört dir. Deshalb liegen deine Daten auch bei dir und nicht bei mir.",
+        body: "Ich richte ihn ein und baue alles darauf. Er läuft auf deinem eigenen Konto – rund 30 € im Monat, und er gehört dir. Deshalb liegen deine Daten auch bei dir und nicht bei mir.",
       },
       {
         title: "Wartung nur, wenn du willst",

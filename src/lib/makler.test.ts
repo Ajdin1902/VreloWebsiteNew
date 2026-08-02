@@ -49,7 +49,7 @@ describe("makler copy", () => {
   it("allows exactly one currency figure – the client's own server cost", () => {
     const hits = strings(makler.voraussetzungen).filter((s) => s.includes("€"));
     expect(hits).toHaveLength(1);
-    expect(hits[0]).toContain("unter 10 €");
+    expect(hits[0]).toContain("rund 30 €");
   });
 
   it("never claims Vrelo provides the server", () => {
