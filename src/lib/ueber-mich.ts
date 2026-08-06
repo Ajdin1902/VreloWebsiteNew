@@ -6,6 +6,16 @@ export type StoryBeat = {
   video?: boolean; // defaults to true; set false to render the beat text-only
 };
 
+// KI-Transparenzhinweis. Sits directly under the first beat (the Bosnia
+// paragraph next to the `quelle` clip), not in a footer: the whole site's
+// imagery is AI-generated, and this is the one spot where a reader could take
+// a generated karst spring for a real photo of the founder's own source.
+// Art. 50 Abs. 4a KI-VO does not compel it (nothing depicts an identifiable
+// real place or person), but the UWG §5 exposure sits in that proximity.
+// See ../../Knowledge/Compliance/KI-Transparenzpflichten.md.
+export const bildhinweis =
+  "Die Bilder und Videos auf dieser Website habe ich mit KI erzeugt. Sie zeigen keine realen Orte.";
+
 export const storyBeats: StoryBeat[] = [
   {
     slug: "quelle",

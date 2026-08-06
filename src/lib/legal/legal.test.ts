@@ -11,6 +11,15 @@ describe("legal content", () => {
     expect(body).toContain("[Platzhalter");
   });
 
+  it("impressum declares the AI-generated imagery site-wide", () => {
+    // The /ueber-mich note covers the spot where a reader could take a
+    // generated spring for a real photo; this covers every other page.
+    const bild = impressum.sections.find((s) => /Bildnachweis/i.test(s.heading));
+    expect(bild).toBeDefined();
+    expect(bild!.body).toMatch(/KI erzeugt/);
+    expect(bild!.body).toMatch(/keine realen Personen, Orte oder Ereignisse/);
+  });
+
   it("impressum links the EU OS-Plattform URL with markdown syntax", () => {
     const os = impressum.sections.find((s) => /EU-Streitschlichtung/i.test(s.heading));
     expect(os).toBeDefined();

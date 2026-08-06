@@ -4,7 +4,7 @@ import { Section } from "@/components/Section";
 import { ClosingCta } from "@/components/ClosingCta";
 import { StoryBeat } from "@/components/ueber-mich/StoryBeat";
 import { Reveal } from "@/components/Reveal";
-import { storyBeats } from "@/lib/ueber-mich";
+import { bildhinweis, storyBeats } from "@/lib/ueber-mich";
 import { JsonLd } from "@/components/JsonLd";
 import { personLd, breadcrumbLd } from "@/lib/jsonld";
 import { canonical } from "@/lib/site";
@@ -39,6 +39,11 @@ export default function UeberMichPage() {
           >
             <Reveal>
               <StoryBeat beat={beat} onDark={onDark} />
+              {/* The AI-imagery note rides the first beat, where the Bosnia
+                  story and the generated spring sit side by side. */}
+              {index === 0 ? (
+                <p className="mt-10 max-w-xl text-sm text-stumm">{bildhinweis}</p>
+              ) : null}
             </Reveal>
           </Section>
         );

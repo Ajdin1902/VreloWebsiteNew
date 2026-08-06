@@ -38,5 +38,15 @@ export const impressum: LegalDoc = {
       heading: "Urheberrecht",
       body: "Die durch den Seitenbetreiber erstellten Inhalte und Werke unterliegen dem deutschen Urheberrecht.",
     },
+    // Site-wide counterpart to the note on /ueber-mich (`bildhinweis` in
+    // src/lib/ueber-mich.ts): that one sits where the UWG §5 risk is, this one
+    // covers the rest of the site at zero conversion cost. Art. 50 Abs. 4a does
+    // not compel either — reasoning in ../../../CLAUDE.md.
+    // ⚠️ Naming the tools makes this go stale: re-roll imagery with a different
+    // generator and this sentence has to move with it.
+    {
+      heading: "Bildnachweis",
+      body: "Die Bild- und Videoaufnahmen auf dieser Website habe ich mit KI erzeugt: Standbilder mit Google Gemini, Videos mit Seedance und Veo. Sie zeigen keine realen Personen, Orte oder Ereignisse.",
+    },
   ],
 };
