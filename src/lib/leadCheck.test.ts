@@ -18,9 +18,39 @@ describe("computeResult", () => {
     expect(r.score).toBe("langsam");
     expect(r.anfragenProJahr).toBe(520);
     expect(r.verloreneAnfragenProJahr).toBe(260);
-    expect(r.recoverableTermine).toBe(208);
-    expect(r.zusaetzlicheAbschluesse).toBe(42);
-    expect(r.eurUpside).toBe(168000);
+    // 520 × (0.50 − 0.10) = 208 addressable, of which RECOVERY_RATE (0.3) come
+    // back as a booked appointment, of which CLOSE_RATE (0.2) close.
+    expect(r.adressierbareAnfragen).toBe(208);
+    expect(r.recoverableTermine).toBe(62);
+    expect(r.zusaetzlicheAbschluesse).toBe(12);
+    expect(r.eurUpside).toBe(48000);
+  });
+
+  it("never claims more recovered appointments than inquiries currently lost", () => {
+    // The honesty invariant: a faster reply can only ever win back a subset of
+    // what is being lost today. Guards against a future constant change that
+    // would make the upside exceed the leak it is derived from.
+    for (const reaktionszeit of ["unter5min", "unter1std", "selberTag", "1bis2tage", "wennZeit"] as const) {
+      const r = computeResult({ ...base, reaktionszeit });
+      expect(r.recoverableTermine).toBeLessThanOrEqual(r.verloreneAnfragenProJahr);
+      expect(r.zusaetzlicheAbschluesse).toBeLessThanOrEqual(r.recoverableTermine);
+      expect(r.adressierbareAnfragen).toBeLessThanOrEqual(r.verloreneAnfragenProJahr);
+    }
+  });
+
+  it("keeps the worst-case upside inside a defensible band", () => {
+    // 20 inquiries/week, worst answer everywhere. Before the 2026-08-08 audit
+    // this produced 156 extra closings / 624.000 € — a promise no undelivered
+    // product can carry. The model must stay well under that.
+    const r = computeResult({
+      anfragenProWoche: 20,
+      reaktionszeit: "wennZeit",
+      abendsWochenende: "nein",
+      imTermin: "gehtUnter",
+      nachfassen: "nie",
+    });
+    expect(r.zusaetzlicheAbschluesse).toBeLessThan(60);
+    expect(r.eurUpside).toBeLessThan(250_000);
   });
 
   it("floors loss at 10% for the fully-fast profile (no invented upside)", () => {
@@ -33,6 +63,7 @@ describe("computeResult", () => {
     });
     expect(r.currentLossPct).toBe(10);
     expect(r.score).toBe("schnell");
+    expect(r.adressierbareAnfragen).toBe(0);
     expect(r.recoverableTermine).toBe(0);
     expect(r.eurUpside).toBe(0);
   });
@@ -58,7 +89,7 @@ describe("computeResult", () => {
     const r = computeResult({ ...base, provision: 6000 });
     expect(r.provisionUsed).toBe(6000);
     expect(r.provisionWasDefault).toBe(false);
-    expect(r.eurUpside).toBe(42 * 6000);
+    expect(r.eurUpside).toBe(12 * 6000);
   });
 
   it("clamps absurd request volume to 200/week before computing", () => {

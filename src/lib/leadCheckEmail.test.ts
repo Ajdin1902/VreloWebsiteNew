@@ -17,9 +17,9 @@ const answers: LeadCheckAnswers = {
   provision: 4000,
 };
 
-const good: LeadCheckFields = { email: "makler@example.de", honeypot: "", renderedAt: 0, answers };
+const good: LeadCheckFields = { email: "makler@example.de", honeypot: "", renderedAt: 0, answers, kontaktErlaubt: true };
 
-// -> 50 % loss, 42 Abschluesse, 168.000 EUR, score "langsam"; provision defaulted
+// -> 50 % loss, 12 Abschluesse, 48.000 EUR, score "langsam"; provision defaulted
 const SLOW_ANSWERS: LeadCheckAnswers = {
   anfragenProWoche: 10,
   reaktionszeit: "selberTag",
@@ -70,13 +70,38 @@ describe("buildLeadCheckEmail (internal)", () => {
       email: "max@beispiel.de",
       answers: SLOW_ANSWERS,
       result: computeResult(SLOW_ANSWERS),
+      kontaktErlaubt: true,
     });
-    expect(m.subject).toBe("Lead-Check: max@beispiel.de – langsam · 168.000 €");
+    expect(m.subject).toBe("Lead-Check: max@beispiel.de – langsam · 48.000 €");
     expect(m.replyTo).toBe("max@beispiel.de");
   });
 
+  it("tells Ajdin plainly when the lead did not consent to being contacted", () => {
+    // The result form used to promise "ich melde mich, wenn du magst" with no
+    // control behind it. The checkbox is that control; the internal mail is
+    // where it has to be impossible to miss.
+    const m = buildLeadCheckEmail({
+      email: "max@beispiel.de",
+      answers: SLOW_ANSWERS,
+      result: computeResult(SLOW_ANSWERS),
+      kontaktErlaubt: false,
+    });
+    expect(m.html).toContain("nicht anschreiben");
+    expect(m.text).toContain("Kontakt erlaubt: NEIN");
+  });
+
+  it("marks an opted-in lead as contactable", () => {
+    const m = buildLeadCheckEmail({
+      email: "max@beispiel.de",
+      answers: SLOW_ANSWERS,
+      result: computeResult(SLOW_ANSWERS),
+      kontaktErlaubt: true,
+    });
+    expect(m.text).toContain("Kontakt erlaubt: JA");
+    expect(m.html).not.toContain("nicht anschreiben");
+  });
   it("omits the € from the subject for a fast lead", () => {
-    const m = buildLeadCheckEmail({ email: "a@b.de", answers: FAST_ANSWERS, result: computeResult(FAST_ANSWERS) });
+    const m = buildLeadCheckEmail({ email: "a@b.de", answers: FAST_ANSWERS, result: computeResult(FAST_ANSWERS) , kontaktErlaubt: true });
     expect(m.subject).toBe("Lead-Check: a@b.de – schnell");
   });
 
@@ -85,8 +110,9 @@ describe("buildLeadCheckEmail (internal)", () => {
       email: "max@beispiel.de",
       answers: SLOW_ANSWERS,
       result: computeResult(SLOW_ANSWERS),
+      kontaktErlaubt: true,
     });
-    expect(m.html).toContain("168.000");
+    expect(m.html).toContain("48.000");
     expect(m.html).toContain("am selben Tag");
     expect(m.html).toContain("wartet, bis ich Zeit habe");
     expect(m.html).toContain("(Standard)");
@@ -97,6 +123,7 @@ describe("buildLeadCheckEmail (internal)", () => {
       email: 'x"<img>@b.de',
       answers: SLOW_ANSWERS,
       result: computeResult(SLOW_ANSWERS),
+      kontaktErlaubt: true,
     });
     expect(m.html).not.toContain("<img>");
     expect(m.html).toContain("&lt;img&gt;");
@@ -110,10 +137,10 @@ describe("buildLeadSummaryEmail", () => {
     const m = buildLeadSummaryEmail({ email: "max@beispiel.de", result: computeResult(SLOW_ANSWERS), calUrl: CAL });
     expect(m.to).toBe("max@beispiel.de");
     expect(m.subject).toBe("Dein Ergebnis: Lead-Reaktions-Check");
-    expect(m.html).toContain("42 Abschl");
-    expect(m.html).toContain("168.000");
+    expect(m.html).toContain("12 Abschl");
+    expect(m.html).toContain("48.000");
     expect(m.html).toContain("50\u00A0%");
-    expect(m.text).toContain("168.000");
+    expect(m.text).toContain("48.000");
     expect(m.html).toContain(CAL);
   });
 

@@ -24,7 +24,7 @@ export function TerminSection({ calLink }: { calLink: string | undefined }) {
       {/* prompt="" drops the SchedulerEmbed's own "Lieber direkt sprechen?"
           heading, which duplicates the section heading above. */}
       <div className="mt-10">
-        <SchedulerEmbed calLink={calLink} fallbackHint={c.fallbackHint} prompt="" />
+        <SchedulerEmbed calLink={calLink} fallbackHint={c.fallbackHint} fallbackHref="/kontakt" prompt="" />
       </div>
     </WaterSection>
   );

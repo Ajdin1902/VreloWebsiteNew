@@ -34,6 +34,8 @@ function parse(formData: FormData): LeadCheckFields {
     honeypot: get("website"),
     renderedAt: Number(get("renderedAt")) || 0,
     answers,
+    // Unchecked box submits nothing at all, so absence must mean "no".
+    kontaktErlaubt: formData.get("kontakt") != null,
   };
 }
 

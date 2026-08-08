@@ -2,6 +2,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import Cal from "@calcom/embed-react";
 
 // Vrelo's Cal.com account lives in the EU data region (cal.eu). The embed
@@ -15,12 +16,18 @@ const CAL_ORIGIN = "https://cal.eu";
 export function SchedulerEmbed({
   calLink,
   fallbackHint = "Schreib mir so lange einfach über das Formular unten.",
+  fallbackHref,
   prompt = "Lieber direkt sprechen?",
 }: {
   calLink: string | undefined;
   /** Where to send the visitor when no scheduler is configured. Defaults to the
       Kontakt page wording, where a form does sit below the embed. */
   fallbackHint?: string;
+  /** Route for the fallback. Pages that have no form of their own (/makler,
+      /lead-check) must pass one — otherwise the unconfigured state names a
+      Kontaktformular the visitor has no way to reach. This is the Vercel
+      Preview state, so it is what branch reviewers see. */
+  fallbackHref?: string;
   /** The heading above the click-to-load button. Pass "" to omit it where the
       surrounding section already asks for the call (e.g. /makler). */
   prompt?: string;
@@ -31,7 +38,15 @@ export function SchedulerEmbed({
     return (
       <div className="mx-auto max-w-xl text-center">
         <p className="font-serif text-xl text-papier md:text-2xl">Online-Terminbuchung folgt in Kürze.</p>
-        <p className="mt-2 text-gletscher">{fallbackHint}</p>
+        <p className="mt-2 text-gletscher">
+          {fallbackHref ? (
+            <Link href={fallbackHref} className="underline underline-offset-4 hover:text-papier">
+              {fallbackHint}
+            </Link>
+          ) : (
+            fallbackHint
+          )}
+        </p>
       </div>
     );
   }

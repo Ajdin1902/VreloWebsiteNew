@@ -23,7 +23,7 @@ const schnell: LeadCheckAnswers = {
 describe("Result", () => {
   it("leads with the € upside for a slow profile", () => {
     render(<Result answers={langsam} result={computeResult(langsam)} calLink={undefined} />);
-    expect(screen.getByText(/168\.000/)).toBeInTheDocument();
+    expect(screen.getByText(/48\.000/)).toBeInTheDocument();
     expect(screen.getByText(/Deine Lead-Reaktion/)).toBeInTheDocument();
   });
 

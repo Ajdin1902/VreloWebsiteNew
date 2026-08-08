@@ -47,11 +47,11 @@ export default function RootLayout({
         />
       </head>
       <body className="flex min-h-screen flex-col">
-        <ChromeGate>
+        <ChromeGate slot="header">
           <Header />
         </ChromeGate>
         <main className="flex-1">{children}</main>
-        <ChromeGate>
+        <ChromeGate slot="footer">
           <Footer />
         </ChromeGate>
       </body>

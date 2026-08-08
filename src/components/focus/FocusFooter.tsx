@@ -6,7 +6,12 @@ const linkClass =
 
 // Minimal focus-mode footer: legal reachability is not optional, the rest is.
 // stein on tiefes-wasser is 7.5:1 — the only surface where stein clears AA.
-export function MaklerFooter() {
+//
+// The links sit in a <nav aria-label="Rechtliches"> so the page has at least one
+// navigation landmark; as a bare <div> they were unreachable by landmark
+// navigation. Rendered from the root layout so this stays a sibling of <main>
+// and keeps its contentinfo role.
+export function FocusFooter() {
   return (
     <footer className="bg-tiefes-wasser text-gletscher">
       <div className="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-8 text-sm text-stein md:flex-row md:items-center md:justify-between">
@@ -14,7 +19,7 @@ export function MaklerFooter() {
           <BrandWord>Vrelo</BrandWord> errichtet die Quelle. Du erlebst den{" "}
           <BrandWord>Merak</BrandWord>-Effekt.
         </p>
-        <div className="flex gap-4">
+        <nav aria-label="Rechtliches" className="flex gap-4">
           <Link href="/impressum" className={linkClass}>
             Impressum
           </Link>
@@ -24,7 +29,7 @@ export function MaklerFooter() {
           <Link href="/kontakt" className={linkClass}>
             Kontakt
           </Link>
-        </div>
+        </nav>
       </div>
     </footer>
   );

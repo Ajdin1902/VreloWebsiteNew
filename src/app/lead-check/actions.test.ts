@@ -45,7 +45,7 @@ describe("submitLeadCheckEmail", () => {
     const lead = send.mock.calls[0][0];
     expect(lead.to).toBe("makler@example.de");
     expect(lead.subject).toBe("Dein Ergebnis: Lead-Reaktions-Check");
-    expect(lead.html).toContain("168.000");
+    expect(lead.html).toContain("48.000");
     const internal = send.mock.calls[1][0];
     expect(internal.to).toBe("hallo@example.de");
     expect(internal.replyTo).toBe("makler@example.de");

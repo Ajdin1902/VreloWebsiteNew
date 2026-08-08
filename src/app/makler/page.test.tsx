@@ -58,11 +58,15 @@ describe("/makler", () => {
     );
   });
 
-  it("brings its own minimal chrome and no site navigation", () => {
+  it("renders no site navigation of its own", () => {
+    // The minimal chrome (logo, one CTA, legal links) is supplied by ChromeGate
+    // from the root layout, so it stays a sibling of <main> and keeps the
+    // banner/contentinfo landmarks — see ChromeGate.test.tsx. The page itself
+    // must carry no navigation at all.
     render(<MaklerPage />);
-    expect(screen.getByRole("link", { name: "Impressum" })).toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Ratgeber" })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Newsletter" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("navigation")).not.toBeInTheDocument();
   });
 
   it("shows the server cost once and no Vrelo price", () => {

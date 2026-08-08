@@ -91,7 +91,7 @@ export const makler: MaklerPage = {
   terminQuelle: {
     eyebrow: "Schritt eins",
     name: "Die Termin-Quelle",
-    promise: "Aus jeder Anfrage wird ein Termin – von selbst, während du arbeitest.",
+    promise: "Jede Anfrage bekommt sofort eine Antwort – und den Weg zum Termin, während du arbeitest.",
     chips: ["Antwort in unter 5 Minuten", "Qualifizieren", "Termin buchen", "Nachfassen", "Protokoll"],
     solves: [
       "Antwortet, wenn du schläfst",
@@ -103,7 +103,7 @@ export const makler: MaklerPage = {
       "Mehr Termine aus den Anfragen, die du ohnehin schon hast. Und ein ruhiger Kopf, weil keine mehr liegen bleibt.",
     proof: {
       prompt: "Glaub mir das nicht – probier es aus.",
-      body: "Du beschreibst kurz dein Geschäft und schreibst dem System dann als dein eigener Interessent. Zwei Minuten, kein Login, nichts wird gespeichert.",
+      body: "Du beschreibst kurz dein Geschäft und schreibst dann als dein eigener Interessent – gegen eine Simulation, die zeigt, wie die Termin-Quelle antwortet. Zwei Minuten, kein Login, nichts wird gespeichert.",
       label: "Spiel deinen eigenen Kunden",
       href: "/demo",
     },
@@ -117,7 +117,7 @@ export const makler: MaklerPage = {
   documentConcierge: {
     eyebrow: "Schritt zwei",
     name: "Der Document Concierge",
-    promise: "Du fragst nie wieder nach einer Unterlage.",
+    promise: "Um die Unterlagen kümmert sich das System, nicht mehr du.",
     flow: [
       { title: "Fall anlegen", body: "20 Sekunden: Name, Kontakt, Art des Falls. Mehr machst du nicht." },
       { title: "Checkliste raus", body: "Dein Kunde bekommt sie auf seinem Kanal, mit einem sicheren Upload-Link." },
@@ -131,7 +131,7 @@ export const makler: MaklerPage = {
       "Vollständige, geprüfte Akten in deiner eigenen Cloud – und kein einziges Telefonat, in dem du um eine Gehaltsabrechnung bittest.",
     trust: {
       title: "Wo die Unterlagen liegen",
-      body: "Die Unterlagen deiner Kunden verlassen nie deine eigene Umgebung. Das System läuft auf deinem eigenen Server, die Upload-Seite ebenso, und die Dateien landen in deiner eigenen Cloud – bei mir liegt keine einzige. Alles in der EU, verschlüsselt übertragen, mit Auftragsverarbeitungsvertrag. Bei Gehaltsabrechnungen und SCHUFA-Auskünften ist das keine Formalie, sondern die Grundbedingung.",
+      body: "Die Unterlagen deiner Kunden bleiben in deinen eigenen Konten. Das System läuft auf deinem eigenen Server, die Upload-Seite ebenso, und die Dateien landen in deiner eigenen Cloud – bei mir liegt keine einzige. Für die automatische Prüfung geht jede Seite einmal an einen KI-Dienst, der ebenfalls in deinem eigenen Konto läuft, Rechenzentrum in der EU; gespeichert wird dort nichts. Alles verschlüsselt übertragen, mit Auftragsverarbeitungsvertrag. Bei Gehaltsabrechnungen und SCHUFA-Auskünften ist das keine Formalie, sondern die Grundbedingung.",
     },
     note: "Den Document Concierge baue ich für dich – nach deinen Fallarten, deinen Checklisten, deiner Cloud. Es gibt ihn nicht als fertige Software zum Anklicken. Deshalb siehst du hier den Ablauf; alles Weitere zeige ich dir im Gespräch.",
     demoVideo: null,
@@ -174,7 +174,7 @@ export const makler: MaklerPage = {
       },
       {
         title: "Jede Anfrage bekommt in unter fünf Minuten eine Antwort.",
-        body: "Rund um die Uhr. Darauf gebe ich mein Wort. Nicht auf dein Anfrage-Volumen – das bestimmt dein Markt, nicht ich.",
+        body: "Rund um die Uhr. Das ist die Zahl, an der du mich messen kannst – hält dein System sie nicht ein, baue ich nach. Nicht zugesagt ist dein Anfrage-Volumen: das bestimmt dein Markt, nicht ich.",
       },
       {
         title: "Der erste Monat Betrieb geht auf mich.",
@@ -210,7 +210,7 @@ export const makler: MaklerPage = {
       {
         question: "Was ist mit den Daten meiner Kunden?",
         answer:
-          "Deine Kundendaten laufen EU-gehostet und DSGVO-konform, mit Auftragsverarbeitungsvertrag. Beim Document Concierge läuft das System auf deinem eigenen Server und die Dokumente landen in deiner eigenen Cloud – bei mir liegt keine einzige Datei.",
+          "Deine Kundendaten liegen auf Servern in der EU, verschlüsselt übertragen und mit Auftragsverarbeitungsvertrag. Beim Document Concierge läuft das System auf deinem eigenen Server und die Dokumente landen in deiner eigenen Cloud – bei mir liegt keine einzige Datei. Welche Dienste dabei beteiligt sind, zeige ich dir vorher vollständig.",
       },
     ],
   },

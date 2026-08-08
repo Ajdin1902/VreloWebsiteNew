@@ -26,9 +26,12 @@ export function Result({
 
   return (
     <div className="space-y-10">
-      <p className="text-sm font-medium uppercase tracking-wider text-stumm">
+      {/* The result view's own heading level. Without it the outline skipped
+          h1 (PageHero) → h3 („Drei Dinge"), and the headline claim below is a
+          <p>, so nothing carried the result in the heading outline at all. */}
+      <h2 className="text-sm font-medium uppercase tracking-wider text-stumm">
         Deine Lead-Reaktion: <span className="text-tiefes-wasser">{SCORE_LABEL[result.score]}</span>
-      </p>
+      </h2>
 
       {fast ? (
         <p className="text-balance font-serif text-2xl text-tiefes-wasser md:text-3xl">
@@ -43,7 +46,8 @@ export function Result({
           </p>
           {result.provisionWasDefault ? (
             <p className="mt-3 text-sm text-stumm">
-              Gerechnet mit 4.000 € pro Abschluss {"–"} passt du den Wert an, wird die Schätzung genauer.
+              Gerechnet mit {eur(result.provisionUsed)} € pro Abschluss {"–"} passt du den Wert an, wird die
+              Schätzung genauer.
             </p>
           ) : null}
         </div>
@@ -58,10 +62,31 @@ export function Result({
 
       <details className="rounded-lg border border-tiefes-wasser/15 bg-papier p-4">
         <summary className="cursor-pointer text-sm font-medium text-tiefes-wasser">Wie wir rechnen</summary>
+        {!fast ? (
+          <ol className="mt-3 list-decimal space-y-1 pl-5 text-sm text-tinte">
+            <li>
+              {result.anfragenProJahr} Anfragen im Jahr, davon gehen nach deinen Angaben rund{" "}
+              {result.currentLossPct} % verloren: {result.verloreneAnfragenProJahr} Stück.
+            </li>
+            <li>
+              Auch ein gutes System verliert welche {"–"} wir rechnen mit 10 %, die nie erreichbar sind. Bleiben{" "}
+              {result.adressierbareAnfragen}, an denen Schnelligkeit überhaupt etwas ändern kann.
+            </li>
+            <li>
+              Davon holt eine Antwort in unter fünf Minuten erfahrungsgemäß etwa jede dritte zurück:{" "}
+              {result.recoverableTermine} zusätzliche Termine.
+            </li>
+            <li>
+              Und davon wird jeder fünfte ein Abschluss: {result.zusaetzlicheAbschluesse}.
+            </li>
+          </ol>
+        ) : null}
         <p className="mt-3 text-sm text-tinte">
-          Grundlage ist die Lead-Response-Forschung (HBR/InsideSales): nach der Fünf-Minuten-Marke fällt die
-          Chance, einen Lead zu erreichen und zu qualifizieren, um rund das Acht- bis Zehnfache. Wir rechnen bewusst
-          konservativ {"–"} und selbst dann, wenn nur jeder fünfte zurückgeholte Termin zum Abschluss wird.
+          Grundlage ist die Forschung zur Reaktionszeit bei Online-Anfragen {"–"} allen voran Harvard Business
+          Review, The Short Life of Online Sales Leads (2011): jenseits der Fünf-Minuten-Marke fällt die Chance,
+          einen Interessenten überhaupt noch zu erreichen und zu qualifizieren, um ein Vielfaches. Die Schätzung
+          oben ist bewusst vorsichtig gerechnet: sie unterstellt weder, dass sich jede verlorene Anfrage
+          zurückholen lässt, noch dass aus jedem zusätzlichen Termin ein Abschluss wird.
         </p>
       </details>
 
@@ -82,7 +107,11 @@ export function Result({
           Willst du, dass das von selbst läuft – auch wenn du im Termin sitzt? Genau das ist die Termin-Quelle.
         </p>
         <div className="mt-6">
-          <SchedulerEmbed calLink={calLink} />
+          <SchedulerEmbed
+            calLink={calLink}
+            fallbackHint="Schreib mir so lange einfach über das Kontaktformular."
+            fallbackHref="/kontakt"
+          />
         </div>
         <div className="mt-8 border-t border-papier/15 pt-6">
           <ResultEmailForm answers={answers} />

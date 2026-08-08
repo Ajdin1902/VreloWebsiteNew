@@ -94,7 +94,7 @@ export const STEPS: readonly Step[] = [
     min: 0,
     optional: true,
     defaultValue: DEFAULT_PROVISION,
-    hint: "Wir rechnen mit dem Branchenschnitt. Ist dein Schnitt anders? Hier anpassen.",
+    hint: "Lässt du das Feld leer, rechnen wir mit 4.000 € pro Abschluss. Ist dein Schnitt anders? Hier anpassen.",
   },
 ];
 
@@ -107,6 +107,9 @@ export type LeadCheckResult = {
   score: Score;
   anfragenProJahr: number;
   verloreneAnfragenProJahr: number;
+  /** Lost inquiries a faster reply could in principle address (loss above the floor). */
+  adressierbareAnfragen: number;
+  /** Of those, the share that realistically comes back as a booked appointment. */
   recoverableTermine: number;
   zusaetzlicheAbschluesse: number;
   eurUpside: number;
@@ -114,7 +117,23 @@ export type LeadCheckResult = {
   provisionWasDefault: boolean;
 };
 
+// The chain, and why each link is what it is. These four constants are the whole
+// commercial claim of this page, so they are named, exported and reasoned about
+// here rather than buried in the arithmetic.
+//
+// ACHIEVABLE_LOSS — no system reaches 0 % loss; some inquiries are never real.
+// RECOVERY_RATE   — of the inquiries currently lost *above* that floor, the share
+//   a sub-5-minute reply actually brings back to a booked appointment. This is
+//   the constant the 2026-08-08 Rams audit added. Before it, the model implicitly
+//   assumed **every** addressable lost inquiry returns, which produced 156 extra
+//   closings / 624.000 € for a solo broker at 20 inquiries/week — a promise no
+//   undelivered product can carry, and the fastest way to lose a sceptical reader
+//   in a word-of-mouth market. 0.3 is a deliberate underclaim: it says a faster
+//   reply wins back roughly one in three of the leads speed is costing today.
+// CLOSE_RATE      — appointment → signed. 1 in 5 is a normal broker figure and is
+//   the one number already disclosed to the reader („jeder fünfte").
 export const ACHIEVABLE_LOSS = 0.1;
+export const RECOVERY_RATE = 0.3;
 export const CLOSE_RATE = 0.2;
 const MAX_ANFRAGEN = 200;
 const MIN_PROVISION = 100;
@@ -149,7 +168,8 @@ export function computeResult(a: LeadCheckAnswers): LeadCheckResult {
   const anfragenProJahr = Math.round(anfragenWoche * 52);
   const verloreneAnfragenProJahr = Math.round(anfragenProJahr * currentLoss);
   const recoverableShare = Math.max(0, currentLoss - ACHIEVABLE_LOSS);
-  const recoverableTermine = Math.round(anfragenProJahr * recoverableShare);
+  const adressierbareAnfragen = Math.round(anfragenProJahr * recoverableShare);
+  const recoverableTermine = Math.round(adressierbareAnfragen * RECOVERY_RATE);
   const zusaetzlicheAbschluesse = Math.round(recoverableTermine * CLOSE_RATE);
   const eurUpside = zusaetzlicheAbschluesse * provisionUsed;
 
@@ -160,6 +180,7 @@ export function computeResult(a: LeadCheckAnswers): LeadCheckResult {
     score,
     anfragenProJahr,
     verloreneAnfragenProJahr,
+    adressierbareAnfragen,
     recoverableTermine,
     zusaetzlicheAbschluesse,
     eurUpside,

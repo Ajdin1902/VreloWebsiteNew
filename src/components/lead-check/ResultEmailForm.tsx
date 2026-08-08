@@ -2,6 +2,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import Link from "next/link";
 import { submitLeadCheckEmail, type LeadCheckEmailState } from "@/app/lead-check/actions";
 import type { LeadCheckAnswers } from "@/lib/leadCheck";
 
@@ -17,7 +18,11 @@ export function ResultEmailForm({ answers }: { answers: LeadCheckAnswers }) {
     state.status === "invalid" ? state.error : state.status === "error" ? state.message : undefined;
 
   if (state.status === "ok") {
-    return <p className="text-gletscher">Danke {"–"} die Zusammenfassung ist unterwegs.</p>;
+    return (
+      <p role="status" className="text-gletscher">
+        Danke {"–"} die Zusammenfassung ist unterwegs.
+      </p>
+    );
   }
 
   return (
@@ -33,7 +38,7 @@ export function ResultEmailForm({ answers }: { answers: LeadCheckAnswers }) {
       <input type="text" name="website" tabIndex={-1} aria-hidden="true" autoComplete="off" className="absolute left-[-9999px] h-0 w-0 opacity-0" />
 
       <label htmlFor="lc-email" className="block text-sm text-gletscher">
-        Zusammenfassung per Mail {"–"} und ich melde mich, wenn du magst.
+        Zusammenfassung per Mail
       </label>
       <div className="flex flex-wrap gap-3">
         <input
@@ -43,8 +48,8 @@ export function ResultEmailForm({ answers }: { answers: LeadCheckAnswers }) {
           placeholder="deine@mail.de"
           required
           aria-invalid={errorMsg != null}
-          aria-describedby={errorMsg ? "lc-email-err" : undefined}
-          className="min-w-[14rem] flex-1 rounded-md border border-papier/30 bg-tiefes-wasser/40 px-3 py-2 text-papier placeholder:text-gletscher/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-vrelo-petrol"
+          aria-describedby={`lc-email-hinweis${errorMsg ? " lc-email-err" : ""}`}
+          className="min-w-[14rem] flex-1 rounded-md border border-papier/60 bg-tiefes-wasser/40 px-3 py-2 text-papier placeholder:text-gletscher/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-vrelo-petrol"
         />
         <button
           type="submit"
@@ -54,7 +59,29 @@ export function ResultEmailForm({ answers }: { answers: LeadCheckAnswers }) {
           {pending ? "Wird gesendet …" : "Schicken"}
         </button>
       </div>
-      {errorMsg ? <p id="lc-email-err" className="text-sm text-signal">{errorMsg}</p> : null}
+
+      {/* Says what actually happens: two mails go out, and the second one puts
+          these answers on Ajdin's desk. The checkbox is what makes the old
+          "ich melde mich, wenn du magst" true — unchecked, nobody writes. */}
+      <p id="lc-email-hinweis" className="text-sm text-gletscher/90">
+        Du bekommst die Zusammenfassung einmalig. Deine Antworten und deine Adresse sehe ich dabei mit {"–"}{" "}
+        Details in der{" "}
+        <Link href="/datenschutz" className="underline underline-offset-4 hover:text-papier">
+          Datenschutzerklärung
+        </Link>
+        .
+      </p>
+
+      <label className="flex items-start gap-2 text-sm text-gletscher">
+        <input id="lc-kontakt" type="checkbox" name="kontakt" className="mt-1" />
+        <span>Du darfst dich bei mir melden.</span>
+      </label>
+
+      {errorMsg ? (
+        <p id="lc-email-err" role="alert" className="text-sm text-signal">
+          {errorMsg}
+        </p>
+      ) : null}
     </form>
   );
 }

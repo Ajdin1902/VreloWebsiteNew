@@ -161,6 +161,8 @@ export function buildLeadCheckEmail(p: {
   email: string;
   answers: LeadCheckAnswers;
   result: LeadCheckResult;
+  /** Whether the lead ticked the optional "you may contact me" box. */
+  kontaktErlaubt: boolean;
 }): LeadCheckEmail {
   const { answers, result } = p;
   const email = p.email.trim();
@@ -177,6 +179,7 @@ export function buildLeadCheckEmail(p: {
     ["Provision", `${eurFmt(result.provisionUsed)}${result.provisionWasDefault ? " (Standard)" : ""}`],
     ["Verlorene Anfragen/Jahr", `≈ ${nf.format(result.verloreneAnfragenProJahr)}`],
     ["Zusätzliche Abschlüsse/Jahr", `≈ ${nf.format(result.zusaetzlicheAbschluesse)}`],
+    ["Kontakt erlaubt", p.kontaktErlaubt ? "JA" : "NEIN – nicht anschreiben"],
   ];
 
   const kpiCell = (n: string, l: string, main = false) =>
@@ -199,7 +202,11 @@ export function buildLeadCheckEmail(p: {
           )
           .join("\n        ")}
       </table>
-      <p style="font-size:12.5px;color:#696359;margin:18px 0 0">Der Lead hat seine Zusammenfassung bereits automatisch bekommen. Auf ‚Antworten‘ schreibst du ihm direkt.</p>
+      <p style="font-size:12.5px;color:#696359;margin:18px 0 0">Der Lead hat seine Zusammenfassung bereits automatisch bekommen.${
+        p.kontaktErlaubt
+          ? " Auf ‚Antworten‘ schreibst du ihm direkt."
+          : " <strong>Er hat dem Kontakt nicht zugestimmt – schreib ihn nicht an.</strong>"
+      }</p>
     </div>
   </body>
 </html>`;
@@ -221,6 +228,8 @@ export function buildLeadCheckEmail(p: {
     `Verlorene Anfragen/Jahr: ${nf.format(result.verloreneAnfragenProJahr)}`,
     `Zusätzliche Abschlüsse/Jahr: ${nf.format(result.zusaetzlicheAbschluesse)}`,
     `Euro-Potenzial/Jahr: ${nf.format(result.eurUpside)} €`,
+    "",
+    `Kontakt erlaubt: ${p.kontaktErlaubt ? "JA" : "NEIN – nicht anschreiben"}`,
   ];
 
   return { subject, text: lines.join("\n"), html, replyTo: email };
@@ -231,6 +240,8 @@ export type LeadCheckFields = {
   honeypot: string;
   renderedAt: number;
   answers: LeadCheckAnswers;
+  /** Optional opt-in from the result form. Absent = not allowed to contact. */
+  kontaktErlaubt: boolean;
 };
 
 export type LeadCheckDecision =
@@ -252,6 +263,11 @@ export function evaluateLeadCheckSubmission(
   return {
     action: "send",
     leadEmail: buildLeadSummaryEmail({ email: f.email, result, calUrl }),
-    internalEmail: buildLeadCheckEmail({ email: f.email, answers: f.answers, result }),
+    internalEmail: buildLeadCheckEmail({
+      email: f.email,
+      answers: f.answers,
+      result,
+      kontaktErlaubt: f.kontaktErlaubt,
+    }),
   };
 }
