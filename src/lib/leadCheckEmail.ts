@@ -62,7 +62,7 @@ export function buildLeadSummaryEmail(p: {
   const tipsHeading = fast ? "Drei Dinge, die dein Tempo absichern" : "Drei Dinge, die du sofort tun kannst";
 
   const ctaInner = calUrl
-    ? `<a href="${calUrl}" style="display:inline-block;background:#d4a24c;color:#0a2538;font-weight:bold;font-size:14px;text-decoration:none;padding:12px 22px;border-radius:8px">15-Minuten-Gespräch buchen</a>`
+    ? `<a href="${calUrl}" style="display:inline-block;background:#d4a24c;color:#0a2538;font-weight:bold;font-size:14px;text-decoration:none;padding:12px 22px;border-radius:8px">30-Minuten-Gespräch buchen</a>`
     : `<span style="color:#f4efe6;font-size:14px">Antworte einfach auf diese E-Mail – dann melde ich mich.</span>`;
 
   const html = `<!doctype html>
@@ -119,7 +119,7 @@ export function buildLeadSummaryEmail(p: {
     "Das Schwere ist, das konsequent zu tun – nachts, im Termin, bei jeder Anfrage.",
     "",
     "Willst du, dass das von selbst läuft – auch wenn du im Termin sitzt? Genau das ist die Termin-Quelle.",
-    calUrl ? `15-Minuten-Gespräch buchen: ${calUrl}` : "Antworte einfach auf diese E-Mail – dann melde ich mich.",
+    calUrl ? `30-Minuten-Gespräch buchen: ${calUrl}` : "Antworte einfach auf diese E-Mail – dann melde ich mich.",
     "",
     "Bis bald",
     "Ajdin von Vrelo",

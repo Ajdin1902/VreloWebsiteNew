@@ -24,7 +24,6 @@ describe("DocumentConciergeBlock", () => {
 
   it("shows no explanatory body paragraph – the flow cards carry it", () => {
     const { container } = render(<DocumentConciergeBlock product={makler.documentConcierge} />);
-    expect(makler.documentConcierge.body).toBeUndefined();
     // A phrase that existed only in the deleted body — a real regression guard.
     expect(container.textContent).not.toContain("20-Sekunden-Formular");
   });

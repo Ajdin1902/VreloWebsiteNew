@@ -1,5 +1,4 @@
 import Image from "next/image";
-import type { ReactNode } from "react";
 import { Section } from "@/components/Section";
 import { withBrandWords } from "@/components/BrandWord";
 
@@ -12,15 +11,10 @@ export function PageHero({
   title,
   lead,
   src,
-  priority = true,
-  actions,
 }: {
   title: string;
   lead: string;
   src: string;
-  priority?: boolean;
-  /** Optional CTA row rendered under the lead (focus-mode landing pages). */
-  actions?: ReactNode;
 }) {
   return (
     <>
@@ -28,7 +22,7 @@ export function PageHero({
         {/* quality 65 (vs default 75): the petrol scrim hides the difference, but
             it cuts every optimized hero variant ~25-35% — lighter cold-MISS and
             warm loads on all four content-page heroes. */}
-        <Image src={src} alt="" fill priority={priority} quality={65} sizes="100vw" className="-z-20 object-cover" />
+        <Image src={src} alt="" fill priority quality={65} sizes="100vw" className="-z-20 object-cover" />
         <div aria-hidden className="hero-overlay-scrim absolute inset-0 -z-10" />
         <h1 className="max-w-4xl text-balance text-4xl font-semibold text-papier [text-shadow:0_2px_16px_rgb(10_37_56_/_0.45)] md:text-5xl">
           {title}
@@ -43,7 +37,6 @@ export function PageHero({
         <p className="max-w-2xl text-pretty font-serif text-xl leading-[1.5] text-tiefes-wasser md:text-[1.6rem] first-letter:float-left first-letter:pr-2 first-letter:pt-1 first-letter:text-[2.8em] first-letter:font-medium first-letter:leading-[0.7] first-letter:text-vrelo-petrol">
           {withBrandWords(lead)}
         </p>
-        {actions ? <div className="mt-8">{actions}</div> : null}
       </Section>
     </>
   );

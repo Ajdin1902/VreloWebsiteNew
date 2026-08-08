@@ -9,23 +9,11 @@ describe("PageHero", () => {
     expect(screen.getByText("Der Vorspann.")).toBeInTheDocument();
   });
 
-  it("renders nothing extra when no actions are passed", () => {
+  it("renders no links of its own", () => {
+    // The hero is title + lead only. The `actions` slot it used to carry was
+    // never passed by any of the seven call sites and was removed with the
+    // 2026-08-08 audit cleanup; /makler's CTA lives in the focus header.
     render(<PageHero title="Titel" lead="Der Vorspann." src="/images/x.webp" />);
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
-  });
-
-  it("renders an optional actions slot below the lead", () => {
-    render(
-      <PageHero
-        title="Titel"
-        lead="Der Vorspann."
-        src="/images/x.webp"
-        actions={<a href="#termin">Erstgespräch vereinbaren</a>}
-      />,
-    );
-    expect(screen.getByRole("link", { name: "Erstgespräch vereinbaren" })).toHaveAttribute(
-      "href",
-      "#termin",
-    );
   });
 });

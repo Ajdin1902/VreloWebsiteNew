@@ -64,6 +64,25 @@ describe("evaluateLeadCheckSubmission", () => {
   });
 });
 
+describe("booking duration", () => {
+  it("promises the same call length as /makler", async () => {
+    // /makler says "30 Minuten" twice; the lead-check email used to say
+    // "15-Minuten-Gespräch", so a prospect who saw both was told two different
+    // things about the same booking. (Rams audit 2026-08-08, M1.)
+    const { makler } = await import("./makler");
+    const m = buildLeadSummaryEmail({
+      email: "a@b.de",
+      result: computeResult(SLOW_ANSWERS),
+      calUrl: "https://cal.eu/vrelo/x",
+    });
+    expect(makler.cta.note).toContain("30 Minuten");
+    expect(makler.close.title).toContain("30 Minuten");
+    expect(m.html).toContain("30-Minuten-Gespräch");
+    expect(m.text).toContain("30-Minuten-Gespräch");
+    expect(m.html).not.toContain("15-Minuten");
+  });
+});
+
 describe("buildLeadCheckEmail (internal)", () => {
   it("carries score and € potential in the subject for a slow lead", () => {
     const m = buildLeadCheckEmail({

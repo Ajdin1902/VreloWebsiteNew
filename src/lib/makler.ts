@@ -15,8 +15,7 @@ export type MaklerProduct = {
   eyebrow: string;
   name: string;
   promise: string;
-  /** Deleted on /makler – the page shows, it does not explain. */
-  body?: string;
+  /** Deleted on /makler – the page shows, it does not explain. */
   /** Short chips rendered as an arrow-separated mechanism row. */
   chips?: string[];
   /** Numbered flow cards (the Document Concierge's seven steps). */
