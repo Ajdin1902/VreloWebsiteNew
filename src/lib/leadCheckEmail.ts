@@ -1,6 +1,14 @@
 // src/lib/leadCheckEmail.ts
 import { EMAIL_RE, isHoneypotTripped, isTooFast } from "./contact";
-import { computeResult, type LeadCheckAnswers, type LeadCheckResult } from "./leadCheck";
+import {
+  computeResult,
+  type LeadCheckAnswers,
+  type LeadCheckResult,
+  type Reaktionszeit,
+  type AbendsWochenende,
+  type ImTermin,
+  type Nachfassen,
+} from "./leadCheck";
 
 export function validateLeadCheckEmail(email: string): string | undefined {
   if (!EMAIL_RE.test(email.trim())) return "Bitte gib eine gültige E-Mail-Adresse an.";
@@ -122,33 +130,100 @@ export function buildLeadSummaryEmail(p: {
   return { to: p.email.trim(), subject, html, text: textLines.join("\n") };
 }
 
-export type LeadCheckEmail = { subject: string; text: string; replyTo: string };
+const REAKTIONSZEIT_LABEL: Record<Reaktionszeit, string> = {
+  unter5min: "unter 5 Minuten",
+  unter1std: "unter 1 Stunde",
+  selberTag: "am selben Tag",
+  "1bis2tage": "1–2 Tage",
+  wennZeit: "wenn ich dazu komme",
+};
+const ABENDS_LABEL: Record<AbendsWochenende, string> = { immer: "immer", manchmal: "manchmal", nein: "nein" };
+const TERMIN_LABEL: Record<ImTermin, string> = {
+  automatisch: "wird automatisch beantwortet",
+  wartet: "wartet, bis ich Zeit habe",
+  gehtUnter: "geht manchmal unter",
+};
+const NACHFASS_LABEL: Record<Nachfassen, string> = {
+  mehrmals: "mehrmals, systematisch",
+  einmal: "einmal",
+  selten: "selten",
+  nie: "nie",
+};
+
+// The lead's address is the only user-controlled string that reaches HTML.
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+export type LeadCheckEmail = { subject: string; text: string; html: string; replyTo: string };
 
 export function buildLeadCheckEmail(p: {
   email: string;
   answers: LeadCheckAnswers;
   result: LeadCheckResult;
 }): LeadCheckEmail {
-  const { email, answers, result } = p;
+  const { answers, result } = p;
+  const email = p.email.trim();
+  const fast = result.score === "schnell";
+  const subject = `Lead-Check: ${email} – ${SCORE_LABEL[result.score]}${fast ? "" : ` · ${nf.format(result.eurUpside)} €`}`;
+
+  const rows: Array<[string, string]> = [
+    ["E-Mail", escapeHtml(email)],
+    ["Anfragen/Woche", String(answers.anfragenProWoche)],
+    ["Reaktionszeit", REAKTIONSZEIT_LABEL[answers.reaktionszeit]],
+    ["Abends/Wochenende", ABENDS_LABEL[answers.abendsWochenende]],
+    ["Im Termin", TERMIN_LABEL[answers.imTermin]],
+    ["Nachfassen", NACHFASS_LABEL[answers.nachfassen]],
+    ["Provision", `${eurFmt(result.provisionUsed)}${result.provisionWasDefault ? " (Standard)" : ""}`],
+    ["Verlorene Anfragen/Jahr", `≈ ${nf.format(result.verloreneAnfragenProJahr)}`],
+    ["Zusätzliche Abschlüsse/Jahr", `≈ ${nf.format(result.zusaetzlicheAbschluesse)}`],
+  ];
+
+  const kpiCell = (n: string, l: string, main = false) =>
+    `<td style="width:33%;background:${main ? "#0a2538" : "#ece3d2"};border-radius:8px;padding:12px 8px;text-align:center"><span style="${SERIF};display:block;font-size:${main ? "22px" : "20px"};color:${main ? "#d4a24c" : "#0a2538"}">${n}</span><span style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:${main ? "#dce7eb" : "#696359"}">${l}</span></td>`;
+
+  const html = `<!doctype html>
+<html lang="de">
+  <body style="${BODY_STYLE}">
+    <div style="max-width:480px;margin:0 auto">
+      <table role="presentation" style="width:100%;border-collapse:separate;border-spacing:6px 0;margin:0 0 18px"><tr>
+        ${kpiCell(eurFmt(result.eurUpside), "Potenzial/Jahr", true)}
+        ${kpiCell(SCORE_LABEL[result.score], "Score")}
+        ${kpiCell(`${result.currentLossPct}${NBSP}%`, "Verlust aktuell")}
+      </tr></table>
+      <table role="presentation" style="width:100%;border-collapse:collapse;font-size:13.5px">
+        ${rows
+          .map(
+            ([k, v]) =>
+              `<tr><td style="padding:7px 8px;border-bottom:1px solid #e3dccc;color:#696359;width:46%">${k}</td><td style="padding:7px 8px;border-bottom:1px solid #e3dccc;font-weight:bold">${v}</td></tr>`,
+          )
+          .join("\n        ")}
+      </table>
+      <p style="font-size:12.5px;color:#696359;margin:18px 0 0">Der Lead hat seine Zusammenfassung bereits automatisch bekommen. Auf ‚Antworten‘ schreibst du ihm direkt.</p>
+    </div>
+  </body>
+</html>`;
+
   const lines = [
-    `E-Mail: ${email.trim()}`,
+    `E-Mail: ${email}`,
     "",
     "Antworten:",
     `Anfragen/Woche: ${answers.anfragenProWoche}`,
-    `Reaktionszeit: ${answers.reaktionszeit}`,
-    `Abends/Wochenende: ${answers.abendsWochenende}`,
-    `Im Termin: ${answers.imTermin}`,
-    `Nachfassen: ${answers.nachfassen}`,
-    `Provision: ${result.provisionUsed}${result.provisionWasDefault ? " (Standard)" : ""}`,
+    `Reaktionszeit: ${REAKTIONSZEIT_LABEL[answers.reaktionszeit]}`,
+    `Abends/Wochenende: ${ABENDS_LABEL[answers.abendsWochenende]}`,
+    `Im Termin: ${TERMIN_LABEL[answers.imTermin]}`,
+    `Nachfassen: ${NACHFASS_LABEL[answers.nachfassen]}`,
+    `Provision: ${nf.format(result.provisionUsed)} €${result.provisionWasDefault ? " (Standard)" : ""}`,
     "",
     "Ergebnis:",
-    `Score: ${result.score}`,
-    `Aktueller Verlust: ${result.currentLossPct}%`,
-    `Verlorene Anfragen/Jahr: ${result.verloreneAnfragenProJahr}`,
-    `Zusaetzliche Abschluesse/Jahr: ${result.zusaetzlicheAbschluesse}`,
-    `Euro-Potenzial/Jahr: ${result.eurUpside}`,
+    `Score: ${SCORE_LABEL[result.score]}`,
+    `Aktueller Verlust: ${result.currentLossPct} %`,
+    `Verlorene Anfragen/Jahr: ${nf.format(result.verloreneAnfragenProJahr)}`,
+    `Zusätzliche Abschlüsse/Jahr: ${nf.format(result.zusaetzlicheAbschluesse)}`,
+    `Euro-Potenzial/Jahr: ${nf.format(result.eurUpside)} €`,
   ];
-  return { subject: "Neuer Lead-Reaktions-Check", text: lines.join("\n"), replyTo: email.trim() };
+
+  return { subject, text: lines.join("\n"), html, replyTo: email };
 }
 
 export type LeadCheckFields = {
@@ -162,13 +237,21 @@ export type LeadCheckDecision =
   | { action: "drop" }
   | { action: "reject"; message: string }
   | { action: "invalid"; error: string }
-  | { action: "send"; email: LeadCheckEmail };
+  | { action: "send"; leadEmail: LeadSummaryEmail; internalEmail: LeadCheckEmail };
 
-export function evaluateLeadCheckSubmission(f: LeadCheckFields, now: number): LeadCheckDecision {
+export function evaluateLeadCheckSubmission(
+  f: LeadCheckFields,
+  now: number,
+  calUrl?: string,
+): LeadCheckDecision {
   if (isHoneypotTripped(f.honeypot)) return { action: "drop" };
   if (isTooFast(f.renderedAt, now)) return { action: "reject", message: "Bitte versuch es gleich noch einmal." };
   const emailErr = validateLeadCheckEmail(f.email);
   if (emailErr) return { action: "invalid", error: emailErr };
   const result = computeResult(f.answers);
-  return { action: "send", email: buildLeadCheckEmail({ email: f.email, answers: f.answers, result }) };
+  return {
+    action: "send",
+    leadEmail: buildLeadSummaryEmail({ email: f.email, result, calUrl }),
+    internalEmail: buildLeadCheckEmail({ email: f.email, answers: f.answers, result }),
+  };
 }
