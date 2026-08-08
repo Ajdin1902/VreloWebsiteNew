@@ -4,10 +4,10 @@ import { Reveal } from "@/components/Reveal";
 // The recurring everyday tasks, phrased as daily pains (verbs); the Was-ich-baue
 // section then shows them handled (problem -> solution echo).
 const tasks = [
-  "Termine bestätigen und daran erinnern",
-  "Nach jedem Auftrag um eine Bewertung bitten",
+  "Aus Kundenanfragen Termine buchen",
+  "Fehlenden Unterlagen hinterherlaufen",
   "Rechnungen schreiben und nachfassen",
-  "Daten von einem Tool ins nächste übertragen",
+  "Daten von einem System ins nächste übertragen",
 ];
 
 export function Problem() {

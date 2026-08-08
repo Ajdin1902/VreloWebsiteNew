@@ -8,10 +8,11 @@ describe("Problem", () => {
     expect(
       screen.getByRole("heading", { name: /Kleinkram frisst deinen Tag/i }),
     ).toBeInTheDocument();
-    expect(screen.getByText(/Termine bestätigen und daran erinnern/i)).toBeInTheDocument();
+    expect(screen.getByText(/Aus Kundenanfragen Termine buchen/i)).toBeInTheDocument();
+    expect(screen.getByText(/Fehlenden Unterlagen hinterherlaufen/i)).toBeInTheDocument();
     expect(screen.getByText(/Rechnungen schreiben und nachfassen/i)).toBeInTheDocument();
     expect(
-      screen.getByText(/Daten von einem Tool ins nächste übertragen/i),
+      screen.getByText(/Daten von einem System ins nächste übertragen/i),
     ).toBeInTheDocument();
   });
 
