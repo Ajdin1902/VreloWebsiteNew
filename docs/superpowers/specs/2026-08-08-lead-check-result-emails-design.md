@@ -18,7 +18,7 @@ Two branded HTML emails per submission:
 
 All email construction stays in the pure module `src/lib/leadCheckEmail.ts` (no React/IO – same pure-core split as today). The Server Action `src/app/lead-check/actions.ts` sends both via Resend.
 
-- `buildLeadSummaryEmail({ email, answers, result, calUrl })` → `{ to, subject, html, text }` (new)
+- `buildLeadSummaryEmail({ email, result, calUrl })` → `{ to, subject, html, text }` (new; the lead copy needs only the result, not the raw answers)
 - `buildLeadCheckEmail({ email, answers, result })` → gains an `html` field next to `text` (internal)
 - `evaluateLeadCheckSubmission` returns both payloads on `action: "send"` (e.g. `{ leadEmail, internalEmail }`); honeypot / too-fast / validation logic unchanged.
 - `calUrl` derivation: `NEXT_PUBLIC_CAL_LINK` is a **path** (SchedulerEmbed pins `calOrigin` to `https://cal.eu`), so the booking URL is `` `https://cal.eu/${calLink()}` ``. Derived in the action (env access), passed into the pure builder.
