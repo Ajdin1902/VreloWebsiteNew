@@ -38,14 +38,18 @@ beforeEach(() => {
 afterEach(() => vi.unstubAllEnvs());
 
 describe("submitLeadCheckEmail", () => {
-  it("sends via Resend on a clean submission", async () => {
+  it("sends the lead summary first, then the internal notification", async () => {
     const r = await submitLeadCheckEmail(initial, fd(good));
     expect(r.status).toBe("ok");
-    expect(send).toHaveBeenCalledTimes(1);
-    const arg = send.mock.calls[0][0];
-    expect(arg.to).toBe("hallo@example.de");
-    expect(arg.replyTo).toBe("makler@example.de");
-    expect(arg.text).toContain("Score: langsam");
+    expect(send).toHaveBeenCalledTimes(2);
+    const lead = send.mock.calls[0][0];
+    expect(lead.to).toBe("makler@example.de");
+    expect(lead.subject).toBe("Dein Ergebnis: Lead-Reaktions-Check");
+    expect(lead.html).toContain("168.000");
+    const internal = send.mock.calls[1][0];
+    expect(internal.to).toBe("hallo@example.de");
+    expect(internal.replyTo).toBe("makler@example.de");
+    expect(internal.text).toContain("Score: langsam");
   });
 
   it("silently succeeds without sending on a honeypot hit", async () => {
@@ -60,10 +64,19 @@ describe("submitLeadCheckEmail", () => {
     expect(send).not.toHaveBeenCalled();
   });
 
-  it("returns error when Resend resolves an error object", async () => {
+  it("returns error when the lead send resolves an error object", async () => {
     send.mockResolvedValueOnce({ data: null, error: { name: "x", message: "bad" } });
     const r = await submitLeadCheckEmail(initial, fd(good));
     expect(r.status).toBe("error");
+  });
+
+  it("stays ok when only the internal send fails", async () => {
+    send
+      .mockResolvedValueOnce({ data: { id: "1" }, error: null })
+      .mockRejectedValueOnce(new Error("internal boom"));
+    const r = await submitLeadCheckEmail(initial, fd(good));
+    expect(r.status).toBe("ok");
+    expect(send).toHaveBeenCalledTimes(2);
   });
 
   it("reports not-configured when env is missing", async () => {
@@ -73,16 +86,16 @@ describe("submitLeadCheckEmail", () => {
     expect(send).not.toHaveBeenCalled();
   });
 
-  it("returns error when Resend throws", async () => {
+  it("returns error when the lead send throws", async () => {
     send.mockRejectedValueOnce(new Error("network error"));
     const r = await submitLeadCheckEmail(initial, fd(good));
     expect(r.status).toBe("error");
   });
 
-  it("falls back to safe defaults for unknown enum values (no NaN in the email)", async () => {
+  it("falls back to safe defaults for unknown enum values (no NaN in either email)", async () => {
     const r = await submitLeadCheckEmail(initial, fd({ ...good, reaktionszeit: "garbage" }));
     expect(r.status).toBe("ok");
-    const arg = send.mock.calls[0][0];
-    expect(arg.text).not.toContain("NaN");
+    expect(send.mock.calls[0][0].html).not.toContain("NaN");
+    expect(send.mock.calls[1][0].text).not.toContain("NaN");
   });
 });

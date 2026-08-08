@@ -13,6 +13,13 @@ export function calLink(): string | undefined {
   return process.env.NEXT_PUBLIC_CAL_LINK;
 }
 
+// Booking URL for emails: NEXT_PUBLIC_CAL_LINK is a path; the account lives
+// in the EU data region, so the origin is cal.eu (see SchedulerEmbed).
+export function calBookingUrl(): string | undefined {
+  const link = calLink();
+  return link ? `https://cal.eu/${link}` : undefined;
+}
+
 export function isContactConfigured(): boolean {
   return Boolean(resendKey() && contactFrom() && contactTo());
 }

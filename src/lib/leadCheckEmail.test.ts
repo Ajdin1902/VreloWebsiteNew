@@ -1,7 +1,12 @@
 // src/lib/leadCheckEmail.test.ts
 import { describe, it, expect } from "vitest";
-import { evaluateLeadCheckSubmission, type LeadCheckFields } from "./leadCheckEmail";
-import type { LeadCheckAnswers } from "./leadCheck";
+import {
+  buildLeadCheckEmail,
+  buildLeadSummaryEmail,
+  evaluateLeadCheckSubmission,
+  type LeadCheckFields,
+} from "./leadCheckEmail";
+import { computeResult, type LeadCheckAnswers } from "./leadCheck";
 
 const answers: LeadCheckAnswers = {
   anfragenProWoche: 10,
@@ -13,6 +18,24 @@ const answers: LeadCheckAnswers = {
 };
 
 const good: LeadCheckFields = { email: "makler@example.de", honeypot: "", renderedAt: 0, answers };
+
+// -> 50 % loss, 42 Abschluesse, 168.000 EUR, score "langsam"; provision defaulted
+const SLOW_ANSWERS: LeadCheckAnswers = {
+  anfragenProWoche: 10,
+  reaktionszeit: "selberTag",
+  abendsWochenende: "manchmal",
+  imTermin: "wartet",
+  nachfassen: "einmal",
+};
+
+// -> score "schnell"
+const FAST_ANSWERS: LeadCheckAnswers = {
+  anfragenProWoche: 10,
+  reaktionszeit: "unter5min",
+  abendsWochenende: "immer",
+  imTermin: "automatisch",
+  nachfassen: "mehrmals",
+};
 
 describe("evaluateLeadCheckSubmission", () => {
   it("drops a honeypot hit", () => {
@@ -29,14 +52,101 @@ describe("evaluateLeadCheckSubmission", () => {
     expect(d.action).toBe("invalid");
   });
 
-  it("builds the email with the recomputed result and answers", () => {
-    const d = evaluateLeadCheckSubmission(good, 999999);
+  it("returns both payloads with the calUrl threaded into the lead email", () => {
+    const d = evaluateLeadCheckSubmission(good, 999999, "https://cal.eu/vrelo/15min");
     expect(d.action).toBe("send");
     if (d.action === "send") {
-      expect(d.email.replyTo).toBe("makler@example.de");
-      expect(d.email.text).toContain("Score: langsam");
-      expect(d.email.text).toContain("168000");
-      expect(d.email.text).toContain("Reaktionszeit: selberTag");
+      expect(d.leadEmail.to).toBe("makler@example.de");
+      expect(d.leadEmail.html).toContain("https://cal.eu/vrelo/15min");
+      expect(d.internalEmail.replyTo).toBe("makler@example.de");
+      expect(d.internalEmail.text).toContain("Score: langsam");
     }
+  });
+});
+
+describe("buildLeadCheckEmail (internal)", () => {
+  it("carries score and € potential in the subject for a slow lead", () => {
+    const m = buildLeadCheckEmail({
+      email: "max@beispiel.de",
+      answers: SLOW_ANSWERS,
+      result: computeResult(SLOW_ANSWERS),
+    });
+    expect(m.subject).toBe("Lead-Check: max@beispiel.de – langsam · 168.000 €");
+    expect(m.replyTo).toBe("max@beispiel.de");
+  });
+
+  it("omits the € from the subject for a fast lead", () => {
+    const m = buildLeadCheckEmail({ email: "a@b.de", answers: FAST_ANSWERS, result: computeResult(FAST_ANSWERS) });
+    expect(m.subject).toBe("Lead-Check: a@b.de – schnell");
+  });
+
+  it("renders KPI tiles and German answer labels in the html", () => {
+    const m = buildLeadCheckEmail({
+      email: "max@beispiel.de",
+      answers: SLOW_ANSWERS,
+      result: computeResult(SLOW_ANSWERS),
+    });
+    expect(m.html).toContain("168.000");
+    expect(m.html).toContain("am selben Tag");
+    expect(m.html).toContain("wartet, bis ich Zeit habe");
+    expect(m.html).toContain("(Standard)");
+  });
+
+  it("escapes the lead email in the html", () => {
+    const m = buildLeadCheckEmail({
+      email: 'x"<img>@b.de',
+      answers: SLOW_ANSWERS,
+      result: computeResult(SLOW_ANSWERS),
+    });
+    expect(m.html).not.toContain("<img>");
+    expect(m.html).toContain("&lt;img&gt;");
+  });
+});
+
+describe("buildLeadSummaryEmail", () => {
+  const CAL = "https://cal.eu/vrelo/15min";
+
+  it("puts the money figures central for a slow score (html + text)", () => {
+    const m = buildLeadSummaryEmail({ email: "max@beispiel.de", result: computeResult(SLOW_ANSWERS), calUrl: CAL });
+    expect(m.to).toBe("max@beispiel.de");
+    expect(m.subject).toBe("Dein Ergebnis: Lead-Reaktions-Check");
+    expect(m.html).toContain("42 Abschl");
+    expect(m.html).toContain("168.000");
+    expect(m.html).toContain("50\u00A0%");
+    expect(m.text).toContain("168.000");
+    expect(m.html).toContain(CAL);
+  });
+
+  it("shows the default-provision fine print only when provision was defaulted", () => {
+    const def = buildLeadSummaryEmail({ email: "a@b.de", result: computeResult(SLOW_ANSWERS), calUrl: CAL });
+    expect(def.html).toContain("Branchenschnitt");
+    const custom = buildLeadSummaryEmail({
+      email: "a@b.de",
+      result: computeResult({ ...SLOW_ANSWERS, provision: 2500 }),
+      calUrl: CAL,
+    });
+    expect(custom.html).not.toContain("Branchenschnitt");
+    expect(custom.html).toContain("2.500");
+  });
+
+  it("makes no money promise for a fast score", () => {
+    const m = buildLeadSummaryEmail({ email: "a@b.de", result: computeResult(FAST_ANSWERS), calUrl: CAL });
+    expect(m.html).toContain("Du reagierst schon schnell.");
+    expect(m.html).not.toContain("€");
+    expect(m.text).not.toContain("€");
+    expect(m.html).toContain("Tempo absichern");
+    expect(m.html).toContain(CAL); // CTA band stays
+  });
+
+  it("falls back to a reply line when no calUrl is configured", () => {
+    const m = buildLeadSummaryEmail({ email: "a@b.de", result: computeResult(SLOW_ANSWERS) });
+    expect(m.html).not.toContain("<a ");
+    expect(m.html).toContain("Antworte einfach auf diese E-Mail");
+  });
+
+  it("contains no site links", () => {
+    const m = buildLeadSummaryEmail({ email: "a@b.de", result: computeResult(SLOW_ANSWERS), calUrl: CAL });
+    expect(m.html).not.toContain("vercel.app");
+    expect(m.text).not.toContain("vercel.app");
   });
 });

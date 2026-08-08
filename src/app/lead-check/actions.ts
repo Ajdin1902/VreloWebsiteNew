@@ -2,7 +2,7 @@
 "use server";
 
 import { Resend } from "resend";
-import { isContactConfigured, contactFrom, contactTo, resendKey } from "@/lib/contact";
+import { isContactConfigured, contactFrom, contactTo, resendKey, calBookingUrl } from "@/lib/contact";
 import { evaluateLeadCheckSubmission, type LeadCheckFields } from "@/lib/leadCheckEmail";
 import type { LeadCheckAnswers } from "@/lib/leadCheck";
 
@@ -41,7 +41,7 @@ export async function submitLeadCheckEmail(
   _prev: LeadCheckEmailState,
   formData: FormData,
 ): Promise<LeadCheckEmailState> {
-  const decision = evaluateLeadCheckSubmission(parse(formData), Date.now());
+  const decision = evaluateLeadCheckSubmission(parse(formData), Date.now(), calBookingUrl());
 
   if (decision.action === "drop") return { status: "ok" };
   if (decision.action === "reject") return { status: "error", message: decision.message };
@@ -53,14 +53,28 @@ export async function submitLeadCheckEmail(
 
   try {
     const resend = new Resend(resendKey());
-    const { error } = await resend.emails.send({
+    // The lead's summary is the promise on the page — it goes out first and
+    // decides the UI state. The internal notification must never break it.
+    const lead = await resend.emails.send({
       from: contactFrom()!,
-      to: contactTo()!,
-      replyTo: decision.email.replyTo,
-      subject: decision.email.subject,
-      text: decision.email.text,
+      to: decision.leadEmail.to,
+      subject: decision.leadEmail.subject,
+      html: decision.leadEmail.html,
+      text: decision.leadEmail.text,
     });
-    if (error) return { status: "error", message: GENERIC_ERROR };
+    if (lead.error) return { status: "error", message: GENERIC_ERROR };
+    try {
+      await resend.emails.send({
+        from: contactFrom()!,
+        to: contactTo()!,
+        replyTo: decision.internalEmail.replyTo,
+        subject: decision.internalEmail.subject,
+        html: decision.internalEmail.html,
+        text: decision.internalEmail.text,
+      });
+    } catch {
+      // Internal-only failure: the lead got their summary; don't fail the UI.
+    }
     return { status: "ok" };
   } catch {
     return { status: "error", message: GENERIC_ERROR };
