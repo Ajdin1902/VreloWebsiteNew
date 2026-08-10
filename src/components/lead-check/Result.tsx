@@ -102,6 +102,22 @@ export function Result({
         </p>
       </div>
 
+      <div>
+        <h3 className="text-lg font-semibold text-tiefes-wasser">Genau das übernimmt die Termin-Quelle</h3>
+        <p className="mt-3 text-tinte">
+          Die drei Dinge von oben sind einfach. Schwer ist nur, sie durchzuhalten {"–"} bei jeder Anfrage. Ein
+          System tut genau das:
+        </p>
+        <ul className="mt-3 list-disc space-y-1 pl-5 text-tinte">
+          <li>
+            Die Termin-Quelle antwortet auf jede neue Anfrage in unter fünf Minuten {"–"} auch abends, auch am
+            Wochenende.
+          </li>
+          <li>Sie stellt die richtigen Fragen und schlägt einen Termin vor.</li>
+          <li>Meldet sich jemand nicht, fasst sie von selbst nach {"–"} ohne dass du daran denken musst.</li>
+        </ul>
+      </div>
+
       <div className="rounded-2xl bg-vrelo-petrol p-8 md:p-10">
         <p className="text-balance font-serif text-xl text-papier md:text-2xl">
           Willst du, dass das von selbst läuft – auch wenn du im Termin sitzt? Genau das ist die Termin-Quelle.

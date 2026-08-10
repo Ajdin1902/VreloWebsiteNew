@@ -36,4 +36,26 @@ describe("Result", () => {
     render(<Result answers={langsam} result={computeResult(langsam)} calLink={undefined} />);
     expect(screen.getByText(/Wie wir rechnen/)).toBeInTheDocument();
   });
+
+  it("mirrors the tips as things the Termin-Quelle does (slow profile)", () => {
+    render(<Result answers={langsam} result={computeResult(langsam)} calLink={undefined} />);
+    expect(screen.getByText(/Genau das übernimmt die Termin-Quelle/)).toBeInTheDocument();
+    expect(screen.getByText(/antwortet auf jede neue Anfrage in unter fünf Minuten/)).toBeInTheDocument();
+    expect(screen.getByText(/schlägt einen Termin vor/)).toBeInTheDocument();
+    expect(screen.getByText(/fasst sie von selbst nach/)).toBeInTheDocument();
+  });
+
+  it("shows the solution mirror for an already-fast profile too", () => {
+    render(<Result answers={schnell} result={computeResult(schnell)} calLink={undefined} />);
+    expect(screen.getByText(/Genau das übernimmt die Termin-Quelle/)).toBeInTheDocument();
+  });
+
+  it("uses German typography in the mirror block (en-dash, no em-dash, no ASCII quote)", () => {
+    render(<Result answers={langsam} result={computeResult(langsam)} calLink={undefined} />);
+    const heading = screen.getByText(/Genau das übernimmt die Termin-Quelle/);
+    const text = heading.closest("div")?.textContent ?? "";
+    expect(text).toContain("–"); // spaced en-dash present
+    expect(text).not.toContain("—"); // no em-dash
+    expect(text).not.toContain('"'); // no ASCII double-quote
+  });
 });
