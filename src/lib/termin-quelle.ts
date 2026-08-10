@@ -18,8 +18,8 @@ export type TerminQuelleAngebot = {
 export const terminQuelle: TerminQuelleAngebot = {
   label: "Mein Angebot",
   name: "Die Termin-Quelle",
-  promise: "Aus jeder Anfrage wird ein Termin – von selbst, während du arbeitest.",
-  body: "Eine Anfrage kommt herein – und bleibt im Tagesgeschäft liegen, bis der Wettbewerber schneller war. Die Termin-Quelle schließt diese Lücke: Jede Anfrage bekommt in unter fünf Minuten eine persönliche Antwort und wird zum Termin – maßgeschneidert auf deinen Betrieb, sauber protokolliert. Nichts, das du lernen oder warten musst.",
+  promise: "Jede Anfrage bekommt sofort eine Antwort – und den Weg zum Termin, während du arbeitest.",
+  body: "Eine Anfrage kommt herein – und bleibt im Tagesgeschäft liegen, bis der Wettbewerber schneller war. Die Termin-Quelle schließt diese Lücke: Jede Anfrage bekommt in unter fünf Minuten eine Antwort und den Weg zum Termin – maßgeschneidert auf deinen Betrieb, sauber protokolliert. Nichts, das du lernen oder warten musst.",
   flow: ["Antwort < 5 Minuten", "Qualifizieren", "Termin buchen", "Nachfassen", "Protokoll"],
   outcome:
     "Du gewinnst mehr Termine aus den Anfragen, die du ohnehin schon hast – und einen ruhigen Kopf, weil keine Anfrage mehr verloren geht.",

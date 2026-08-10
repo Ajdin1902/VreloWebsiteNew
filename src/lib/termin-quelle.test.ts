@@ -12,10 +12,20 @@ describe("terminQuelle offer copy", () => {
     expect(terminQuelle.cta.label.trim()).not.toBe("");
   });
 
-  it("is the Termin-Quelle offer: promise turns Anfragen into Termine", () => {
+  it("is the Termin-Quelle offer: promise names Anfrage and the Weg zum Termin", () => {
     expect(terminQuelle.name).toBe("Die Termin-Quelle");
     expect(terminQuelle.promise).toContain("Anfrage");
     expect(terminQuelle.promise).toContain("Termin");
+  });
+
+  it("promises the mechanism, not a universal outcome (Rams 2026-08-08 / realign 2026-08-10)", () => {
+    // Never promise that every inquiry BECOMES an appointment — that is an outcome
+    // the lead controls, on a product with zero deliveries. Promise the answer + the
+    // path to the Termin. Guards against the stale „aus jeder Anfrage wird ein Termin".
+    const serialized = JSON.stringify(terminQuelle);
+    expect(serialized).not.toMatch(/aus jeder Anfrage wird ein Termin/i);
+    expect(serialized).not.toMatch(/wird zum Termin/i);
+    expect(terminQuelle.promise).toContain("Antwort");
   });
 
   it("has exactly the five-step flow, each non-empty", () => {
