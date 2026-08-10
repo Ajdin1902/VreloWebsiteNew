@@ -190,6 +190,13 @@ export function Protokoll({ calLink, seed, transcript }: { calLink: string | und
         )}
       </div>
 
+      <div className="mt-8 rounded-xl border border-faden bg-papier p-5 text-left">
+        <h3 className="text-sm font-semibold text-tiefes-wasser">So läuft es bei dir – ohne KI.</h3>
+        <p className="mt-2 max-w-prose text-sm text-tinte">
+          Diese Demo ist der Vorgeschmack. Live tippt dein Kunde sein Anliegen an, beantwortet zwei kurze Fragen und wählt einen freien Termin – eine schlanke, feste Buchungsstrecke. Kein Sprachmodell, das etwas Falsches sagen könnte; keine Kundendaten, die durch eine KI laufen. Das macht sie zuverlässig und sauber.
+        </p>
+      </div>
+
       <AbschlussCta calLink={calLink} />
 
       {transcript.length > 0 ? (

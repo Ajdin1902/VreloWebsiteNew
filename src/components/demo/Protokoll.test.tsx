@@ -54,6 +54,17 @@ describe("Protokoll", () => {
     expect(cta.getAttribute("href")).toContain("/kontakt");
   });
 
+  it("imprints the deterministic, no-AI production flow before the CTA", async () => {
+    vi.spyOn(global, "fetch").mockResolvedValue(
+      jsonResponse({ name: "Alen", anliegen: "Baufinanzierung", termin: "Mo 6.7. 10:00", offenePunkte: [], email: "" }),
+    );
+    render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={transcript} />);
+
+    expect(await screen.findByText(/So läuft es bei dir – ohne KI/)).toBeInTheDocument();
+    expect(screen.getByText(/eine schlanke, feste Buchungsstrecke/)).toBeInTheDocument();
+    expect(screen.getByText(/keine Kundendaten, die durch eine KI laufen/)).toBeInTheDocument();
+  });
+
   it("renders the email row and a simulated confirmation-mail preview when an email is present", async () => {
     vi.spyOn(global, "fetch").mockResolvedValue(
       jsonResponse({ name: "Alen", anliegen: "Baufinanzierung", termin: "Mo 6.7. 10:00", offenePunkte: [], email: "alen@example.de" }),
