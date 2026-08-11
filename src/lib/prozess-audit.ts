@@ -17,8 +17,8 @@ export type ProzessAudit = {
 export const prozessAudit: ProzessAudit = {
   label: "Nicht sicher, wo du anfangen sollst?",
   heading: "Der Prozess-Audit – ich finde die eine Aufgabe, die dich am meisten kostet.",
-  body: "Du merkst, dass Zeit und Anfragen durchrutschen – aber nicht, wo genau. Im Prozess-Audit schaue ich mir deine Abläufe genau an und du bekommst ein fertiges Handbuch: ein Diagramm, wie dein Prozess danach läuft, den genauen Fahrplan für die Automatisierung und die Rechnung dahinter – was die Aufgabe dich heute kostet und was sie dir zurückgibt, ausgerechnet. Am Ende hast du schwarz auf weiß, was dir Automatisierung bringt. Wenn du danach baust, ist der Audit für dich kostenlos.",
-  deliverableLabel: "Das bekommst du – schwarz auf weiß",
+  body: "Du merkst, dass Zeit und Anfragen durchrutschen – aber nicht, wo genau. Im Prozess-Audit schaue ich mir deine Abläufe an und du bekommst ein fertiges Handbuch: schwarz auf weiß, wo du am meisten verlierst und wie dein Tag ohne diese Aufgabe aussieht. Wenn du danach baust, ist der Audit für dich kostenlos.",
+  deliverableLabel: "Das bekommst du",
   deliverables: [
     "Deine Abläufe, Schritt für Schritt kartiert",
     "Ein Diagramm, wie dein Prozess nach der Automatisierung läuft",
