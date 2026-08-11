@@ -11,9 +11,10 @@ export function ProzessAudit() {
   const o = prozessAudit;
   return (
     <div className="card-depth mx-auto max-w-3xl rounded-2xl bg-tiefes-wasser/40 p-8 ring-1 ring-amber/25 md:p-10">
-      <span className="inline-block rounded-full bg-amber px-3 py-1 text-xs font-semibold uppercase tracking-wide text-tiefes-wasser">
-        {o.label}
-      </span>
+      {/* A quiet sentence-case lead-in question — not the flagship's short pill
+          badge, which reads heavy and wraps at 390px for a 34-char question. The
+          heading answers it. gletscher for AA on the dark card (amber fails). */}
+      <p className="text-sm font-medium text-gletscher">{o.label}</p>
       <h2 className="mt-4 text-balance text-2xl font-semibold tracking-tight text-papier md:text-3xl">
         {o.heading}
       </h2>
