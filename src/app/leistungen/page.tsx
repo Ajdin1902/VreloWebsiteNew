@@ -6,6 +6,7 @@ import { LeistungDetail } from "@/components/leistungen/LeistungDetail";
 import { TerminQuelleAngebot } from "@/components/leistungen/TerminQuelleAngebot";
 import { Referenzen } from "@/components/leistungen/Referenzen";
 import { MehrMoeglich } from "@/components/leistungen/MehrMoeglich";
+import { ProzessAudit } from "@/components/leistungen/ProzessAudit";
 import { Reveal } from "@/components/Reveal";
 import { leistungen } from "@/lib/leistungen";
 import { JsonLd } from "@/components/JsonLd";
@@ -64,6 +65,13 @@ export default function LeistungenPage() {
         );
       })}
       <MehrMoeglich />
+      {/* Paid-audit on-ramp: pulled up so it butts the petrol MehrMoeglich as one
+          region, then the paper Referenzen below gives the clean tone divider. */}
+      <Section tone="petrol" className="-mt-24 md:-mt-32">
+        <Reveal>
+          <ProzessAudit />
+        </Reveal>
+      </Section>
       <Referenzen />
       <ClosingCta
         heading="Lass uns deine Quelle bauen."
