@@ -21,6 +21,11 @@ describe("ProzessAudit", () => {
     expect(screen.getByText(prozessAudit.guarantee)).toBeInTheDocument();
   });
 
+  it("shows the keep-note (the fahrplan-is-yours reassurance)", () => {
+    render(<ProzessAudit />);
+    expect(screen.getByText(prozessAudit.keepNote)).toBeInTheDocument();
+  });
+
   it("links the CTA to the free Erstgespräch", () => {
     render(<ProzessAudit />);
     const cta = screen.getByRole("link", { name: prozessAudit.cta.label });

@@ -34,7 +34,8 @@ export function ProzessAudit() {
         ))}
       </ul>
 
-      <p className="mt-8 max-w-2xl text-pretty text-sm italic text-gletscher">{o.guarantee}</p>
+      <p className="mt-8 text-sm font-medium text-papier">{o.keepNote}</p>
+      <p className="mt-3 max-w-2xl text-pretty text-sm italic text-gletscher">{o.guarantee}</p>
 
       <div className="mt-8">
         <CTAButton href={o.cta.href} tone="dark">

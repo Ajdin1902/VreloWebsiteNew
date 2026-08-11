@@ -9,6 +9,7 @@ export type ProzessAudit = {
   body: string;
   deliverableLabel: string;
   deliverables: string[];
+  keepNote: string;
   guarantee: string;
   cta: { label: string; href: string };
 };
@@ -25,6 +26,7 @@ export const prozessAudit: ProzessAudit = {
     "Die Rechnung dahinter: was die Aufgabe heute kostet und was sie dir zurückgibt – ausgerechnet",
     "Ein klares Ziel und der Zeitrahmen, bis es steht",
   ],
+  keepNote: "Dein Fahrplan gehört dir – ob du danach mit mir baust oder nicht.",
   guarantee: "Zeigt dir der Fahrplan keine konkrete, lohnende Automatisierung, bekommst du dein Geld zurück.",
   cta: { label: "Kostenloses Erstgespräch", href: "/kontakt" },
 };
