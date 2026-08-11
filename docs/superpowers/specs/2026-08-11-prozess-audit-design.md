@@ -114,6 +114,12 @@ A new presentational component (working name `ProzessAudit`) reading from a new 
 - A dedicated `/prozess-audit` page (a Leistungen block is enough for v1; promote to its own page only if outreach demand justifies it).
 - `/makler` changes (the outreach page already closes on the scheduler; fold the audit into that conversation verbally for now — reassess after the first audits sell).
 - Route B (teach-you-to-DIY consulting) — parked.
+- **Qualifikations-Quiz — parked (2026-08-11), own brainstorm next.** A short on-page quiz so a visitor can self-check whether the audit is relevant for him / what he needs, before booking the call. Almost certainly reuses/extends the existing `/lead-check` 6-question quiz engine (`src/lib/leadCheck.ts` `computeResult` + the focus-route pattern) rather than a new build. Needs its own brainstorm → spec → plan; not part of this block.
+
+## As-built notes (post-review, 2026-08-11)
+- **Eyebrow is a sentence-case lead-in, not a pill badge** — a 34-char question in the flagship's uppercase amber pill read heavy and wrapped at 390px (code-review finding). Rendered as a quiet `gletscher` lead-in the heading answers.
+- **Deliverable copy made specific** (founder request): the five inclusions name the target-state diagram, the exact build roadmap, the calculated business case (cost today vs. return), and the goal + timeframe — „a clear plan on what automation gives you“, not „a document“.
+- **Second risk-reversal shipped:** „Dein Fahrplan gehört dir – ob du danach mit mir baust oder nicht.“ sits above the money-back guarantee (Hormozi bonus-stack pass — the one bonus that reads well on-page; the rest stay in the sales script). Full Grand Slam Offer treatment: `Knowledge/marketing/prozess-audit-offer.md`.
 
 ---
 
