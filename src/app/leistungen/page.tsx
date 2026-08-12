@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   alternates: { canonical: canonical("/leistungen") },
   title: "Leistungen",
   description:
-    "Maßgeschneiderte Automatisierungen für kleine Betriebe: von Anfragen & Leads über Termine, Angebote & Rechnungen und Nachfass-Mails bis zu Datensync, wiederkehrender Kommunikation und Bewertungen.",
+    "Maßgeschneiderte Automatisierungen für kleine Betriebe: von Anfragen & Leads über Termine und Angebote & Rechnungen bis zur Dateneingabe.",
 };
 
 export default function LeistungenPage() {
@@ -35,10 +35,11 @@ export default function LeistungenPage() {
         </Reveal>
       </Section>
       {/* Paid-audit on-ramp, right beneath the flagship: the "not sure where to
-          start?" entry, caught before the visitor wades through the 7 Bausteine.
-          A warm highlighted card (its own component) between the cool flagship
-          and the plain menu — the contrast is the highlight. */}
-      <Section tone="paper" className="-mt-24 md:-mt-32">
+          start?" entry, caught before the visitor wades through the Bausteine.
+          A warm card on a petrol band — the dark background fills the top and
+          the light card pops; stays distinct from the dark MehrMoeglich card at
+          the end. */}
+      <Section tone="petrol" className="-mt-24 md:-mt-32">
         <Reveal>
           <ProzessAudit />
         </Reveal>
@@ -55,10 +56,11 @@ export default function LeistungenPage() {
         </Reveal>
       </Section>
       {leistungen.map((leistung, index) => {
-        // Every other detail sits on a petrol-dark band; the light card floats
-        // on it. Same parity that used to drive the faint tint. The petrol/paper
-        // contrast is the divider — no line.
-        const onDark = index % 2 === 1;
+        // Inverted parity (was index % 2 === 1): the menu now opens on a petrol
+        // band and alternates paper/petrol from there, matching the dark-forward
+        // ribbon (petrol audit → paper intro → petrol 01 → paper 02 → …). The
+        // petrol/paper contrast is the divider — no line.
+        const onDark = index % 2 === 0;
         return (
           <Section
             key={leistung.slug}
