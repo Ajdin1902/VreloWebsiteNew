@@ -3,18 +3,19 @@ import { CTAButton } from "@/components/CTAButton";
 import { prozessAudit } from "@/lib/prozess-audit";
 
 // The paid-audit on-ramp, lifted directly beneath the flagship Termin-Quelle as
-// the "not sure where to start?" entry. A warm sonnenlicht card with an amber
-// ring so it reads as the highlighted recommended path — contrasting the cool
-// deep-petrol flagship above and the plain paper menu below (this contrast is
-// the highlight; it also keeps it from reading as a twin of the petrol
-// MehrMoeglich capstone at the end). On-light AA: ember for small accent text
+// the "not sure where to start?" entry. A warm sonnenlicht card seated on a
+// petrol band: the dark background fills the top of the page and the light card
+// pops off it as the highlighted recommended path. A crisp light edge + deep
+// shadow lift it off the petrol (the amber ring would vanish against the dark);
+// it stays distinct from the dark MehrMoeglich capstone at the end. On-light
+// AA: ember for small accent text
 // (clears AA on sonnenlicht), tinte body, tiefes-wasser headings, navy inverse
 // CTA. Price-free (site convention); routes to the free Erstgespräch where the
 // fee is named. No mechanism (Claude/n8n) — that is how Vrelo builds.
 export function ProzessAudit() {
   const o = prozessAudit;
   return (
-    <div className="card-depth mx-auto max-w-3xl rounded-2xl bg-sonnenlicht p-8 ring-1 ring-amber/50 md:p-10">
+    <div className="shadow-deepwater mx-auto max-w-3xl rounded-2xl bg-sonnenlicht p-8 ring-1 ring-papier/25 md:p-10">
       {/* Sentence-case lead-in (not an uppercase/pill badge — a 34-char question
           reads heavy that way and wraps at 390px). The heading answers it. */}
       <p className="text-sm font-medium text-ember">{o.label}</p>
