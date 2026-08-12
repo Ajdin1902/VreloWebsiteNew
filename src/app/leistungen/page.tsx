@@ -38,14 +38,18 @@ export default function LeistungenPage() {
           start?" entry, caught before the visitor wades through the Bausteine.
           A warm card on a petrol band — the dark background fills the top and
           the light card pops; stays distinct from the dark MehrMoeglich card at
-          the end. */}
-      <Section tone="petrol" className="-mt-24 md:-mt-32">
+          the end. No -mt here: once the bands alternate colour, collapsing the
+          gap pulls the petrol up over the flagship's bottom padding and the card
+          butts the seam. Each band keeps its full, symmetric py (same as the
+          Bausteine below). */}
+      <Section tone="petrol">
         <Reveal>
           <ProzessAudit />
         </Reveal>
       </Section>
-      {/* Reframe the 7 services as the toolbox beneath the flagship. */}
-      <Section tone="paper" className="-mt-24 md:-mt-32">
+      {/* Reframe the services as the toolbox beneath the flagship. No -mt: full
+          symmetric py so this paper band doesn't eat the petrol audit's padding. */}
+      <Section tone="paper">
         <Reveal>
           <h2 className="text-balance text-2xl font-semibold tracking-tight text-tiefes-wasser md:text-3xl">
             Die einzelnen Bausteine
@@ -65,9 +69,6 @@ export default function LeistungenPage() {
           <Section
             key={leistung.slug}
             tone={onDark ? "petrol" : "paper"}
-            // Pull the first detail up under the intro so the stacked paper
-            // Sections don't double their py padding into an oversized gap.
-            className={index === 0 ? "-mt-24 md:-mt-32" : ""}
           >
             <Reveal>
               <LeistungDetail leistung={leistung} index={index} onDark={onDark} />
