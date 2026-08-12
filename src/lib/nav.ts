@@ -19,7 +19,7 @@ export const navLinks: NavLink[] = [
 // navigational exits and a second, competing email capture around a six-question
 // task — on the page the Tier-A outreach actually links to. /demo is deliberately
 // NOT a focus route: it is a sandbox people are meant to wander out of.
-export const focusRoutes: string[] = ["/makler", "/lead-check"];
+export const focusRoutes: string[] = ["/makler", "/lead-check", "/prozess-check"];
 
 export type FocusCta = { href: string; label: string; short: string };
 
@@ -31,6 +31,9 @@ export const focusChrome: Record<string, { cta?: FocusCta }> = {
     cta: { href: "#termin", label: "Erstgespräch vereinbaren", short: "Erstgespräch" },
   },
   "/lead-check": {},
+  "/prozess-check": {
+    cta: { href: "/kontakt", label: "Erstgespräch vereinbaren", short: "Erstgespräch" },
+  },
 };
 
 // A null pathname (no router context) falls back to "show the chrome" — the
