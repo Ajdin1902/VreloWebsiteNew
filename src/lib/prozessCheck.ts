@@ -113,35 +113,36 @@ export type ResultCopy = {
   fits: boolean;
 };
 
-// Task noun (for the A/B mirror) and consequence clause (each carries its own
-// leading connector so it appends cleanly after the noun / after "spürbar Zeit").
+// Task as a noun phrase (so it sits grammatically after "Zeit in …") and the
+// consequence as its own sentence (a spliced clause read awkwardly and could
+// repeat the task noun). Both mirror the visitor's own answers back to him.
 const AUFGABE_NOUN: Record<Aufgabe, string> = {
-  anfragen: "Anfragen beantworten",
-  termine: "Termine ausmachen",
+  anfragen: "das Beantworten von Anfragen",
+  termine: "die Terminvergabe",
   angebote: "Angebote und Rechnungen",
-  nachfassen: "Nachfassen",
-  daten: "Daten von A nach B tippen",
-  nachrichten: "immer die gleichen Nachrichten",
+  nachfassen: "das Nachfassen",
+  daten: "das Übertragen von Daten",
+  nachrichten: "dieselben Nachrichten immer wieder",
 };
 
-const KONSEQUENZ_CLAUSE: Record<Konsequenz, string> = {
-  liegen: " und Anfragen bleiben dabei liegen",
-  termine: " und Termine verrutschen dir",
-  warten: " und Kunden warten länger, als dir lieb ist",
-  nichts: " auch wenn dabei nichts verloren geht",
+const KONSEQUENZ_SATZ: Record<Konsequenz, string> = {
+  liegen: "Und wenn es eng wird, bleiben Anfragen liegen.",
+  termine: "Und wenn es eng wird, verrutschen Termine.",
+  warten: "Und wenn es eng wird, warten Kunden länger, als dir lieb ist.",
+  nichts: "Verloren geht dabei nichts – aber die Zeit ist weg.",
 };
 
 export function resultCopy(a: ProzessCheckAnswers): ResultCopy {
   const category = categorize(a);
   const noun = AUFGABE_NOUN[a.aufgabe];
-  const clause = KONSEQUENZ_CLAUSE[a.konsequenz];
+  const satz = KONSEQUENZ_SATZ[a.konsequenz];
 
   switch (category) {
     case "A":
       return {
         category,
         headline: "Eine klare Quelle.",
-        body: `Du steckst Woche für Woche einen guten Teil deiner Zeit in ${noun}${clause}. Genau dafür ist der Prozess-Audit da: eine klare Quelle, die sich rechnen lässt.`,
+        body: `Du steckst Woche für Woche einen guten Teil deiner Zeit in ${noun}. ${satz} Genau dafür ist der Prozess-Audit da: eine klare Quelle, die sich rechnen lässt.`,
         verdict: "Ein Erstgespräch lohnt sich für dich.",
         fits: true,
       };
@@ -149,7 +150,7 @@ export function resultCopy(a: ProzessCheckAnswers): ResultCopy {
       return {
         category,
         headline: "Da steckt etwas drin.",
-        body: `Diese eine Aufgabe – ${noun} – kostet dich spürbar Zeit${clause}. Ob sich das Automatisieren für dich schon rechnet, zeigt dir der Audit schwarz auf weiß.`,
+        body: `Diese eine Aufgabe – ${noun} – kostet dich spürbar Zeit. ${satz} Ob sich das Automatisieren für dich schon rechnet, zeigt dir der Audit schwarz auf weiß.`,
         verdict: "Ein Erstgespräch bringt dir Klarheit.",
         fits: true,
       };

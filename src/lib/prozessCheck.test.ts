@@ -116,8 +116,8 @@ describe("prozessCheck copy", () => {
       versucht: "garnicht",
     });
     expect(r.category).toBe("A");
-    expect(r.body).toContain("Termine ausmachen");
-    expect(r.body).toContain("Kunden warten");
+    expect(r.body).toContain("Terminvergabe");
+    expect(r.body).toContain("warten Kunden");
   });
 
   it("marks A/B/C as fitting (scheduler) and D as not", () => {
