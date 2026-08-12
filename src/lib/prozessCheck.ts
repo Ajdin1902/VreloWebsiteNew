@@ -103,3 +103,84 @@ export function categorize(a: ProzessCheckAnswers): Category {
   if (s >= 3) return "A";
   return "B";
 }
+
+export type ResultCopy = {
+  category: Category;
+  headline: string;
+  body: string;
+  verdict: string;
+  /** A/B/C embed the scheduler; D shows the soft exit. */
+  fits: boolean;
+};
+
+// Task noun (for the A/B mirror) and consequence clause (each carries its own
+// leading connector so it appends cleanly after the noun / after "spürbar Zeit").
+const AUFGABE_NOUN: Record<Aufgabe, string> = {
+  anfragen: "Anfragen beantworten",
+  termine: "Termine ausmachen",
+  angebote: "Angebote und Rechnungen",
+  nachfassen: "Nachfassen",
+  daten: "Daten von A nach B tippen",
+  nachrichten: "immer die gleichen Nachrichten",
+};
+
+const KONSEQUENZ_CLAUSE: Record<Konsequenz, string> = {
+  liegen: " und Anfragen bleiben dabei liegen",
+  termine: " und Termine verrutschen dir",
+  warten: " und Kunden warten länger, als dir lieb ist",
+  nichts: " auch wenn dabei nichts verloren geht",
+};
+
+export function resultCopy(a: ProzessCheckAnswers): ResultCopy {
+  const category = categorize(a);
+  const noun = AUFGABE_NOUN[a.aufgabe];
+  const clause = KONSEQUENZ_CLAUSE[a.konsequenz];
+
+  switch (category) {
+    case "A":
+      return {
+        category,
+        headline: "Eine klare Quelle.",
+        body: `Du steckst Woche für Woche einen guten Teil deiner Zeit in ${noun}${clause}. Genau dafür ist der Prozess-Audit da: eine klare Quelle, die sich rechnen lässt.`,
+        verdict: "Ein Erstgespräch lohnt sich für dich.",
+        fits: true,
+      };
+    case "B":
+      return {
+        category,
+        headline: "Da steckt etwas drin.",
+        body: `Diese eine Aufgabe – ${noun} – kostet dich spürbar Zeit${clause}. Ob sich das Automatisieren für dich schon rechnet, zeigt dir der Audit schwarz auf weiß.`,
+        verdict: "Ein Erstgespräch bringt dir Klarheit.",
+        fits: true,
+      };
+    case "C":
+      return {
+        category,
+        headline: "Bei dir läuft schon einiges.",
+        body: "Du automatisierst schon – dann geht es bei dir weniger ums Anfangen als ums Rundmachen. Ein kurzes Gespräch klärt, ob ein Audit dir noch etwas bringt oder ob du gut aufgestellt bist.",
+        verdict: "Ein kurzes Gespräch sagt dir, ob sich ein Audit lohnt.",
+        fits: true,
+      };
+    case "D":
+      return {
+        category,
+        headline: "Noch zu klein.",
+        body: "Ehrlich? So wie es klingt, kostet dich das Ganze eher Nerven als echte Stunden – und es geht nichts verloren. Dann lohnt sich ein Audit für dich vermutlich noch nicht. Komm wieder, wenn eine Aufgabe dir wirklich den Tag frisst.",
+        verdict: "Ein Gespräch ist gerade noch nicht nötig.",
+        fits: false,
+      };
+  }
+}
+
+// Static UI copy the Result component renders (components hold no German).
+export const RESULT_UI = {
+  resultLabel: "Dein Ergebnis",
+  schedulerPrompt: "Im kostenlosen Erstgespräch schauen wir gemeinsam drauf – unverbindlich.",
+  schedulerFallbackHint: "Schreib mir so lange einfach über das Kontaktformular.",
+  exitLead: "Schau dich in Ruhe um. Wenn dich eine Aufgabe doch täglich ausbremst, bin ich da.",
+  exitNewsletterPrefix: "Bis dahin: ",
+  exitNewsletterLabel: "„Die Quelle“",
+  exitNewsletterSuffix: ", mein Newsletter mit einem kleinen Tipp pro Woche, oder stöber im ",
+  exitRatgeberLabel: "Ratgeber",
+  exitSuffix: ".",
+} as const;
