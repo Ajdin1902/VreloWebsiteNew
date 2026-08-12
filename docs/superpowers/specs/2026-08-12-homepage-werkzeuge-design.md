@@ -44,13 +44,16 @@ Logo-Karussell-Leiste). Bewusst **kein** Karussell und **keine** echten Logos:
   - **E-Mail & Kalender:** Outlook · Gmail · Google Kalender
   - **CRM & Kontakte:** onOffice · HubSpot · Pipedrive
   - **Aufgaben & Ablage:** ClickUp · Notion · Google Sheets
-  - **Rechnung & Nachricht:** sevDesk · WhatsApp · Telegram
+  - **Rechnung & Buchhaltung:** sevDesk · lexoffice · DATEV
 - **Ruhiger Auffang-Satz** unter dem Raster: „Und viele weitere – wenn dein Werkzeug eine Schnittstelle hat, lässt es sich meist anbinden.“ (Ehrlich,
   keine Partnerschaft behauptet, keine aufgeblähte Zahl.)
 
-Bewusst ausgelassen: DATEV/lexoffice (kein sauberer nativer Connector),
-Calendly/Cal.com (Buchung ist bei Vrelo maßgeschneidert). Später leicht
-ergänzbar.
+Alle Werkzeuge haben eine öffentliche Schnittstelle (DATEV/lexoffice per API,
+kein nativer n8n-Node nötig) — die Aussage bleibt ehrlich. WhatsApp/Telegram
+sind zugunsten der beiden Buchhaltungswerkzeuge rausgefallen (Entscheid: für die
+Makler-Zielgruppe zählt Rechnung/Buchhaltung mehr als Messaging). Bewusst
+ausgelassen: Calendly/Cal.com (Buchung ist bei Vrelo maßgeschneidert). Später
+leicht ergänzbar.
 
 ## Oberfläche & Einordnung in den Farb-Bogen (wichtig)
 
