@@ -34,6 +34,15 @@ export default function LeistungenPage() {
           <TerminQuelleAngebot />
         </Reveal>
       </Section>
+      {/* Paid-audit on-ramp, right beneath the flagship: the "not sure where to
+          start?" entry, caught before the visitor wades through the 7 Bausteine.
+          A warm highlighted card (its own component) between the cool flagship
+          and the plain menu — the contrast is the highlight. */}
+      <Section tone="paper" className="-mt-24 md:-mt-32">
+        <Reveal>
+          <ProzessAudit />
+        </Reveal>
+      </Section>
       {/* Reframe the 7 services as the toolbox beneath the flagship. */}
       <Section tone="paper" className="-mt-24 md:-mt-32">
         <Reveal>
@@ -65,13 +74,6 @@ export default function LeistungenPage() {
         );
       })}
       <MehrMoeglich />
-      {/* Paid-audit on-ramp: pulled up so it butts the petrol MehrMoeglich as one
-          region, then the paper Referenzen below gives the clean tone divider. */}
-      <Section tone="petrol" className="-mt-24 md:-mt-32">
-        <Reveal>
-          <ProzessAudit />
-        </Reveal>
-      </Section>
       <Referenzen />
       <ClosingCta
         heading="Lass uns deine Quelle bauen."

@@ -2,32 +2,34 @@ import Link from "next/link";
 import { CTAButton } from "@/components/CTAButton";
 import { prozessAudit } from "@/lib/prozess-audit";
 
-// The paid-audit on-ramp on /leistungen, placed right after the MehrMoeglich
-// capstone: for the visitor unsure where to start, a structured Prozess-Audit
-// that ends in a process handbook. Price-free (site convention); routes to the
-// free Erstgespräch where the fee is named. A dark card that is quieter than the
-// flagship Termin-Quelle block (smaller heading, no serif promise) so it reads
-// as a secondary on-ramp, not a second flagship.
+// The paid-audit on-ramp, lifted directly beneath the flagship Termin-Quelle as
+// the "not sure where to start?" entry. A warm sonnenlicht card with an amber
+// ring so it reads as the highlighted recommended path — contrasting the cool
+// deep-petrol flagship above and the plain paper menu below (this contrast is
+// the highlight; it also keeps it from reading as a twin of the petrol
+// MehrMoeglich capstone at the end). On-light AA: ember for small accent text
+// (clears AA on sonnenlicht), tinte body, tiefes-wasser headings, navy inverse
+// CTA. Price-free (site convention); routes to the free Erstgespräch where the
+// fee is named. No mechanism (Claude/n8n) — that is how Vrelo builds.
 export function ProzessAudit() {
   const o = prozessAudit;
   return (
-    <div className="card-depth mx-auto max-w-3xl rounded-2xl bg-tiefes-wasser/40 p-8 ring-1 ring-amber/25 md:p-10">
-      {/* A quiet sentence-case lead-in question — not the flagship's short pill
-          badge, which reads heavy and wraps at 390px for a 34-char question. The
-          heading answers it. gletscher for AA on the dark card (amber fails). */}
-      <p className="text-sm font-medium text-gletscher">{o.label}</p>
-      <h2 className="mt-4 text-balance text-2xl font-semibold tracking-tight text-papier md:text-3xl">
+    <div className="card-depth mx-auto max-w-3xl rounded-2xl bg-sonnenlicht p-8 ring-1 ring-amber/50 md:p-10">
+      {/* Sentence-case lead-in (not an uppercase/pill badge — a 34-char question
+          reads heavy that way and wraps at 390px). The heading answers it. */}
+      <p className="text-sm font-medium text-ember">{o.label}</p>
+      <h2 className="mt-4 text-balance text-2xl font-semibold tracking-tight text-tiefes-wasser md:text-3xl">
         {o.heading}
       </h2>
-      <p className="mt-4 max-w-2xl text-pretty text-gletscher">{o.body}</p>
+      <p className="mt-4 max-w-2xl text-pretty text-tinte">{o.body}</p>
 
-      <p className="mt-8 text-sm font-semibold uppercase tracking-wide text-gletscher">
+      <p className="mt-8 text-sm font-semibold uppercase tracking-wide text-ember">
         {o.deliverableLabel}
       </p>
       <ul className="mt-4 grid gap-3">
         {o.deliverables.map((item) => (
-          <li key={item} className="flex items-start gap-3 text-gletscher">
-            <span aria-hidden="true" className="mt-1 text-amber">
+          <li key={item} className="flex items-start gap-3 text-tinte">
+            <span aria-hidden="true" className="mt-1 text-ember">
               ✓
             </span>
             <span>{item}</span>
@@ -35,16 +37,16 @@ export function ProzessAudit() {
         ))}
       </ul>
 
-      <p className="mt-8 text-sm font-medium text-papier">{o.keepNote}</p>
-      <p className="mt-3 max-w-2xl text-pretty text-sm italic text-gletscher">{o.guarantee}</p>
+      <p className="mt-8 text-sm font-medium text-tiefes-wasser">{o.keepNote}</p>
+      <p className="mt-3 max-w-2xl text-pretty text-sm italic text-stumm">{o.guarantee}</p>
 
       <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-        <CTAButton href={o.cta.href} tone="dark">
+        <CTAButton href={o.cta.href} variant="inverse">
           {o.cta.label}
         </CTAButton>
         <Link
           href={o.check.href}
-          className="text-sm font-medium text-gletscher underline underline-offset-4 hover:text-papier"
+          className="text-sm font-medium text-tiefes-wasser underline decoration-amber/60 underline-offset-4 transition-colors hover:decoration-amber"
         >
           {o.check.label}
         </Link>
