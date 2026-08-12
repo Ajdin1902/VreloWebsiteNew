@@ -163,22 +163,22 @@ implementer smooths any awkward seam (e.g. `aufgabe = anfragen` + `konsequenz = 
 
 ## Routing / CTA mechanics
 
-- **A / B / C** close on the free Erstgespräch. Decision to confirm at review: **embed the shared
-  `SchedulerEmbed`** on the result (mirrors `/lead-check`, lowest friction on a chrome-less focus route)
-  **vs.** a `CTAButton` → `/kontakt` (mirrors the ProzessAudit block, simpler). Recommendation:
-  `CTAButton` → `/kontakt`, to match the ProzessAudit block this quiz extends and keep the result light;
-  the scheduler already lives one click away on `/kontakt`.
-- **D** gets no booking CTA — soft Newsletter/Ratgeber link only.
+- **A / B / C** close on the free Erstgespräch by **embedding the shared `SchedulerEmbed`** directly on
+  the result (resolved 2026-08-12 — mirrors `/lead-check`, lowest friction on a chrome-less focus route;
+  reuses the tested EU-pinned embed with its `calLink`/`/kontakt`-fallback behaviour). C carries the same
+  embed under its softer copy. The page component receives `calLink` from `NEXT_PUBLIC_CAL_LINK`, passed
+  down to `Result`, exactly as `/lead-check` does.
+- **D** gets no scheduler and no booking CTA — soft Newsletter/Ratgeber link only.
 - **€499 never appears on the page** (§4 rule) — it is named in the call. The result sells the outcome.
 
 ## Placement, route & entry
 
 - **New route `/prozess-check`** — a **focus route** (no site chrome): add to `focusRoutes` +
-  `focusChrome` in `src/lib/nav.ts` (logo-only header, or a „Zur Website“/Erstgespräch CTA per the
-  lead-check precedent). `noindex`, absent from nav and `sitemap.ts` (join the `/lead-check`, `/demo`,
-  `/makler` set).
-- **Hero:** `PageHero` with an existing water banner (reuse `/images/lead-check-banner.webp` or the
-  `/leistungen` banner — final pick at build; a dedicated image is a later polish, out of scope).
+  `focusChrome` in `src/lib/nav.ts` with a **small Erstgespräch CTA in the `FocusHeader`** (resolved
+  2026-08-12 — mirrors `/makler`; `focusChrome` gets a `cta` → `/kontakt`). `noindex`, absent from nav
+  and `sitemap.ts` (join the `/lead-check`, `/demo`, `/makler` set).
+- **Hero:** `PageHero` **reusing `/images/lead-check-banner.webp`** (resolved 2026-08-12 — no new asset;
+  a dedicated image is a later polish, out of scope).
 - **Entry point:** a **secondary line** on the existing `ProzessAudit` block (`/leistungen`) — e.g.
   „Nicht sicher, ob sich das lohnt? Mach den 60-Sekunden-Check.“ → `/prozess-check`. Mirrors how
   `/lead-check` is entered as a secondary CTA from `TerminQuelleAngebot`. The block's primary CTA
@@ -206,7 +206,8 @@ implementer smooths any awkward seam (e.g. `aufgabe = anfragen` + `konsequenz = 
   → D; severity 2 → B; severity 3 → A; and that `resultCopy` interpolates the right task/consequence
   strings and never emits a number.
 - **Component** (`ProzessCheck.test.tsx`): advances through 5 questions, renders each category's result,
-  D shows no scheduler/booking CTA, A/B/C show the Erstgespräch CTA.
+  D shows **no `SchedulerEmbed`** and no booking CTA (only the soft Newsletter/Ratgeber link), A/B/C
+  render the embedded scheduler.
 
 ## Out of scope (deliberate)
 
@@ -225,8 +226,8 @@ implementer smooths any awkward seam (e.g. `aufgabe = anfragen` + `konsequenz = 
 - **Brand:** `du`, generic masculine, calm voice, German quotes + en-dash, verified at the byte level
   after every write (Edit/Write downgrade closing quotes).
 
-## Open decisions for review
+## Resolved decisions (2026-08-12)
 
-1. **A/B/C close:** `CTAButton` → `/kontakt` (rec) vs. embedded `SchedulerEmbed`.
-2. **Focus-route header CTA:** logo-only vs. an Erstgespräch CTA in the `FocusHeader`.
-3. **Hero image:** reuse `lead-check-banner.webp` vs. the `/leistungen` banner.
+1. **A/B/C close:** embed the shared `SchedulerEmbed` on the result (not a `/kontakt` link).
+2. **Focus-route header:** a small Erstgespräch CTA in the `FocusHeader` (mirrors `/makler`).
+3. **Hero image:** reuse `/images/lead-check-banner.webp` (no new asset).
