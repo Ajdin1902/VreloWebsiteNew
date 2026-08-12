@@ -122,7 +122,7 @@ const AUFGABE_NOUN: Record<Aufgabe, string> = {
   angebote: "Angebote und Rechnungen",
   nachfassen: "das Nachfassen",
   daten: "das Übertragen von Daten",
-  nachrichten: "dieselben Nachrichten immer wieder",
+  nachrichten: "das Beantworten derselben Nachrichten",
 };
 
 const KONSEQUENZ_SATZ: Record<Konsequenz, string> = {
@@ -170,6 +170,12 @@ export function resultCopy(a: ProzessCheckAnswers): ResultCopy {
         verdict: "Ein Gespräch ist gerade noch nicht nötig.",
         fits: false,
       };
+    default: {
+      // Compile-time exhaustiveness guard: adding a Category makes this fail here
+      // at the switch, not as a subtle "may be undefined" at the call site.
+      const _exhaustive: never = category;
+      return _exhaustive;
+    }
   }
 }
 
