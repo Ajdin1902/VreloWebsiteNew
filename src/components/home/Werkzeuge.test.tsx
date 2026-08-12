@@ -25,9 +25,9 @@ const LABELS = [
 ];
 
 describe("Werkzeuge", () => {
-  it("renders on a petrol band (preserves the cool→warm arc)", () => {
+  it("renders on the light tint surface (breaks the petrol run)", () => {
     const { container } = render(<Werkzeuge />);
-    expect(container.querySelector("section")).toHaveClass("bg-vrelo-petrol");
+    expect(container.querySelector("section")).toHaveClass("bg-gletscher/30");
   });
 
   it("renders the reassurance heading", () => {
