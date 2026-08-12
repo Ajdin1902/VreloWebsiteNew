@@ -56,9 +56,14 @@ describe("Werkzeuge", () => {
     expect(screen.getByText(/Und viele weitere/i)).toBeInTheDocument();
   });
 
-  it("associates each tool list with its cluster label (aria-labelledby)", () => {
+  it("associates each tool list with an existing cluster label (aria-labelledby resolves)", () => {
     const { container } = render(<Werkzeuge />);
     const lists = container.querySelectorAll("ul[aria-labelledby]");
     expect(lists).toHaveLength(4);
+    for (const list of lists) {
+      const id = list.getAttribute("aria-labelledby");
+      expect(id).toBeTruthy();
+      expect(container.querySelector(`#${id}`)).not.toBeNull();
+    }
   });
 });

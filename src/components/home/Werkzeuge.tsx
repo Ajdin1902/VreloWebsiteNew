@@ -38,7 +38,7 @@ export function Werkzeuge() {
             <Reveal key={cluster.label} delayMs={160 + i * 80}>
               <p
                 id={labelId}
-                className="text-sm font-medium uppercase tracking-wide text-gletscher/70"
+                className="text-sm font-medium uppercase tracking-wide text-gletscher/80"
               >
                 {cluster.label}
               </p>
