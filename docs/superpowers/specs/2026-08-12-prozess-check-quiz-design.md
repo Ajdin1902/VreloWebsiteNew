@@ -229,5 +229,7 @@ implementer smooths any awkward seam (e.g. `aufgabe = anfragen` + `konsequenz = 
 ## Resolved decisions (2026-08-12)
 
 1. **A/B/C close:** embed the shared `SchedulerEmbed` on the result (not a `/kontakt` link).
-2. **Focus-route header:** a small Erstgespräch CTA in the `FocusHeader` (mirrors `/makler`).
+2. **Focus-route header:** logo only, like `/lead-check` (revised after code review — a `/kontakt`
+   header CTA is a pre-quiz exit that competes with the qualifier; `/makler`'s CTA is an in-page anchor,
+   not a comparable case).
 3. **Hero image:** reuse `/images/lead-check-banner.webp` (no new asset).

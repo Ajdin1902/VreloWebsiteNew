@@ -31,9 +31,10 @@ export const focusChrome: Record<string, { cta?: FocusCta }> = {
     cta: { href: "#termin", label: "Erstgespräch vereinbaren", short: "Erstgespräch" },
   },
   "/lead-check": {},
-  "/prozess-check": {
-    cta: { href: "/kontakt", label: "Erstgespräch vereinbaren", short: "Erstgespräch" },
-  },
+  // Logo only: /prozess-check is a qualifier quiz like /lead-check — a header
+  // CTA to /kontakt would be a pre-quiz exit that competes with the quiz, and
+  // fitting visitors already land on the embedded scheduler at the end.
+  "/prozess-check": {},
 };
 
 // A null pathname (no router context) falls back to "show the chrome" — the
