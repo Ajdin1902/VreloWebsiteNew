@@ -64,7 +64,20 @@ Design system). Eine helle Sektion **zwischen** `WasIchBaue` und `Steps` würde
 diesen Block aufreißen und den monotonen kühl→warm-Bogen zu einem Zickzack
 (kühl→warm→kühl) brechen.
 
-**Entscheid: `Section tone="petrol"`, direkt nach `WasIchBaue`, vor `Steps`.**
+**Entscheid (revidiert 2026-08-12, live): `Section tint` (helle, kühle Fläche),
+direkt nach `WasIchBaue`, vor `Steps`.** Der ursprüngliche Petrol-Entscheid
+(Absatz unten) ergab in der Praxis drei Petrol-Sektionen am Stück
+(`WasIchBaue` → `Werkzeuge` → `Steps`) — ein zu dunkles Plateau. Die helle
+`tint`-Fläche bricht das in eine saubere Petrol → hell → Petrol-Alternation
+(genau wie `Problem` → `WasIchBaue` darüber); die Werkzeug-Chips werden zu
+hellen `bg-papier`-Karten mit `border-faden`, die von der Tint-Fläche abheben
+(dieselbe Mechanik wie `Proof`). Cluster-Label auf `text-stumm` (AA auf hell),
+Überschrift `text-tiefes-wasser`, Fließtext `text-tinte`. Ausrichtungs-Detail:
+`min-h-[2lh]` auf jedem Cluster-Label reserviert zwei Zeilenhöhen, damit ein
+umbrechendes Label (Rechnung & Buchhaltung) seine Karten nicht unter die anderen
+Spalten drückt. Der folgende Petrol-Absatz bleibt als Historie stehen.
+
+**Historischer Entscheid (überholt): `Section tone="petrol"`, direkt nach `WasIchBaue`, vor `Steps`.**
 Das verlängert den Petrol-Block um einen Satz („das nehme ich dir ab – und du
 behältst deine Werkzeuge"), hält den Bogen intakt und setzt die konzeptuell
 engste Nachbarschaft (WasIchBaue = was ich abnehme; Werkzeuge = womit es läuft).
