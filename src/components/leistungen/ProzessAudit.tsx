@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { CTAButton } from "@/components/CTAButton";
 import { prozessAudit } from "@/lib/prozess-audit";
 
@@ -37,10 +38,16 @@ export function ProzessAudit() {
       <p className="mt-8 text-sm font-medium text-papier">{o.keepNote}</p>
       <p className="mt-3 max-w-2xl text-pretty text-sm italic text-gletscher">{o.guarantee}</p>
 
-      <div className="mt-8">
+      <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
         <CTAButton href={o.cta.href} tone="dark">
           {o.cta.label}
         </CTAButton>
+        <Link
+          href={o.check.href}
+          className="text-sm font-medium text-gletscher underline underline-offset-4 hover:text-papier"
+        >
+          {o.check.label}
+        </Link>
       </div>
     </div>
   );

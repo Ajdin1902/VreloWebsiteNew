@@ -12,6 +12,7 @@ export type ProzessAudit = {
   keepNote: string;
   guarantee: string;
   cta: { label: string; href: string };
+  check: { label: string; href: string };
 };
 
 export const prozessAudit: ProzessAudit = {
@@ -29,4 +30,5 @@ export const prozessAudit: ProzessAudit = {
   keepNote: "Dein Fahrplan gehört dir – ob du danach mit mir baust oder nicht.",
   guarantee: "Zeigt dir der Fahrplan keine konkrete, lohnende Automatisierung, bekommst du dein Geld zurück.",
   cta: { label: "Kostenloses Erstgespräch", href: "/kontakt" },
+  check: { label: "Unsicher, ob sich das lohnt? Mach den 60-Sekunden-Check.", href: "/prozess-check" },
 };

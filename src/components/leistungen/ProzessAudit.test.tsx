@@ -31,4 +31,10 @@ describe("ProzessAudit", () => {
     const cta = screen.getByRole("link", { name: prozessAudit.cta.label });
     expect(cta).toHaveAttribute("href", "/kontakt");
   });
+
+  it("links the secondary Prozess-Check on-ramp to /prozess-check", () => {
+    render(<ProzessAudit />);
+    const link = screen.getByRole("link", { name: prozessAudit.check.label });
+    expect(link).toHaveAttribute("href", "/prozess-check");
+  });
 });

@@ -52,4 +52,9 @@ describe("prozess-audit copy", () => {
   it("lists the five handbook inclusions", () => {
     expect(prozessAudit.deliverables).toHaveLength(5);
   });
+
+  it("offers the Prozess-Check as a secondary on-ramp to /prozess-check", () => {
+    expect(prozessAudit.check.href).toBe("/prozess-check");
+    expect(prozessAudit.check.label.length).toBeGreaterThan(0);
+  });
 });
