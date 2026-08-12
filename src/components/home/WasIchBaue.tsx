@@ -7,7 +7,7 @@ const leistungen = [
   "Anfragen & Leads",
   "Termine & Bestätigungen",
   "Angebote & Rechnungen",
-  "Bewertungen einsammeln",
+  "Dateneingabe",
 ];
 
 export function WasIchBaue() {
