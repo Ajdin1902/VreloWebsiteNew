@@ -29,31 +29,10 @@ export const leistungen: Leistung[] = [
     outcomes: ["Angebote in Minuten", "Rechnung nach Auftrag", "automatisches Mahnwesen"],
   },
   {
-    slug: "nachfass-mails",
-    title: "Nachfass-Mails",
-    punchline: "Nichts fällt mehr durchs Raster.",
-    body: "Angebote und offene Anfragen werden automatisch nachgefasst – freundlich, pünktlich und in deinem Ton. Kein Auftrag geht mehr verloren, weil eine Mail liegen geblieben ist.",
-    outcomes: ["pünktliche Follow-ups", "mehr abgeschlossene Angebote", "in deinem Ton"],
-  },
-  {
     slug: "dateneingabe",
     title: "Dateneingabe",
     punchline: "Eine Eingabe, überall aktuell.",
-    body: "Kundendaten landen in der E-Mail, dann im CRM, dann in der Buchhaltung, dann in Excel – jede manuelle Übertragung kostet Zeit und produziert Zahlendreher. Ich baue dir einen zentralen Datenfluss: Eine Eingabe befüllt alle Systeme, synchronisiert sie und hält sie auf demselben Stand.",
+    body: "Kundendaten landen in der E-Mail, dann im CRM, dann in der Buchhaltung, dann in Excel – jede manuelle Übertragung kostet Zeit und produziert Zahlendreher. Ich baue dir einen zentralen Datenfluss: Eine Eingabe befüllt alle Systeme, synchronisiert sie und hält sie auf demselben Stand. Sauber dokumentiert, damit er auch in einem Jahr noch läuft.",
     outcomes: ["kein Abtippen", "weniger Fehler", "Systeme im Gleichstand"],
-  },
-  {
-    slug: "kommunikation",
-    title: "Wiederkehrende Kommunikation",
-    punchline: "Routine-Nachrichten schreiben sich von selbst.",
-    body: "Wiederkehrende E-Mails und Benachrichtigungen – Bestätigungen, Status-Updates, Rückmeldungen – laufen automatisch. Persönlich genug, dass niemand den Unterschied merkt. Sauber dokumentiert, damit es auch in einem Jahr noch läuft.",
-    outcomes: ["immer rechtzeitig", "persönlich & automatisch", "mehr Zeit für echte Gespräche"],
-  },
-  {
-    slug: "bewertungen",
-    title: "Bewertungen einsammeln",
-    punchline: "Aus zufriedenen Kunden werden sichtbare Bewertungen.",
-    body: "Zufriedene Kunden hinterlassen selten von allein eine Bewertung – einfach, weil im Alltag niemand daran denkt. Nach dem Auftragsabschluss geht automatisch eine freundliche Bitte raus, mit Direktlink zur Bewertung. Ohne Drängeln, im richtigen Moment.",
-    outcomes: ["mehr Google-Bewertungen", "im richtigen Moment", "ganz ohne Drängeln"],
   },
 ];

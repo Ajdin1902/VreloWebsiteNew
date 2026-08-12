@@ -7,10 +7,7 @@ describe("leistungen data", () => {
       "Anfragen & Leads",
       "Termine & Bestätigungen",
       "Angebote & Rechnungen",
-      "Nachfass-Mails",
       "Dateneingabe",
-      "Wiederkehrende Kommunikation",
-      "Bewertungen einsammeln",
     ]);
   });
 
