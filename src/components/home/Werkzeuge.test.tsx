@@ -25,9 +25,11 @@ const LABELS = [
 ];
 
 describe("Werkzeuge", () => {
-  it("renders on the light tint surface (breaks the petrol run)", () => {
+  it("renders on the deepest dark tone (one step below the petrol neighbours)", () => {
+    // WasIchBaue + Steps are both vrelo-petrol; Werkzeuge dips to tiefes-wasser so
+    // the three dark sections read as one calm deep stretch, no light flash.
     const { container } = render(<Werkzeuge />);
-    expect(container.querySelector("section")).toHaveClass("bg-gletscher/30");
+    expect(container.querySelector("section")).toHaveClass("bg-tiefes-wasser");
   });
 
   it("renders the reassurance heading", () => {

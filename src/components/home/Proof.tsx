@@ -23,26 +23,26 @@ const values = [
 export function Proof() {
   return (
     <Section tone="paper" className="relative isolate overflow-hidden border-t border-faden">
-      {/* Soft brand-teal surface: a tint of the brand petrol over paper (color-mix
-          30 %) — cool but warmer/greener than gletscher, clearly Vrelo. Breaks the
-          warm-paper run and sets up the cool→warm close into the warm MerakClose
-          below; warm papier value-cards lift off it, dark text stays AA. A faint
-          water texture sits beneath the tint (the site's water motif) for depth. */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/images/section-texture.webp"
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover"
-      />
+      {/* Sunset-Echo surface: a pale radial echo of the MerakClose sunset
+          (sonnenlicht -> honig -> sonnenlicht, each mixed toward paper so it stays
+          light). Warms the section into the finale below -- Proof reads as the dawn,
+          MerakClose as the sunset -- instead of the old cool teal that echoed the
+          petrol header. Cards are a honey-cream (honig 35% -> paper), a step lighter
+          than the band's core so they still lift; heading + card titles are ember (the
+          MerakClose heading tone), body stays near-black -- all clear AA (ember on the
+          honey card ~5:1, ember heading on the band ~4.5:1 large text). */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-[color-mix(in_oklab,var(--color-vrelo-petrol)_30%,var(--color-papier))] opacity-90"
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{
+          background:
+            "radial-gradient(120% 120% at 50% 120%, color-mix(in oklab, var(--color-sonnenlicht) 70%, var(--color-papier)), color-mix(in oklab, var(--color-honig) 55%, var(--color-papier)) 60%, color-mix(in oklab, var(--color-sonnenlicht) 70%, var(--color-papier)) 100%)",
+        }}
       />
 
       {/* Centered spine: heading + connector on the central axis. */}
       <div className="mx-auto max-w-[44rem] text-center">
-        <Reveal as="h2" delayMs={0} className="text-balance text-3xl font-semibold tracking-tight text-tiefes-wasser md:text-4xl">
+        <Reveal as="h2" delayMs={0} className="text-balance text-3xl font-semibold tracking-tight text-ember md:text-4xl">
           Sorgfältig gebaut. Verlässlich im Betrieb.
         </Reveal>
         <Reveal as="p" delayMs={80} className="mt-5 text-pretty text-lg text-tinte">
@@ -52,8 +52,8 @@ export function Proof() {
 
       <Reveal as="ul" delayMs={160} className="mx-auto mt-10 grid max-w-3xl gap-5 text-left sm:grid-cols-2">
         {values.map((v) => (
-          <li key={v.title} className="card-depth rounded-2xl border border-faden bg-papier p-6">
-            <h3 className="text-xl font-semibold text-vrelo-petrol">{v.title}</h3>
+          <li key={v.title} className="card-depth rounded-2xl border border-[color-mix(in_oklab,var(--color-honig)_45%,var(--color-faden))] bg-[color-mix(in_oklab,var(--color-honig)_35%,var(--color-papier))] p-6">
+            <h3 className="text-xl font-semibold text-ember">{v.title}</h3>
             <p className="mt-2 text-tinte">{v.body}</p>
           </li>
         ))}
