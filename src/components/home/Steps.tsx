@@ -10,8 +10,10 @@ const steps = [
 
 export function Steps() {
   return (
-    <Section tone="petrol" className="relative isolate overflow-hidden border-t border-gletscher/15">
-      {/* Subtle flowing-water backdrop (Fließen); petrol tint keeps cards + text legible. */}
+    <Section tone="petrol" className="relative isolate overflow-hidden">
+      {/* Subtle flowing-water backdrop (Fließen); petrol tint keeps cards + text legible.
+          No top divider: the light Werkzeuge section above makes the tone change the seam
+          (house convention — separate by tone, not lines). */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/images/fliessen.webp"
@@ -19,7 +21,10 @@ export function Steps() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover"
       />
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-vrelo-petrol/70" />
+      {/* /80, not /70: the gletscher intro <p> sits directly on the tinted photo, and the
+          brightest water spots dropped it to 3.82:1 at /70 (measured). /80 lifts the worst
+          case to 4.67:1 — clears AA 4.5 for 18px body — while the water stays visible. */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-vrelo-petrol/80" />
 
       {/* Centered spine: intro on the spine, the three cards keep their grid + left text. */}
       <div className="mx-auto max-w-[44rem] text-center">

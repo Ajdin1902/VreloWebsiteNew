@@ -15,10 +15,13 @@ export function MerakClose() {
         poster="/video/merak-poster.jpg"
         className="pointer-events-none absolute inset-0 -z-20 h-full w-full object-cover"
       />
-      {/* Warm tint over the footage keeps the amber register + text contrast. */}
+      {/* Warm tint over the footage keeps the amber register + text contrast.
+          opacity-90, not -80: at /80 the sunset's dark spots bled through and pulled the
+          ember heading to 2.60:1 — under the 3.0 large-text AA bar. /90 restores it to
+          3.15:1 (near the gradient-only ceiling of 3.73) and leaves a faint warm shimmer. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_120%_at_50%_120%,#f4e4c1,#e8b86b_55%,#f4e4c1_100%)] opacity-80"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_120%_at_50%_120%,#f4e4c1,#e8b86b_55%,#f4e4c1_100%)] opacity-90"
       />
       {/* Centered spine: the payoff lands on the spine like the rest of the page. */}
       <div className="mx-auto max-w-[44rem] text-center">

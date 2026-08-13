@@ -103,19 +103,6 @@ body {
     color-mix(in oklab, var(--color-tiefes-wasser) 60%, transparent) 100%
   );
 }
-/* Seamless warm bloom: a visible core that feathers fully to transparent (no
-   hard rim) + a soft outer glow + a slight blur. Centered on the ripple origin. */
-.hero-drop {
-  background: radial-gradient(circle at 50% 47%,
-    rgba(250,242,225,0.92),
-    rgba(244,228,193,0.78) 18%,
-    rgba(224,176,92,0.50) 42%,
-    rgba(212,162,76,0.18) 62%,
-    rgba(212,162,76,0) 80%);
-  filter: blur(3px);
-  box-shadow: 0 0 62px 16px rgba(212,162,76,0.28);
-}
-
 /* Primary-CTA micro-interaction: a sheen sweep + slight lift on hover. Raw
    values (neutral white sheen, black lift shadow) live here, not in the
    component. Uses filter: drop-shadow (NOT box-shadow) so it never overrides
