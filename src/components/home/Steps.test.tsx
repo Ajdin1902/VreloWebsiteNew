@@ -3,9 +3,9 @@ import { render, screen } from "@testing-library/react";
 import { Steps } from "./Steps";
 
 describe("Steps", () => {
-  it("renders on a petrol cool band", () => {
+  it("renders on a deep cool band (Spine A karst-gorge source beat)", () => {
     const { container } = render(<Steps />);
-    expect(container.querySelector("section")).toHaveClass("bg-vrelo-petrol");
+    expect(container.querySelector("section")).toHaveClass("bg-tiefes-wasser");
   });
 
   it("keeps all three steps", () => {

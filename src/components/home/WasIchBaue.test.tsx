@@ -3,9 +3,9 @@ import { render, screen } from "@testing-library/react";
 import { WasIchBaue } from "./WasIchBaue";
 
 describe("WasIchBaue", () => {
-  it("renders on a petrol cool band", () => {
+  it("renders on a deep cool band (Spine A god-rays)", () => {
     const { container } = render(<WasIchBaue />);
-    expect(container.querySelector("section")).toHaveClass("bg-vrelo-petrol");
+    expect(container.querySelector("section")).toHaveClass("bg-tiefes-wasser");
   });
 
   it("uses an amber accent for the link (legible on petrol)", () => {
