@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { Section } from "@/components/Section";
+import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { ClosingCta } from "@/components/ClosingCta";
 import { StoryBeat } from "@/components/ueber-mich/StoryBeat";
 import { Reveal } from "@/components/Reveal";
@@ -35,8 +36,16 @@ export default function UeberMichPage() {
             tone={onDark ? "petrol" : "paper"}
             // Pull the first beat up under the lead so the stacked paper Sections
             // don't double their py padding into an oversized gap.
-            className={index === 0 ? "-mt-24 md:-mt-32" : ""}
+            className={[index === 0 ? "-mt-24 md:-mt-32" : "", onDark ? "relative isolate overflow-hidden" : ""]
+              .filter(Boolean)
+              .join(" ")}
           >
+            {/* Dark beats get only the calm water texture: each beat already
+                carries a video, and a pictorial backdrop behind a moving clip is
+                noise. Heavy tint (0.65) — the beat text sits directly on it. */}
+            {onDark ? (
+              <SectionBackdrop src="/images/section-texture.webp" tintRgb="27 80 99" tintOpacity={0.65} />
+            ) : null}
             <Reveal>
               <StoryBeat beat={beat} onDark={onDark} />
               {/* The AI-imagery note rides the first beat, where the Bosnia

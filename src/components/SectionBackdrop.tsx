@@ -1,6 +1,8 @@
-// A decorative full-bleed backdrop for a homepage Section: a water image under a
-// solid-colour tint that keeps content legible. Drop it as the FIRST child of a
-// `relative isolate overflow-hidden` Section (the `isolate` is required — without
+// A decorative full-bleed backdrop for a Section (or any panel): a water image
+// under a solid-colour tint that keeps content legible. Homepage sections use it
+// for the "rising from the deep" ascent; subpages follow the rule "dark band =
+// image, paper band = paper, one sunlit close" (ClosingCta). Drop it as the FIRST
+// child of a `relative isolate overflow-hidden` container (the `isolate` is required — without
 // it the -z- layers paint behind the section's own opaque background; see
 // Steps/Proof/MerakClose). The image is decorative (empty alt + aria-hidden);
 // the section's own text carries all meaning.

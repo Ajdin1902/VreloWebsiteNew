@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { Section } from "@/components/Section";
+import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { ClosingCta } from "@/components/ClosingCta";
 import { LeistungDetail } from "@/components/leistungen/LeistungDetail";
 import { TerminQuelleAngebot } from "@/components/leistungen/TerminQuelleAngebot";
@@ -42,7 +43,13 @@ export default function LeistungenPage() {
           gap pulls the petrol up over the flagship's bottom padding and the card
           butts the seam. Each band keeps its full, symmetric py (same as the
           Bausteine below). */}
-      <Section tone="petrol">
+      <Section tone="petrol" className="relative isolate overflow-hidden">
+        {/* Underwater light shafts falling from above onto the opaque audit card
+            — the one place on the subpages a bright, pictorial image can sit
+            under a petrol tint of only 0.5, because no text touches it. (It was
+            first tried inside the Termin-Quelle panel and failed: the shaft sat
+            exactly under the amber promise, 2.6:1.) */}
+        <SectionBackdrop src="/images/bg-lichtschacht.webp" tintRgb="27 80 99" tintOpacity={0.5} />
         <Reveal>
           <ProzessAudit />
         </Reveal>
@@ -69,7 +76,14 @@ export default function LeistungenPage() {
           <Section
             key={leistung.slug}
             tone={onDark ? "petrol" : "paper"}
+            className={onDark ? "relative isolate overflow-hidden" : ""}
           >
+            {/* Petrol bands carry the near-featureless water texture — grain,
+                not a picture, because the opaque papier card above holds the
+                reading; paper bands stay flat paper (subpage rule). */}
+            {onDark ? (
+              <SectionBackdrop src="/images/section-texture.webp" tintRgb="27 80 99" tintOpacity={0.55} />
+            ) : null}
             <Reveal>
               <LeistungDetail leistung={leistung} index={index} onDark={onDark} />
             </Reveal>

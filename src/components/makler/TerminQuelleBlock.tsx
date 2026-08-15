@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Section } from "@/components/Section";
 import { Reveal } from "@/components/Reveal";
+import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { makler } from "@/lib/makler";
 
 // Product 1, on a deep-petrol panel so it reads as THE offer (the /leistungen
@@ -11,7 +12,10 @@ export function TerminQuelleBlock() {
   const p = makler.terminQuelle;
   return (
     <Section tone="paper" className="-mt-24 md:-mt-32">
-      <Reveal className="shadow-deepwater mx-auto max-w-3xl rounded-3xl bg-vrelo-petrol p-8 ring-1 ring-amber/40 md:p-12">
+      <Reveal className="shadow-deepwater relative isolate mx-auto max-w-3xl overflow-hidden rounded-3xl bg-vrelo-petrol p-8 ring-1 ring-amber/40 md:p-12">
+        {/* Same drop-and-rings backdrop as the /leistungen flagship panel (0.85
+            petrol tint) — one offer, one look. */}
+        <SectionBackdrop src="/images/was-ich-baue.webp" tintRgb="27 80 99" tintOpacity={0.85} />
         <span className="inline-block rounded-full bg-amber px-3 py-1 text-xs font-semibold uppercase tracking-wide text-tiefes-wasser">
           {p.eyebrow}
         </span>

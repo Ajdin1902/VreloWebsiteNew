@@ -1,5 +1,6 @@
 import { Section } from "@/components/Section";
 import { Reveal } from "@/components/Reveal";
+import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { makler } from "@/lib/makler";
 
 // Risk reversal on the warm sonnenlicht band — the page's warmest point, right
@@ -8,7 +9,12 @@ import { makler } from "@/lib/makler";
 export function Garantie() {
   const g = makler.garantie;
   return (
-    <Section tone="warm">
+    <Section tone="warm" className="relative isolate overflow-hidden">
+      {/* The page's "surface": the same sunlit water every subpage closes on
+          (ClosingCta), here under the risk reversal because /makler ends on the
+          petrol WaterSection instead. Cards are opaque papier; only the heading,
+          intro and close sit on the image — measured against its darkest patch. */}
+      <SectionBackdrop src="/images/bg-oberflaeche.webp" tintRgb="244 228 193" tintOpacity={0.7} />
       <div className="mx-auto max-w-[44rem] text-center">
         <h2 className="text-balance font-serif text-3xl italic text-tiefes-wasser md:text-4xl">
           {g.title}

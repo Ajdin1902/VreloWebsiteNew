@@ -33,7 +33,7 @@ export default function KontaktPage() {
           option floats on the water, the amber form card below it is the main
           writing surface. The -mt eases it up under the intro (not all the way,
           so the booking subheadline keeps some breathing room at the top). */}
-      <WaterSection className="-mt-12 md:-mt-16">
+      <WaterSection src="/images/bg-horizont.webp" className="-mt-12 md:-mt-16">
         <SchedulerEmbed calLink={calLink()} />
 
         <div className="mx-auto mt-12 max-w-xl rounded-2xl bg-amber p-8 shadow-deepwater md:mt-16 md:p-10">
@@ -62,30 +62,32 @@ export default function KontaktPage() {
         </div>
       </WaterSection>
 
-      {/* The ripple banner closes the page back on paper — the water motif stays
-          in the photo, but the page returns to papier before the dark footer.
-          The -mt collapses the doubled gap after the water room; symmetric pt/pb
-          keep the space above the caption and below the banner matched (the
-          Footer no longer carries a margin, so the banner butts it directly). */}
-      <div className="bg-papier -mt-24 md:-mt-32">
-        <div className="mx-auto max-w-6xl px-6 pt-32 pb-32 md:pt-40 md:pb-40">
-          <figure>
-            <figcaption className="mb-5 text-center font-serif text-xl italic text-tiefes-wasser md:text-2xl">
-              Der erste Tropfen genügt.
-            </figcaption>
-            <RippleImage
-              src="/images/kontakt-banner.webp"
-              alt="Eine ruhige Wasseroberfläche im warmen Morgenlicht; ein erster sanfter Ring breitet sich aus."
-              className="aspect-[21/9] w-full rounded-2xl shadow-deepwater ring-1 ring-tiefes-wasser/10"
-              seedXFraction={0.5}
-              seedYFraction={0.46}
-            />
-            <p className="mt-5 text-center font-serif text-xl italic text-tiefes-wasser md:text-2xl">
-              Den Rest bringe ich ins Fließen.
-            </p>
-          </figure>
+      {/* The ripple image IS the closing section: still image + WebGL canvas fill
+          the band edge to edge, and the two lines sit where the photo hands them
+          contrast — navy on the warm morning sky at the top, papier on the deep
+          water at the bottom. No tint: a scrim over the canvas would dull the
+          ripple. Text is pointer-events-none so the water still answers the
+          cursor through it. No -mt: the water room above is a different tone, and
+          the negative margin would pull the image up over its bottom padding so
+          the gold card butts the seam (the site-wide -mt trap). Symmetric pt/pb
+          inside; the Footer carries no margin, so the image butts it directly. */}
+      <figure className="relative isolate flex min-h-[70vh] flex-col justify-between overflow-hidden bg-papier">
+        <div className="absolute inset-0 -z-10">
+          <RippleImage
+            src="/images/kontakt-banner.webp"
+            alt="Eine ruhige Wasseroberfläche im warmen Morgenlicht; ein erster sanfter Ring breitet sich aus."
+            className="h-full w-full"
+            seedXFraction={0.5}
+            seedYFraction={0.46}
+          />
         </div>
-      </div>
+        <figcaption className="pointer-events-none mx-auto w-full max-w-6xl px-6 pt-24 text-center font-serif text-2xl italic text-tiefes-wasser md:pt-32 md:text-3xl">
+          Der erste Tropfen genügt.
+        </figcaption>
+        <p className="pointer-events-none mx-auto w-full max-w-6xl px-6 pb-24 text-center font-serif text-2xl italic text-papier md:pb-32 md:text-3xl">
+          Den Rest bringe ich ins Fließen.
+        </p>
+      </figure>
 
       <JsonLd data={breadcrumbLd([{ name: "Start", path: "/" }, { name: "Kontakt", path: "/kontakt" }])} />
     </>
