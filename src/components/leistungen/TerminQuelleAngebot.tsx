@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CTAButton } from "@/components/CTAButton";
 import { terminQuelle } from "@/lib/termin-quelle";
+import { SectionBackdrop } from "@/components/SectionBackdrop";
 
 // The flagship offer block at the top of /leistungen: a named, productized
 // package (Die Termin-Quelle) lifted above the generic service menu. Price-free
@@ -12,7 +13,13 @@ import { terminQuelle } from "@/lib/termin-quelle";
 export function TerminQuelleAngebot() {
   const o = terminQuelle;
   return (
-    <div className="shadow-deepwater mx-auto max-w-3xl rounded-3xl bg-vrelo-petrol p-8 ring-1 ring-amber/40 md:p-12">
+    <div className="shadow-deepwater relative isolate mx-auto max-w-3xl overflow-hidden rounded-3xl bg-vrelo-petrol p-8 ring-1 ring-amber/40 md:p-12">
+      {/* A single drop and its rings inside the offer panel — the Quelle motif,
+          dark and even. Heavy petrol tint (0.85): the panel carries small gletscher
+          body text and the amber promise (3.8:1 on plain petrol), so the image may
+          only add depth, never lift the base — measured, the promise stays ≥3:1
+          (large text) at 1440 and 390. The brighter light-shaft image failed here.*/}
+      <SectionBackdrop src="/images/was-ich-baue.webp" tintRgb="27 80 99" tintOpacity={0.85} />
       <span className="inline-block rounded-full bg-amber px-3 py-1 text-xs font-semibold uppercase tracking-wide text-tiefes-wasser">
         {o.label}
       </span>
