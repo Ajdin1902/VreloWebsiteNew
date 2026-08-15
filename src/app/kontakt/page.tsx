@@ -33,7 +33,7 @@ export default function KontaktPage() {
           option floats on the water, the amber form card below it is the main
           writing surface. The -mt eases it up under the intro (not all the way,
           so the booking subheadline keeps some breathing room at the top). */}
-      <WaterSection className="-mt-12 md:-mt-16">
+      <WaterSection src="/images/bg-horizont.webp" className="-mt-12 md:-mt-16">
         <SchedulerEmbed calLink={calLink()} />
 
         <div className="mx-auto mt-12 max-w-xl rounded-2xl bg-amber p-8 shadow-deepwater md:mt-16 md:p-10">
