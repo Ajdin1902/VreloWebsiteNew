@@ -67,9 +67,11 @@ export default function KontaktPage() {
           contrast — navy on the warm morning sky at the top, papier on the deep
           water at the bottom. No tint: a scrim over the canvas would dull the
           ripple. Text is pointer-events-none so the water still answers the
-          cursor through it. The -mt collapses the doubled gap after the water
-          room; the Footer carries no margin, so the image butts it directly. */}
-      <figure className="relative isolate -mt-24 flex min-h-[70vh] flex-col justify-between overflow-hidden bg-papier md:-mt-32">
+          cursor through it. No -mt: the water room above is a different tone, and
+          the negative margin would pull the image up over its bottom padding so
+          the gold card butts the seam (the site-wide -mt trap). Symmetric pt/pb
+          inside; the Footer carries no margin, so the image butts it directly. */}
+      <figure className="relative isolate flex min-h-[70vh] flex-col justify-between overflow-hidden bg-papier">
         <div className="absolute inset-0 -z-10">
           <RippleImage
             src="/images/kontakt-banner.webp"
@@ -79,10 +81,10 @@ export default function KontaktPage() {
             seedYFraction={0.46}
           />
         </div>
-        <figcaption className="pointer-events-none mx-auto w-full max-w-6xl px-6 pt-32 text-center font-serif text-2xl italic text-tiefes-wasser md:pt-40 md:text-3xl">
+        <figcaption className="pointer-events-none mx-auto w-full max-w-6xl px-6 pt-24 text-center font-serif text-2xl italic text-tiefes-wasser md:pt-32 md:text-3xl">
           Der erste Tropfen genügt.
         </figcaption>
-        <p className="pointer-events-none mx-auto w-full max-w-6xl px-6 pb-32 text-center font-serif text-2xl italic text-papier md:pb-40 md:text-3xl">
+        <p className="pointer-events-none mx-auto w-full max-w-6xl px-6 pb-24 text-center font-serif text-2xl italic text-papier md:pb-32 md:text-3xl">
           Den Rest bringe ich ins Fließen.
         </p>
       </figure>
