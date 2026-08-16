@@ -26,7 +26,7 @@ export function Problem() {
           Der Kleinkram frisst deinen Tag.
         </Reveal>
         <Reveal as="p" delayMs={80} className="mt-5 text-pretty text-lg text-gletscher">
-          Es sind nicht die großen Dinge – es ist das, was sich jeden Tag wiederholt:
+          Es sind nicht die großen Dinge. Es ist das, was sich jeden Tag wiederholt:
         </Reveal>
         <Reveal as="div" delayMs={160} className="card-depth mx-auto mt-8 max-w-xl rounded-2xl border border-gletscher/25 bg-gletscher/10 p-8 text-left">
           <ul className="flex flex-col gap-3 text-lg text-gletscher">
@@ -39,8 +39,8 @@ export function Problem() {
           </ul>
         </Reveal>
         <Reveal as="p" delayMs={240} className="mt-7 text-pretty text-lg text-gletscher">
-          Jede Aufgabe für sich ist klein. Zusammen sind es Stunden – Zeit, die für die
-          Arbeit fehlt, die du eigentlich liebst.
+          Jede Aufgabe für sich ist klein. Zusammen sind es Stunden. Zeit, die für die
+          Arbeit fehlt, die du liebst.
         </Reveal>
       </div>
     </Section>

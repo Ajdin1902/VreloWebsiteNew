@@ -30,7 +30,7 @@ export function Hero() {
         Manuelle Aufgaben rauben dir die Zeit.
       </h1>
       <p className="hero-reveal-sub mt-6 max-w-xl text-pretty text-[1.05rem] leading-relaxed tracking-[-0.005em] text-gletscher md:text-xl md:leading-relaxed">
-        Ich baue maßgeschneiderte Automatisierungen für kleine Betriebe – Termine,
+        Ich baue maßgeschneiderte Automatisierungen für kleine Betriebe. Termine,
         Mails und Datenpflege laufen von selbst. So gewinnst du jede Woche Stunden
         zurück.
       </p>
@@ -38,7 +38,7 @@ export function Hero() {
         <CTAButton href="/kontakt" tone="dark" />
         {/* Friction reducer: name the concrete next step so the click is predictable. */}
         <p className="mt-3 text-sm text-gletscher">
-          Kostenloses Erstgespräch – 30 Minuten, unverbindlich.
+          Kostenloses Erstgespräch. 30 Minuten, unverbindlich.
         </p>
       </div>
     </section>

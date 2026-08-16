@@ -80,7 +80,7 @@ export function Werkzeuge() {
         delayMs={480}
         className="mx-auto mt-10 max-w-2xl text-center text-sm text-stein"
       >
-        Und viele weitere – wenn dein Werkzeug eine Schnittstelle hat, lässt es sich
+        Und viele weitere. Wenn dein Werkzeug eine Schnittstelle hat, lässt es sich
         meist anbinden.
       </Reveal>
     </Section>

@@ -17,4 +17,9 @@ describe("Referenzen (leistungen)", () => {
     render(<Referenzen />);
     expect(screen.queryByText(/Bald: Stimmen aus echten Betrieben/i)).toBeNull();
   });
+
+  it("exposes the #referenzen anchor so the homepage can deep-link to it", () => {
+    const { container } = render(<Referenzen />);
+    expect(container.querySelector("#referenzen")).not.toBeNull();
+  });
 });

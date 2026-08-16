@@ -30,7 +30,7 @@ describe("Hero", () => {
   it("names the concrete next step under the CTA (friction-reducing microcopy)", () => {
     render(<Hero />);
     expect(
-      screen.getByText(/Kostenloses Erstgespräch – 30 Minuten, unverbindlich/),
+      screen.getByText(/Kostenloses Erstgespräch\. 30 Minuten, unverbindlich/),
     ).toBeInTheDocument();
   });
 

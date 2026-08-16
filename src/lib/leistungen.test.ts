@@ -8,14 +8,16 @@ describe("leistungen data", () => {
       "Termine & Bestätigungen",
       "Angebote & Rechnungen",
       "Dateneingabe",
+      "Persönlicher Assistent",
+      "Prozess- & Aufgabensteuerung",
     ]);
   });
 
-  it("gives each service a slug, punchline, body and 2–3 outcomes", () => {
+  it("gives each service a slug, punchline, kurz teaser and 2–3 outcomes", () => {
     for (const l of leistungen) {
       expect(l.slug).toMatch(/\S/);
       expect(l.punchline).toMatch(/\S/);
-      expect(l.body).toMatch(/\S/);
+      expect(l.kurz).toMatch(/\S/);
       expect(l.outcomes.length).toBeGreaterThanOrEqual(2);
       expect(l.outcomes.length).toBeLessThanOrEqual(3);
     }
@@ -27,7 +29,7 @@ describe("leistungen data", () => {
   });
 
   it("frames durability somewhere (the 'it still runs in a year' cue)", () => {
-    const text = leistungen.map((l) => `${l.body} ${l.outcomes.join(" ")}`).join(" ");
+    const text = leistungen.map((l) => `${l.kurz} ${l.outcomes.join(" ")}`).join(" ");
     expect(text).toMatch(/dokumentiert|in einem Jahr|läuft/i);
   });
 });

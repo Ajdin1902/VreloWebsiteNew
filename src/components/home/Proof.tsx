@@ -1,25 +1,23 @@
 import { Section } from "@/components/Section";
 import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { Reveal } from "@/components/Reveal";
-import { ReferenzCard } from "@/components/referenzen/ReferenzCard";
-import { referenzen } from "@/lib/referenzen";
 
 const values = [
   {
     title: "Ein Ansprechpartner.",
-    body: "Du redest immer mit mir – kein Team, keine Tickets, keine Warteschleife.",
+    body: "Du redest immer mit mir. Kein Team, keine Tickets, keine Warteschleife.",
   },
   {
     title: "Praxiserprobt.",
-    body: "Seit über drei Jahren automatisiere ich Prozesse in einem internationalen Unternehmen – du bekommst diese Erfahrung in jedem System.",
+    body: "Seit über drei Jahren automatisiere ich Prozesse in einem internationalen Unternehmen. Diese Erfahrung bekommst du in jedem System.",
   },
   {
     title: "Maßgeschneidert statt von der Stange.",
-    body: "Ein System, das zu deinem Betrieb passt – bis ins Detail dokumentiert.",
+    body: "Ein System, das zu deinem Betrieb passt, bis ins Detail dokumentiert.",
   },
   {
     title: "Du wartest nichts.",
-    body: "Einrichten, absichern, am Laufen halten – das übernehme ich. Du musst nichts lernen.",
+    body: "Einrichten, absichern, am Laufen halten. Das übernehme ich, du musst nichts lernen.",
   },
 ];
 
@@ -37,11 +35,15 @@ export function Proof() {
       <SectionBackdrop src="/images/bg-proof.webp" tintRgb="244 228 193" tintOpacity={0.55} />
       {/* Soft sunlit glow behind the heading spine — a feathered warm radial (like the
           MerakClose scrim, but localised so the Fließen surface stays visible). It lifts
-          the top band enough for a warm ember heading (matching the MerakClose finale
-          this section hands into) to clear large-text AA without a heavy full-cover tint. */}
+          the top band under the deep-espresso #33210f heading without a heavy full-cover
+          tint. ⚠️ It MUST carry a negative z (-z-[5], above the tint at -z-10, below the
+          static content): the glow is position:absolute, so with z-index:auto it paints
+          in the positioned phase — AFTER the static heading — and its translucent
+          sonnenlicht veiled the settled heading (crisp during the Reveal transform, hazy
+          once transform:none dropped it below the glow). -z-[5] keeps it a backdrop. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-2/3 bg-[radial-gradient(60%_55%_at_50%_16%,color-mix(in_oklab,var(--color-sonnenlicht)_80%,transparent),transparent_72%)]"
+        className="pointer-events-none absolute inset-x-0 top-0 h-2/3 -z-[5] bg-[radial-gradient(60%_55%_at_50%_16%,color-mix(in_oklab,var(--color-sonnenlicht)_80%,transparent),transparent_72%)]"
       />
 
       {/* Centered spine: heading + connector on the central axis. Ember heading + tinte
@@ -68,14 +70,6 @@ export function Proof() {
           <li key={v.title} className="card-depth rounded-2xl border border-papier/50 bg-papier/70 p-6 backdrop-blur-sm">
             <h3 className="text-xl font-semibold text-ember">{v.title}</h3>
             <p className="mt-2 text-tinte">{v.body}</p>
-          </li>
-        ))}
-      </Reveal>
-
-      <Reveal as="ul" delayMs={240} className="mx-auto mt-12 grid max-w-3xl gap-5 sm:grid-cols-2">
-        {referenzen.map((r) => (
-          <li key={r.slug}>
-            <ReferenzCard referenz={r} variant="compact" surfaceClassName="bg-papier/85 backdrop-blur-sm" />
           </li>
         ))}
       </Reveal>

@@ -6,7 +6,7 @@ import { CTAButton } from "@/components/CTAButton";
 const steps = [
   { num: "1", title: "Hinschauen", desc: "Wir finden gemeinsam die Aufgaben, die dich täglich Zeit kosten." },
   { num: "2", title: "Bauen", desc: "Ich baue daraus eine saubere, dokumentierte Quelle." },
-  { num: "3", title: "Fließen", desc: "Die Arbeit läuft von selbst – still im Hintergrund." },
+  { num: "3", title: "Fließen", desc: "Die Arbeit läuft von selbst, still im Hintergrund." },
 ];
 
 export function Steps() {
@@ -28,7 +28,7 @@ export function Steps() {
           In drei klaren Schritten.
         </Reveal>
         <Reveal as="p" delayMs={80} className="mt-5 text-pretty text-lg text-gletscher">
-          Der erste Schritt ist klein – den Rest übernehme ich.
+          Der erste Schritt ist klein. Den Rest übernehme ich.
         </Reveal>
       </div>
       <Reveal as="ol" delayMs={160} className="mt-10 grid gap-6 md:grid-cols-3">
@@ -47,7 +47,7 @@ export function Steps() {
       <Reveal delayMs={240} className="mt-10 text-center">
         <CTAButton href="/kontakt" variant="primary" />
         <p className="mt-3 text-sm text-gletscher">
-          Kostenloses Erstgespräch – 30 Minuten, unverbindlich.
+          Kostenloses Erstgespräch. 30 Minuten, unverbindlich.
         </p>
       </Reveal>
     </Section>

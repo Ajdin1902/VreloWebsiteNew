@@ -1,7 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { Proof } from "./Proof";
-import { referenzen } from "@/lib/referenzen";
 
 describe("Proof", () => {
   it("renders the heading and four value cards", () => {
@@ -19,12 +18,9 @@ describe("Proof", () => {
     }
   });
 
-  it("renders the two compact reference cards instead of the coming-soon line", () => {
+  it("no longer carries the references (they live in their own section now)", () => {
     render(<Proof />);
-    for (const r of referenzen) {
-      expect(screen.getByRole("heading", { name: r.titel })).toBeInTheDocument();
-      expect(screen.getByText(r.kennzahl)).toBeInTheDocument();
-    }
     expect(screen.queryByText(/Erste Kundenreferenzen folgen/i)).toBeNull();
+    expect(screen.queryByText("Referenzen")).toBeNull();
   });
 });

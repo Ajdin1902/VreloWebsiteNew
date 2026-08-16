@@ -19,14 +19,15 @@ describe("ReferenzCard", () => {
     expect(screen.getByText(agentur.kennzahlLabel)).toBeInTheDocument();
   });
 
-  it("compact variant shows title, ergebnis and number but omits the beats", () => {
+  it("compact variant shows title, the kompakt summary and number but omits the beats and ergebnis", () => {
     render(<ReferenzCard referenz={agentur} variant="compact" />);
     expect(screen.getByRole("heading", { name: agentur.titel })).toBeInTheDocument();
-    expect(screen.getByText(agentur.ergebnis)).toBeInTheDocument();
+    expect(screen.getByText(agentur.kompakt)).toBeInTheDocument();
     expect(screen.getByText(agentur.kennzahl)).toBeInTheDocument();
     expect(screen.queryByText("Das Problem")).toBeNull();
     expect(screen.queryByText(agentur.problem)).toBeNull();
     expect(screen.queryByText(agentur.gebaut)).toBeNull();
     expect(screen.queryByText(agentur.laeuft)).toBeNull();
+    expect(screen.queryByText(agentur.ergebnis)).toBeNull();
   });
 });

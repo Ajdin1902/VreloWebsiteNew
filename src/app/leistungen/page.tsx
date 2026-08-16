@@ -3,8 +3,7 @@ import { PageHero } from "@/components/PageHero";
 import { Section } from "@/components/Section";
 import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { ClosingCta } from "@/components/ClosingCta";
-import { LeistungDetail } from "@/components/leistungen/LeistungDetail";
-import { TerminQuelleAngebot } from "@/components/leistungen/TerminQuelleAngebot";
+import { LeistungCard } from "@/components/leistungen/LeistungCard";
 import { Referenzen } from "@/components/leistungen/Referenzen";
 import { MehrMoeglich } from "@/components/leistungen/MehrMoeglich";
 import { ProzessAudit } from "@/components/leistungen/ProzessAudit";
@@ -24,72 +23,38 @@ export const metadata: Metadata = {
 export default function LeistungenPage() {
   return (
     <>
-      <PageHero
-        title="Leistungen"
-        src="/images/leistungen-banner.webp"
-        lead="Ich baue dir eine saubere Quelle für die Aufgaben, die sich jeden Tag wiederholen – maßgeschneidert für deinen Betrieb, nicht von der Stange. Kein Durcheinander aus zehn Tools, sondern eine Lösung, die still im Hintergrund läuft."
-      />
-      {/* The flagship: the named, packaged offer lifted above the generic menu. */}
-      <Section tone="paper" className="-mt-24 md:-mt-32">
-        <Reveal>
-          <TerminQuelleAngebot />
-        </Reveal>
-      </Section>
-      {/* Paid-audit on-ramp, right beneath the flagship: the "not sure where to
-          start?" entry, caught before the visitor wades through the Bausteine.
-          A warm card on a petrol band — the dark background fills the top and
-          the light card pops; stays distinct from the dark MehrMoeglich card at
-          the end. No -mt here: once the bands alternate colour, collapsing the
-          gap pulls the petrol up over the flagship's bottom padding and the card
-          butts the seam. Each band keeps its full, symmetric py (same as the
-          Bausteine below). */}
-      <Section tone="petrol" className="relative isolate overflow-hidden">
-        {/* Underwater light shafts falling from above onto the opaque audit card
-            — the one place on the subpages a bright, pictorial image can sit
-            under a petrol tint of only 0.5, because no text touches it. (It was
-            first tried inside the Termin-Quelle panel and failed: the shaft sat
-            exactly under the amber promise, 2.6:1.) */}
-        <SectionBackdrop src="/images/bg-lichtschacht.webp" tintRgb="27 80 99" tintOpacity={0.5} />
+      <PageHero title="Leistungen" src="/images/leistungen-banner.webp" imageClassName="scale-125 origin-bottom" />
+      {/* Paid-audit on-ramp — the lead element now that the Termin-Quelle flagship
+          is retired (Model C: the Prozess-Audit is the main entry) and the intro
+          deck is dropped. A plain papier band under the hero image: the warm
+          sonnenlicht audit card lifts off it on its own shadow (no backdrop). */}
+      <Section tone="paper">
         <Reveal>
           <ProzessAudit />
         </Reveal>
       </Section>
-      {/* Reframe the services as the toolbox beneath the flagship. No -mt: full
-          symmetric py so this paper band doesn't eat the petrol audit's padding. */}
-      <Section tone="paper">
+      {/* The Bausteine: a petrol image band with a compact two-column card grid
+          (six use cases). A water backdrop under a petrol tint; light heading +
+          intro sit on the dark band, the opaque papier cards pop on top. Extra
+          space (mt-14) after the intro before the grid begins. */}
+      <Section tone="petrol" className="relative isolate overflow-hidden">
+        <SectionBackdrop src="/images/bg-bausteine-b.webp" tintRgb="27 80 99" tintOpacity={0.7} />
         <Reveal>
-          <h2 className="text-balance text-2xl font-semibold tracking-tight text-tiefes-wasser md:text-3xl">
+          <h2 className="text-balance text-2xl font-semibold tracking-tight text-papier md:text-3xl">
             Die einzelnen Bausteine
           </h2>
-          <p className="mt-3 max-w-2xl text-pretty text-tinte">
-            Die Termin-Quelle bündelt die wichtigsten davon. Jeden Baustein gibt es auch einzeln.
+          <p className="mt-3 max-w-2xl text-pretty text-gletscher">
+            Jeder Baustein nimmt dir eine wiederkehrende Aufgabe ab. Einzeln oder kombiniert, ganz nach deinem Betrieb.
           </p>
+          <ul className="mt-14 grid gap-6 sm:grid-cols-2">
+            {leistungen.map((leistung, index) => (
+              <li key={leistung.slug}>
+                <LeistungCard leistung={leistung} index={index} />
+              </li>
+            ))}
+          </ul>
         </Reveal>
       </Section>
-      {leistungen.map((leistung, index) => {
-        // Inverted parity (was index % 2 === 1): the menu now opens on a petrol
-        // band and alternates paper/petrol from there, matching the dark-forward
-        // ribbon (petrol audit → paper intro → petrol 01 → paper 02 → …). The
-        // petrol/paper contrast is the divider — no line.
-        const onDark = index % 2 === 0;
-        return (
-          <Section
-            key={leistung.slug}
-            tone={onDark ? "petrol" : "paper"}
-            className={onDark ? "relative isolate overflow-hidden" : ""}
-          >
-            {/* Petrol bands carry the near-featureless water texture — grain,
-                not a picture, because the opaque papier card above holds the
-                reading; paper bands stay flat paper (subpage rule). */}
-            {onDark ? (
-              <SectionBackdrop src="/images/section-texture.webp" tintRgb="27 80 99" tintOpacity={0.55} />
-            ) : null}
-            <Reveal>
-              <LeistungDetail leistung={leistung} index={index} onDark={onDark} />
-            </Reveal>
-          </Section>
-        );
-      })}
       <MehrMoeglich />
       <Referenzen />
       <ClosingCta

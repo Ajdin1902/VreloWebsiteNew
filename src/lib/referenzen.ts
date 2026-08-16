@@ -5,7 +5,8 @@ export type Referenz = {
   problem: string; // Das Problem
   gebaut: string; // Gebaut
   laeuft: string; // Läuft
-  ergebnis: string; // the freier-Kopf close (also the compact result line)
+  ergebnis: string; // the freier-Kopf close (full card only)
+  kompakt: string; // one-line summary for the compact homepage card
   kennzahl: string; // the one honest number
   kennzahlLabel: string; // caption under the number
 };
@@ -13,31 +14,35 @@ export type Referenz = {
 export const referenzen: Referenz[] = [
   {
     slug: "agentur",
-    label: "Marketingagentur · Region Regensburg",
+    label: "Marketingagentur · Regensburg",
     titel: "Die Kundenübersicht steuert sich selbst.",
     problem:
-      "Jeder neue Kunde durchlief dieselben Phasen – von Hand weitergeklickt, Aufgaben jedes Mal neu angelegt, Fristen manuell gesetzt. Das kostete täglich Zeit und ging leicht unter.",
+      "Jeder neue Kunde durchlief dieselben Phasen. Jede Karte wurde von Hand weitergeklickt, die Aufgaben jedes Mal neu angelegt, die Fristen manuell gesetzt. Das kostete täglich Zeit und ging leicht unter.",
     gebaut:
-      "Ein System, das jede Kundenkarte automatisch weiterschaltet, sobald ihre Aufgaben erledigt sind – mit den passenden Aufgaben und Werktags-Fristen für die nächste Phase.",
+      "Ein System, das jede Kundenkarte automatisch weiterschaltet, sobald ihre Aufgaben erledigt sind. Die passenden Aufgaben und Werktags-Fristen für die nächste Phase legt es gleich mit an.",
     laeuft:
-      "Seit Monaten still im Hintergrund, quer durch fünf Übersichten – ohne dass jemand eine Karte von Hand bewegt.",
+      "Seit Monaten läuft es still im Hintergrund, quer durch fünf Übersichten, ohne dass jemand eine Karte von Hand bewegt.",
     ergebnis:
-      "Am Ende: ein freier Kopf. Ordnung und Struktur statt täglichem Nachhalten – ein verlässlicher Prozess, der den Betrieb im Hintergrund trägt.",
+      "Resultat: Der Aufgabenkatalog steuert und aktualisiert sich von selbst. Die Mitarbeiter haben mehr Zeit, um die eigentliche Arbeit zu erledigen, anstatt zu dokumentieren.",
+    kompakt:
+      "Von manueller Dokumentation und Kundensteuerung zu einem automatisierten Aufgabenkatalog mit Deadline und Ansprechpartner.",
     kennzahl: "5 Übersichten",
     kennzahlLabel: "laufen von selbst",
   },
   {
     slug: "hausmeister",
-    label: "Hausmeisterservice · Oberpfalz",
+    label: "Hausmeisterservice · Regensburg",
     titel: "Das Büro läuft per Sprachnachricht.",
     problem:
-      "Der Inhaber ist den ganzen Tag auf seinen Objekten, selten am Schreibtisch. E-Mails, Termine, Aufgaben und Rechnungsdaten stapelten sich – und wurden abends nachgeholt.",
+      "Der Inhaber ist den ganzen Tag auf seinen Objekten, selten am Schreibtisch. E-Mails, Termine, Aufgaben und Rechnungsdaten stapelten sich und wurden abends nachgeholt.",
     gebaut:
-      "Ein Assistent per Telegram: Er spricht unterwegs kurz hinein, der Rest passiert von selbst – E-Mail geschrieben und verschickt, Termin eingetragen, Aufgabe an einen Mitarbeiter, Notiz abgelegt, Rechnungsdaten erfasst.",
+      "Ein Assistent per Telegram: Der Inhaber spricht unterwegs kurz hinein, der Rest passiert von selbst. E-Mail geschrieben und verschickt, Termin eingetragen, Aufgabe an einen Mitarbeiter, Notiz abgelegt, Rechnungsdaten erfasst.",
     laeuft:
       "Aus ein bis zwei Stunden Büroarbeit am Abend wird eine kurze Sprachnachricht zwischendurch.",
     ergebnis:
-      "Am Ende: ein freier Kopf. Der Ablauf ist geordnet und läuft verlässlich – der Inhaber muss nicht mehr daran denken.",
+      "Resultat: Sprachnachrichten sparen Stunden an Verwaltungsaufgaben nach dem Feierabend.",
+    kompakt:
+      "Ein Telegram-Assistent, in alle Systeme integriert, erledigt die täglichen Verwaltungsaufgaben.",
     kennzahl: "1–2 Std./Tag",
     kennzahlLabel: "zurückgewonnen",
   },

@@ -26,7 +26,7 @@ describe("referenzen copy", () => {
 
   it("gives every card all content fields", () => {
     for (const r of referenzen) {
-      for (const field of ["label", "titel", "problem", "gebaut", "laeuft", "ergebnis", "kennzahl", "kennzahlLabel"] as const) {
+      for (const field of ["label", "titel", "problem", "gebaut", "laeuft", "ergebnis", "kompakt", "kennzahl", "kennzahlLabel"] as const) {
         expect(r[field].length).toBeGreaterThan(0);
       }
     }

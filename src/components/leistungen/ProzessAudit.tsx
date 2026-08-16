@@ -2,13 +2,11 @@ import Link from "next/link";
 import { CTAButton } from "@/components/CTAButton";
 import { prozessAudit } from "@/lib/prozess-audit";
 
-// The paid-audit on-ramp, lifted directly beneath the flagship Termin-Quelle as
-// the "not sure where to start?" entry. A warm sonnenlicht card seated on a
-// petrol band: the dark background fills the top of the page and the light card
-// pops off it as the highlighted recommended path. A crisp light edge + deep
-// shadow lift it off the petrol (the amber ring would vanish against the dark);
-// it stays distinct from the dark MehrMoeglich capstone at the end. On-light
-// AA: ember for small accent text
+// The paid-audit on-ramp — the lead element on /leistungen since the Termin-Quelle
+// flagship was retired (Model C). A warm sonnenlicht card seated on a plain papier
+// band: the deep shadow lifts the warm panel off the light page as the highlighted
+// recommended path; it stays distinct from the dark MehrMoeglich capstone at the
+// end. On-light AA: ember for small accent text
 // (clears AA on sonnenlicht), tinte body, tiefes-wasser headings, navy inverse
 // CTA. Price-free (site convention); routes to the free Erstgespräch where the
 // fee is named. No mechanism (Claude/n8n) — that is how Vrelo builds.

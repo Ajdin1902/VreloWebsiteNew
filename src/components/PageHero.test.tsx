@@ -9,6 +9,12 @@ describe("PageHero", () => {
     expect(screen.getByText("Der Vorspann.")).toBeInTheDocument();
   });
 
+  it("omits the lead deck when no lead is passed", () => {
+    render(<PageHero title="Titel" src="/images/x.webp" />);
+    expect(screen.getByRole("heading", { level: 1, name: "Titel" })).toBeInTheDocument();
+    expect(screen.queryByText("Der Vorspann.")).not.toBeInTheDocument();
+  });
+
   it("renders no links of its own", () => {
     // The hero is title + lead only. The `actions` slot it used to carry was
     // never passed by any of the seven call sites and was removed with the
