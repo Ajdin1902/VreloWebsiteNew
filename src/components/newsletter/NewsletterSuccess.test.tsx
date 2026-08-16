@@ -14,4 +14,9 @@ describe("NewsletterSuccess", () => {
     render(<NewsletterSuccess />);
     expect(screen.getByText("Fast geschafft.")).toHaveClass("text-papier");
   });
+
+  it("hints that the confirmation mail may land in the spam folder", () => {
+    render(<NewsletterSuccess />);
+    expect(screen.getByRole("status")).toHaveTextContent(/Spam-Ordner/i);
+  });
 });

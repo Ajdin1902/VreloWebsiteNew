@@ -80,8 +80,8 @@ describe("prozessCheck copy", () => {
     expect(corpus.filter((s) => s.includes('"'))).toEqual([]);
   });
 
-  it("uses the en-dash, never the em-dash", () => {
-    expect(corpus.filter((s) => s.includes("—"))).toEqual([]);
+  it("uses no dash at all (Gedankenstrich retired site-wide)", () => {
+    expect(corpus.filter((s) => s.includes("—") || s.includes("–"))).toEqual([]);
   });
 
   it("pairs every opening German quote with a closing one", () => {

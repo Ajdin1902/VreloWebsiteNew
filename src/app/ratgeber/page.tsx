@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   alternates: { canonical: canonical("/ratgeber") },
   title: "Ratgeber",
   description:
-    "Praxisnahe Notizen zur ruhigen Automatisierung für kleine Betriebe – wie du wiederkehrende Arbeit abgibst und Kopffreiheit zurückgewinnst.",
+    "Praxisnahe Notizen zur ruhigen Automatisierung für kleine Betriebe, wie du wiederkehrende Arbeit abgibst und Kopffreiheit zurückgewinnst.",
 };
 
 export default function RatgeberPage() {
@@ -23,7 +23,7 @@ export default function RatgeberPage() {
       <PageHero
         title="Gedanken zur ruhigen Automatisierung"
         src="/images/ratgeber-banner.webp"
-        lead="Praxisnahe Notizen für kleine Betriebe – wie du wiederkehrende Arbeit abgibst und Zeit, Ruhe und einen freien Kopf zurückgewinnst."
+        lead="Praxisnahe Notizen für kleine Betriebe, wie du wiederkehrende Arbeit abgibst und Zeit, Ruhe und einen freien Kopf zurückgewinnst."
       />
       {/* Pull the list up under the intro: both are paper, so the doubled
           Section padding (intro bottom + list top) leaves too big a gap. */}
@@ -32,7 +32,7 @@ export default function RatgeberPage() {
       </Section>
       <ClosingCta
         heading="Lass uns deine Quelle bauen."
-        lead="Erzähl mir, was dich täglich Zeit kostet – ich zeige dir unverbindlich, was sich automatisieren lässt."
+        lead="Erzähl mir, was dich täglich Zeit kostet. Ich zeige dir unverbindlich, was sich automatisieren lässt."
       />
       <JsonLd
         data={breadcrumbLd([

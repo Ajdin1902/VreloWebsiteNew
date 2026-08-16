@@ -25,7 +25,7 @@ function MailVorschau({ notiz }: { notiz: Terminnotiz }) {
         </div>
         <div className="flex gap-2">
           <dt className="text-stumm">Betreff:</dt>
-          <dd className="text-tinte">Ihr Termin – Bestätigung</dd>
+          <dd className="text-tinte">Ihr Termin: Bestätigung</dd>
         </div>
       </dl>
       <p className="mt-3 whitespace-pre-line leading-relaxed text-tinte">
@@ -49,7 +49,7 @@ function AbschlussCta({ calLink }: { calLink: string | undefined }) {
   if (!calLink) {
     return (
       <a href="/kontakt" className="cta-fx mt-8 inline-block rounded-lg bg-tiefes-wasser px-6 py-3 text-papier">
-        Genau das für deinen Betrieb – lass uns reden
+        Genau das für deinen Betrieb. Lass uns reden
       </a>
     );
   }
@@ -134,12 +134,12 @@ export function Protokoll({ calLink, seed, transcript }: { calLink: string | und
         Das hat dein Kunde gerade erlebt.
       </h2>
       <p className="mt-3 max-w-prose text-stumm">
-        Antwort in Sekunden, rund um die Uhr, qualifiziert, Termin gebucht – und genau das landet automatisch als Terminnotiz bei dir.
+        Antwort in Sekunden, rund um die Uhr, qualifiziert, Termin gebucht. Und genau das landet automatisch als Terminnotiz bei dir.
       </p>
 
       <div aria-live="polite" aria-busy={state.status === "loading"}>
         {state.status === "loading" ? (
-          <p className="mt-6 text-sm text-stumm">Einen Moment – ich fasse das Gespräch zusammen …</p>
+          <p className="mt-6 text-sm text-stumm">Einen Moment. Ich fasse das Gespräch zusammen …</p>
         ) : notiz ? (
           <>
             <div className="mt-6 rounded-xl border border-faden bg-papier p-5 text-left">
@@ -191,9 +191,9 @@ export function Protokoll({ calLink, seed, transcript }: { calLink: string | und
       </div>
 
       <div className="mt-8 rounded-xl border border-faden bg-papier p-5 text-left">
-        <h3 className="text-sm font-semibold text-tiefes-wasser">So läuft es bei dir – ohne KI.</h3>
+        <h3 className="text-sm font-semibold text-tiefes-wasser">So läuft es bei dir, ohne KI.</h3>
         <p className="mt-2 max-w-prose text-sm text-tinte">
-          Diese Demo ist der Vorgeschmack. Live tippt dein Kunde sein Anliegen an, beantwortet zwei kurze Fragen und wählt einen freien Termin – eine schlanke, feste Buchungsstrecke. Kein Sprachmodell, das etwas Falsches sagen könnte; keine Kundendaten, die durch eine KI laufen. Das macht sie zuverlässig und sauber.
+          Diese Demo ist der Vorgeschmack. Live tippt dein Kunde sein Anliegen an, beantwortet zwei kurze Fragen und wählt einen freien Termin, eine schlanke, feste Buchungsstrecke. Kein Sprachmodell, das etwas Falsches sagen könnte; keine Kundendaten, die durch eine KI laufen. Das macht sie zuverlässig und sauber.
         </p>
       </div>
 

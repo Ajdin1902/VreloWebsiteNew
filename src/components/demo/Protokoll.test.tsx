@@ -60,7 +60,7 @@ describe("Protokoll", () => {
     );
     render(<Protokoll calLink="https://cal.example/x" seed={seed} transcript={transcript} />);
 
-    expect(await screen.findByText(/So läuft es bei dir – ohne KI/)).toBeInTheDocument();
+    expect(await screen.findByText(/So läuft es bei dir, ohne KI/)).toBeInTheDocument();
     expect(screen.getByText(/eine schlanke, feste Buchungsstrecke/)).toBeInTheDocument();
     expect(screen.getByText(/keine Kundendaten, die durch eine KI laufen/)).toBeInTheDocument();
   });

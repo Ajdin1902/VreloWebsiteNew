@@ -50,11 +50,11 @@ describe("Result", () => {
     expect(screen.getByText(/Genau das übernimmt die Termin-Quelle/)).toBeInTheDocument();
   });
 
-  it("uses German typography in the mirror block (en-dash, no em-dash, no ASCII quote)", () => {
+  it("uses German typography in the mirror block (no dashes, no ASCII quote)", () => {
     render(<Result answers={langsam} result={computeResult(langsam)} calLink={undefined} />);
     const heading = screen.getByText(/Genau das übernimmt die Termin-Quelle/);
     const text = heading.closest("div")?.textContent ?? "";
-    expect(text).toContain("–"); // spaced en-dash present
+    expect(text).not.toContain("–"); // no en-dash (Gedankenstrich retired site-wide)
     expect(text).not.toContain("—"); // no em-dash
     expect(text).not.toContain('"'); // no ASCII double-quote
   });

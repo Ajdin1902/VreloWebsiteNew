@@ -5,7 +5,7 @@ const clean = `Ich habe das lange beobachtet.
 
 ## Warum das passiert
 
-Der Kunde wartet – und niemand antwortet. „So läuft das oft.“
+Der Kunde wartet, und niemand antwortet. „So läuft das oft.“
 `;
 
 describe("stripFrontmatter", () => {
@@ -32,6 +32,11 @@ describe("findCopyIssues", () => {
   it("catches the em-dash", () => {
     const issues = findCopyIssues("Der Kunde wartet — niemand antwortet.");
     expect(issues.map((i) => i.kind)).toContain("em-dash");
+  });
+
+  it("catches the en-dash (Gedankenstrich retired site-wide)", () => {
+    const issues = findCopyIssues("Der Kunde wartet – niemand antwortet.");
+    expect(issues.map((i) => i.kind)).toContain("en-dash");
   });
 
   it("catches ASCII double quotes", () => {

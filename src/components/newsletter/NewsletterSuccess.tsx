@@ -16,6 +16,7 @@ export function NewsletterSuccess() {
         <p className="font-serif text-2xl text-papier">Fast geschafft.</p>
         <p className="mx-auto mt-3 max-w-[42ch] text-sm leading-relaxed text-gletscher">
           Schau in dein Postfach und bestätige deine Anmeldung. Danach bist du dabei.
+          Ist die Mail nicht im Posteingang, wirf einen Blick in den Spam-Ordner.
         </p>
       </div>
       <PageImage

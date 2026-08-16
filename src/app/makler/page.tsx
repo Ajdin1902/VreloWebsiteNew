@@ -21,7 +21,7 @@ import { calLink } from "@/lib/contact";
 export const metadata: Metadata = {
   title: "Mehr Termine, weniger Papierkram",
   description:
-    "Zwei Systeme für unabhängige Makler und Finanzberater: jede Anfrage in unter fünf Minuten beantwortet und zum Termin gemacht – und die Unterlagen deiner Kunden vollständig eingesammelt, ohne Hinterhertelefonieren.",
+    "Zwei Systeme für unabhängige Makler und Finanzberater: jede Anfrage in unter fünf Minuten beantwortet und zum Termin gemacht, und die Unterlagen deiner Kunden vollständig eingesammelt, ohne Hinterhertelefonieren.",
   robots: { index: false, follow: false },
 };
 

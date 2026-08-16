@@ -90,7 +90,7 @@ export function Setup({ onReady }: { onReady: (seed: DemoSeed) => void }) {
         </label>
       </div>
 
-      <p className="mt-4 text-sm text-stumm">Bitte keine echten Kundendaten eingeben – das hier ist eine Demo.</p>
+      <p className="mt-4 text-sm text-stumm">Bitte keine echten Kundendaten eingeben. Das hier ist eine Demo.</p>
 
       <button
         type="button"

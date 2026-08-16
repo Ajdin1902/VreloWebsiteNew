@@ -44,7 +44,7 @@ export const STEPS: readonly Step[] = [
   },
   {
     id: "zeit",
-    label: "Wie viel Zeit frisst diese eine Sache – ehrlich geschätzt – pro Woche?",
+    label: "Wie viel Zeit frisst diese eine Sache, ehrlich geschätzt, pro Woche?",
     options: [
       { value: "unter1", label: "unter 1 Stunde" },
       { value: "1bis3", label: "1 bis 3 Stunden" },
@@ -54,7 +54,7 @@ export const STEPS: readonly Step[] = [
   },
   {
     id: "konsequenz",
-    label: "Und wenn du mal nicht hinterherkommst – was passiert dann?",
+    label: "Und wenn du mal nicht hinterherkommst, was passiert dann?",
     options: [
       { value: "liegen", label: "Anfragen bleiben liegen oder springen ab" },
       { value: "termine", label: "Termine verrutschen oder gehen unter" },
@@ -129,7 +129,7 @@ const KONSEQUENZ_SATZ: Record<Konsequenz, string> = {
   liegen: "Und wenn es eng wird, bleiben Anfragen liegen.",
   termine: "Und wenn es eng wird, verrutschen Termine.",
   warten: "Und wenn es eng wird, warten Kunden länger, als dir lieb ist.",
-  nichts: "Verloren geht dabei nichts – aber die Zeit ist weg.",
+  nichts: "Verloren geht dabei nichts. Aber die Zeit ist weg.",
 };
 
 export function resultCopy(a: ProzessCheckAnswers): ResultCopy {
@@ -150,7 +150,7 @@ export function resultCopy(a: ProzessCheckAnswers): ResultCopy {
       return {
         category,
         headline: "Da steckt etwas drin.",
-        body: `Diese eine Aufgabe – ${noun} – kostet dich spürbar Zeit. ${satz} Ob sich das Automatisieren für dich schon rechnet, zeigt dir der Audit schwarz auf weiß.`,
+        body: `Diese eine Aufgabe, ${noun}, kostet dich spürbar Zeit. ${satz} Ob sich das Automatisieren für dich schon rechnet, zeigt dir der Audit schwarz auf weiß.`,
         verdict: "Ein Erstgespräch bringt dir Klarheit.",
         fits: true,
       };
@@ -158,7 +158,7 @@ export function resultCopy(a: ProzessCheckAnswers): ResultCopy {
       return {
         category,
         headline: "Bei dir läuft schon einiges.",
-        body: "Du automatisierst schon – dann geht es bei dir weniger ums Anfangen als ums Rundmachen. Ein kurzes Gespräch klärt, ob ein Audit dir noch etwas bringt oder ob du gut aufgestellt bist.",
+        body: "Du automatisierst schon. Dann geht es bei dir weniger ums Anfangen als ums Rundmachen. Ein kurzes Gespräch klärt, ob ein Audit dir noch etwas bringt oder ob du gut aufgestellt bist.",
         verdict: "Ein kurzes Gespräch sagt dir, ob sich ein Audit lohnt.",
         fits: true,
       };
@@ -166,7 +166,7 @@ export function resultCopy(a: ProzessCheckAnswers): ResultCopy {
       return {
         category,
         headline: "Noch zu klein.",
-        body: "Ehrlich? So wie es klingt, kostet dich das Ganze eher Nerven als echte Stunden – und es geht nichts verloren. Dann lohnt sich ein Audit für dich vermutlich noch nicht. Komm wieder, wenn eine Aufgabe dir wirklich den Tag frisst.",
+        body: "Ehrlich? So wie es klingt, kostet dich das Ganze eher Nerven als echte Stunden. Und es geht nichts verloren. Dann lohnt sich ein Audit für dich vermutlich noch nicht. Komm wieder, wenn eine Aufgabe dir wirklich den Tag frisst.",
         verdict: "Ein Gespräch ist gerade noch nicht nötig.",
         fits: false,
       };
@@ -182,7 +182,7 @@ export function resultCopy(a: ProzessCheckAnswers): ResultCopy {
 // Static UI copy the Result component renders (components hold no German).
 export const RESULT_UI = {
   resultLabel: "Dein Ergebnis",
-  schedulerPrompt: "Im kostenlosen Erstgespräch schauen wir gemeinsam drauf – unverbindlich.",
+  schedulerPrompt: "Im kostenlosen Erstgespräch schauen wir gemeinsam drauf, unverbindlich.",
   schedulerFallbackHint: "Schreib mir so lange einfach über das Kontaktformular.",
   exitLead: "Schau dich in Ruhe um. Wenn dich eine Aufgabe doch täglich ausbremst, bin ich da.",
   exitNewsletterPrefix: "Bis dahin: ",

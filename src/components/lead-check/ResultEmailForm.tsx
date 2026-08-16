@@ -20,7 +20,7 @@ export function ResultEmailForm({ answers }: { answers: LeadCheckAnswers }) {
   if (state.status === "ok") {
     return (
       <p role="status" className="text-gletscher">
-        Danke {"–"} die Zusammenfassung ist unterwegs.
+        Danke. Die Zusammenfassung ist unterwegs.
       </p>
     );
   }
@@ -64,7 +64,7 @@ export function ResultEmailForm({ answers }: { answers: LeadCheckAnswers }) {
           these answers on Ajdin's desk. The checkbox is what makes the old
           "ich melde mich, wenn du magst" true — unchecked, nobody writes. */}
       <p id="lc-email-hinweis" className="text-sm text-gletscher/90">
-        Du bekommst die Zusammenfassung einmalig. Deine Antworten und deine Adresse sehe ich dabei mit {"–"}{" "}
+        Du bekommst die Zusammenfassung einmalig. Deine Antworten und deine Adresse sehe ich dabei mit.{" "}
         Details in der{" "}
         <Link href="/datenschutz" className="underline underline-offset-4 hover:text-papier">
           Datenschutzerklärung

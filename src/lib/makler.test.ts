@@ -27,8 +27,8 @@ describe("makler copy", () => {
     expect(bad).toEqual([]);
   });
 
-  it("uses the en-dash, never the em-dash", () => {
-    const bad = all.filter((s) => s.includes("—"));
+  it("uses no dash at all (Gedankenstrich retired site-wide)", () => {
+    const bad = all.filter((s) => s.includes("—") || s.includes("–"));
     expect(bad).toEqual([]);
   });
 

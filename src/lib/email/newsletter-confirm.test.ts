@@ -15,7 +15,7 @@ describe("buildConfirmEmail", () => {
 
   it("includes a greeting, a sign-off, and the brand one-liner", () => {
     const e = buildConfirmEmail({ confirmUrl: url });
-    const oneLiner = "Aus einem Tropfen fließt ein Fluss – aus einer Idee deine Zeit zurück.";
+    const oneLiner = "Aus einem Tropfen fließt ein Fluss, aus einer Idee deine Zeit zurück.";
     expect(e.text).toMatch(/^Hallo,/);
     expect(e.text).toMatch(/Bis bald/);
     expect(e.text).toMatch(/Ajdin von Vrelo/);

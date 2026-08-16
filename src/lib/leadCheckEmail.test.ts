@@ -91,7 +91,7 @@ describe("buildLeadCheckEmail (internal)", () => {
       result: computeResult(SLOW_ANSWERS),
       kontaktErlaubt: true,
     });
-    expect(m.subject).toBe("Lead-Check: max@beispiel.de – langsam · 48.000 €");
+    expect(m.subject).toBe("Lead-Check: max@beispiel.de, langsam · 48.000 €");
     expect(m.replyTo).toBe("max@beispiel.de");
   });
 
@@ -121,7 +121,7 @@ describe("buildLeadCheckEmail (internal)", () => {
   });
   it("omits the € from the subject for a fast lead", () => {
     const m = buildLeadCheckEmail({ email: "a@b.de", answers: FAST_ANSWERS, result: computeResult(FAST_ANSWERS) , kontaktErlaubt: true });
-    expect(m.subject).toBe("Lead-Check: a@b.de – schnell");
+    expect(m.subject).toBe("Lead-Check: a@b.de, schnell");
   });
 
   it("renders KPI tiles and German answer labels in the html", () => {

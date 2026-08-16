@@ -11,7 +11,7 @@ export function ContactSuccess() {
       >
         <span className="h-2.5 w-2.5 rounded-full bg-tiefes-wasser" />
       </div>
-      <p className="font-serif text-2xl text-tiefes-wasser">Danke – ich melde mich.</p>
+      <p className="font-serif text-2xl text-tiefes-wasser">Danke. Ich melde mich.</p>
       <p className="mx-auto mt-3 max-w-[34ch] text-sm leading-relaxed text-tinte">
         Deine Nachricht ist bei mir. Ich antworte persönlich, meist innerhalb von ein, zwei Werktagen.
       </p>

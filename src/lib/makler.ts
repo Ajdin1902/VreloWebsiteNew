@@ -5,8 +5,8 @@
 //   ../../../Knowledge/Offers/Termin-Quelle.md
 //   ../../../Knowledge/Strategy/Document_Concierge.md
 // Rules: no prices, no invented numbers, no testimonials. German punctuation
-// per Brand.md – „…“ (U+201E/U+201C) and the spaced en-dash „ – “ (U+2013).
-// Guarded by makler.test.ts.
+// per Brand.md: German quotes U+201E/U+201C, and NO Gedankenstrich. Use a comma,
+// period or colon instead of any dash. Guarded by makler.test.ts.
 
 export type MaklerBullet = { title: string; body: string };
 export type MaklerFlowStep = { title: string; body: string };
@@ -15,7 +15,7 @@ export type MaklerProduct = {
   eyebrow: string;
   name: string;
   promise: string;
-  /** Deleted on /makler – the page shows, it does not explain. */
+  /** Deleted on /makler – the page shows, it does not explain. */
   /** Short chips rendered as an arrow-separated mechanism row. */
   chips?: string[];
   /** Numbered flow cards (the Document Concierge's seven steps). */
@@ -62,7 +62,7 @@ export const makler: MaklerPage = {
     label: "Erstgespräch vereinbaren",
     short: "Erstgespräch",
     href: "#termin",
-    note: "Kostenloses Erstgespräch – 30 Minuten, unverbindlich.",
+    note: "Kostenloses Erstgespräch. 30 Minuten, unverbindlich.",
   },
 
   hero: {
@@ -77,11 +77,11 @@ export const makler: MaklerPage = {
     leaks: [
       {
         title: "Die Anfrage, die kalt wird",
-        body: "Eine Anfrage kommt abends um halb zehn herein. Du siehst sie am nächsten Morgen zwischen zwei Terminen. Bis du antwortest, hat der Interessent längst drei weitere Berater angeschrieben – und spricht mit dem, der zuerst zurückgemeldet hat. Die Anfrage war da. Der Abschluss nicht.",
+        body: "Eine Anfrage kommt abends um halb zehn herein. Du siehst sie am nächsten Morgen zwischen zwei Terminen. Bis du antwortest, hat der Interessent längst drei weitere Berater angeschrieben, und spricht mit dem, der zuerst zurückgemeldet hat. Die Anfrage war da. Der Abschluss nicht.",
       },
       {
         title: "Die Unterlagen, denen du hinterhertelefonierst",
-        body: "Gehaltsabrechnung, Kontoauszüge, Steuerbescheid, SCHUFA, Ausweis. Du fragst einmal. Du fragst nach einer Woche noch einmal. Dann kommt das Foto vom Küchentisch, schief und halb abgeschnitten. Der Fall zieht sich um Wochen – nicht weil etwas schwierig wäre, sondern weil du Bote und Mahnung in einer Person bist.",
+        body: "Gehaltsabrechnung, Kontoauszüge, Steuerbescheid, SCHUFA, Ausweis. Du fragst einmal. Du fragst nach einer Woche noch einmal. Dann kommt das Foto vom Küchentisch, schief und halb abgeschnitten. Der Fall zieht sich um Wochen, nicht weil etwas schwierig wäre, sondern weil du Bote und Mahnung in einer Person bist.",
       },
     ],
     close: "Für beides gibt es bei mir ein System. Das erste ist der Anfang.",
@@ -90,7 +90,7 @@ export const makler: MaklerPage = {
   terminQuelle: {
     eyebrow: "Schritt eins",
     name: "Die Termin-Quelle",
-    promise: "Jede Anfrage bekommt sofort eine Antwort – und den Weg zum Termin, während du arbeitest.",
+    promise: "Jede Anfrage bekommt sofort eine Antwort und den Weg zum Termin, während du arbeitest.",
     chips: ["Antwort in unter 5 Minuten", "Qualifizieren", "Termin buchen", "Nachfassen", "Protokoll"],
     solves: [
       "Antwortet, wenn du schläfst",
@@ -101,8 +101,8 @@ export const makler: MaklerPage = {
     outcome:
       "Mehr Termine aus den Anfragen, die du ohnehin schon hast. Und ein ruhiger Kopf, weil keine mehr liegen bleibt.",
     proof: {
-      prompt: "Glaub mir das nicht – probier es aus.",
-      body: "Du beschreibst kurz dein Geschäft und schreibst dann als dein eigener Interessent – gegen eine Simulation, die zeigt, wie die Termin-Quelle antwortet. Zwei Minuten, kein Login, nichts wird gespeichert.",
+      prompt: "Glaub mir das nicht, probier es aus.",
+      body: "Du beschreibst kurz dein Geschäft und schreibst dann als dein eigener Interessent, gegen eine Simulation, die zeigt, wie die Termin-Quelle antwortet. Zwei Minuten, kein Login, nichts wird gespeichert.",
       label: "Spiel deinen eigenen Kunden",
       href: "/demo",
     },
@@ -124,15 +124,15 @@ export const makler: MaklerPage = {
       { title: "Sofort geprüft", body: "Falsches oder unlesbares Dokument? Geht freundlich zurück, bevor du es überhaupt siehst." },
       { title: "Ruhig nachgefasst", body: "Nur was noch fehlt, in ruhigem Abstand. Höflich und beharrlich." },
       { title: "Abgelegt bei dir", body: "Jede Datei benannt und sortiert in deinem eigenen Cloud-Ordner." },
-      { title: "Eine Meldung an dich", body: "Alle sieben da – oder: es fehlt noch der Kontoauszug. Du musst nichts öffnen." },
+      { title: "Eine Meldung an dich", body: "Alle sieben da. Oder es fehlt noch der Kontoauszug. Du musst nichts öffnen." },
     ],
     outcome:
-      "Vollständige, geprüfte Akten in deiner eigenen Cloud – und kein einziges Telefonat, in dem du um eine Gehaltsabrechnung bittest.",
+      "Vollständige, geprüfte Akten in deiner eigenen Cloud, und kein einziges Telefonat, in dem du um eine Gehaltsabrechnung bittest.",
     trust: {
       title: "Wo die Unterlagen liegen",
-      body: "Die Unterlagen deiner Kunden bleiben in deinen eigenen Konten. Das System läuft auf deinem eigenen Server, die Upload-Seite ebenso, und die Dateien landen in deiner eigenen Cloud – bei mir liegt keine einzige. Für die automatische Prüfung geht jede Seite einmal an einen KI-Dienst, der ebenfalls in deinem eigenen Konto läuft, Rechenzentrum in der EU; gespeichert wird dort nichts. Alles verschlüsselt übertragen, mit Auftragsverarbeitungsvertrag. Bei Gehaltsabrechnungen und SCHUFA-Auskünften ist das keine Formalie, sondern die Grundbedingung.",
+      body: "Die Unterlagen deiner Kunden bleiben in deinen eigenen Konten. Das System läuft auf deinem eigenen Server, die Upload-Seite ebenso, und die Dateien landen in deiner eigenen Cloud, bei mir liegt keine einzige. Für die automatische Prüfung geht jede Seite einmal an einen KI-Dienst, der ebenfalls in deinem eigenen Konto läuft, Rechenzentrum in der EU; gespeichert wird dort nichts. Alles verschlüsselt übertragen, mit Auftragsverarbeitungsvertrag. Bei Gehaltsabrechnungen und SCHUFA-Auskünften ist das keine Formalie, sondern die Grundbedingung.",
     },
-    note: "Den Document Concierge baue ich für dich – nach deinen Fallarten, deinen Checklisten, deiner Cloud. Es gibt ihn nicht als fertige Software zum Anklicken. Deshalb siehst du hier den Ablauf; alles Weitere zeige ich dir im Gespräch.",
+    note: "Den Document Concierge baue ich für dich, nach deinen Fallarten, deinen Checklisten, deiner Cloud. Es gibt ihn nicht als fertige Software zum Anklicken. Deshalb siehst du hier den Ablauf; alles Weitere zeige ich dir im Gespräch.",
     demoVideo: null,
   },
 
@@ -141,11 +141,11 @@ export const makler: MaklerPage = {
     items: [
       {
         title: "Deinen eigenen Server",
-        body: "Ich richte ihn ein und baue alles darauf. Er läuft auf deinem eigenen Konto – rund 30 € im Monat, und er gehört dir. Deshalb liegen deine Daten auch bei dir und nicht bei mir.",
+        body: "Ich richte ihn ein und baue alles darauf. Er läuft auf deinem eigenen Konto, rund 30 € im Monat, und er gehört dir. Deshalb liegen deine Daten auch bei dir und nicht bei mir.",
       },
       {
         title: "Wartung nur, wenn du willst",
-        body: "Monatlich kündbar. Kündigst du, läuft alles weiter – du verlierst nur meine Aufmerksamkeit und die laufenden Verbesserungen, nie die Sicherheit.",
+        body: "Monatlich kündbar. Kündigst du, läuft alles weiter. Du verlierst nur meine Aufmerksamkeit und die laufenden Verbesserungen, nie die Sicherheit.",
       },
     ],
   },
@@ -173,7 +173,7 @@ export const makler: MaklerPage = {
       },
       {
         title: "Jede Anfrage bekommt in unter fünf Minuten eine Antwort.",
-        body: "Rund um die Uhr. Das ist die Zahl, an der du mich messen kannst – hält dein System sie nicht ein, baue ich nach. Nicht zugesagt ist dein Anfrage-Volumen: das bestimmt dein Markt, nicht ich.",
+        body: "Rund um die Uhr. Das ist die Zahl, an der du mich messen kannst. Hält dein System sie nicht ein, baue ich nach. Nicht zugesagt ist dein Anfrage-Volumen: das bestimmt dein Markt, nicht ich.",
       },
       {
         title: "Der erste Monat Betrieb geht auf mich.",
@@ -184,7 +184,7 @@ export const makler: MaklerPage = {
       "Ich sichere zu, was ich in der Hand habe: Funktion, Reaktionszeit, sauberer Betrieb.",
     founding: {
       title: "Meine ersten drei Kunden",
-      body: "Für meine ersten drei Kunden gebe ich eine zusätzliche Zusage: Hält die Termin-Quelle die Fünf-Minuten-Antwort in einem Monat einmal nicht ein, ist dieser Monat für dich kostenlos. Ich sage das einmal, ohne Countdown – es ist schlicht der Stand.",
+      body: "Für meine ersten drei Kunden gebe ich eine zusätzliche Zusage: Hält die Termin-Quelle die Fünf-Minuten-Antwort in einem Monat einmal nicht ein, ist dieser Monat für dich kostenlos. Ich sage das einmal, ohne Countdown. Es ist schlicht der Stand.",
     },
   },
 
@@ -194,7 +194,7 @@ export const makler: MaklerPage = {
       {
         question: "Ich habe doch schon ein Kontaktformular und einen Kalender-Link.",
         answer:
-          "Das Formular sammelt eine Anfrage – reagieren, qualifizieren und nachfassen musst du weiter selbst, und zwar rechtzeitig. Genau da geht das Geld verloren: Die meisten Anfragen kommen abends oder am Wochenende, und bis du am Schreibtisch bist, ist der Interessent oft schon woanders. Der Kalender-Link hilft nur dem, der ohnehin buchen will. Die Termin-Quelle schließt die Lücke dazwischen.",
+          "Das Formular sammelt eine Anfrage. Reagieren, qualifizieren und nachfassen musst du weiter selbst, und zwar rechtzeitig. Genau da geht das Geld verloren: Die meisten Anfragen kommen abends oder am Wochenende, und bis du am Schreibtisch bist, ist der Interessent oft schon woanders. Der Kalender-Link hilft nur dem, der ohnehin buchen will. Die Termin-Quelle schließt die Lücke dazwischen.",
       },
       {
         question: "Ich bin kein Technik-Mensch.",
@@ -209,7 +209,7 @@ export const makler: MaklerPage = {
       {
         question: "Was ist mit den Daten meiner Kunden?",
         answer:
-          "Deine Kundendaten liegen auf Servern in der EU, verschlüsselt übertragen und mit Auftragsverarbeitungsvertrag. Beim Document Concierge läuft das System auf deinem eigenen Server und die Dokumente landen in deiner eigenen Cloud – bei mir liegt keine einzige Datei. Welche Dienste dabei beteiligt sind, zeige ich dir vorher vollständig.",
+          "Deine Kundendaten liegen auf Servern in der EU, verschlüsselt übertragen und mit Auftragsverarbeitungsvertrag. Beim Document Concierge läuft das System auf deinem eigenen Server und die Dokumente landen in deiner eigenen Cloud, bei mir liegt keine einzige Datei. Welche Dienste dabei beteiligt sind, zeige ich dir vorher vollständig.",
       },
     ],
   },

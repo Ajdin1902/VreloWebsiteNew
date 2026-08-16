@@ -13,6 +13,7 @@ export type CopyIssue = { kind: string; detail: string };
 // silently downgrade U+201C to U+201D, which would turn this guard into a
 // detector that can never fire.
 const EM_DASH = "\u2014"; // the em-dash, forbidden in German copy
+const EN_DASH = "\u2013"; // the en-dash (Gedankenstrich), retired site-wide 2026-08-16
 const OPEN_QUOTE = "\u201E"; // the opening German quote
 const CLOSE_QUOTE = "\u201C"; // the correct closing German quote
 const WRONG_CLOSE = "\u201D"; // the wrong closing quote tools downgrade to
@@ -46,7 +47,15 @@ export function findCopyIssues(body: string): CopyIssue[] {
   if (em !== -1) {
     issues.push({
       kind: "em-dash",
-      detail: `use the spaced en-dash instead: ...${snippet(body, em)}...`,
+      detail: `no Gedankenstrich: use a comma, period or colon instead: ...${snippet(body, em)}...`,
+    });
+  }
+
+  const en = body.indexOf(EN_DASH);
+  if (en !== -1) {
+    issues.push({
+      kind: "en-dash",
+      detail: `no Gedankenstrich: use a comma, period or colon instead: ...${snippet(body, en)}...`,
     });
   }
 

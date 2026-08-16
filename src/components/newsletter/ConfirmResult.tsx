@@ -15,9 +15,12 @@ export function ConfirmResult({ status }: { status: ConfirmResultData["status"] 
           >
             <span className="h-2.5 w-2.5 rounded-full bg-amber" />
           </div>
-          <p className="font-serif text-2xl text-tiefes-wasser">Bestätigt – du bist dabei.</p>
+          <p className="font-serif text-2xl text-tiefes-wasser">Bestätigt. Du bist dabei.</p>
           <p className="mx-auto mt-3 max-w-[42ch] text-sm leading-relaxed text-stumm">
             Ab jetzt fließen dir wöchentlich neue KI-Ideen ins Postfach.
+          </p>
+          <p className="mx-auto mt-2 max-w-[42ch] text-xs leading-relaxed text-stumm">
+            Sollte eine Ausgabe im Spam-Ordner landen, verschieb sie einmal in den Posteingang. Dann kommt die nächste gleich richtig an.
           </p>
         </div>
         <RippleImage

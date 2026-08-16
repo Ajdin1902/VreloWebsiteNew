@@ -35,18 +35,18 @@ export function Result({
 
       {fast ? (
         <p className="text-balance font-serif text-2xl text-tiefes-wasser md:text-3xl">
-          Du reagierst schon schnell. Dann geht es bei der Termin-Quelle eher darum, dass das so bleibt – auch wenn mehr reinkommt.
+          Du reagierst schon schnell. Dann geht es bei der Termin-Quelle eher darum, dass das so bleibt, auch wenn mehr reinkommt.
         </p>
       ) : (
         <div>
           <p className="text-balance font-serif text-2xl text-tiefes-wasser md:text-3xl">
             Mit einer Antwort in unter 5 Minuten wären bei dir rund{" "}
-            <strong>{result.zusaetzlicheAbschluesse} Abschlüsse mehr im Jahr</strong> drin {"–"} ca.{" "}
+            <strong>{result.zusaetzlicheAbschluesse} Abschlüsse mehr im Jahr</strong> drin, ca.{" "}
             <strong>{eur(result.eurUpside)} €</strong>. Ohne eine einzige neue Anfrage.
           </p>
           {result.provisionWasDefault ? (
             <p className="mt-3 text-sm text-stumm">
-              Gerechnet mit {eur(result.provisionUsed)} € pro Abschluss {"–"} passt du den Wert an, wird die
+              Gerechnet mit {eur(result.provisionUsed)} € pro Abschluss. Passt du den Wert an, wird die
               Schätzung genauer.
             </p>
           ) : null}
@@ -55,7 +55,7 @@ export function Result({
 
       {!fast ? (
         <p className="text-tinte">
-          Aktuell werden rund {result.currentLossPct} % deiner Anfragen kalt, bevor daraus ein Termin wird {"–"}{" "}
+          Aktuell werden rund {result.currentLossPct} % deiner Anfragen kalt, bevor daraus ein Termin wird,{" "}
           das sind ca. {result.verloreneAnfragenProJahr} im Jahr.
         </p>
       ) : null}
@@ -69,7 +69,7 @@ export function Result({
               {result.currentLossPct} % verloren: {result.verloreneAnfragenProJahr} Stück.
             </li>
             <li>
-              Auch ein gutes System verliert welche {"–"} wir rechnen mit 10 %, die nie erreichbar sind. Bleiben{" "}
+              Auch ein gutes System verliert welche. Wir rechnen mit 10 %, die nie erreichbar sind. Bleiben{" "}
               {result.adressierbareAnfragen}, an denen Schnelligkeit überhaupt etwas ändern kann.
             </li>
             <li>
@@ -82,7 +82,7 @@ export function Result({
           </ol>
         ) : null}
         <p className="mt-3 text-sm text-tinte">
-          Grundlage ist die Forschung zur Reaktionszeit bei Online-Anfragen {"–"} allen voran Harvard Business
+          Grundlage ist die Forschung zur Reaktionszeit bei Online-Anfragen, allen voran Harvard Business
           Review, The Short Life of Online Sales Leads (2011): jenseits der Fünf-Minuten-Marke fällt die Chance,
           einen Interessenten überhaupt noch zu erreichen und zu qualifizieren, um ein Vielfaches. Die Schätzung
           oben ist bewusst vorsichtig gerechnet: sie unterstellt weder, dass sich jede verlorene Anfrage
@@ -98,29 +98,29 @@ export function Result({
           <li>Eine feste Nachfass-Routine für alle, die sich nicht melden.</li>
         </ul>
         <p className="mt-3 text-sm text-stumm">
-          Das Schwere ist, das <strong>konsequent</strong> zu tun {"–"} nachts, im Termin, bei jeder Anfrage.
+          Das Schwere ist, das <strong>konsequent</strong> zu tun, nachts, im Termin, bei jeder Anfrage.
         </p>
       </div>
 
       <div>
         <h3 className="text-lg font-semibold text-tiefes-wasser">Genau das übernimmt die Termin-Quelle</h3>
         <p className="mt-3 text-tinte">
-          Die drei Dinge von oben sind einfach. Schwer ist nur, sie durchzuhalten {"–"} bei jeder Anfrage. Ein
+          Die drei Dinge von oben sind einfach. Schwer ist nur, sie durchzuhalten, bei jeder Anfrage. Ein
           System tut genau das:
         </p>
         <ul className="mt-3 list-disc space-y-1 pl-5 text-tinte">
           <li>
-            Die Termin-Quelle antwortet auf jede neue Anfrage in unter fünf Minuten {"–"} auch abends, auch am
+            Die Termin-Quelle antwortet auf jede neue Anfrage in unter fünf Minuten, auch abends, auch am
             Wochenende.
           </li>
           <li>Sie stellt die richtigen Fragen und schlägt einen Termin vor.</li>
-          <li>Meldet sich jemand nicht, fasst sie von selbst nach {"–"} ohne dass du daran denken musst.</li>
+          <li>Meldet sich jemand nicht, fasst sie von selbst nach, ohne dass du daran denken musst.</li>
         </ul>
       </div>
 
       <div className="rounded-2xl bg-vrelo-petrol p-8 md:p-10">
         <p className="text-balance font-serif text-xl text-papier md:text-2xl">
-          Willst du, dass das von selbst läuft – auch wenn du im Termin sitzt? Genau das ist die Termin-Quelle.
+          Willst du, dass das von selbst läuft, auch wenn du im Termin sitzt? Genau das ist die Termin-Quelle.
         </p>
         <div className="mt-6">
           <SchedulerEmbed

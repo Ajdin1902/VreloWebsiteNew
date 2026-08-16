@@ -36,8 +36,8 @@ describe("referenzen copy", () => {
     expect(all.filter((s) => s.includes('"'))).toEqual([]);
   });
 
-  it("uses the en-dash, never the em-dash", () => {
-    expect(all.filter((s) => s.includes("—"))).toEqual([]);
+  it("uses no dash at all (Gedankenstrich retired site-wide)", () => {
+    expect(all.filter((s) => s.includes("—") || s.includes("–"))).toEqual([]);
   });
 
   it("pairs every opening German quote with a closing one", () => {

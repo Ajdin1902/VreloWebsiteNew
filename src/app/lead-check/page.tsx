@@ -7,7 +7,7 @@ import { calLink } from "@/lib/contact";
 export const metadata: Metadata = {
   title: "Lead-Reaktions-Check",
   description:
-    "In zwei Minuten siehst du, wie viele Abschlüsse mit deinem heutigen Posteingang mehr drin wären – wenn jede Anfrage sofort eine Antwort bekäme.",
+    "In zwei Minuten siehst du, wie viele Abschlüsse mit deinem heutigen Posteingang mehr drin wären, wenn jede Anfrage sofort eine Antwort bekäme.",
   robots: { index: false, follow: false },
 };
 
@@ -17,7 +17,7 @@ export default function LeadCheckPage() {
       <PageHero
         title="Wie viel lässt du jede Woche liegen?"
         src="/images/lead-check-banner.webp"
-        lead="In zwei Minuten siehst du, wie viele Abschlüsse mit deinem heutigen Posteingang mehr drin wären – wenn jede Anfrage sofort eine Antwort bekäme. Sechs Fragen, kein Login, dein Ergebnis sofort."
+        lead="In zwei Minuten siehst du, wie viele Abschlüsse mit deinem heutigen Posteingang mehr drin wären, wenn jede Anfrage sofort eine Antwort bekäme. Sechs Fragen, kein Login, dein Ergebnis sofort."
       />
       {/* A faint cool band so the warm paper wizard card lifts off the page —
           the petrol/papier two-tone of the other subpages, in a soft key.

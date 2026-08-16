@@ -8,7 +8,7 @@ export type ConfirmEmail = { subject: string; html: string; text: string };
 export function buildConfirmEmail({ confirmUrl }: { confirmUrl: string }): ConfirmEmail {
   const subject = "Bitte bestätige deine Newsletter-Anmeldung";
 
-  const oneLiner = "Aus einem Tropfen fließt ein Fluss – aus einer Idee deine Zeit zurück.";
+  const oneLiner = "Aus einem Tropfen fließt ein Fluss, aus einer Idee deine Zeit zurück.";
 
   const text = [
     "Hallo,",

@@ -8,7 +8,7 @@ export const impressum: LegalDoc = {
   sections: [
     {
       heading: "Anbieter",
-      body: "Ajdin Džafić\nVrelo – Prozessautomatisierung\nDietrich-Bonhoeffer-Straße 2\n93055 Regensburg\nDeutschland",
+      body: "Ajdin Džafić\nVrelo, Prozessautomatisierung\nDietrich-Bonhoeffer-Straße 2\n93055 Regensburg\nDeutschland",
     },
     {
       heading: "Kontakt",

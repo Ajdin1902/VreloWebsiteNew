@@ -60,6 +60,7 @@ Other approved taglines: *Die Quelle. Der Merak-Effekt.* · *Aus der Quelle in d
 - ❌ **Never:** skalieren · disrupten · KI-Magie · Game-Changer · Synergien · 10× Wachstum · revolutionär · KI/AI buzzword soup · „Workflow-Flickenteppich" (as self-description) · hype / hard sell / false urgency
 - **Water metaphor:** at most ONE per piece (Quelle/Fluss) — evocative, not flooded.
 - *Merak*-Effekt is a **feeling, never a product/package name**. Always paired with Vrelo (Quelle → Effekt), always warm register.
+- **German punctuation (founder decision 2026-08-16):** German quotes (U+201E open, U+201C close), never ASCII straight quotes. **No Gedankenstrich in German copy.** The spaced en-dash (U+2013) is retired; join clauses with a comma, a period, or a colon, and write number ranges with the word bis (e.g. 1 bis 2). Em-dashes (U+2014) never appear in German copy either. (English code comments may keep the em-dash.)
 
 ---
 

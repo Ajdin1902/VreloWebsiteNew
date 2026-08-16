@@ -17,7 +17,7 @@ export function FocusHeader({ cta }: { cta?: FocusCta }) {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link
           href="/"
-          aria-label="Vrelo – Startseite"
+          aria-label="Vrelo, Startseite"
           className="rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-papier focus-visible:ring-vrelo-petrol"
         >
           <BrandLockup variant="navy" />

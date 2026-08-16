@@ -7,7 +7,7 @@ import { calLink } from "@/lib/contact";
 export const metadata: Metadata = {
   title: "Prozess-Check",
   description:
-    "In 60 Sekunden findest du heraus, welche Aufgabe dich am meisten kostet – und ob sich ein Prozess-Audit für dich lohnt. Fünf Fragen, kein Login.",
+    "In 60 Sekunden findest du heraus, welche Aufgabe dich am meisten kostet, und ob sich ein Prozess-Audit für dich lohnt. Fünf Fragen, kein Login.",
   robots: { index: false, follow: false },
 };
 
@@ -17,7 +17,7 @@ export default function ProzessCheckPage() {
       <PageHero
         title="Lohnt sich das für deinen Betrieb?"
         src="/images/lead-check-banner.webp"
-        lead="Fünf kurze Fragen, und du weißt, welche Aufgabe dich am meisten kostet – und ob ein Prozess-Audit für dich der richtige nächste Schritt ist. Kein Login, dein Ergebnis sofort."
+        lead="Fünf kurze Fragen, und du weißt, welche Aufgabe dich am meisten kostet, und ob ein Prozess-Audit für dich der richtige nächste Schritt ist. Kein Login, dein Ergebnis sofort."
       />
       {/* Same faint cool band as /lead-check so the warm paper card lifts off. */}
       <div className="-mt-10 bg-gletscher/30 md:-mt-12">

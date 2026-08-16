@@ -43,7 +43,7 @@ export const referenzen: Referenz[] = [
       "Resultat: Sprachnachrichten sparen Stunden an Verwaltungsaufgaben nach dem Feierabend.",
     kompakt:
       "Ein Telegram-Assistent, in alle Systeme integriert, erledigt die täglichen Verwaltungsaufgaben.",
-    kennzahl: "1–2 Std./Tag",
+    kennzahl: "1 bis 2 Std./Tag",
     kennzahlLabel: "zurückgewonnen",
   },
 ];

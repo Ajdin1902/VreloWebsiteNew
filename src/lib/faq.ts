@@ -8,17 +8,17 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Wie läuft ein Projekt mit dir ab?",
         answer:
-          "In drei klaren Schritten: Wir schauen gemeinsam hin, wo dir Zeit verloren geht. Ich baue daraus eine saubere, dokumentierte Lösung. Danach läuft sie von selbst – für Anpassungen bleibe ich erreichbar.",
+          "In drei klaren Schritten: Wir schauen gemeinsam hin, wo dir Zeit verloren geht. Ich baue daraus eine saubere, dokumentierte Lösung. Danach läuft sie von selbst. Für Anpassungen bleibe ich erreichbar.",
       },
       {
         question: "Für welche Betriebe baust du?",
         answer:
-          "Für kleine Betriebe und Selbstständige im DACH-Raum – Handwerk, Praxen, Agenturen, lokale Dienstleister. Wenn sich bei dir täglich derselbe Kleinkram wiederholt, lohnt es sich.",
+          "Für kleine Betriebe und Selbstständige im DACH-Raum: Handwerk, Praxen, Agenturen, lokale Dienstleister. Wenn sich bei dir täglich derselbe Kleinkram wiederholt, lohnt es sich.",
       },
       {
         question: "Arbeitest du auch remote?",
         answer:
-          "Ja, komplett remote. Die Zusammenarbeit läuft über kurze Calls und klare Absprachen – egal, wo dein Betrieb sitzt.",
+          "Ja, komplett remote. Die Zusammenarbeit läuft über kurze Calls und klare Absprachen, egal, wo dein Betrieb sitzt.",
       },
       {
         question: "Was passiert nach dem Projekt?",
@@ -33,7 +33,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Muss ich meine bestehenden Tools wechseln?",
         answer:
-          "Nicht zwingend. Wenn eine andere Lösung dein Problem an der Wurzel löst, schlage ich sie dir vor – manchmal ist damit schon das Grundproblem behoben. Oft reicht es aber, deine bestehenden Tools sauber miteinander zu verbinden. Ich zwinge dir kein neues System auf, sondern passe mich deiner Lage an.",
+          "Nicht zwingend. Wenn eine andere Lösung dein Problem an der Wurzel löst, schlage ich sie dir vor. Manchmal ist damit schon das Grundproblem behoben. Oft reicht es aber, deine bestehenden Tools sauber miteinander zu verbinden. Ich zwinge dir kein neues System auf, sondern passe mich deiner Lage an.",
       },
       {
         question: "Was passiert mit meinen Daten?",
@@ -53,7 +53,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Was kostet eine Automatisierung?",
         answer:
-          "Das hängt vom Umfang ab – jede Lösung ist maßgeschneidert. Mir ist wichtig, dass nachvollziehbar bleibt, wie ich den Preis festlege: Im Gespräch beantworte ich deine Fragen im besten Fall, bevor du sie überhaupt stellst. Danach bekommst du ein klares, unverbindliches Angebot ohne versteckte Kosten.",
+          "Das hängt vom Umfang ab. Jede Lösung ist maßgeschneidert. Mir ist wichtig, dass nachvollziehbar bleibt, wie ich den Preis festlege: Im Gespräch beantworte ich deine Fragen im besten Fall, bevor du sie überhaupt stellst. Danach bekommst du ein klares, unverbindliches Angebot ohne versteckte Kosten.",
       },
       {
         question: "Wie lange dauert die Umsetzung?",
@@ -63,7 +63,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Wie fange ich an?",
         answer:
-          "Mit einem unverbindlichen Gespräch. Du erzählst mir, was dich Zeit kostet – ich sage dir ehrlich, ob und wie ich helfen kann.",
+          "Mit einem unverbindlichen Gespräch. Du erzählst mir, was dich Zeit kostet. Ich sage dir ehrlich, ob und wie ich helfen kann.",
       },
     ],
   },

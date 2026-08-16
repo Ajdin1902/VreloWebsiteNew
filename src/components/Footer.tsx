@@ -33,7 +33,7 @@ export function Footer() {
           >
             Newsletter
           </Link>
-          <p className="mb-3">Automatisierungs-Ideen mit KI – ruhig erklärt.</p>
+          <p className="mb-3">Automatisierungs-Ideen mit KI, ruhig erklärt.</p>
           {isNewsletterConfigured() ? (
             <NewsletterForm compact />
           ) : (

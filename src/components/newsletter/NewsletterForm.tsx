@@ -19,7 +19,7 @@ export function NewsletterForm({ compact = false }: { compact?: boolean }) {
     // Footer keeps a quiet inline confirmation; the full page shows the payoff.
     return compact ? (
       <p className="text-sm text-gletscher">
-        Fast geschafft – schau in dein Postfach und bestätige deine Anmeldung.
+        Fast geschafft. Schau in dein Postfach und bestätige deine Anmeldung.
       </p>
     ) : (
       <NewsletterSuccess />

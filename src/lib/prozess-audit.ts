@@ -17,17 +17,17 @@ export type ProzessAudit = {
 
 export const prozessAudit: ProzessAudit = {
   label: "Nicht sicher, wo du anfangen sollst?",
-  heading: "Der Prozess-Audit – ich finde die eine Aufgabe, die dich am meisten kostet.",
-  body: "Du merkst, dass Zeit und Anfragen durchrutschen – aber nicht, wo genau. Im Prozess-Audit schaue ich mir deine Abläufe an und du bekommst ein fertiges Handbuch: schwarz auf weiß, wo du am meisten verlierst und wie dein Tag ohne diese Aufgabe aussieht. Wenn du danach baust, ist der Audit für dich kostenlos.",
+  heading: "Der Prozess-Audit: Ich finde die eine Aufgabe, die dich am meisten kostet.",
+  body: "Du merkst, dass Zeit und Anfragen durchrutschen, aber nicht, wo genau. Im Prozess-Audit schaue ich mir deine Abläufe an und du bekommst ein fertiges Handbuch: schwarz auf weiß, wo du am meisten verlierst und wie dein Tag ohne diese Aufgabe aussieht. Wenn du danach baust, ist der Audit für dich kostenlos.",
   deliverableLabel: "Das bekommst du",
   deliverables: [
     "Deine Abläufe, Schritt für Schritt kartiert",
     "Ein Diagramm, wie dein Prozess nach der Automatisierung läuft",
     "Der genaue Fahrplan: welche Automatisierung zuerst, in welchen Schritten",
-    "Die Rechnung dahinter: was die Aufgabe heute kostet und was sie dir zurückgibt – ausgerechnet",
+    "Die Rechnung dahinter: was die Aufgabe heute kostet und was sie dir zurückgibt, ausgerechnet",
     "Ein klares Ziel und der Zeitrahmen, bis es steht",
   ],
-  keepNote: "Dein Fahrplan gehört dir – ob du danach mit mir baust oder nicht.",
+  keepNote: "Dein Fahrplan gehört dir, ob du danach mit mir baust oder nicht.",
   guarantee: "Zeigt dir der Fahrplan keine konkrete, lohnende Automatisierung, bekommst du dein Geld zurück.",
   cta: { label: "Kostenloses Erstgespräch", href: "/kontakt" },
   check: { label: "Unsicher, ob sich das lohnt? Mach den 60-Sekunden-Check.", href: "/prozess-check" },

@@ -46,16 +46,16 @@ export function buildLeadSummaryEmail(p: {
 
   const heroHtml = fast
     ? `<p style="${SERIF};text-align:center;font-size:25px;line-height:1.35;color:#0a2538;margin:0 0 6px">Du reagierst schon schnell.</p>
-<p style="text-align:center;font-size:14px;margin:0 0 18px">Dann geht es bei der Termin-Quelle eher darum, dass das so bleibt – auch wenn mehr reinkommt.</p>`
-    : `<p style="${SERIF};text-align:center;font-size:25px;line-height:1.35;color:#0a2538;margin:0 0 6px">Rund <strong>${result.zusaetzlicheAbschluesse} Abschlüsse mehr im Jahr</strong> – ca. <strong>${eurFmt(result.eurUpside)}</strong>.</p>
+<p style="text-align:center;font-size:14px;margin:0 0 18px">Dann geht es bei der Termin-Quelle eher darum, dass das so bleibt, auch wenn mehr reinkommt.</p>`
+    : `<p style="${SERIF};text-align:center;font-size:25px;line-height:1.35;color:#0a2538;margin:0 0 6px">Rund <strong>${result.zusaetzlicheAbschluesse} Abschlüsse mehr im Jahr</strong>, ca. <strong>${eurFmt(result.eurUpside)}</strong>.</p>
 <p style="text-align:center;font-size:14px;margin:0 0 18px">Mit einer Antwort in unter 5 Minuten. Ohne eine einzige neue Anfrage.</p>`;
 
   const contextHtml = fast
     ? ""
-    : `<p style="font-size:14.5px;line-height:1.6;margin:0 0 8px">Aktuell werden rund ${result.currentLossPct}${NBSP}% deiner Anfragen kalt, bevor daraus ein Termin wird – das sind ca. ${nf.format(result.verloreneAnfragenProJahr)} im Jahr.</p>
+    : `<p style="font-size:14.5px;line-height:1.6;margin:0 0 8px">Aktuell werden rund ${result.currentLossPct}${NBSP}% deiner Anfragen kalt, bevor daraus ein Termin wird, das sind ca. ${nf.format(result.verloreneAnfragenProJahr)} im Jahr.</p>
 <p style="font-size:12.5px;color:#696359;margin:0 0 22px">${
         result.provisionWasDefault
-          ? `Gerechnet mit ${eurFmt(result.provisionUsed)} pro Abschluss – dem Branchenschnitt.`
+          ? `Gerechnet mit ${eurFmt(result.provisionUsed)} pro Abschluss, dem Branchenschnitt.`
           : `Gerechnet mit ${eurFmt(result.provisionUsed)} pro Abschluss.`
       }</p>`;
 
@@ -63,7 +63,7 @@ export function buildLeadSummaryEmail(p: {
 
   const ctaInner = calUrl
     ? `<a href="${calUrl}" style="display:inline-block;background:#d4a24c;color:#0a2538;font-weight:bold;font-size:14px;text-decoration:none;padding:12px 22px;border-radius:8px">30-Minuten-Gespräch buchen</a>`
-    : `<span style="color:#f4efe6;font-size:14px">Antworte einfach auf diese E-Mail – dann melde ich mich.</span>`;
+    : `<span style="color:#f4efe6;font-size:14px">Antworte einfach auf diese E-Mail. Dann melde ich mich.</span>`;
 
   const html = `<!doctype html>
 <html lang="de">
@@ -73,16 +73,16 @@ export function buildLeadSummaryEmail(p: {
       ${heroHtml}
       <div style="width:44px;height:3px;background:#d4a24c;margin:0 auto 22px"></div>
       ${contextHtml}
-      <div style="background:#ece3d2;border-radius:8px;padding:14px 16px;font-size:13px;line-height:1.6;margin:0 0 22px"><strong>Wie wir rechnen:</strong> Grundlage ist die Lead-Response-Forschung (HBR/InsideSales) – nach der Fünf-Minuten-Marke fällt die Chance, einen Lead zu erreichen, um rund das Acht- bis Zehnfache. Wir rechnen bewusst konservativ, und selbst dann, wenn nur jeder fünfte zurückgeholte Termin zum Abschluss wird.</div>
+      <div style="background:#ece3d2;border-radius:8px;padding:14px 16px;font-size:13px;line-height:1.6;margin:0 0 22px"><strong>Wie wir rechnen:</strong> Grundlage ist die Lead-Response-Forschung (HBR/InsideSales). Nach der Fünf-Minuten-Marke fällt die Chance, einen Lead zu erreichen, um rund das Acht- bis Zehnfache. Wir rechnen bewusst konservativ, und selbst dann, wenn nur jeder fünfte zurückgeholte Termin zum Abschluss wird.</div>
       <p style="font-size:15px;font-weight:bold;color:#0a2538;margin:0 0 8px">${tipsHeading}</p>
       <ul style="margin:0 0 8px;padding-left:20px;font-size:14.5px;line-height:1.6">
         <li style="margin-bottom:4px">Eine feste Fünf-Minuten-Regel für neue Anfragen.</li>
         <li style="margin-bottom:4px">Eine einfache Auto-Antwort, die sofort bestätigt.</li>
         <li>Eine feste Nachfass-Routine für alle, die sich nicht melden.</li>
       </ul>
-      <p style="font-size:12.5px;color:#696359;margin:0 0 24px">Das Schwere ist, das <strong>konsequent</strong> zu tun – nachts, im Termin, bei jeder Anfrage.</p>
+      <p style="font-size:12.5px;color:#696359;margin:0 0 24px">Das Schwere ist, das <strong>konsequent</strong> zu tun, nachts, im Termin, bei jeder Anfrage.</p>
       <div style="background:#1b5063;border-radius:12px;padding:24px 22px;text-align:center;margin:0 0 26px">
-        <p style="${SERIF};color:#f4efe6;font-size:17px;line-height:1.45;margin:0 0 16px">Willst du, dass das von selbst läuft – auch wenn du im Termin sitzt? Genau das ist die Termin-Quelle.</p>
+        <p style="${SERIF};color:#f4efe6;font-size:17px;line-height:1.45;margin:0 0 16px">Willst du, dass das von selbst läuft, auch wenn du im Termin sitzt? Genau das ist die Termin-Quelle.</p>
         ${ctaInner}
       </div>
       <p style="font-size:14.5px;line-height:1.6;margin:0 0 24px">Bis bald<br>Ajdin von <em style="${SERIF};font-style:italic">Vrelo</em></p>
@@ -98,28 +98,28 @@ export function buildLeadSummaryEmail(p: {
     ...(fast
       ? [
           "Du reagierst schon schnell.",
-          "Dann geht es bei der Termin-Quelle eher darum, dass das so bleibt – auch wenn mehr reinkommt.",
+          "Dann geht es bei der Termin-Quelle eher darum, dass das so bleibt, auch wenn mehr reinkommt.",
         ]
       : [
-          `Rund ${result.zusaetzlicheAbschluesse} Abschlüsse mehr im Jahr – ca. ${nf.format(result.eurUpside)} €.`,
+          `Rund ${result.zusaetzlicheAbschluesse} Abschlüsse mehr im Jahr, ca. ${nf.format(result.eurUpside)} €.`,
           "Mit einer Antwort in unter 5 Minuten. Ohne eine einzige neue Anfrage.",
           "",
-          `Aktuell werden rund ${result.currentLossPct} % deiner Anfragen kalt, bevor daraus ein Termin wird – das sind ca. ${nf.format(result.verloreneAnfragenProJahr)} im Jahr.`,
+          `Aktuell werden rund ${result.currentLossPct} % deiner Anfragen kalt, bevor daraus ein Termin wird, das sind ca. ${nf.format(result.verloreneAnfragenProJahr)} im Jahr.`,
           result.provisionWasDefault
-            ? `Gerechnet mit ${nf.format(result.provisionUsed)} € pro Abschluss – dem Branchenschnitt.`
+            ? `Gerechnet mit ${nf.format(result.provisionUsed)} € pro Abschluss, dem Branchenschnitt.`
             : `Gerechnet mit ${nf.format(result.provisionUsed)} € pro Abschluss.`,
         ]),
     "",
-    "Wie wir rechnen: Grundlage ist die Lead-Response-Forschung (HBR/InsideSales) – nach der Fünf-Minuten-Marke fällt die Chance, einen Lead zu erreichen, um rund das Acht- bis Zehnfache. Wir rechnen bewusst konservativ, und selbst dann, wenn nur jeder fünfte zurückgeholte Termin zum Abschluss wird.",
+    "Wie wir rechnen: Grundlage ist die Lead-Response-Forschung (HBR/InsideSales). Nach der Fünf-Minuten-Marke fällt die Chance, einen Lead zu erreichen, um rund das Acht- bis Zehnfache. Wir rechnen bewusst konservativ, und selbst dann, wenn nur jeder fünfte zurückgeholte Termin zum Abschluss wird.",
     "",
     `${tipsHeading}:`,
     "- Eine feste Fünf-Minuten-Regel für neue Anfragen.",
     "- Eine einfache Auto-Antwort, die sofort bestätigt.",
     "- Eine feste Nachfass-Routine für alle, die sich nicht melden.",
-    "Das Schwere ist, das konsequent zu tun – nachts, im Termin, bei jeder Anfrage.",
+    "Das Schwere ist, das konsequent zu tun, nachts, im Termin, bei jeder Anfrage.",
     "",
-    "Willst du, dass das von selbst läuft – auch wenn du im Termin sitzt? Genau das ist die Termin-Quelle.",
-    calUrl ? `30-Minuten-Gespräch buchen: ${calUrl}` : "Antworte einfach auf diese E-Mail – dann melde ich mich.",
+    "Willst du, dass das von selbst läuft, auch wenn du im Termin sitzt? Genau das ist die Termin-Quelle.",
+    calUrl ? `30-Minuten-Gespräch buchen: ${calUrl}` : "Antworte einfach auf diese E-Mail. Dann melde ich mich.",
     "",
     "Bis bald",
     "Ajdin von Vrelo",
@@ -134,7 +134,7 @@ const REAKTIONSZEIT_LABEL: Record<Reaktionszeit, string> = {
   unter5min: "unter 5 Minuten",
   unter1std: "unter 1 Stunde",
   selberTag: "am selben Tag",
-  "1bis2tage": "1–2 Tage",
+  "1bis2tage": "1 bis 2 Tage",
   wennZeit: "wenn ich dazu komme",
 };
 const ABENDS_LABEL: Record<AbendsWochenende, string> = { immer: "immer", manchmal: "manchmal", nein: "nein" };
@@ -167,7 +167,7 @@ export function buildLeadCheckEmail(p: {
   const { answers, result } = p;
   const email = p.email.trim();
   const fast = result.score === "schnell";
-  const subject = `Lead-Check: ${email} – ${SCORE_LABEL[result.score]}${fast ? "" : ` · ${nf.format(result.eurUpside)} €`}`;
+  const subject = `Lead-Check: ${email}, ${SCORE_LABEL[result.score]}${fast ? "" : ` · ${nf.format(result.eurUpside)} €`}`;
 
   const rows: Array<[string, string]> = [
     ["E-Mail", escapeHtml(email)],
@@ -179,7 +179,7 @@ export function buildLeadCheckEmail(p: {
     ["Provision", `${eurFmt(result.provisionUsed)}${result.provisionWasDefault ? " (Standard)" : ""}`],
     ["Verlorene Anfragen/Jahr", `≈ ${nf.format(result.verloreneAnfragenProJahr)}`],
     ["Zusätzliche Abschlüsse/Jahr", `≈ ${nf.format(result.zusaetzlicheAbschluesse)}`],
-    ["Kontakt erlaubt", p.kontaktErlaubt ? "JA" : "NEIN – nicht anschreiben"],
+    ["Kontakt erlaubt", p.kontaktErlaubt ? "JA" : "NEIN, nicht anschreiben"],
   ];
 
   const kpiCell = (n: string, l: string, main = false) =>
@@ -205,7 +205,7 @@ export function buildLeadCheckEmail(p: {
       <p style="font-size:12.5px;color:#696359;margin:18px 0 0">Der Lead hat seine Zusammenfassung bereits automatisch bekommen.${
         p.kontaktErlaubt
           ? " Auf ‚Antworten‘ schreibst du ihm direkt."
-          : " <strong>Er hat dem Kontakt nicht zugestimmt – schreib ihn nicht an.</strong>"
+          : " <strong>Er hat dem Kontakt nicht zugestimmt. Schreib ihn nicht an.</strong>"
       }</p>
     </div>
   </body>
@@ -229,7 +229,7 @@ export function buildLeadCheckEmail(p: {
     `Zusätzliche Abschlüsse/Jahr: ${nf.format(result.zusaetzlicheAbschluesse)}`,
     `Euro-Potenzial/Jahr: ${nf.format(result.eurUpside)} €`,
     "",
-    `Kontakt erlaubt: ${p.kontaktErlaubt ? "JA" : "NEIN – nicht anschreiben"}`,
+    `Kontakt erlaubt: ${p.kontaktErlaubt ? "JA" : "NEIN, nicht anschreiben"}`,
   ];
 
   return { subject, text: lines.join("\n"), html, replyTo: email };

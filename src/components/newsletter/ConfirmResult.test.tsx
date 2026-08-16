@@ -9,6 +9,11 @@ describe("ConfirmResult", () => {
     expect(screen.getByText(/Bestätigt/i)).toBeInTheDocument();
     expect(screen.getByAltText(/Wasserlauf/i)).toBeInTheDocument();
   });
+  it("hints how to keep future issues out of spam", () => {
+    render(<ConfirmResult status="ok" />);
+    expect(screen.getByText(/Spam-Ordner/i)).toBeInTheDocument();
+    expect(screen.getByText(/Posteingang/i)).toBeInTheDocument();
+  });
   it("shows a calm error + link back for invalid", () => {
     render(<ConfirmResult status="invalid" />);
     expect(screen.getByText(/ungültig oder abgelaufen/i)).toBeInTheDocument();

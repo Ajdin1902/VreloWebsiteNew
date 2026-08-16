@@ -26,7 +26,7 @@ export type Step =
       label: string;
       placeholder: string;
       min: number;
-      optional: true;
+      optional: true;
       hint: string;
     }
   | { id: "reaktionszeit"; kind: "choice"; label: string; options: readonly ChoiceOption<Reaktionszeit>[] }
@@ -50,7 +50,7 @@ export const STEPS: readonly Step[] = [
       { value: "unter5min", label: "unter 5 Minuten" },
       { value: "unter1std", label: "unter 1 Stunde" },
       { value: "selberTag", label: "am selben Tag" },
-      { value: "1bis2tage", label: "1–2 Tage" },
+      { value: "1bis2tage", label: "1 bis 2 Tage" },
       { value: "wennZeit", label: "wenn ich dazu komme" },
     ],
   },
@@ -91,7 +91,7 @@ export const STEPS: readonly Step[] = [
     label: "Was ist dir ein abgeschlossener Kunde im Schnitt wert?",
     placeholder: "4000",
     min: 0,
-    optional: true,
+    optional: true,
     hint: "Lässt du das Feld leer, rechnen wir mit 4.000 € pro Abschluss. Ist dein Schnitt anders? Hier anpassen.",
   },
 ];

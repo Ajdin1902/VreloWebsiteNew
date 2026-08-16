@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   alternates: { canonical: canonical("/kontakt") },
   title: "Kontakt",
   description:
-    "Schreib mir, was dich täglich Zeit kostet – ich melde mich und sage dir ehrlich, ob und wie ich helfen kann.",
+    "Schreib mir, was dich täglich Zeit kostet. Ich melde mich und sage dir ehrlich, ob und wie ich helfen kann.",
 };
 
 export default function KontaktPage() {
@@ -26,7 +26,7 @@ export default function KontaktPage() {
     <>
       <PageIntro
         title="Lass uns deine Quelle bauen."
-        lead="Erzähl mir, was dich täglich Zeit kostet – ich melde mich und sage dir ehrlich, ob und wie ich helfen kann."
+        lead="Erzähl mir, was dich täglich Zeit kostet. Ich melde mich und sage dir ehrlich, ob und wie ich helfen kann."
       />
 
       {/* The petrol water room holds the two ways to reach me: the booking
@@ -53,7 +53,7 @@ export default function KontaktPage() {
                   </p>
                 ) : (
                   <p className="text-tinte">
-                    Ruf mich an oder schreib mir – das Formular schalte ich in Kürze frei.
+                    Ruf mich an oder schreib mir. Das Formular schalte ich in Kürze frei.
                   </p>
                 )}
               </div>
