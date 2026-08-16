@@ -4,23 +4,23 @@ export type LegalDoc = { title: string; intro: string; sections: LegalSection[] 
 export const impressum: LegalDoc = {
   title: "Impressum",
   intro:
-    "Entwurf – bitte vor Veröffentlichung rechtlich prüfen lassen. Angaben gemäß § 5 DDG.",
+    "Angaben gemäß § 5 DDG.",
   sections: [
     {
       heading: "Anbieter",
-      body: "Ajdin Dzafic\n[Platzhalter: Straße und Hausnummer]\n[Platzhalter: PLZ und Ort]\nDeutschland",
+      body: "Ajdin Džafić\nVrelo – Prozessautomatisierung\nDietrich-Bonhoeffer-Straße 2\n93055 Regensburg\nDeutschland",
     },
     {
       heading: "Kontakt",
-      body: "E-Mail: [Platzhalter: E-Mail-Adresse]\nTelefon: [Platzhalter: optional]",
+      body: "E-Mail: kontakt@vrelo-ki.de\nOder über das Kontaktformular auf dieser Website.",
     },
-    {
-      heading: "Umsatzsteuer-ID",
-      body: "Umsatzsteuer-Identifikationsnummer gemäß § 27 a UStG: [Platzhalter: falls vorhanden]",
-    },
+    // USt-IdNr: beantragt, noch nicht erteilt (Stand 2026-08-16). § 5 DDG verlangt sie nur
+    // „soweit vorhanden“ → Abschnitt kommt zurück, sobald der BZSt-Brief da ist:
+    // { heading: "Umsatzsteuer-ID", body: "Umsatzsteuer-Identifikationsnummer gemäß § 27 a UStG: DE…" }
+    // Die Steuernummer gehört NICHT hierher (keine Pflichtangabe, Missbrauchsrisiko).
     {
       heading: "Verantwortlich für den Inhalt",
-      body: "Ajdin Dzafic, Anschrift wie oben.",
+      body: "Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV (V.i.S.d.P.):\nAjdin Džafić\nDietrich-Bonhoeffer-Straße 2\n93055 Regensburg",
     },
     {
       heading: "EU-Streitschlichtung",

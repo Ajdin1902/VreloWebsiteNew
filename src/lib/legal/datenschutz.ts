@@ -3,11 +3,11 @@ import type { LegalDoc } from "./impressum";
 export const datenschutz: LegalDoc = {
   title: "Datenschutzerklärung",
   intro:
-    "Entwurf – bitte vor Veröffentlichung rechtlich prüfen lassen. Diese Erklärung informiert über die Verarbeitung personenbezogener Daten auf dieser Website.",
+    "Diese Erklärung informiert über die Verarbeitung personenbezogener Daten auf dieser Website. Stand: August 2026.",
   sections: [
     {
       heading: "Verantwortlicher",
-      body: "Verantwortlich im Sinne der DSGVO:\nAjdin Dzafic\n[Platzhalter: Anschrift]\n[Platzhalter: E-Mail]\n(vollständige Angaben siehe Impressum).",
+      body: "Verantwortlich im Sinne der DSGVO:\nAjdin Džafić\nDietrich-Bonhoeffer-Straße 2\n93055 Regensburg\nE-Mail: kontakt@vrelo-ki.de\n(vollständige Angaben siehe Impressum).",
     },
     {
       heading: "Hosting",

@@ -4,11 +4,23 @@ import { impressum } from "./impressum";
 import { datenschutz } from "./datenschutz";
 
 describe("legal content", () => {
-  it("impressum has section headings and a Platzhalter for personal details", () => {
+  it("impressum is live copy: real Anbieter, no Platzhalter, no Entwurf marker", () => {
     const headings = impressum.sections.map((s) => s.heading);
     expect(headings.join(" ")).toMatch(/Haftung für Links/i);
     const body = impressum.sections.map((s) => s.body).join("\n");
-    expect(body).toContain("[Platzhalter");
+    expect(body).not.toContain("[Platzhalter");
+    expect(impressum.intro).not.toMatch(/Entwurf/);
+    expect(body).toContain("Dietrich-Bonhoeffer-Straße 2\n93055 Regensburg");
+    expect(body).toContain("kontakt@vrelo-ki.de");
+    // Steuernummer is deliberately not published (no § 5 DDG duty, misuse risk).
+    expect(body).not.toMatch(/Steuernummer/);
+  });
+
+  it("impressum names the V.i.S.d.P. (Art. 50 Abs. 4b KI-VO exemption needs a named person)", () => {
+    const v = impressum.sections.find((s) => /Verantwortlich für den Inhalt/i.test(s.heading));
+    expect(v).toBeDefined();
+    expect(v!.body).toMatch(/V.i.S.d.P./);
+    expect(v!.body).toContain("Ajdin Džafić");
   });
 
   it("impressum declares the AI-generated imagery site-wide", () => {
@@ -26,13 +38,14 @@ describe("legal content", () => {
     expect(os!.body).toContain("[https://ec.europa.eu/consumers/odr](https://ec.europa.eu/consumers/odr)");
   });
 
-  it("datenschutz covers the contact form, Resend, Cal.com, rights, and a newsletter placeholder", () => {
+  it("datenschutz covers the contact form, Resend, Cal.com, rights, and the newsletter (no placeholder)", () => {
     const all = datenschutz.sections.map((s) => `${s.heading}\n${s.body}`).join("\n");
     expect(all).toMatch(/Verantwortlich/i);
     expect(all).toMatch(/Resend/);
     expect(all).toMatch(/Cal\.com/);
     expect(all).toMatch(/Betroffenenrechte|Rechte/i);
-    expect(all).toContain("[Platzhalter");
+    expect(all).not.toContain("[Platzhalter");
+    expect(datenschutz.intro).not.toMatch(/Entwurf/);
     expect(all).toMatch(/Newsletter/i);
   });
 
