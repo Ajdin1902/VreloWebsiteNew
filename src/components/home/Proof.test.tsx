@@ -1,9 +1,10 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { Proof } from "./Proof";
+import { referenzen } from "@/lib/referenzen";
 
 describe("Proof", () => {
-  it("renders the heading, four value cards, and the references footnote", () => {
+  it("renders the heading and four value cards", () => {
     render(<Proof />);
     expect(
       screen.getByRole("heading", { name: /Sorgfältig gebaut\. Verlässlich im Betrieb\./i }),
@@ -16,11 +17,14 @@ describe("Proof", () => {
     ]) {
       expect(screen.getByRole("heading", { name: title })).toBeInTheDocument();
     }
-    expect(screen.getByText(/Erste Kundenreferenzen folgen/i)).toBeInTheDocument();
   });
 
-  it("does not show the old apologetic placeholder line", () => {
+  it("renders the two compact reference cards instead of the coming-soon line", () => {
     render(<Proof />);
-    expect(screen.queryByText(/Echte Referenzen folgen in Kürze/i)).toBeNull();
+    for (const r of referenzen) {
+      expect(screen.getByRole("heading", { name: r.titel })).toBeInTheDocument();
+      expect(screen.getByText(r.kennzahl)).toBeInTheDocument();
+    }
+    expect(screen.queryByText(/Erste Kundenreferenzen folgen/i)).toBeNull();
   });
 });

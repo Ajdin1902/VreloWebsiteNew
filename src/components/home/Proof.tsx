@@ -1,6 +1,8 @@
 import { Section } from "@/components/Section";
 import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { Reveal } from "@/components/Reveal";
+import { ReferenzCard } from "@/components/referenzen/ReferenzCard";
+import { referenzen } from "@/lib/referenzen";
 
 const values = [
   {
@@ -70,8 +72,12 @@ export function Proof() {
         ))}
       </Reveal>
 
-      <Reveal as="p" delayMs={240} className="mx-auto mt-8 max-w-xl text-center text-sm text-tinte">
-        Erste Kundenreferenzen folgen, sobald die laufenden Projekte abgeschlossen sind.
+      <Reveal as="ul" delayMs={240} className="mx-auto mt-12 grid max-w-3xl gap-5 sm:grid-cols-2">
+        {referenzen.map((r) => (
+          <li key={r.slug}>
+            <ReferenzCard referenz={r} variant="compact" surfaceClassName="bg-papier/85 backdrop-blur-sm" />
+          </li>
+        ))}
       </Reveal>
     </Section>
   );
