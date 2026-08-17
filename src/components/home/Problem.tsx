@@ -32,7 +32,13 @@ export function Problem() {
           <ul className="flex flex-col gap-3 text-lg text-gletscher">
             {tasks.map((task) => (
               <li key={task} className="flex items-start gap-3">
-                <span aria-hidden className="mt-[0.6rem] h-1.5 w-1.5 shrink-0 rounded-full bg-amber" />
+                {/* Dot centered on the FIRST line: a one-line-tall (h-[1lh]) flex box
+                    centers the dot vertically within the line, and items-start keeps it
+                    pinned to the first line when a long task wraps on mobile. Robust to
+                    line-height changes, unlike the old fixed mt nudge. */}
+                <span aria-hidden className="flex h-[1lh] shrink-0 items-center">
+                  <span className="h-1.5 w-1.5 rounded-full bg-amber" />
+                </span>
                 <span>{task}</span>
               </li>
             ))}

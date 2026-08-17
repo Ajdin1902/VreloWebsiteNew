@@ -28,7 +28,7 @@ export default function LeistungenPage() {
           is retired (Model C: the Prozess-Audit is the main entry) and the intro
           deck is dropped. A plain papier band under the hero image: the warm
           sonnenlicht audit card lifts off it on its own shadow (no backdrop). */}
-      <Section tone="paper">
+      <Section id="prozess-audit" tone="paper" className="scroll-mt-24">
         <Reveal>
           <ProzessAudit />
         </Reveal>

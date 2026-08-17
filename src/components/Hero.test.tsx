@@ -6,7 +6,7 @@ describe("Hero", () => {
   it("leads the H1 with the short pain headline", () => {
     render(<Hero />);
     const h1 = screen.getByRole("heading", { level: 1 });
-    expect(h1).toHaveTextContent(/Manuelle Aufgaben rauben dir die Zeit/);
+    expect(h1).toHaveTextContent(/Wiederkehrende Aufgaben fressen deinen Tag/);
   });
 
   it("renders the Merak scene image", () => {
@@ -38,7 +38,7 @@ describe("Hero", () => {
     render(<Hero />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveClass("hero-reveal-h1");
     expect(
-      screen.getByText(/maßgeschneiderte Automatisierungen/),
+      screen.getByText(/freien Kopf zurück/),
     ).toHaveClass("hero-reveal-sub");
     const ctaWrapper = screen.getByRole("link", { name: "Zeit zurückgewinnen" })
       .parentElement as HTMLElement;

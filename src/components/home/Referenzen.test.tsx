@@ -20,4 +20,10 @@ describe("Referenzen (homepage)", () => {
     const link = screen.getByRole("link", { name: /Beide Projekte im Detail ansehen/i });
     expect(link).toHaveAttribute("href", "/leistungen#referenzen");
   });
+
+  it("bridges to the Prozess-Audit on /leistungen", () => {
+    render(<Referenzen />);
+    const link = screen.getByRole("link", { name: /Prozess-Audit/i });
+    expect(link).toHaveAttribute("href", "/leistungen#prozess-audit");
+  });
 });

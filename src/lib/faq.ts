@@ -53,7 +53,12 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Was kostet eine Automatisierung?",
         answer:
-          "Das hängt vom Umfang ab. Jede Lösung ist maßgeschneidert. Mir ist wichtig, dass nachvollziehbar bleibt, wie ich den Preis festlege: Im Gespräch beantworte ich deine Fragen im besten Fall, bevor du sie überhaupt stellst. Danach bekommst du ein klares, unverbindliches Angebot ohne versteckte Kosten.",
+          "Je nach Umfang liegt eine Automatisierung zwischen 1.500 und 12.000 Euro netto. Die Spanne ist so groß, weil sich so unterschiedlich viel automatisieren lässt, vom kleinen Baustein bis zum ganzen Ablauf. Den genauen Preis rechne ich für deinen Fall aus und erkläre ihn dir im Gespräch Schritt für Schritt, damit du nachvollziehen kannst, wie er zustande kommt. Danach bekommst du ein klares, unverbindliches Angebot ohne versteckte Kosten.",
+      },
+      {
+        question: "Fallen laufende Kosten an?",
+        answer:
+          "Nur, wenn du willst. Läuft dein System, kannst du eine laufende Betreuung dazunehmen: Ich überwache die Abläufe, behebe Fehler und passe Kleinigkeiten an. Je nach Umfang liegt das zwischen 350 und 1.000 Euro im Monat, netto und monatlich kündbar. Ohne Betreuung läuft dein System weiter, sicher, aber auf dem Stand der Übergabe.",
       },
       {
         question: "Wie lange dauert die Umsetzung?",

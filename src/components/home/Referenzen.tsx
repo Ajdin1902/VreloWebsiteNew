@@ -45,6 +45,30 @@ export function Referenzen() {
           <span aria-hidden> →</span>
         </Link>
       </Reveal>
+
+      {/* Bridge from proof to the paid entry step: a small papier card (the compact
+          twin of the reference cards above) so the next step reads as an offer, not a
+          footnote. Narrower + lighter padding so it sits smaller than the two proof
+          cards. Opaque papier, so ember/tinte/stumm clear AA without fighting the warm
+          backdrop. Honest framing — it points forward, it does not claim the two past
+          projects began with an audit. */}
+      <Reveal as="div" delayMs={300} className="mx-auto mt-8 max-w-md">
+        <div className="card-depth rounded-2xl border border-tinte/10 bg-papier p-6 text-left">
+          <p className="text-sm font-medium uppercase tracking-wider text-stumm">
+            Dein erster Schritt
+          </p>
+          <p className="mt-2 text-pretty text-tinte">
+            Im Prozess-Audit finden wir gemeinsam die eine Aufgabe, die sich bei dir zuerst lohnt.
+          </p>
+          <Link
+            href="/leistungen#prozess-audit"
+            className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-ember underline decoration-ember/40 underline-offset-4 transition hover:text-[#4d3216] hover:decoration-[#4d3216]"
+          >
+            Mehr zum Prozess-Audit
+            <span aria-hidden> →</span>
+          </Link>
+        </div>
+      </Reveal>
     </Section>
   );
 }

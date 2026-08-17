@@ -27,12 +27,11 @@ export function Hero() {
       </div>
 
       <h1 className="hero-reveal-h1 text-balance text-[2.25rem] font-semibold leading-[1.12] tracking-[-0.02em] text-papier md:text-[3.5rem] lg:text-[4rem]">
-        Manuelle Aufgaben rauben dir die Zeit.
+        Wiederkehrende Aufgaben fressen deinen Tag.
       </h1>
       <p className="hero-reveal-sub mt-6 max-w-xl text-pretty text-[1.05rem] leading-relaxed tracking-[-0.005em] text-gletscher md:text-xl md:leading-relaxed">
-        Ich baue maßgeschneiderte Automatisierungen für kleine Betriebe. Termine,
-        Mails und Datenpflege laufen von selbst. So gewinnst du jede Woche Stunden
-        zurück.
+        Maßgeschneiderte Automatisierungen für deinen Betrieb sind die Lösung. Du
+        gewinnst deine Stunden und einen freien Kopf zurück.
       </p>
       <div className="hero-reveal-cta mt-9">
         <CTAButton href="/kontakt" tone="dark" />
