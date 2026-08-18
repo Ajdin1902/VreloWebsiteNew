@@ -9,7 +9,7 @@ const values = [
   },
   {
     title: "Praxiserprobt.",
-    body: "Seit über drei Jahren automatisiere ich Prozesse in einem internationalen Unternehmen. Diese Erfahrung bekommst du in jedem System.",
+    body: "Seit über drei Jahren automatisiere ich professionell Prozesse. Diese Erfahrung bekommst du in jedem System.",
   },
   {
     title: "Maßgeschneidert statt von der Stange.",

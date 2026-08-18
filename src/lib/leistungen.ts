@@ -8,6 +8,13 @@ export type Leistung = {
 
 export const leistungen: Leistung[] = [
   {
+    slug: "assistent",
+    title: "Persönlicher Assistent",
+    punchline: "Dein Büro per Sprachnachricht.",
+    kurz: "Ein Assistent per Telegram oder WhatsApp, abgestimmt auf deinen Betrieb. Alle Systeme miteinander verbunden. Du sprichst unterwegs kurz hinein, den Rest erledigt er: Mail, Termin, Aufgabe, Notiz.",
+    outcomes: ["kein Abendbüro", "per Sprachnachricht erledigt", "auf deinen Betrieb abgestimmt"],
+  },
+  {
     slug: "anfragen-leads",
     title: "Anfragen & Leads",
     punchline: "Wer zuerst antwortet, gewinnt.",
@@ -36,17 +43,10 @@ export const leistungen: Leistung[] = [
     outcomes: ["kein Abtippen", "weniger Fehler", "Systeme im Gleichstand"],
   },
   {
-    slug: "assistent",
-    title: "Persönlicher Assistent",
-    punchline: "Dein Büro per Sprachnachricht.",
-    kurz: "Ein Assistent per Telegram oder WhatsApp, abgestimmt auf deinen Betrieb. Du sprichst unterwegs kurz hinein, den Rest erledigt er: Mail, Termin, Aufgabe, Notiz.",
-    outcomes: ["kein Abendbüro", "per Sprachnachricht erledigt", "auf deinen Betrieb abgestimmt"],
-  },
-  {
     slug: "prozesssteuerung",
     title: "Prozess- & Aufgabensteuerung",
     punchline: "Aufgaben steuern sich selbst.",
-    kurz: "Jeder Vorgang läuft von Phase zu Phase von selbst weiter, mit den passenden Aufgaben, Fristen und Zuständigkeiten. Nichts bleibt liegen.",
+    kurz: "Automatisierte Dokumentation deiner Prozesse. Ob Kundenakquise, Entwicklungsprozess oder Eigenprojekte. Alles mit den passenden Aufgaben, Fristen und Zuständigkeiten.",
     outcomes: ["nichts bleibt liegen", "Fristen automatisch", "immer die nächste Phase"],
   },
 ];

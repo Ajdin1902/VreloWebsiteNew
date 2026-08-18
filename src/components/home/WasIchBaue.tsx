@@ -6,7 +6,7 @@ import { Reveal } from "@/components/Reveal";
 // A curated four-chip highlight of the services; the full set lives on /leistungen.
 const leistungen = [
   "Anfragen & Leads",
-  "Termine & Bestätigungen",
+  "Persönlicher Assistent",
   "Angebote & Rechnungen",
   "Dateneingabe",
 ];

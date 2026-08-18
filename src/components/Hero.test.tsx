@@ -6,7 +6,7 @@ describe("Hero", () => {
   it("leads the H1 with the short pain headline", () => {
     render(<Hero />);
     const h1 = screen.getByRole("heading", { level: 1 });
-    expect(h1).toHaveTextContent(/Wiederkehrende Aufgaben fressen deinen Tag/);
+    expect(h1).toHaveTextContent(/Manuelle Prozesse rauben dir die Zeit/);
   });
 
   it("renders the Merak scene image", () => {
