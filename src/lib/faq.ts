@@ -53,12 +53,12 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Was kostet eine Automatisierung?",
         answer:
-          "Je nach Umfang liegt eine Automatisierung zwischen 1.500 und 12.000 Euro netto. Die Spanne ist so groß, weil sich so unterschiedlich viel automatisieren lässt, vom kleinen Baustein bis zum ganzen Ablauf. Den genauen Preis rechne ich für deinen Fall aus und erkläre ihn dir im Gespräch Schritt für Schritt, damit du nachvollziehen kannst, wie er zustande kommt. Danach bekommst du ein klares, unverbindliches Angebot ohne versteckte Kosten.",
+          "Je nach Umfang liegt eine Automatisierung zwischen 1.500 und 25.000 Euro netto. Wie viel es bei dir wird, hängt davon ab, wie viel sich automatisieren lässt, vom kleinen Baustein bis zum ganzen Ablauf, daher die große Spanne. Dabei setze ich den Preis so an, dass er sich für dich meist schon nach wenigen Monaten rechnet. Den genauen Betrag rechne ich für deinen Fall aus und erkläre ihn dir im Gespräch Schritt für Schritt, damit du nachvollziehen kannst, wie er zustande kommt.",
       },
       {
         question: "Fallen laufende Kosten an?",
         answer:
-          "Nur, wenn du willst. Läuft dein System, kannst du eine laufende Betreuung dazunehmen: Ich überwache die Abläufe, behebe Fehler und passe Kleinigkeiten an. Je nach Umfang liegt das zwischen 350 und 1.000 Euro im Monat, netto und monatlich kündbar. Ohne Betreuung läuft dein System weiter, sicher, aber auf dem Stand der Übergabe.",
+          "Den Server für dein System zahlst du direkt beim Anbieter und auf deinen Namen, rund 30 Euro im Monat. Nutzt dein System KI, kommen je nach Nutzung meist 5 bis 10 Euro im Monat dazu. Weitere laufende Fremdkosten hast du nicht. Eine laufende Betreuung kannst du dazunehmen, wenn du willst: Ich überwache die Abläufe, behebe Fehler und passe Kleinigkeiten an. Je nach Umfang liegt das zwischen 350 und 1.000 Euro im Monat, netto und monatlich kündbar. Ohne Betreuung läuft dein System weiter, sicher, aber auf dem Stand der Übergabe.",
       },
       {
         question: "Wie lange dauert die Umsetzung?",
