@@ -36,13 +36,13 @@ export const referenzen: Referenz[] = [
     problem:
       "Der Inhaber ist den ganzen Tag auf seinen Objekten, selten am Schreibtisch. E-Mails, Termine, Aufgaben und Rechnungsdaten stapelten sich und wurden abends nachgeholt.",
     gebaut:
-      "Ein Assistent per Telegram: Der Inhaber spricht unterwegs kurz hinein, der Rest passiert von selbst. E-Mail geschrieben und verschickt, Termin eingetragen, Aufgabe an einen Mitarbeiter, Notiz abgelegt, Rechnungsdaten erfasst.",
+      "Ein KI-Assistent per Telegram: Der Inhaber spricht unterwegs kurz hinein, der Rest passiert von selbst. E-Mail geschrieben und verschickt, Termin eingetragen, Aufgabe an einen Mitarbeiter, Notiz abgelegt, Rechnungsdaten erfasst.",
     laeuft:
       "Aus ein bis zwei Stunden Büroarbeit am Abend wird eine kurze Sprachnachricht zwischendurch.",
     ergebnis:
       "Resultat: Sprachnachrichten sparen Stunden an Verwaltungsaufgaben nach dem Feierabend.",
     kompakt:
-      "Ein Telegram-Assistent, in alle Systeme integriert, erledigt die täglichen Verwaltungsaufgaben.",
+      "Ein KI-Assistent, in alle Systeme integriert, erledigt die täglichen Verwaltungsaufgaben.",
     kennzahl: "1 bis 2 Std./Tag",
     kennzahlLabel: "zurückgewonnen",
   },
