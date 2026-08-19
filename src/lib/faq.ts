@@ -8,7 +8,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Wie läuft ein Projekt mit dir ab?",
         answer:
-          "In drei klaren Schritten: Wir schauen gemeinsam hin, wo dir Zeit verloren geht. Ich baue daraus eine saubere, dokumentierte Lösung. Danach läuft sie von selbst. Für Anpassungen bleibe ich erreichbar.",
+          "In drei Schritten: Zuerst legen wir in einem unverbindlichen Erstgespräch den Grundstein: womit du arbeitest, wo es hakt, wo du hinwillst. Dann erstelle ich dir einen genauen Plan, wie wir dorthin kommen: Welche Prozesse lassen sich automatisieren, wo lohnt es sich am meisten, und was bringt dir das konkret? Zum Schluss entscheidest du, wann du diesen Weg gehen möchtest. Nach dem Projekt bleibe ich für Anpassungen erreichbar.",
       },
       {
         question: "Für welche Betriebe baust du?",
@@ -53,7 +53,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Was kostet eine Automatisierung?",
         answer:
-          "Je nach Umfang liegt eine Automatisierung zwischen 1.500 und 25.000 Euro netto. Wie viel es bei dir wird, hängt davon ab, wie viel sich automatisieren lässt, vom kleinen Baustein bis zum ganzen Ablauf, daher die große Spanne. Dabei setze ich den Preis so an, dass er sich für dich meist schon nach wenigen Monaten rechnet. Den genauen Betrag rechne ich für deinen Fall aus und erkläre ihn dir im Gespräch Schritt für Schritt, damit du nachvollziehen kannst, wie er zustande kommt.",
+          "Je nach Umfang liegt eine Automatisierung zwischen 1.500 und 25.000 Euro netto. Wie viel es bei dir wird, hängt davon ab, wie viel sich automatisieren lässt, vom kleinen Baustein bis zum ganzen Ablauf, daher die große Spanne. Den genauen Betrag rechne ich für deinen Fall aus und erkläre ihn dir im Gespräch Schritt für Schritt, damit du nachvollziehen kannst, wie er zustande kommt.",
       },
       {
         question: "Fallen laufende Kosten an?",
