@@ -20,7 +20,7 @@ describe("legal content", () => {
     const v = impressum.sections.find((s) => /Verantwortlich für den Inhalt/i.test(s.heading));
     expect(v).toBeDefined();
     expect(v!.body).toMatch(/V.i.S.d.P./);
-    expect(v!.body).toContain("Ajdin Džafić");
+    expect(v!.body).toContain("Ajdin Dzafic");
   });
 
   it("impressum declares the AI-generated imagery site-wide", () => {

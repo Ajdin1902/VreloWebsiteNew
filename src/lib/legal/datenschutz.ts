@@ -7,7 +7,7 @@ export const datenschutz: LegalDoc = {
   sections: [
     {
       heading: "Verantwortlicher",
-      body: "Verantwortlich im Sinne der DSGVO:\nAjdin Džafić\nDietrich-Bonhoeffer-Straße 2\n93055 Regensburg\nE-Mail: kontakt@vrelo-ki.de\n(vollständige Angaben siehe Impressum).",
+      body: "Verantwortlich im Sinne der DSGVO:\nAjdin Dzafic\nDietrich-Bonhoeffer-Straße 2\n93055 Regensburg\nE-Mail: kontakt@vrelo-ki.de\n(vollständige Angaben siehe Impressum).",
     },
     {
       heading: "Hosting",

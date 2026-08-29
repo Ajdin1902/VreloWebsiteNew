@@ -8,7 +8,7 @@ export const impressum: LegalDoc = {
   sections: [
     {
       heading: "Anbieter",
-      body: "Ajdin Džafić\nVrelo, Prozessautomatisierung\nDietrich-Bonhoeffer-Straße 2\n93055 Regensburg\nDeutschland",
+      body: "Ajdin Dzafic\nVrelo, Prozessautomatisierung\nDietrich-Bonhoeffer-Straße 2\n93055 Regensburg\nDeutschland",
     },
     {
       heading: "Kontakt",
@@ -20,7 +20,7 @@ export const impressum: LegalDoc = {
     // Die Steuernummer gehört NICHT hierher (keine Pflichtangabe, Missbrauchsrisiko).
     {
       heading: "Verantwortlich für den Inhalt",
-      body: "Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV (V.i.S.d.P.):\nAjdin Džafić\nDietrich-Bonhoeffer-Straße 2\n93055 Regensburg",
+      body: "Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV (V.i.S.d.P.):\nAjdin Dzafic\nDietrich-Bonhoeffer-Straße 2\n93055 Regensburg",
     },
     {
       heading: "EU-Streitschlichtung",
