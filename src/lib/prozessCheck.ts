@@ -1,189 +1,196 @@
 // src/lib/prozessCheck.ts
 //
-// Pure core for the /prozess-check qualification quiz. Deterministic, no AI, no
-// numbers in the result. Five pain-surfacing questions categorize the visitor
-// (A/B/C/D); the result gives an honest fit verdict for Der Prozess-Audit.
-// Distinct from leadCheck.ts on purpose - no € scoring here.
-// Design: docs/superpowers/specs/2026-08-12-prozess-check-quiz-design.md
+// Pure core for the free /prozess-check funnel. Deterministic, no AI, no €.
+// The visitor answers Branche + Team, drags an hours slider for each of five
+// repetitive-work areas, then three quick feeling questions. The result mirrors
+// his own numbers back: total hours/week + a ranked pain profile. No price ever
+// (that is named in the call). Spec: Knowledge/marketing/prozess-check-funnel.md
+// Distinct from leadCheck.ts on purpose — that one does € math, this one never does.
 
-export type Aufgabe = "anfragen" | "termine" | "angebote" | "nachfassen" | "daten" | "nachrichten";
-export type Zeit = "unter1" | "1bis3" | "3bis5" | "ueber5";
-export type Konsequenz = "liegen" | "termine" | "warten" | "nichts";
+export type Branche = "handwerk" | "immobilien" | "reinigung" | "praxis" | "handel" | "anderes";
+export type Team = "allein" | "2bis5" | "6bis20" | "ueber20";
+export type AreaId = "anfragen" | "rechnungen" | "daten" | "erinnern" | "orga";
 export type Abende = "staendig" | "abundzu" | "nein";
-export type Versucht = "toolBrach" | "gebastelt" | "garnicht" | "laeuft";
+export type Versucht = "nichts" | "toolBrach" | "beauftragt";
 
 export type ProzessCheckAnswers = {
-  aufgabe: Aufgabe;
-  zeit: Zeit;
-  konsequenz: Konsequenz;
+  branche: Branche;
+  team: Team;
+  stunden: Record<AreaId, number>; // 0..10 per area
+  nervt: AreaId;
   abende: Abende;
   versucht: Versucht;
+};
+
+// Order is the tie-break order for equal hours.
+export const AREA_IDS: readonly AreaId[] = ["anfragen", "rechnungen", "daten", "erinnern", "orga"];
+
+export const AREA_LABEL: Record<AreaId, string> = {
+  anfragen: "Anfragen beantworten und Termine ausmachen",
+  rechnungen: "Rechnungen, Belege und Mahnungen",
+  daten: "Daten aus Mails oder Zetteln in ein System tippen",
+  erinnern: "Kunden erinnern und nachfassen",
+  orga: "Interne Orga: Zettel, Listen, Zuruf",
+};
+
+// A calm, honest sentence per area on what is typically automatable. No promise,
+// no €, no vendor name. One water-metaphor concept at most; kept short.
+export const AREA_SENTENCE: Record<AreaId, string> = {
+  anfragen: "Anfragen lassen sich sofort beantworten und zu einem Termin führen, ohne dass du daneben sitzt.",
+  rechnungen: "Belege und Rechnungen lassen sich einlesen, zuordnen und ablegen, statt sie abzutippen.",
+  daten: "Daten wandern von selbst von A nach B, sobald eine Mail oder ein Formular reinkommt.",
+  erinnern: "Erinnerungen und Nachfass-Nachrichten gehen automatisch raus, zur richtigen Zeit, an die richtige Person.",
+  orga: "Wiederkehrende Abläufe laufen im Hintergrund, damit weniger auf Zetteln und im Kopf hängt.",
 };
 
 type ChoiceOption<V extends string> = { value: V; label: string };
 
 export type Step =
-  | { id: "aufgabe"; label: string; options: readonly ChoiceOption<Aufgabe>[] }
-  | { id: "zeit"; label: string; options: readonly ChoiceOption<Zeit>[] }
-  | { id: "konsequenz"; label: string; options: readonly ChoiceOption<Konsequenz>[] }
-  | { id: "abende"; label: string; options: readonly ChoiceOption<Abende>[] }
-  | { id: "versucht"; label: string; options: readonly ChoiceOption<Versucht>[] };
+  | { id: "branche"; kind: "choice"; label: string; options: readonly ChoiceOption<Branche>[] }
+  | { id: "team"; kind: "choice"; label: string; options: readonly ChoiceOption<Team>[] }
+  | { id: "stunden"; kind: "grid"; label: string; hint: string; max: number }
+  | { id: "nervt"; kind: "choice"; label: string; options: readonly ChoiceOption<AreaId>[] }
+  | { id: "abende"; kind: "choice"; label: string; options: readonly ChoiceOption<Abende>[] }
+  | { id: "versucht"; kind: "choice"; label: string; options: readonly ChoiceOption<Versucht>[] };
 
 export const STEPS: readonly Step[] = [
   {
-    id: "aufgabe",
-    label: "Welche Aufgabe machst du gefühlt jede Woche immer und immer wieder?",
+    id: "branche",
+    kind: "choice",
+    label: "Was machst du?",
     options: [
-      { value: "anfragen", label: "Anfragen beantworten und qualifizieren" },
-      { value: "termine", label: "Termine ausmachen und hin- und herschieben" },
-      { value: "angebote", label: "Angebote und Rechnungen schreiben" },
-      { value: "nachfassen", label: "Hinterhertelefonieren und nachfassen" },
-      { value: "daten", label: "Dieselben Daten von A nach B tippen" },
-      { value: "nachrichten", label: "Immer die gleichen Nachrichten beantworten" },
+      { value: "handwerk", label: "Handwerk" },
+      { value: "immobilien", label: "Immobilien" },
+      { value: "reinigung", label: "Reinigung oder Dienstleistung" },
+      { value: "praxis", label: "Praxis oder Kanzlei" },
+      { value: "handel", label: "Handel" },
+      { value: "anderes", label: "Etwas anderes" },
     ],
   },
   {
-    id: "zeit",
-    label: "Wie viel Zeit frisst diese eine Sache, ehrlich geschätzt, pro Woche?",
+    id: "team",
+    kind: "choice",
+    label: "Wie groß ist dein Team?",
     options: [
-      { value: "unter1", label: "unter 1 Stunde" },
-      { value: "1bis3", label: "1 bis 3 Stunden" },
-      { value: "3bis5", label: "3 bis 5 Stunden" },
-      { value: "ueber5", label: "mehr als 5 Stunden" },
+      { value: "allein", label: "Ich allein" },
+      { value: "2bis5", label: "2 bis 5" },
+      { value: "6bis20", label: "6 bis 20" },
+      { value: "ueber20", label: "Mehr als 20" },
     ],
   },
   {
-    id: "konsequenz",
-    label: "Und wenn du mal nicht hinterherkommst, was passiert dann?",
-    options: [
-      { value: "liegen", label: "Anfragen bleiben liegen oder springen ab" },
-      { value: "termine", label: "Termine verrutschen oder gehen unter" },
-      { value: "warten", label: "Kunden warten länger, als mir lieb ist" },
-      { value: "nichts", label: "Nichts geht verloren, es kostet mich nur Zeit" },
-    ],
+    id: "stunden",
+    kind: "grid",
+    label: "Wo geht deine Zeit hin?",
+    hint: "Schätz für jede Aufgabe grob, wie viele Stunden pro Woche sie dich kostet. Null ist völlig in Ordnung.",
+    max: 10,
+  },
+  {
+    id: "nervt",
+    kind: "choice",
+    label: "Was davon nervt dich am meisten?",
+    options: AREA_IDS.map((id) => ({ value: id, label: AREA_LABEL[id] })),
   },
   {
     id: "abende",
-    label: "Nimmst du solche Aufgaben abends oder am Wochenende mit nach Hause?",
+    kind: "choice",
+    label: "Arbeitest du abends oder am Wochenende Liegengebliebenes ab?",
     options: [
-      { value: "staendig", label: "Ja, ständig" },
+      { value: "staendig", label: "Ja, regelmäßig" },
       { value: "abundzu", label: "Ab und zu" },
-      { value: "nein", label: "Nein, das lasse ich im Betrieb" },
+      { value: "nein", label: "Nein" },
     ],
   },
   {
     id: "versucht",
+    kind: "choice",
     label: "Hast du schon versucht, das loszuwerden?",
     options: [
-      { value: "toolBrach", label: "Ein Tool gekauft, aber es liegt brach" },
-      { value: "gebastelt", label: "Selbst etwas gebastelt, hält aber nicht" },
-      { value: "garnicht", label: "Noch nicht, ich weiß nicht, wo ich anfangen soll" },
-      { value: "laeuft", label: "Läuft schon teilweise automatisch" },
+      { value: "nichts", label: "Noch nichts" },
+      { value: "toolBrach", label: "Software gekauft, aber halb eingerichtet" },
+      { value: "beauftragt", label: "Freelancer oder Agentur beauftragt" },
     ],
   },
 ];
 
-export type Category = "A" | "B" | "C" | "D";
-
-const ZEIT_PTS: Record<Zeit, number> = { unter1: 0, "1bis3": 1, "3bis5": 2, ueber5: 3 };
-const KONSEQUENZ_PTS: Record<Konsequenz, number> = { liegen: 1, termine: 1, warten: 1, nichts: 0 };
-const ABENDE_PTS: Record<Abende, number> = { staendig: 2, abundzu: 1, nein: 0 };
-
-export function severity(a: ProzessCheckAnswers): number {
-  return ZEIT_PTS[a.zeit] + KONSEQUENZ_PTS[a.konsequenz] + ABENDE_PTS[a.abende];
+export function totalHours(a: ProzessCheckAnswers): number {
+  return AREA_IDS.reduce((sum, id) => sum + (a.stunden[id] || 0), 0);
 }
 
-// Order matters: "already automating" overrides severity (engagement is the
-// signal → optimization, not a fresh build). Otherwise severity buckets:
-// 0 → D (too small), 1-2 → B (moderate), >=3 → A (clear).
-export function categorize(a: ProzessCheckAnswers): Category {
-  if (a.versucht === "laeuft") return "C";
-  const s = severity(a);
-  if (s === 0) return "D";
-  if (s >= 3) return "A";
-  return "B";
+// Areas by hours descending; equal hours keep AREA_IDS order (stable).
+export function rankAreas(a: ProzessCheckAnswers): AreaId[] {
+  return [...AREA_IDS].sort((x, y) => (a.stunden[y] || 0) - (a.stunden[x] || 0));
 }
 
 export type ResultCopy = {
-  category: Category;
-  headline: string;
-  body: string;
-  verdict: string;
-  /** A/B/C embed the scheduler; D shows the soft exit. */
+  totalHours: number;
+  /** false only when the visitor reports zero hours everywhere. */
   fits: boolean;
+  headline: string;
+  sub: string;
+  topAreas: { id: AreaId; hours: number; label: string; sentence: string }[];
+  nervtLabel: string;
+  verdict: string;
 };
 
-// Task as a noun phrase (so it sits grammatically after "Zeit in …") and the
-// consequence as its own sentence (a spliced clause read awkwardly and could
-// repeat the task noun). Both mirror the visitor's own answers back to him.
-const AUFGABE_NOUN: Record<Aufgabe, string> = {
-  anfragen: "das Beantworten von Anfragen",
-  termine: "die Terminvergabe",
-  angebote: "Angebote und Rechnungen",
-  nachfassen: "das Nachfassen",
-  daten: "das Übertragen von Daten",
-  nachrichten: "das Beantworten derselben Nachrichten",
-};
-
-const KONSEQUENZ_SATZ: Record<Konsequenz, string> = {
-  liegen: "Und wenn es eng wird, bleiben Anfragen liegen.",
-  termine: "Und wenn es eng wird, verrutschen Termine.",
-  warten: "Und wenn es eng wird, warten Kunden länger, als dir lieb ist.",
-  nichts: "Verloren geht dabei nichts. Aber die Zeit ist weg.",
-};
+const nf = new Intl.NumberFormat("de-DE");
 
 export function resultCopy(a: ProzessCheckAnswers): ResultCopy {
-  const category = categorize(a);
-  const noun = AUFGABE_NOUN[a.aufgabe];
-  const satz = KONSEQUENZ_SATZ[a.konsequenz];
+  const total = totalHours(a);
+  const nervtLabel = AREA_LABEL[a.nervt];
 
-  switch (category) {
-    case "A":
-      return {
-        category,
-        headline: "Eine klare Quelle.",
-        body: `Du steckst Woche für Woche einen guten Teil deiner Zeit in ${noun}. ${satz} Genau dafür ist der Prozess-Audit da: eine klare Quelle, die sich rechnen lässt.`,
-        verdict: "Ein Erstgespräch lohnt sich für dich.",
-        fits: true,
-      };
-    case "B":
-      return {
-        category,
-        headline: "Da steckt etwas drin.",
-        body: `Diese eine Aufgabe, ${noun}, kostet dich spürbar Zeit. ${satz} Ob sich das Automatisieren für dich schon rechnet, zeigt dir der Audit schwarz auf weiß.`,
-        verdict: "Ein Erstgespräch bringt dir Klarheit.",
-        fits: true,
-      };
-    case "C":
-      return {
-        category,
-        headline: "Bei dir läuft schon einiges.",
-        body: "Du automatisierst schon. Dann geht es bei dir weniger ums Anfangen als ums Rundmachen. Ein kurzes Gespräch klärt, ob ein Audit dir noch etwas bringt oder ob du gut aufgestellt bist.",
-        verdict: "Ein kurzes Gespräch sagt dir, ob sich ein Audit lohnt.",
-        fits: true,
-      };
-    case "D":
-      return {
-        category,
-        headline: "Noch zu klein.",
-        body: "Ehrlich? So wie es klingt, kostet dich das Ganze eher Nerven als echte Stunden. Und es geht nichts verloren. Dann lohnt sich ein Audit für dich vermutlich noch nicht. Komm wieder, wenn eine Aufgabe dir wirklich den Tag frisst.",
-        verdict: "Ein Gespräch ist gerade noch nicht nötig.",
-        fits: false,
-      };
-    default: {
-      // Compile-time exhaustiveness guard: adding a Category makes this fail here
-      // at the switch, not as a subtle "may be undefined" at the call site.
-      const _exhaustive: never = category;
-      return _exhaustive;
-    }
+  if (total === 0) {
+    return {
+      totalHours: 0,
+      fits: false,
+      headline: "Bei dir frisst gerade nichts nennenswert Zeit.",
+      sub: "Das ist ein gutes Zeichen. Wenn sich das ändert und dir eine Aufgabe den Tag frisst, weißt du, wo ich bin.",
+      topAreas: [],
+      nervtLabel,
+      verdict: "Ein Gespräch ist gerade noch nicht nötig.",
+    };
   }
+
+  // Top areas that actually carry hours; the visitor's "nervt" pick leads if it
+  // ties on hours, otherwise hours decide. Show up to three.
+  const ranked = rankAreas(a).filter((id) => (a.stunden[id] || 0) > 0);
+  // Bring the "nervt" area to the front when it shares the top hour count.
+  const topHours = a.stunden[ranked[0]] || 0;
+  if (a.stunden[a.nervt] === topHours && ranked[0] !== a.nervt) {
+    ranked.splice(ranked.indexOf(a.nervt), 1);
+    ranked.unshift(a.nervt);
+  }
+  const topAreas = ranked.slice(0, 3).map((id) => ({
+    id,
+    hours: a.stunden[id] || 0,
+    label: AREA_LABEL[id],
+    sentence: AREA_SENTENCE[id],
+  }));
+
+  return {
+    totalHours: total,
+    fits: true,
+    headline: `Rund ${nf.format(total)} Stunden pro Woche gehen bei dir in Aufgaben, die sich wiederholen.`,
+    sub: "Gerechnet aus deinen eigenen Angaben.",
+    topAreas,
+    nervtLabel,
+    verdict:
+      a.abende === "staendig"
+        ? "Und ein Teil davon nimmst du mit nach Hause. Genau da fangen wir an."
+        : "Das ist Zeit, die sich zurückholen lässt.",
+  };
 }
 
-// Static UI copy the Result component renders (components hold no German).
+// Static UI copy the components render (components hold no German).
 export const RESULT_UI = {
   resultLabel: "Dein Ergebnis",
-  schedulerPrompt: "Im kostenlosen Erstgespräch schauen wir gemeinsam drauf, unverbindlich.",
+  profileLabel: "Am meisten kostet dich",
+  nervtPrefix: "Du sagst, am meisten nervt dich: ",
+  schedulerPrompt:
+    "Lass uns 30 Minuten drüber sprechen. Kostenlos, unverbindlich, und du bekommst danach einen Fahrplan, der dir gehört.",
   schedulerFallbackHint: "Schreib mir so lange einfach über das Kontaktformular.",
+  emailLabel: "Ergebnis lieber per Mail?",
+  emailIntro: "Ich schick dir deine Auswertung zu, dann hast du sie in Ruhe.",
   exitLead: "Schau dich in Ruhe um. Wenn dich eine Aufgabe doch täglich ausbremst, bin ich da.",
   exitNewsletterPrefix: "Bis dahin: ",
   exitNewsletterLabel: "„Die Quelle“",

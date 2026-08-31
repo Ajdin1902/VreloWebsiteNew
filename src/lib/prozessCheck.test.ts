@@ -1,54 +1,82 @@
 import { describe, it, expect } from "vitest";
 import {
-  categorize,
-  severity,
   STEPS,
+  AREA_IDS,
+  AREA_LABEL,
+  totalHours,
+  rankAreas,
   resultCopy,
   RESULT_UI,
   type ProzessCheckAnswers,
-  type Aufgabe,
-  type Konsequenz,
 } from "./prozessCheck";
 
-// A base answer set that scores severity 0 (D) unless overridden.
 const base: ProzessCheckAnswers = {
-  aufgabe: "anfragen",
-  zeit: "unter1",
-  konsequenz: "nichts",
+  branche: "handwerk",
+  team: "2bis5",
+  stunden: { anfragen: 0, rechnungen: 0, daten: 0, erinnern: 0, orga: 0 },
+  nervt: "anfragen",
   abende: "nein",
-  versucht: "garnicht",
+  versucht: "nichts",
 };
 
-describe("prozessCheck categorization", () => {
-  it("has five steps in order", () => {
-    expect(STEPS.map((s) => s.id)).toEqual(["aufgabe", "zeit", "konsequenz", "abende", "versucht"]);
+describe("prozessCheck steps", () => {
+  it("has the six steps in order", () => {
+    expect(STEPS.map((s) => s.id)).toEqual([
+      "branche",
+      "team",
+      "stunden",
+      "nervt",
+      "abende",
+      "versucht",
+    ]);
   });
 
-  it("routes anyone who already automates to C, regardless of severity", () => {
-    expect(
-      categorize({ ...base, zeit: "ueber5", konsequenz: "liegen", abende: "staendig", versucht: "laeuft" }),
-    ).toBe("C");
-    expect(categorize({ ...base, versucht: "laeuft" })).toBe("C");
-  });
-
-  it("routes the clear low-pain case (severity 0) to D", () => {
-    expect(severity(base)).toBe(0);
-    expect(categorize(base)).toBe("D");
-  });
-
-  it("routes moderate pain (severity 1-2) to B", () => {
-    expect(categorize({ ...base, zeit: "1bis3" })).toBe("B"); // severity 1
-    expect(categorize({ ...base, zeit: "1bis3", konsequenz: "liegen" })).toBe("B"); // severity 2
-  });
-
-  it("routes strong pain (severity >= 3) to A", () => {
-    expect(categorize({ ...base, zeit: "3bis5", konsequenz: "liegen" })).toBe("A"); // 2+1 = 3
-    expect(categorize({ ...base, zeit: "ueber5", abende: "staendig" })).toBe("A"); // 3+2 = 5
+  it("the stunden step is the grid kind and lists all five areas", () => {
+    const grid = STEPS.find((s) => s.id === "stunden");
+    expect(grid?.kind).toBe("grid");
+    expect(AREA_IDS).toEqual(["anfragen", "rechnungen", "daten", "erinnern", "orga"]);
   });
 });
 
-// Collect every German string the feature can render: STEPS, the static UI copy,
-// and resultCopy over a matrix covering all nouns × consequences × categories.
+describe("totalHours + rankAreas", () => {
+  it("sums the five sliders", () => {
+    expect(
+      totalHours({ ...base, stunden: { anfragen: 3, rechnungen: 5, daten: 1, erinnern: 2, orga: 1 } }),
+    ).toBe(12);
+  });
+
+  it("ranks areas by hours descending, ties broken by area order", () => {
+    expect(
+      rankAreas({ ...base, stunden: { anfragen: 2, rechnungen: 5, daten: 2, erinnern: 0, orga: 0 } }),
+    ).toEqual(["rechnungen", "anfragen", "daten", "erinnern", "orga"]);
+  });
+});
+
+describe("resultCopy", () => {
+  it("puts the summed hours in the headline and marks a real load as fitting", () => {
+    const r = resultCopy({ ...base, stunden: { anfragen: 3, rechnungen: 5, daten: 1, erinnern: 0, orga: 0 } });
+    expect(r.fits).toBe(true);
+    expect(r.totalHours).toBe(9);
+    expect(r.headline).toContain("9");
+    // Top area leads the profile and carries a calm what-is-automatable sentence.
+    expect(r.topAreas[0].id).toBe("rechnungen");
+    expect(r.topAreas[0].sentence.length).toBeGreaterThan(0);
+  });
+
+  it("returns the honest zero-state when nothing costs time", () => {
+    const r = resultCopy(base); // all sliders 0
+    expect(r.fits).toBe(false);
+    expect(r.totalHours).toBe(0);
+    expect(r.topAreas).toEqual([]);
+  });
+
+  it("names the area the visitor said annoys him most", () => {
+    const r = resultCopy({ ...base, nervt: "daten", stunden: { anfragen: 1, rechnungen: 1, daten: 1, erinnern: 1, orga: 1 } });
+    expect(r.nervtLabel).toBe(AREA_LABEL.daten);
+  });
+});
+
+// Copy-guard: collect every renderable German string.
 function strings(value: unknown, out: string[] = []): string[] {
   if (typeof value === "string") out.push(value);
   else if (Array.isArray(value)) for (const v of value) strings(v, out);
@@ -56,34 +84,26 @@ function strings(value: unknown, out: string[] = []): string[] {
   return out;
 }
 
-const AUFGABEN: Aufgabe[] = ["anfragen", "termine", "angebote", "nachfassen", "daten", "nachrichten"];
-const KONSEQUENZEN: Konsequenz[] = ["liegen", "termine", "warten", "nichts"];
-// One answer set per category (severity: A>=3, B 1-2, C laeuft, D 0).
-const CATEGORY_SAMPLES: ProzessCheckAnswers[] = [
-  { aufgabe: "anfragen", zeit: "ueber5", konsequenz: "liegen", abende: "staendig", versucht: "garnicht" }, // A
-  { aufgabe: "anfragen", zeit: "1bis3", konsequenz: "nichts", abende: "nein", versucht: "garnicht" }, // B
-  { aufgabe: "anfragen", zeit: "1bis3", konsequenz: "liegen", abende: "abundzu", versucht: "laeuft" }, // C
-  { aufgabe: "anfragen", zeit: "unter1", konsequenz: "nichts", abende: "nein", versucht: "garnicht" }, // D
+const SAMPLES: ProzessCheckAnswers[] = [
+  { ...base, stunden: { anfragen: 6, rechnungen: 2, daten: 1, erinnern: 0, orga: 0 }, nervt: "anfragen", abende: "staendig", versucht: "toolBrach" },
+  { ...base, stunden: { anfragen: 0, rechnungen: 0, daten: 0, erinnern: 0, orga: 0 } }, // zero-state
+  { ...base, stunden: { anfragen: 1, rechnungen: 1, daten: 1, erinnern: 1, orga: 1 }, nervt: "orga", abende: "abundzu", versucht: "beauftragt" },
 ];
 
 const corpus: string[] = [];
 strings(STEPS, corpus);
 strings(RESULT_UI, corpus);
-for (const aufgabe of AUFGABEN)
-  for (const konsequenz of KONSEQUENZEN)
-    for (const s of CATEGORY_SAMPLES) strings(resultCopy({ ...s, aufgabe, konsequenz }), corpus);
+for (const s of SAMPLES) strings(resultCopy(s), corpus);
 
 const CURRENCY = /€|\bEUR\b|\d\s*(Euro|netto)\b/i;
 
-describe("prozessCheck copy", () => {
+describe("prozessCheck copy-guard", () => {
   it("uses German quotes, never ASCII double quotes", () => {
     expect(corpus.filter((s) => s.includes('"'))).toEqual([]);
   });
-
-  it("uses no dash at all (Gedankenstrich retired site-wide)", () => {
+  it("uses no dash at all", () => {
     expect(corpus.filter((s) => s.includes("—") || s.includes("–"))).toEqual([]);
   });
-
   it("pairs every opening German quote with a closing one", () => {
     for (const s of corpus) {
       const open = (s.match(/„/g) ?? []).length;
@@ -91,39 +111,7 @@ describe("prozessCheck copy", () => {
       expect({ s, open, close }).toEqual({ s, open, close: open });
     }
   });
-
-  it("never names a price", () => {
-    // resultCopy + RESULT_UI only (STEPS legitimately say '1 bis 3 Stunden').
-    const resultStrings: string[] = [];
-    strings(RESULT_UI, resultStrings);
-    for (const s of CATEGORY_SAMPLES) strings(resultCopy(s), resultStrings);
-    expect(resultStrings.filter((s) => CURRENCY.test(s))).toEqual([]);
-  });
-
-  it("emits no number in the result headline/body/verdict", () => {
-    for (const s of CATEGORY_SAMPLES) {
-      const r = resultCopy(s);
-      expect(/\d/.test(r.headline + r.body + r.verdict)).toBe(false);
-    }
-  });
-
-  it("mirrors the visitor's task and consequence in A", () => {
-    const r = resultCopy({
-      aufgabe: "termine",
-      zeit: "ueber5",
-      konsequenz: "warten",
-      abende: "staendig",
-      versucht: "garnicht",
-    });
-    expect(r.category).toBe("A");
-    expect(r.body).toContain("Terminvergabe");
-    expect(r.body).toContain("warten Kunden");
-  });
-
-  it("marks A/B/C as fitting (scheduler) and D as not", () => {
-    expect(resultCopy(CATEGORY_SAMPLES[0]).fits).toBe(true); // A
-    expect(resultCopy(CATEGORY_SAMPLES[1]).fits).toBe(true); // B
-    expect(resultCopy(CATEGORY_SAMPLES[2]).fits).toBe(true); // C
-    expect(resultCopy(CATEGORY_SAMPLES[3]).fits).toBe(false); // D
+  it("never names a price (hours numbers are allowed, currency is not)", () => {
+    expect(corpus.filter((s) => CURRENCY.test(s))).toEqual([]);
   });
 });
