@@ -9,7 +9,7 @@
 
 export type Branche = "handwerk" | "immobilien" | "reinigung" | "praxis" | "handel" | "anderes";
 export type Team = "allein" | "2bis5" | "6bis20" | "ueber20";
-export type AreaId = "anfragen" | "rechnungen" | "daten" | "erinnern" | "orga";
+export type AreaId = "anfragen" | "auftraege" | "rechnungen" | "daten" | "erinnern" | "orga";
 export type Abende = "staendig" | "abundzu" | "nein";
 export type Versucht = "nichts" | "toolBrach" | "beauftragt";
 
@@ -23,10 +23,11 @@ export type ProzessCheckAnswers = {
 };
 
 // Order is the tie-break order for equal hours.
-export const AREA_IDS: readonly AreaId[] = ["anfragen", "rechnungen", "daten", "erinnern", "orga"];
+export const AREA_IDS: readonly AreaId[] = ["anfragen", "auftraege", "rechnungen", "daten", "erinnern", "orga"];
 
 export const AREA_LABEL: Record<AreaId, string> = {
   anfragen: "Anfragen beantworten und Termine ausmachen",
+  auftraege: "Aufträge verarbeiten und weiterleiten",
   rechnungen: "Rechnungen, Belege und Mahnungen",
   daten: "Daten aus Mails oder Zetteln in ein System tippen",
   erinnern: "Kunden erinnern und nachfassen",
@@ -37,6 +38,7 @@ export const AREA_LABEL: Record<AreaId, string> = {
 // no €, no vendor name. One water-metaphor concept at most; kept short.
 export const AREA_SENTENCE: Record<AreaId, string> = {
   anfragen: "Anfragen lassen sich sofort beantworten und zu einem Termin führen, ohne dass du daneben sitzt.",
+  auftraege: "Neue Aufträge landen von selbst als fertige Arbeitsinfo bei der richtigen Person, ohne Ausdrucken und Abtippen.",
   rechnungen: "Belege und Rechnungen lassen sich einlesen, zuordnen und ablegen, statt sie abzutippen.",
   daten: "Daten wandern von selbst von A nach B, sobald eine Mail oder ein Formular reinkommt.",
   erinnern: "Erinnerungen und Nachfass-Nachrichten gehen automatisch raus, zur richtigen Zeit, an die richtige Person.",
@@ -128,6 +130,10 @@ export type ResultCopy = {
   fits: boolean;
   headline: string;
   sub: string;
+  /** Only when fits: the same hours extrapolated to full work days per year. */
+  yearLine?: string;
+  /** Only when fits: names the arithmetic behind the numbers (honesty, no black box). */
+  basis?: string;
   topAreas: { id: AreaId; hours: number; label: string; sentence: string }[];
   nervtLabel: string;
   verdict: string;
@@ -167,11 +173,20 @@ export function resultCopy(a: ProzessCheckAnswers): ResultCopy {
     sentence: AREA_SENTENCE[id],
   }));
 
+  // 46 work weeks, 8-hour days: a deliberately plain extrapolation the basis
+  // line names out loud, so the bigger number stays the visitor's own arithmetic.
+  const jahresTage = Math.round((total * 46) / 8);
+
   return {
     totalHours: total,
     fits: true,
-    headline: `Rund ${nf.format(total)} Stunden pro Woche gehen bei dir in Aufgaben, die sich wiederholen.`,
-    sub: "Gerechnet aus deinen eigenen Angaben.",
+    headline: total === 1 ? "Rund 1 Stunde pro Woche" : `Rund ${nf.format(total)} Stunden pro Woche`,
+    sub:
+      total === 1
+        ? "geht bei dir in Aufgaben, die sich wiederholen."
+        : "gehen bei dir in Aufgaben, die sich wiederholen.",
+    yearLine: `Aufs Jahr gerechnet sind das rund ${nf.format(jahresTage)} volle Arbeitstage.`,
+    basis: "Gerechnet aus deinen eigenen Angaben, mit 46 Arbeitswochen im Jahr und 8 Stunden pro Arbeitstag.",
     topAreas,
     nervtLabel,
     verdict:
@@ -186,8 +201,9 @@ export const RESULT_UI = {
   resultLabel: "Dein Ergebnis",
   profileLabel: "Am meisten kostet dich",
   nervtPrefix: "Du sagst, am meisten nervt dich: ",
+  reliefTitle: "Das muss nicht so bleiben.",
   schedulerPrompt:
-    "Lass uns 30 Minuten drüber sprechen. Kostenlos, unverbindlich, und du bekommst danach einen Fahrplan, der dir gehört.",
+    "Im kostenlosen Erstgespräch schauen wir uns deine größten Zeitfresser gemeinsam an. 30 Minuten, unverbindlich. Danach weißt du, welche Aufgabe zuerst verschwindet, und du bekommst einen Fahrplan, der dir gehört.",
   schedulerFallbackHint: "Schreib mir so lange einfach über das Kontaktformular.",
   emailLabel: "Ergebnis lieber per Mail?",
   emailIntro: "Ich schick dir deine Auswertung zu, dann hast du sie in Ruhe.",

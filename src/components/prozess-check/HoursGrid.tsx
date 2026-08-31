@@ -5,9 +5,9 @@ import { useState } from "react";
 import { AREA_IDS, AREA_LABEL, type AreaId } from "@/lib/prozessCheck";
 
 const primaryBtn =
-  "inline-flex items-center justify-center rounded-lg bg-tiefes-wasser px-5 py-2.5 text-sm font-semibold text-papier transition-colors hover:bg-vrelo-petrol focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-papier focus-visible:ring-tiefes-wasser";
+  "inline-flex items-center justify-center rounded-lg bg-tiefes-wasser px-5 py-2.5 text-sm font-semibold text-papier transition-colors hover:bg-vrelo-petrol focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-lesepapier focus-visible:ring-tiefes-wasser";
 
-const zeroState: Record<AreaId, number> = { anfragen: 0, rechnungen: 0, daten: 0, erinnern: 0, orga: 0 };
+const zeroState: Record<AreaId, number> = { anfragen: 0, auftraege: 0, rechnungen: 0, daten: 0, erinnern: 0, orga: 0 };
 
 // One accessible range slider per area. Native <input type=range> carries the
 // slider role, keyboard support, and touch for free; we add a visible value
@@ -67,10 +67,8 @@ export function HoursGrid({
         })}
       </ul>
 
-      <div className="mt-8 flex flex-wrap gap-3">
-        <button type="button" className={primaryBtn} onClick={() => onSubmit(stunden)}>
-          Ergebnis zeigen
-        </button>
+      {/* Continue sits bottom right (reading direction: forward = right). */}
+      <div className="mt-8 flex items-center justify-between gap-3">
         {showBack ? (
           <button
             type="button"
@@ -79,7 +77,12 @@ export function HoursGrid({
           >
             {"← Zurück"}
           </button>
-        ) : null}
+        ) : (
+          <span />
+        )}
+        <button type="button" className={primaryBtn} onClick={() => onSubmit(stunden)}>
+          Weiter
+        </button>
       </div>
     </div>
   );

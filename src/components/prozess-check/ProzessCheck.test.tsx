@@ -22,7 +22,7 @@ describe("ProzessCheck wizard", () => {
     answerChoice(/2 bis 5/);
     // Step 3 grid: set one slider, submit
     fireEvent.change(screen.getByLabelText(AREA_LABEL.rechnungen), { target: { value: "5" } });
-    answerChoice(/Ergebnis zeigen/);
+    answerChoice(/Weiter/);
     // Step 4 nervt
     answerChoice(AREA_LABEL.rechnungen);
     // Step 5 abende
@@ -41,7 +41,7 @@ describe("ProzessCheck wizard", () => {
     render(<ProzessCheck calLink={undefined} />);
     answerChoice("Handwerk");
     answerChoice(/Ich allein/);
-    answerChoice(/Ergebnis zeigen/); // grid untouched → all 0
+    answerChoice(/Weiter/); // grid untouched → all 0
     answerChoice(AREA_LABEL.anfragen);
     answerChoice(/^Nein$/);
     answerChoice(/Noch nichts/);

@@ -20,7 +20,7 @@ export function ProzessCheck({ calLink }: { calLink: string | undefined }) {
     const final: ProzessCheckAnswers = {
       branche: answers.branche ?? "anderes",
       team: answers.team ?? "allein",
-      stunden: answers.stunden ?? { anfragen: 0, rechnungen: 0, daten: 0, erinnern: 0, orga: 0 },
+      stunden: answers.stunden ?? { anfragen: 0, auftraege: 0, rechnungen: 0, daten: 0, erinnern: 0, orga: 0 },
       nervt: answers.nervt ?? "anfragen",
       abende: answers.abende ?? "nein",
       versucht: answers.versucht ?? "nichts",
@@ -36,7 +36,7 @@ export function ProzessCheck({ calLink }: { calLink: string | undefined }) {
   const back = () => setIndex((i) => Math.max(0, i - 1));
 
   return (
-    <div className="card-depth rounded-2xl border border-faden bg-papier p-6 md:p-10">
+    <div className="card-depth rounded-2xl border border-faden bg-lesepapier p-6 md:p-10">
       <p role="status" aria-live="polite" className="text-sm text-stumm">
         Frage {index + 1} von {STEPS.length}
       </p>

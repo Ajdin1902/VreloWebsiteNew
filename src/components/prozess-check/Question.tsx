@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Step } from "@/lib/prozessCheck";
 
 const optionClass =
-  "w-full rounded-lg border border-vrelo-petrol/70 bg-gletscher/40 px-4 py-3 text-left text-tinte transition-colors hover:border-vrelo-petrol hover:bg-gletscher focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vrelo-petrol focus-visible:ring-offset-2 focus-visible:ring-offset-papier";
+  "w-full rounded-lg border border-vrelo-petrol/70 bg-papier/70 px-4 py-3 text-left text-tinte transition-colors hover:border-vrelo-petrol hover:bg-papier focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vrelo-petrol focus-visible:ring-offset-2 focus-visible:ring-offset-lesepapier";
 
 // Renders a single choice step. Choice clicks advance immediately (the parent
 // appends the answer and moves on). The grid step is handled by the parent via

@@ -11,7 +11,7 @@ import type { ProzessCheckAnswers } from "./prozessCheck";
 const answers: ProzessCheckAnswers = {
   branche: "handwerk",
   team: "6bis20",
-  stunden: { anfragen: 3, rechnungen: 5, daten: 1, erinnern: 0, orga: 0 },
+  stunden: { anfragen: 3, auftraege: 0, rechnungen: 5, daten: 1, erinnern: 0, orga: 0 },
   nervt: "rechnungen",
   abende: "staendig",
   versucht: "toolBrach",

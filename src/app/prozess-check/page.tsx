@@ -20,8 +20,9 @@ export default function ProzessCheckPage() {
         src="/images/lead-check-banner.webp"
         lead="Ein paar kurze Fragen, und du siehst schwarz auf weiß, wie viele Stunden pro Woche in Aufgaben gehen, die sich immer wiederholen, und wo du am meisten zurückholst. Kein Login, dein Ergebnis sofort."
       />
-      {/* Same faint cool band as /lead-check so the warm paper card lifts off. */}
-      <div className="-mt-10 bg-gletscher/30 md:-mt-12">
+      {/* Deep petrol band (founder feedback 2026-08-31: the pale band read too
+          bright); the lesepapier card lifts off it and cuts the glare. */}
+      <div className="-mt-10 bg-vrelo-petrol md:-mt-12">
         <div className="mx-auto max-w-2xl px-6 pb-24 pt-4 md:pb-32 md:pt-6">
           <ProzessCheck calLink={calLink()} />
         </div>

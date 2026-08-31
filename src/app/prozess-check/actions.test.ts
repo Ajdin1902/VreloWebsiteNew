@@ -16,6 +16,7 @@ const good = {
   branche: "handwerk",
   team: "6bis20",
   h_anfragen: "3",
+  h_auftraege: "0",
   h_rechnungen: "5",
   h_daten: "1",
   h_erinnern: "0",

@@ -18,7 +18,7 @@ describe("HoursGrid", () => {
     render(<HoursGrid label="x" hint="h" max={10} onSubmit={onSubmit} onBack={() => {}} showBack={false} />);
     fireEvent.change(screen.getByLabelText(AREA_LABEL.rechnungen), { target: { value: "5" } });
     fireEvent.change(screen.getByLabelText(AREA_LABEL.anfragen), { target: { value: "3" } });
-    fireEvent.click(screen.getByRole("button", { name: /Ergebnis zeigen/i }));
-    expect(onSubmit).toHaveBeenCalledWith({ anfragen: 3, rechnungen: 5, daten: 0, erinnern: 0, orga: 0 });
+    fireEvent.click(screen.getByRole("button", { name: /Weiter/i }));
+    expect(onSubmit).toHaveBeenCalledWith({ anfragen: 3, auftraege: 0, rechnungen: 5, daten: 0, erinnern: 0, orga: 0 });
   });
 });
