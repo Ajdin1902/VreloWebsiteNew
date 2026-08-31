@@ -45,8 +45,8 @@ describe("prozess-audit copy", () => {
     expect(all.filter((s) => /\bn8n\b|claude/i.test(s))).toEqual([]);
   });
 
-  it("routes the primary CTA to the free Prozess-Check funnel", () => {
-    expect(prozessAudit.cta.href).toBe("/prozess-check");
+  it("routes the primary CTA to the booking page", () => {
+    expect(prozessAudit.cta.href).toBe("/kontakt");
   });
 
   it("lists five deliverables (incl. the no-preparation Fragenkatalog)", () => {

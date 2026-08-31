@@ -16,10 +16,10 @@ describe("ProzessAudit", () => {
     }
   });
 
-  it("links the primary CTA to the free Prozess-Check funnel", () => {
+  it("links the primary CTA to the booking page", () => {
     render(<ProzessAudit />);
     const cta = screen.getByRole("link", { name: prozessAudit.cta.label });
-    expect(cta).toHaveAttribute("href", "/prozess-check");
+    expect(cta).toHaveAttribute("href", "/kontakt");
   });
 
   it("links the secondary Prozess-Check on-ramp to /prozess-check", () => {

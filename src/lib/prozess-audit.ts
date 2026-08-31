@@ -27,6 +27,8 @@ export const prozessAudit: ProzessAudit = {
     "Einen Fahrplan: welche Automatisierung zuerst, in welchen Schritten",
     "Eine klare Empfehlung für den ersten Schritt",
   ],
-  cta: { label: "Zum kostenlosen Prozess-Check", href: "/prozess-check" },
-  check: { label: "In drei Minuten siehst du, wo deine Zeit hingeht.", href: "/prozess-check" },
+  // Primary = book the free call on /kontakt (scheduler); secondary = the
+  // Prozess-Check on-ramp for whoever wants the numbers first.
+  cta: { label: "Kostenloses Erstgespräch buchen", href: "/kontakt" },
+  check: { label: "Oder erst der Prozess-Check: In drei Minuten siehst du, wo deine Zeit hingeht.", href: "/prozess-check" },
 };
