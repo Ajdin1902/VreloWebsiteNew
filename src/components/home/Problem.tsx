@@ -6,7 +6,7 @@ import { Reveal } from "@/components/Reveal";
 // section then shows them handled (problem -> solution echo).
 const tasks = [
   "Aus Kundenanfragen Termine buchen",
-  "Projektstatus nachverfolgen und dokumentieren",
+  "Neue Aufträge erfassen und weitergeben",
   "Rechnungen schreiben und nachfassen",
   "Daten von einem System ins nächste übertragen",
 ];
