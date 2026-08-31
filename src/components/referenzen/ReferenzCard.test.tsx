@@ -30,4 +30,15 @@ describe("ReferenzCard", () => {
     expect(screen.queryByText(agentur.laeuft)).toBeNull();
     expect(screen.queryByText(agentur.ergebnis)).toBeNull();
   });
+
+  it("compact headline links to the project's full card on /leistungen; full headline does not", () => {
+    const { unmount } = render(<ReferenzCard referenz={agentur} variant="compact" />);
+    expect(screen.getByRole("link", { name: agentur.titel })).toHaveAttribute(
+      "href",
+      `/leistungen#referenz-${agentur.slug}`,
+    );
+    unmount();
+    render(<ReferenzCard referenz={agentur} variant="full" />);
+    expect(screen.queryByRole("link", { name: agentur.titel })).toBeNull();
+  });
 });

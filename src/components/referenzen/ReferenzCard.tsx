@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Referenz } from "@/lib/referenzen";
 
 type Props = {
@@ -24,7 +25,20 @@ export function ReferenzCard({ referenz, variant, surfaceClassName }: Props) {
       }`}
     >
       <p className="text-sm font-medium uppercase tracking-wider text-stumm">{referenz.label}</p>
-      <h3 className="mt-3 text-balance text-xl font-semibold text-ember">{referenz.titel}</h3>
+      {/* Compact headline links to this project's full card on /leistungen (the
+          full card carries the matching anchor id, set where it is rendered). */}
+      <h3 className="mt-3 text-balance text-xl font-semibold text-ember">
+        {variant === "compact" ? (
+          <Link
+            href={`/leistungen#referenz-${referenz.slug}`}
+            className="rounded-sm underline decoration-ember/30 underline-offset-4 transition hover:decoration-ember focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember/60 focus-visible:ring-offset-2"
+          >
+            {referenz.titel}
+          </Link>
+        ) : (
+          referenz.titel
+        )}
+      </h3>
 
       {beats.length > 0 ? (
         <div className="mt-5 space-y-4">
@@ -45,7 +59,10 @@ export function ReferenzCard({ referenz, variant, surfaceClassName }: Props) {
 
       {/* The one honest number, set off by a hairline. mt-auto pushes it to the
           card foot so cards in a grid line their numbers up regardless of body length. */}
-      <div className="mt-auto flex items-baseline gap-2 border-t border-tinte/10 pt-5">
+      {/* Caption always stacks below the kennzahl so both cards' footers are the
+          same height and the big lines align across the grid (a long kennzahl like
+          "Projektdokumentation" would otherwise wrap on one card only). */}
+      <div className="mt-auto flex flex-col gap-0.5 border-t border-tinte/10 pt-5">
         <span className="text-2xl font-semibold text-ember">{referenz.kennzahl}</span>
         <span className="text-sm text-stumm">{referenz.kennzahlLabel}</span>
       </div>
