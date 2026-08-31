@@ -25,7 +25,9 @@ export function Referenzen() {
         </p>
         <ul className="mt-10 grid gap-6 sm:grid-cols-2">
           {referenzen.map((r) => (
-            <li key={r.slug}>
+            // Anchor target for the compact homepage card's headline link.
+            // scroll-mt sits on the element carrying the id (sticky header).
+            <li key={r.slug} id={`referenz-${r.slug}`} className="scroll-mt-24">
               <ReferenzCard referenz={r} variant="full" />
             </li>
           ))}

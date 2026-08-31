@@ -26,8 +26,8 @@ export const referenzen: Referenz[] = [
       "Resultat: Der Aufgabenkatalog steuert und aktualisiert sich von selbst. Die Mitarbeiter haben mehr Zeit, um die eigentliche Arbeit zu erledigen, anstatt zu dokumentieren.",
     kompakt:
       "Von manueller Dokumentation und Kundensteuerung zu einem automatisierten Aufgabenkatalog mit Deadline und Ansprechpartner.",
-    kennzahl: "5 Übersichten",
-    kennzahlLabel: "laufen von selbst",
+    kennzahl: "Projektdokumentation",
+    kennzahlLabel: "läuft von selbst",
   },
   {
     slug: "hausmeister",
