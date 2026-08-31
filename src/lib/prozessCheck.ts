@@ -96,7 +96,7 @@ export const STEPS: readonly Step[] = [
   {
     id: "abende",
     kind: "choice",
-    label: "Arbeitest du abends oder am Wochenende Liegengebliebenes ab?",
+    label: "Arbeitest du abends oder am Wochenende offene Aufgaben ab?",
     options: [
       { value: "staendig", label: "Ja, regelmäßig" },
       { value: "abundzu", label: "Ab und zu" },
