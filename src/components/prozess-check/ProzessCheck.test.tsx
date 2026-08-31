@@ -1,54 +1,51 @@
-import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { describe, it, expect, vi } from "vitest";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { ProzessCheck } from "./ProzessCheck";
-import { STEPS } from "@/lib/prozessCheck";
+import { AREA_LABEL } from "@/lib/prozessCheck";
 
-// Click the option with the given visible label, advancing one step.
-async function pick(user: ReturnType<typeof userEvent.setup>, label: string) {
-  await user.click(screen.getByRole("button", { name: label }));
+// The Cal embed is heavy and network-y; stub it so the wizard test stays a unit.
+vi.mock("@/components/kontakt/SchedulerEmbed", () => ({
+  SchedulerEmbed: () => <div data-testid="scheduler" />,
+}));
+
+function answerChoice(label: string | RegExp) {
+  fireEvent.click(screen.getByRole("button", { name: label }));
 }
 
-// Answer all five questions with the labels that produce category A (strong).
-async function answerStrong(user: ReturnType<typeof userEvent.setup>) {
-  await pick(user, "Anfragen beantworten und qualifizieren");
-  await pick(user, "mehr als 5 Stunden");
-  await pick(user, "Anfragen bleiben liegen oder springen ab");
-  await pick(user, "Ja, ständig");
-  await pick(user, "Noch nicht, ich weiß nicht, wo ich anfangen soll");
-}
+describe("ProzessCheck wizard", () => {
+  it("walks all steps and shows the hours result", () => {
+    render(<ProzessCheck calLink="https://cal.eu/x" />);
 
-// Labels that produce category D (too small).
-async function answerSmall(user: ReturnType<typeof userEvent.setup>) {
-  await pick(user, "Anfragen beantworten und qualifizieren");
-  await pick(user, "unter 1 Stunde");
-  await pick(user, "Nichts geht verloren, es kostet mich nur Zeit");
-  await pick(user, "Nein, das lasse ich im Betrieb");
-  await pick(user, "Noch nicht, ich weiß nicht, wo ich anfangen soll");
-}
+    // Step 1 branche
+    answerChoice("Handwerk");
+    // Step 2 team
+    answerChoice(/2 bis 5/);
+    // Step 3 grid: set one slider, submit
+    fireEvent.change(screen.getByLabelText(AREA_LABEL.rechnungen), { target: { value: "5" } });
+    answerChoice(/Ergebnis zeigen/);
+    // Step 4 nervt
+    answerChoice(AREA_LABEL.rechnungen);
+    // Step 5 abende
+    answerChoice(/Ab und zu/);
+    // Step 6 versucht
+    answerChoice(/Noch nichts/);
 
-describe("ProzessCheck", () => {
-  it("shows the first question and a progress counter", () => {
-    render(<ProzessCheck calLink="team/vrelo/kennenlernen" />);
-    expect(screen.getByText(`Frage 1 von ${STEPS.length}`)).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: STEPS[0].label })).toBeInTheDocument();
+    // Result: hours headline (5) + scheduler. The per-area hours readout also
+    // says "5 Stunden" when only one slider is set, so match the headline
+    // sentence specifically to avoid an ambiguous multi-match.
+    expect(screen.getByText(/5 Stunden pro Woche/)).toBeInTheDocument();
+    expect(screen.getByTestId("scheduler")).toBeInTheDocument();
   });
 
-  it("A: reaches a fitting result with the scheduler (Termin anzeigen)", async () => {
-    const user = userEvent.setup();
-    render(<ProzessCheck calLink="team/vrelo/kennenlernen" />);
-    await answerStrong(user);
-    expect(screen.getByText(/Eine klare Quelle/)).toBeInTheDocument();
-    expect(screen.getByText(/Ein Erstgespräch lohnt sich für dich/)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Termin anzeigen" })).toBeInTheDocument();
-  });
-
-  it("D: honest not-yet result, no scheduler, soft newsletter link", async () => {
-    const user = userEvent.setup();
-    render(<ProzessCheck calLink="team/vrelo/kennenlernen" />);
-    await answerSmall(user);
-    expect(screen.getByText(/Noch zu klein/)).toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: "Termin anzeigen" })).not.toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Die Quelle/ })).toHaveAttribute("href", "/newsletter");
+  it("shows the honest zero-state when all sliders stay at 0", () => {
+    render(<ProzessCheck calLink={undefined} />);
+    answerChoice("Handwerk");
+    answerChoice(/Ich allein/);
+    answerChoice(/Ergebnis zeigen/); // grid untouched → all 0
+    answerChoice(AREA_LABEL.anfragen);
+    answerChoice(/^Nein$/);
+    answerChoice(/Noch nichts/);
+    expect(screen.getByText(/gerade noch nicht nötig/i)).toBeInTheDocument();
+    expect(screen.queryByTestId("scheduler")).not.toBeInTheDocument();
   });
 });
