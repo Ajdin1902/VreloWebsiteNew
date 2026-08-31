@@ -1,33 +1,32 @@
 // src/components/prozess-check/Question.tsx
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Step } from "@/lib/prozessCheck";
 
-// Interactive boundaries clear WCAG 1.4.11 (3:1) on the bg-papier card: the
-// border carries the affordance at 3.77:1 (vrelo-petrol/70 over papier), the
-// gletscher/40 fill is a nicety - same tokens as the lead-check option button.
 const optionClass =
   "w-full rounded-lg border border-vrelo-petrol/70 bg-gletscher/40 px-4 py-3 text-left text-tinte transition-colors hover:border-vrelo-petrol hover:bg-gletscher focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vrelo-petrol focus-visible:ring-offset-2 focus-visible:ring-offset-papier";
 
+// Renders a single choice step. Choice clicks advance immediately (the parent
+// appends the answer and moves on). The grid step is handled by the parent via
+// HoursGrid, never here.
 export function Question({
   step,
   onAnswer,
   onBack,
   showBack,
 }: {
-  step: Step;
+  step: Extract<Step, { kind: "choice" }>;
   onAnswer: (value: string) => void;
   onBack: () => void;
   showBack: boolean;
 }) {
   const headingId = `pc-frage-${step.id}`;
-
-  // Advancing unmounts whatever held focus, dropping it to <body>; move focus to
-  // the new question so a keyboard user doesn't re-tab from the top each time.
-  // Skipped on first mount so landing on the page doesn't yank the viewport down.
   const headingRef = useRef<HTMLHeadingElement | null>(null);
   const isFirstRender = useRef(true);
+  const [seenStepId, setSeenStepId] = useState(step.id);
+  if (step.id !== seenStepId) setSeenStepId(step.id);
+
   useEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;
@@ -47,7 +46,6 @@ export function Question({
         {step.label}
       </h2>
 
-      {/* role=group + aria-labelledby ties the options to the question. */}
       <ul role="group" aria-labelledby={headingId} className="mt-6 space-y-3">
         {step.options.map((o) => (
           <li key={o.value}>

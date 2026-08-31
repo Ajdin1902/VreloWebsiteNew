@@ -21,9 +21,9 @@ describe("Referenzen (homepage)", () => {
     expect(link).toHaveAttribute("href", "/leistungen#referenzen");
   });
 
-  it("bridges to the Prozess-Audit on /leistungen", () => {
+  it("bridges to the free Prozess-Check funnel", () => {
     render(<Referenzen />);
-    const link = screen.getByRole("link", { name: /Prozess-Audit/i });
-    expect(link).toHaveAttribute("href", "/leistungen#prozess-audit");
+    const link = screen.getByRole("link", { name: /Prozess-Check/i });
+    expect(link).toHaveAttribute("href", "/prozess-check");
   });
 });

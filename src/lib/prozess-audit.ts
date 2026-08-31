@@ -1,8 +1,9 @@
-// Public, price-free copy for the "Der Prozess-Audit" on-ramp block on
-// /leistungen. The paid audit (€499, fully credited) and the handbook structure
-// live in HQ: docs/superpowers/specs/2026-08-11-prozess-audit-design.md. This
-// block sells the outcome and routes to the free Erstgespräch; the price is
-// named only in that call. No mechanism (Claude/n8n) — that is how Vrelo builds.
+// Public, price-free copy for the "Der Prozess-Audit" card on /leistungen.
+// Since 2026-08-31 the audit is FREE, fed by the /prozess-check questionnaire
+// (Prozess-Check-Funnel). The Fahrplan is price-free and travels; the price is
+// named only in the call (HQ §4). No €499, no money-back guarantee, no handbook
+// business-case line — those retired with the paid tripwire. Spec:
+// Knowledge/marketing/prozess-check-funnel.md
 export type ProzessAudit = {
   label: string;
   heading: string;
@@ -10,7 +11,7 @@ export type ProzessAudit = {
   deliverableLabel: string;
   deliverables: string[];
   keepNote: string;
-  guarantee: string;
+  guarantee: string; // repurposed: price-free reassurance, not a money-back line
   cta: { label: string; href: string };
   check: { label: string; href: string };
 };
@@ -18,17 +19,16 @@ export type ProzessAudit = {
 export const prozessAudit: ProzessAudit = {
   label: "Nicht sicher, wo du anfangen sollst?",
   heading: "Der Prozess-Audit: Ich finde die eine Aufgabe, die dich am meisten kostet.",
-  body: "Du merkst, dass Zeit und Anfragen durchrutschen, aber nicht, wo genau. Im Prozess-Audit schaue ich mir deine Abläufe an und du bekommst ein fertiges Handbuch: schwarz auf weiß, wo du am meisten verlierst und wie dein Tag ohne diese Aufgabe aussieht. Wenn du danach baust, ist der Audit für dich kostenlos.",
+  body: "Du merkst, dass Zeit und Anfragen durchrutschen, aber nicht genau wo. Wir sprechen 30 Minuten, kostenlos, und danach bekommst du einen Fahrplan: was sich bei dir automatisieren lässt und in welcher Reihenfolge. Der Fahrplan gehört dir. Ob du ihn selbst umsetzt, umsetzen lässt oder mit mir baust, entscheidest du danach.",
   deliverableLabel: "Das bekommst du",
   deliverables: [
-    "Deine Abläufe, Schritt für Schritt kartiert",
-    "Ein Diagramm, wie dein Prozess nach der Automatisierung läuft",
-    "Der genaue Fahrplan: welche Automatisierung zuerst, in welchen Schritten",
-    "Die Rechnung dahinter: was die Aufgabe heute kostet und was sie dir zurückgibt, ausgerechnet",
-    "Ein klares Ziel und der Zeitrahmen, bis es steht",
+    "Ein 30-minütiges Gespräch, in dem wir deine Abläufe durchgehen",
+    "Deine Aufgaben, nach dem sortiert, was dich am meisten Zeit kostet",
+    "Einen Fahrplan: welche Automatisierung zuerst, in welchen Schritten",
+    "Eine klare Empfehlung für den ersten Schritt",
   ],
-  keepNote: "Dein Fahrplan gehört dir, ob du danach mit mir baust oder nicht.",
-  guarantee: "Zeigt dir der Fahrplan keine konkrete, lohnende Automatisierung, bekommst du dein Geld zurück.",
-  cta: { label: "Kostenloses Erstgespräch", href: "/kontakt" },
-  check: { label: "Unsicher, ob sich das lohnt? Mach den 60-Sekunden-Check.", href: "/prozess-check" },
+  keepNote: "Der Fahrplan gehört dir. Du kannst ihn selbst umsetzen, umsetzen lassen oder mit mir bauen.",
+  guarantee: "Der Prozess-Check und der Fahrplan kosten dich nichts. Was eine Umsetzung kosten würde, sagen wir dir im Gespräch.",
+  cta: { label: "Zum kostenlosen Prozess-Check", href: "/prozess-check" },
+  check: { label: "In drei Minuten siehst du, wo deine Zeit hingeht.", href: "/prozess-check" },
 };
