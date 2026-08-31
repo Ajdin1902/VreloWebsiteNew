@@ -13,8 +13,8 @@ import { Reveal } from "@/components/Reveal";
 // tool has a public API, so "works with your tools" stays honest.
 const clusters: { label: string; tools: string[] }[] = [
   { label: "E-Mail & Kalender", tools: ["Outlook", "Gmail", "Google Kalender"] },
-  { label: "CRM & Kontakte", tools: ["onOffice", "HubSpot", "Pipedrive"] },
-  { label: "Aufgaben & Ablage", tools: ["ClickUp", "Notion", "Google Sheets"] },
+  { label: "CRM & Kontakte", tools: ["onOffice", "HubSpot", "Salesforce"] },
+  { label: "Aufgaben & Ablage", tools: ["ClickUp", "Stackfield", "Google Sheets"] },
   { label: "Rechnung & Buchhaltung", tools: ["sevDesk", "lexoffice", "DATEV"] },
 ];
 
