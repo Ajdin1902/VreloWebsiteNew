@@ -9,7 +9,7 @@ describe("ProzessAudit", () => {
     expect(screen.getByRole("heading", { name: prozessAudit.heading })).toBeInTheDocument();
   });
 
-  it("renders all five handbook inclusions", () => {
+  it("renders all deliverables", () => {
     render(<ProzessAudit />);
     for (const item of prozessAudit.deliverables) {
       expect(screen.getByText(item)).toBeInTheDocument();
@@ -26,10 +26,10 @@ describe("ProzessAudit", () => {
     expect(screen.getByText(prozessAudit.keepNote)).toBeInTheDocument();
   });
 
-  it("links the CTA to the free Erstgespräch", () => {
+  it("links the primary CTA to the free Prozess-Check funnel", () => {
     render(<ProzessAudit />);
     const cta = screen.getByRole("link", { name: prozessAudit.cta.label });
-    expect(cta).toHaveAttribute("href", "/kontakt");
+    expect(cta).toHaveAttribute("href", "/prozess-check");
   });
 
   it("links the secondary Prozess-Check on-ramp to /prozess-check", () => {

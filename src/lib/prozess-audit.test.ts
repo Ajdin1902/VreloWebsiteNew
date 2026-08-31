@@ -14,7 +14,7 @@ const all = strings(prozessAudit);
 
 // The Prozess-Audit block names NO price at all (stricter than /makler, which
 // permits the one server-cost figure). The €499 lives only in the sales call.
-const CURRENCY = /€|\bEUR\b|\d\s*(Euro|netto)\b/i;
+const CURRENCY = /€|\bEUR\b|\d\s*(Euro|netto)\b|\b499\b/i;
 
 describe("prozess-audit copy", () => {
   it("collects a body of copy", () => {
@@ -45,12 +45,12 @@ describe("prozess-audit copy", () => {
     expect(all.filter((s) => /\bn8n\b|claude/i.test(s))).toEqual([]);
   });
 
-  it("routes the CTA to the free Erstgespräch at /kontakt", () => {
-    expect(prozessAudit.cta.href).toBe("/kontakt");
+  it("routes the primary CTA to the free Prozess-Check funnel", () => {
+    expect(prozessAudit.cta.href).toBe("/prozess-check");
   });
 
-  it("lists the five handbook inclusions", () => {
-    expect(prozessAudit.deliverables).toHaveLength(5);
+  it("lists four deliverables", () => {
+    expect(prozessAudit.deliverables).toHaveLength(4);
   });
 
   it("offers the Prozess-Check as a secondary on-ramp to /prozess-check", () => {

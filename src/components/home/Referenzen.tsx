@@ -61,10 +61,10 @@ export function Referenzen() {
             Im Prozess-Audit finden wir gemeinsam die eine Aufgabe, die sich bei dir zuerst lohnt.
           </p>
           <Link
-            href="/leistungen#prozess-audit"
+            href="/prozess-check"
             className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-ember underline decoration-ember/40 underline-offset-4 transition hover:text-[#4d3216] hover:decoration-[#4d3216]"
           >
-            Mehr zum Prozess-Audit
+            Mach den Prozess-Check
             <span aria-hidden> →</span>
           </Link>
         </div>
