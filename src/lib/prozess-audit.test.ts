@@ -13,7 +13,7 @@ function strings(value: unknown, out: string[] = []): string[] {
 const all = strings(prozessAudit);
 
 // The Prozess-Audit block names NO price at all (stricter than /makler, which
-// permits the one server-cost figure). The €499 lives only in the sales call.
+// permits the one server-cost figure). The build price is named only in the call.
 const CURRENCY = /€|\bEUR\b|\d\s*(Euro|netto)\b|\b499\b/i;
 
 describe("prozess-audit copy", () => {
@@ -49,8 +49,13 @@ describe("prozess-audit copy", () => {
     expect(prozessAudit.cta.href).toBe("/prozess-check");
   });
 
-  it("lists four deliverables", () => {
-    expect(prozessAudit.deliverables).toHaveLength(4);
+  it("lists five deliverables (incl. the no-preparation Fragenkatalog)", () => {
+    expect(prozessAudit.deliverables).toHaveLength(5);
+    expect(prozessAudit.deliverables.join(" ")).toContain("Fragenkatalog");
+  });
+
+  it("leads the heading with kostenlos", () => {
+    expect(prozessAudit.heading.startsWith("Kostenlos")).toBe(true);
   });
 
   it("offers the Prozess-Check as a secondary on-ramp to /prozess-check", () => {

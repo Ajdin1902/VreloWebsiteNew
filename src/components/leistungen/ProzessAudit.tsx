@@ -2,14 +2,14 @@ import Link from "next/link";
 import { CTAButton } from "@/components/CTAButton";
 import { prozessAudit } from "@/lib/prozess-audit";
 
-// The paid-audit on-ramp — the lead element on /leistungen since the Termin-Quelle
+// The free-audit on-ramp — the lead element on /leistungen since the Termin-Quelle
 // flagship was retired (Model C). A warm sonnenlicht card seated on a plain papier
 // band: the deep shadow lifts the warm panel off the light page as the highlighted
 // recommended path; it stays distinct from the dark MehrMoeglich capstone at the
 // end. On-light AA: ember for small accent text
 // (clears AA on sonnenlicht), tinte body, tiefes-wasser headings, navy inverse
-// CTA. Price-free (site convention); routes to the free Erstgespräch where the
-// fee is named. No mechanism (Claude/n8n) — that is how Vrelo builds.
+// CTA. Price-free (site convention); the build price is named only in the call.
+// No mechanism (Claude/n8n) — that is how Vrelo builds.
 export function ProzessAudit() {
   const o = prozessAudit;
   return (
@@ -35,9 +35,6 @@ export function ProzessAudit() {
           </li>
         ))}
       </ul>
-
-      <p className="mt-8 text-sm font-medium text-tiefes-wasser">{o.keepNote}</p>
-      <p className="mt-3 max-w-2xl text-pretty text-sm italic text-stumm">{o.guarantee}</p>
 
       <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
         <CTAButton href={o.cta.href} variant="inverse">
