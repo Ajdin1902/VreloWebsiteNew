@@ -27,7 +27,9 @@ export function WoranEsScheitert() {
             key={row.einwand}
             className="card-depth flex flex-col rounded-2xl border border-gletscher/25 bg-gletscher/10 p-6"
           >
-            <p className="font-serif text-lg italic text-papier">{row.einwand}</p>
+            {/* min-h-[2lh] reserves two lines for one- and two-line Einwände, so
+                the amber solution names align across a row (Werkzeuge pattern). */}
+            <p className="min-h-[2lh] font-serif text-lg italic text-papier">{row.einwand}</p>
             <p className="mt-4 font-semibold text-honig">{row.loesungName}</p>
             <p className="mt-2 flex-1 text-pretty text-gletscher">{row.satz}</p>
             <p className="mt-4">
