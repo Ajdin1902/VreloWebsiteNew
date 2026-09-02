@@ -46,11 +46,19 @@ function useMounted() {
   );
 }
 
-// How far a stacked card peeks out from under the next one (px).
-const PEEK = 64;
+// How far a stacked card peeks out from under the next one (px), at most.
+// The actual peek shrinks so the WHOLE settled stack (card + peek * (n-1))
+// always fits the stage — on a phone that collapses to 0 and the cards sit
+// exactly on top of each other, which is the intended mobile behavior.
+const MAX_PEEK = 64;
+
+function fittingPeek(stageWidth: number, cardWidth: number, count: number) {
+  if (count < 2 || stageWidth <= 0 || cardWidth <= 0) return 0;
+  return Math.max(0, Math.min(MAX_PEEK, Math.floor((stageWidth - cardWidth) / (count - 1))));
+}
 
 const CARD_SIZING =
-  "min-w-[82%] max-w-[82%] sm:min-w-[58%] sm:max-w-[58%] lg:min-w-[44%] lg:max-w-[44%]";
+  "min-w-full max-w-full sm:min-w-[58%] sm:max-w-[58%] lg:min-w-[44%] lg:max-w-[44%]";
 const CARD_SURFACE = "card-depth rounded-2xl border border-faden bg-lesepapier p-6 md:p-8";
 
 function CardInner({ phase, index }: { phase: BauPhase; index: number }) {
@@ -95,7 +103,8 @@ function ScrollCard({
 }) {
   const start = index / count;
   const end = start + 1 / count;
-  const settled = -Math.max(cardWidth - PEEK, 0) * index;
+  const peek = fittingPeek(stageWidth, cardWidth, count);
+  const settled = -Math.max(cardWidth - peek, 0) * index;
   const x = useTransform(progress, [start, end], [stageWidth, settled]);
   return (
     <motion.li
