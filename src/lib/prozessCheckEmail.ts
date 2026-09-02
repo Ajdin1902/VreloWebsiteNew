@@ -64,7 +64,7 @@ export function buildSummaryEmail(p: {
         ${profileHtml}
       </table>
       <div style="background:#1b5063;border-radius:12px;padding:24px 22px;text-align:center;margin:0 0 26px">
-        <p style="${SERIF};color:#f4efe6;font-size:17px;line-height:1.45;margin:0 0 16px">Lass uns 30 Minuten drüber sprechen. Danach bekommst du einen Fahrplan, der dir gehört.</p>
+        <p style="${SERIF};color:#f4efe6;font-size:17px;line-height:1.45;margin:0 0 16px">Lass uns 30 Minuten drüber sprechen. Wenn sich etwas lohnt, bekommst du danach einen Fahrplan von mir, und er gehört dir.</p>
         ${ctaInner}
       </div>
       <p style="font-size:14.5px;line-height:1.6;margin:0 0 24px">Bis bald<br>Ajdin von <em style="${SERIF};font-style:italic">Vrelo</em></p>
@@ -83,7 +83,7 @@ export function buildSummaryEmail(p: {
     "Wo deine Zeit hingeht:",
     ...r.topAreas.map((a) => `- ${a.label}: ${hoursLabel(a.hours)}/Woche`),
     "",
-    "Lass uns 30 Minuten drüber sprechen. Danach bekommst du einen Fahrplan, der dir gehört.",
+    "Lass uns 30 Minuten drüber sprechen. Wenn sich etwas lohnt, bekommst du danach einen Fahrplan von mir, und er gehört dir.",
     calUrl ? `30-Minuten-Gespräch buchen: ${calUrl}` : "Antworte einfach auf diese E-Mail. Dann melde ich mich.",
     "",
     "Bis bald",

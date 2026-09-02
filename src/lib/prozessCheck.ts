@@ -202,8 +202,11 @@ export const RESULT_UI = {
   profileLabel: "Am meisten kostet dich",
   nervtPrefix: "Du sagst, am meisten nervt dich: ",
   reliefTitle: "Das muss nicht so bleiben.",
+  // Dream-outcome bridge (2026-09-02): the questionnaire→call handoff plus the
+  // honest Fahrplan promise — conditional („wenn sich etwas lohnt“), because the
+  // audit is at Vrelo's discretion (Knowledge/marketing/prozess-check-funnel.md §2).
   schedulerPrompt:
-    "Im kostenlosen Erstgespräch schauen wir uns deine größten Zeitfresser gemeinsam an. 30 Minuten, unverbindlich. Danach weißt du, welche Aufgabe zuerst verschwindet, und du bekommst einen Fahrplan, der dir gehört.",
+    "Der Fragebogen zeigt dir, wo deine Stunden hingehen. Das Gespräch zeigt dir, wie du sie zurückholst: In 30 Minuten klären wir, welche deiner täglichen Aufgaben ein System übernehmen kann. Wenn sich etwas lohnt, bekommst du in ein bis zwei Tagen einen Fahrplan von mir. Kostenlos, und er gehört dir.",
   schedulerFallbackHint: "Schreib mir so lange einfach über das Kontaktformular.",
   emailLabel: "Ergebnis lieber per Mail?",
   emailIntro: "Ich schick dir deine Auswertung zu, dann hast du sie in Ruhe.",
