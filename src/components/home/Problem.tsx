@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Section } from "@/components/Section";
 import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { Reveal } from "@/components/Reveal";
@@ -47,6 +48,19 @@ export function Problem() {
         <Reveal as="p" delayMs={240} className="mt-7 text-pretty text-lg text-gletscher">
           Jede Aufgabe für sich ist klein. Zusammen sind es Stunden. Zeit, die für die
           Arbeit fehlt, die du liebst.
+        </Reveal>
+        {/* The one bridge out of the pain beat (decision 2026-09-02): a single
+            calm link to the Prozess-Check, not a link per task — the section
+            keeps its role as the pure low point before Was-ich-baue answers. */}
+        <Reveal as="p" delayMs={320} className="mt-5 text-pretty text-gletscher">
+          Wenn du nicht weißt, wo du anfangen sollst: Der{" "}
+          <Link
+            href="/prozess-check"
+            className="font-medium text-honig underline underline-offset-4 hover:text-papier"
+          >
+            Prozess-Check
+          </Link>{" "}
+          zeigt es dir in drei Minuten.
         </Reveal>
       </div>
     </Section>

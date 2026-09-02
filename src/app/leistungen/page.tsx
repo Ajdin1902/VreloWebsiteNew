@@ -7,6 +7,8 @@ import { LeistungCard } from "@/components/leistungen/LeistungCard";
 import { Referenzen } from "@/components/leistungen/Referenzen";
 import { MehrMoeglich } from "@/components/leistungen/MehrMoeglich";
 import { ProzessAudit } from "@/components/leistungen/ProzessAudit";
+import { WennDuBaust } from "@/components/leistungen/WennDuBaust";
+import { WoranEsScheitert } from "@/components/leistungen/WoranEsScheitert";
 import { Reveal } from "@/components/Reveal";
 import { leistungen } from "@/lib/leistungen";
 import { JsonLd } from "@/components/JsonLd";
@@ -55,6 +57,11 @@ export default function LeistungenPage() {
           </ul>
         </Reveal>
       </Section>
+      {/* The Grand-Slam pair (2026-09-02): first the delivery stack as a
+          pinned scroll timeline (papier band), then the obstacle worksheet
+          answered (petrol texture band) — what you get, then why not to worry. */}
+      <WennDuBaust />
+      <WoranEsScheitert />
       <MehrMoeglich />
       <Referenzen />
       <ClosingCta

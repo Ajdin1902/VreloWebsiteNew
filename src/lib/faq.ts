@@ -23,7 +23,17 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Was passiert nach dem Projekt?",
         answer:
-          "Du bist nicht allein: Ich bleibe erreichbar, und weil alles sauber dokumentiert ist, lässt sich dein System anpassen, wenn sich etwas in deinem Betrieb ändert.",
+          "In den ersten 14 Tagen nach der Übergabe beobachte ich dein System und justiere nach, ohne dass du dich darum kümmerst. Danach bist du nicht allein: Ich bleibe erreichbar, und weil alles sauber dokumentiert ist, lässt sich dein System anpassen, wenn sich etwas in deinem Betrieb ändert.",
+      },
+      {
+        question: "Ersetzt die Automatisierung mich oder meine Mitarbeiter?",
+        answer:
+          "Nein. Sie übernimmt die Aufgaben, die sich jeden Tag wiederholen: das Abtippen, Weiterleiten, Erinnern. Alles, was dein Urteil oder das deiner Mitarbeiter braucht, bleibt bei euch. In der Praxis heißt das: weniger Kleinkram am Schreibtisch, mehr Zeit für die Arbeit, für die deine Kunden dich bezahlen.",
+      },
+      {
+        question: "Müssen meine Mitarbeiter etwas Neues lernen?",
+        answer:
+          "Meistens nicht, oder nur einen kleinen Schritt, etwa eine Nachricht an einer neuen Stelle lesen. Die Abläufe bleiben, wie dein Team sie kennt; das System arbeitet im Hintergrund. Zur Übergabe gehört eine Dokumentation für deine Mitarbeiter, in klarer Sprache und ohne Fachbegriffe.",
       },
     ],
   },

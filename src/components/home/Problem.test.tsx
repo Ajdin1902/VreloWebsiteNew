@@ -16,6 +16,13 @@ describe("Problem", () => {
     ).toBeInTheDocument();
   });
 
+  it("bridges to the Prozess-Check with exactly one link", () => {
+    render(<Problem />);
+    const links = screen.getAllByRole("link");
+    expect(links).toHaveLength(1);
+    expect(links[0]).toHaveAttribute("href", "/prozess-check");
+  });
+
   it("wraps the task list in a card-depth panel", () => {
     const { container } = render(<Problem />);
     const panel = container.querySelector(".card-depth");
