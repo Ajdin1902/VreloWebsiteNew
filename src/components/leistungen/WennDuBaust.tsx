@@ -101,8 +101,12 @@ function ScrollCard({
   stageWidth: number;
   cardWidth: number;
 }) {
-  const start = index / count;
-  const end = start + 1 / count;
+  // The static first card takes no slot: the moving cards (1..n-1) share the
+  // runway equally, so with a 500vh runway (100vh pinned + 400vh of travel) each
+  // card gets ~80vh of scroll — roughly one flick per card, by founder request.
+  const moving = Math.max(count - 1, 1);
+  const start = (index - 1) / moving;
+  const end = index / moving;
   const peek = fittingPeek(stageWidth, cardWidth, count);
   const settled = -Math.max(cardWidth - peek, 0) * index;
   const x = useTransform(progress, [start, end], [stageWidth, settled]);
@@ -136,7 +140,7 @@ function ScrollStage() {
 
   const count = wennDuBaust.phases.length;
   return (
-    <div ref={scrollRef} className="relative h-[330vh]">
+    <div ref={scrollRef} className="relative h-[500vh]">
       {/* overflow-hidden sits on the sticky element itself — on an ancestor it
           would break position: sticky. */}
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
