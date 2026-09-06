@@ -18,6 +18,7 @@ export function SchedulerEmbed({
   fallbackHint = "Schreib mir so lange einfach über das Formular unten.",
   fallbackHref,
   prompt = "Lieber direkt sprechen?",
+  notes,
 }: {
   calLink: string | undefined;
   /** Where to send the visitor when no scheduler is configured. Defaults to the
@@ -31,6 +32,9 @@ export function SchedulerEmbed({
   /** The heading above the click-to-load button. Pass "" to omit it where the
       surrounding section already asks for the call (e.g. /makler). */
   prompt?: string;
+  /** Prefill for Cal's "notes" booking field, e.g. `Quelle: brief-handwerk` so a
+      booking from a letter batch is attributable. Short, allow-listed text only. */
+  notes?: string;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -79,7 +83,7 @@ export function SchedulerEmbed({
       <Cal
         calLink={calLink}
         calOrigin={CAL_ORIGIN}
-        config={{ theme: "light" }}
+        config={notes ? { theme: "light", notes } : { theme: "light" }}
         style={{ width: "100%", height: "100%", overflow: "scroll" }}
       />
     </div>

@@ -3,6 +3,7 @@
 // the visitor (their hours + profile, no €, only the Cal URL as a link) and an
 // internal notification so Ajdin walks into the call already knowing the profile.
 import { EMAIL_RE, isHoneypotTripped, isTooFast } from "./contact";
+import { sourceLabel } from "./source";
 import {
   resultCopy,
   totalHours,
@@ -130,12 +131,15 @@ export function buildInternalEmail(p: {
   email: string;
   answers: ProzessCheckAnswers;
   kontaktErlaubt: boolean;
+  /** Attribution slug from `?src=` (letter batches), already allow-listed. */
+  source?: string;
 }): InternalEmail {
   const { answers } = p;
   const email = p.email.trim();
   const total = totalHours(answers);
   const ranked = rankAreas(answers);
-  const subject = `Prozess-Check: ${email}, ${total} Std./Woche`;
+  const quelle = sourceLabel(p.source);
+  const subject = `Prozess-Check: ${email}, ${total} Std./Woche${p.source ? `, ${p.source}` : ""}`;
 
   const hoursRows = ranked
     .map(
@@ -153,6 +157,7 @@ export function buildInternalEmail(p: {
     ["Abends/Wochenende", ABENDE_LABEL[answers.abende]],
     ["Schon versucht", VERSUCHT_LABEL[answers.versucht]],
     ["Kontakt erlaubt", p.kontaktErlaubt ? "JA" : "NEIN, nicht anschreiben"],
+    ["Quelle", quelle],
   ];
 
   const html = `<!doctype html>
@@ -192,6 +197,7 @@ export function buildInternalEmail(p: {
     `Schon versucht: ${VERSUCHT_LABEL[answers.versucht]}`,
     "",
     `Kontakt erlaubt: ${p.kontaktErlaubt ? "JA" : "NEIN, nicht anschreiben"}`,
+    `Quelle: ${quelle}`,
   ];
 
   return { subject, text: lines.join("\n"), html, replyTo: email };
@@ -203,6 +209,8 @@ export type ProzessCheckFields = {
   renderedAt: number;
   answers: ProzessCheckAnswers;
   kontaktErlaubt: boolean;
+  /** Attribution slug from `?src=`, already normalized (undefined = plain website visit). */
+  source?: string;
 };
 
 export type ProzessCheckDecision =
@@ -223,6 +231,6 @@ export function evaluateSubmission(
   return {
     action: "send",
     leadEmail: buildSummaryEmail({ email: f.email, answers: f.answers, calUrl }),
-    internalEmail: buildInternalEmail({ email: f.email, answers: f.answers, kontaktErlaubt: f.kontaktErlaubt }),
+    internalEmail: buildInternalEmail({ email: f.email, answers: f.answers, kontaktErlaubt: f.kontaktErlaubt, source: f.source }),
   };
 }

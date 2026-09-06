@@ -11,7 +11,14 @@ type PartialAnswers = Partial<Omit<ProzessCheckAnswers, "stunden">> & {
   stunden?: Record<AreaId, number>;
 };
 
-export function ProzessCheck({ calLink }: { calLink: string | undefined }) {
+export function ProzessCheck({
+  calLink,
+  source,
+}: {
+  calLink: string | undefined;
+  /** Attribution slug from `?src=` (e.g. `brief-handwerk`), already normalized. */
+  source?: string;
+}) {
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<PartialAnswers>({});
 
@@ -25,7 +32,7 @@ export function ProzessCheck({ calLink }: { calLink: string | undefined }) {
       abende: answers.abende ?? "nein",
       versucht: answers.versucht ?? "nichts",
     };
-    return <Result answers={final} copy={resultCopy(final)} calLink={calLink} />;
+    return <Result answers={final} copy={resultCopy(final)} calLink={calLink} source={source} />;
   }
 
   const step = STEPS[index];

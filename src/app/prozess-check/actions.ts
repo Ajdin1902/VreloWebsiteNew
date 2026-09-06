@@ -4,6 +4,7 @@ import { Resend } from "resend";
 import { isContactConfigured, contactFrom, contactTo, resendKey, calBookingUrl } from "@/lib/contact";
 import { evaluateSubmission, type ProzessCheckFields } from "@/lib/prozessCheckEmail";
 import { AREA_IDS, type ProzessCheckAnswers } from "@/lib/prozessCheck";
+import { normalizeSource } from "@/lib/source";
 
 export type ProzessCheckEmailState =
   | { status: "idle" }
@@ -43,6 +44,7 @@ function parse(formData: FormData): ProzessCheckFields {
     renderedAt: Number(get("renderedAt")) || 0,
     answers,
     kontaktErlaubt: formData.get("kontakt") != null,
+    source: normalizeSource(get("src")),
   };
 }
 

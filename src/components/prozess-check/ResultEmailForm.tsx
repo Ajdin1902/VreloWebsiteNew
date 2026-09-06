@@ -8,7 +8,7 @@ import { AREA_IDS, type ProzessCheckAnswers } from "@/lib/prozessCheck";
 
 const initial: ProzessCheckEmailState = { status: "idle" };
 
-export function ResultEmailForm({ answers }: { answers: ProzessCheckAnswers }) {
+export function ResultEmailForm({ answers, source }: { answers: ProzessCheckAnswers; source?: string }) {
   const [state, formAction, pending] = useActionState(submitProzessCheckEmail, initial);
   const [renderedAt] = useState(() => Date.now());
 
@@ -34,6 +34,7 @@ export function ResultEmailForm({ answers }: { answers: ProzessCheckAnswers }) {
       <input type="hidden" name="nervt" value={answers.nervt} />
       <input type="hidden" name="abende" value={answers.abende} />
       <input type="hidden" name="versucht" value={answers.versucht} />
+      {source ? <input type="hidden" name="src" value={source} /> : null}
       {/* honeypot */}
       <input type="text" name="website" tabIndex={-1} aria-hidden="true" autoComplete="off" className="absolute left-[-9999px] h-0 w-0 opacity-0" />
 

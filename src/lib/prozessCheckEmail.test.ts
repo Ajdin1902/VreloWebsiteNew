@@ -53,6 +53,17 @@ describe("buildInternalEmail", () => {
     const m = buildInternalEmail({ email: '<x>@b.de', answers, kontaktErlaubt: false });
     expect(m.html).not.toContain("<x>@b.de");
   });
+  it("names the letter batch as Quelle when the visitor came via ?src=", () => {
+    const m = buildInternalEmail({ email: "a@b.de", answers, kontaktErlaubt: true, source: "brief-handwerk" });
+    expect(m.subject).toContain("brief-handwerk");
+    expect(m.text).toContain("Quelle: brief-handwerk");
+    expect(m.html).toContain("brief-handwerk");
+  });
+  it("labels a plain visit as Website", () => {
+    const m = buildInternalEmail({ email: "a@b.de", answers, kontaktErlaubt: true });
+    expect(m.text).toContain("Quelle: Website");
+    expect(m.subject).not.toContain("Website");
+  });
 });
 
 describe("evaluateSubmission", () => {

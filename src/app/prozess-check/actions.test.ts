@@ -39,4 +39,8 @@ describe("submitProzessCheckEmail gate", () => {
     const s = await submitProzessCheckEmail(idle, fd({ ...good, renderedAt: String(Date.now()) }));
     expect(s.status).toBe("error");
   });
+  it("still gates a submit that carries a junk src value (the slug is sanitised, never trusted)", async () => {
+    const s = await submitProzessCheckEmail(idle, fd({ ...good, src: "<script>", email: "nope" }));
+    expect(s.status).toBe("invalid");
+  });
 });

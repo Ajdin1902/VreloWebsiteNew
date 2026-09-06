@@ -14,10 +14,13 @@ export function Result({
   answers,
   copy,
   calLink,
+  source,
 }: {
   answers: ProzessCheckAnswers;
   copy: ResultCopy;
   calLink: string | undefined;
+  /** Attribution slug (`?src=`); travels into the booking notes and the result e-mail. */
+  source?: string;
 }) {
   return (
     <div className="space-y-8">
@@ -73,12 +76,13 @@ export function Result({
               prompt=""
               fallbackHint={RESULT_UI.schedulerFallbackHint}
               fallbackHref="/kontakt"
+              notes={source ? `Quelle: ${source}` : undefined}
             />
           </div>
           <div className="mt-8 border-t border-papier/20 pt-6">
             <p className="text-sm font-medium text-gletscher">{RESULT_UI.emailLabel}</p>
             <p className="mt-1 text-sm text-gletscher/90">{RESULT_UI.emailIntro}</p>
-            <ResultEmailForm answers={answers} />
+            <ResultEmailForm answers={answers} source={source} />
           </div>
         </div>
       ) : (

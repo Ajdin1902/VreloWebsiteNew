@@ -1,7 +1,9 @@
 // src/app/prozess-check/page.tsx
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { PageHero } from "@/components/PageHero";
 import { ProzessCheck } from "@/components/prozess-check/ProzessCheck";
+import { ProzessCheckFromUrl } from "@/components/prozess-check/ProzessCheckFromUrl";
 import { calLink } from "@/lib/contact";
 
 export const metadata: Metadata = {
@@ -24,7 +26,11 @@ export default function ProzessCheckPage() {
           bright); the lesepapier card lifts off it and cuts the glare. */}
       <div className="-mt-10 bg-vrelo-petrol md:-mt-12">
         <div className="mx-auto max-w-2xl px-6 pb-24 pt-4 md:pb-32 md:pt-6">
-          <ProzessCheck calLink={calLink()} />
+          {/* ?src=brief-<segment> (letter batches via /brief) is read on the
+              client; the fallback renders the same questionnaire without it. */}
+          <Suspense fallback={<ProzessCheck calLink={calLink()} />}>
+            <ProzessCheckFromUrl calLink={calLink()} />
+          </Suspense>
         </div>
       </div>
     </>
