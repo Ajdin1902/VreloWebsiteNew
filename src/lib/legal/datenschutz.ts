@@ -3,7 +3,7 @@ import type { LegalDoc } from "./impressum";
 export const datenschutz: LegalDoc = {
   title: "Datenschutzerklärung",
   intro:
-    "Diese Erklärung informiert über die Verarbeitung personenbezogener Daten auf dieser Website. Stand: August 2026.",
+    "Diese Erklärung informiert über die Verarbeitung personenbezogener Daten auf dieser Website. Stand: September 2026.",
   sections: [
     {
       heading: "Verantwortlicher",
@@ -12,6 +12,10 @@ export const datenschutz: LegalDoc = {
     {
       heading: "Hosting",
       body: "Diese Website wird bei Vercel gehostet. Beim Aufruf werden technisch notwendige Server-Logs (u. a. IP-Adresse, Zeitpunkt, abgerufene Seite) verarbeitet. Dabei können Daten in die USA übertragen werden. Rechtsgrundlage ist das berechtigte Interesse an einem sicheren Betrieb (Art. 6 Abs. 1 lit. f DSGVO).",
+    },
+    {
+      heading: "Reichweitenmessung (Vercel Web Analytics)",
+      body: "Um zu sehen, welche Seiten aufgerufen werden, nutze ich Vercel Web Analytics. Der Dienst arbeitet ohne Cookies und ohne Wiedererkennung über mehrere Websites hinweg. Es wird kein Profil über dich gebildet und nichts auf deinem Gerät gespeichert. Aus technischen Angaben deines Aufrufs (u. a. IP-Adresse und Browser-Kennung) bildet Vercel einen anonymen Kennwert, der täglich wechselt; die IP-Adresse selbst wird nicht gespeichert. Anbieter ist die Vercel Inc.; dabei können Daten in die USA übertragen werden. Rechtsgrundlage ist das berechtigte Interesse an einer einfachen, datensparsamen Auswertung der Seitennutzung (Art. 6 Abs. 1 lit. f DSGVO).",
     },
     {
       heading: "Kontaktformular",

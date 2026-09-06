@@ -114,6 +114,7 @@ Author issues as `.md` in `content/newsletter/` (frontmatter `subject`/`previewT
 - **Fonts:** self-hosted via `next/font` (`src/lib/fonts.ts`) — Plus Jakarta Sans + Fraunces.
 - **Tests:** Vitest + React Testing Library (jsdom).
 - **Conversion:** `resend` (email) · `@calcom/embed-react` (scheduler). Env documented in `.env.example` (real values in Vercel).
+- **Analytics:** `@vercel/analytics` — `<Analytics />` in `src/app/layout.tsx` (Vercel Web Analytics, cookieless). ⚠️ Collects only when **Web Analytics is enabled in the Vercel project dashboard**; the component alone does nothing.
 - **Deploy:** Vercel (project `ajdin42-7733s-projects/vrelo-website`). Push to `main` auto-deploys.
 
 ## Project structure
@@ -171,10 +172,11 @@ Frequent commits; commit messages end with a `Co-Authored-By:` line naming the m
 - **Prices: offer pages stay price-free, the FAQ shows ranges (revised 2026-08-18).** `/leistungen`, `/makler`, `/prozess-check` reveal the price only in the Angebot after Discovery (guarded by their copy tests). The **FAQ** deliberately names ranges as a transparency/trust play — Bau 1.500 bis 25.000 Euro netto, Betrieb 350 bis 1.000 Euro/Mo — with the exact figure calculated in the meeting (`src/lib/faq.ts`, no copy-guard there). Matches HQ §4 (Bau 1.500 bis 25.000, Betrieb 350 bis 1.000/Mo — the site range is the source of truth).
 - **Hormozi skills are framework/output only** — keep the Vrelo voice (calm-over-hype) on top; their artifacts live in `Knowledge/marketing/`, never shipped verbatim. **Review lens:** score every customer-facing change against the **Hormozi Value Equation**, defined in HQ [CLAUDE.md](../CLAUDE.md) §8.
 - Videos: full 4-clip sequence on **Über mich**; sunset at the homepage Merak-close; **not** in the hero (LCP). Lazy-load, poster fallback, respect `prefers-reduced-motion`.
-- No tracking cookies on load (cookieless analytics + click-to-load Cal.com) → no consent banner needed for now.
+- No tracking cookies on load (cookieless analytics + click-to-load Cal.com) → no consent banner needed for now. **Vercel Web Analytics live since 2026-09-06** — cookieless, nothing written to the visitor's device, so § 25 TDDDG consent doesn't bite; declared in the Datenschutzerklärung as „Reichweitenmessung (Vercel Web Analytics)“ on Art. 6 Abs. 1 lit. f DSGVO. ⚠️ Any analytics product that *does* touch device storage (Speed Insights custom events, a second tool) flips this line – re-check before adding one.
 - Legal pages are drafts-to-review (founder/lawyer must verify before go-live).
 
 > **Changelog** (newest first, one line each; git has the detail):
+> - **2026-09-06** – **Vercel Web Analytics aktiviert** (im Repo, noch nicht deployed): `@vercel/analytics` + `<Analytics />` im Root-Layout; Datenschutzerklärung um „Reichweitenmessung (Vercel Web Analytics)“ ergänzt (cookieless, Art. 6 Abs. 1 lit. f), Stand auf September 2026 gezogen.
 > - **2026-09-02** – **Grand-Slam-Sektionen auf `/leistungen`** (deployed): „Wenn du mit mir baust“ (Scroll-Karten → Design-system-Bullet; Schlusskarte = **Feinschliff**, HQ §4) + „Woran es bei den meisten scheitert“ (`leistungen-weg.ts`, copy-guarded, einzige Währungszahl „rund 30 Euro“) · Problem-Sektion: genau ein Brückenlink zum Prozess-Check · FAQ: Mitarbeiter-Einträge + Feinschliff-Satz · Ergebnis-Bridge + Ergebnis-Mail auf konditionale Fahrplan-Zusage („wenn sich etwas lohnt“, Funnel-Doc §1a).
 > - **2026-08-31** – **Prozess-Check-Funnel live** (deployed): `/prozess-check` als öffentlicher, indexierter Fragebogen; `/leistungen`-Audit-Karte auf den kostenlosen Funnel umgeschrieben; Homepage-Brückenkarte. Alle Regeln → Design-system-Bullet „Prozess-Check“.
 > - **2026-08-17/18** – Copy-Feinschliff-Serie (deployed): Hero-H1 „Manuelle Prozesse rauben dir die Zeit.“, FAQ-Preisspannen (Bau 1.500 bis 25.000 € netto, UWG-sicher ohne Payback-Aussage), `/leistungen` + Homepage führen mit „Persönlicher Assistent“. Wortlaute + Warum in Key decisions; Git hat die Details.
