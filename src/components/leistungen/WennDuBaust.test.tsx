@@ -1,29 +1,9 @@
-import { describe, it, expect, afterEach, vi } from "vitest";
+import { describe, it, expect, afterEach } from "vitest";
 import { render, screen, cleanup } from "@testing-library/react";
 import { WennDuBaust } from "./WennDuBaust";
 import { wennDuBaust } from "@/lib/leistungen-weg";
 
-function mockMatchMedia(reducedMotion: boolean) {
-  vi.stubGlobal(
-    "matchMedia",
-    (query: string) =>
-      ({
-        matches: reducedMotion && query.includes("prefers-reduced-motion"),
-        media: query,
-        onchange: null,
-        addEventListener: () => {},
-        removeEventListener: () => {},
-        addListener: () => {},
-        removeListener: () => {},
-        dispatchEvent: () => false,
-      }) as MediaQueryList
-  );
-}
-
-afterEach(() => {
-  cleanup();
-  vi.unstubAllGlobals();
-});
+afterEach(cleanup);
 
 describe("WennDuBaust", () => {
   it("renders the heading and all six build deliverables", () => {
@@ -35,11 +15,9 @@ describe("WennDuBaust", () => {
     }
   });
 
-  it("falls back to the static stack under prefers-reduced-motion", () => {
-    mockMatchMedia(true);
+  it("renders a plain, non-pinned grid of cards", () => {
     const { container } = render(<WennDuBaust />);
-    // The animated stage pins via position: sticky; the static fallback has no
-    // sticky element and no tall scroll runway.
+    // The section is a normal padded band now (no sticky scroll pin).
     expect(container.querySelector(".sticky")).toBeNull();
     expect(container.querySelectorAll("li")).toHaveLength(wennDuBaust.phases.length);
   });
