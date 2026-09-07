@@ -1,19 +1,67 @@
-import { Reveal } from "@/components/Reveal";
+"use client";
+
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
 import { wennDuBaust, type BauPhase } from "@/lib/leistungen-weg";
 
-// The delivery stack ("Wenn du mit mir baust") as a normal-height section that
-// matches the rest of /leistungen: the warm "surface break" between the two
-// petrol bands. Sonnenlicht band, warm near-white lichtpapier cards, ember
-// heading, and inverse navy/sonnenlicht number badges (amber blends on the warm
-// ground). Rendered as a two-then-three-column card grid with a single fade-up
-// Reveal, the same rhythm as the neighbouring sections.
+// The delivery stack ("Wenn du mit mir baust") as a scroll-driven card
+// timeline: the section pins while the six build deliverables slide in one by
+// one from the right, each card stacking onto the previous with a small
+// offset. Mechanic adapted from a shadcn/motion community block; restyled to
+// the Vrelo system as the warm "surface break" between the two petrol bands
+// on /leistungen: a sonnenlicht band, warm near-white lichtpapier cards, ember
+// heading, and inverse (navy/sonnenlicht) number badges since amber blends on
+// the warm ground.
 //
-// History: this used to pin full-screen and scrub the six cards in horizontally
-// as a stacked fan (motion/react useScroll). That made the band a whole viewport
-// tall with large empty space above and below the cards, so it was replaced with
-// this compact grid on founder request (2026-09-07). A grid also keeps every card
-// readable, which the fan only managed while you were actively scrubbing.
+// Safety rails this adaptation adds over the original:
+// - SSR/no-JS and prefers-reduced-motion render a plain vertical grid — the
+//   animated stage only swaps in client-side after hydration (the original
+//   read window.innerWidth during render, which crashes the server build).
+// - widths are measured from the DOM (stage + first card) instead of
+//   window.innerWidth, so the fly-in distance matches the clipped container.
 
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+
+// Hydration-safe reduced-motion read (same pattern as LazyVideo): the server
+// snapshot is false so SSR and first client render agree, then React swaps to
+// the real preference without a mismatch.
+function usePrefersReducedMotion() {
+  return useSyncExternalStore(
+    (onChange) => {
+      const mq = window.matchMedia(REDUCED_MOTION_QUERY);
+      mq.addEventListener("change", onChange);
+      return () => mq.removeEventListener("change", onChange);
+    },
+    () => window.matchMedia(REDUCED_MOTION_QUERY).matches,
+    () => false
+  );
+}
+
+// Hydration detector without setState-in-effect: the server snapshot is false,
+// the client snapshot true, so React swaps to the animated stage right after
+// hydration without a mismatch or a cascading render.
+const emptySubscribe = () => () => {};
+function useMounted() {
+  return useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
+}
+
+// How far a stacked card peeks out from under the next one (px), at most.
+// The actual peek shrinks so the WHOLE settled stack (card + peek * (n-1))
+// always fits the stage — on a phone that collapses to 0 and the cards sit
+// exactly on top of each other, which is the intended mobile behavior.
+const MAX_PEEK = 64;
+
+function fittingPeek(stageWidth: number, cardWidth: number, count: number) {
+  if (count < 2 || stageWidth <= 0 || cardWidth <= 0) return 0;
+  return Math.max(0, Math.min(MAX_PEEK, Math.floor((stageWidth - cardWidth) / (count - 1))));
+}
+
+const CARD_SIZING =
+  "min-w-full max-w-full sm:min-w-[58%] sm:max-w-[58%] lg:min-w-[44%] lg:max-w-[44%]";
 const CARD_SURFACE = "card-depth rounded-2xl border border-faden bg-lichtpapier p-6 md:p-8";
 
 function CardInner({ phase, index }: { phase: BauPhase; index: number }) {
@@ -33,25 +81,124 @@ function CardInner({ phase, index }: { phase: BauPhase; index: number }) {
   );
 }
 
+function Heading() {
+  return (
+    <div className="mx-auto max-w-[44rem] text-center">
+      <h2 className="text-balance text-3xl font-semibold tracking-tight text-ember md:text-4xl">
+        {wennDuBaust.heading}
+      </h2>
+    </div>
+  );
+}
+
+function ScrollCard({
+  phase,
+  index,
+  count,
+  progress,
+  stageWidth,
+  cardWidth,
+}: {
+  phase: BauPhase;
+  index: number;
+  count: number;
+  progress: MotionValue<number>;
+  stageWidth: number;
+  cardWidth: number;
+}) {
+  // The static first card takes no slot: the moving cards (1..n-1) share the
+  // runway equally, so with a 500vh runway (100vh pinned + 400vh of travel) each
+  // card gets ~80vh of scroll — roughly one flick per card, by founder request.
+  const moving = Math.max(count - 1, 1);
+  const start = (index - 1) / moving;
+  const end = index / moving;
+  const peek = fittingPeek(stageWidth, cardWidth, count);
+  // Center the settled fan: it spans cardWidth + peek * (count - 1); the leftover
+  // stage width is split evenly and added as a constant right-shift, so the whole
+  // stack lands centered once every card has entered instead of pinned to the
+  // left edge. On a phone (peek 0, cards full-width) the offset collapses to 0.
+  const stackWidth = cardWidth + peek * Math.max(count - 1, 0);
+  const centerOffset = Math.max(0, (stageWidth - stackWidth) / 2);
+  const settled = centerOffset - Math.max(cardWidth - peek, 0) * index;
+  const x = useTransform(progress, [start, end], [stageWidth, settled]);
+  return (
+    <motion.li
+      data-card={phase.id}
+      style={{ x: index > 0 ? x : centerOffset }}
+      className={`${CARD_SURFACE} ${CARD_SIZING}`}
+    >
+      <CardInner phase={phase} index={index} />
+    </motion.li>
+  );
+}
+
+function ScrollStage() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLOListElement>(null);
+  const [dims, setDims] = useState({ stage: 0, card: 0 });
+  const { scrollYProgress } = useScroll({ target: scrollRef });
+
+  useEffect(() => {
+    const measure = () =>
+      setDims({
+        stage: stageRef.current?.offsetWidth ?? 0,
+        card: stageRef.current?.querySelector("li")?.getBoundingClientRect().width ?? 0,
+      });
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
+  const count = wennDuBaust.phases.length;
+  return (
+    <div ref={scrollRef} className="relative h-[500vh]">
+      {/* overflow-hidden sits on the sticky element itself — on an ancestor it
+          would break position: sticky. */}
+      <div className="sticky top-0 flex h-screen items-center overflow-hidden">
+        <div className="mx-auto w-full max-w-6xl px-6">
+          <Heading />
+          <ol ref={stageRef} className="mt-10 flex flex-nowrap items-stretch">
+            {wennDuBaust.phases.map((phase, index) => (
+              <ScrollCard
+                key={phase.id}
+                phase={phase}
+                index={index}
+                count={count}
+                progress={scrollYProgress}
+                stageWidth={dims.stage}
+                cardWidth={dims.card}
+              />
+            ))}
+          </ol>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function StaticStack() {
+  return (
+    <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
+      <Heading />
+      <ol className="mt-10 grid gap-6 md:grid-cols-2">
+        {wennDuBaust.phases.map((phase, index) => (
+          <li key={phase.id} data-card={phase.id} className={CARD_SURFACE}>
+            <CardInner phase={phase} index={index} />
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
 export function WennDuBaust() {
+  const reduced = usePrefersReducedMotion();
+  const mounted = useMounted();
+  const animated = mounted && !reduced;
+
   return (
     <section aria-label={wennDuBaust.heading} className="bg-sonnenlicht text-tinte">
-      <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <Reveal>
-          <div className="mx-auto max-w-[44rem] text-center">
-            <h2 className="text-balance text-3xl font-semibold tracking-tight text-ember md:text-4xl">
-              {wennDuBaust.heading}
-            </h2>
-          </div>
-        </Reveal>
-        <Reveal as="ol" delayMs={120} className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {wennDuBaust.phases.map((phase, index) => (
-            <li key={phase.id} className={CARD_SURFACE}>
-              <CardInner phase={phase} index={index} />
-            </li>
-          ))}
-        </Reveal>
-      </div>
+      {animated ? <ScrollStage /> : <StaticStack />}
     </section>
   );
 }
