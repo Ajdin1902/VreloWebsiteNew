@@ -32,7 +32,7 @@ Client copy is German; the brand voice is calm over hype. Nothing broadcasts by 
    ---
    ```
 2. Body = the four fixed sections from the playbook, each a `## ` heading then its text:
-   `## Kurz aus der KI-Welt`, `## Der Tipp der Woche`, `## So nutzen wir es`, `## Meme der Woche`. Open with a 1-2 sentence intro; close with the reply-driven CTA and a „Bis zum nächsten Mal“ sign-off.
+   `## Kurz aus der KI-Welt`, `## Der Tipp der Woche`, `## So nutzen wir es`, `## Meme der Woche`. Open with a 1-2 sentence intro; close with a „Bis zum nächsten Mal“ sign-off (`– Ajdin`), then a **`P.S.`** line – the fixed close that carries the one ask (forward-info nugget + soft reply-driven push; see the playbook §5). No body CTA before the sign-off: the P.S. is the only ask.
    - `## Der Tipp der Woche` auto-renders as the warm sonnenlicht callout card; no extra markup.
    - The meme is an image line: `![<alt>](/images/newsletter/<file>.png)`. Put the PNG in `public/images/newsletter/`.
 3. **German typography (verify the bytes).** German quotes are „…“ (U+201E open / U+201C close); the Gedankenstrich is the spaced en-dash „ – “ (U+2013), never an em-dash. The Write/Edit tools silently downgrade the closing quote and the en-dash, so author the `.md` via a small `node`/`fs` script (or verify right after) instead of trusting Edit. Check:

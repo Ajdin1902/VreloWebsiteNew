@@ -41,7 +41,7 @@ Pronunciation: **VREH-lo**. Origin: Vrelo Bosne, the turquoise spring near Saraj
 - Sub: Maßgeschneiderte Automatisierungen für kleine Betriebe. Sie übernehmen den wiederkehrenden Kleinkram — du gewinnst Zeit, Ruhe und einen freien Kopf zurück.
 - CTA: **Quelle erkunden**
 
-**Service blurb ("Was wir tun"):** *Vrelo* baut maßgeschneiderte Automatisierungssysteme für kleine Betriebe im DACH-Raum. Wir schauen uns deinen Arbeitsalltag an, finden die Aufgaben, die dich täglich Zeit kosten — Termine, Nachfass-Mails, Dateneingabe, wiederkehrende Kommunikation — und bauen daraus eine saubere, dokumentierte Quelle, aus der diese Arbeit von selbst fließt. Keine Vorlagen von der Stange, kein Technik-Kauderwelsch. Nur ein ruhiges, verlässliches System im Hintergrund. Das ist der *Merak*-Effekt.
+**Service blurb ("Was wir tun"):** *Vrelo* baut maßgeschneiderte Automatisierungssysteme für kleine Betriebe im DACH-Raum. Wir schauen uns deinen Arbeitsalltag an, finden die Aufgaben, die dich täglich Zeit kosten — Termine, Nachfass-Mails, Dateneingabe, wiederkehrende Kommunikation — und bauen daraus eine saubere, dokumentierte Quelle, aus der diese Arbeit von selbst fließt. Keine Vorlagen von der Stange, keine Fachbegriffe. Nur ein ruhiges, verlässliches System im Hintergrund. Das ist der *Merak*-Effekt.
 
 Other approved taglines: *Die Quelle. Der Merak-Effekt.* · *Aus der Quelle in den Fluss.* · *Wo dein Workflow entspringt.*
 
