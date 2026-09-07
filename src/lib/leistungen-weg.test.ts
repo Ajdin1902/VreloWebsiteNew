@@ -51,8 +51,7 @@ describe("leistungen-weg copy", () => {
     expect(last.text).toContain("vollen Betrag zurück");
   });
 
-  it("keeps the free steps in the intro, not as build phases", () => {
-    expect(wennDuBaust.intro).toContain("kostenlose");
+  it("keeps the free steps (Prozess-Check/Audit) out of the build phases", () => {
     const titles = wennDuBaust.phases.map((p) => p.title.toLowerCase());
     expect(titles.some((t) => t.includes("check") || t.includes("audit"))).toBe(false);
   });

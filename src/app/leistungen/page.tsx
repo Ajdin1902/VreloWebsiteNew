@@ -36,19 +36,15 @@ export default function LeistungenPage() {
         </Reveal>
       </Section>
       {/* The Bausteine: a petrol image band with a compact two-column card grid
-          (six use cases). A water backdrop under a petrol tint; light heading +
-          intro sit on the dark band, the opaque papier cards pop on top. Extra
-          space (mt-14) after the intro before the grid begins. */}
+          (six use cases). A water backdrop under a petrol tint; the light heading
+          sits on the dark band, the opaque papier cards pop on top. */}
       <Section tone="petrol" className="relative isolate overflow-hidden">
         <SectionBackdrop src="/images/bg-bausteine-b.webp" tintRgb="27 80 99" tintOpacity={0.7} />
         <Reveal>
           <h2 className="text-balance text-2xl font-semibold tracking-tight text-papier md:text-3xl">
             Die einzelnen Bausteine
           </h2>
-          <p className="mt-3 max-w-2xl text-pretty text-gletscher">
-            Jeder Baustein nimmt dir eine wiederkehrende Aufgabe ab. Einzeln oder kombiniert, ganz nach deinem Betrieb.
-          </p>
-          <ul className="mt-14 grid gap-6 sm:grid-cols-2">
+          <ul className="mt-10 grid gap-6 sm:grid-cols-2">
             {leistungen.map((leistung, index) => (
               <li key={leistung.slug}>
                 <LeistungCard leistung={leistung} index={index} />

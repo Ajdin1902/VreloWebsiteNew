@@ -17,7 +17,6 @@ export type BauPhase = {
 
 export type WennDuBaust = {
   heading: string;
-  intro: string;
   phases: BauPhase[];
 };
 
@@ -25,8 +24,6 @@ export type WennDuBaust = {
 // deliberately closes the sequence on the guarantee.
 export const wennDuBaust: WennDuBaust = {
   heading: "Wenn du mit mir baust",
-  intro:
-    "Davor kommen immer zwei kostenlose Schritte: der Prozess-Check und das Prozess-Audit mit deinem Fahrplan. Der Bau selbst umfasst dann all das:",
   phases: [
     {
       id: "server",
@@ -70,13 +67,11 @@ export type Einwand = {
 
 export type WoranEsScheitert = {
   heading: string;
-  intro: string;
   rows: Einwand[];
 };
 
 export const woranEsScheitert: WoranEsScheitert = {
   heading: "Woran es bei den meisten scheitert",
-  intro: "Sechs Fragen halten die meisten Inhaber zurück. Jede davon hat eine Antwort.",
   rows: [
     {
       einwand: "„Ich weiß nicht, wo ich anfangen soll.“",

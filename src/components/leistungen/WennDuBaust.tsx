@@ -8,7 +8,10 @@ import { wennDuBaust, type BauPhase } from "@/lib/leistungen-weg";
 // timeline: the section pins while the six build deliverables slide in one by
 // one from the right, each card stacking onto the previous with a small
 // offset. Mechanic adapted from a shadcn/motion community block; restyled to
-// the Vrelo system (papier band, lesepapier cards, amber number badges).
+// the Vrelo system as the warm "surface break" between the two petrol bands
+// on /leistungen: a sonnenlicht band, warm near-white lichtpapier cards, ember
+// heading, and inverse (navy/sonnenlicht) number badges since amber blends on
+// the warm ground.
 //
 // Safety rails this adaptation adds over the original:
 // - SSR/no-JS and prefers-reduced-motion render a plain vertical grid — the
@@ -59,12 +62,15 @@ function fittingPeek(stageWidth: number, cardWidth: number, count: number) {
 
 const CARD_SIZING =
   "min-w-full max-w-full sm:min-w-[58%] sm:max-w-[58%] lg:min-w-[44%] lg:max-w-[44%]";
-const CARD_SURFACE = "card-depth rounded-2xl border border-faden bg-lesepapier p-6 md:p-8";
+const CARD_SURFACE = "card-depth rounded-2xl border border-faden bg-lichtpapier p-6 md:p-8";
 
 function CardInner({ phase, index }: { phase: BauPhase; index: number }) {
   return (
     <>
-      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber font-serif text-lg italic text-tiefes-wasser">
+      {/* Navy badge, sonnenlicht numeral: on the warm sonnenlicht band amber
+          blends into the ground, so the badge goes inverse (same call as the
+          ClosingCta button on its warm band). */}
+      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-vrelo-petrol font-serif text-lg italic text-sonnenlicht">
         {String(index + 1).padStart(2, "0")}
       </div>
       <h3 className="mt-4 text-balance text-xl font-semibold text-tiefes-wasser md:text-2xl">
@@ -78,10 +84,9 @@ function CardInner({ phase, index }: { phase: BauPhase; index: number }) {
 function Heading() {
   return (
     <div className="mx-auto max-w-[44rem] text-center">
-      <h2 className="text-balance text-3xl font-semibold tracking-tight text-tiefes-wasser md:text-4xl">
+      <h2 className="text-balance text-3xl font-semibold tracking-tight text-ember md:text-4xl">
         {wennDuBaust.heading}
       </h2>
-      <p className="mt-5 text-pretty text-lg text-tinte">{wennDuBaust.intro}</p>
     </div>
   );
 }
@@ -108,12 +113,18 @@ function ScrollCard({
   const start = (index - 1) / moving;
   const end = index / moving;
   const peek = fittingPeek(stageWidth, cardWidth, count);
-  const settled = -Math.max(cardWidth - peek, 0) * index;
+  // Center the settled fan: it spans cardWidth + peek * (count - 1); the leftover
+  // stage width is split evenly and added as a constant right-shift, so the whole
+  // stack lands centered once every card has entered instead of pinned to the
+  // left edge. On a phone (peek 0, cards full-width) the offset collapses to 0.
+  const stackWidth = cardWidth + peek * Math.max(count - 1, 0);
+  const centerOffset = Math.max(0, (stageWidth - stackWidth) / 2);
+  const settled = centerOffset - Math.max(cardWidth - peek, 0) * index;
   const x = useTransform(progress, [start, end], [stageWidth, settled]);
   return (
     <motion.li
       data-card={phase.id}
-      style={{ x: index > 0 ? x : 0 }}
+      style={{ x: index > 0 ? x : centerOffset }}
       className={`${CARD_SURFACE} ${CARD_SIZING}`}
     >
       <CardInner phase={phase} index={index} />
@@ -186,7 +197,7 @@ export function WennDuBaust() {
   const animated = mounted && !reduced;
 
   return (
-    <section aria-label={wennDuBaust.heading} className="bg-papier text-tinte">
+    <section aria-label={wennDuBaust.heading} className="bg-sonnenlicht text-tinte">
       {animated ? <ScrollStage /> : <StaticStack />}
     </section>
   );

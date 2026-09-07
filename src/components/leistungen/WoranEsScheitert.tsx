@@ -18,7 +18,6 @@ export function WoranEsScheitert() {
           <h2 className="text-balance text-3xl font-semibold tracking-tight text-papier md:text-4xl">
             {woranEsScheitert.heading}
           </h2>
-          <p className="mt-5 text-pretty text-lg text-gletscher">{woranEsScheitert.intro}</p>
         </div>
       </Reveal>
       <Reveal as="ul" delayMs={120} className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
