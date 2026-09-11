@@ -49,5 +49,7 @@ describe("sitemap", () => {
     expect(urls).not.toContain(`${siteUrl}/makler`);
     expect(urls).not.toContain(`${siteUrl}/lead-check`);
     expect(urls).not.toContain(`${siteUrl}/demo`);
+    expect(urls).not.toContain(`${siteUrl}/karte`);
+    expect(urls).not.toContain(`${siteUrl}/karte/qr`);
   });
 });
