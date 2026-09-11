@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { navLinks, focusRoutes, isFocusRoute, focusChrome } from "./nav";
+import { navLinks, focusRoutes, isFocusRoute, focusChrome, bareRoutes, isBareRoute } from "./nav";
 
 describe("focus routes", () => {
   it("treats the two outreach landing pages as focus routes", () => {
@@ -36,5 +36,20 @@ describe("focus routes", () => {
 
   it("falls back to showing the chrome when the pathname is unknown", () => {
     expect(isFocusRoute(null)).toBe(false);
+  });
+});
+
+describe("bare routes", () => {
+  it("treats the business card and its QR page as bare (no chrome at all)", () => {
+    expect(bareRoutes).toContain("/karte");
+    expect(bareRoutes).toContain("/karte/qr");
+    expect(isBareRoute("/karte")).toBe(true);
+    expect(isBareRoute("/karte/qr")).toBe(true);
+  });
+
+  it("keeps chrome on normal routes and falls back safely on null", () => {
+    expect(isBareRoute("/")).toBe(false);
+    expect(isBareRoute("/makler")).toBe(false);
+    expect(isBareRoute(null)).toBe(false);
   });
 });

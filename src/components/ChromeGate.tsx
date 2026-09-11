@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import { usePathname } from "next/navigation";
-import { isFocusRoute, focusChrome } from "@/lib/nav";
+import { isFocusRoute, isBareRoute, focusChrome } from "@/lib/nav";
 import { FocusHeader } from "@/components/focus/FocusHeader";
 import { FocusFooter } from "@/components/focus/FocusFooter";
 
@@ -19,6 +19,12 @@ import { FocusFooter } from "@/components/focus/FocusFooter";
 // page is scoped to <main> and maps to neither.
 export function ChromeGate({ children, slot }: { children: ReactNode; slot: "header" | "footer" }) {
   const pathname = usePathname();
+
+  // Bare routes (the digital business card + its QR page) get no chrome in
+  // either slot — the page stands alone on the screen.
+  if (isBareRoute(pathname)) {
+    return null;
+  }
 
   if (isFocusRoute(pathname)) {
     const config = focusChrome[pathname!] ?? {};

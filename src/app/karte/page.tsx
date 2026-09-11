@@ -47,6 +47,15 @@ export default function KartePage() {
           Website ansehen
         </Link>
       </div>
+
+      <nav aria-label="Rechtliches" className="mt-6 flex gap-4 text-xs text-tinte/50">
+        <Link href="/impressum" className="py-1 underline">
+          Impressum
+        </Link>
+        <Link href="/datenschutz" className="py-1 underline">
+          Datenschutz
+        </Link>
+      </nav>
     </div>
   );
 }

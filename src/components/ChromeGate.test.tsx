@@ -47,6 +47,27 @@ describe("ChromeGate", () => {
     expect(screen.queryByRole("link", { name: /Erstgespräch/ })).not.toBeInTheDocument();
   });
 
+  it("renders no chrome at all on a bare route", () => {
+    pathname.current = "/karte";
+    const { container: header } = render(
+      <ChromeGate slot="header">
+        <p>Kopfzeile</p>
+      </ChromeGate>,
+    );
+    expect(screen.queryByText("Kopfzeile")).not.toBeInTheDocument();
+    // No focus brand link either — the page stands entirely alone.
+    expect(screen.queryByLabelText(/Startseite/)).not.toBeInTheDocument();
+    expect(header).toBeEmptyDOMElement();
+
+    const { container: footer } = render(
+      <ChromeGate slot="footer">
+        <p>Fußzeile</p>
+      </ChromeGate>,
+    );
+    expect(screen.queryByText("Fußzeile")).not.toBeInTheDocument();
+    expect(footer).toBeEmptyDOMElement();
+  });
+
   it("renders the focus footer with a legal navigation landmark", () => {
     pathname.current = "/lead-check";
     render(

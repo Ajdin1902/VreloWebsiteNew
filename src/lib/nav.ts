@@ -21,6 +21,14 @@ export const navLinks: NavLink[] = [
 // NOT a focus route: it is a sandbox people are meant to wander out of.
 export const focusRoutes: string[] = ["/makler", "/lead-check", "/prozess-check"];
 
+// Bare routes: no site chrome at all — no header, no footer. The digital
+// business card (/karte) and its QR display page (/karte/qr) are shown
+// full-screen from a phone and handed to someone to look at or scan; any nav or
+// footer around them is noise. The root layout still wraps children in <main>,
+// so a bare page keeps its one required landmark. Impressum/Datenschutz stay
+// reachable from a small link on the card itself, not from a site footer.
+export const bareRoutes: string[] = ["/karte", "/karte/qr"];
+
 export type FocusCta = { href: string; label: string; short: string };
 
 // Per-route chrome config. A route with no CTA gets the logo alone — right for
@@ -41,4 +49,8 @@ export const focusChrome: Record<string, { cta?: FocusCta }> = {
 // safe, normal case.
 export function isFocusRoute(pathname: string | null): boolean {
   return pathname !== null && focusRoutes.includes(pathname);
+}
+
+export function isBareRoute(pathname: string | null): boolean {
+  return pathname !== null && bareRoutes.includes(pathname);
 }

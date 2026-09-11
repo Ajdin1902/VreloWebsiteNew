@@ -24,4 +24,10 @@ describe("KartePage", () => {
     expect(screen.getByText("+49 176 4380 6085").closest("a")?.getAttribute("href"))
       .toBe("tel:+4917643806085");
   });
+
+  it("keeps Impressum and Datenschutz reachable without the site footer", () => {
+    render(<KartePage />);
+    expect(screen.getByRole("link", { name: "Impressum" }).getAttribute("href")).toBe("/impressum");
+    expect(screen.getByRole("link", { name: "Datenschutz" }).getAttribute("href")).toBe("/datenschutz");
+  });
 });
