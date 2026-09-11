@@ -25,6 +25,11 @@ describe("KartePage", () => {
       .toBe("tel:+4917643806085");
   });
 
+  it("anchors the card with the Vrelo brand mark", () => {
+    render(<KartePage />);
+    expect(screen.getByText("Vrelo")).toBeTruthy();
+  });
+
   it("keeps Impressum and Datenschutz reachable without the site footer", () => {
     render(<KartePage />);
     expect(screen.getByRole("link", { name: "Impressum" }).getAttribute("href")).toBe("/impressum");

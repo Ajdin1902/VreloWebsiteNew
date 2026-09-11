@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { BrandWord } from "@/components/BrandWord";
+import { BrandLockup } from "@/components/BrandLockup";
 import { KARTE } from "@/lib/karte";
 
 export const metadata: Metadata = {
@@ -13,18 +13,20 @@ export default function KartePage() {
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center px-6 py-16">
       <div className="card-depth w-full rounded-3xl border border-faden bg-papier p-8 text-center">
+        {/* Brand anchor: on a bare route the site chrome that normally carries
+            the Vrelo lockup is gone, so the card carries the mark itself. The
+            lockup inlines the vrelo-symbol-navy-amber geometry (amber drop). */}
+        <BrandLockup variant="navy" className="justify-center" />
+
         <Image
           src="/images/karte-portrait.webp"
           alt="Porträt von Ajdin Dzafic"
           width={160}
           height={160}
           priority
-          className="mx-auto rounded-full object-cover"
+          className="mx-auto mt-8 rounded-full object-cover"
         />
         <h1 className="mt-6 text-2xl font-semibold text-tinte">{KARTE.fullName}</h1>
-        <p className="mt-1 text-lg text-vrelo-petrol">
-          <BrandWord>Vrelo</BrandWord>
-        </p>
         <p className="mt-1 text-sm text-tinte/80">{KARTE.descriptor}</p>
 
         <div className="mt-6 space-y-2 text-sm">
