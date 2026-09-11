@@ -11,11 +11,11 @@ export const metadata: Metadata = {
 
 export default function KartePage() {
   return (
-    <main className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center px-6 py-16">
+    <div className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center px-6 py-16">
       <div className="card-depth w-full rounded-3xl border border-faden bg-papier p-8 text-center">
         <Image
           src="/images/karte-portrait.webp"
-          alt="Ajdin Dzafic"
+          alt="Porträt von Ajdin Dzafic"
           width={160}
           height={160}
           priority
@@ -28,10 +28,10 @@ export default function KartePage() {
         <p className="mt-1 text-sm text-tinte/80">{KARTE.descriptor}</p>
 
         <div className="mt-6 space-y-2 text-sm">
-          <a href={`mailto:${KARTE.email}`} className="block text-vrelo-petrol underline">
+          <a href={`mailto:${KARTE.email}`} className="block py-2 text-vrelo-petrol underline">
             {KARTE.email}
           </a>
-          <a href={`tel:${KARTE.phone.replace(/\s+/g, "")}`} className="block text-vrelo-petrol underline">
+          <a href={`tel:${KARTE.phone.replace(/\s+/g, "")}`} className="block py-2 text-vrelo-petrol underline">
             {KARTE.phone}
           </a>
         </div>
@@ -43,10 +43,10 @@ export default function KartePage() {
           Kontakt speichern
         </a>
 
-        <Link href="/" className="mt-4 block text-xs text-tinte/60 underline">
+        <Link href="/" className="mt-4 block py-2 text-xs text-tinte/60 underline">
           Website ansehen
         </Link>
       </div>
-    </main>
+    </div>
   );
 }
