@@ -38,8 +38,8 @@ function MailVorschau({ notiz }: { notiz: Terminnotiz }) {
 
 // The close of the demo. He has just watched a booking happen in seconds, so
 // the ask is a booking – not a trip to /kontakt and a form. SchedulerEmbed is
-// reused untouched: it pins the cal.eu origin (the default cal.com origin 404s
-// Vrelo's EU account) and mounts the iframe only on click, which keeps the
+// reused untouched: it pins the cal.com origin (Vrelo's account host; cal.eu
+// 404s it) and mounts the iframe only on click, which keeps the
 // /demo Datenschutz section true. It is styled on-dark, hence the petrol band.
 //
 // Without a calLink the band would only apologise while pointing twice at the

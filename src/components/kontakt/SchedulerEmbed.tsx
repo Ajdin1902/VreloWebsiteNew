@@ -5,10 +5,10 @@ import { useState } from "react";
 import Link from "next/link";
 import Cal from "@calcom/embed-react";
 
-// Vrelo's Cal.com account lives in the EU data region (cal.eu). The embed
-// defaults to the cal.com origin, which would 404 the booking iframe — so we
-// pin it to the EU origin. The slug itself comes from NEXT_PUBLIC_CAL_LINK.
-const CAL_ORIGIN = "https://cal.eu";
+// Vrelo's Cal.com account (ajdin-dzafic-vrelo) lives on the default cal.com
+// origin — the EU cal.eu host 404s this account, so we pin cal.com explicitly.
+// The slug itself comes from NEXT_PUBLIC_CAL_LINK.
+const CAL_ORIGIN = "https://cal.com";
 
 // Sits on the petrol water above the form card: on-dark text, amber CTA. Cal's
 // iframe loads only after the click, so there's no third-party request on page

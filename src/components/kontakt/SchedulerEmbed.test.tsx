@@ -40,11 +40,11 @@ describe("SchedulerEmbed", () => {
     expect(screen.getByTestId("cal-embed")).toBeInTheDocument();
   });
 
-  it("points the embed at the EU data region (cal.eu), not the default cal.com", async () => {
-    render(<SchedulerEmbed calLink="ajdin19/vrelo-kennenlernen" />);
+  it("pins the embed to the cal.com origin (the account's host; cal.eu 404s it)", async () => {
+    render(<SchedulerEmbed calLink="ajdin-dzafic-vrelo/30min" />);
     await userEvent.click(screen.getByRole("button", { name: /Termin anzeigen/i }));
-    expect(mock.props?.calLink).toBe("ajdin19/vrelo-kennenlernen");
-    expect(mock.props?.calOrigin).toBe("https://cal.eu");
+    expect(mock.props?.calLink).toBe("ajdin-dzafic-vrelo/30min");
+    expect(mock.props?.calOrigin).toBe("https://cal.com");
   });
 
   it("shows a calm placeholder (no button) when calLink is missing", () => {
