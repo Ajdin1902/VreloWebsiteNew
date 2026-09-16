@@ -14,9 +14,11 @@ export const impressum: LegalDoc = {
       heading: "Kontakt",
       body: "E-Mail: kontakt@vrelo-ki.de\nOder über das Kontaktformular auf dieser Website.",
     },
-    // USt-IdNr: beantragt, noch nicht erteilt (Stand 2026-08-16). § 5 DDG verlangt sie nur
-    // „soweit vorhanden“ → Abschnitt kommt zurück, sobald der BZSt-Brief da ist:
-    // { heading: "Umsatzsteuer-ID", body: "Umsatzsteuer-Identifikationsnummer gemäß § 27 a UStG: DE…" }
+    // USt-IdNr erteilt vom BZSt (eingegangen 2026-09-16). § 5 Abs. 1 Nr. 6 DDG: Pflichtangabe, soweit vorhanden.
+    {
+      heading: "Umsatzsteuer-ID",
+      body: "Umsatzsteuer-Identifikationsnummer gemäß § 27 a UStG:\nDE464014191",
+    },
     // Die Steuernummer gehört NICHT hierher (keine Pflichtangabe, Missbrauchsrisiko).
     {
       heading: "Verantwortlich für den Inhalt",

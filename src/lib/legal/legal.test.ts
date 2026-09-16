@@ -16,6 +16,11 @@ describe("legal content", () => {
     expect(body).not.toMatch(/Steuernummer/);
   });
 
+  it("impressum carries the USt-IdNr (§ 5 DDG, soweit vorhanden)", () => {
+    const body = impressum.sections.map((s) => s.body).join("\n");
+    expect(body).toContain("DE464014191");
+  });
+
   it("impressum names the V.i.S.d.P. (Art. 50 Abs. 4b KI-VO exemption needs a named person)", () => {
     const v = impressum.sections.find((s) => /Verantwortlich für den Inhalt/i.test(s.heading));
     expect(v).toBeDefined();
