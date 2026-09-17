@@ -15,6 +15,8 @@ const nextConfig: NextConfig = {
     return [
       { source: "/brief", destination: "/prozess-check?src=brief", permanent: false },
       { source: "/brief/:segment", destination: "/prozess-check?src=brief-:segment", permanent: false },
+      // Walk-in flyer (HQ: Knowledge/marketing/flyer/flyer-brief.md), same pattern.
+      { source: "/flyer", destination: "/prozess-check?src=flyer", permanent: false },
     ];
   },
 };

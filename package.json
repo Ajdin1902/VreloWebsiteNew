@@ -11,6 +11,7 @@
     "test:watch": "vitest",
     "optimize:videos": "node scripts/optimize-videos.mjs",
     "karte:assets": "node scripts/build-karte-assets.mjs",
+    "flyer:assets": "node scripts/build-flyer-assets.mjs",
     "newsletter": "node --env-file-if-exists=.env.local scripts/send-newsletter.mjs"
   },
   "dependencies": {
