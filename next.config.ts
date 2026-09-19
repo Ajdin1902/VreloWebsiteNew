@@ -17,6 +17,13 @@ const nextConfig: NextConfig = {
       { source: "/brief/:segment", destination: "/prozess-check?src=brief-:segment", permanent: false },
       // Walk-in flyer (HQ: Knowledge/marketing/flyer/flyer-brief.md), same pattern.
       { source: "/flyer", destination: "/prozess-check?src=flyer", permanent: false },
+      // Parked under Model C (2026-09-19): the broker-era pages are off the site.
+      // The code stays in the repo; redirects run before the filesystem, so the
+      // pages and the /demo API routes are unreachable while links already out
+      // in the world land on a live page instead of a 404. Remove a line to un-park.
+      { source: "/makler", destination: "/leistungen", permanent: false },
+      { source: "/demo/:path*", destination: "/leistungen", permanent: false },
+      { source: "/lead-check", destination: "/prozess-check", permanent: false },
     ];
   },
 };
