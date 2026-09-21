@@ -51,6 +51,15 @@ describe("leistungen-weg copy", () => {
     expect(last.text).toContain("vollen Betrag zurück");
   });
 
+  // HQ decision 2026-09-07: the guarantee presupposes the Prozess-Audit. The
+  // site must not promise more than the Angebot does (UWG §5).
+  it("ties the guarantee to the Prozess-Audit, before the refund promise", () => {
+    const last = wennDuBaust.phases[wennDuBaust.phases.length - 1];
+    const audit = last.text.indexOf("Prozess-Audit");
+    expect(audit).toBeGreaterThan(-1);
+    expect(audit).toBeLessThan(last.text.indexOf("vollen Betrag zurück"));
+  });
+
   it("keeps the free steps (Prozess-Check/Audit) out of the build phases", () => {
     const titles = wennDuBaust.phases.map((p) => p.title.toLowerCase());
     expect(titles.some((t) => t.includes("check") || t.includes("audit"))).toBe(false);

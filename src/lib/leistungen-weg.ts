@@ -53,7 +53,7 @@ export const wennDuBaust: WennDuBaust = {
     {
       id: "feinschliff",
       title: "Der Feinschliff",
-      text: "14 Tage nach der Übergabe beobachte ich dein System und justiere nach, ohne dass du dich darum kümmerst. In dieser Zeit gilt: Bist du nicht zufrieden, bekommst du den vollen Betrag zurück, und ich baue alles sauber zurück.",
+      text: "14 Tage nach der Übergabe beobachte ich dein System und justiere nach, ohne dass du dich darum kümmerst. Weil jedem Bau das kostenlose Prozess-Audit vorausgeht, gilt in dieser Zeit: Bist du nicht zufrieden, bekommst du den vollen Betrag zurück, und ich baue alles sauber zurück.",
     },
   ],
 };
