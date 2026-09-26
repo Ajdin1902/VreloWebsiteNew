@@ -25,17 +25,20 @@ export function MerakClose() {
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_120%_at_50%_120%,#f4e4c1,#e8b86b_55%,#f4e4c1_100%)] opacity-90"
       />
-      {/* Centered spine: the payoff lands on the spine like the rest of the page. */}
+      {/* Centered spine: the payoff lands on the spine like the rest of the page.
+          The headline mirrors the hero („Manuelle Prozesse rauben dir die Zeit.“):
+          the page opens on the pain and closes on it solved (decision 2026-09-26). */}
       <div className="mx-auto max-w-[44rem] text-center">
         <Reveal as="h2" delayMs={0} className="text-balance font-serif text-3xl italic leading-snug text-ember md:text-4xl">
-          Stell dir den Montagmorgen vor, an dem schon zwei Stunden Arbeit erledigt sind.
+          Die Prozesse laufen von selbst. Deine Zeit gehört wieder dir.
         </Reveal>
         <Reveal as="p" delayMs={80} className="mx-auto mt-6 max-w-xl text-pretty text-lg text-tinte">
-          Das ist der <BrandWord>Merak</BrandWord>-Effekt. Der erste Schritt dauert drei Minuten: Der
-          Prozess-Check zeigt dir, wo deine Stunden hingehen.
+          Das ist der <BrandWord>Merak</BrandWord>-Effekt.
         </Reveal>
         <Reveal delayMs={160} className="mt-8">
           <CTAButton href={checkHref(CHECK_SRC.homeClose)}>{CHECK_CTA.label}</CTAButton>
+          {/* Effort reducer at the last decision point: free, no login, result now. */}
+          <p className="mt-3 text-sm text-tinte">{CHECK_CTA.microcopy}</p>
           <SecondaryLink tone="light" prefix={CHECK_CTA.directPrefix} label={CHECK_CTA.directLabel} href={CHECK_CTA.directHref} />
         </Reveal>
       </div>
