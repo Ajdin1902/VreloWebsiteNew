@@ -21,9 +21,21 @@ describe("Header", () => {
     expect(screen.getByRole("button", { name: /menü öffnen/i })).toBeInTheDocument();
   });
 
-  it("keeps a compact CTA reachable on mobile (one tap, outside the drawer)", () => {
+  it("sends the desktop CTA to the Prozess-Check", () => {
     render(<Header />);
-    const compact = screen.getByRole("link", { name: "Erstgespräch" });
-    expect(compact).toHaveAttribute("href", "/kontakt");
+    expect(screen.getByRole("link", { name: "Prozess-Check starten" })).toHaveAttribute(
+      "href",
+      "/prozess-check?src=header",
+    );
+  });
+
+  it("keeps a compact Prozess-Check CTA reachable on mobile (one tap, outside the drawer)", () => {
+    render(<Header />);
+    expect(screen.getByRole("link", { name: "Prozess-Check" })).toHaveAttribute("href", "/prozess-check?src=header");
+  });
+
+  it("keeps Kontakt in the nav as the path to a call", () => {
+    render(<Header />);
+    expect(screen.getByRole("link", { name: "Kontakt" })).toHaveAttribute("href", "/kontakt");
   });
 });

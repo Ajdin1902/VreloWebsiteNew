@@ -49,4 +49,13 @@ describe("MobileNav", () => {
     expect(container.contains(dialog)).toBe(false);
     expect(document.body.contains(dialog)).toBe(true);
   });
+
+  it("puts the Prozess-Check CTA at the bottom of the open drawer", () => {
+    render(<MobileNav />);
+    fireEvent.click(screen.getByRole("button", { name: /menü öffnen/i }));
+    expect(screen.getByRole("link", { name: "Prozess-Check starten" })).toHaveAttribute(
+      "href",
+      "/prozess-check?src=header",
+    );
+  });
 });

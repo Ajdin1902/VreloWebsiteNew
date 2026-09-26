@@ -37,6 +37,12 @@ describe("focus routes", () => {
   it("falls back to showing the chrome when the pathname is unknown", () => {
     expect(isFocusRoute(null)).toBe(false);
   });
+
+  it("keeps /prozess-check logo-only: no header CTA pointing at itself", () => {
+    expect(isFocusRoute("/prozess-check")).toBe(true);
+    expect(focusChrome["/prozess-check"].cta).toBeUndefined();
+    expect(navLinks.map((l) => l.href)).not.toContain("/prozess-check");
+  });
 });
 
 describe("bare routes", () => {

@@ -4,6 +4,7 @@ import { BrandWord } from "@/components/BrandWord";
 import { BrandLockup } from "@/components/BrandLockup";
 import { NewsletterForm } from "@/components/newsletter/NewsletterForm";
 import { isNewsletterConfigured } from "@/lib/newsletter";
+import { CHECK_CTA, CHECK_SRC, checkHref } from "@/lib/prozessCheckCta";
 
 export function Footer() {
   return (
@@ -24,6 +25,15 @@ export function Footer() {
                 </Link>
               </li>
             ))}
+            {/* Not in navLinks: /prozess-check is a focus route (nav.test.ts). */}
+            <li>
+              <Link
+                href={checkHref(CHECK_SRC.footer)}
+                className="rounded-sm text-gletscher hover:text-honig focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-tiefes-wasser focus-visible:ring-honig"
+              >
+                {CHECK_CTA.short}
+              </Link>
+            </li>
           </ul>
         </nav>
         <div className="text-sm text-stein">
