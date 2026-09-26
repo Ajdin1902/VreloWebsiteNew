@@ -19,7 +19,6 @@
 | `header` | Header button (desktop + mobile menu) |
 | `home-hero` | Homepage hero |
 | `home-check` | Homepage Prozess-Check section |
-| `home-steps` | Homepage Steps |
 | `home-close` | Homepage MerakClose |
 | `leistungen-audit` | /leistungen audit card |
 | `leistungen-einwand` | /leistungen „Woran es scheitert“ row |
@@ -37,7 +36,9 @@ Links are built from one helper (e.g. `checkHref(src)` in `src/lib/`) so the slu
 
 ## 2. Homepage
 
-**Order:** Hero → Problem → **ProzessCheckSection (new)** → WasIchBaue → Werkzeuge → Steps → Proof → Referenzen → MerakClose.
+**Order:** Hero → Problem → **ProzessCheckSection (new, replaces Steps)** → WasIchBaue → Werkzeuge → Proof → Referenzen → MerakClose. Eight sections, as today.
+
+**Why replace, not add (decided 2026-09-26):** adding would make 9 full-height sections with two three-step blocks (Steps' step 1 „Hinschauen“ *is* the check + call), a five-section dark run before the page brightens at Proof, and proof pushed further down on mobile. The new section takes over Steps' job („how starting with me works“); „Bauen/Fließen“ stays covered by WasIchBaue and the six-step build path on /leistungen. Folding Proof into WasIchBaue (7 sections) is the candidate for the 2026-10-10 review — judgment without scroll data today, and it touches the deep→surface visual hand-off.
 
 **Hero.** H1 unchanged („Manuelle Prozesse rauben dir die Zeit.“).
 - Subline: „Ich baue maßgeschneiderte Automatisierungen für deinen Betrieb. Wo du anfängst, zeigt dir der Prozess-Check: drei Minuten, und du siehst, wie viele Stunden pro Woche im Kleinkram stecken.“
@@ -52,11 +53,11 @@ Links are built from one helper (e.g. `checkHref(src)` in `src/lib/`) so the slu
 - Three steps (left):
   1. „Sechs kurze Fragen“ — „Kein Login, nichts vorzubereiten. Du schätzt, ich rechne.“
   2. „Dein Ergebnis sofort“ — „Deine Stunden pro Woche und die Aufgabe, die dich am meisten kostet. Direkt auf dem Bildschirm, ohne E-Mail-Adresse.“
-  3. „Wenn du willst: 30 Minuten mit mir“ — „Wir klären, welche Aufgabe ein System übernehmen kann. Lohnt sich etwas, bekommst du in ein bis zwei Tagen einen Fahrplan. Kostenlos, und er gehört dir.“
+  3. „Wenn du willst: 30 Minuten mit mir“ — „Wir klären, welche Aufgabe ein System übernehmen kann. Lohnt sich etwas, bekommst du in ein bis zwei Tagen einen Fahrplan. Kostenlos, und er gehört dir. Auf Wunsch baue ich ihn dir, und die Arbeit läuft von selbst.“ (the last sentence carries what Steps' „Bauen/Fließen“ said)
 - Example card (right): papier card, visibly labelled „Beispiel“; „Rund 9 Stunden pro Woche“, top three areas as bars, one area sentence. Built from the real result's data and pieces (`AREA_LABEL`, `AREA_SENTENCE`, the result's bar styling) with a fixed sample answer set, so the preview cannot drift from the real result screen.
 - Primary button „Prozess-Check starten“ → `home-check`.
 
-**Steps.** Step 1 „Hinschauen“ desc → „Der Prozess-Check und ein kurzes Gespräch zeigen, welche Aufgaben dich täglich Zeit kosten.“ Button → `home-steps`; microcopy as hero.
+**Steps.** Removed from the homepage; `src/components/home/Steps.tsx` and its test are deleted (no other page uses it). Its backdrop `bg-steps.webp` may be reused by the new section if the contrast measures clear AA; otherwise it is left in `public/` untouched.
 
 **Referenzen.** Remove the „Dein erster Schritt“ card (absorbed by the new section; MerakClose follows directly).
 
@@ -94,7 +95,7 @@ Links are built from one helper (e.g. `checkHref(src)` in `src/lib/`) so the slu
 ## 5. Testing
 
 - Unit test for the `checkHref` helper (slug passes `normalizeSource`).
-- Component tests: every CTA listed in §1 renders the expected href incl. slug; secondary Erstgespräch links point to `/kontakt`; FAQ exception keeps `/kontakt` primary; the Referenzen „Dein erster Schritt“ card and the Problem inline link are gone.
+- Component tests: every CTA listed in §1 renders the expected href incl. slug; secondary Erstgespräch links point to `/kontakt`; FAQ exception keeps `/kontakt` primary; the Referenzen „Dein erster Schritt“ card and the Problem inline link are gone; the homepage renders eight sections in the order of §2 with no Steps section.
 - ProzessCheckSection: example card is labelled „Beispiel“ and renders labels/sentences from the real `prozessCheck` data.
 - Redirect test for `/empfehlung/:partner` if the redirects are covered; otherwise a manual check after deploy.
 - Existing copy guards stay green (no Gedankenstrich, „…“ quotes, no € amounts in check copy); byte-check new German strings for U+201E/U+201C after writing.
@@ -104,7 +105,7 @@ Links are built from one helper (e.g. `checkHref(src)` in `src/lib/`) so the slu
 
 - **Visible:** `/prozess-check` visits by referrer (Vercel Analytics) · booked calls by `src` (Cal notes; internal e-mail when an address is left).
 - **Known gap:** a completed check without booking or e-mail is invisible. Closing it needs custom events (paid Vercel plan, to verify); not worth it yet.
-- **Review 2026-10-10:** count check visits and bookings per slug; the placement with zero bookings is reworked first. Mid-article Ratgeber box and a hero-embedded first question (approach C) are the candidates for the next round.
+- **Review 2026-10-10:** count check visits and bookings per slug; the placement with zero bookings is reworked first. Folding Proof into WasIchBaue (§2), a mid-article Ratgeber box and a hero-embedded first question (approach C) are the candidates for the next round.
 
 ## 7. Out of scope
 
