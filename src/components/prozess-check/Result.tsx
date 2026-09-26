@@ -3,12 +3,8 @@
 
 import Link from "next/link";
 import { SchedulerEmbed } from "@/components/kontakt/SchedulerEmbed";
-import { RESULT_UI, type ResultCopy, type ProzessCheckAnswers } from "@/lib/prozessCheck";
+import { RESULT_UI, hoursLabel, type ResultCopy, type ProzessCheckAnswers } from "@/lib/prozessCheck";
 import { ResultEmailForm } from "./ResultEmailForm";
-
-function hoursLabel(n: number): string {
-  return n === 1 ? "1 Stunde" : `${n} Stunden`;
-}
 
 export function Result({
   answers,

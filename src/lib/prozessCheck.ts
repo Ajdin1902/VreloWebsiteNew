@@ -124,6 +124,11 @@ export function rankAreas(a: ProzessCheckAnswers): AreaId[] {
   return [...AREA_IDS].sort((x, y) => (a.stunden[y] || 0) - (a.stunden[x] || 0));
 }
 
+/** „1 Stunde“ / „4 Stunden“: shared by the result screen and the homepage example. */
+export function hoursLabel(n: number): string {
+  return n === 1 ? "1 Stunde" : `${n} Stunden`;
+}
+
 export type ResultCopy = {
   totalHours: number;
   /** false only when the visitor reports zero hours everywhere. */

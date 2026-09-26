@@ -6,6 +6,7 @@ import {
   totalHours,
   rankAreas,
   resultCopy,
+  hoursLabel,
   RESULT_UI,
   type ProzessCheckAnswers,
 } from "./prozessCheck";
@@ -117,5 +118,13 @@ describe("prozessCheck copy-guard", () => {
   });
   it("never names a price (hours numbers are allowed, currency is not)", () => {
     expect(corpus.filter((s) => CURRENCY.test(s))).toEqual([]);
+  });
+});
+
+describe("hoursLabel", () => {
+  it("uses the singular for one hour", () => {
+    expect(hoursLabel(1)).toBe("1 Stunde");
+    expect(hoursLabel(4)).toBe("4 Stunden");
+    expect(hoursLabel(0)).toBe("0 Stunden");
   });
 });
