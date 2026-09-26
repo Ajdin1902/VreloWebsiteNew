@@ -31,4 +31,17 @@ describe("faq data", () => {
     expect(after).toBeDefined();
     expect(after!.answer).toMatch(/erreichbar|anpass/i);
   });
+
+  it("starts people with the Prozess-Check", () => {
+    const all = faqGroups.flatMap((g) => g.entries);
+    const start = all.find((e) => e.question === "Wie fange ich an?");
+    expect(start!.answer).toMatch(/^Mit dem Prozess-Check/);
+  });
+
+  it("answers whether the Prozess-Check is really free", () => {
+    const all = faqGroups.flatMap((g) => g.entries);
+    const free = all.find((e) => e.question === "Ist der Prozess-Check wirklich kostenlos?");
+    expect(free).toBeDefined();
+    expect(free!.answer).toMatch(/^Ja\./);
+  });
 });

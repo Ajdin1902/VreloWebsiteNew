@@ -78,7 +78,12 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Wie fange ich an?",
         answer:
-          "Mit einem unverbindlichen Gespräch. Du erzählst mir, was dich Zeit kostet. Ich sage dir ehrlich, ob und wie ich helfen kann.",
+          "Mit dem Prozess-Check: sechs kurze Fragen, drei Minuten, dein Ergebnis sofort. Wenn du danach reden willst, buchst du dir direkt 30 Minuten mit mir.",
+      },
+      {
+        question: "Ist der Prozess-Check wirklich kostenlos?",
+        answer:
+          "Ja. Du bekommst Klarheit über deine Zeit, ich lerne deinen Betrieb kennen. Ob wir danach zusammenarbeiten, entscheidest du.",
       },
     ],
   },

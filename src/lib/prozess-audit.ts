@@ -5,6 +5,8 @@
 // decision (2026-08-31); the body carries the fahrplan-is-yours close, so there
 // is no separate keep-note or price line anymore. Spec:
 // Knowledge/marketing/prozess-check-funnel.md
+import { CHECK_CTA, CHECK_SRC, checkHref } from "@/lib/prozessCheckCta";
+
 export type ProzessAudit = {
   label: string;
   heading: string;
@@ -12,7 +14,7 @@ export type ProzessAudit = {
   deliverableLabel: string;
   deliverables: string[];
   cta: { label: string; href: string };
-  check: { label: string; href: string };
+  secondary: { prefix: string; label: string; href: string };
 };
 
 export const prozessAudit: ProzessAudit = {
@@ -27,8 +29,8 @@ export const prozessAudit: ProzessAudit = {
     "Einen Fahrplan: welche Automatisierung zuerst, in welchen Schritten",
     "Eine klare Empfehlung für den ersten Schritt",
   ],
-  // Primary = book the free call on /kontakt (scheduler); secondary = the
-  // Prozess-Check on-ramp for whoever wants the numbers first.
-  cta: { label: "Kostenloses Erstgespräch buchen", href: "/kontakt" },
-  check: { label: "Oder erst der Prozess-Check: In drei Minuten siehst du, wo deine Zeit hingeht.", href: "/prozess-check" },
+  // Front door since 2026-09-26: primary = the Prozess-Check (answers travel
+  // into the booking), secondary = the Erstgespräch for warm visitors.
+  cta: { label: CHECK_CTA.label, href: checkHref(CHECK_SRC.leistungenAudit) },
+  secondary: { prefix: CHECK_CTA.directPrefix, label: CHECK_CTA.directLabel, href: CHECK_CTA.directHref },
 };

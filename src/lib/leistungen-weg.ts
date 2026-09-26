@@ -9,6 +9,8 @@
 // the client's OWN server cost, "rund 30 Euro" (HQ rule: the public number is
 // always "rund 30", matching /makler and the FAQ).
 
+import { CHECK_SRC, checkHref } from "@/lib/prozessCheckCta";
+
 export type BauPhase = {
   id: string;
   title: string;
@@ -77,7 +79,7 @@ export const woranEsScheitert: WoranEsScheitert = {
       einwand: "„Ich weiß nicht, wo ich anfangen soll.“",
       loesungName: "Der Prozess-Check",
       satz: "Drei Minuten, ein paar Fragen. Du siehst, wo deine Stunden hingehen und womit du anfängst.",
-      link: { href: "/prozess-check", label: "Zum Prozess-Check" },
+      link: { href: checkHref(CHECK_SRC.leistungenEinwand), label: "Zum Prozess-Check" },
     },
     {
       einwand: "„Ich weiß nicht, was sich bei mir lohnt.“",

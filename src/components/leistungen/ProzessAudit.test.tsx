@@ -16,15 +16,16 @@ describe("ProzessAudit", () => {
     }
   });
 
-  it("links the primary CTA to the booking page", () => {
+  it("links the primary CTA to the Prozess-Check", () => {
     render(<ProzessAudit />);
-    const cta = screen.getByRole("link", { name: prozessAudit.cta.label });
-    expect(cta).toHaveAttribute("href", "/kontakt");
+    expect(screen.getByRole("link", { name: prozessAudit.cta.label })).toHaveAttribute(
+      "href",
+      "/prozess-check?src=leistungen-audit",
+    );
   });
 
-  it("links the secondary Prozess-Check on-ramp to /prozess-check", () => {
+  it("links the quiet secondary path to the booking page", () => {
     render(<ProzessAudit />);
-    const link = screen.getByRole("link", { name: prozessAudit.check.label });
-    expect(link).toHaveAttribute("href", "/prozess-check");
+    expect(screen.getByRole("link", { name: prozessAudit.secondary.label })).toHaveAttribute("href", "/kontakt");
   });
 });

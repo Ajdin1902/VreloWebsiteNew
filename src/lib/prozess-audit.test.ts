@@ -45,8 +45,9 @@ describe("prozess-audit copy", () => {
     expect(all.filter((s) => /\bn8n\b|claude/i.test(s))).toEqual([]);
   });
 
-  it("routes the primary CTA to the booking page", () => {
-    expect(prozessAudit.cta.href).toBe("/kontakt");
+  it("routes the primary CTA to the Prozess-Check (front door, 2026-09-26)", () => {
+    expect(prozessAudit.cta.href).toBe("/prozess-check?src=leistungen-audit");
+    expect(prozessAudit.cta.label).toBe("Prozess-Check starten");
   });
 
   it("lists five deliverables (incl. the no-preparation Fragenkatalog)", () => {
@@ -58,8 +59,8 @@ describe("prozess-audit copy", () => {
     expect(prozessAudit.heading.startsWith("Kostenlos")).toBe(true);
   });
 
-  it("offers the Prozess-Check as a secondary on-ramp to /prozess-check", () => {
-    expect(prozessAudit.check.href).toBe("/prozess-check");
-    expect(prozessAudit.check.label.length).toBeGreaterThan(0);
+  it("keeps the Erstgespräch as the quiet secondary path", () => {
+    expect(prozessAudit.secondary.href).toBe("/kontakt");
+    expect(prozessAudit.secondary.label).toBe("Erstgespräch buchen");
   });
 });

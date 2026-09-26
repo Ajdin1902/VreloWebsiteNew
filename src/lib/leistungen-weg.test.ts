@@ -66,7 +66,7 @@ describe("leistungen-weg copy", () => {
   });
 
   it("links the first two objections into the funnel", () => {
-    expect(woranEsScheitert.rows[0].link.href).toBe("/prozess-check");
+    expect(woranEsScheitert.rows[0].link.href).toBe("/prozess-check?src=leistungen-einwand");
     expect(woranEsScheitert.rows[1].link.href).toBe("#prozess-audit");
   });
 

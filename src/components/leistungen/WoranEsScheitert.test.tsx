@@ -16,7 +16,7 @@ describe("WoranEsScheitert", () => {
     render(<WoranEsScheitert />);
     const links = screen.getAllByRole("link");
     expect(links).toHaveLength(woranEsScheitert.rows.length);
-    expect(links[0]).toHaveAttribute("href", "/prozess-check");
+    expect(links[0]).toHaveAttribute("href", "/prozess-check?src=leistungen-einwand");
     expect(links[1]).toHaveAttribute("href", "#prozess-audit");
   });
 });
