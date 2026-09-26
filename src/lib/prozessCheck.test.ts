@@ -128,3 +128,17 @@ describe("hoursLabel", () => {
     expect(hoursLabel(0)).toBe("0 Stunden");
   });
 });
+
+// Result bridge to the call (shortened 2026-09-26). The Fahrplan stays
+// conditional (funnel doc §1a): the audit is at Vrelo's discretion.
+describe("RESULT_UI.schedulerPrompt", () => {
+  it("is the short bridge from result to call", () => {
+    expect(RESULT_UI.schedulerPrompt).toBe(
+      "Jetzt weißt du, wo du Zeit verlierst. Im Gespräch findest du heraus, wie du sie zurückbekommst. Lohnt sich etwas, zeigt dir ein Fahrplan den Weg. Kostenlos, und er gehört dir.",
+    );
+  });
+
+  it("promises the Fahrplan only conditionally", () => {
+    expect(RESULT_UI.schedulerPrompt).toContain("Lohnt sich etwas");
+  });
+});
