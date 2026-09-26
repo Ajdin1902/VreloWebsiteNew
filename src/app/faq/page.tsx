@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { ClosingCta } from "@/components/ClosingCta";
+import { CHECK_SRC } from "@/lib/prozessCheckCta";
 import { FaqAccordion } from "@/components/faq/FaqAccordion";
 import { faqGroups } from "@/lib/faq";
 import { JsonLd } from "@/components/JsonLd";
@@ -28,6 +29,8 @@ export default function FaqPage() {
       <ClosingCta
         heading="Offene Frage?"
         lead="Schreib mir kurz, was du wissen willst. Ich melde mich persönlich."
+        src={CHECK_SRC.faq}
+        primary="kontakt"
       />
       <JsonLd data={faqPageLd()} />
       <JsonLd data={breadcrumbLd([{ name: "Start", path: "/" }, { name: "FAQ", path: "/faq" }])} />

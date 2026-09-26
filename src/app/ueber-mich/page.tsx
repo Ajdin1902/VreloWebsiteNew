@@ -3,6 +3,7 @@ import { PageHero } from "@/components/PageHero";
 import { Section } from "@/components/Section";
 import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { ClosingCta } from "@/components/ClosingCta";
+import { CHECK_SRC } from "@/lib/prozessCheckCta";
 import { StoryBeat } from "@/components/ueber-mich/StoryBeat";
 import { Reveal } from "@/components/Reveal";
 import { bildhinweis, storyBeats } from "@/lib/ueber-mich";
@@ -59,8 +60,9 @@ export default function UeberMichPage() {
       })}
 
       <ClosingCta
-        heading="Lern mich unverbindlich kennen."
-        lead="Fressen die immer gleichen Aufgaben deine Zeit, und du hättest gern wieder dieses Gefühl von Ruhe, von Merak? Lass uns unverbindlich reden; wir finden gemeinsam den ersten Schritt."
+        heading="Fang klein an."
+        lead="Der Prozess-Check zeigt dir in drei Minuten, wo deine Zeit hingeht. Wenn du danach reden willst, bin ich da."
+        src={CHECK_SRC.ueberMich}
       />
       <JsonLd data={personLd()} />
       <JsonLd data={breadcrumbLd([{ name: "Start", path: "/" }, { name: "Über mich", path: "/ueber-mich" }])} />

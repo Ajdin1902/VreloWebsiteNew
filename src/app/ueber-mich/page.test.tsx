@@ -19,4 +19,12 @@ describe("/ueber-mich", () => {
     // Same Reveal wrapper as the first beat.
     expect(note.closest(".reveal")?.contains(firstBeatHeading!)).toBe(true);
   });
+
+  it("closes on the Prozess-Check with the ueber-mich slug", () => {
+    render(<UeberMichPage />);
+    expect(screen.getByRole("link", { name: "Prozess-Check starten" })).toHaveAttribute(
+      "href",
+      "/prozess-check?src=ueber-mich",
+    );
+  });
 });

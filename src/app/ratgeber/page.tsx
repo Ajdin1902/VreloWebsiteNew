@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { Section } from "@/components/Section";
 import { ClosingCta } from "@/components/ClosingCta";
+import { CHECK_SRC } from "@/lib/prozessCheckCta";
 import { JsonLd } from "@/components/JsonLd";
 import { RatgeberIndex } from "@/components/ratgeber/RatgeberIndex";
 import { getAllArticles } from "@/lib/ratgeber";
@@ -31,8 +32,9 @@ export default function RatgeberPage() {
         <RatgeberIndex articles={articles} />
       </Section>
       <ClosingCta
-        heading="Lass uns deine Quelle bauen."
-        lead="Erzähl mir, was dich täglich Zeit kostet. Ich zeige dir unverbindlich, was sich automatisieren lässt."
+        heading="Wie viel Zeit kostet dich das?"
+        lead="Der Prozess-Check zeigt dir in drei Minuten, wie viele Stunden pro Woche bei dir in solchen Aufgaben stecken."
+        src={CHECK_SRC.ratgeber}
       />
       <JsonLd
         data={breadcrumbLd([

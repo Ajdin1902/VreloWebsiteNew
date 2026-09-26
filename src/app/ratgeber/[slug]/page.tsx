@@ -5,6 +5,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { Section } from "@/components/Section";
 import { PageImage } from "@/components/PageImage";
 import { ClosingCta } from "@/components/ClosingCta";
+import { CHECK_SRC } from "@/lib/prozessCheckCta";
 import { JsonLd } from "@/components/JsonLd";
 import { ArticleHeader } from "@/components/ratgeber/ArticleHeader";
 import { proseComponents } from "@/components/Prose";
@@ -74,8 +75,9 @@ export default async function ArticlePage(
         </div>
       </Section>
       <ClosingCta
-        heading="Lass uns deine Quelle bauen."
-        lead="Erzähl mir, was dich täglich Zeit kostet. Ich zeige dir unverbindlich, was sich automatisieren lässt."
+        heading="Wie viel Zeit kostet dich das?"
+        lead="Der Prozess-Check zeigt dir in drei Minuten, wie viele Stunden pro Woche bei dir in solchen Aufgaben stecken."
+        src={CHECK_SRC.ratgeber}
       />
       <JsonLd data={articleLd(article)} />
       <JsonLd

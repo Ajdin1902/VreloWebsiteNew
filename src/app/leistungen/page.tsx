@@ -3,6 +3,7 @@ import { PageHero } from "@/components/PageHero";
 import { Section } from "@/components/Section";
 import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { ClosingCta } from "@/components/ClosingCta";
+import { CHECK_SRC } from "@/lib/prozessCheckCta";
 import { LeistungCard } from "@/components/leistungen/LeistungCard";
 import { Referenzen } from "@/components/leistungen/Referenzen";
 import { MehrMoeglich } from "@/components/leistungen/MehrMoeglich";
@@ -62,7 +63,8 @@ export default function LeistungenPage() {
       <Referenzen />
       <ClosingCta
         heading="Lass uns deine Quelle bauen."
-        lead="Erzähl mir, was dich täglich Zeit kostet und welche Leistungen dich interessieren. Ich zeige dir unverbindlich, was sich automatisieren lässt."
+        lead="Fang mit drei Minuten an: Der Prozess-Check zeigt dir, welche Aufgabe dich am meisten kostet. Danach reden wir, wenn du willst."
+        src={CHECK_SRC.leistungenClose}
       />
       <JsonLd data={breadcrumbLd([{ name: "Start", path: "/" }, { name: "Leistungen", path: "/leistungen" }])} />
     </>
