@@ -2,7 +2,7 @@ import { Hero } from "@/components/Hero";
 import { Problem } from "@/components/home/Problem";
 import { WasIchBaue } from "@/components/home/WasIchBaue";
 import { Werkzeuge } from "@/components/home/Werkzeuge";
-import { Steps } from "@/components/home/Steps";
+import { ProzessCheckSection } from "@/components/home/ProzessCheckSection";
 import { Proof } from "@/components/home/Proof";
 import { Referenzen } from "@/components/home/Referenzen";
 import { MerakClose } from "@/components/home/MerakClose";
@@ -20,9 +20,9 @@ export default function Home() {
     <>
       <Hero />
       <Problem />
+      <ProzessCheckSection />
       <WasIchBaue />
       <Werkzeuge />
-      <Steps />
       <Proof />
       <Referenzen />
       <MerakClose />

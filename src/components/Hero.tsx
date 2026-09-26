@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { CTAButton } from "@/components/CTAButton";
+import { SecondaryLink } from "@/components/SecondaryLink";
+import { CHECK_CTA, CHECK_SRC, checkHref } from "@/lib/prozessCheckCta";
 
 export function Hero() {
   return (
@@ -30,15 +32,16 @@ export function Hero() {
         Manuelle Prozesse rauben dir die Zeit.
       </h1>
       <p className="hero-reveal-sub mt-6 max-w-xl text-pretty text-[1.05rem] leading-relaxed tracking-[-0.005em] text-gletscher md:text-xl md:leading-relaxed">
-        Maßgeschneiderte Automatisierungen für deinen Betrieb sind die Lösung. Du
-        gewinnst deine Stunden und einen freien Kopf zurück.
+        Ich baue maßgeschneiderte Automatisierungen für deinen Betrieb. Wo du anfängst, zeigt dir der
+        Prozess-Check: drei Minuten, und du siehst, wie viele Stunden pro Woche im Kleinkram stecken.
       </p>
       <div className="hero-reveal-cta mt-9">
-        <CTAButton href="/kontakt" tone="dark" />
-        {/* Friction reducer: name the concrete next step so the click is predictable. */}
-        <p className="mt-3 text-sm text-gletscher">
-          Kostenloses Erstgespräch. 30 Minuten, unverbindlich.
-        </p>
+        <CTAButton href={checkHref(CHECK_SRC.homeHero)} tone="dark">
+          {CHECK_CTA.label}
+        </CTAButton>
+        {/* Friction reducer: name what the click costs (nothing) and returns (a result now). */}
+        <p className="mt-3 text-sm text-gletscher">{CHECK_CTA.microcopy}</p>
+        <SecondaryLink tone="dark" prefix={CHECK_CTA.directPrefix} label={CHECK_CTA.directLabel} href={CHECK_CTA.directHref} />
       </div>
     </section>
   );

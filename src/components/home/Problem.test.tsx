@@ -16,11 +16,9 @@ describe("Problem", () => {
     ).toBeInTheDocument();
   });
 
-  it("bridges to the Prozess-Check with exactly one link", () => {
+  it("ends on the pain with no link (the Prozess-Check section right after answers it)", () => {
     render(<Problem />);
-    const links = screen.getAllByRole("link");
-    expect(links).toHaveLength(1);
-    expect(links[0]).toHaveAttribute("href", "/prozess-check");
+    expect(screen.queryAllByRole("link")).toHaveLength(0);
   });
 
   it("wraps the task list in a card-depth panel", () => {

@@ -22,26 +22,29 @@ describe("Hero", () => {
     expect(section?.getAttribute("style")).toBeFalsy();
   });
 
-  it("keeps a single primary CTA", () => {
+  it("sends the one primary CTA to the Prozess-Check", () => {
     render(<Hero />);
-    expect(screen.getByRole("link", { name: "Zeit zurückgewinnen" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Prozess-Check starten" })).toHaveAttribute(
+      "href",
+      "/prozess-check?src=home-hero",
+    );
   });
 
-  it("names the concrete next step under the CTA (friction-reducing microcopy)", () => {
+  it("names the friction reducers under the CTA", () => {
     render(<Hero />);
-    expect(
-      screen.getByText(/Kostenloses Erstgespräch\. 30 Minuten, unverbindlich/),
-    ).toBeInTheDocument();
+    expect(screen.getByText("Kostenlos, ohne Login. Dein Ergebnis siehst du sofort.")).toBeInTheDocument();
+  });
+
+  it("keeps the Erstgespräch as a quiet secondary link", () => {
+    render(<Hero />);
+    expect(screen.getByRole("link", { name: "Erstgespräch buchen" })).toHaveAttribute("href", "/kontakt");
   });
 
   it("applies the staggered reveal classes (H1 rise-only, sub + CTA fade-up)", () => {
     render(<Hero />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveClass("hero-reveal-h1");
-    expect(
-      screen.getByText(/freien Kopf zurück/),
-    ).toHaveClass("hero-reveal-sub");
-    const ctaWrapper = screen.getByRole("link", { name: "Zeit zurückgewinnen" })
-      .parentElement as HTMLElement;
+    expect(screen.getByText(/Wo du anfängst, zeigt dir der Prozess-Check/)).toHaveClass("hero-reveal-sub");
+    const ctaWrapper = screen.getByRole("link", { name: "Prozess-Check starten" }).parentElement as HTMLElement;
     expect(ctaWrapper).toHaveClass("hero-reveal-cta");
   });
 });

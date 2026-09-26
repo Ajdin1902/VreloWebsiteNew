@@ -1,6 +1,8 @@
 import { Section } from "@/components/Section";
 import { BrandWord } from "@/components/BrandWord";
 import { CTAButton } from "@/components/CTAButton";
+import { SecondaryLink } from "@/components/SecondaryLink";
+import { CHECK_CTA, CHECK_SRC, checkHref } from "@/lib/prozessCheckCta";
 import { LazyVideo } from "@/components/LazyVideo";
 import { Reveal } from "@/components/Reveal";
 
@@ -29,11 +31,12 @@ export function MerakClose() {
           Stell dir den Montagmorgen vor, an dem schon zwei Stunden Arbeit erledigt sind.
         </Reveal>
         <Reveal as="p" delayMs={80} className="mx-auto mt-6 max-w-xl text-pretty text-lg text-tinte">
-          Das ist der <BrandWord>Merak</BrandWord>-Effekt. Schau dir unverbindlich an, was
-          möglich ist. Der Anfang einer Zusammenarbeit, die bleibt. Kein Verkaufsgespräch.
+          Das ist der <BrandWord>Merak</BrandWord>-Effekt. Der erste Schritt dauert drei Minuten: Der
+          Prozess-Check zeigt dir, wo deine Stunden hingehen. Kein Verkaufsgespräch.
         </Reveal>
         <Reveal delayMs={160} className="mt-8">
-          <CTAButton href="/kontakt" />
+          <CTAButton href={checkHref(CHECK_SRC.homeClose)}>{CHECK_CTA.label}</CTAButton>
+          <SecondaryLink tone="light" prefix={CHECK_CTA.directPrefix} label={CHECK_CTA.directLabel} href={CHECK_CTA.directHref} />
         </Reveal>
       </div>
     </Section>

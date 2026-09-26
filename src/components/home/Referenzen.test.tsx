@@ -21,9 +21,10 @@ describe("Referenzen (homepage)", () => {
     expect(link).toHaveAttribute("href", "/leistungen#referenzen");
   });
 
-  it("bridges to the free Prozess-Check funnel", () => {
+  it("carries only the detail link (the check bridge moved to its own section)", () => {
     render(<Referenzen />);
-    const link = screen.getByRole("link", { name: /Prozess-Check/i });
-    expect(link).toHaveAttribute("href", "/prozess-check");
+    const hrefs = screen.getAllByRole("link").map((a) => a.getAttribute("href") ?? "");
+    expect(hrefs.filter((h) => h.startsWith("/prozess-check"))).toEqual([]);
+    expect(screen.queryByText("Dein erster Schritt")).not.toBeInTheDocument();
   });
 });
