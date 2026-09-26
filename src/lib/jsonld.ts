@@ -1,5 +1,5 @@
 // src/lib/jsonld.ts
-import { siteUrl, siteName } from "./site";
+import { siteUrl, siteName, linkedinUrl } from "./site";
 import { faqGroups } from "./faq";
 import type { Article } from "./ratgeber";
 
@@ -14,6 +14,7 @@ export function professionalServiceLd() {
     description: "Maßgeschneiderte Automatisierungen für kleine Betriebe im DACH-Raum.",
     areaServed: ["DE", "AT", "CH"],
     founder: { "@type": "Person", name: FOUNDER },
+    sameAs: [linkedinUrl],
   };
 }
 

@@ -15,6 +15,10 @@ describe("jsonld builders", () => {
     expect(ld.areaServed).toEqual(["DE", "AT", "CH"]);
   });
 
+  it("professionalServiceLd ties the business to its LinkedIn page (sameAs)", () => {
+    expect(professionalServiceLd().sameAs).toEqual(["https://www.linkedin.com/company/vrelo-ki/"]);
+  });
+
   it("personLd describes the founder", () => {
     expect(personLd()["@type"]).toBe("Person");
   });

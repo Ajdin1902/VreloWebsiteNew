@@ -12,4 +12,15 @@ describe("Footer", () => {
     render(<Footer />);
     expect(screen.getByRole("link", { name: "Prozess-Check" })).toHaveAttribute("href", "/prozess-check?src=footer");
   });
+
+  it("links the Vrelo LinkedIn page, opening in a new tab", () => {
+    render(<Footer />);
+    const link = screen.getByRole("link", { name: "Vrelo auf LinkedIn" });
+    expect(link).toHaveAttribute("href", "https://www.linkedin.com/company/vrelo-ki/");
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link.getAttribute("rel")).toContain("noopener");
+    expect(link.getAttribute("rel")).toContain("noreferrer");
+    // Label-in-name (WCAG 2.5.3): the visible word is part of the accessible name.
+    expect(link).toHaveTextContent("LinkedIn");
+  });
 });

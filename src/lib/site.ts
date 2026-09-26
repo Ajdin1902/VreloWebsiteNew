@@ -12,6 +12,8 @@ export function normalizeBase(value: string | undefined): string {
 
 export const siteUrl = normalizeBase(process.env.NEXT_PUBLIC_SITE_URL);
 export const siteName = "Vrelo";
+// The Vrelo company page: footer link + JSON-LD sameAs (2026-09-26).
+export const linkedinUrl = "https://www.linkedin.com/company/vrelo-ki/";
 
 export function canonical(path: string): string {
   return `${siteUrl}${path}`;
