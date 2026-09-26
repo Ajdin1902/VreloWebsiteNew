@@ -20,6 +20,7 @@ export default function ProzessCheckPage() {
       <PageHero
         title="Wie viel Zeit frisst der Kleinkram bei dir?"
         src="/images/lead-check-banner.webp"
+        size="compact"
       />
       {/* Deep petrol band (founder feedback 2026-08-31: the pale band read too
           bright); the lesepapier card lifts off it and cuts the glare. No intro

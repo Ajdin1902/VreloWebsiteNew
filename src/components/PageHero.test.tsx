@@ -22,4 +22,18 @@ describe("PageHero", () => {
     render(<PageHero title="Titel" lead="Der Vorspann." src="/images/x.webp" />);
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });
+
+  it("keeps the tall hero by default", () => {
+    const { container } = render(<PageHero title="T" src="/x.webp" />);
+    expect(container.querySelector("section")).toHaveClass("min-h-[68vh]");
+  });
+
+  // /prozess-check (2026-09-26): a shorter hero so the first answers of the
+  // questionnaire sit on the first screen, also on desktop.
+  it("renders a compact hero when size=\"compact\"", () => {
+    const { container } = render(<PageHero title="T" src="/x.webp" size="compact" />);
+    const section = container.querySelector("section");
+    expect(section).toHaveClass("min-h-[34vh]");
+    expect(section).not.toHaveClass("min-h-[68vh]");
+  });
 });

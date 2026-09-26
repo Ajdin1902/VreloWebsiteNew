@@ -13,6 +13,7 @@ export function PageHero({
   lead,
   src,
   imageClassName = "",
+  size = "default",
 }: {
   title: string;
   lead?: string;
@@ -20,10 +21,14 @@ export function PageHero({
   /** Extra classes on the full-bleed hero image (the section is `overflow-hidden`,
    *  so a `scale-*` here zooms/crops the image without spilling). */
   imageClassName?: string;
+  /** compact = a shorter hero for task pages (/prozess-check), so the first
+   *  interaction sits on the first screen; default keeps the tall hero. */
+  size?: "default" | "compact";
 }) {
+  const height = size === "compact" ? "min-h-[34vh] py-16" : "min-h-[68vh] py-24";
   return (
     <>
-      <section className="relative isolate flex min-h-[68vh] flex-col items-center justify-center overflow-hidden px-6 py-24 text-center">
+      <section className={`relative isolate flex ${height} flex-col items-center justify-center overflow-hidden px-6 text-center`}>
         {/* quality 65 (vs default 75): the petrol scrim hides the difference, but
             it cuts every optimized hero variant ~25-35% — lighter cold-MISS and
             warm loads on all four content-page heroes. */}

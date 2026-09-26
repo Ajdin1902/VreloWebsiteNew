@@ -17,4 +17,9 @@ describe("/prozess-check", () => {
     expect(container.textContent).not.toContain("schwarz auf weiß");
     expect(screen.getByText("Was machst du?")).toBeInTheDocument();
   });
+
+  it("uses the compact hero so the first answers are on the first screen", () => {
+    const { container } = render(<ProzessCheckPage />);
+    expect(container.querySelector("section")).toHaveClass("min-h-[34vh]");
+  });
 });
