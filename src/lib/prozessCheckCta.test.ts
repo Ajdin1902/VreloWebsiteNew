@@ -54,9 +54,17 @@ describe("check copy", () => {
     expect(STEPS).toHaveLength(6);
   });
 
-  it("has three teaser steps, the last one carrying the build path", () => {
+  it("has three teaser steps, the last one optional and naming the Fahrplan", () => {
     expect(CHECK_TEASER.steps).toHaveLength(3);
-    expect(CHECK_TEASER.steps[2].text).toContain("läuft von selbst");
+    expect(CHECK_TEASER.steps[2].title).toBe("Optional: 30 Minuten mit mir");
+    expect(CHECK_TEASER.steps[2].text).toMatch(/^Das Ergebnis: dein eigener Automatisierungs-Fahrplan/);
+  });
+
+  // Funnel doc §1a: the audit is at Vrelo's discretion, so the Fahrplan is only
+  // ever promised conditionally (an unconditional promise is a UWG §5 risk).
+  it("promises the Fahrplan only conditionally and keeps it the owner's", () => {
+    expect(CHECK_TEASER.steps[2].text).toContain("wenn sich bei dir etwas lohnt");
+    expect(CHECK_TEASER.steps[2].text).toContain("er gehört dir");
   });
 });
 

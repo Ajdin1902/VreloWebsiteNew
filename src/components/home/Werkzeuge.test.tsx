@@ -68,4 +68,9 @@ describe("Werkzeuge", () => {
       expect(container.querySelector(`#${id}`)).not.toBeNull();
     }
   });
+
+  it("lets the heading answer the objection alone (copy trim 2026-09-26)", () => {
+    const { container } = render(<Werkzeuge />);
+    expect(container.textContent).not.toContain("Du wechselst nichts");
+  });
 });

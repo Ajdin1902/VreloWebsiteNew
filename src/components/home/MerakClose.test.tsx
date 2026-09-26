@@ -17,4 +17,9 @@ describe("MerakClose", () => {
     );
     expect(screen.getByRole("link", { name: "Erstgespräch buchen" })).toHaveAttribute("href", "/kontakt");
   });
+
+  it("drops the no-sales-call line (the button leads to a questionnaire now)", () => {
+    const { container } = render(<MerakClose />);
+    expect(container.textContent).not.toContain("Kein Verkaufsgespräch");
+  });
 });

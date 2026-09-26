@@ -43,7 +43,7 @@ describe("Hero", () => {
   it("applies the staggered reveal classes (H1 rise-only, sub + CTA fade-up)", () => {
     render(<Hero />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveClass("hero-reveal-h1");
-    expect(screen.getByText(/Wo du anfängst, zeigt dir der Prozess-Check/)).toHaveClass("hero-reveal-sub");
+    expect(screen.getByText("Maßgeschneiderte Automatisierungen geben dir deine Stunden zurück. Finde in drei Minuten heraus, wo du anfängst.")).toHaveClass("hero-reveal-sub");
     const ctaWrapper = screen.getByRole("link", { name: "Prozess-Check starten" }).parentElement as HTMLElement;
     expect(ctaWrapper).toHaveClass("hero-reveal-cta");
   });

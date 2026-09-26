@@ -37,10 +37,6 @@ export function Werkzeuge() {
         >
           Läuft mit den Werkzeugen, die du schon nutzt.
         </Reveal>
-        <Reveal as="p" delayMs={80} className="mt-5 text-pretty text-lg text-gletscher">
-          Du wechselst nichts und lernst nichts Neues. Ich baue die Automatisierung
-          um das herum, womit du heute schon arbeitest.
-        </Reveal>
         {/* One small amber accent — the recurring warm 10% element that threads the
             sections together (echoes the amber step-badges in the Steps section). */}
         <Reveal delayMs={120} className="mx-auto mt-8 h-[3px] w-12 rounded-full bg-amber">{null}</Reveal>

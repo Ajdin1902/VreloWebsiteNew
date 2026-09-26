@@ -23,4 +23,9 @@ describe("Proof", () => {
     expect(screen.queryByText(/Erste Kundenreferenzen folgen/i)).toBeNull();
     expect(screen.queryByText("Referenzen")).toBeNull();
   });
+
+  it("drops the lead-in line under the heading (copy trim 2026-09-26)", () => {
+    const { container } = render(<Proof />);
+    expect(container.textContent).not.toContain("Worauf du dich verlassen kannst");
+  });
 });

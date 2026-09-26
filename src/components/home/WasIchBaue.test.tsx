@@ -14,4 +14,9 @@ describe("WasIchBaue", () => {
       "text-honig",
     );
   });
+
+  it("drops the lead that repeated the Proof cards (copy trim 2026-09-26)", () => {
+    const { container } = render(<WasIchBaue />);
+    expect(container.textContent).not.toContain("Ein Ansprechpartner, der weiß");
+  });
 });

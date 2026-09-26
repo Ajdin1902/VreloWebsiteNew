@@ -32,8 +32,7 @@ export function Hero() {
         Manuelle Prozesse rauben dir die Zeit.
       </h1>
       <p className="hero-reveal-sub mt-6 max-w-xl text-pretty text-[1.05rem] leading-relaxed tracking-[-0.005em] text-gletscher md:text-xl md:leading-relaxed">
-        Ich baue maßgeschneiderte Automatisierungen für deinen Betrieb. Wo du anfängst, zeigt dir der
-        Prozess-Check: drei Minuten, und du siehst, wie viele Stunden pro Woche im Kleinkram stecken.
+        Maßgeschneiderte Automatisierungen geben dir deine Stunden zurück. Finde in drei Minuten heraus, wo du anfängst.
       </p>
       <div className="hero-reveal-cta mt-9">
         <CTAButton href={checkHref(CHECK_SRC.homeHero)} tone="dark">

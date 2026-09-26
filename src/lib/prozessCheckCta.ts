@@ -71,8 +71,9 @@ export const CHECK_TEASER = {
       text: "Deine Stunden pro Woche und die Aufgabe, die dich am meisten kostet. Direkt auf dem Bildschirm, ohne E-Mail-Adresse.",
     },
     {
-      title: "Wenn du willst: 30 Minuten mit mir",
-      text: "Wir klären, welche Aufgabe ein System übernehmen kann. Lohnt sich etwas, bekommst du in ein bis zwei Tagen einen Fahrplan. Kostenlos, und er gehört dir. Auf Wunsch baue ich ihn dir, und die Arbeit läuft von selbst.",
+      title: "Optional: 30 Minuten mit mir",
+      // Conditional on purpose (funnel doc §1a): the audit is at Vrelo's discretion.
+      text: "Das Ergebnis: dein eigener Automatisierungs-Fahrplan, wenn sich bei dir etwas lohnt. Kostenlos, und er gehört dir.",
     },
   ],
   exampleLabel: "Beispiel",

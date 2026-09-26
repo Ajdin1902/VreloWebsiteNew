@@ -32,7 +32,7 @@ export function MerakClose() {
         </Reveal>
         <Reveal as="p" delayMs={80} className="mx-auto mt-6 max-w-xl text-pretty text-lg text-tinte">
           Das ist der <BrandWord>Merak</BrandWord>-Effekt. Der erste Schritt dauert drei Minuten: Der
-          Prozess-Check zeigt dir, wo deine Stunden hingehen. Kein Verkaufsgespräch.
+          Prozess-Check zeigt dir, wo deine Stunden hingehen.
         </Reveal>
         <Reveal delayMs={160} className="mt-8">
           <CTAButton href={checkHref(CHECK_SRC.homeClose)}>{CHECK_CTA.label}</CTAButton>

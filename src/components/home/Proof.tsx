@@ -57,9 +57,6 @@ export function Proof() {
         <Reveal as="h2" delayMs={0} className="text-balance text-3xl font-semibold tracking-tight text-[#33210f] md:text-4xl">
           Sorgfältig gebaut. Verlässlich im Betrieb.
         </Reveal>
-        <Reveal as="p" delayMs={80} className="mt-5 text-pretty text-lg text-tinte">
-          Worauf du dich verlassen kannst:
-        </Reveal>
       </div>
 
       {/* Frosted papier glass cards: the light-surface twin of the deep sections' faint
