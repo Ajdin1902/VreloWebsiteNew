@@ -52,7 +52,9 @@ export function Header() {
             Front door since 2026-09-26: the check, not the call; „Kontakt“ in
             the nav stays the path to a call. */}
         <div className="flex items-center gap-1 md:hidden">
-          <CTAButton href={checkHref(CHECK_SRC.header)}>{CHECK_CTA.short}</CTAButton>
+          <CTAButton href={checkHref(CHECK_SRC.header)} size="compact">
+            {CHECK_CTA.short}
+          </CTAButton>
           <MobileNav />
         </div>
       </nav>

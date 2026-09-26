@@ -43,4 +43,15 @@ describe("CTAButton", () => {
     expect(link).toHaveClass("text-papier");
     expect(link).toHaveClass("cta-fx");
   });
+
+  // Final review: „Prozess-Check“ broke at its hyphen in the mobile header below
+  // ~355px and pushed the header from 72 to 92px. The compact size never wraps
+  // and drops the arrow circle so logo + button + burger fit at 320px.
+  it("renders a compact size that never wraps and carries no arrow", () => {
+    const { container } = render(<CTAButton href="/x" size="compact">Prozess-Check</CTAButton>);
+    const link = screen.getByRole("link", { name: "Prozess-Check" });
+    expect(link).toHaveClass("whitespace-nowrap", "px-3");
+    expect(link).not.toHaveClass("px-5");
+    expect(container.querySelector("[aria-hidden=\"true\"]")).toBeNull();
+  });
 });

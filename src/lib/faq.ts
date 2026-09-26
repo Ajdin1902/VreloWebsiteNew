@@ -1,3 +1,6 @@
+import { questionCountPhrase } from "@/lib/prozessCheckCta";
+import { STEPS } from "@/lib/prozessCheck";
+
 export type FaqEntry = { question: string; answer: string };
 export type FaqGroup = { theme: string; entries: FaqEntry[] };
 
@@ -78,7 +81,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Wie fange ich an?",
         answer:
-          "Mit dem Prozess-Check: sechs kurze Fragen, drei Minuten, dein Ergebnis sofort. Wenn du danach reden willst, buchst du dir direkt 30 Minuten mit mir.",
+          `Mit dem Prozess-Check: ${questionCountPhrase(STEPS.length)}, drei Minuten, dein Ergebnis sofort. Wenn du danach reden willst, buchst du dir direkt 30 Minuten mit mir.`,
       },
       {
         question: "Ist der Prozess-Check wirklich kostenlos?",

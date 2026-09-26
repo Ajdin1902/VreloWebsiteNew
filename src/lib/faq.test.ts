@@ -1,5 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { faqGroups } from "./faq";
+import { questionCountPhrase } from "./prozessCheckCta";
+import { STEPS } from "./prozessCheck";
 
 describe("faq data", () => {
   it("has three themed groups in order", () => {
@@ -36,6 +38,8 @@ describe("faq data", () => {
     const all = faqGroups.flatMap((g) => g.entries);
     const start = all.find((e) => e.question === "Wie fange ich an?");
     expect(start!.answer).toMatch(/^Mit dem Prozess-Check/);
+    // Review: the FAQ repeats the question count; it must follow the quiz.
+    expect(start!.answer).toContain(questionCountPhrase(STEPS.length));
   });
 
   it("answers whether the Prozess-Check is really free", () => {

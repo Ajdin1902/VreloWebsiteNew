@@ -6,19 +6,25 @@ export function CTAButton({
   children = "Zeit zurückgewinnen",
   variant = "primary",
   tone = "papier",
+  size = "default",
 }: {
   href: string;
   children?: ReactNode;
   variant?: "primary" | "ghost" | "inverse";
   tone?: "papier" | "dark" | "petrol";
+  // compact = the mobile header button beside the burger: tighter padding, no
+  // wrap (a hyphenated label like „Prozess-Check“ must stay on one line), and
+  // no arrow circle, so logo + button + burger fit at 320px.
+  size?: "default" | "compact";
 }) {
+  const compact = size === "compact";
   const offset =
     tone === "dark"
       ? "focus-visible:ring-offset-tiefes-wasser"
       : tone === "petrol"
         ? "focus-visible:ring-offset-vrelo-petrol"
         : "focus-visible:ring-offset-papier";
-  const base = `group inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${offset} focus-visible:ring-amber`;
+  const base = `group inline-flex items-center justify-center gap-2 rounded-lg ${compact ? "whitespace-nowrap px-3" : "px-5"} py-2.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${offset} focus-visible:ring-amber`;
   // inverse = navy fill for warm/light surfaces (e.g. the ClosingCta warm band)
   // where amber would blend; the resting shadow lifts it off the warm bg.
   const styles =
@@ -33,7 +39,7 @@ export function CTAButton({
   return (
     <Link href={href} className={`${base} ${styles}${fx}`}>
       <span className="relative z-[1]">{children}</span>
-      {filled ? (
+      {filled && !compact ? (
         // Button-in-button trailing arrow: nested circle that shifts on hover.
         // aria-hidden so the accessible name stays the label text. The circle
         // tint flips to light on the navy inverse fill.

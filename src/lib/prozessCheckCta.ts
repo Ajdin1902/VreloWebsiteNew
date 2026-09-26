@@ -5,7 +5,7 @@
 // Every primary CTA links to /prozess-check with its own ?src= slug, which the
 // page writes into the Cal booking notes and the result e-mail, so each booked
 // call shows the button it came from. Components hold no German.
-import type { ProzessCheckAnswers } from "@/lib/prozessCheck";
+import { STEPS, type ProzessCheckAnswers } from "@/lib/prozessCheck";
 
 export const CHECK_SRC = {
   header: "header",
@@ -46,12 +46,24 @@ export const CHECK_CTA = {
   kontaktHintSuffix: "zeigt es dir in drei Minuten.",
 } as const;
 
+// The question count is promised on the homepage and in the FAQ. Both spell it
+// from STEPS.length, so adding or removing a quiz step can never leave a stale
+// number in public copy (UWG §5).
+const NUMBER_WORDS = ["null", "eine", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun", "zehn", "elf", "zwölf"];
+
+export function questionCountPhrase(n: number): string {
+  const word = NUMBER_WORDS[n] ?? String(n);
+  return n === 1 ? `${word} kurze Frage` : `${word} kurze Fragen`;
+}
+
+const countPhrase = questionCountPhrase(STEPS.length);
+
 export const CHECK_TEASER = {
   eyebrow: "Der Prozess-Check",
   heading: "Wie viele Stunden sind es bei dir?",
   steps: [
     {
-      title: "Sechs kurze Fragen",
+      title: countPhrase.charAt(0).toUpperCase() + countPhrase.slice(1),
       text: "Kein Login, nichts vorzubereiten. Du schätzt, ich rechne.",
     },
     {

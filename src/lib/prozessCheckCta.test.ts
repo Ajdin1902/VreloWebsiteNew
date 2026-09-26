@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { CHECK_SRC, CHECK_CTA, CHECK_TEASER, SAMPLE_ANSWERS, checkHref } from "./prozessCheckCta";
+import { CHECK_SRC, CHECK_CTA, CHECK_TEASER, SAMPLE_ANSWERS, checkHref, questionCountPhrase } from "./prozessCheckCta";
 import { normalizeSource } from "./source";
 import { STEPS, resultCopy } from "./prozessCheck";
 
@@ -57,6 +57,21 @@ describe("check copy", () => {
   it("has three teaser steps, the last one carrying the build path", () => {
     expect(CHECK_TEASER.steps).toHaveLength(3);
     expect(CHECK_TEASER.steps[2].text).toContain("läuft von selbst");
+  });
+});
+
+// Final review: the count claim appears on the homepage AND in the FAQ. Both
+// derive it from STEPS.length, so a quiz change can never leave a stale number.
+describe("questionCountPhrase", () => {
+  it("spells the quiz length in German", () => {
+    expect(questionCountPhrase(6)).toBe("sechs kurze Fragen");
+    expect(questionCountPhrase(7)).toBe("sieben kurze Fragen");
+    expect(questionCountPhrase(1)).toBe("eine kurze Frage");
+  });
+
+  it("feeds the teaser title from the real quiz length", () => {
+    const phrase = questionCountPhrase(STEPS.length);
+    expect(CHECK_TEASER.steps[0].title).toBe(phrase.charAt(0).toUpperCase() + phrase.slice(1));
   });
 });
 
