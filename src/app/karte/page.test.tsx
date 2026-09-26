@@ -35,4 +35,9 @@ describe("KartePage", () => {
     expect(screen.getByRole("link", { name: "Impressum" }).getAttribute("href")).toBe("/impressum");
     expect(screen.getByRole("link", { name: "Datenschutz" }).getAttribute("href")).toBe("/datenschutz");
   });
+
+  it("offers the Prozess-Check under the save button", () => {
+    render(<KartePage />);
+    expect(screen.getByRole("link", { name: "Prozess-Check" }).getAttribute("href")).toBe("/prozess-check?src=karte");
+  });
 });

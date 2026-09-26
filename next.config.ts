@@ -17,6 +17,9 @@ const nextConfig: NextConfig = {
       { source: "/brief/:segment", destination: "/prozess-check?src=brief-:segment", permanent: false },
       // Walk-in flyer (HQ: Knowledge/marketing/flyer/flyer-brief.md), same pattern.
       { source: "/flyer", destination: "/prozess-check?src=flyer", permanent: false },
+      // Referral partners (agencies, Alen, MDZ owner): vrelo-ki.de/empfehlung/<name>.
+      // Naming rule + attribution fallback pinned in printRedirects.test.ts.
+      { source: "/empfehlung/:partner", destination: "/prozess-check?src=partner-:partner", permanent: false },
       // Parked under Model C (2026-09-19): the broker-era pages are off the site.
       // The code stays in the repo; redirects run before the filesystem, so the
       // pages and the /demo API routes are unreachable while links already out
