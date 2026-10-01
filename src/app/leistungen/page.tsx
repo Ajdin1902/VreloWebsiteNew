@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/PageHero";
+import { ServiceHero } from "@/components/leistungen/ServiceHero";
 import { Section } from "@/components/Section";
 import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { ClosingCta } from "@/components/ClosingCta";
@@ -19,18 +19,22 @@ export const metadata: Metadata = {
     "KI-Automatisierung, Prozessautomatisierung, KI-Server, Claude für Unternehmen, KI-Schulung, KI-Beratung sowie Betreuung und Wartung aus einer Hand.",
 };
 
-// The hub (spec 2026-10-01 §3.2): the seven services in three groups, then the
+// The hub (spec 2026-10-01 §3.2): the compact ServiceHero (same as the
+// subpages), the seven services in three groups, then the
 // trust layer (what you get, the obstacles answered, references). The audit
 // card moved to /leistungen/ki-beratung; the six Bausteine became the example
 // runs on the subpages.
 export default function LeistungenPage() {
   return (
     <>
-      <PageHero
+      <ServiceHero
+        eyebrow="KI und Automatisierung"
         title="Leistungen"
-        src="/images/leistungen-banner.webp"
+        line="Ich baue KI- und Prozessautomatisierungen, richte sie ein und halte sie am Laufen."
+        image="/images/leistungen-banner.webp"
         imageClassName="scale-125 origin-bottom"
-        lead="KI-Automatisierung und Prozessautomatisierung: Ich baue sie, richte sie ein und halte sie am Laufen. Such dir aus, wo du anfangen willst."
+        primary="check"
+        src={CHECK_SRC.leistungenHero}
       />
       <Section tone="petrol" className="relative isolate overflow-hidden">
         <SectionBackdrop src="/images/bg-bausteine-b.webp" tintRgb="27 80 99" tintOpacity={0.7} />

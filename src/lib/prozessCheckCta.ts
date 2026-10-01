@@ -13,6 +13,7 @@ export const CHECK_SRC = {
   leistungenAudit: "leistungen-audit",
   leistungenEinwand: "leistungen-einwand",
   leistungenClose: "leistungen-close",
+  leistungenHero: "leistungen-hero",
   leistungProzessautomatisierung: "leistung-prozessautomatisierung",
   leistungKiAutomatisierung: "leistung-ki-automatisierung",
   leistungKiServer: "leistung-ki-server",
