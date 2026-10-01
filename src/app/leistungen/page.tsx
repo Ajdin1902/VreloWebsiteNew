@@ -4,14 +4,10 @@ import { Section } from "@/components/Section";
 import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { ClosingCta } from "@/components/ClosingCta";
 import { CHECK_SRC } from "@/lib/prozessCheckCta";
-import { LeistungCard } from "@/components/leistungen/LeistungCard";
+import { ServiceGroups } from "@/components/leistungen/ServiceGroups";
 import { Referenzen } from "@/components/leistungen/Referenzen";
-import { MehrMoeglich } from "@/components/leistungen/MehrMoeglich";
-import { ProzessAudit } from "@/components/leistungen/ProzessAudit";
 import { WennDuBaust } from "@/components/leistungen/WennDuBaust";
 import { WoranEsScheitert } from "@/components/leistungen/WoranEsScheitert";
-import { Reveal } from "@/components/Reveal";
-import { leistungen } from "@/lib/leistungen";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbLd } from "@/lib/jsonld";
 import { canonical } from "@/lib/site";
@@ -20,46 +16,28 @@ export const metadata: Metadata = {
   alternates: { canonical: canonical("/leistungen") },
   title: "Leistungen",
   description:
-    "Maßgeschneiderte Automatisierungen für kleine Betriebe: von Anfragen & Leads über Termine und Angebote & Rechnungen bis zur Dateneingabe.",
+    "KI-Automatisierung, Prozessautomatisierung, KI-Server, Claude für Unternehmen, KI-Schulung, KI-Beratung sowie Betreuung und Wartung aus einer Hand.",
 };
 
+// The hub (spec 2026-10-01 §3.2): the seven services in three groups, then the
+// trust layer (what you get, the obstacles answered, references). The audit
+// card moved to /leistungen/ki-beratung; the six Bausteine became the example
+// runs on the subpages.
 export default function LeistungenPage() {
   return (
     <>
-      <PageHero title="Leistungen" src="/images/leistungen-banner.webp" imageClassName="scale-125 origin-bottom" />
-      {/* Paid-audit on-ramp — the lead element now that the Termin-Quelle flagship
-          is retired (Model C: the Prozess-Audit is the main entry) and the intro
-          deck is dropped. A plain papier band under the hero image: the warm
-          sonnenlicht audit card lifts off it on its own shadow (no backdrop). */}
-      <Section id="prozess-audit" tone="paper" className="scroll-mt-24">
-        <Reveal>
-          <ProzessAudit />
-        </Reveal>
-      </Section>
-      {/* The Bausteine: a petrol image band with a compact two-column card grid
-          (six use cases). A water backdrop under a petrol tint; the light heading
-          sits on the dark band, the opaque papier cards pop on top. */}
+      <PageHero
+        title="Leistungen"
+        src="/images/leistungen-banner.webp"
+        imageClassName="scale-125 origin-bottom"
+        lead="KI-Automatisierung und Prozessautomatisierung: Ich baue sie, richte sie ein und halte sie am Laufen. Such dir aus, wo du anfangen willst."
+      />
       <Section tone="petrol" className="relative isolate overflow-hidden">
         <SectionBackdrop src="/images/bg-bausteine-b.webp" tintRgb="27 80 99" tintOpacity={0.7} />
-        <Reveal>
-          <h2 className="text-balance text-2xl font-semibold tracking-tight text-papier md:text-3xl">
-            Die einzelnen Bausteine
-          </h2>
-          <ul className="mt-10 grid gap-6 sm:grid-cols-2">
-            {leistungen.map((leistung, index) => (
-              <li key={leistung.slug}>
-                <LeistungCard leistung={leistung} index={index} />
-              </li>
-            ))}
-          </ul>
-        </Reveal>
+        <ServiceGroups />
       </Section>
-      {/* The Grand-Slam pair (2026-09-02): first the delivery stack as a
-          pinned scroll timeline (papier band), then the obstacle worksheet
-          answered (petrol texture band) — what you get, then why not to worry. */}
       <WennDuBaust />
       <WoranEsScheitert />
-      <MehrMoeglich />
       <Referenzen />
       <ClosingCta
         heading="Lass uns deine Quelle bauen."

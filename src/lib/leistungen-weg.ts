@@ -85,7 +85,7 @@ export const woranEsScheitert: WoranEsScheitert = {
       einwand: "„Ich weiß nicht, was sich bei mir lohnt.“",
       loesungName: "Der Fahrplan",
       satz: "Das kostenlose Prozess-Audit endet mit einem Fahrplan: was sich automatisieren lässt, in welcher Reihenfolge. Er gehört dir.",
-      link: { href: "#prozess-audit", label: "Zum kostenlosen Audit" },
+      link: { href: "/leistungen/ki-beratung#prozess-audit", label: "Zum kostenlosen Audit" },
     },
     {
       einwand: "„Dafür fehlt mir das IT-Wissen.“",
