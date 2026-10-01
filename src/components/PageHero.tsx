@@ -46,7 +46,7 @@ export function PageHero({
           className={["-z-20 object-cover", imageClassName].filter(Boolean).join(" ")}
         />
         <div aria-hidden className="hero-overlay-scrim absolute inset-0 -z-10" />
-        <h1 className="max-w-4xl text-balance text-4xl font-semibold text-papier [text-shadow:0_2px_16px_rgb(10_37_56_/_0.45)] md:text-5xl">
+        <h1 className="max-w-4xl text-balance hyphens-auto break-words text-4xl font-semibold text-papier [text-shadow:0_2px_16px_rgb(10_37_56_/_0.45)] md:text-5xl">
           {title}
         </h1>
       </section>

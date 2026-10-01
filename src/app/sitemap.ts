@@ -2,12 +2,14 @@
 import type { MetadataRoute } from "next";
 import { siteUrl } from "@/lib/site";
 import { getAllArticles } from "@/lib/ratgeber";
+import { leistungenPages } from "@/lib/leistungenPages";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   const staticRoutes = [
     "",
     "/leistungen",
+    ...leistungenPages.map((p) => `/leistungen/${p.slug}`),
     "/prozess-check",
     "/ueber-mich",
     "/faq",

@@ -3,6 +3,7 @@ import { describe, it, expect } from "vitest";
 import sitemap from "./sitemap";
 import { siteUrl } from "@/lib/site";
 import { getAllArticles } from "@/lib/ratgeber";
+import { leistungenPages } from "@/lib/leistungenPages";
 
 describe("sitemap", () => {
   it("includes the core live routes and excludes unbuilt ones", () => {
@@ -51,5 +52,9 @@ describe("sitemap", () => {
     expect(urls).not.toContain(`${siteUrl}/demo`);
     expect(urls).not.toContain(`${siteUrl}/karte`);
     expect(urls).not.toContain(`${siteUrl}/karte/qr`);
+  });
+  it("lists all seven Leistungen subpages", () => {
+    const urls = sitemap().map((e) => e.url);
+    for (const p of leistungenPages) expect(urls).toContain(`${siteUrl}/leistungen/${p.slug}`);
   });
 });

@@ -1,7 +1,7 @@
 // src/lib/jsonld.test.ts
 import { describe, it, expect } from "vitest";
 import {
-  professionalServiceLd, personLd, faqPageLd, articleLd, breadcrumbLd,
+  professionalServiceLd, personLd, faqPageLd, articleLd, breadcrumbLd, serviceLd,
 } from "./jsonld";
 import { faqGroups } from "./faq";
 import { siteUrl } from "./site";
@@ -49,5 +49,15 @@ describe("jsonld builders", () => {
     expect(ld["@type"]).toBe("BreadcrumbList");
     expect(ld.itemListElement[0].position).toBe(1);
     expect(ld.itemListElement[1].item).toBe(`${siteUrl}/ratgeber`);
+  });
+});
+
+describe("serviceLd", () => {
+  it("describes a Leistungen subpage as a Service provided by Vrelo", () => {
+    const ld = serviceLd({ slug: "ki-server", title: "KI-Server", metaDescription: "Beschreibung." });
+    expect(ld["@type"]).toBe("Service");
+    expect(ld.name).toBe("KI-Server");
+    expect(ld.url).toMatch(/\/leistungen\/ki-server$/);
+    expect(ld.provider["@type"]).toBe("ProfessionalService");
   });
 });

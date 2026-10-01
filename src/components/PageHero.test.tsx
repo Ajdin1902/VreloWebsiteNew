@@ -57,4 +57,8 @@ describe("PageHero", () => {
     expect(section).toHaveClass("min-h-[34vh]");
     expect(section).not.toHaveClass("min-h-[68vh]");
   });
+  it("lets long German compounds hyphenate instead of overflowing on phones", () => {
+    render(<PageHero title="Prozessautomatisierung" src="/images/bg-steps.webp" />);
+    expect(screen.getByRole("heading", { level: 1 })).toHaveClass("hyphens-auto", "break-words");
+  });
 });

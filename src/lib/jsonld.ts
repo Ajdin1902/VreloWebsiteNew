@@ -73,3 +73,16 @@ export function breadcrumbLd(items: { name: string; path: string }[]) {
     })),
   };
 }
+
+export function serviceLd(page: { slug: string; title: string; metaDescription: string }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: page.title,
+    serviceType: page.title,
+    description: page.metaDescription,
+    url: `${siteUrl}/leistungen/${page.slug}`,
+    areaServed: ["DE", "AT", "CH"],
+    provider: { "@type": "ProfessionalService", name: siteName, url: siteUrl },
+  };
+}
