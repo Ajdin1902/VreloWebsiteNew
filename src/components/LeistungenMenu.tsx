@@ -13,7 +13,15 @@ const linkFocus =
 // The panel is positioned against the header <nav> (which is `relative`), so it
 // never overflows the viewport at md widths.
 export function LeistungenMenu({ pathname }: { pathname: string | null }) {
-  const [open, setOpen] = useState(false);
+  // The panel remembers the route it was opened on, so it is closed on any
+  // other route: the Header persists across client navigation, and a stale
+  // open panel would cover the top of the new page. Derived, not an effect.
+  const [openOn, setOpenOn] = useState<string | null | undefined>(undefined);
+  const open = openOn !== undefined && openOn === pathname;
+  const setOpen = (next: boolean | ((o: boolean) => boolean)) => {
+    const value = typeof next === "function" ? next(open) : next;
+    setOpenOn(value ? pathname : undefined);
+  };
   const wrapRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
 
@@ -22,15 +30,15 @@ export function LeistungenMenu({ pathname }: { pathname: string | null }) {
     const outside = (e: Event) => !wrapRef.current?.contains(e.target as Node);
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        setOpen(false);
+        setOpenOn(undefined);
         toggleRef.current?.focus();
       }
     };
     const onPointer = (e: MouseEvent) => {
-      if (outside(e)) setOpen(false);
+      if (outside(e)) setOpenOn(undefined);
     };
     const onFocus = (e: FocusEvent) => {
-      if (outside(e)) setOpen(false);
+      if (outside(e)) setOpenOn(undefined);
     };
     document.addEventListener("keydown", onKey);
     document.addEventListener("mousedown", onPointer);
@@ -48,6 +56,7 @@ export function LeistungenMenu({ pathname }: { pathname: string | null }) {
     <div ref={wrapRef} className="flex items-center gap-1">
       <Link
         href="/leistungen"
+        onClick={() => setOpen(false)}
         aria-current={pathname === "/leistungen" ? "page" : undefined}
         className={`text-sm transition-colors hover:text-vrelo-petrol ${linkFocus} ${inSection ? "font-semibold text-vrelo-petrol" : "text-tinte"}`}
       >

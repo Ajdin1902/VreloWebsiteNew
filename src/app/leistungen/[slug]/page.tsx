@@ -42,10 +42,14 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 }
 
 /** Ratgeber links for the „Mehr dazu“ line: unknown slugs and hidden drafts drop out. */
-export function relatedArticles(slugs: string[], showDrafts: boolean): { slug: string; title: string }[] {
+export function relatedArticles(
+  slugs: string[],
+  showDrafts: boolean,
+  lookup: (slug: string) => { slug: string; title: string; draft: boolean } = getArticleBySlug,
+): { slug: string; title: string }[] {
   return slugs.flatMap((s) => {
     try {
-      const a = getArticleBySlug(s);
+      const a = lookup(s);
       return a.draft && !showDrafts ? [] : [{ slug: a.slug, title: a.title }];
     } catch {
       return [];

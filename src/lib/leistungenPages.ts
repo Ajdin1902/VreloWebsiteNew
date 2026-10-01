@@ -70,7 +70,7 @@ export const kiStudien: StudyFigure[] = [
   },
   {
     figure: "3 Stunden",
-    claim: "pro Woche spart, wer KI im Beruf nutzt, im Mittel. Das sind rund 7,7 % der Arbeitszeit, gemessen in elf Ländern des Euroraums.",
+    claim: "pro Woche oder mehr spart jeder zweite, der KI im Beruf nutzt. Das ist der Median aus elf Ländern des Euroraums, rund 7,7 % der Arbeitszeit.",
     source: "Europäische Zentralbank",
     year: 2026,
     url: "https://www.ecb.europa.eu/press/blog/date/2026/html/ecb.blog20260826~e1c1a89999.en.html",
@@ -289,7 +289,7 @@ export const leistungenPages: LeistungPage[] = [
     navLabel: "KI-Schulung",
     title: "KI-Schulung",
     subline:
-      "Dein Team lernt, Claude und einfache Automatisierungen im Arbeitsalltag sicher zu nutzen. An euren eigenen Aufgaben, nicht an Beispielen aus dem Lehrbuch.",
+      "Dein Team lernt, Claude, den KI-Assistenten von Anthropic, und einfache Automatisierungen im Arbeitsalltag sicher zu nutzen. An euren eigenen Aufgaben, nicht an Beispielen aus dem Lehrbuch.",
     metaDescription:
       "KI-Schulung für Teams: Claude im Arbeitsalltag nutzen, eigene Vorlagen bauen, wiederkehrende Aufgaben automatisieren. Praxisnah an euren eigenen Abläufen.",
     kurz: "Dein Team lernt Claude und erste Automatisierungen an euren eigenen Aufgaben.",
@@ -343,7 +343,7 @@ export const leistungenPages: LeistungPage[] = [
       "Du musst nicht wissen, was mit KI möglich ist. Das ist mein Job. Du weißt, was dich jeden Tag Zeit kostet, und das reicht für den Anfang.",
     metaDescription:
       "KI-Beratung für Unternehmen: Im kostenlosen Erstgespräch und Prozess-Audit finden wir heraus, wo KI und Automatisierung sich bei dir lohnen. Mit Fahrplan, wenn es passt.",
-    kurz: "Kostenloses Erstgespräch und Prozess-Audit: wo sich KI bei dir lohnt, mit Fahrplan.",
+    kurz: "Kostenloses Erstgespräch: wo sich KI bei dir lohnt. Wenn ja, folgt ein Prozess-Audit mit Fahrplan.",
     heroImage: "/images/bg-horizont.webp",
     pain: {
       heading: "Kennst du das?",
@@ -373,7 +373,7 @@ export const leistungenPages: LeistungPage[] = [
       steps: [
         "Im kostenlosen Erstgespräch erzählst du mir, was dich jeden Tag Zeit kostet.",
         "Lohnt es sich, schaue ich mir im Prozess-Audit deine Abläufe genauer an.",
-        "Ein bis zwei Werktage später bekommst du einen Fahrplan: was sich automatisieren lässt, was es bringt und in welcher Reihenfolge.",
+        "Wenn sich etwas lohnt, bekommst du ein bis zwei Werktage später einen Fahrplan: was sich automatisieren lässt, was es bringt und in welcher Reihenfolge.",
       ],
       after: "Nachher: Du weißt, womit du anfängst, und entscheidest selbst, ob und mit wem du es umsetzt.",
     },

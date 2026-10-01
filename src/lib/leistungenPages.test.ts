@@ -130,4 +130,30 @@ describe("leistungenPages", () => {
     expect(getLeistungPage("gibt-es-nicht")).toBeUndefined();
     expect(leistungHref("ki-server")).toBe("/leistungen/ki-server");
   });
+
+  // Funnel rule (prozess-check-funnel §1a): the audit is at Vrelo's discretion,
+  // so any string that mentions the Fahrplan must make it conditional.
+  it("promises the Fahrplan only conditionally", () => {
+    for (const p of leistungenPages) {
+      // The strings that promise delivery; a point title about ownership
+      // („Der Fahrplan gehört dir.“) is not a promise to deliver one.
+      const promises = [p.kurz, p.subline, p.metaDescription, ...p.example.steps, p.example.after, p.cta.lead];
+      for (const s of promises)
+        if (/Fahrplan/.test(s)) expect(s, `${p.slug}: ${s}`).toMatch(/[Ww]enn|[Ll]ohnt/);
+    }
+  });
+
+  it("states the EZB figure as a median, not an average", () => {
+    const proof = getLeistungPage("ki-automatisierung")!.proof;
+    if (proof.kind !== "studies") throw new Error("expected studies");
+    const ezb = proof.figures.find((f) => f.source === "Europäische Zentralbank")!;
+    expect(ezb.claim).toContain("Median");
+    expect(ezb.claim).not.toContain("im Mittel");
+  });
+
+  // Spec §2: a technical term is explained once where it first appears on a page.
+  it("explains Claude in the subline wherever the subline names it", () => {
+    for (const p of leistungenPages)
+      if (/Claude/.test(p.subline)) expect(p.subline, p.slug).toContain("Anthropic");
+  });
 });

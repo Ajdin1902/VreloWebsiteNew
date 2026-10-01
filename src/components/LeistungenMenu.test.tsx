@@ -49,4 +49,18 @@ describe("LeistungenMenu", () => {
     fireEvent.click(toggle());
     expect(screen.getByRole("link", { name: "Claude für Unternehmen" })).toHaveAttribute("aria-current", "page");
   });
+
+  it("closes when the route changes (Header persists across navigation)", () => {
+    const { rerender } = render(<LeistungenMenu pathname="/" />);
+    fireEvent.click(toggle());
+    rerender(<LeistungenMenu pathname="/leistungen" />);
+    expect(toggle()).toHaveAttribute("aria-expanded", "false");
+  });
+
+  it("closes when the hub label itself is clicked", () => {
+    render(<LeistungenMenu pathname="/" />);
+    fireEvent.click(toggle());
+    fireEvent.click(screen.getByRole("link", { name: "Leistungen" }));
+    expect(toggle()).toHaveAttribute("aria-expanded", "false");
+  });
 });

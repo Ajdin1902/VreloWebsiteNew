@@ -46,4 +46,14 @@ describe("/leistungen/[slug]", () => {
     expect(relatedArticles(slugs, false)).toEqual([{ slug: live.slug, title: live.title }]);
     if (draft) expect(relatedArticles(slugs, true).map((a) => a.slug)).toContain(draft.slug);
   });
+
+  it("drops a draft article in production and keeps it when drafts are visible (stubbed lookup)", () => {
+    const stub = (slug: string) => {
+      if (slug === "entwurf") return { slug, title: "Entwurf", draft: true };
+      if (slug === "live") return { slug, title: "Live", draft: false };
+      throw new Error("not found");
+    };
+    expect(relatedArticles(["live", "entwurf", "fehlt"], false, stub)).toEqual([{ slug: "live", title: "Live" }]);
+    expect(relatedArticles(["live", "entwurf"], true, stub).map((a) => a.slug)).toEqual(["live", "entwurf"]);
+  });
 });
