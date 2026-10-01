@@ -38,13 +38,10 @@ export type LeistungPage = {
   heroImage: string;
   pain: { heading: string; moments: string[]; close: string };
   proof: Proof;
-  example: {
-    heading: string;
-    before: string;
-    steps: [string, string, string];
-    after: string;
-    video?: { src: string; poster: string; caption: string };
-  };
+  /** Either a three-step run (before → steps → after) or a real clip on its own. */
+  example:
+    | { heading: string; before: string; steps: [string, string, string]; after: string }
+    | { heading: string; video: { src: string; poster: string } };
   /** Renders the existing ProzessAudit card after the example (KI-Beratung only). */
   auditCard?: boolean;
   note?: { heading: string; body: string; link: { label: string; href: string } };
@@ -165,18 +162,7 @@ export const leistungenPages: LeistungPage[] = [
     },
     example: {
       heading: "So sieht das aus",
-      before: "Vorher: Jede Eingangsrechnung wird geöffnet, gelesen und von Hand übertragen.",
-      steps: [
-        "Die Rechnung kommt per E-Mail.",
-        "Die KI liest Lieferant, Betrag, Datum und Rechnungsnummer aus.",
-        "Die Daten liegen in deiner Buchhaltung, das PDF im richtigen Ordner.",
-      ],
-      after: "Nachher: Du schaust nur noch auf das, was die KI als unklar markiert hat.",
-      video: {
-        src: "/video/ki-assistent.mp4",
-        poster: "/video/ki-assistent.webp",
-        caption: "Ein echter Lauf mit Testdaten: Der Assistent bekommt eine kurze Nachricht und legt Termin, Aufgabe und Rechnung an.",
-      },
+      video: { src: "/video/ki-assistent.mp4", poster: "/video/ki-assistent.webp" },
     },
     cta: {
       kind: "check",

@@ -56,6 +56,7 @@ describe("ProofBlock", () => {
 describe("ExampleBlock", () => {
   it("shows before, three numbered steps and after", () => {
     const ex = page("ki-beratung").example;
+    if (!("steps" in ex)) throw new Error("expected a step run");
     render(<ExampleBlock example={ex} />);
     expect(screen.getByText(ex.before)).toBeInTheDocument();
     const list = screen.getByRole("list");
@@ -64,11 +65,15 @@ describe("ExampleBlock", () => {
     expect(screen.getByText(ex.after)).toBeInTheDocument();
   });
 
-  it("renders an optional clip with its caption", () => {
-    const ex = { ...page("ki-automatisierung").example, video: { src: "/video/x.mp4", poster: "/video/x.webp", caption: "Ein echter Lauf." } };
+  it("renders a video-only example large, with no steps and no extra text", () => {
+    const ex = { heading: "So sieht das aus", video: { src: "/video/x.mp4", poster: "/video/x.webp" } };
     const { container } = render(<ExampleBlock example={ex} />);
-    expect(screen.getByText("Ein echter Lauf.")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: "So sieht das aus" })).toBeInTheDocument();
     expect(container.querySelector("video, img[src='/video/x.webp']")).not.toBeNull();
+    expect(container.querySelector("ol")).toBeNull();
+    expect(container.querySelector("figcaption")).toBeNull();
+    expect(container.querySelectorAll("p")).toHaveLength(0);
+    expect(container.querySelector("figure")).toHaveClass("max-w-2xl");
   });
 });
 

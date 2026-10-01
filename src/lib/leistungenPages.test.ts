@@ -42,11 +42,17 @@ describe("leistungenPages", () => {
   });
 
   it.each(leistungenPages.map((p) => [p.slug, p] as const))("%s fills every block", (_s, p) => {
-    for (const s of [p.navLabel, p.title, p.subline, p.metaDescription, p.kurz, p.pain.heading, p.pain.close, p.proof.heading, p.proof.objection, p.example.heading, p.example.before, p.example.after, p.cta.heading, p.cta.lead])
+    for (const s of [p.navLabel, p.title, p.subline, p.metaDescription, p.kurz, p.pain.heading, p.pain.close, p.proof.heading, p.proof.objection, p.example.heading, p.cta.heading, p.cta.lead])
       expect(s.trim().length).toBeGreaterThan(0);
     expect(p.pain.moments.length).toBeGreaterThanOrEqual(3);
     expect(p.pain.moments.length).toBeLessThanOrEqual(4);
-    expect(p.example.steps).toHaveLength(3);
+    if ("steps" in p.example) {
+      expect(p.example.before.trim()).not.toBe("");
+      expect(p.example.after.trim()).not.toBe("");
+      expect(p.example.steps).toHaveLength(3);
+    } else {
+      expect(p.example.video.src).toMatch(/^\/video\//);
+    }
     expect(p.related.length).toBeGreaterThanOrEqual(1);
     expect(p.related.length).toBeLessThanOrEqual(3);
     expect(fs.existsSync(pub(p.heroImage))).toBe(true);
@@ -104,7 +110,7 @@ describe("leistungenPages", () => {
 
   it("points every video at a file that exists", () => {
     for (const p of leistungenPages) {
-      if (!p.example.video) continue;
+      if (!("video" in p.example)) continue;
       expect(fs.existsSync(pub(p.example.video.src))).toBe(true);
       expect(fs.existsSync(pub(p.example.video.poster))).toBe(true);
     }
@@ -137,7 +143,8 @@ describe("leistungenPages", () => {
     for (const p of leistungenPages) {
       // The strings that promise delivery; a point title about ownership
       // („Der Fahrplan gehört dir.“) is not a promise to deliver one.
-      const promises = [p.kurz, p.subline, p.metaDescription, ...p.example.steps, p.example.after, p.cta.lead];
+      const run = "steps" in p.example ? [...p.example.steps, p.example.after] : [];
+      const promises = [p.kurz, p.subline, p.metaDescription, ...run, p.cta.lead];
       for (const s of promises)
         if (/Fahrplan/.test(s)) expect(s, `${p.slug}: ${s}`).toMatch(/[Ww]enn|[Ll]ohnt/);
     }
@@ -155,5 +162,14 @@ describe("leistungenPages", () => {
   it("explains Claude in the subline wherever the subline names it", () => {
     for (const p of leistungenPages)
       if (/Claude/.test(p.subline)) expect(p.subline, p.slug).toContain("Anthropic");
+  });
+
+  // Ajdin 2026-10-01: KI-Automatisierung shows the real clip on its own, no
+  // text run around it (the invoice example and the caption are gone).
+  it("shows the clip alone on KI-Automatisierung", () => {
+    const ex = getLeistungPage("ki-automatisierung")!.example;
+    expect("video" in ex).toBe(true);
+    expect("steps" in ex).toBe(false);
+    expect(JSON.stringify(ex)).not.toMatch(/Rechnung|Vorher|Nachher|Testdaten/);
   });
 });
