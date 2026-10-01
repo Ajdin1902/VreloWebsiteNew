@@ -172,7 +172,11 @@ export const leistungenPages: LeistungPage[] = [
         "Die Daten liegen in deiner Buchhaltung, das PDF im richtigen Ordner.",
       ],
       after: "Nachher: Du schaust nur noch auf das, was die KI als unklar markiert hat.",
-      // video: added in Task 6 once the clip is encoded and approved.
+      video: {
+        src: "/video/ki-assistent.mp4",
+        poster: "/video/ki-assistent.webp",
+        caption: "Ein echter Lauf mit Testdaten: Der Assistent bekommt eine kurze Nachricht und legt Termin, Aufgabe und Rechnung an.",
+      },
     },
     cta: {
       kind: "check",
