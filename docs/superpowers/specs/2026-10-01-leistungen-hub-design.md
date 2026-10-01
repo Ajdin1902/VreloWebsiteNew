@@ -74,7 +74,10 @@ Every subpage renders the same five blocks from data. Each block has one job.
      > „Ich arbeite selbst jeden Tag mit Claude: für Code, Texte, Recherche und meine eigenen Automatisierungen. In meinen früheren Positionen und bei Kunden habe ich Claude eingeführt und in bestehende Abläufe eingebunden. Was du lernst, habe ich selbst im Einsatz.“
 
      plus two or three honest-promise points („Ein Ansprechpartner“, „Wenn es sich nicht rechnet, sage ich es dir“).
+
+   **Every proof kind ends with one objection line** (Hormozi „kill the zombies before the price“). The two predictable objections are „ersetzt das meine Leute?“ and „muss ich das warten oder verstehen?“; each page answers the one that fits it. On KI-Automatisierung the line doubles as the compliance boundary (extract and file, never evaluate; KI-Transparenzpflichten doc): *„Die KI liest und sortiert, entscheiden tust du.“*
 4. **Example (the core)** — one concrete run: a „Vorher“ line, then **three steps** with an icon each, then the result. E.g. *Rechnung kommt per E-Mail → KI liest Lieferant, Betrag, Datum → liegt sortiert in deiner Buchhaltung.* This block carries the comprehension job.
+   **Optional real clip** (Codie Sanchez „credibility in action“): an example may carry a `video` that renders via the existing `LazyVideo` above the three steps. First use: KI-Automatisierung & Assistenten with the anonymised Telegram-assistant clip (live on LinkedIn since 2026-09-22; web-encode from `OneDrive/Pictures/Camera Roll/edit/mdz-assistent-linkedin.mp4`, no MDZ name, captions on). The three steps stay as the text version.
 5. **CTA** — `ClosingCta` variant. `check` pages: Prozess-Check primary + Erstgespräch quiet link. `kontakt` pages: Erstgespräch primary + Prozess-Check quiet link. Then the „Mehr dazu“ Ratgeber line.
 
 ## 5. Data model and code shape
@@ -85,16 +88,21 @@ One data file, one dynamic route; a new page is a new entry, never a new compone
 // src/lib/leistungenPages.ts — all German copy lives here, components hold none
 export type LeistungGroup = "automatisieren" | "befaehigen" | "betreiben";
 export type StudyFigure = { figure: string; claim: string; source: string; year: number; url: string };
-export type Proof =
+export type Proof = (
   | { kind: "studies"; heading: string; figures: StudyFigure[]; caseLine?: string }
   | { kind: "case"; heading: string; body: string }
-  | { kind: "practice"; heading: string; body: string; points: { title: string; body: string }[] };
+  | { kind: "practice"; heading: string; body: string; points: { title: string; body: string }[] }
+) & { objection: string }; // one line, required on every page
 export type LeistungPage = {
   slug: string; group: LeistungGroup; navLabel: string;
   title: string; subline: string; metaDescription: string; heroImage: string;
   pain: { heading: string; moments: string[]; close: string };
   proof: Proof;
-  example: { heading: string; before: string; steps: [string, string, string]; after: string };
+  example: {
+    heading: string; before: string; steps: [string, string, string]; after: string;
+    video?: { src: string; poster: string; caption: string }; // rendered via LazyVideo
+  };
+  note?: { body: string; link: { label: string; href: string } }; // e.g. Digitalbonus, above the CTA
   cta: { kind: "check" | "kontakt"; heading: string; lead: string };
   related: string[]; // Ratgeber slugs
 };
@@ -113,6 +121,29 @@ A separate research step produces `Knowledge/marketing/ki-studien.md` (durable, 
 - Pick 2–3 that answer the visitor's question („nutzen andere das schon, und bringt es was?“): adoption, measured time/cost effect, the barrier „fehlendes Wissen“ (which the Schulung/Beratung pages answer).
 - No figure without a working link ships. A test asserts every `StudyFigure` has `url`, `source`, `year`.
 
+## 6a. Digitalbonus Bayern note (KI-Beratung page)
+
+The `note` slot on `ki-beratung` carries the funding hint, worded as a possibility, never a promise (doc → `Knowledge/marketing/digitalbonus-bayern.md`). Draft:
+
+> „Sitzt dein Betrieb in Bayern und hat weniger als 50 Mitarbeiter, kann der Digitalbonus Bayern einen Teil der Kosten übernehmen, oft bis zur Hälfte. Wichtig: Der Antrag muss gestellt sein, bevor du jemanden beauftragst. Ob er bei dir passt, klären wir im Gespräch.“
+
+Link: „Zum Förderprogramm“ → `https://www.digitalbonus.bayern/foerderprogramm/`. Rules: „kann“, never „bekommst du“ (no legal claim) · no € amount, no percentage stronger than „oft bis zur Hälfte“ · „Antrag vor Auftrag“ always in the same breath (otherwise Subventionsbetrug risk for the client) · Kanzleien and Arztpraxen are excluded, so the page never addresses them with it. The open call to Team Digitalbonus Oberpfalz (HQ §7) may sharpen the wording later; it does not block go-live.
+
+## 6b. Copy sources (read before writing each page)
+
+| Source | Feeds |
+|---|---|
+| `Knowledge/marketing/first-client-conversations.md` §0a (die Treppe) + §0b | Prozessautomatisierung hero subline + example; KI-Beratung („Du musst nicht wissen, was möglich ist, das ist mein Job“) |
+| `Knowledge/marketing/prozess-landkarten.md` §0 (12 stations) + segment Landkarten | Pain moments and example runs on every automation page. ⚠ „Die Treppe“ sections stay internal |
+| `Knowledge/marketing/prozess-check-funnel.md` §1a | Hero sublines (one voice with the funnel); KI-Beratung promises clarity, the Fahrplan only „wenn sich etwas lohnt“ |
+| `Knowledge/Tech/agent-platforms.md` + `Products/DocumentConcierge/docs/bedrock-eu-findings.md` + VreloVPS spec | KI-Server and Claude facts: „innerhalb der EU“, ZDR, model pinned, own account, n8n as trigger layer |
+| `Knowledge/Compliance/KI-Transparenzpflichten.md` | KI-Automatisierung objection line (extract, never evaluate); built-in bot disclosure as a trust point |
+| `Knowledge/Videos/Hormozi/2026-09-07-sell-better-…md` | Objection lines; outcome before mechanics („sell the vacation“) in every hero |
+| `Knowledge/Videos/Codie-Sanchez/2026-09-29-…md` | Real clip in the example block; „die Quelle“ as the owned word where it fits naturally |
+| `Knowledge/marketing/digitalbonus-bayern.md` | §6a note |
+
+Skills for the copy phase: `ogilvy` (headlines), `objection-destroyer` (objection lines), `stop-slop` (everything), Value-Equation check (HQ §8) before shipping. Not `landing-page-copy` (long-form, conflicts with the five-block template).
+
 ## 7. Copy rules and review
 
 - All German copy through `stop-slop`; Brand.md wins on conflict. Value-equation check (HQ §8) on the hub + each subpage before shipping.
@@ -121,7 +152,7 @@ A separate research step produces `Knowledge/marketing/ki-studien.md` (durable, 
 
 ## 8. Testing
 
-- Data tests: seven pages, unique slugs, every group non-empty, every block filled, `steps` length 3, `related` slugs exist, `studies` figures complete, copy guards.
+- Data tests: seven pages, unique slugs, every group non-empty, every block filled, `steps` length 3, `related` slugs exist, `studies` figures complete, every page has an `objection`, any `video` file exists under `public/`, the Digitalbonus note contains „kann“ and „Antrag“ and no `€`/`%`, copy guards.
 - Route: `generateStaticParams` returns the seven slugs; unknown slug → 404; metadata canonical per page.
 - Components: each block renders its data; CTA kind → correct primary href with `src`.
 - Nav: dropdown keyboard/Escape behaviour, `aria-expanded`, mobile nested list.
@@ -137,5 +168,6 @@ New Ratgeber explainer articles (own batch) · new hero images (reuse existing w
 
 - HQ CLAUDE.md §3: record the menu reversal + wider buyer; §2.2: index `ki-studien.md` once written; §6: ❓ Schulung format.
 - Brand.md §5: widen the descriptor „kleine Betriebe“.
+- `first-client-conversations.md` §0a: clarify that the „nie KI sagen“ Sperre applies to spoken walk-in talks with wary owners only; the website uses KI openly (2026-10-01).
 - Google-Unternehmensprofil „Leistungen“ list: align with the seven services.
 - Vault light sync.
