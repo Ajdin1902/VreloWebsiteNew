@@ -1,7 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { CHECK_SRC, CHECK_CTA, CHECK_TEASER, SAMPLE_ANSWERS, checkHref, kontaktHref, questionCountPhrase } from "./prozessCheckCta";
+import { CHECK_SRC, CHECK_CTA, checkHref, kontaktHref, questionCountPhrase } from "./prozessCheckCta";
 import { normalizeSource } from "./source";
-import { STEPS, resultCopy } from "./prozessCheck";
 
 function strings(value: unknown, out: string[] = []): string[] {
   if (typeof value === "string") out.push(value);
@@ -10,7 +9,7 @@ function strings(value: unknown, out: string[] = []): string[] {
   return out;
 }
 
-const copy = [...strings(CHECK_CTA), ...strings(CHECK_TEASER)];
+const copy = strings(CHECK_CTA);
 
 describe("CHECK_SRC", () => {
   it("uses slugs that survive normalizeSource unchanged", () => {
@@ -23,6 +22,10 @@ describe("CHECK_SRC", () => {
     const slugs: string[] = Object.values(CHECK_SRC);
     expect(new Set(slugs).size).toBe(slugs.length);
     expect(slugs).not.toContain("home-steps");
+  });
+
+  it("no longer carries a home teaser slug", () => {
+    expect(Object.values(CHECK_SRC)).not.toContain("home-check");
   });
 
   it("builds the check href with the slug", () => {
@@ -46,49 +49,15 @@ describe("check copy", () => {
   it("never names the mechanism", () => {
     expect(copy.filter((s) => /\bn8n\b|claude/i.test(s))).toEqual([]);
   });
-
-  // Review Focus 1: the teaser promises „Sechs kurze Fragen“. If the quiz
-  // gains or loses a step, this claim must be rewritten before shipping.
-  it("promises exactly as many questions as the quiz has", () => {
-    expect(CHECK_TEASER.steps[0].title).toBe("Sechs kurze Fragen");
-    expect(STEPS).toHaveLength(6);
-  });
-
-  it("has three teaser steps, the last one optional and naming the Fahrplan", () => {
-    expect(CHECK_TEASER.steps).toHaveLength(3);
-    expect(CHECK_TEASER.steps[2].title).toBe("Optional: 30 Minuten mit mir");
-    expect(CHECK_TEASER.steps[2].text).toMatch(/^Das Ergebnis: dein eigener Automatisierungs-Fahrplan/);
-  });
-
-  // Funnel doc §1a: the audit is at Vrelo's discretion, so the Fahrplan is only
-  // ever promised conditionally (an unconditional promise is a UWG §5 risk).
-  it("promises the Fahrplan only conditionally and keeps it the owner's", () => {
-    expect(CHECK_TEASER.steps[2].text).toContain("wenn sich bei dir etwas lohnt");
-    expect(CHECK_TEASER.steps[2].text).toContain("er gehört dir");
-  });
 });
 
-// Final review: the count claim appears on the homepage AND in the FAQ. Both
-// derive it from STEPS.length, so a quiz change can never leave a stale number.
+// The count claim appears in the FAQ, spelled from STEPS.length, so a quiz
+// change can never leave a stale number.
 describe("questionCountPhrase", () => {
   it("spells the quiz length in German", () => {
     expect(questionCountPhrase(6)).toBe("sechs kurze Fragen");
     expect(questionCountPhrase(7)).toBe("sieben kurze Fragen");
     expect(questionCountPhrase(1)).toBe("eine kurze Frage");
-  });
-
-  it("feeds the teaser title from the real quiz length", () => {
-    const phrase = questionCountPhrase(STEPS.length);
-    expect(CHECK_TEASER.steps[0].title).toBe(phrase.charAt(0).toUpperCase() + phrase.slice(1));
-  });
-});
-
-describe("SAMPLE_ANSWERS", () => {
-  it("produce a nine-hour example led by Rechnungen", () => {
-    const r = resultCopy(SAMPLE_ANSWERS);
-    expect(r.fits).toBe(true);
-    expect(r.headline).toBe("Rund 9 Stunden pro Woche");
-    expect(r.topAreas.map((a) => a.id)).toEqual(["rechnungen", "anfragen", "daten"]);
   });
 });
 

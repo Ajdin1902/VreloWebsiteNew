@@ -5,12 +5,10 @@
 // Every primary CTA links to /prozess-check with its own ?src= slug, which the
 // page writes into the Cal booking notes and the result e-mail, so each booked
 // call shows the button it came from. Components hold no German.
-import { STEPS, type ProzessCheckAnswers } from "@/lib/prozessCheck";
 
 export const CHECK_SRC = {
   header: "header",
   homeHero: "home-hero",
-  homeCheck: "home-check",
   homeClose: "home-close",
   leistungenAudit: "leistungen-audit",
   leistungenEinwand: "leistungen-einwand",
@@ -60,8 +58,7 @@ export const CHECK_CTA = {
   kontaktHintSuffix: "zeigt es dir in drei Minuten.",
 } as const;
 
-// The question count is promised on the homepage and in the FAQ. Both spell it
-// from STEPS.length, so adding or removing a quiz step can never leave a stale
+// The question count is promised in the FAQ, spelled from STEPS.length there, so adding or removing a quiz step can never leave a stale
 // number in public copy (UWG §5).
 const NUMBER_WORDS = ["null", "eine", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun", "zehn", "elf", "zwölf"];
 
@@ -70,37 +67,3 @@ export function questionCountPhrase(n: number): string {
   return n === 1 ? `${word} kurze Frage` : `${word} kurze Fragen`;
 }
 
-const countPhrase = questionCountPhrase(STEPS.length);
-
-export const CHECK_TEASER = {
-  eyebrow: "Der Prozess-Check",
-  heading: "Wie viele Stunden sind es bei dir?",
-  steps: [
-    {
-      title: countPhrase.charAt(0).toUpperCase() + countPhrase.slice(1),
-      text: "Kein Login, nichts vorzubereiten. Du schätzt, ich rechne.",
-    },
-    {
-      title: "Dein Ergebnis sofort",
-      text: "Deine Stunden pro Woche und die Aufgabe, die dich am meisten kostet. Direkt auf dem Bildschirm, ohne E-Mail-Adresse.",
-    },
-    {
-      title: "Optional: 30 Minuten mit mir",
-      // Conditional on purpose (funnel doc §1a): the audit is at Vrelo's discretion.
-      text: "Das Ergebnis: dein eigener Automatisierungs-Fahrplan, wenn sich bei dir etwas lohnt. Kostenlos, und er gehört dir.",
-    },
-  ],
-  exampleLabel: "Beispiel",
-  exampleNote: "So sieht dein Ergebnis aus, gerechnet aus deinen eigenen Angaben.",
-} as const;
-
-// Fixed answers behind the homepage example card. Run through the real
-// resultCopy(), so the preview always matches the live result screen.
-export const SAMPLE_ANSWERS: ProzessCheckAnswers = {
-  branche: "handwerk",
-  team: "2bis5",
-  stunden: { anfragen: 3, auftraege: 0, rechnungen: 4, daten: 2, erinnern: 0, orga: 0 },
-  nervt: "rechnungen",
-  abende: "abundzu",
-  versucht: "nichts",
-};

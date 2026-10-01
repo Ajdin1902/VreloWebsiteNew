@@ -2,14 +2,9 @@ import Link from "next/link";
 import { Section } from "@/components/Section";
 import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { Reveal } from "@/components/Reveal";
+import { leistungenPages, leistungHref } from "@/lib/leistungenPages";
 
-// A curated four-chip highlight of the services; the full set lives on /leistungen.
-const leistungen = [
-  "Anfragen & Leads",
-  "Persönlicher Assistent",
-  "Angebote & Rechnungen",
-  "Dateneingabe",
-];
+// The seven services as links into their subpages (spec 2026-10-01 §3.4).
 
 // Spine A "die Quelle": a dark blue-hour karst pool with ripples spreading from a
 // single drop — the effect of taking the tasks off the plate, rippling outward.
@@ -26,13 +21,15 @@ export function WasIchBaue() {
           Ich nehme dir die immer gleichen Aufgaben ab.
         </Reveal>
       </div>
-      <Reveal as="ul" delayMs={200} aria-labelledby="was-ich-baue-heading" className="mx-auto mt-10 grid max-w-2xl gap-3 sm:grid-cols-2">
-        {leistungen.map((leistung) => (
-          <li
-            key={leistung}
-            className="card-depth rounded-2xl border border-gletscher/25 bg-gletscher/10 px-4 py-3 text-center text-gletscher"
-          >
-            {leistung}
+      <Reveal as="ul" delayMs={200} aria-labelledby="was-ich-baue-heading" className="mx-auto mt-10 grid max-w-3xl gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {leistungenPages.map((p) => (
+          <li key={p.slug}>
+            <Link
+              href={leistungHref(p.slug)}
+              className="card-depth block h-full rounded-2xl border border-gletscher/25 bg-gletscher/10 px-4 py-3 text-center text-gletscher transition-colors hover:border-honig hover:text-papier focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-tiefes-wasser focus-visible:ring-honig"
+            >
+              {p.navLabel}
+            </Link>
           </li>
         ))}
       </Reveal>
