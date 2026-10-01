@@ -107,14 +107,14 @@ export const leistungenPages: LeistungPage[] = [
         "Rechnungen gehen raus, aber das Nachfassen bleibt liegen.",
         "Aufgaben leben auf Zetteln und in Köpfen statt an einem Ort.",
       ],
-      close: "Jeder Handgriff dauert nur Minuten. Zusammen sind es Stunden pro Woche, jede Woche.",
+      close: "Jeder Handgriff dauert ein paar Minuten. Zusammen kosten sie dich Stunden pro Woche.",
     },
     proof: {
       kind: "case",
       heading: "Aus der Praxis",
       body: "Eine Marketingagentur steuert ihre Projekte mit einer Prozess-Engine, die ich gebaut habe: Jede Projektphase legt ihre Aufgaben, Fristen und Zuständigkeiten selbst an. Niemand muss mehr nachhalten, welcher Schritt als Nächstes kommt.",
       objection:
-        "Ersetzt das deine Leute? Nein. Es nimmt ihnen das Abtippen ab, damit sie Zeit für die Arbeit haben, für die du sie eingestellt hast.",
+        "Deine Leute behalten ihre Arbeit. Das System nimmt ihnen das Abtippen ab, damit sie Zeit für die Aufgaben haben, für die du sie eingestellt hast.",
     },
     example: {
       heading: "So sieht das aus",
@@ -124,7 +124,7 @@ export const leistungenPages: LeistungPage[] = [
         "Das System legt den Kontakt an, bestätigt den Eingang und informiert den Zuständigen.",
         "Bleibt die Anfrage liegen, kommt nach zwei Tagen eine Erinnerung.",
       ],
-      after: "Nachher: Keine Anfrage geht verloren, und niemand tippt etwas doppelt.",
+      after: "Nachher: Anfragen landen sofort beim Zuständigen, und du tippst nichts mehr doppelt.",
     },
     cta: {
       kind: "check",
@@ -140,7 +140,7 @@ export const leistungenPages: LeistungPage[] = [
     navLabel: "KI-Automatisierung & Assistenten",
     title: "KI-Automatisierung & Assistenten",
     subline:
-      "Wo Lesen, Sortieren und Antworten deinen Tag frisst, übernimmt die KI: Belege, E-Mails, Dokumente und ein Assistent, dem du per Sprachnachricht Aufgaben gibst.",
+      "Belege lesen, E-Mails vorsortieren, Antworten vorbereiten: Das übernimmt die KI für dich. Dazu ein Assistent, dem du unterwegs per Sprachnachricht Aufgaben gibst.",
     metaDescription:
       "KI-Automatisierung und KI-Assistenten: Rechnungen und Dokumente auslesen, E-Mails vorsortieren, Aufgaben per Sprachnachricht erledigen. Auf Wunsch innerhalb der EU.",
     kurz: "Die KI liest Belege, sortiert E-Mails und erledigt als Assistent Aufgaben per Sprachnachricht.",
@@ -153,7 +153,7 @@ export const leistungenPages: LeistungPage[] = [
         "Unterwegs fällt dir eine Aufgabe ein, und abends weißt du nicht mehr, welche.",
         "Unterlagen von Kunden kommen unvollständig, und das Nachfragen dauert Tage.",
       ],
-      close: "Das ist Arbeit, die Aufmerksamkeit braucht, aber kein Urteil. Genau die kann eine KI übernehmen.",
+      close: "Diese Arbeit braucht Aufmerksamkeit, aber kein Urteil. Solche Arbeit übernimmt eine KI zuverlässig.",
     },
     proof: {
       kind: "studies",
@@ -205,14 +205,14 @@ export const leistungenPages: LeistungPage[] = [
         "Deine Mitarbeiter nutzen längst private KI-Konten, und keiner weiß, was dort landet.",
         "Ein Dienstleister würde alles bei sich betreiben, und du wärst von ihm abhängig.",
       ],
-      close: "Datenschutz ist kein Grund, auf KI zu verzichten. Er ist ein Grund, sie richtig aufzusetzen.",
+      close: "Mit dem richtigen Aufbau nutzt du KI und behältst deine Daten trotzdem bei dir.",
     },
     proof: {
       kind: "case",
       heading: "So setze ich das auf",
       body: "Jeder KI-Server läuft in einem Konto auf deinen Namen: Du zahlst ihn direkt und besitzt die Daten vom ersten Tag an. Das KI-Modell rechnet innerhalb der EU, der Anbieter speichert deine Anfragen nicht und trainiert nicht damit. Das Betriebssystem aktualisiert sich selbst, die Software läuft auf geprüften Versionen.",
       objection:
-        "Musst du den Server verstehen? Nein. Ich richte ihn ein, sichere ihn ab und dokumentiere alles. Endet unsere Zusammenarbeit, läuft er sicher weiter.",
+        "Den Server musst du nicht verstehen. Ich richte ihn ein, sichere ihn ab und dokumentiere alles. Endet unsere Zusammenarbeit, läuft er sicher weiter.",
     },
     example: {
       heading: "So sieht das aus",
@@ -238,7 +238,7 @@ export const leistungenPages: LeistungPage[] = [
     navLabel: "Claude für Unternehmen",
     title: "Claude für Unternehmen",
     subline:
-      "Claude ist der KI-Assistent von Anthropic. Ich richte ihn für dein Team ein: mit euren Vorlagen, eurem Wissen und klaren Regeln für eure Daten.",
+      "Claude ist der KI-Assistent von Anthropic. Ich richte ihn für dein Team ein, mit euren Vorlagen, eurem Wissen und klaren Regeln für eure Daten, damit er vom ersten Tag an eure Arbeit kennt.",
     metaDescription:
       "Claude für Unternehmen einrichten: Team-Zugang, Projekte mit eurem Firmenwissen, eigene Vorlagen, Anbindung an eure Werkzeuge und klare Regeln für eure Daten.",
     kurz: "Claude für dein Team eingerichtet, mit euren Vorlagen, eurem Wissen und klaren Datenregeln.",
@@ -251,7 +251,7 @@ export const leistungenPages: LeistungPage[] = [
         "Dieselben Texte, Angebote und Zusammenfassungen werden jeden Tag neu erklärt.",
         "Niemand hat festgelegt, welche Daten in die KI dürfen und welche nicht.",
       ],
-      close: "Das Werkzeug ist da. Was fehlt, ist die Einrichtung, die es zu eurem macht.",
+      close: "Das Werkzeug habt ihr schon. Euch fehlt die Einrichtung, die es auf euren Betrieb zuschneidet.",
     },
     proof: {
       kind: "practice",
@@ -263,7 +263,7 @@ export const leistungenPages: LeistungPage[] = [
         { title: "Ehrlich, wenn es nicht passt.", body: "Passt ChatGPT oder ein anderes Werkzeug besser zu euch, sage ich dir das." },
       ],
       objection:
-        "Muss dein Team dafür Technik lernen? Nein. Es arbeitet mit Claude wie mit einem Kollegen, die Einrichtung bleibt meine Aufgabe.",
+        "Dein Team lernt dafür keine Technik. Es arbeitet mit Claude wie mit einem Kollegen, die Einrichtung übernehme ich.",
     },
     example: {
       heading: "So sieht das aus",
@@ -310,11 +310,11 @@ export const leistungenPages: LeistungPage[] = [
       body: PRACTICE_BODY,
       points: [
         { title: "An euren Aufgaben.", body: "Wir arbeiten mit euren echten Texten, Abläufen und Dokumenten. Was dein Team lernt, nutzt es am nächsten Tag." },
-        { title: "Claude und Automatisierung.", body: "Kein Rundumschlag über alle Werkzeuge: Claude im Alltag und der Schritt zur ersten eigenen Automatisierung." },
+        { title: "Claude und Automatisierung.", body: "Zwei Themen, gründlich: Claude im Alltag und der Schritt zur ersten eigenen Automatisierung." },
         { title: "Format nach Absprache.", body: "Vor Ort oder online, für ein kleines Team oder eine Abteilung. Wir legen es im Gespräch fest." },
       ],
       objection:
-        "Ersetzt KI deine Leute? Nein. Sie nimmt ihnen das Immergleiche ab, und dein Team entscheidet, wofür es die Zeit nutzt.",
+        "Dein Team bleibt. Die KI nimmt ihm das Immergleiche ab, und ihr entscheidet, wofür ihr die gewonnene Zeit nutzt.",
     },
     example: {
       heading: "So sieht das aus",
@@ -353,7 +353,7 @@ export const leistungenPages: LeistungPage[] = [
         "Angebote von Agenturen klingen groß, teuer und schwer zu prüfen.",
         "Du weißt nicht, ob sich das für einen Betrieb deiner Größe überhaupt rechnet.",
       ],
-      close: "Die Frage ist nicht, ob KI etwas kann. Die Frage ist, wo sie bei dir etwas bringt.",
+      close: "Im Gespräch klären wir, wo KI dir Zeit spart und wo sie dir nichts bringt.",
     },
     proof: {
       kind: "practice",
@@ -365,7 +365,7 @@ export const leistungenPages: LeistungPage[] = [
         { title: "Der Fahrplan gehört dir.", body: "Du kannst ihn selbst umsetzen, umsetzen lassen oder mit mir bauen." },
       ],
       objection:
-        "Musst du dich mit KI auskennen? Nein. Du erzählst mir, was dich Zeit kostet. Welche Technik dazu passt, ist mein Teil.",
+        "Mit KI auskennen musst du dich nicht. Du erzählst mir, was dich Zeit kostet, und ich suche die passende Technik.",
     },
     example: {
       heading: "So läuft die Beratung",
@@ -397,7 +397,7 @@ export const leistungenPages: LeistungPage[] = [
     navLabel: "Betreuung & Wartung",
     title: "Betreuung & Wartung",
     subline:
-      "Ein System, das läuft, soll auch morgen noch laufen. Ich überwache deine Automatisierungen, behebe Fehler und passe sie an, wenn sich dein Betrieb verändert.",
+      "Ich überwache deine Automatisierungen, behebe Fehler und passe sie an, wenn sich dein Betrieb verändert. Du merkst davon vor allem, dass alles läuft.",
     metaDescription:
       "Betreuung und Wartung für Automatisierungen und KI-Systeme: Überwachung mit Alarm, Fehlerbehebung, kleine Änderungen. Monatlich kündbar, für Systeme, die ich gebaut habe.",
     kurz: "Überwachung mit echtem Alarm, Fehlerbehebung und kleine Änderungen, monatlich kündbar.",
@@ -410,14 +410,14 @@ export const leistungenPages: LeistungPage[] = [
         "Du willst eine Kleinigkeit ändern, aber wer es gebaut hat, ist nicht mehr erreichbar.",
         "Der Server läuft, aber niemand weiß, ob er sicher ist.",
       ],
-      close: "Automatisierung spart nur Zeit, solange sie läuft. Und dass sie läuft, muss jemand prüfen.",
+      close: "Eine Automatisierung spart dir Zeit, solange sie läuft. Jemand muss prüfen, dass sie läuft.",
     },
     proof: {
       kind: "case",
       heading: "So betreue ich",
-      body: "Jedes System, das ich betreue, meldet sich, wenn etwas schiefgeht: Der Alarm kommt bei mir an, bevor es dir auffällt. Ich teste, dass dieser Alarm wirklich ankommt, nicht nur, dass Daten fließen. Fehler behebe ich, kleine Änderungen sind enthalten, und einmal im Monat siehst du in einer Zeile, was dein System erledigt hat.",
+      body: "Jedes System, das ich betreue, meldet sich, wenn etwas schiefgeht: Der Alarm kommt bei mir an, bevor es dir auffällt. Ich teste, dass dieser Alarm bei mir ankommt. Fehler behebe ich, kleine Änderungen sind enthalten, und einmal im Monat siehst du in einer Zeile, was dein System erledigt hat.",
       objection:
-        "Bindest du dich damit? Nein. Die Betreuung ist monatlich kündbar. Ohne sie läuft dein System sicher weiter, nur ohne Anpassungen.",
+        "Die Betreuung ist monatlich kündbar. Kündigst du, läuft dein System sicher weiter, nur ohne Anpassungen.",
     },
     example: {
       heading: "So sieht das aus",
