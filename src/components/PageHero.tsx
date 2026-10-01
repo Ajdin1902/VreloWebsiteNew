@@ -8,12 +8,15 @@ import { withBrandWords } from "@/components/BrandWord";
 // keeps the papier title legible across images of varying brightness (the FAQ
 // pebble pool is far lighter than the underwater Ratgeber scene). A page may omit
 // `lead` to open straight on the first content section (see /leistungen).
+// An optional `portrait` (a real photo, so it carries a real alt) sits beside
+// the lead on desktop and below it on mobile (only /ueber-mich).
 export function PageHero({
   title,
   lead,
   src,
   imageClassName = "",
   size = "default",
+  portrait,
 }: {
   title: string;
   lead?: string;
@@ -24,6 +27,7 @@ export function PageHero({
   /** compact = a shorter hero for task pages (/prozess-check), so the first
    *  interaction sits on the first screen; default keeps the tall hero. */
   size?: "default" | "compact";
+  portrait?: { src: string; alt: string; caption?: string };
 }) {
   const height = size === "compact" ? "min-h-[34vh] py-16" : "min-h-[68vh] py-24";
   return (
@@ -53,9 +57,26 @@ export function PageHero({
           left (max-w-2xl). Omitted when `lead` is not passed. */}
       {lead ? (
         <Section tone="paper">
-          <p className="max-w-2xl text-pretty font-serif text-xl leading-[1.5] text-tiefes-wasser md:text-[1.6rem] first-letter:float-left first-letter:pr-2 first-letter:pt-1 first-letter:text-[2.8em] first-letter:font-medium first-letter:leading-[0.7] first-letter:text-vrelo-petrol">
-            {withBrandWords(lead)}
-          </p>
+          <div className={portrait ? "grid items-center gap-10 md:grid-cols-[1.55fr_1fr] md:gap-16" : undefined}>
+            <p className="max-w-2xl text-pretty font-serif text-xl leading-[1.5] text-tiefes-wasser md:text-[1.6rem] first-letter:float-left first-letter:pr-2 first-letter:pt-1 first-letter:text-[2.8em] first-letter:font-medium first-letter:leading-[0.7] first-letter:text-vrelo-petrol">
+              {withBrandWords(lead)}
+            </p>
+            {portrait ? (
+              <figure className="w-full max-w-sm md:max-w-none">
+                <Image
+                  src={portrait.src}
+                  alt={portrait.alt}
+                  width={960}
+                  height={1200}
+                  sizes="(min-width: 768px) 34vw, 90vw"
+                  className="aspect-[4/5] w-full rounded-2xl object-cover shadow-deepwater"
+                />
+                {portrait.caption ? (
+                  <figcaption className="mt-3 text-sm text-stumm">{portrait.caption}</figcaption>
+                ) : null}
+              </figure>
+            ) : null}
+          </div>
         </Section>
       ) : null}
     </>

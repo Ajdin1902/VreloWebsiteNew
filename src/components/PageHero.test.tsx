@@ -23,6 +23,27 @@ describe("PageHero", () => {
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });
 
+  // /ueber-mich (2026-10-01): the founder portrait sits beside the lead.
+  it("shows a portrait with its caption beside the lead when one is passed", () => {
+    render(
+      <PageHero
+        title="T"
+        lead="Der Vorspann."
+        src="/x.webp"
+        portrait={{ src: "/p.webp", alt: "Porträt von Ajdin", caption: "Ajdin Dzafic · Gründer" }}
+      />,
+    );
+    expect(screen.getByRole("img", { name: "Porträt von Ajdin" })).toBeInTheDocument();
+    expect(screen.getByText("Ajdin Dzafic · Gründer")).toBeInTheDocument();
+    expect(screen.getByText("Der Vorspann.")).toBeInTheDocument();
+  });
+
+  it("renders no portrait unless one is passed", () => {
+    // The banner image is decorative (alt=""), so no img role is exposed.
+    render(<PageHero title="T" lead="Der Vorspann." src="/x.webp" />);
+    expect(screen.queryByRole("img")).not.toBeInTheDocument();
+  });
+
   it("keeps the tall hero by default", () => {
     const { container } = render(<PageHero title="T" src="/x.webp" />);
     expect(container.querySelector("section")).toHaveClass("min-h-[68vh]");

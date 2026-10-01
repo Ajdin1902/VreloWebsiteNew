@@ -1,23 +1,24 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import UeberMichPage from "./page";
-import { bildhinweis } from "@/lib/ueber-mich";
+import { portraits } from "@/lib/portraits";
 
 describe("/ueber-mich", () => {
-  it("shows the AI-imagery note in the page body, not only in a footer", () => {
-    // The note has to sit next to the Bosnia story: that is where a reader
-    // could read the generated spring as a photo of a real place.
+  it("shows the standing portrait beside the intro", () => {
     render(<UeberMichPage />);
-    expect(screen.getByText(bildhinweis)).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: portraits.stehend.alt })).toBeInTheDocument();
   });
 
-  it("places the note under the first story beat", () => {
+  it("shows the sitting portrait in the closing section", () => {
+    render(<UeberMichPage />);
+    const sitting = screen.getByRole("img", { name: portraits.sitzend.alt });
+    const close = screen.getByRole("heading", { level: 2, name: "Fang klein an." }).closest("section");
+    expect(close?.contains(sitting)).toBe(true);
+  });
+
+  it("carries no AI-imagery note any more (removed 2026-10-01)", () => {
     const { container } = render(<UeberMichPage />);
-    const note = screen.getByText(bildhinweis);
-    const firstBeatHeading = container.querySelector("#beat-quelle");
-    expect(firstBeatHeading).not.toBeNull();
-    // Same Reveal wrapper as the first beat.
-    expect(note.closest(".reveal")?.contains(firstBeatHeading!)).toBe(true);
+    expect(container.textContent).not.toMatch(/mit KI erzeugt/);
   });
 
   it("closes on the Prozess-Check with the ueber-mich slug", () => {

@@ -28,13 +28,13 @@ describe("legal content", () => {
     expect(v!.body).toContain("Ajdin Dzafic");
   });
 
-  it("impressum declares the AI-generated imagery site-wide", () => {
-    // The /ueber-mich note covers the spot where a reader could take a
-    // generated spring for a real photo; this covers every other page.
-    const bild = impressum.sections.find((s) => /Bildnachweis/i.test(s.heading));
-    expect(bild).toBeDefined();
-    expect(bild!.body).toMatch(/KI erzeugt/);
-    expect(bild!.body).toMatch(/keine realen Personen, Orte oder Ereignisse/);
+  it("impressum carries no Bildnachweis claiming no real persons", () => {
+    // Removed 2026-10-01 by founder decision: generated landscapes need no
+    // label, and /ueber-mich now shows real photos of the founder, so the old
+    // „keine realen Personen“ line would be false.
+    expect(impressum.sections.find((s) => /Bildnachweis/i.test(s.heading))).toBeUndefined();
+    const all = impressum.sections.map((s) => s.body).join("\n");
+    expect(all).not.toMatch(/keine realen Personen/);
   });
 
   it("impressum links the EU OS-Plattform URL with markdown syntax", () => {

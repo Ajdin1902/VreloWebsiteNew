@@ -6,7 +6,8 @@ import { ClosingCta } from "@/components/ClosingCta";
 import { CHECK_SRC } from "@/lib/prozessCheckCta";
 import { StoryBeat } from "@/components/ueber-mich/StoryBeat";
 import { Reveal } from "@/components/Reveal";
-import { bildhinweis, storyBeats } from "@/lib/ueber-mich";
+import { storyBeats } from "@/lib/ueber-mich";
+import { portraits } from "@/lib/portraits";
 import { JsonLd } from "@/components/JsonLd";
 import { personLd, breadcrumbLd } from "@/lib/jsonld";
 import { canonical } from "@/lib/site";
@@ -24,6 +25,7 @@ export default function UeberMichPage() {
       <PageHero
         title="Über mich"
         src="/images/ueber-mich-banner.webp"
+        portrait={portraits.stehend}
         lead="Ich bin Ajdin Dzafic, Gründer von Vrelo, jahrelanger Prozessautomatisierer mit einem Master of Science in Wirtschaftsinformatik, und Kaffeeliebhaber. Das Schönste an meiner Arbeit war für mich immer der Moment am Ende eines Projekts: Niemand musste sich mehr um die wiederkehrenden, zeitraubenden Aufgaben kümmern. Sie liefen von selbst. Das brachte Ruhe. Genau das ist die Motivation hinter Vrelo."
       />
 
@@ -49,11 +51,6 @@ export default function UeberMichPage() {
             ) : null}
             <Reveal>
               <StoryBeat beat={beat} onDark={onDark} />
-              {/* The AI-imagery note rides the first beat, where the Bosnia
-                  story and the generated spring sit side by side. */}
-              {index === 0 ? (
-                <p className="mt-10 max-w-xl text-sm text-stumm">{bildhinweis}</p>
-              ) : null}
             </Reveal>
           </Section>
         );

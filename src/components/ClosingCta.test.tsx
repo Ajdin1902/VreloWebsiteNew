@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { ClosingCta } from "./ClosingCta";
+import { portraits } from "@/lib/portraits";
 
 describe("ClosingCta", () => {
   it("renders the heading (h2) and lead", () => {
@@ -27,6 +28,16 @@ describe("ClosingCta", () => {
       "href",
       "/prozess-check?src=faq",
     );
+  });
+
+  // 2026-10-01: every close carries the founder's sitting photo.
+  it("shows the founder photo beside the close on every caller", () => {
+    render(<ClosingCta heading="h" lead="l" src="leistungen-close" />);
+    expect(screen.getByRole("img", { name: portraits.sitzend.alt })).toHaveAttribute(
+      "src",
+      expect.stringContaining("portrait-sitzend"),
+    );
+    expect(screen.getByRole("link", { name: "Prozess-Check starten" })).toBeInTheDocument();
   });
 
   it("keeps the ember heading and the navy (inverse) button on the warm band", () => {
