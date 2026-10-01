@@ -84,7 +84,7 @@ Zweck: Beweis-Block auf `/leistungen/ki-automatisierung`. Regel: nur Primärquel
 | Zahl | Wortlaut auf der Quelle (exakt) | Stichprobe | Quelle | Jahr | URL | abgerufen |
 |---|---|---|---|---|---|---|
 
-## 2. Auswahl für die Website (2–3) und warum
+## 2. Auswahl für die Website (2 bis 3) und warum
 
 ## 3. TS-Block
 ```ts
