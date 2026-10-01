@@ -84,6 +84,16 @@ export function findCopyIssues(body: string): CopyIssue[] {
     });
   }
 
+  // Ajdin 2026-10-01: never a comma before und. Where grammar needs one
+  // (closing a subordinate clause), the sentence gets rephrased instead.
+  const kommaUnd = /,\s+und\b/.exec(body);
+  if (kommaUnd) {
+    issues.push({
+      kind: "comma-und",
+      detail: `no comma before und: drop it or rephrase: ...${snippet(body, kommaUnd.index)}...`,
+    });
+  }
+
   const punctuated = /[a-zäöüß][:*_]innen\b/i.exec(body);
   if (punctuated) {
     issues.push({

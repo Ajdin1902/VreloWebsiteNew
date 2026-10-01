@@ -134,7 +134,7 @@ describe("hoursLabel", () => {
 describe("RESULT_UI.schedulerPrompt", () => {
   it("is the short bridge from result to call", () => {
     expect(RESULT_UI.schedulerPrompt).toBe(
-      "Jetzt weißt du, wo du Zeit verlierst. Im Gespräch findest du heraus, wie du sie zurückbekommst. Lohnt sich etwas, zeigt dir ein Fahrplan den Weg. Kostenlos, und er gehört dir.",
+      "Jetzt weißt du, wo du Zeit verlierst. Im Gespräch findest du heraus, wie du sie zurückbekommst. Lohnt sich etwas, zeigt dir ein Fahrplan den Weg. Er ist kostenlos und gehört dir.",
     );
   });
 

@@ -73,7 +73,7 @@ export function buildLeadSummaryEmail(p: {
       ${heroHtml}
       <div style="width:44px;height:3px;background:#d4a24c;margin:0 auto 22px"></div>
       ${contextHtml}
-      <div style="background:#ece3d2;border-radius:8px;padding:14px 16px;font-size:13px;line-height:1.6;margin:0 0 22px"><strong>Wie wir rechnen:</strong> Grundlage ist die Lead-Response-Forschung (HBR/InsideSales). Nach der Fünf-Minuten-Marke fällt die Chance, einen Lead zu erreichen, um rund das Acht- bis Zehnfache. Wir rechnen bewusst konservativ, und selbst dann, wenn nur jeder fünfte zurückgeholte Termin zum Abschluss wird.</div>
+      <div style="background:#ece3d2;border-radius:8px;padding:14px 16px;font-size:13px;line-height:1.6;margin:0 0 22px"><strong>Wie wir rechnen:</strong> Grundlage ist die Lead-Response-Forschung (HBR/InsideSales). Nach der Fünf-Minuten-Marke fällt die Chance, einen Lead zu erreichen, um rund das Acht- bis Zehnfache. Wir rechnen bewusst konservativ: mit nur jedem fünften zurückgeholten Termin als Abschluss.</div>
       <p style="font-size:15px;font-weight:bold;color:#0a2538;margin:0 0 8px">${tipsHeading}</p>
       <ul style="margin:0 0 8px;padding-left:20px;font-size:14.5px;line-height:1.6">
         <li style="margin-bottom:4px">Eine feste Fünf-Minuten-Regel für neue Anfragen.</li>
@@ -110,7 +110,7 @@ export function buildLeadSummaryEmail(p: {
             : `Gerechnet mit ${nf.format(result.provisionUsed)} € pro Abschluss.`,
         ]),
     "",
-    "Wie wir rechnen: Grundlage ist die Lead-Response-Forschung (HBR/InsideSales). Nach der Fünf-Minuten-Marke fällt die Chance, einen Lead zu erreichen, um rund das Acht- bis Zehnfache. Wir rechnen bewusst konservativ, und selbst dann, wenn nur jeder fünfte zurückgeholte Termin zum Abschluss wird.",
+    "Wie wir rechnen: Grundlage ist die Lead-Response-Forschung (HBR/InsideSales). Nach der Fünf-Minuten-Marke fällt die Chance, einen Lead zu erreichen, um rund das Acht- bis Zehnfache. Wir rechnen bewusst konservativ: mit nur jedem fünften zurückgeholten Termin als Abschluss.",
     "",
     `${tipsHeading}:`,
     "- Eine feste Fünf-Minuten-Regel für neue Anfragen.",

@@ -191,7 +191,7 @@ export const leistungenPages: LeistungPage[] = [
         "Mitarbeiter mit privaten KI-Konten",
         "Abhängig vom Dienstleister",
       ],
-      close: "Mit dem richtigen Aufbau nutzt du KI, und deine Daten bleiben bei dir.",
+      close: "Mit dem richtigen Aufbau nutzt du KI und deine Daten bleiben bei dir.",
     },
     proof: {
       kind: "case",
@@ -300,7 +300,7 @@ export const leistungenPages: LeistungPage[] = [
         { title: "Format nach Absprache.", body: "Vor Ort oder online, für ein kleines Team oder eine Abteilung. Wir legen es im Gespräch fest." },
       ],
       objection:
-        "Dein Team bleibt. Die KI nimmt ihm das Immergleiche ab, und ihr entscheidet, wofür ihr die gewonnene Zeit nutzt.",
+        "Dein Team bleibt. Die KI nimmt ihm das Immergleiche ab und ihr entscheidet, wofür ihr die gewonnene Zeit nutzt.",
     },
     example: {
       heading: "So sieht das aus",
@@ -308,7 +308,7 @@ export const leistungenPages: LeistungPage[] = [
       steps: [
         "Wir nehmen eine echte Aufgabe aus eurem Alltag.",
         "Dein Team baut sich dafür eine Vorlage in Claude, mit euren Regeln und eurem Ton.",
-        "Ab dem nächsten Tag nutzt jeder diese Vorlage, und ihr seht, welche Aufgabe als Nächstes dran ist.",
+        "Ab dem nächsten Tag nutzt jeder diese Vorlage und ihr seht, welche Aufgabe als Nächstes dran ist.",
       ],
       after: "Dein Team arbeitet mit Vorlagen, die es in der Schulung selbst gebaut hat.",
     },
@@ -351,7 +351,7 @@ export const leistungenPages: LeistungPage[] = [
         { title: "Der Fahrplan gehört dir.", body: "Du kannst ihn selbst umsetzen, umsetzen lassen oder mit mir bauen." },
       ],
       objection:
-        "Mit KI auskennen musst du dich nicht. Du erzählst mir, was dich Zeit kostet, und ich suche die passende Technik.",
+        "Mit KI auskennen musst du dich nicht. Du erzählst mir, was dich Zeit kostet. Ich suche die passende Technik dazu.",
     },
     example: {
       heading: "So läuft die Beratung",
@@ -361,7 +361,7 @@ export const leistungenPages: LeistungPage[] = [
         "Lohnt es sich, schaue ich mir im Prozess-Audit deine Abläufe genauer an.",
         "Wenn sich etwas lohnt, bekommst du ein bis zwei Werktage später einen Fahrplan: was sich automatisieren lässt, was es bringt und in welcher Reihenfolge.",
       ],
-      after: "Du weißt, womit du anfängst, und entscheidest selbst, ob und mit wem.",
+      after: "Du weißt, womit du anfängst. Ob und mit wem du es umsetzt, entscheidest du selbst.",
     },
     auditCard: true,
     note: {
@@ -401,7 +401,7 @@ export const leistungenPages: LeistungPage[] = [
     proof: {
       kind: "case",
       heading: "So betreue ich",
-      body: "Jedes System, das ich betreue, meldet sich, wenn etwas schiefgeht: Der Alarm kommt bei mir an, bevor es dir auffällt. Ich teste, dass dieser Alarm bei mir ankommt. Fehler behebe ich, kleine Änderungen sind enthalten, und einmal im Monat siehst du in einer Zeile, was dein System erledigt hat.",
+      body: "Jedes System, das ich betreue, meldet sich, wenn etwas schiefgeht: Der Alarm kommt bei mir an, bevor es dir auffällt. Ich teste, dass dieser Alarm bei mir ankommt. Fehler behebe ich, kleine Änderungen sind enthalten und einmal im Monat siehst du in einer Zeile, was dein System erledigt hat.",
       objection:
         "Die Betreuung ist monatlich kündbar. Kündigst du, läuft dein System sicher weiter, nur ohne Anpassungen.",
     },
@@ -410,7 +410,7 @@ export const leistungenPages: LeistungPage[] = [
       before: "Einen Fehler bemerkst du erst, wenn sich ein Kunde beschwert.",
       steps: [
         "Eine Verbindung zu einem Programm bricht nachts ab.",
-        "Der Alarm kommt bei mir an, und ich sehe, welcher Schritt fehlgeschlagen ist.",
+        "Der Alarm kommt bei mir an und ich sehe, welcher Schritt fehlgeschlagen ist.",
         "Ich behebe den Fehler und lasse die liegengebliebenen Vorgänge nachlaufen.",
       ],
       after: "Der Fehler ist behoben, bevor dein Kunde ihn bemerkt.",

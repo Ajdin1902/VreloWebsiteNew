@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   alternates: { canonical: canonical("/ueber-mich") },
   title: "Über mich",
   description:
-    "Wer hinter Vrelo steckt: meine Geschichte von der Quelle bis zum Merak-Effekt, und warum ich Automatisierungen für Betriebe und Unternehmen baue.",
+    "Wer hinter Vrelo steckt: meine Geschichte von der Quelle bis zum Merak-Effekt und warum ich Automatisierungen für Betriebe und Unternehmen baue.",
 };
 
 export default function UeberMichPage() {
@@ -26,7 +26,7 @@ export default function UeberMichPage() {
         title="Über mich"
         src="/images/ueber-mich-banner.webp"
         portrait={portraits.stehend}
-        lead="Ich bin Ajdin Dzafic, Gründer von Vrelo, jahrelanger Prozessautomatisierer mit einem Master of Science in Wirtschaftsinformatik, und Kaffeeliebhaber. Das Schönste an meiner Arbeit war für mich immer der Moment am Ende eines Projekts: Niemand musste sich mehr um die wiederkehrenden, zeitraubenden Aufgaben kümmern. Sie liefen von selbst. Das brachte Ruhe. Genau das ist die Motivation hinter Vrelo."
+        lead="Ich bin Ajdin Dzafic, Gründer von Vrelo, jahrelanger Prozessautomatisierer mit einem Master of Science in Wirtschaftsinformatik und Kaffeeliebhaber. Das Schönste an meiner Arbeit war für mich immer der Moment am Ende eines Projekts: Niemand musste sich mehr um die wiederkehrenden, zeitraubenden Aufgaben kümmern. Sie liefen von selbst. Das brachte Ruhe. Genau das ist die Motivation hinter Vrelo."
       />
 
       {storyBeats.map((beat, index) => {

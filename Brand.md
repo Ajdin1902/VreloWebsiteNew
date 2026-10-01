@@ -62,6 +62,7 @@ Other approved taglines: *Die Quelle. Der Merak-Effekt.* · *Aus der Quelle in d
 - **Water metaphor:** at most ONE per piece (Quelle/Fluss) — evocative, not flooded.
 - *Merak*-Effekt is a **feeling, never a product/package name**. Always paired with Vrelo (Quelle → Effekt), always warm register.
 - **German punctuation (founder decision 2026-08-16):** German quotes (U+201E open, U+201C close), never ASCII straight quotes. **No Gedankenstrich in German copy.** The spaced en-dash (U+2013) is retired; join clauses with a comma, a period, or a colon, and write number ranges with the word bis (e.g. 1 bis 2). Em-dashes (U+2014) never appear in German copy either. (English code comments may keep the em-dash.)
+- **No comma before „und“ (founder decision 2026-10-01: „Humans do not do that.“):** drop it between main clauses and list items. Where German grammar needs it (the comma closes a subordinate or relative clause, an insertion, or comes before „und zwar“), rephrase the sentence instead, usually by splitting it in two. The site copy guard (`findCopyIssues` + `src/lib/kommaUnd.test.ts`) enforces it.
 
 ---
 

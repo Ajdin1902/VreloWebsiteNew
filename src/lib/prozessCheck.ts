@@ -212,7 +212,7 @@ export const RESULT_UI = {
   // („Lohnt sich etwas“): the audit is at Vrelo's discretion
   // (Knowledge/marketing/prozess-check-funnel.md §1a/§2).
   schedulerPrompt:
-    "Jetzt weißt du, wo du Zeit verlierst. Im Gespräch findest du heraus, wie du sie zurückbekommst. Lohnt sich etwas, zeigt dir ein Fahrplan den Weg. Kostenlos, und er gehört dir.",
+    "Jetzt weißt du, wo du Zeit verlierst. Im Gespräch findest du heraus, wie du sie zurückbekommst. Lohnt sich etwas, zeigt dir ein Fahrplan den Weg. Er ist kostenlos und gehört dir.",
   schedulerFallbackHint: "Schreib mir so lange einfach über das Kontaktformular.",
   emailLabel: "Ergebnis lieber per Mail?",
   emailIntro: "Ich schick dir deine Auswertung zu, dann hast du sie in Ruhe.",

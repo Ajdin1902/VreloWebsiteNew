@@ -5,7 +5,7 @@ const clean = `Ich habe das lange beobachtet.
 
 ## Warum das passiert
 
-Der Kunde wartet, und niemand antwortet. „So läuft das oft.“
+Der Kunde wartet und niemand antwortet. „So läuft das oft.“
 `;
 
 describe("stripFrontmatter", () => {
@@ -27,6 +27,16 @@ describe("stripFrontmatter", () => {
 describe("findCopyIssues", () => {
   it("passes clean German copy", () => {
     expect(findCopyIssues(clean)).toEqual([]);
+  });
+
+  // Ajdin 2026-10-01: „Humans do not do that.“ Rephrase where grammar needs the comma.
+  it("catches a comma before und", () => {
+    const issues = findCopyIssues("Ich bleibe erreichbar, und du weißt Bescheid.");
+    expect(issues.map((i) => i.kind)).toContain("comma-und");
+  });
+
+  it("leaves und without a comma alone", () => {
+    expect(findCopyIssues("Schnell und ruhig, ohne Umweg.")).toEqual([]);
   });
 
   it("catches the em-dash", () => {

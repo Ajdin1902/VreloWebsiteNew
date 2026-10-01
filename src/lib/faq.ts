@@ -11,7 +11,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Wie läuft ein Projekt mit dir ab?",
         answer:
-          "In drei Schritten: Zuerst legen wir in einem unverbindlichen Erstgespräch den Grundstein: womit du arbeitest, wo es hakt, wo du hinwillst. Dann erstelle ich dir einen genauen Plan, wie wir dorthin kommen: Welche Prozesse lassen sich automatisieren, wo lohnt es sich am meisten, und was bringt dir das konkret? Zum Schluss entscheidest du, wann du diesen Weg gehen möchtest. Nach dem Projekt bleibe ich für Anpassungen erreichbar.",
+          "In drei Schritten: Zuerst legen wir in einem unverbindlichen Erstgespräch den Grundstein: womit du arbeitest, wo es hakt, wo du hinwillst. Dann erstelle ich dir einen genauen Plan, wie wir dorthin kommen: Welche Prozesse lassen sich automatisieren, wo lohnt es sich am meisten und was bringt dir das konkret? Zum Schluss entscheidest du, wann du diesen Weg gehen möchtest. Nach dem Projekt bleibe ich für Anpassungen erreichbar.",
       },
       {
         question: "Für welche Betriebe baust du?",
@@ -26,7 +26,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Was passiert nach dem Projekt?",
         answer:
-          "In den ersten 14 Tagen nach der Übergabe beobachte ich dein System und justiere nach, ohne dass du dich darum kümmerst. Danach bist du nicht allein: Ich bleibe erreichbar, und weil alles sauber dokumentiert ist, lässt sich dein System anpassen, wenn sich etwas in deinem Betrieb ändert.",
+          "In den ersten 14 Tagen nach der Übergabe beobachte ich dein System und justiere nach, ohne dass du dich darum kümmerst. Danach bist du nicht allein: Ich bleibe erreichbar. Weil alles sauber dokumentiert ist, lässt sich dein System anpassen, wenn sich etwas in deinem Betrieb ändert.",
       },
       {
         question: "Ersetzt die Automatisierung mich oder meine Mitarbeiter?",

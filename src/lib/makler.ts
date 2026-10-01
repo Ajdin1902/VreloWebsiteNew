@@ -77,7 +77,7 @@ export const makler: MaklerPage = {
     leaks: [
       {
         title: "Die Anfrage, die kalt wird",
-        body: "Eine Anfrage kommt abends um halb zehn herein. Du siehst sie am nächsten Morgen zwischen zwei Terminen. Bis du antwortest, hat der Interessent längst drei weitere Berater angeschrieben, und spricht mit dem, der zuerst zurückgemeldet hat. Die Anfrage war da. Der Abschluss nicht.",
+        body: "Eine Anfrage kommt abends um halb zehn herein. Du siehst sie am nächsten Morgen zwischen zwei Terminen. Bis du antwortest, hat der Interessent längst drei weitere Berater angeschrieben und spricht mit dem, der zuerst zurückgemeldet hat. Die Anfrage war da. Der Abschluss nicht.",
       },
       {
         title: "Die Unterlagen, denen du hinterhertelefonierst",
@@ -127,10 +127,10 @@ export const makler: MaklerPage = {
       { title: "Eine Meldung an dich", body: "Alle sieben da. Oder es fehlt noch der Kontoauszug. Du musst nichts öffnen." },
     ],
     outcome:
-      "Vollständige, geprüfte Akten in deiner eigenen Cloud, und kein einziges Telefonat, in dem du um eine Gehaltsabrechnung bittest.",
+      "Vollständige, geprüfte Akten in deiner eigenen Cloud und kein einziges Telefonat, in dem du um eine Gehaltsabrechnung bittest.",
     trust: {
       title: "Wo die Unterlagen liegen",
-      body: "Die Unterlagen deiner Kunden bleiben in deinen eigenen Konten. Das System läuft auf deinem eigenen Server, die Upload-Seite ebenso, und die Dateien landen in deiner eigenen Cloud, bei mir liegt keine einzige. Für die automatische Prüfung geht jede Seite einmal an einen KI-Dienst, der ebenfalls in deinem eigenen Konto läuft, Rechenzentrum in der EU; gespeichert wird dort nichts. Alles verschlüsselt übertragen, mit Auftragsverarbeitungsvertrag. Bei Gehaltsabrechnungen und SCHUFA-Auskünften ist das keine Formalie, sondern die Grundbedingung.",
+      body: "Die Unterlagen deiner Kunden bleiben in deinen eigenen Konten. Das System läuft auf deinem eigenen Server, die Upload-Seite ebenso und die Dateien landen in deiner eigenen Cloud, bei mir liegt keine einzige. Für die automatische Prüfung geht jede Seite einmal an einen KI-Dienst, der ebenfalls in deinem eigenen Konto läuft, Rechenzentrum in der EU; gespeichert wird dort nichts. Alles verschlüsselt übertragen, mit Auftragsverarbeitungsvertrag. Bei Gehaltsabrechnungen und SCHUFA-Auskünften ist das keine Formalie, sondern die Grundbedingung.",
     },
     note: "Den Document Concierge baue ich für dich, nach deinen Fallarten, deinen Checklisten, deiner Cloud. Es gibt ihn nicht als fertige Software zum Anklicken. Deshalb siehst du hier den Ablauf; alles Weitere zeige ich dir im Gespräch.",
     demoVideo: null,
@@ -141,7 +141,7 @@ export const makler: MaklerPage = {
     items: [
       {
         title: "Deinen eigenen Server",
-        body: "Ich richte ihn ein und baue alles darauf. Er läuft auf deinem eigenen Konto, rund 30 € im Monat, und er gehört dir. Deshalb liegen deine Daten auch bei dir und nicht bei mir.",
+        body: "Ich richte ihn ein und baue alles darauf. Er läuft auf deinem eigenen Konto für rund 30 € im Monat und gehört dir. Deshalb liegen deine Daten auch bei dir und nicht bei mir.",
       },
       {
         title: "Wartung nur, wenn du willst",
@@ -194,7 +194,7 @@ export const makler: MaklerPage = {
       {
         question: "Ich habe doch schon ein Kontaktformular und einen Kalender-Link.",
         answer:
-          "Das Formular sammelt eine Anfrage. Reagieren, qualifizieren und nachfassen musst du weiter selbst, und zwar rechtzeitig. Genau da geht das Geld verloren: Die meisten Anfragen kommen abends oder am Wochenende, und bis du am Schreibtisch bist, ist der Interessent oft schon woanders. Der Kalender-Link hilft nur dem, der ohnehin buchen will. Die Termin-Quelle schließt die Lücke dazwischen.",
+          "Das Formular sammelt eine Anfrage. Reagieren, qualifizieren und rechtzeitig nachfassen musst du weiter selbst. Genau da geht das Geld verloren: Die meisten Anfragen kommen abends oder am Wochenende. Bis du am Schreibtisch bist, ist der Interessent oft schon woanders. Der Kalender-Link hilft nur dem, der ohnehin buchen will. Die Termin-Quelle schließt die Lücke dazwischen.",
       },
       {
         question: "Ich bin kein Technik-Mensch.",

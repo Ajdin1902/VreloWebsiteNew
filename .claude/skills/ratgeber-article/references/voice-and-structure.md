@@ -32,6 +32,7 @@ Pick the motif from `image_prompt.md` §9 that matches the article's theme (e.g.
 Run every line; fix before writing.
 - [ ] No em-dash „—“ anywhere — only „ – “ (U+2013). (`grep -c "—"` on the draft = 0.)
 - [ ] German quotes balanced — count of „ equals count of “ (U+201C). No ASCII `"` in prose.
+- [ ] No comma before „und“ anywhere (Ajdin 2026-10-01). Where grammar needs it, rephrase; `findCopyIssues` fails the build otherwise.
 - [ ] ≤ 1 water metaphor in the whole body.
 - [ ] Generic masculine only — no `…innen` / feminine plurals.
 - [ ] *Merak* appears and lands as a warm feeling near the end.

@@ -58,7 +58,7 @@ describe("makler copy", () => {
     // Concierge trust paragraph true. See the design spec §2.1.
     const server = makler.voraussetzungen.items[0].body;
     expect(server).toContain("deinem eigenen Konto");
-    expect(server).toContain("er gehört dir");
+    expect(server).toContain("gehört dir");
   });
 
   it("points the demo invitation at /demo and the CTA at the booking anchor", () => {

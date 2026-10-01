@@ -9,7 +9,7 @@ import { calLink } from "@/lib/contact";
 export const metadata: Metadata = {
   title: "Prozess-Check",
   description:
-    "In drei Minuten siehst du, wie viele Stunden pro Woche dich wiederkehrende Aufgaben kosten, und wo du am meisten Zeit zurückgewinnst. Kein Login, dein Ergebnis sofort.",
+    "In drei Minuten siehst du, wie viele Stunden pro Woche dich wiederkehrende Aufgaben kosten und wo du am meisten Zeit zurückgewinnst. Kein Login, dein Ergebnis sofort.",
   robots: { index: true, follow: true },
   alternates: { canonical: "/prozess-check" },
 };
