@@ -5,7 +5,7 @@ import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { CTAButton } from "@/components/CTAButton";
 import { SecondaryLink } from "@/components/SecondaryLink";
 import { withBrandWords } from "@/components/BrandWord";
-import { CHECK_CTA, checkHref, type CheckSrc } from "@/lib/prozessCheckCta";
+import { CHECK_CTA, checkHref, kontaktHref, type CheckSrc } from "@/lib/prozessCheckCta";
 
 // The site-wide close: every subpage ends on the same sunlit water surface —
 // the subpage twin of the homepage's Proof→Merak "surface break". Dark bands
@@ -55,7 +55,9 @@ export function ClosingCta({
           </>
         ) : (
           <>
-            <CTAButton href="/kontakt" variant="inverse" />
+            <CTAButton href={kontaktHref(src)} variant="inverse">
+              {CHECK_CTA.directLabel}
+            </CTAButton>
             <SecondaryLink tone="light" prefix={CHECK_CTA.checkPrefix} label={CHECK_CTA.checkLabel} href={checkHref(src)} />
           </>
         )}

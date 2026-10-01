@@ -1,5 +1,6 @@
 // src/app/kontakt/page.tsx
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { PageIntro } from "@/components/PageIntro";
 import { RippleImage } from "@/components/RippleImage";
 import { WaterSection } from "@/components/WaterSection";
@@ -7,6 +8,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { ContactForm } from "@/components/kontakt/ContactForm";
 import { CardHeading } from "@/components/kontakt/CardHeading";
 import { SchedulerEmbed } from "@/components/kontakt/SchedulerEmbed";
+import { SchedulerFromUrl } from "@/components/kontakt/SchedulerFromUrl";
 import { CheckHint } from "@/components/kontakt/CheckHint";
 import { lightLinkClass } from "@/components/kontakt/onDarkLink";
 import { isContactConfigured, contactTo, calLink } from "@/lib/contact";
@@ -36,7 +38,9 @@ export default function KontaktPage() {
           so the booking subheadline keeps some breathing room at the top). */}
       <WaterSection src="/images/bg-horizont.webp" className="-mt-12 md:-mt-16">
         <CheckHint />
-        <SchedulerEmbed calLink={calLink()} />
+        <Suspense fallback={<SchedulerEmbed calLink={calLink()} />}>
+          <SchedulerFromUrl calLink={calLink()} />
+        </Suspense>
 
         <div className="mx-auto mt-12 max-w-xl rounded-2xl bg-amber p-8 shadow-deepwater md:mt-16 md:p-10">
           {configured ? (

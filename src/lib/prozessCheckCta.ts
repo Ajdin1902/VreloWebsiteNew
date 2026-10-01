@@ -15,6 +15,13 @@ export const CHECK_SRC = {
   leistungenAudit: "leistungen-audit",
   leistungenEinwand: "leistungen-einwand",
   leistungenClose: "leistungen-close",
+  leistungProzessautomatisierung: "leistung-prozessautomatisierung",
+  leistungKiAutomatisierung: "leistung-ki-automatisierung",
+  leistungKiServer: "leistung-ki-server",
+  leistungClaude: "leistung-claude",
+  leistungKiSchulung: "leistung-ki-schulung",
+  leistungKiBeratung: "leistung-ki-beratung",
+  leistungBetreuung: "leistung-betreuung",
   ratgeber: "ratgeber",
   ueberMich: "ueber-mich",
   faq: "faq",
@@ -27,6 +34,13 @@ export type CheckSrc = (typeof CHECK_SRC)[keyof typeof CHECK_SRC];
 
 export function checkHref(src: CheckSrc): string {
   return `/prozess-check?src=${src}`;
+}
+
+// The Erstgespräch twin of checkHref: /kontakt reads ?src= on the client and
+// writes it into the Cal booking notes, so a call booked from a subpage whose
+// primary button is the Erstgespräch stays attributable (spec 2026-10-01 §5).
+export function kontaktHref(src: CheckSrc): string {
+  return `/kontakt?src=${src}`;
 }
 
 export const CHECK_CTA = {

@@ -23,7 +23,7 @@ describe("ClosingCta", () => {
 
   it("flips to /kontakt primary with the check as secondary (FAQ exception)", () => {
     render(<ClosingCta heading="h" lead="l" src="faq" primary="kontakt" />);
-    expect(screen.getByRole("link", { name: "Zeit zurückgewinnen" })).toHaveAttribute("href", "/kontakt");
+    expect(screen.getByRole("link", { name: "Erstgespräch buchen" })).toHaveAttribute("href", "/kontakt?src=faq");
     expect(screen.getByRole("link", { name: "Erst den Prozess-Check machen" })).toHaveAttribute(
       "href",
       "/prozess-check?src=faq",

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { CHECK_SRC, CHECK_CTA, CHECK_TEASER, SAMPLE_ANSWERS, checkHref, questionCountPhrase } from "./prozessCheckCta";
+import { CHECK_SRC, CHECK_CTA, CHECK_TEASER, SAMPLE_ANSWERS, checkHref, kontaktHref, questionCountPhrase } from "./prozessCheckCta";
 import { normalizeSource } from "./source";
 import { STEPS, resultCopy } from "./prozessCheck";
 
@@ -89,5 +89,25 @@ describe("SAMPLE_ANSWERS", () => {
     expect(r.fits).toBe(true);
     expect(r.headline).toBe("Rund 9 Stunden pro Woche");
     expect(r.topAreas.map((a) => a.id)).toEqual(["rechnungen", "anfragen", "daten"]);
+  });
+});
+
+describe("subpage attribution", () => {
+  it("has one normalisable slug per Leistungen subpage", () => {
+    const slugs = [
+      CHECK_SRC.leistungProzessautomatisierung,
+      CHECK_SRC.leistungKiAutomatisierung,
+      CHECK_SRC.leistungKiServer,
+      CHECK_SRC.leistungClaude,
+      CHECK_SRC.leistungKiSchulung,
+      CHECK_SRC.leistungKiBeratung,
+      CHECK_SRC.leistungBetreuung,
+    ];
+    expect(new Set(slugs).size).toBe(7);
+    for (const s of slugs) expect(normalizeSource(s)).toBe(s);
+  });
+
+  it("builds the Erstgespräch link with the same src", () => {
+    expect(kontaktHref(CHECK_SRC.leistungClaude)).toBe("/kontakt?src=leistung-claude");
   });
 });
