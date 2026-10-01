@@ -1,6 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import { getLeistungPage, type LeistungSlug } from "@/lib/leistungenPages";
+
+export type RatgeberKategorie = "Grundlagen" | "Praxis" | "Kosten";
+export const RATGEBER_KATEGORIEN: RatgeberKategorie[] = ["Grundlagen", "Praxis", "Kosten"];
 
 export type Article = {
   slug: string;
@@ -13,6 +17,8 @@ export type Article = {
   cover: string; // public path, e.g. "/images/ratgeber-termine.webp"
   coverAlt: string; // German alt text
   body: string; // raw MDX body, frontmatter stripped
+  kategorie?: RatgeberKategorie;
+  leistung?: LeistungSlug; // the Leistungen subpage this article explains
 };
 
 export function readingMinutes(text: string): number {
@@ -40,6 +46,14 @@ export function parseArticle(filename: string, raw: string): Article {
   if (!coverAlt) {
     throw new Error(`Ratgeber article "${slug}" is missing required frontmatter: coverAlt`);
   }
+  const kategorie = data.kategorie === undefined ? undefined : String(data.kategorie);
+  if (kategorie !== undefined && !RATGEBER_KATEGORIEN.includes(kategorie as RatgeberKategorie)) {
+    throw new Error(`Ratgeber article "${slug}" has an unknown kategorie: ${kategorie}`);
+  }
+  const leistung = data.leistung === undefined ? undefined : String(data.leistung);
+  if (leistung !== undefined && !getLeistungPage(leistung)) {
+    throw new Error(`Ratgeber article "${slug}" has an unknown leistung: ${leistung}`);
+  }
   return {
     slug,
     title: String(data.title ?? ""),
@@ -51,6 +65,8 @@ export function parseArticle(filename: string, raw: string): Article {
     cover,
     coverAlt,
     body: content,
+    kategorie: kategorie as RatgeberKategorie | undefined,
+    leistung: leistung as LeistungSlug | undefined,
   };
 }
 

@@ -14,6 +14,7 @@ import { getArticleSlugs, getArticleBySlug, draftsVisible, type Article } from "
 import { articleLd, breadcrumbLd } from "@/lib/jsonld";
 import { canonical } from "@/lib/site";
 import Link from "next/link";
+import { getLeistungPage } from "@/lib/leistungenPages";
 
 export function generateStaticParams() {
   return getArticleSlugs().map((slug) => ({ slug }));
@@ -66,6 +67,17 @@ export default async function ArticlePage(
           />
         </div>
         <div className="mx-auto mt-12 max-w-2xl">
+          {article.leistung ? (
+            <p className="mb-6 text-tinte">
+              Mehr dazu, was ich hier baue:{" "}
+              <Link
+                href={`/leistungen/${article.leistung}`}
+                className="rounded-sm font-medium text-vrelo-petrol underline underline-offset-4 hover:text-tiefes-wasser focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-lesepapier focus-visible:ring-vrelo-petrol"
+              >
+                {getLeistungPage(article.leistung)?.navLabel}
+              </Link>
+            </p>
+          ) : null}
           <Link
             href="/ratgeber"
             className="rounded-sm text-sm font-medium text-stumm underline-offset-4 hover:text-vrelo-petrol hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-lesepapier focus-visible:ring-vrelo-petrol"

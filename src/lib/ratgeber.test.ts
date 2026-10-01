@@ -92,3 +92,38 @@ describe("selectArticles", () => {
     expect(r.map((a) => a.slug)).toEqual(["new", "draft", "old"]);
   });
 });
+
+describe("kategorie and leistung frontmatter", () => {
+  const base = `---
+title: "T"
+description: "D"
+date: "2026-10-01"
+cover: "/images/x.webp"
+coverAlt: "Alt"
+`;
+
+  it("reads a known kategorie and leistung", () => {
+    const a = parseArticle("x.mdx", `${base}kategorie: "Grundlagen"
+leistung: "ki-server"
+---
+Text.`);
+    expect(a.kategorie).toBe("Grundlagen");
+    expect(a.leistung).toBe("ki-server");
+  });
+
+  it("leaves both undefined when absent", () => {
+    const a = parseArticle("x.mdx", `${base}---
+Text.`);
+    expect(a.kategorie).toBeUndefined();
+    expect(a.leistung).toBeUndefined();
+  });
+
+  it("rejects an unknown kategorie or leistung", () => {
+    expect(() => parseArticle("x.mdx", `${base}kategorie: "Sonstiges"
+---
+Text.`)).toThrow(/kategorie/);
+    expect(() => parseArticle("x.mdx", `${base}leistung: "seo"
+---
+Text.`)).toThrow(/leistung/);
+  });
+});

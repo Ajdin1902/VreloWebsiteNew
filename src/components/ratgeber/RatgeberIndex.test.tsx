@@ -21,4 +21,12 @@ describe("RatgeberIndex", () => {
     render(<RatgeberIndex articles={[]} />);
     expect(screen.getByText("Hier entsteht der Ratgeber.")).toBeInTheDocument();
   });
+
+  it("groups articles under their kategorie in the order Grundlagen, Praxis, Kosten", () => {
+    const mk = (slug: string, kategorie?: "Grundlagen" | "Praxis" | "Kosten"): Article => ({ ...a(slug, slug), kategorie });
+    render(<RatgeberIndex articles={[mk("k", "Kosten"), mk("p", "Praxis"), mk("g", "Grundlagen"), mk("w")]} />);
+    expect(screen.getAllByRole("heading", { level: 2 }).map((h) => h.textContent)).toEqual(["Grundlagen", "Praxis", "Kosten", "Weitere"]);
+    // Article titles drop one level under their group heading.
+    expect(screen.getAllByRole("heading", { level: 3 }).map((h) => h.textContent)).toEqual(["g", "p", "k", "w"]);
+  });
 });

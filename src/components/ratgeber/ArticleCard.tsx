@@ -2,7 +2,15 @@
 import Link from "next/link";
 import { formatDate, type Article } from "@/lib/ratgeber";
 
-export function ArticleCard({ article }: { article: Article }) {
+export function ArticleCard({
+  article,
+  headingLevel = "h2",
+}: {
+  article: Article;
+  /** h3 when the card sits under a group heading (grouped Ratgeber index). */
+  headingLevel?: "h2" | "h3";
+}) {
+  const Heading = headingLevel;
   const meta = [
     formatDate(article.date),
     `${article.readingMinutes} Min`,
@@ -20,14 +28,14 @@ export function ArticleCard({ article }: { article: Article }) {
         />
         <p className="text-xs font-semibold uppercase tracking-wider text-stumm">{meta}</p>
       </div>
-      <h2 className="mt-3 font-serif text-2xl font-medium text-tiefes-wasser">
+      <Heading className="mt-3 font-serif text-2xl font-medium text-tiefes-wasser">
         <Link
           href={`/ratgeber/${article.slug}`}
           className="rounded-sm hover:text-vrelo-petrol focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-papier focus-visible:ring-vrelo-petrol"
         >
           {article.title}
         </Link>
-      </h2>
+      </Heading>
       <p className="mt-2 max-w-2xl text-tinte/80">{article.description}</p>
     </article>
   );

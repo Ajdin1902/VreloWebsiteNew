@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { describe, it, expect } from "vitest";
 import { stripFrontmatter, findCopyIssues } from "./ratgeberCopy";
+import { getAllArticles } from "./ratgeber";
 
 const DIR = path.join(process.cwd(), "content/ratgeber");
 const files = fs.readdirSync(DIR).filter((f) => f.endsWith(".mdx"));
@@ -37,5 +38,11 @@ describe("Ratgeber corpus typography", () => {
         ok: true,
       });
     }
+  });
+});
+
+describe("Ratgeber corpus is categorised", () => {
+  it("gives every article a kategorie", () => {
+    for (const a of getAllArticles({ includeDrafts: true })) expect(a.kategorie, a.slug).toBeDefined();
   });
 });

@@ -26,4 +26,9 @@ describe("ArticleCard", () => {
     render(<ArticleCard article={{ ...article, draft: true }} />);
     expect(screen.getByText(/Entwurf/)).toBeInTheDocument();
   });
+
+  it("can render its title one level down, under a group heading", () => {
+    render(<ArticleCard article={article} headingLevel="h3" />);
+    expect(screen.getByRole("heading", { level: 3, name: "Mein Artikel" })).toBeInTheDocument();
+  });
 });
