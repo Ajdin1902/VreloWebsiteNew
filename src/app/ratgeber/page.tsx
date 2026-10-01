@@ -1,6 +1,6 @@
 // src/app/ratgeber/page.tsx
 import type { Metadata } from "next";
-import { PageHero } from "@/components/PageHero";
+import { CompactHero } from "@/components/CompactHero";
 import { Section } from "@/components/Section";
 import { ClosingCta } from "@/components/ClosingCta";
 import { CHECK_SRC } from "@/lib/prozessCheckCta";
@@ -21,14 +21,13 @@ export default function RatgeberPage() {
   const articles = getAllArticles();
   return (
     <>
-      <PageHero
+      <CompactHero
+        eyebrow="Grundlagen · Praxis · Kosten"
         title="Gedanken zur ruhigen Automatisierung"
-        src="/images/ratgeber-banner.webp"
-        lead="Praxisnahe Notizen für Betriebe und Unternehmen, wie du wiederkehrende Arbeit abgibst und Zeit, Ruhe und einen freien Kopf zurückgewinnst."
+        line="Praxisnahe Notizen, wie du wiederkehrende Arbeit abgibst und Zeit zurückgewinnst."
+        image="/images/ratgeber-banner.webp"
       />
-      {/* Pull the list up under the intro: both are paper, so the doubled
-          Section padding (intro bottom + list top) leaves too big a gap. */}
-      <Section tone="paper" className="-mt-24 md:-mt-32">
+      <Section tone="paper">
         <RatgeberIndex articles={articles} />
       </Section>
       <ClosingCta

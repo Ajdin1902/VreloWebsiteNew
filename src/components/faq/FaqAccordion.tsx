@@ -10,8 +10,6 @@ export function FaqAccordion({ groups }: { groups: FaqGroup[] }) {
       {groups.map((group, i) => {
         // Every other theme group is a petrol-dark band (for the three real
         // groups: the middle one), giving the FAQ a light/dark reading rhythm.
-        // The first group is pulled up under the paper intro so two stacked
-        // paper Sections don't double their py padding into an oversized gap.
         const onDark = i % 2 === 1;
         const labelColor = onDark ? "text-gletscher" : "text-stumm";
         const borderColor = onDark ? "border-gletscher/20" : "border-faden";
@@ -19,9 +17,7 @@ export function FaqAccordion({ groups }: { groups: FaqGroup[] }) {
           <Section
             key={group.theme}
             tone={onDark ? "petrol" : "paper"}
-            className={[i === 0 ? "-mt-24 md:-mt-32" : "", onDark ? "relative isolate overflow-hidden" : ""]
-              .filter(Boolean)
-              .join(" ")}
+            className={onDark ? "relative isolate overflow-hidden" : undefined}
           >
             {/* Petrol bands carry the calm water texture (subpage rule: dark =
                 image, paper = paper). Text sits directly on it, so the tint stays

@@ -3,14 +3,14 @@ import { CTAButton } from "@/components/CTAButton";
 import { SecondaryLink } from "@/components/SecondaryLink";
 import { CHECK_CTA, checkHref, kontaktHref, type CheckSrc } from "@/lib/prozessCheckCta";
 
-// The Leistungen hero (Ajdin 2026-10-01, variant A): half a screen of water
+// The compact hero (Ajdin 2026-10-01, variant A): half a screen of water
 // carrying an eyebrow, the title, one short line and the page's button, so the
 // first screen says what it is and where to click. No separate lead band.
 // primary="check" leads with the Prozess-Check, "kontakt" with the
 // Erstgespräch; the other path sits underneath as the quiet second link.
 // Without `cta` the hero carries no button (the hub, Ajdin 2026-10-01).
-// Used by the hub (/leistungen) and, via LeistungHero, every subpage.
-export function ServiceHero({
+// Used by /leistungen, its subpages (via LeistungHero), /faq and /ratgeber.
+export function CompactHero({
   eyebrow,
   title,
   line,

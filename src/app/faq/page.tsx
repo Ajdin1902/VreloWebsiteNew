@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/PageHero";
+import { CompactHero } from "@/components/CompactHero";
 import { ClosingCta } from "@/components/ClosingCta";
 import { CHECK_SRC } from "@/lib/prozessCheckCta";
 import { FaqAccordion } from "@/components/faq/FaqAccordion";
@@ -18,13 +18,13 @@ export const metadata: Metadata = {
 export default function FaqPage() {
   return (
     <>
-      <PageHero
+      <CompactHero
+        eyebrow="Zusammenarbeit · Technik · Kosten"
         title="Häufige Fragen"
-        src="/images/faq-banner.webp"
-        lead="Was Betriebe und Unternehmen vor der Zusammenarbeit am häufigsten fragen. Deine Frage ist nicht dabei? Schreib mir einfach."
+        line="Was Betriebe und Unternehmen vor der Zusammenarbeit am häufigsten fragen."
+        image="/images/faq-banner.webp"
       />
-      {/* FaqAccordion emits one Section per theme group (alternating petrol/paper);
-          its first group is pulled up under the intro. */}
+      {/* FaqAccordion emits one Section per theme group (alternating petrol/paper). */}
       <FaqAccordion groups={faqGroups} />
       <ClosingCta
         heading="Offene Frage?"

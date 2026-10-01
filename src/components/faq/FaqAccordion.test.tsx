@@ -43,5 +43,12 @@ describe("FaqAccordion", () => {
     expect(sections[0]).toHaveClass("bg-papier");
     expect(sections[1]).toHaveClass("bg-vrelo-petrol");
     expect(sections[2]).toHaveClass("bg-papier");
+  });
+
+  // The FAQ now opens on the compact image hero (2026-10-01), so the first
+  // group must not be pulled up over it.
+  it("does not pull the first group up under the hero", () => {
+    const { container } = render(<FaqAccordion groups={groups} />);
+    expect(container.querySelector("section")).not.toHaveClass("-mt-24");
   });
 });
