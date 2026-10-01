@@ -33,8 +33,6 @@ export default function LeistungenPage() {
         line="Ich baue KI- und Prozessautomatisierungen, richte sie ein und halte sie am Laufen."
         image="/images/leistungen-banner.webp"
         imageClassName="scale-125 origin-bottom"
-        primary="check"
-        src={CHECK_SRC.leistungenHero}
       />
       <Section tone="petrol" className="relative isolate overflow-hidden">
         <SectionBackdrop src="/images/bg-bausteine-b.webp" tintRgb="27 80 99" tintOpacity={0.7} />

@@ -8,6 +8,7 @@ import { CHECK_CTA, checkHref, kontaktHref, type CheckSrc } from "@/lib/prozessC
 // first screen says what it is and where to click. No separate lead band.
 // primary="check" leads with the Prozess-Check, "kontakt" with the
 // Erstgespräch; the other path sits underneath as the quiet second link.
+// Without `cta` the hero carries no button (the hub, Ajdin 2026-10-01).
 // Used by the hub (/leistungen) and, via LeistungHero, every subpage.
 export function ServiceHero({
   eyebrow,
@@ -15,8 +16,7 @@ export function ServiceHero({
   line,
   image,
   imageClassName = "",
-  primary,
-  src,
+  cta,
 }: {
   eyebrow: string;
   title: string;
@@ -24,10 +24,9 @@ export function ServiceHero({
   image: string;
   /** Extra classes on the image, e.g. a zoom; the section is overflow-hidden. */
   imageClassName?: string;
-  primary: "check" | "kontakt";
-  src: CheckSrc;
+  cta?: { primary: "check" | "kontakt"; src: CheckSrc };
 }) {
-  const check = primary === "check";
+  const check = cta?.primary === "check";
   return (
     <section className="relative isolate flex min-h-[52vh] items-center overflow-hidden py-16">
       <Image
@@ -49,16 +48,18 @@ export function ServiceHero({
           {title}
         </h1>
         <p className="mt-5 max-w-xl text-pretty text-lg text-papier/90 md:text-xl">{line}</p>
-        <div className="mt-8">
-          <CTAButton href={check ? checkHref(src) : kontaktHref(src)} tone="dark">
-            {check ? CHECK_CTA.label : CHECK_CTA.directLabel}
-          </CTAButton>
-          {check ? (
-            <SecondaryLink tone="dark" prefix={CHECK_CTA.directPrefix} label={CHECK_CTA.directLabel} href={CHECK_CTA.directHref} />
-          ) : (
-            <SecondaryLink tone="dark" prefix={CHECK_CTA.checkPrefix} label={CHECK_CTA.checkLabel} href={checkHref(src)} />
-          )}
-        </div>
+        {cta ? (
+          <div className="mt-8">
+            <CTAButton href={check ? checkHref(cta.src) : kontaktHref(cta.src)} tone="dark">
+              {check ? CHECK_CTA.label : CHECK_CTA.directLabel}
+            </CTAButton>
+            {check ? (
+              <SecondaryLink tone="dark" prefix={CHECK_CTA.directPrefix} label={CHECK_CTA.directLabel} href={CHECK_CTA.directHref} />
+            ) : (
+              <SecondaryLink tone="dark" prefix={CHECK_CTA.checkPrefix} label={CHECK_CTA.checkLabel} href={checkHref(cta.src)} />
+            )}
+          </div>
+        ) : null}
       </div>
     </section>
   );

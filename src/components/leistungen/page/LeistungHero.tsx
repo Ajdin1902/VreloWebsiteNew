@@ -11,8 +11,7 @@ export function LeistungHero({ page }: { page: LeistungPage }) {
       title={page.title}
       line={page.subline}
       image={page.heroImage}
-      primary={page.cta.kind}
-      src={page.cta.src}
+      cta={{ primary: page.cta.kind, src: page.cta.src }}
     />
   );
 }
