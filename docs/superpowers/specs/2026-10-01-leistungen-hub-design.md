@@ -67,6 +67,8 @@ Every subpage renders the same five blocks from data. Each block has one job.
 
 1. **Hero** — H1 = service name (search term). Subline = one sentence that defines the service in plain words. Reuses `PageHero` with an existing water image.
 2. **Pain („Kennst du das?“)** — 3–4 concrete everyday moments, then one closing line that turns them into lost hours. Same visual pattern as the homepage `Problem` list.
+
+   > **Revised 2026-10-01 (Ajdin picked variant A + 3 from a localhost preview):** the hero is its own `LeistungHero`, half a screen of water carrying group label, H1, one short line (≤ 90 chars) and the page's CTA, with no separate lead band. The pain block puts heading + close on the left and the moments on the right as three-to-six-word fragments (≤ 42 chars each, close ≤ 75). A test in `leistungenPages.test.ts` holds the lengths.
 3. **Proof** — one of three kinds:
    - `studies` (KI-Automatisierung): 2–3 figures, each with claim, **source, year, link**, rendered as „Quelle: Bitkom, 2025“ linking out. Plus one anonymous case line („Ein Hausmeisterservice gibt seinem Assistenten Aufgaben per Sprachnachricht …“).
    - `case`: one short anonymous case, „Ein Betrieb mit … Mitarbeitern …“. No client name until Alen / the MDZ owner give their OK.

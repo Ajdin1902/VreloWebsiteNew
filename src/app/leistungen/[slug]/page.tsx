@@ -5,12 +5,12 @@
 // src/lib/leistungenPages.ts.
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { PageHero } from "@/components/PageHero";
 import { Section } from "@/components/Section";
 import { Reveal } from "@/components/Reveal";
 import { ClosingCta } from "@/components/ClosingCta";
 import { JsonLd } from "@/components/JsonLd";
 import { ProzessAudit } from "@/components/leistungen/ProzessAudit";
+import { LeistungHero } from "@/components/leistungen/page/LeistungHero";
 import { PainBlock } from "@/components/leistungen/page/PainBlock";
 import { ProofBlock } from "@/components/leistungen/page/ProofBlock";
 import { ExampleBlock } from "@/components/leistungen/page/ExampleBlock";
@@ -64,7 +64,7 @@ export default async function LeistungSubpage({ params }: Params) {
 
   return (
     <>
-      <PageHero title={page.title} lead={page.subline} src={page.heroImage} />
+      <LeistungHero page={page} />
       <PainBlock pain={page.pain} />
       <ProofBlock proof={page.proof} />
       <ExampleBlock example={page.example} />

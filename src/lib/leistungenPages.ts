@@ -30,7 +30,7 @@ export type LeistungPage = {
   group: LeistungGroup;
   navLabel: string;
   title: string;
-  /** One plain sentence that defines the service; shown as the hero lead. */
+  /** One short sentence (≤ 90 chars) that defines the service; shown in the hero. */
   subline: string;
   metaDescription: string;
   /** One sentence for the hub card. */
@@ -91,7 +91,7 @@ export const leistungenPages: LeistungPage[] = [
     navLabel: "Prozessautomatisierung",
     title: "Prozessautomatisierung",
     subline:
-      "Alles, was in deinem Betrieb jeden Tag gleich abläuft, baue ich so, dass es von allein läuft. Du machst die Arbeit, die dein Urteil braucht.",
+      "Was in deinem Betrieb jeden Tag gleich abläuft, läuft ab jetzt von allein.",
     metaDescription:
       "Prozessautomatisierung für Betriebe und Unternehmen: Anfragen, Termine, Angebote, Rechnungen und Dateneingabe laufen von selbst. Maßgeschneidert und dokumentiert.",
     kurz: "Wiederkehrende Abläufe wie Anfragen, Termine, Rechnungen und Dateneingabe laufen von selbst.",
@@ -99,12 +99,12 @@ export const leistungenPages: LeistungPage[] = [
     pain: {
       heading: "Kennst du das?",
       moments: [
-        "Eine Anfrage kommt per E-Mail, jemand tippt sie ab und leitet sie weiter.",
-        "Dieselben Kundendaten stehen in drei Programmen, und keins ist aktuell.",
-        "Rechnungen gehen raus, aber das Nachfassen bleibt liegen.",
-        "Aufgaben leben auf Zetteln und in Köpfen statt an einem Ort.",
+        "Anfragen von Hand abtippen",
+        "Dieselben Daten in drei Programmen",
+        "Nachfassen bleibt liegen",
+        "Aufgaben auf Zetteln",
       ],
-      close: "Jeder Handgriff dauert ein paar Minuten. Zusammen kosten sie dich Stunden pro Woche.",
+      close: "Jeder Handgriff kostet Minuten. Zusammen sind es Stunden pro Woche.",
     },
     proof: {
       kind: "case",
@@ -137,7 +137,7 @@ export const leistungenPages: LeistungPage[] = [
     navLabel: "KI-Automatisierung & Assistenten",
     title: "KI-Automatisierung & Assistenten",
     subline:
-      "Belege lesen, E-Mails vorsortieren, Antworten vorbereiten: Das übernimmt die KI für dich. Dazu ein Assistent, dem du unterwegs per Sprachnachricht Aufgaben gibst.",
+      "Die KI liest Belege, sortiert E-Mails und nimmt Aufgaben per Sprachnachricht an.",
     metaDescription:
       "KI-Automatisierung und KI-Assistenten: Rechnungen und Dokumente auslesen, E-Mails vorsortieren, Aufgaben per Sprachnachricht erledigen. Auf Wunsch innerhalb der EU.",
     kurz: "Die KI liest Belege, sortiert E-Mails und erledigt als Assistent Aufgaben per Sprachnachricht.",
@@ -145,12 +145,12 @@ export const leistungenPages: LeistungPage[] = [
     pain: {
       heading: "Kennst du das?",
       moments: [
-        "Rechnungen kommen als PDF, und jemand überträgt Lieferant, Betrag und Datum von Hand.",
-        "Das Postfach ist voll, und das Wichtige steckt irgendwo zwischen Newslettern.",
-        "Unterwegs fällt dir eine Aufgabe ein, und abends weißt du nicht mehr, welche.",
-        "Unterlagen von Kunden kommen unvollständig, und das Nachfragen dauert Tage.",
+        "Rechnungen von Hand übertragen",
+        "Das Wichtige geht im Postfach unter",
+        "Unterwegs gedacht, abends vergessen",
+        "Unterlagen kommen unvollständig",
       ],
-      close: "Diese Arbeit braucht Aufmerksamkeit, aber kein Urteil. Solche Arbeit übernimmt eine KI zuverlässig.",
+      close: "Das braucht Aufmerksamkeit, aber kein Urteil. Das übernimmt die KI.",
     },
     proof: {
       kind: "studies",
@@ -178,7 +178,7 @@ export const leistungenPages: LeistungPage[] = [
     navLabel: "KI-Server",
     title: "KI-Server",
     subline:
-      "KI für sensible Daten: auf einem Server, der dir gehört, mit einem KI-Modell, das innerhalb der EU rechnet.",
+      "KI für sensible Daten: auf deinem eigenen Server, gerechnet innerhalb der EU.",
     metaDescription:
       "KI-Server für sensible Daten: eigener Server auf deinen Namen, KI-Modelle innerhalb der EU, kein Training mit deinen Daten. Eingerichtet und dokumentiert.",
     kurz: "KI für sensible Daten: auf einem Server, der dir gehört, mit Modellen innerhalb der EU.",
@@ -186,12 +186,12 @@ export const leistungenPages: LeistungPage[] = [
     pain: {
       heading: "Kennst du das?",
       moments: [
-        "Du würdest KI gern nutzen, aber Kundendaten gehören nicht in ein beliebiges Chatfenster.",
-        "Niemand kann dir sagen, wo deine Daten verarbeitet werden.",
-        "Deine Mitarbeiter nutzen längst private KI-Konten, und keiner weiß, was dort landet.",
-        "Ein Dienstleister würde alles bei sich betreiben, und du wärst von ihm abhängig.",
+        "Kundendaten im fremden Chatfenster",
+        "Unklar, wo deine Daten landen",
+        "Mitarbeiter mit privaten KI-Konten",
+        "Abhängig vom Dienstleister",
       ],
-      close: "Mit dem richtigen Aufbau nutzt du KI und behältst deine Daten trotzdem bei dir.",
+      close: "Mit dem richtigen Aufbau nutzt du KI, und deine Daten bleiben bei dir.",
     },
     proof: {
       kind: "case",
@@ -224,7 +224,7 @@ export const leistungenPages: LeistungPage[] = [
     navLabel: "Claude für Unternehmen",
     title: "Claude für Unternehmen",
     subline:
-      "Claude ist der KI-Assistent von Anthropic. Ich richte ihn für dein Team ein, mit euren Vorlagen, eurem Wissen und klaren Regeln für eure Daten, damit er vom ersten Tag an eure Arbeit kennt.",
+      "Claude, der KI-Assistent von Anthropic, eingerichtet für dein Team und eure Daten.",
     metaDescription:
       "Claude für Unternehmen einrichten: Team-Zugang, Projekte mit eurem Firmenwissen, eigene Vorlagen, Anbindung an eure Werkzeuge und klare Regeln für eure Daten.",
     kurz: "Claude für dein Team eingerichtet, mit euren Vorlagen, eurem Wissen und klaren Datenregeln.",
@@ -232,12 +232,12 @@ export const leistungenPages: LeistungPage[] = [
     pain: {
       heading: "Kennst du das?",
       moments: [
-        "Jeder im Team nutzt KI anders, und keiner weiß, was die anderen tun.",
-        "Claude gibt allgemeine Antworten, weil er nichts über euren Betrieb weiß.",
-        "Dieselben Texte, Angebote und Zusammenfassungen werden jeden Tag neu erklärt.",
-        "Niemand hat festgelegt, welche Daten in die KI dürfen und welche nicht.",
+        "Jeder nutzt KI anders",
+        "Claude kennt euren Betrieb nicht",
+        "Dieselben Erklärungen, jeden Tag",
+        "Keine Regel für eure Daten",
       ],
-      close: "Das Werkzeug habt ihr schon. Euch fehlt die Einrichtung, die es auf euren Betrieb zuschneidet.",
+      close: "Das Werkzeug habt ihr. Es fehlt die Einrichtung für euren Betrieb.",
     },
     proof: {
       kind: "practice",
@@ -275,7 +275,7 @@ export const leistungenPages: LeistungPage[] = [
     navLabel: "KI-Schulung",
     title: "KI-Schulung",
     subline:
-      "Dein Team lernt, Claude, den KI-Assistenten von Anthropic, und einfache Automatisierungen im Arbeitsalltag sicher zu nutzen. An euren eigenen Aufgaben, nicht an Beispielen aus dem Lehrbuch.",
+      "Dein Team lernt den KI-Assistenten Claude von Anthropic, an euren eigenen Aufgaben.",
     metaDescription:
       "KI-Schulung für Teams: Claude im Arbeitsalltag nutzen, eigene Vorlagen bauen, wiederkehrende Aufgaben automatisieren. Praxisnah an euren eigenen Abläufen.",
     kurz: "Dein Team lernt Claude und erste Automatisierungen an euren eigenen Aufgaben.",
@@ -283,12 +283,12 @@ export const leistungenPages: LeistungPage[] = [
     pain: {
       heading: "Kennst du das?",
       moments: [
-        "Die Hälfte des Teams probiert KI aus, die andere Hälfte traut sich nicht.",
-        "Wer es nutzt, tippt eine Frage ein und ist von der allgemeinen Antwort enttäuscht.",
-        "Niemand weiß, welche Daten in die KI dürfen.",
-        "Online-Kurse erklären Werkzeuge, aber nicht eure Arbeit.",
+        "Die Hälfte traut sich nicht",
+        "Allgemeine Fragen, enttäuschende Antworten",
+        "Unklar, welche Daten rein dürfen",
+        "Kurse ohne Bezug zu eurer Arbeit",
       ],
-      close: "KI bringt erst etwas, wenn dein Team weiß, wie sie zu den eigenen Aufgaben passt.",
+      close: "KI hilft erst, wenn dein Team weiß, wo sie in die eigene Arbeit passt.",
     },
     proof: {
       kind: "practice",
@@ -326,7 +326,7 @@ export const leistungenPages: LeistungPage[] = [
     navLabel: "KI-Beratung",
     title: "KI-Beratung",
     subline:
-      "Du musst nicht wissen, was mit KI möglich ist. Das ist mein Job. Du weißt, was dich jeden Tag Zeit kostet, und das reicht für den Anfang.",
+      "Kostenloses Erstgespräch: Wir finden heraus, wo KI dir Zeit spart.",
     metaDescription:
       "KI-Beratung für Unternehmen: Im kostenlosen Erstgespräch und Prozess-Audit finden wir heraus, wo KI und Automatisierung sich bei dir lohnen. Mit Fahrplan, wenn es passt.",
     kurz: "Kostenloses Erstgespräch: wo sich KI bei dir lohnt. Wenn ja, folgt ein Prozess-Audit mit Fahrplan.",
@@ -334,12 +334,12 @@ export const leistungenPages: LeistungPage[] = [
     pain: {
       heading: "Kennst du das?",
       moments: [
-        "Überall heißt es, man müsse jetzt KI einsetzen, aber nicht, wo.",
-        "Du hast ein paar Werkzeuge ausprobiert, und nichts ist geblieben.",
-        "Angebote von Agenturen klingen groß, teuer und schwer zu prüfen.",
-        "Du weißt nicht, ob sich das für einen Betrieb deiner Größe überhaupt rechnet.",
+        "Alle sagen KI, keiner sagt wo",
+        "Ausprobiert, nichts ist geblieben",
+        "Agentur-Angebote, schwer zu prüfen",
+        "Lohnt sich das für deine Größe?",
       ],
-      close: "Im Gespräch klären wir, wo KI dir Zeit spart und wo sie dir nichts bringt.",
+      close: "Im Gespräch klären wir, was sich bei dir lohnt und was nicht.",
     },
     proof: {
       kind: "practice",
@@ -383,7 +383,7 @@ export const leistungenPages: LeistungPage[] = [
     navLabel: "Betreuung & Wartung",
     title: "Betreuung & Wartung",
     subline:
-      "Ich überwache deine Automatisierungen, behebe Fehler und passe sie an, wenn sich dein Betrieb verändert. Du merkst davon vor allem, dass alles läuft.",
+      "Ich halte deine Automatisierungen am Laufen. Du merkst nur, dass alles läuft.",
     metaDescription:
       "Betreuung und Wartung für Automatisierungen und KI-Systeme: Überwachung mit Alarm, Fehlerbehebung, kleine Änderungen. Monatlich kündbar, für Systeme, die ich gebaut habe.",
     kurz: "Überwachung mit echtem Alarm, Fehlerbehebung und kleine Änderungen, monatlich kündbar.",
@@ -391,12 +391,12 @@ export const leistungenPages: LeistungPage[] = [
     pain: {
       heading: "Kennst du das?",
       moments: [
-        "Eine Automatisierung bricht still ab, und es fällt erst Wochen später auf.",
-        "Ein Programm ändert seine Schnittstelle, und niemand passt die Verbindung an.",
-        "Du willst eine Kleinigkeit ändern, aber wer es gebaut hat, ist nicht mehr erreichbar.",
-        "Der Server läuft, aber niemand weiß, ob er sicher ist.",
+        "Fehler fallen erst Wochen später auf",
+        "Schnittstelle geändert, Verbindung tot",
+        "Wer es gebaut hat, ist weg",
+        "Läuft der Server sicher?",
       ],
-      close: "Eine Automatisierung spart dir Zeit, solange sie läuft. Jemand muss prüfen, dass sie läuft.",
+      close: "Eine Automatisierung spart Zeit, solange jemand prüft, dass sie läuft.",
     },
     proof: {
       kind: "case",

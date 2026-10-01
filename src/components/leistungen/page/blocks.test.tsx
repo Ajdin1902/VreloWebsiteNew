@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import { PainBlock } from "./PainBlock";
+import { LeistungHero } from "./LeistungHero";
 import { ProofBlock } from "./ProofBlock";
 import { ExampleBlock } from "./ExampleBlock";
 import { NoteBlock } from "./NoteBlock";
@@ -16,6 +17,40 @@ describe("PainBlock", () => {
     expect(screen.getByRole("heading", { level: 2, name: p.pain.heading })).toBeInTheDocument();
     expect(screen.getAllByRole("listitem")).toHaveLength(p.pain.moments.length);
     expect(screen.getByText(p.pain.close)).toBeInTheDocument();
+  });
+
+  it("puts the closing line beside the heading, before the list", () => {
+    const p = page("betreuung");
+    const { container } = render(<PainBlock pain={p.pain} />);
+    const close = screen.getByText(p.pain.close);
+    const list = container.querySelector("ul")!;
+    expect(close.compareDocumentPosition(list) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+});
+
+describe("LeistungHero", () => {
+  it("shows group, title, the one line and the Prozess-Check on a check page", () => {
+    const p = page("prozessautomatisierung");
+    render(<LeistungHero page={p} />);
+    expect(screen.getByText(/Automatisieren/)).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1, name: p.title })).toBeInTheDocument();
+    expect(screen.getByText(p.subline)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Prozess-Check starten/ })).toHaveAttribute(
+      "href",
+      "/prozess-check?src=leistung-prozessautomatisierung",
+    );
+    expect(screen.getByRole("link", { name: "Erstgespräch buchen" })).toHaveAttribute("href", "/kontakt");
+  });
+
+  it("leads with the Erstgespräch on a kontakt page", () => {
+    const p = page("claude");
+    render(<LeistungHero page={p} />);
+    expect(screen.getByText(/Befähigen/)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Erstgespräch buchen/ })).toHaveAttribute("href", "/kontakt?src=leistung-claude");
+    expect(screen.getByRole("link", { name: "Erst den Prozess-Check machen" })).toHaveAttribute(
+      "href",
+      "/prozess-check?src=leistung-claude",
+    );
   });
 });
 

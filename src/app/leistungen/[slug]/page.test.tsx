@@ -25,6 +25,15 @@ describe("/leistungen/[slug]", () => {
     expect(h2s).toEqual(["Kennst du das?", "Aus der Praxis", "So sieht das aus", "Welche Aufgabe kostet dich am meisten?"]);
   });
 
+  it("puts the one line and the button in the hero, with no separate lead section", async () => {
+    const page = leistungenPages[0];
+    render(await LeistungSubpage(params(page.slug)));
+    const hero = screen.getByRole("heading", { level: 1 }).closest("section")!;
+    expect(hero).toHaveTextContent(page.subline);
+    expect(hero.querySelector("a[href^='/prozess-check']")).not.toBeNull();
+    expect(screen.getAllByText(page.subline)).toHaveLength(1);
+  });
+
   it("shows the audit card and the Förderung note only on KI-Beratung, with the Erstgespräch first", async () => {
     render(await LeistungSubpage(params("ki-beratung")));
     expect(document.getElementById("prozess-audit")).not.toBeNull();

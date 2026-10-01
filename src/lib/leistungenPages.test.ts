@@ -164,6 +164,16 @@ describe("leistungenPages", () => {
       if (/Claude/.test(p.subline)) expect(p.subline, p.slug).toContain("Anthropic");
   });
 
+  // Ajdin 2026-10-01 (hero A + pain 3): one short sentence in the hero and
+  // three-to-six-word pain points, so the first screens carry little text.
+  it("keeps the hero line and the pain points short", () => {
+    for (const p of leistungenPages) {
+      expect(p.subline.length, `${p.slug}: ${p.subline}`).toBeLessThanOrEqual(90);
+      for (const m of p.pain.moments) expect(m.length, `${p.slug}: ${m}`).toBeLessThanOrEqual(42);
+      expect(p.pain.close.length, `${p.slug}: ${p.pain.close}`).toBeLessThanOrEqual(75);
+    }
+  });
+
   // Ajdin 2026-10-01: KI-Automatisierung shows the real clip on its own, no
   // text run around it (the invoice example and the caption are gone).
   it("shows the clip alone on KI-Automatisierung", () => {
