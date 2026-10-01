@@ -22,8 +22,17 @@ export function WasIchBaue() {
         </Reveal>
       </div>
       <Reveal as="ul" delayMs={200} aria-labelledby="was-ich-baue-heading" className="mx-auto mt-10 grid max-w-3xl gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {leistungenPages.map((p) => (
-          <li key={p.slug}>
+        {leistungenPages.map((p, i) => (
+          // Seven cards leave the last one alone in its row: center it (half
+          // width in the two-column grid, middle column in the three-column one).
+          <li
+            key={p.slug}
+            className={
+              i === leistungenPages.length - 1
+                ? "sm:col-span-2 sm:mx-auto sm:w-[calc(50%-0.375rem)] lg:col-span-1 lg:col-start-2 lg:mx-0 lg:w-auto"
+                : undefined
+            }
+          >
             <Link
               href={leistungHref(p.slug)}
               className="card-depth block h-full rounded-2xl border border-gletscher/25 bg-gletscher/10 px-4 py-3 text-center text-gletscher transition-colors hover:border-honig hover:text-papier focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-tiefes-wasser focus-visible:ring-honig"
