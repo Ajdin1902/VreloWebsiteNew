@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
-import { navLinks } from "@/lib/nav";
+import { navLinks, leistungenMenu } from "@/lib/nav";
 import { BrandLockup } from "@/components/BrandLockup";
 import { CTAButton } from "@/components/CTAButton";
 import { CHECK_CTA, CHECK_SRC, checkHref } from "@/lib/prozessCheckCta";
@@ -68,7 +68,7 @@ export function MobileNav() {
           aria-modal="true"
           aria-label="Hauptnavigation"
           tabIndex={-1}
-          className="fixed inset-0 z-[60] flex flex-col bg-tiefes-wasser px-6 py-5 text-gletscher motion-safe:animate-[fade-in_180ms_ease-out] focus:outline-none"
+          className="fixed inset-0 z-[60] flex flex-col overflow-y-auto bg-tiefes-wasser px-6 py-5 text-gletscher motion-safe:animate-[fade-in_180ms_ease-out] focus:outline-none"
         >
           <div className="flex items-center justify-between">
             <BrandLockup variant="paper" />
@@ -92,6 +92,28 @@ export function MobileNav() {
                 >
                   {l.label}
                 </Link>
+                {l.href === "/leistungen" ? (
+                  <div className="mb-2 ml-1 border-l border-gletscher/25 pl-4">
+                    {leistungenMenu.map((g) => (
+                      <div key={g.label} className="mt-2">
+                        <p className="text-xs uppercase tracking-wider text-gletscher/70">{g.label}</p>
+                        <ul className="mt-1 flex flex-col">
+                          {g.items.map((it) => (
+                            <li key={it.href}>
+                              <Link
+                                href={it.href}
+                                onClick={() => setOpen(false)}
+                                className="block rounded-sm py-1.5 text-base text-gletscher hover:text-honig focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-tiefes-wasser focus-visible:ring-honig"
+                              >
+                                {it.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
               </li>
             ))}
           </ul>

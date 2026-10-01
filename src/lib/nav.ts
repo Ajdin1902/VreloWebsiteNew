@@ -1,3 +1,5 @@
+import { leistungGroups, leistungenPages, leistungHref } from "@/lib/leistungenPages";
+
 export type NavLink = { href: string; label: string };
 
 export const navLinks: NavLink[] = [
@@ -54,3 +56,14 @@ export function isFocusRoute(pathname: string | null): boolean {
 export function isBareRoute(pathname: string | null): boolean {
   return pathname !== null && bareRoutes.includes(pathname);
 }
+
+export type NavGroup = { label: string; items: NavLink[] };
+
+// The Leistungen dropdown (spec 2026-10-01 §3.3), derived from the page data so
+// the nav can never list a service that has no page.
+export const leistungenMenu: NavGroup[] = leistungGroups.map((g) => ({
+  label: g.label,
+  items: leistungenPages
+    .filter((p) => p.group === g.id)
+    .map((p) => ({ href: leistungHref(p.slug), label: p.navLabel })),
+}));

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { navLinks, focusRoutes, isFocusRoute, focusChrome, bareRoutes, isBareRoute } from "./nav";
+import { navLinks, focusRoutes, isFocusRoute, focusChrome, bareRoutes, isBareRoute, leistungenMenu } from "./nav";
 
 describe("focus routes", () => {
   it("treats the two outreach landing pages as focus routes", () => {
@@ -57,5 +57,13 @@ describe("bare routes", () => {
     expect(isBareRoute("/")).toBe(false);
     expect(isBareRoute("/makler")).toBe(false);
     expect(isBareRoute(null)).toBe(false);
+  });
+});
+
+describe("leistungenMenu", () => {
+  it("groups the seven subpages under three labels", () => {
+    expect(leistungenMenu.map((g) => g.label)).toEqual(["Automatisieren", "Befähigen", "Betreiben"]);
+    expect(leistungenMenu.flatMap((g) => g.items)).toHaveLength(7);
+    expect(leistungenMenu[1].items[0]).toEqual({ href: "/leistungen/claude", label: "Claude für Unternehmen" });
   });
 });

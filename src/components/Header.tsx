@@ -6,6 +6,7 @@ import { navLinks } from "@/lib/nav";
 import { BrandLockup } from "@/components/BrandLockup";
 import { CTAButton } from "@/components/CTAButton";
 import { MobileNav } from "@/components/MobileNav";
+import { LeistungenMenu } from "@/components/LeistungenMenu";
 import { CHECK_CTA, CHECK_SRC, checkHref } from "@/lib/prozessCheckCta";
 
 export function Header() {
@@ -14,7 +15,7 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-faden bg-papier/90 backdrop-blur">
       <nav
         aria-label="Hauptnavigation"
-        className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4"
+        className="relative mx-auto flex max-w-6xl items-center justify-between px-6 py-4"
       >
         <Link
           href="/"
@@ -26,6 +27,13 @@ export function Header() {
 
         <ul className="hidden items-center gap-5 md:flex lg:gap-7">
           {navLinks.map((l) => {
+            if (l.href === "/leistungen") {
+              return (
+                <li key={l.href}>
+                  <LeistungenMenu pathname={pathname} />
+                </li>
+              );
+            }
             const active = pathname === l.href;
             return (
               <li key={l.href}>
