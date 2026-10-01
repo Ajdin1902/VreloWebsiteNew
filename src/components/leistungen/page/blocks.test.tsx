@@ -100,6 +100,15 @@ describe("ExampleBlock", () => {
     expect(screen.getByText(ex.after)).toBeInTheDocument();
   });
 
+  it("labels the before and after cards once each", () => {
+    const ex = page("prozessautomatisierung").example;
+    if (!("steps" in ex)) throw new Error("expected a step run");
+    render(<ExampleBlock example={ex} />);
+    expect(screen.getAllByText("Vorher")).toHaveLength(1);
+    expect(screen.getAllByText("Nachher")).toHaveLength(1);
+    expect(screen.getByText(ex.after).closest("[data-nachher]")).not.toBeNull();
+  });
+
   it("renders a video-only example large, with no steps and no extra text", () => {
     const ex = { heading: "So sieht das aus", video: { src: "/video/x.mp4", poster: "/video/x.webp" } };
     const { container } = render(<ExampleBlock example={ex} />);

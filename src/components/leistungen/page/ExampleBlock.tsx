@@ -27,10 +27,14 @@ export function ExampleBlock({ example }: { example: LeistungPage["example"] }) 
           </Reveal>
         ) : (
           <>
-            <Reveal as="p" delayMs={80} className="mt-5 max-w-2xl text-pretty text-lg text-gletscher">
-              {example.before}
+            {/* Vorher: a quiet dark card, the state the reader knows. */}
+            <Reveal as="div" delayMs={80} className="mt-8 flex max-w-3xl flex-col items-start gap-3 rounded-2xl border border-gletscher/25 bg-tiefes-wasser/45 p-6 sm:flex-row sm:items-center sm:gap-5 md:p-7">
+              <span className="shrink-0 rounded-full bg-gletscher/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-gletscher">
+                Vorher
+              </span>
+              <p className="text-pretty text-lg text-gletscher md:text-xl">{example.before}</p>
             </Reveal>
-            <Reveal as="ol" delayMs={160} className="mt-10 grid gap-5 md:grid-cols-3">
+            <Reveal as="ol" delayMs={160} className="mt-6 grid gap-5 md:grid-cols-3">
               {example.steps.map((s, i) => (
                 <li key={s} className="card-depth rounded-2xl bg-papier p-6 text-tinte">
                   <span aria-hidden className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-amber font-semibold text-tiefes-wasser">
@@ -40,8 +44,18 @@ export function ExampleBlock({ example }: { example: LeistungPage["example"] }) 
                 </li>
               ))}
             </Reveal>
-            <Reveal as="p" delayMs={240} className="mt-8 max-w-2xl text-pretty text-lg font-medium text-papier">
-              {example.after}
+            {/* Nachher: the payoff, in the warm sunlight colour so it reads as
+                the surface the run comes up to (Ajdin 2026-10-01: make it pop). */}
+            <Reveal
+              as="div"
+              delayMs={240}
+              data-nachher
+              className="mt-6 flex flex-col items-start gap-3 rounded-2xl bg-sonnenlicht p-6 shadow-deepwater sm:flex-row sm:items-center sm:gap-5 md:p-8"
+            >
+              <span className="shrink-0 rounded-full bg-tiefes-wasser px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-papier">
+                Nachher
+              </span>
+              <p className="text-pretty font-serif text-xl leading-snug text-tiefes-wasser md:text-2xl">{example.after}</p>
             </Reveal>
           </>
         )}

@@ -115,13 +115,13 @@ export const leistungenPages: LeistungPage[] = [
     },
     example: {
       heading: "So sieht das aus",
-      before: "Vorher: Jede Anfrage wird von Hand abgetippt, weitergeleitet und nachverfolgt.",
+      before: "Du tippst jede Anfrage ab, leitest sie weiter und hakst von Hand nach.",
       steps: [
         "Eine Anfrage kommt per Formular oder E-Mail rein.",
         "Das System legt den Kontakt an, bestätigt den Eingang und informiert den Zuständigen.",
         "Bleibt die Anfrage liegen, kommt nach zwei Tagen eine Erinnerung.",
       ],
-      after: "Nachher: Anfragen landen sofort beim Zuständigen, und du tippst nichts mehr doppelt.",
+      after: "Jede Anfrage liegt sofort beim Zuständigen. Du tippst nichts mehr doppelt.",
     },
     cta: {
       kind: "check",
@@ -202,13 +202,13 @@ export const leistungenPages: LeistungPage[] = [
     },
     example: {
       heading: "So sieht das aus",
-      before: "Vorher: Sensible Dokumente werden von Hand geprüft, weil sie in keine fremde KI dürfen.",
+      before: "Du prüfst sensible Dokumente von Hand, weil sie in keine fremde KI dürfen.",
       steps: [
         "Ein Kunde lädt seine Unterlagen über eine Seite hoch, die zu deinem Betrieb gehört.",
         "Die KI auf deinem Server prüft, ob alles vollständig und lesbar ist.",
         "Die Unterlagen liegen sortiert in deinem Ordner, Fehlendes wird beim Kunden nachgefragt.",
       ],
-      after: "Nachher: Die KI arbeitet für dich, und die Daten bleiben bei dir und innerhalb der EU.",
+      after: "Die KI prüft für dich. Die Daten bleiben bei dir, innerhalb der EU.",
     },
     cta: {
       kind: "kontakt",
@@ -253,13 +253,13 @@ export const leistungenPages: LeistungPage[] = [
     },
     example: {
       heading: "So sieht das aus",
-      before: "Vorher: Jeder schreibt seine Angebote selbst und fängt jedes Mal bei null an.",
+      before: "Jedes Angebot beginnt mit einer leeren Seite.",
       steps: [
         "Ich lege ein Claude-Projekt mit euren Leistungen, Preisen und Musterangeboten an.",
         "Dein Mitarbeiter beschreibt in zwei Sätzen, was der Kunde braucht.",
         "Claude schreibt den Entwurf in eurem Ton, dein Mitarbeiter prüft und schickt ihn ab.",
       ],
-      after: "Nachher: Jeder fängt bei einem guten Entwurf an statt bei einer leeren Seite.",
+      after: "Jedes Angebot beginnt mit einem guten Entwurf in eurem Ton.",
     },
     cta: {
       kind: "kontakt",
@@ -304,13 +304,13 @@ export const leistungenPages: LeistungPage[] = [
     },
     example: {
       heading: "So sieht das aus",
-      before: "Vorher: Jeder fasst Kundengespräche von Hand zusammen und schreibt die Nachfass-Mail selbst.",
+      before: "Jeder fasst Kundengespräche von Hand zusammen und schreibt jede Nachfass-Mail selbst.",
       steps: [
         "Wir nehmen eine echte Aufgabe aus eurem Alltag.",
         "Dein Team baut sich dafür eine Vorlage in Claude, mit euren Regeln und eurem Ton.",
         "Ab dem nächsten Tag nutzt jeder diese Vorlage, und ihr seht, welche Aufgabe als Nächstes dran ist.",
       ],
-      after: "Nachher: Dein Team geht mit Werkzeugen aus der Schulung, die es selbst gebaut hat.",
+      after: "Dein Team arbeitet mit Vorlagen, die es in der Schulung selbst gebaut hat.",
     },
     cta: {
       kind: "kontakt",
@@ -355,13 +355,13 @@ export const leistungenPages: LeistungPage[] = [
     },
     example: {
       heading: "So läuft die Beratung",
-      before: "Vorher: Viele Ideen, kein klarer erster Schritt.",
+      before: "Viele Ideen, kein klarer erster Schritt.",
       steps: [
         "Im kostenlosen Erstgespräch erzählst du mir, was dich jeden Tag Zeit kostet.",
         "Lohnt es sich, schaue ich mir im Prozess-Audit deine Abläufe genauer an.",
         "Wenn sich etwas lohnt, bekommst du ein bis zwei Werktage später einen Fahrplan: was sich automatisieren lässt, was es bringt und in welcher Reihenfolge.",
       ],
-      after: "Nachher: Du weißt, womit du anfängst, und entscheidest selbst, ob und mit wem du es umsetzt.",
+      after: "Du weißt, womit du anfängst, und entscheidest selbst, ob und mit wem.",
     },
     auditCard: true,
     note: {
@@ -407,13 +407,13 @@ export const leistungenPages: LeistungPage[] = [
     },
     example: {
       heading: "So sieht das aus",
-      before: "Vorher: Ein Fehler fällt auf, wenn sich ein Kunde beschwert.",
+      before: "Einen Fehler bemerkst du erst, wenn sich ein Kunde beschwert.",
       steps: [
         "Eine Verbindung zu einem Programm bricht nachts ab.",
         "Der Alarm kommt bei mir an, und ich sehe, welcher Schritt fehlgeschlagen ist.",
         "Ich behebe den Fehler und lasse die liegengebliebenen Vorgänge nachlaufen.",
       ],
-      after: "Nachher: Du erfährst davon im Monatsbericht, nicht von deinem Kunden.",
+      after: "Der Fehler ist behoben, bevor dein Kunde ihn bemerkt.",
     },
     cta: {
       kind: "check",

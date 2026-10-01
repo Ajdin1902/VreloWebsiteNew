@@ -174,6 +174,18 @@ describe("leistungenPages", () => {
     }
   });
 
+  // The component labels the cards, so the copy carries no „Vorher:“ prefix,
+  // and each side stays one short line (Ajdin 2026-10-01: make it pop).
+  it("keeps before and after short and unprefixed", () => {
+    for (const p of leistungenPages) {
+      if (!("steps" in p.example)) continue;
+      for (const s of [p.example.before, p.example.after]) {
+        expect(s, `${p.slug}: ${s}`).not.toMatch(/^(Vorher|Nachher):/);
+        expect(s.length, `${p.slug}: ${s}`).toBeLessThanOrEqual(90);
+      }
+    }
+  });
+
   // Ajdin 2026-10-01: KI-Automatisierung shows the real clip on its own, no
   // text run around it (the invoice example and the caption are gone).
   it("shows the clip alone on KI-Automatisierung", () => {
