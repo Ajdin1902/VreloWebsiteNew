@@ -129,7 +129,7 @@ export const leistungenPages: LeistungPage[] = [
       heading: "Welche Aufgabe kostet dich am meisten?",
       lead: "Der Prozess-Check zeigt dir in drei Minuten, wo deine Stunden hingehen und womit du anfängst.",
     },
-    related: ["taeglich-stunden-zurueckgewinnen", "aus-jeder-anfrage-ein-termin", "durcheinander-oder-saubere-quelle"],
+    related: ["was-ist-prozessautomatisierung", "taeglich-stunden-zurueckgewinnen", "aus-jeder-anfrage-ein-termin"],
   },
   {
     slug: "ki-automatisierung",
@@ -170,7 +170,7 @@ export const leistungenPages: LeistungPage[] = [
       heading: "Wo würde dir eine KI am meisten abnehmen?",
       lead: "Der Prozess-Check zeigt dir in drei Minuten, welche Aufgaben bei dir die meiste Zeit kosten. Danach reden wir, wenn du willst.",
     },
-    related: ["was-ki-im-betrieb-wirklich-kann", "unterlagen-einsammeln-ohne-nachfassen", "claude-im-alltag-nutzen"],
+    related: ["was-ist-ein-ki-agent", "was-ki-im-betrieb-wirklich-kann", "unterlagen-einsammeln-ohne-nachfassen"],
   },
   {
     slug: "ki-server",
@@ -216,7 +216,7 @@ export const leistungenPages: LeistungPage[] = [
       heading: "Lass uns über deine Daten reden.",
       lead: "Im Erstgespräch klären wir, welche Daten du verarbeiten willst und welcher Aufbau dafür passt.",
     },
-    related: ["wo-laeuft-deine-ki", "selbst-bauen-oder-bauen-lassen"],
+    related: ["was-ist-ein-ki-server", "wo-laeuft-deine-ki", "selbst-bauen-oder-bauen-lassen"],
   },
   {
     slug: "claude",
@@ -267,7 +267,7 @@ export const leistungenPages: LeistungPage[] = [
       heading: "Lass uns Claude bei euch einrichten.",
       lead: "Im Erstgespräch schauen wir, wofür ihr Claude nutzen wollt und was dafür eingerichtet werden muss.",
     },
-    related: ["claude-im-alltag-nutzen", "was-ki-im-betrieb-wirklich-kann"],
+    related: ["claude-oder-chatgpt", "claude-im-alltag-nutzen", "was-ki-im-betrieb-wirklich-kann"],
   },
   {
     slug: "ki-schulung",
@@ -318,7 +318,7 @@ export const leistungenPages: LeistungPage[] = [
       heading: "Lass uns eure Schulung planen.",
       lead: "Im Erstgespräch klären wir, wer teilnimmt, welche Aufgaben ihr mitbringt und welches Format passt.",
     },
-    related: ["claude-im-alltag-nutzen", "was-ki-im-betrieb-wirklich-kann"],
+    related: ["claude-im-alltag-nutzen", "claude-oder-chatgpt", "was-ki-im-betrieb-wirklich-kann"],
   },
   {
     slug: "ki-beratung",
@@ -375,7 +375,7 @@ export const leistungenPages: LeistungPage[] = [
       heading: "Lass uns herausfinden, wo es sich lohnt.",
       lead: "Das Erstgespräch dauert 30 Minuten und kostet nichts. Danach weißt du, ob sich ein genauerer Blick lohnt.",
     },
-    related: ["selbst-bauen-oder-bauen-lassen", "durcheinander-oder-saubere-quelle"],
+    related: ["selbst-bauen-oder-bauen-lassen", "was-ist-prozessautomatisierung", "was-ist-ein-ki-agent"],
   },
   {
     slug: "betreuung",

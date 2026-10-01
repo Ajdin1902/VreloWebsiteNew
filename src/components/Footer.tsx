@@ -14,7 +14,7 @@ export function Footer() {
         <div>
           <BrandLockup variant="paper" />
           <p className="mt-3 text-sm text-stein">
-            Durchdachte Automatisierung für kleine Betriebe.
+            Durchdachte Automatisierung für Betriebe und Unternehmen.
           </p>
           {/* The company page, for owners who look Vrelo up before they get in
               touch. Footer, not the homepage close: the close keeps one action.

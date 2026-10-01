@@ -10,11 +10,11 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Vrelo — Durchdachte Automatisierung für kleine Betriebe",
+    default: "Vrelo — Durchdachte Automatisierung für Betriebe und Unternehmen",
     template: "%s — Vrelo",
   },
   description:
-    "Maßgeschneiderte Automatisierungen für kleine Betriebe. Du gewinnst Zeit, Ruhe und einen freien Kopf zurück.",
+    "Maßgeschneiderte Automatisierungen für Betriebe und Unternehmen. Du gewinnst Zeit, Ruhe und einen freien Kopf zurück.",
   openGraph: {
     type: "website",
     locale: "de_DE",
@@ -23,11 +23,11 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: {
-      default: "Vrelo — Durchdachte Automatisierung für kleine Betriebe",
+      default: "Vrelo — Durchdachte Automatisierung für Betriebe und Unternehmen",
       template: "%s — Vrelo",
     },
     description:
-      "Maßgeschneiderte Automatisierungen für kleine Betriebe. Du gewinnst Zeit, Ruhe und einen freien Kopf zurück.",
+      "Maßgeschneiderte Automatisierungen für Betriebe und Unternehmen. Du gewinnst Zeit, Ruhe und einen freien Kopf zurück.",
   },
 };
 

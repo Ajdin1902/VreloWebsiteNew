@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   alternates: { canonical: canonical("/ueber-mich") },
   title: "Über mich",
   description:
-    "Wer hinter Vrelo steckt: meine Geschichte von der Quelle bis zum Merak-Effekt, und warum ich Automatisierungen für kleine Betriebe baue.",
+    "Wer hinter Vrelo steckt: meine Geschichte von der Quelle bis zum Merak-Effekt, und warum ich Automatisierungen für Betriebe und Unternehmen baue.",
 };
 
 export default function UeberMichPage() {

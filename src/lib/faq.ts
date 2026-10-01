@@ -16,7 +16,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Für welche Betriebe baust du?",
         answer:
-          "Für kleine Betriebe und Selbstständige im DACH-Raum: Handwerk, Praxen, Agenturen, lokale Dienstleister. Wenn sich bei dir täglich derselbe Kleinkram wiederholt, lohnt es sich.",
+          "Für Betriebe und Unternehmen jeder Größe im DACH-Raum, vom Handwerk über Agenturen und Praxen bis zum Mittelstand. Wenn sich bei dir täglich derselbe Kleinkram wiederholt, lohnt es sich.",
       },
       {
         question: "Arbeitest du auch remote?",

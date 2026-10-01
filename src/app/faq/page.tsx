@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   alternates: { canonical: canonical("/faq") },
   title: "Häufige Fragen",
   description:
-    "Antworten auf die häufigsten Fragen zu Zusammenarbeit, Technik, Sicherheit und Kosten, für kleine Betriebe, die wiederkehrende Aufgaben automatisieren wollen.",
+    "Antworten auf die häufigsten Fragen zu Zusammenarbeit, Technik, Sicherheit und Kosten, für Betriebe und Unternehmen, die wiederkehrende Aufgaben automatisieren wollen.",
 };
 
 export default function FaqPage() {
@@ -21,7 +21,7 @@ export default function FaqPage() {
       <PageHero
         title="Häufige Fragen"
         src="/images/faq-banner.webp"
-        lead="Was kleine Betriebe vor der Zusammenarbeit am häufigsten fragen. Deine Frage ist nicht dabei? Schreib mir einfach."
+        lead="Was Betriebe und Unternehmen vor der Zusammenarbeit am häufigsten fragen. Deine Frage ist nicht dabei? Schreib mir einfach."
       />
       {/* FaqAccordion emits one Section per theme group (alternating petrol/paper);
           its first group is pulled up under the intro. */}

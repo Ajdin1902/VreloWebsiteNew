@@ -11,7 +11,7 @@ export function professionalServiceLd() {
     "@type": "ProfessionalService",
     name: siteName,
     url: siteUrl,
-    description: "Maßgeschneiderte Automatisierungen für kleine Betriebe im DACH-Raum.",
+    description: "Maßgeschneiderte Automatisierungen für Betriebe und Unternehmen im DACH-Raum.",
     areaServed: ["DE", "AT", "CH"],
     founder: { "@type": "Person", name: FOUNDER },
     sameAs: [linkedinUrl],
