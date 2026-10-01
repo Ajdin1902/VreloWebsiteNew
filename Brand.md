@@ -31,8 +31,8 @@ Pronunciation: **VREH-lo**. Origin: Vrelo Bosne, the turquoise spring near Saraj
 | Slot | Line |
 |---|---|
 | **Primary tagline** | *Vrelo errichtet die Quelle. Du erlebst den Merak-Effekt.* |
-| **Descriptor** (what-is-this) | **Durchdachte Automatisierung für kleine Betriebe.** |
-| **Headline variant** | *Maßgeschneiderte Automatisierung für kleine Betriebe.* |
+| **Descriptor** (what-is-this) | **Durchdachte Automatisierung für Betriebe und Unternehmen.** |
+| **Headline variant** | *Maßgeschneiderte Automatisierung für Betriebe und Unternehmen.* |
 | **Positioning** | *Die Quelle deiner Automatisierung. Das Ergebnis: Merak-Effekt.* |
 | CTA | **Quelle erkunden** (alt: „Unverbindlich kennenlernen", „Zeig mir, was möglich ist") |
 
@@ -45,7 +45,8 @@ Pronunciation: **VREH-lo**. Origin: Vrelo Bosne, the turquoise spring near Saraj
 
 Other approved taglines: *Die Quelle. Der Merak-Effekt.* · *Aus der Quelle in den Fluss.* · *Wo dein Workflow entspringt.*
 
-> **Descriptor rules:** keep `du`-voice OUT of the descriptor (it's a targeting line). The audience tag „kleine Betriebe" is a *swappable slot* — never fuse the descriptor into the logo; keep it as separate text. Variants: *für Selbstständige* / **für kleine Betriebe (current)** / *für kleine Unternehmen*.
+> **Descriptor rules:** keep `du`-voice OUT of the descriptor (it's a targeting line). The audience tag „kleine Betriebe" is a *swappable slot* — never fuse the descriptor into the logo; keep it as separate text. Variants: *für Selbstständige* / *für kleine Betriebe* / *für kleine Unternehmen* / **für Betriebe und Unternehmen (current)**.
+> 2026-10-01: Zielgruppe für die Website erweitert (auch größere Unternehmen), siehe HQ CLAUDE.md §3. Die Website-Texte mit „kleine Betriebe“ (Footer, Metadaten, OG-Bild, FAQ, Ratgeber, JSON-LD) ziehen erst nach, wenn Ajdin die neue Formulierung freigibt.
 
 ---
 
