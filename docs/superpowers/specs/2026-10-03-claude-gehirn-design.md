@@ -96,7 +96,7 @@ Mapping to ours: `CLAUDE.md` = HQ router; `quellen/` + `wissen/` + `inhalt.md` +
 
 Indexed, in the sitemap. Working title „Ein Gehirn für deinen Betrieb, mit Claude“ (final copy through stop-slop + Brand.md). **No CTA in the page body.**
 
-❓ **Chrome (decide before the plan):** the site `Header` carries the Prozess-Check button (`CHECK_SRC.header`) on every page, and `ClosingCta` is the usual page end. Options: (a) normal chrome, header button stays, no `ClosingCta` on this page · (b) focus route with logo-only chrome (`focusChrome["/claude-gehirn"] = {}`), no button anywhere, but also no site navigation. Recommendation: (a), because the header is site chrome every visitor already expects, and the page itself asks for nothing.
+**Chrome (decided 2026-10-03, option a):** normal site chrome; the `Header` keeps its Prozess-Check button (site chrome every visitor expects), but the page has **no `ClosingCta`** and nothing in the body asks for anything. Rejected: focus route with logo-only chrome (removes site navigation).
 
 1. **Opening:** one sentence what it is + „kostenlos, ohne Anmeldung“.
 2. **Was du brauchst:** Claude Desktop app (Windows or Mac) · a paid Claude plan (Pro or higher; Cowork isn't in the free plan) · about 15 minutes · Cowork is a research preview at Anthropic and can change.
