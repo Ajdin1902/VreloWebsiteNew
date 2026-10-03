@@ -12,9 +12,10 @@ function strings(value: unknown, out: string[] = []): string[] {
 
 const all = strings(gehirnPage);
 
+// Ajdin 2026-10-03: the page is the prompt plus the minimum to use it safely.
 describe("/claude-gehirn copy", () => {
-  it("collects a substantial body of copy", () => {
-    expect(all.length).toBeGreaterThan(50);
+  it("stays short", () => {
+    expect(all.join(" ").length).toBeLessThan(2600);
   });
 
   it("follows the house typography in every string", () => {
@@ -30,46 +31,35 @@ describe("/claude-gehirn copy", () => {
     expect(all.filter((s) => /Partner|zertifiziert/i.test(s))).toEqual([]);
   });
 
-  it("states the requirements honestly, up front", () => {
-    const v = strings(gehirnPage.voraussetzungen).join(" ");
-    expect(v).toContain("Pro");
-    expect(v).toContain("kostenlosen Tarif nicht enthalten");
-    expect(v).toContain("Vorschau");
-  });
-
-  it("covers all four storage options plus our own way", () => {
-    expect(gehirnPage.ordner.options.map((o) => o.name)).toEqual([
-      "Lokal auf deinem Rechner",
-      "OneDrive",
-      "iCloud Drive",
-      "Google Drive",
-    ]);
-    expect(gehirnPage.ordner.unserWeg.body).toContain("jede Stunde");
-  });
-
   it("asks for nothing: no CTA copy anywhere", () => {
     expect(all.filter((s) => /Erstgespräch|Prozess-Check|buchen|Termin vereinbaren/i.test(s))).toEqual([]);
   });
 
-  // Final review 2026-10-03: „Dokumente“ often lives in OneDrive on Windows,
-  // so the local example must not point there; the ask-first rule matches the prompt.
-  it("gives a local example path outside Dokumente", () => {
-    expect(gehirnPage.ordner.options[0].wo).toContain(String.raw`C:\Mein Gehirn`);
-    expect(gehirnPage.ordner.options[0].wo).not.toContain("Dokumente");
+  it("states the requirements honestly, in the description too", () => {
+    expect(gehirnPage.anleitung.voraussetzungen).toContain("Windows oder Mac");
+    expect(gehirnPage.anleitung.voraussetzungen).toContain("ab Pro");
+    expect(gehirnPage.anleitung.voraussetzungen).toContain("Vorschau");
+    expect(gehirnPage.meta.description).toContain("ab Pro");
   });
 
-  it("describes the ask-first rule the way the prompt scopes it", () => {
-    const rule = gehirnPage.regeln.items.find((r) => r.title === "Erst fragen.")!;
-    expect(rule.body).toContain("Quellen");
+  it("offers an added folder and own mails instead of copying", () => {
+    expect(gehirnPage.anleitung.tipp).toContain("Pfad");
+    expect(gehirnPage.anleitung.tipp).toContain("eigene Mails");
   });
 
-  it("offers adding an existing folder and is honest that Cowork has no write protection", () => {
-    expect(gehirnPage.schritte.tipp).toContain("Pfad");
-    expect(gehirnPage.schritte.tippHinweis).toContain("keinen Schreibschutz");
+  it("says where the folder goes, outside Dokumente, with our own backup", () => {
+    const o = gehirnPage.anleitung.ordner;
+    expect(o).toContain(String.raw`C:\Mein Gehirn`);
+    expect(o).not.toContain("Dokumente");
+    expect(o).toContain("Immer auf diesem Gerät behalten");
+    expect(o).toContain("jede Stunde");
   });
 
-  it("tells the owner that a few own mails teach Claude the writing style", () => {
-    expect(gehirnPage.schritte.tipp).toContain("eigene Mails");
+  it("is honest about data, write protection and ownership", () => {
+    const g = gehirnPage.gutZuWissen.items.join(" ");
+    expect(g).toContain("Anthropic");
+    expect(g).toContain("keinen Schreibschutz");
+    expect(g).toContain("gehören dir");
   });
 
   it("says Vrelo is not affiliated with Anthropic", () => {

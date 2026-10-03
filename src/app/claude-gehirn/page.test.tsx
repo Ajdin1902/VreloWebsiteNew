@@ -6,10 +6,13 @@ import { getGehirnPrompt } from "@/lib/claudeGehirn";
 import { gehirnPage } from "@/lib/claudeGehirnPage";
 
 describe("/claude-gehirn", () => {
-  it("opens on the hero title without a button", () => {
+  it("puts the prompt right under the title, before any instructions", () => {
     render(<GehirnPage />);
-    const hero = screen.getByRole("heading", { level: 1, name: gehirnPage.hero.title }).closest("section")!;
-    expect(hero.querySelectorAll("a")).toHaveLength(0);
+    const h1 = screen.getByRole("heading", { level: 1, name: gehirnPage.top.title });
+    const box = screen.getByLabelText(gehirnPage.prompt.boxLabel);
+    const anleitung = screen.getByRole("heading", { level: 2, name: gehirnPage.anleitung.heading });
+    expect(h1.compareDocumentPosition(box) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(box.compareDocumentPosition(anleitung) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
 
   it("shows the exact prompt from the single source file", () => {
@@ -17,26 +20,23 @@ describe("/claude-gehirn", () => {
     expect(screen.getByLabelText(gehirnPage.prompt.boxLabel).textContent).toBe(getGehirnPrompt());
   });
 
+  it("opens without an image hero", () => {
+    const { container } = render(<GehirnPage />);
+    expect(container.querySelectorAll("img")).toHaveLength(0);
+  });
+
   it("asks for nothing: no link to the funnel or the contact page in the page body", () => {
     const { container } = render(<GehirnPage />);
     expect(container.querySelectorAll('a[href*="prozess-check"], a[href*="kontakt"]')).toHaveLength(0);
   });
 
-  it("names every section heading", () => {
+  it("has exactly three short sections after the prompt", () => {
     render(<GehirnPage />);
-    for (const h of [
-      gehirnPage.voraussetzungen.heading,
-      gehirnPage.schritte.heading,
-      gehirnPage.ordner.heading,
-      gehirnPage.prompt.heading,
-      gehirnPage.ergebnis.heading,
-      gehirnPage.regeln.heading,
-      gehirnPage.alltag.heading,
-      gehirnPage.nichtHinein.heading,
-      gehirnPage.fragen.heading,
-    ]) {
-      expect(screen.getByRole("heading", { level: 2, name: h })).toBeInTheDocument();
-    }
+    expect(screen.getAllByRole("heading", { level: 2 }).map((h) => h.textContent)).toEqual([
+      gehirnPage.anleitung.heading,
+      gehirnPage.danach.heading,
+      gehirnPage.gutZuWissen.heading,
+    ]);
   });
 
   it("closes with the non-affiliation line", () => {
