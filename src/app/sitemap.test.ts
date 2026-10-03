@@ -57,4 +57,8 @@ describe("sitemap", () => {
     const urls = sitemap().map((e) => e.url);
     for (const p of leistungenPages) expect(urls).toContain(`${siteUrl}/leistungen/${p.slug}`);
   });
+  it("lists the Claude-Gehirn gift page", () => {
+    const urls = sitemap().map((e) => e.url);
+    expect(urls).toContain(`${siteUrl}/claude-gehirn`);
+  });
 });

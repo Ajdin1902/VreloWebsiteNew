@@ -94,14 +94,15 @@ describe("leistungenPages", () => {
     expect(new Set(leistungenPages.map((p) => p.cta.src)).size).toBe(7);
   });
 
-  it("carries the Digitalbonus note only on KI-Beratung, as a possibility", () => {
-    expect(leistungenPages.filter((p) => p.note).map((p) => p.slug)).toEqual(["ki-beratung"]);
+  it("carries notes on Claude (gift page) and KI-Beratung (Digitalbonus, as a possibility)", () => {
+    expect(leistungenPages.filter((p) => p.note).map((p) => p.slug)).toEqual(["claude", "ki-beratung"]);
     const note = getLeistungPage("ki-beratung")!.note!;
     expect(note.body).toContain("kann");
     expect(note.body).toContain("Antrag");
     expect(note.body).toContain("bevor");
     expect(note.body).not.toMatch(/€|%/);
     expect(note.link.href).toBe("https://www.digitalbonus.bayern/foerderprogramm/");
+    expect(getLeistungPage("claude")!.note!.link.href).toBe("/claude-gehirn");
   });
 
   it("shows the audit card only on KI-Beratung", () => {

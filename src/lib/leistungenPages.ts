@@ -261,6 +261,11 @@ export const leistungenPages: LeistungPage[] = [
       ],
       after: "Jedes Angebot beginnt mit einem guten Entwurf in eurem Ton.",
     },
+    note: {
+      heading: "Zum Ausprobieren",
+      body: "Wie ich Claude selbst nutze, kannst du nachbauen: Ein Text legt in einem Ordner ein Gehirn für deinen Betrieb an. Kostenlos, ohne Anmeldung.",
+      link: { label: "Zum Claude-Gehirn", href: "/claude-gehirn" },
+    },
     cta: {
       kind: "kontakt",
       src: CHECK_SRC.leistungClaude,
