@@ -153,8 +153,8 @@ Run by Ajdin on his machine with the prompt as of commit 236fe05 (2,689 chars). 
 | (b) Dokumente zuerst | pass (reported) | none |
 | (c) OneDrive | pass (reported) | none |
 | Zweite Sitzung | pass (reported) | none |
-| Überlauf (150 Zeilen) | ☐ open | |
-| (f) hinzugefügter Ordner statt Kopie | ☐ open | |
+| Überlauf (150 Zeilen) | pass (reported) | none |
+| (f) hinzugefügter Ordner statt Kopie | pass (reported) | none |
 
 OneDrive-Empfehlung: bleibt (run c passed), `ordner.fallback` unchanged.
 
