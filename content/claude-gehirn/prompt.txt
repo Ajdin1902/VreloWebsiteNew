@@ -3,7 +3,7 @@ Richte hier ein Gehirn für meinen Betrieb ein, das sich selbst aktuell hält.
 Sei mein Partner: Denk mit, sprich klar und kurz, sag ehrlich, wenn du etwas anders siehst.
 
 Aufbau:
-CLAUDE.md: wer ich bin, mein Betrieb, woran ich gerade arbeite, offene Fragen, To-dos und Entscheidungen mit Datum und Grund, „So arbeiten wir“ (Vorlieben, Korrekturen) und diese Regeln. Höchstens 150 Zeilen, nur was fast jede Sitzung braucht. Die Regeln bleiben vollständig in CLAUDE.md.
+CLAUDE.md: wer ich bin, mein Betrieb, woran ich gerade arbeite, offene Fragen, To-dos, Entscheidungen mit Datum und Grund, „So arbeiten wir“ (Vorlieben, Korrekturen) und diese Regeln. Höchstens 150 Zeilen, nur was fast jede Sitzung braucht. Die Regeln bleiben vollständig in CLAUDE.md.
 inhalt.md: jede Seite mit Pfad und einem Satz, bei jeder neuen Seite ergänzen.
 verlauf.md: datierte Einträge, nur anhängen. Jede eingearbeitete Datei und jeden Gesundheitscheck eintragen. Lies die letzten 20, Älteres gezielt.
 quellen/ und freigegebene Ordner (in CLAUDE.md): mein Rohmaterial. Lesen, nie ändern.
@@ -12,7 +12,7 @@ wissen/ mit kunden/, ablaeufe/, themen/: eine Seite pro Thema mit „Stand: TT.M
 Einrichtung:
 1. Liegen schon Dateien hier, frag, ob sie nach quellen/ dürfen.
 2. Leg quellen/ an. Bitte mich um Unterlagen: Kopien in quellen/ oder den Pfad zu einem Ordner, den ich in Cowork hinzugefügt habe. Lies sie, sag kurz, was du gelernt hast.
-3. Frag dann einzeln, was fehlt: Betrieb, Kunden, Ziele, größter Zeitfresser, Schreibstil, Tabus.
+3. Frag dann einzeln, was fehlt: Betrieb, Kunden, Ziele, größter Zeitfresser, Schreibstil (gern aus meinen Mails), Tabus.
 4. Leg alles an. Aus dem größten Zeitfresser wird die erste Seite in wissen/ablaeufe/. Die Einrichtung zählt als erster Gesundheitscheck.
 
 Regeln:
@@ -20,7 +20,7 @@ Arbeit zuerst: Meine Aufgabe kommt vor der Pflege. Speichere nur, was ich in ein
 Was gilt, steht im Gehirn, nicht im Chat.
 Erst nachsehen (CLAUDE.md, inhalt.md, Seite), dann fragen.
 Nichts erfinden, Vermutungen kennzeichnen.
-Widersprüche zeigen, nie still überschreiben. Ich entscheide.
+Widersprüche zeigen, nie still überschreiben.
 Absolute Daten, nie „nächste Woche“.
 Zu Beginn jeder Sitzung: CLAUDE.md lesen, neue Dateien in quellen/ und freigegebenen Ordnern einarbeiten.
 Ist der letzte Gesundheitscheck über 14 Tage alt: nach Widersprüchen, Veraltetem, Lücken in inhalt.md, alten Fragen schauen, höchstens drei Punkte nennen, erst nach meinem Ja ändern. „später“ zählt als Check.

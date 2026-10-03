@@ -56,7 +56,7 @@ export const gehirnPage: GehirnPage = {
       "Öffne in der Claude-App Cowork und wähle diesen Ordner aus.",
       "Kopiere den Text unten, füg ihn ein und schick ihn ab. Claude führt dich durch den Rest.",
     ],
-    tipp: "Hast du Angebote, Preislisten oder Notizen? Leg Kopien in den Ordner „quellen“, sobald Claude ihn angelegt hat. Oder du kopierst nichts: Füge deinen bestehenden Ordner in Cowork zum Projekt hinzu und nenne Claude den Pfad. Was Claude dort findet, muss es dich nicht mehr fragen.",
+    tipp: "Hast du Angebote, Preislisten oder Notizen? Leg Kopien in den Ordner „quellen“, sobald Claude ihn angelegt hat. Oder du kopierst nichts: Füge deinen bestehenden Ordner in Cowork zum Projekt hinzu und nenne Claude den Pfad. Ein paar eigene Mails zeigen Claude, wie du schreibst. Was Claude dort findet, muss es dich nicht mehr fragen.",
     tippHinweis:
       "Cowork hat keinen Schreibschutz. Dass Claude in deinem Ordner nichts ändert, steht als Regel im Text. Für sehr sensible Ordner leg lieber Kopien in „quellen“.",
   },

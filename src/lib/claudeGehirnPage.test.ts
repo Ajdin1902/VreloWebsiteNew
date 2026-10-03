@@ -68,6 +68,10 @@ describe("/claude-gehirn copy", () => {
     expect(gehirnPage.schritte.tippHinweis).toContain("keinen Schreibschutz");
   });
 
+  it("tells the owner that a few own mails teach Claude the writing style", () => {
+    expect(gehirnPage.schritte.tipp).toContain("eigene Mails");
+  });
+
   it("says Vrelo is not affiliated with Anthropic", () => {
     expect(gehirnPage.hinweis).toContain("nicht mit Anthropic verbunden");
   });

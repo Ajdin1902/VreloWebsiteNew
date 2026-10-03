@@ -72,6 +72,10 @@ describe("Claude-Gehirn prompt", () => {
     expect(prompt).toContain("neue Dateien in quellen/ und freigegebenen Ordnern einarbeiten");
   });
 
+  it("lets the owner show the writing style through a few of his own mails", () => {
+    expect(prompt).toContain("Schreibstil (gern aus meinen Mails)");
+  });
+
   it("counts code points, not UTF-16 units", () => {
     expect(promptLength("„ä“")).toBe(3);
   });
