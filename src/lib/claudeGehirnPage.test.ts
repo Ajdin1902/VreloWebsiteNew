@@ -63,6 +63,11 @@ describe("/claude-gehirn copy", () => {
     expect(rule.body).toContain("Quellen");
   });
 
+  it("offers adding an existing folder and is honest that Cowork has no write protection", () => {
+    expect(gehirnPage.schritte.tipp).toContain("Pfad");
+    expect(gehirnPage.schritte.tippHinweis).toContain("keinen Schreibschutz");
+  });
+
   it("says Vrelo is not affiliated with Anthropic", () => {
     expect(gehirnPage.hinweis).toContain("nicht mit Anthropic verbunden");
   });

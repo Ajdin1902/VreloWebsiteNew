@@ -46,7 +46,10 @@ export default function GehirnPage() {
             <ol className="mt-6 list-decimal space-y-3 pl-6 text-lg">
               {c.schritte.steps.map((s) => <li key={s}>{s}</li>)}
             </ol>
-            <p className="mt-6 rounded-2xl bg-sonnenlicht p-5">{c.schritte.tipp}</p>
+            <div className="mt-6 rounded-2xl bg-sonnenlicht p-5">
+              <p>{c.schritte.tipp}</p>
+              <p className="mt-3 text-sm">{c.schritte.tippHinweis}</p>
+            </div>
           </div>
         </Reveal>
       </Section>

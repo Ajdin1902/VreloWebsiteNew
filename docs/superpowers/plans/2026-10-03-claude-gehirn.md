@@ -229,6 +229,9 @@ Pass when: all files are created and visible in Explorer and on onedrive.com, an
   5. say „Das Angebot an Familie Berger ist raus, fertig.“ → the to-do disappears from `CLAUDE.md` **without** a question (ask-first rule is scoped to files, `quellen/` and anything leaving the folder), `verlauf.md` gets an entry.
   6. open `verlauf.md` → every processed `quellen/` file and the setup (as first Gesundheitscheck) are listed.
 
+- [ ] **Step 5b: Run (f), added folder instead of copies.** Put the three files from Step 1 into a separate folder (e.g. `C:\Huber-Angebote`), add it to the Cowork project, start a fresh brain folder, paste the prompt, and give Claude the path when it asks for documents.
+Pass when: Claude reads the files in place, copies nothing, notes the folder in `CLAUDE.md`, and the files in `C:\Huber-Angebote` are unchanged afterwards (dates + content). Then drop a new file into `C:\Huber-Angebote` and open a new session: it gets picked up at session start.
+
 - [ ] **Step 6: Overflow test.** In the (b) folder, ask Claude to append 120 lines of fictional to-dos to `CLAUDE.md` until it is at 150 lines, then start a new session and say „Neuer Kunde: Firma Lenz, Treppenhaus, Angebot bis 15.10.2026.“
 Pass when: Claude trims `CLAUDE.md` before adding and says what moved where.
 

@@ -8,7 +8,7 @@ export type GehirnPage = {
   hero: { eyebrow: string; title: string; line: string; image: string };
   intro: string;
   voraussetzungen: { heading: string; items: string[]; hinweis: string };
-  schritte: { heading: string; steps: [string, string, string]; tipp: string };
+  schritte: { heading: string; steps: [string, string, string]; tipp: string; tippHinweis: string };
   ordner: {
     heading: string;
     intro: string;
@@ -56,7 +56,9 @@ export const gehirnPage: GehirnPage = {
       "Öffne in der Claude-App Cowork und wähle diesen Ordner aus.",
       "Kopiere den Text unten, füg ihn ein und schick ihn ab. Claude führt dich durch den Rest.",
     ],
-    tipp: "Hast du Angebote, Preislisten oder Notizen? Leg sie in den Ordner „quellen“, sobald Claude ihn angelegt hat. Was Claude dort findet, muss es dich nicht mehr fragen.",
+    tipp: "Hast du Angebote, Preislisten oder Notizen? Leg Kopien in den Ordner „quellen“, sobald Claude ihn angelegt hat. Oder du kopierst nichts: Füge deinen bestehenden Ordner in Cowork zum Projekt hinzu und nenne Claude den Pfad. Was Claude dort findet, muss es dich nicht mehr fragen.",
+    tippHinweis:
+      "Cowork hat keinen Schreibschutz. Dass Claude in deinem Ordner nichts ändert, steht als Regel im Text. Für sehr sensible Ordner leg lieber Kopien in „quellen“.",
   },
   ordner: {
     heading: "Wo du den Ordner anlegst",
@@ -177,7 +179,7 @@ export const gehirnPage: GehirnPage = {
       },
       {
         title: "Es pflegt sich selbst.",
-        body: "Neue Dateien in „quellen“ arbeitet Claude zu Beginn der Sitzung ein. Alle 14 Tage schaut es kurz nach Widersprüchen und Veraltetem. Du musst es nicht daran erinnern.",
+        body: "Neue Dateien in „quellen“ und in deinen hinzugefügten Ordnern arbeitet Claude zu Beginn der Sitzung ein. Alle 14 Tage schaut es kurz nach Widersprüchen und Veraltetem. Du musst es nicht daran erinnern.",
       },
       {
         title: "Erst fragen.",

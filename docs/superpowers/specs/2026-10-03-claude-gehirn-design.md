@@ -154,5 +154,8 @@ Run by Ajdin on his machine with the prompt as of commit 236fe05 (2,689 chars). 
 | (c) OneDrive | pass (reported) | none |
 | Zweite Sitzung | pass (reported) | none |
 | Überlauf (150 Zeilen) | ☐ open | |
+| (f) hinzugefügter Ordner statt Kopie | ☐ open | |
 
 OneDrive-Empfehlung: bleibt (run c passed), `ordner.fallback` unchanged.
+
+**Change 2026-10-03 (after runs 1 to 4, Ajdin):** owners can add an existing folder to the Cowork project and give Claude its path instead of copying files. Cowork only reads folders that belong to the project (a pasted path alone is blocked) and has **no read-only switch**, so the prompt carries the rule „freigegebene Ordner: Lesen, nie ändern“, notes them in `CLAUDE.md` and reads new files there at session start; the page says honestly that this is a rule, not a lock. Setup step 5 (show result + three example sentences) was cut for the budget; prompt now 2,690 chars. Run (f) re-tests it.
