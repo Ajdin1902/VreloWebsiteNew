@@ -64,7 +64,7 @@ export const gehirnPage: GehirnPage = {
     options: [
       {
         name: "Lokal auf deinem Rechner",
-        wo: "Windows: Laufwerk C:, zum Beispiel Dokumente\\Mein Gehirn. Mac: ein Ordner außerhalb von iCloud.",
+        wo: "Windows: Laufwerk C:, zum Beispiel C:\\Mein Gehirn. Mac: ein Ordner außerhalb von iCloud.",
         plus: ["Am schnellsten, auch ohne Internet.", "Nichts wird zwischendurch abgeglichen."],
         minus: [
           "Liegt nur auf diesem einen Gerät.",
@@ -181,7 +181,7 @@ export const gehirnPage: GehirnPage = {
       },
       {
         title: "Erst fragen.",
-        body: "Bevor Claude etwas löscht, überschreibt oder aus dem Ordner schickt, fragt es dich.",
+        body: "Seine eigenen Seiten pflegt Claude selbst. Bevor es Dateien löscht, deine Quellen ändert oder etwas aus dem Ordner schickt, fragt es dich.",
       },
     ],
   },

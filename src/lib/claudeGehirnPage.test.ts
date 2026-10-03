@@ -51,6 +51,18 @@ describe("/claude-gehirn copy", () => {
     expect(all.filter((s) => /Erstgespräch|Prozess-Check|buchen|Termin vereinbaren/i.test(s))).toEqual([]);
   });
 
+  // Final review 2026-10-03: „Dokumente“ often lives in OneDrive on Windows,
+  // so the local example must not point there; the ask-first rule matches the prompt.
+  it("gives a local example path outside Dokumente", () => {
+    expect(gehirnPage.ordner.options[0].wo).toContain(String.raw`C:\Mein Gehirn`);
+    expect(gehirnPage.ordner.options[0].wo).not.toContain("Dokumente");
+  });
+
+  it("describes the ask-first rule the way the prompt scopes it", () => {
+    const rule = gehirnPage.regeln.items.find((r) => r.title === "Erst fragen.")!;
+    expect(rule.body).toContain("Quellen");
+  });
+
   it("says Vrelo is not affiliated with Anthropic", () => {
     expect(gehirnPage.hinweis).toContain("nicht mit Anthropic verbunden");
   });

@@ -45,6 +45,25 @@ describe("Claude-Gehirn prompt", () => {
     }
   });
 
+  // Final review 2026-10-03: the history must carry what later rules look up,
+  // postponing must be recorded, and self-pruning must not trigger the ask-first rule.
+  it("logs what the upkeep rules look up later", () => {
+    expect(prompt).toContain("Jede eingearbeitete Datei und jeden Gesundheitscheck eintragen");
+    expect(prompt).toContain("Die Einrichtung zählt als erster Gesundheitscheck");
+    expect(prompt).toContain("„später“ zählt als Check");
+  });
+
+  it("scopes the ask-first rule so pruning the brain needs no question", () => {
+    expect(prompt).toContain("CLAUDE.md, inhalt.md und wissen/ pflegst du selbst");
+    expect(prompt).toContain("Frag, bevor du Dateien löschst, quellen/ änderst");
+  });
+
+  it("keeps the map current and the rules from being pruned away", () => {
+    expect(prompt).toContain("bei jeder neuen Seite ergänzen");
+    expect(prompt).toContain("Die Regeln bleiben vollständig in CLAUDE.md");
+    expect(prompt).toContain("Was gilt, steht im Gehirn");
+  });
+
   it("counts code points, not UTF-16 units", () => {
     expect(promptLength("„ä“")).toBe(3);
   });

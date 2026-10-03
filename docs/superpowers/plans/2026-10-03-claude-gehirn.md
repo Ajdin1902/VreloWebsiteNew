@@ -226,6 +226,8 @@ Pass when: all files are created and visible in Explorer and on onedrive.com, an
   2. drop a new file `quellen/termin-berger.txt` („Termin Familie Berger verschoben auf 14.10.2026.“) and start a new session → reported in one line at session start and filed;
   3. ask „Wie spät ist es in Tokio?“ → answers, saves nothing, no „Notiert“ line;
   4. say „Frau Berger hat zugesagt, Start am 20.10.2026.“ → files it, one „Notiert“ line, no question.
+  5. say „Das Angebot an Familie Berger ist raus, fertig.“ → the to-do disappears from `CLAUDE.md` **without** a question (ask-first rule is scoped to files, `quellen/` and anything leaving the folder), `verlauf.md` gets an entry.
+  6. open `verlauf.md` → every processed `quellen/` file and the setup (as first Gesundheitscheck) are listed.
 
 - [ ] **Step 6: Overflow test.** In the (b) folder, ask Claude to append 120 lines of fictional to-dos to `CLAUDE.md` until it is at 150 lines, then start a new session and say „Neuer Kunde: Firma Lenz, Treppenhaus, Angebot bis 15.10.2026.“
 Pass when: Claude trims `CLAUDE.md` before adding and says what moved where.
