@@ -142,3 +142,17 @@ Indexed, in the sitemap. Working title „Ein Gehirn für deinen Betrieb, mit Cl
 - Shipping our backup script.
 - Any email capture, CTA or follow-up sequence.
 - Skills, scheduled tasks, connectors (MCP) inside the brain — candidates for a later „Ausbaustufe“ page only if the asset proves itself.
+
+## 11. Testergebnis (Cowork, 2026-10-03)
+
+Run by Ajdin on his machine with the prompt as of commit 236fe05 (2,689 chars). Result reported as „successful“ for runs 1 to 4, without per-check detail.
+
+| Run | Ergebnis | Änderung am Prompt |
+|---|---|---|
+| (a) leerer Ordner | pass (reported) | none |
+| (b) Dokumente zuerst | pass (reported) | none |
+| (c) OneDrive | pass (reported) | none |
+| Zweite Sitzung | pass (reported) | none |
+| Überlauf (150 Zeilen) | ☐ open | |
+
+OneDrive-Empfehlung: bleibt (run c passed), `ordner.fallback` unchanged.
