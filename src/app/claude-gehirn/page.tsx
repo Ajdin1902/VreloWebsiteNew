@@ -2,8 +2,9 @@
 //
 // The Claude-Gehirn gift page (spec 2026-10-03 §7). Ungated, no CTA in the
 // body, no ClosingCta: the site header is the only chrome that sells.
-// Short by decision (Ajdin 2026-10-03): title, then the prompt in the first
-// screen, then three small sections. No image hero, so the prompt stays on top.
+// Layout by Ajdin (2026-10-04): title, requirements and the prompt in the first
+// screen (no image hero), then three bands: setup + tutorial video · where the
+// folder lives + how it is built · what to keep in mind + honest notes.
 // All copy: src/lib/claudeGehirnPage.ts; the prompt: content/claude-gehirn/prompt.txt.
 import type { Metadata } from "next";
 import { Section } from "@/components/Section";
@@ -23,15 +24,28 @@ export const metadata: Metadata = {
 };
 
 const h2 = "text-balance text-2xl font-semibold text-tiefes-wasser md:text-3xl";
+const dot = "mt-[0.6em] size-1.5 shrink-0 rounded-full bg-amber";
 
 export default function GehirnPage() {
   const prompt = getGehirnPrompt();
+  const [colOrt, ...cols] = c.speicherort.columns;
   return (
     <>
       <section className="bg-papier text-tinte">
         <div className="mx-auto max-w-3xl px-6 pb-16 pt-12 md:pb-20 md:pt-16">
           <h1 className="text-balance text-4xl font-semibold text-tiefes-wasser md:text-5xl">{c.top.title}</h1>
           <p className="mt-4 text-pretty text-lg">{c.top.line}</p>
+          <div className="mt-6">
+            <p className="text-sm font-semibold uppercase tracking-wide text-stumm">{c.top.voraussetzungenLabel}</p>
+            <ul className="mt-2 flex flex-col gap-1 sm:flex-row sm:flex-wrap sm:gap-x-6">
+              {c.top.voraussetzungen.map((v) => (
+                <li key={v} className="flex gap-2">
+                  <span aria-hidden="true" className={dot} />
+                  <span>{v}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
           <div className="mt-8">
             <PromptBox
               text={prompt}
@@ -47,19 +61,91 @@ export default function GehirnPage() {
       <Section tint>
         <div className="mx-auto max-w-3xl">
           <h2 className={h2}>{c.anleitung.heading}</h2>
-          <p className="mt-4">{c.anleitung.voraussetzungen}</p>
           <ol className="mt-4 list-decimal space-y-2 pl-6">
             {c.anleitung.steps.map((s) => <li key={s}>{s}</li>)}
           </ol>
-          <p className="mt-4">{c.anleitung.tipp}</p>
-          <p className="mt-4 text-stumm">{c.anleitung.ordner}</p>
+          <figure className="mt-8">
+            {/* A tutorial, not decoration: the reader starts it, can pause and scrub. */}
+            <video
+              src={c.anleitung.video.src}
+              poster={c.anleitung.video.poster}
+              aria-label={c.anleitung.video.label}
+              controls
+              muted
+              playsInline
+              preload="none"
+              width={1600}
+              height={852}
+              className="h-auto w-full rounded-2xl bg-tiefes-wasser shadow-deepwater"
+            />
+            <figcaption className="mt-3 text-sm text-stumm">{c.anleitung.video.caption}</figcaption>
+          </figure>
         </div>
       </Section>
 
       <Section tone="paper">
         <div className="mx-auto max-w-3xl">
-          <h2 className={h2}>{c.danach.heading}</h2>
-          <p className="mt-4">{c.danach.body}</p>
+          <h2 className={h2}>{c.speicherort.heading}</h2>
+          {/* A real table from md up; below it every row becomes a card with inline labels. */}
+          <table className="mt-6 block w-full text-left md:table md:border-collapse">
+            <thead className="hidden md:table-header-group">
+              <tr className="border-b border-faden">
+                {c.speicherort.columns.map((col) => (
+                  <th key={col} scope="col" className="py-3 pr-4 text-sm font-semibold uppercase tracking-wide text-stumm">
+                    {col}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="block space-y-4 md:table-row-group md:space-y-0">
+              {c.speicherort.rows.map((r) => (
+                <tr
+                  key={r.ort}
+                  className="block rounded-2xl border border-faden bg-lichtpapier p-5 md:table-row md:rounded-none md:border-x-0 md:border-t-0 md:bg-transparent md:p-0"
+                >
+                  <th scope="row" className="block pb-2 font-semibold text-tiefes-wasser md:table-cell md:w-1/5 md:py-4 md:pr-4 md:align-top">
+                    <span className="sr-only">{colOrt}: </span>
+                    {r.ort}
+                  </th>
+                  {[r.vorteile, r.nachteile, r.wann].map((cell, i) => (
+                    <td key={cols[i]} className="block py-1 md:table-cell md:py-4 md:pr-4 md:align-top">
+                      <span className="font-semibold md:hidden">{cols[i]}: </span>
+                      {cell}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p className="mt-4 text-sm text-stumm">{c.speicherort.fussnote}</p>
+
+          <h2 className={`${h2} mt-16`}>{c.ordner.heading}</h2>
+          <p className="mt-4">{c.ordner.intro}</p>
+          <div className="mt-6 rounded-2xl bg-tiefes-wasser p-6 text-gletscher md:p-8">
+            <p className="font-mono font-semibold text-papier">{c.ordner.root}</p>
+            <ul className="ml-2 mt-3 space-y-3 border-l border-gletscher/40 pl-5">
+              {c.ordner.tree.map((e) => (
+                <li key={e.name} className="flex flex-col sm:flex-row sm:gap-4">
+                  <code className="font-mono font-semibold text-papier sm:w-32 sm:shrink-0">{e.name}</code>
+                  <span>{e.note}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Section>
+
+      <Section tint>
+        <div className="mx-auto max-w-3xl">
+          <h2 className={h2}>{c.beachten.heading}</h2>
+          <ul className="mt-4 space-y-2">
+            {c.beachten.items.map((i) => (
+              <li key={i} className="flex gap-3">
+                <span aria-hidden="true" className={dot} />
+                <span>{i}</span>
+              </li>
+            ))}
+          </ul>
 
           <h2 className={`${h2} mt-12`}>{c.gutZuWissen.heading}</h2>
           <ul className="mt-4 list-disc space-y-2 pl-6">

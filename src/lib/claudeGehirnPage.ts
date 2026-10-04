@@ -2,28 +2,39 @@
 //
 // Every German string for /claude-gehirn (spec 2026-10-03 §7). The page and
 // its components hold none. A gift page: nothing here asks for anything.
-// Short by decision (Ajdin 2026-10-03): the prompt first, then only what a
-// reader needs to use it safely.
+// Layout by Ajdin (2026-10-04): prompt first, then steps + video, where the
+// folder lives, how it is built, what to keep in mind, and the honest notes.
+// German quotes are written as \u201E … \u201C escapes so no tool can downgrade them.
+
+export type FolderRow = { ort: string; vorteile: string; nachteile: string; wann: string };
 
 export type GehirnPage = {
   meta: { title: string; description: string };
-  top: { title: string; line: string };
+  top: { title: string; line: string; voraussetzungenLabel: string; voraussetzungen: string[] };
   prompt: { boxLabel: string; copyLabel: string; copiedLabel: string; failedLabel: string };
-  anleitung: { heading: string; voraussetzungen: string; steps: [string, string, string]; tipp: string; ordner: string };
-  danach: { heading: string; body: string };
+  anleitung: {
+    heading: string;
+    steps: [string, string, string];
+    video: { src: string; poster: string; label: string; caption: string };
+  };
+  speicherort: { heading: string; columns: [string, string, string, string]; rows: [FolderRow, FolderRow]; fussnote: string };
+  ordner: { heading: string; intro: string; root: string; tree: { name: string; note: string }[] };
+  beachten: { heading: string; items: string[] };
   gutZuWissen: { heading: string; items: string[] };
   hinweis: string;
 };
 
 export const gehirnPage: GehirnPage = {
   meta: {
-    title: "Ein Gehirn für deinen Betrieb, mit Claude",
+    title: "Dein Prompt für dein KI-Gehirn mit Claude",
     description:
       "Ein kostenloser Text für Claude Cowork (ab Pro): Claude legt in einem Ordner ein Gehirn für deinen Betrieb an, lernt aus deinen Unterlagen und hält sein Wissen selbst aktuell.",
   },
   top: {
-    title: "Ein Gehirn für deinen Betrieb, mit Claude",
-    line: "Kopieren, in Claude Cowork einfügen, abschicken. Kostenlos, ohne Anmeldung.",
+    title: "Dein Prompt für dein KI-Gehirn",
+    line: "Kopieren, in Claude einfügen, abschicken.",
+    voraussetzungenLabel: "Voraussetzungen",
+    voraussetzungen: ["Claude Pro oder höher, in der Claude-App für Windows oder Mac", "15 Minuten"],
   },
   prompt: {
     boxLabel: "Der Text zum Einfügen",
@@ -33,20 +44,57 @@ export const gehirnPage: GehirnPage = {
   },
   anleitung: {
     heading: "So richtest du es ein",
-    voraussetzungen:
-      "Du brauchst die Claude-App für Windows oder Mac, einen bezahlten Tarif ab Pro (Cowork, noch in der Vorschau) und etwa 15 Minuten.",
     steps: [
-      "Leg einen neuen, leeren Ordner an.",
+      "Leg einen leeren Ordner an.",
       "Öffne in der Claude-App Cowork und wähle den Ordner aus.",
       "Füge den Text ein und schick ihn ab. Claude führt dich durch den Rest.",
     ],
-    tipp: "Du musst nichts kopieren: Füge bestehende Ordner in Cowork hinzu und nenne Claude den Pfad. Ein paar eigene Mails zeigen Claude, wie du schreibst.",
-    ordner:
-      "Am schnellsten liegt der Ordner lokal, etwa unter C:\\Mein Gehirn. Mit OneDrive hast du eine Sicherung, stell den Ordner dann auf „Immer auf diesem Gerät behalten“. Kein USB-Stick, kein Netzlaufwerk. Ich arbeite selbst auf C: und sichere jede Stunde nach OneDrive.",
+    video: {
+      src: "/video/claude-gehirn-anleitung.mp4",
+      poster: "/video/claude-gehirn-anleitung.webp",
+      label: "Video: die Einrichtung in Claude Cowork, Schritt für Schritt",
+      caption: "Die Einrichtung in 22 Sekunden, ohne Ton.",
+    },
   },
-  danach: {
-    heading: "Was danach passiert",
-    body: "Claude legt dein Gehirn im Ordner an: CLAUDE.md mit dem Wichtigsten, Seiten zu Kunden und Abläufen, ein Inhaltsverzeichnis und einen Verlauf. Es speichert nur, was du in einem Monat noch brauchst, räumt selbst auf und fragt, bevor es Dateien löscht. Du musst nichts pflegen.",
+  speicherort: {
+    heading: "Wo der Ordner liegt",
+    columns: ["Speicherort", "Vorteile", "Nachteile", "Wann nutzen"],
+    rows: [
+      {
+        ort: "Lokal, etwa C:\\Mein Gehirn",
+        vorteile: "Am schnellsten. Läuft auch ohne Internet.",
+        nachteile: "Keine automatische Sicherung. Nur auf diesem Rechner.",
+        wann: "Wenn du an einem Rechner arbeitest. So mache ich es selbst und sichere jede Stunde nach OneDrive.",
+      },
+      {
+        ort: "Cloud: OneDrive, Google Drive, iCloud",
+        vorteile: "Automatisch gesichert. Auf mehreren Geräten.",
+        nachteile:
+          "Etwas langsamer. Die Dateien müssen auf dem Gerät liegen, bei OneDrive mit \u201EImmer auf diesem Gerät behalten\u201C.",
+        wann: "Wenn du an mehreren Geräten arbeitest oder keine eigene Sicherung hast.",
+      },
+    ],
+    fussnote: "Kein USB-Stick, kein Netzlaufwerk.",
+  },
+  ordner: {
+    heading: "So ist der Ordner aufgebaut",
+    intro: "Claude legt alles selbst an. Deine Unterlagen kommen nach quellen/.",
+    root: "Mein Gehirn/",
+    tree: [
+      { name: "CLAUDE.md", note: "das Wichtigste, liest Claude jedes Mal" },
+      { name: "inhalt.md", note: "Inhaltsverzeichnis aller Seiten" },
+      { name: "verlauf.md", note: "was wann passiert ist" },
+      { name: "quellen/", note: "deine Unterlagen, Claude liest nur" },
+      { name: "wissen/", note: "eine Seite pro Kunde, Ablauf und Thema" },
+    ],
+  },
+  beachten: {
+    heading: "Dinge zu beachten",
+    items: [
+      "Starte Cowork ab jetzt immer in diesem Ordner.",
+      "Claude merkt sich nur, was wichtig ist.",
+      "Je mehr Claude weiß, desto besser die Ergebnisse.",
+    ],
   },
   gutZuWissen: {
     heading: "Gut zu wissen",
