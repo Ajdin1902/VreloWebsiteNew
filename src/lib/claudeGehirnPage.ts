@@ -19,7 +19,7 @@ export type GehirnPage = {
     video: { src: string; poster: string; label: string; caption: string };
   };
   speicherort: { heading: string; columns: [string, string, string, string]; rows: [FolderRow, FolderRow]; fussnote: string };
-  ordner: { heading: string; intro: string; root: string; tree: { name: string; note: string }[]; andereWege: string };
+  ordner: { heading: string; intro: string; root: string; tree: { name: string; note: string }[]; andereWegeTitel: string; andereWege: string };
   beachten: { heading: string; items: string[] };
   gutZuWissen: { heading: string; items: string[] };
   hinweis: string;
@@ -107,6 +107,7 @@ export const gehirnPage: GehirnPage = {
     ],
     // Ajdin 2026-10-04: the tool is taste, the structure is the point. Claude Code
     // reads CLAUDE.md like Cowork; the plain claude.ai chat cannot open a folder.
+    andereWegeTitel: "Alternativ",
     andereWege:
       "Cowork ist nur ein Weg. Ich selbst arbeite mit Claude Code in Visual Studio Code, das ist Geschmackssache. Entscheidend ist dieser Aufbau: Er funktioniert überall, wo Claude direkt in deinem Ordner arbeitet.",
   },

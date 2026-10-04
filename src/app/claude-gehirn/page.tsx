@@ -160,7 +160,8 @@ export default function GehirnPage() {
               ))}
             </ul>
           </div>
-          <p className="mt-6">{c.ordner.andereWege}</p>
+          <h3 className="mt-8 text-lg font-semibold text-tiefes-wasser">{c.ordner.andereWegeTitel}</h3>
+          <p className="mt-2">{c.ordner.andereWege}</p>
         </div>
       </Section>
 
