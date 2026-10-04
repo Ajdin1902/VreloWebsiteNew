@@ -19,6 +19,11 @@ describe("/claude-gehirn", () => {
     expect(after(box, anleitung)).toBe(true);
   });
 
+  it("passes the whole-text hint to the prompt box", () => {
+    render(<GehirnPage />);
+    expect(screen.getByRole("status")).toHaveTextContent(gehirnPage.prompt.hintLabel);
+  });
+
   it("shows the exact prompt from the single source file", () => {
     render(<GehirnPage />);
     expect(screen.getByLabelText(gehirnPage.prompt.boxLabel).textContent).toBe(getGehirnPrompt());
@@ -52,9 +57,10 @@ describe("/claude-gehirn", () => {
     expect(container.querySelectorAll('a[href*="prozess-check"], a[href*="kontakt"]')).toHaveLength(0);
   });
 
-  it("has the five sections after the prompt, in order", () => {
+  it("has the six sections after the prompt, vision first", () => {
     render(<GehirnPage />);
     expect(screen.getAllByRole("heading", { level: 2 }).map((h) => h.textContent)).toEqual([
+      gehirnPage.vision.heading,
       gehirnPage.anleitung.heading,
       gehirnPage.speicherort.heading,
       gehirnPage.ordner.heading,

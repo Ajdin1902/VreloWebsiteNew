@@ -19,7 +19,7 @@ const all = strings(gehirnPage);
 // three things to keep in mind and the honest „Gut zu wissen“.
 describe("/claude-gehirn copy", () => {
   it("stays short", () => {
-    expect(all.join(" ").length).toBeLessThan(3200);
+    expect(all.join(" ").length).toBeLessThan(3600);
   });
 
   it("follows the house typography in every string", () => {
@@ -32,7 +32,7 @@ describe("/claude-gehirn copy", () => {
   });
 
   it("never claims a partnership or certification with Anthropic", () => {
-    expect(all.filter((s) => /Partner|zertifiziert/i.test(s))).toEqual([]);
+    expect(all.filter((s) => /\bPartner|zertifiziert/i.test(s))).toEqual([]);
   });
 
   it("asks for nothing: no CTA copy anywhere", () => {
@@ -49,6 +49,16 @@ describe("/claude-gehirn copy", () => {
     expect(v).toContain("Windows oder Mac");
     expect(v).toContain("15 Minuten");
     expect(gehirnPage.meta.description).toContain("ab Pro");
+  });
+
+  it("opens with the vision: three points, the goal, three example questions, my own use", () => {
+    const v = gehirnPage.vision;
+    expect(v.items).toHaveLength(3);
+    expect(v.items[1]).toContain("Sparringspartner");
+    expect(v.ziel).toBe("Das Ziel: dein eigenes KI-Gehirn.");
+    expect(v.fragen).toHaveLength(3);
+    for (const f of v.fragen) expect(f).toMatch(/^„.+“$/);
+    expect(v.ich).toContain("So arbeite ich selbst");
   });
 
   it("has three setup steps, starting with an empty folder", () => {

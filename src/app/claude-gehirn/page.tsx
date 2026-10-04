@@ -2,9 +2,10 @@
 //
 // The Claude-Gehirn gift page (spec 2026-10-03 §7). Ungated, no CTA in the
 // body, no ClosingCta: the site header is the only chrome that sells.
-// Layout by Ajdin (2026-10-04): title, requirements and the prompt in the first
-// screen (no image hero), then three bands: setup + tutorial video · where the
-// folder lives + how it is built · what to keep in mind + honest notes.
+// Layout by Ajdin (2026-10-04): title, requirements and a short prompt box in the
+// first screen (no image hero) with the vision band peeking in, then three bands:
+// setup + tutorial video · where the folder lives + how it is built · what to
+// keep in mind + honest notes.
 // All copy: src/lib/claudeGehirnPage.ts; the prompt: content/claude-gehirn/prompt.txt.
 import type { Metadata } from "next";
 import { Section } from "@/components/Section";
@@ -32,7 +33,8 @@ export default function GehirnPage() {
   return (
     <>
       <section className="bg-papier text-tinte">
-        <div className="mx-auto max-w-3xl px-6 pb-16 pt-12 md:pb-20 md:pt-16">
+        {/* px-6 outside max-w-3xl, like Section, so every band shares one text column. */}
+        <div className="mx-auto max-w-3xl box-content px-6 pb-10 pt-12 md:pb-12 md:pt-16">
           <h1 className="text-balance text-4xl font-semibold text-tiefes-wasser md:text-5xl">{c.top.title}</h1>
           <p className="mt-4 text-pretty text-lg">{c.top.line}</p>
           <div className="mt-6">
@@ -53,8 +55,34 @@ export default function GehirnPage() {
               copyLabel={c.prompt.copyLabel}
               copiedLabel={c.prompt.copiedLabel}
               failedLabel={c.prompt.failedLabel}
+              hintLabel={c.prompt.hintLabel}
             />
           </div>
+        </div>
+      </section>
+
+      {/* Own band with less top padding than Section, so its heading shows in the first screen. */}
+      <section className="bg-tiefes-wasser text-gletscher">
+        <div className="mx-auto max-w-3xl box-content px-6 py-14 md:py-16">
+          <h2 className="text-balance text-2xl font-semibold text-papier md:text-3xl">{c.vision.heading}</h2>
+          <ul className="mt-5 space-y-2">
+            {c.vision.items.map((i) => (
+              <li key={i} className="flex gap-3">
+                <span aria-hidden="true" className={dot} />
+                <span>{i}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-6 text-xl font-semibold text-honig md:text-2xl">{c.vision.ziel}</p>
+          <p className="mt-8 text-sm font-semibold uppercase tracking-wide text-stein">{c.vision.fragenLabel}</p>
+          <ul className="mt-3 grid gap-3 md:grid-cols-3">
+            {c.vision.fragen.map((f) => (
+              <li key={f} className="rounded-xl bg-vrelo-petrol/60 p-4 font-medium text-papier">
+                {f}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-8">{c.vision.ich}</p>
         </div>
       </section>
 

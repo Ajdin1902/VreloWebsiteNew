@@ -8,6 +8,7 @@ const labels = {
   copyLabel: "Text kopieren",
   copiedLabel: "Kopiert.",
   failedLabel: "Von Hand kopieren.",
+  hintLabel: "Der Button kopiert den ganzen Text.",
 };
 const text = "Zeile eins\nZeile zwei";
 
@@ -47,6 +48,16 @@ describe("PromptBox", () => {
     render(<PromptBox text={text} {...labels} />);
     fireEvent.click(screen.getByRole("button", { name: labels.copyLabel }));
     expect(await screen.findByText(labels.failedLabel)).toBeInTheDocument();
+  });
+
+  it("says before any click that the button copies the whole text", () => {
+    render(<PromptBox text={text} {...labels} />);
+    expect(screen.getByRole("status")).toHaveTextContent(labels.hintLabel);
+  });
+
+  it("stays short so the next section shows in the first screen (Ajdin 2026-10-04)", () => {
+    render(<PromptBox text={text} {...labels} />);
+    expect(screen.getByLabelText(labels.boxLabel).className).toContain("max-h-48");
   });
 
   it("announces the result politely", () => {

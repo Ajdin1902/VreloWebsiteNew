@@ -2,7 +2,7 @@
 //
 // Every German string for /claude-gehirn (spec 2026-10-03 §7). The page and
 // its components hold none. A gift page: nothing here asks for anything.
-// Layout by Ajdin (2026-10-04): prompt first, then steps + video, where the
+// Layout by Ajdin (2026-10-04): prompt first, the vision, then steps + video, where the
 // folder lives, how it is built, what to keep in mind, and the honest notes.
 // German quotes are written as \u201E … \u201C escapes so no tool can downgrade them.
 
@@ -11,7 +11,8 @@ export type FolderRow = { ort: string; vorteile: string; nachteile: string; wann
 export type GehirnPage = {
   meta: { title: string; description: string };
   top: { title: string; line: string; voraussetzungenLabel: string; voraussetzungen: string[] };
-  prompt: { boxLabel: string; copyLabel: string; copiedLabel: string; failedLabel: string };
+  prompt: { boxLabel: string; copyLabel: string; copiedLabel: string; failedLabel: string; hintLabel: string };
+  vision: { heading: string; items: string[]; ziel: string; fragenLabel: string; fragen: string[]; ich: string };
   anleitung: {
     heading: string;
     steps: [string, string, string];
@@ -41,6 +42,23 @@ export const gehirnPage: GehirnPage = {
     copyLabel: "Text kopieren",
     copiedLabel: "Kopiert. Jetzt in Cowork einfügen.",
     failedLabel: "Kopieren hat nicht geklappt. Markiere den Text und kopiere ihn von Hand.",
+    hintLabel: "Der Button kopiert den ganzen Text.",
+  },
+  vision: {
+    heading: "Die Vision",
+    items: [
+      "Du arbeitest mit Claude, der alles Wichtige über dein Unternehmen weiß.",
+      "Er ist dein persönlicher Sparringspartner rund um dein Unternehmen.",
+      "Er kennt deine Kunden, Preise und Abläufe. Darum passen seine Antworten genau zu deinem Betrieb.",
+    ],
+    ziel: "Das Ziel: dein eigenes KI-Gehirn.",
+    fragenLabel: "Was du dann fragst:",
+    fragen: [
+      "\u201ESchreib das Angebot für Huber so wie letztes Mal.\u201C",
+      "\u201EWas ist bei meinen Kunden gerade offen?\u201C",
+      "\u201EWarum haben wir die Preise im März angepasst?\u201C",
+    ],
+    ich: "So arbeite ich selbst jeden Tag: Mein ganzer Betrieb liegt in so einem Ordner.",
   },
   anleitung: {
     heading: "So richtest du es ein",
