@@ -11,12 +11,14 @@ export function PromptBox({
   copyLabel,
   copiedLabel,
   failedLabel,
+  hintLabel,
 }: {
   text: string;
   boxLabel: string;
   copyLabel: string;
   copiedLabel: string;
   failedLabel: string;
+  hintLabel: string;
 }) {
   const [state, setState] = useState<"idle" | "copied" | "failed">("idle");
 
@@ -33,7 +35,7 @@ export function PromptBox({
     <div className="card-depth rounded-2xl bg-papier p-4 text-tinte md:p-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p role="status" aria-live="polite" className="text-sm font-medium text-tiefes-wasser">
-          {state === "copied" ? copiedLabel : state === "failed" ? failedLabel : ""}
+          {state === "copied" ? copiedLabel : state === "failed" ? failedLabel : hintLabel}
         </p>
         <button
           type="button"
@@ -43,13 +45,18 @@ export function PromptBox({
           {copyLabel}
         </button>
       </div>
-      <pre
-        tabIndex={0}
-        aria-label={boxLabel}
-        className="mt-4 max-h-[32rem] overflow-y-auto whitespace-pre-wrap break-words rounded-xl bg-lesepapier p-4 font-mono text-sm leading-relaxed text-tinte focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vrelo-petrol"
-      >
-        {text}
-      </pre>
+      {/* Short by decision (Ajdin 2026-10-04): the next section shows in the first
+          screen; the fade says there is more, the hint says the button takes it all. */}
+      <div className="relative mt-4">
+        <pre
+          tabIndex={0}
+          aria-label={boxLabel}
+          className="max-h-48 overflow-y-auto whitespace-pre-wrap break-words rounded-xl bg-lesepapier p-4 font-mono text-sm leading-relaxed text-tinte focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vrelo-petrol"
+        >
+          {text}
+        </pre>
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-10 rounded-b-xl bg-linear-to-t from-lesepapier to-transparent" />
+      </div>
     </div>
   );
 }
