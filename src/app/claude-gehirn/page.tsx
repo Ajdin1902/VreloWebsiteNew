@@ -160,6 +160,7 @@ export default function GehirnPage() {
               ))}
             </ul>
           </div>
+          <p className="mt-6">{c.ordner.andereWege}</p>
         </div>
       </Section>
 

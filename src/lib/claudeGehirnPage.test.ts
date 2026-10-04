@@ -90,6 +90,14 @@ describe("/claude-gehirn copy", () => {
     for (const n of names) expect(prompt).toContain(n);
   });
 
+  it("says Cowork is one way and the structure is what counts (Ajdin 2026-10-04)", () => {
+    const a = gehirnPage.ordner.andereWege;
+    expect(a).toContain("Claude Code");
+    expect(a).toContain("Visual Studio Code");
+    expect(a).toContain("Geschmackssache");
+    expect(a).toContain("Aufbau");
+  });
+
   it("lists the three things to keep in mind", () => {
     expect(gehirnPage.beachten.items).toHaveLength(3);
     expect(gehirnPage.beachten.items[0]).toContain("in diesem Ordner");

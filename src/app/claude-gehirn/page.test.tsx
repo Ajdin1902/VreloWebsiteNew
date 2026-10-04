@@ -52,6 +52,14 @@ describe("/claude-gehirn", () => {
     expect(within(table).getAllByRole("row")).toHaveLength(3);
   });
 
+  it("shows the other-ways note right after the folder tree", () => {
+    render(<GehirnPage />);
+    const note = screen.getByText(gehirnPage.ordner.andereWege);
+    const beachten = screen.getByRole("heading", { level: 2, name: gehirnPage.beachten.heading });
+    expect(after(screen.getByText(gehirnPage.ordner.tree[4].note), note)).toBe(true);
+    expect(after(note, beachten)).toBe(true);
+  });
+
   it("asks for nothing: no link to the funnel or the contact page in the page body", () => {
     const { container } = render(<GehirnPage />);
     expect(container.querySelectorAll('a[href*="prozess-check"], a[href*="kontakt"]')).toHaveLength(0);
