@@ -18,7 +18,10 @@ export function WasIchBaue() {
       {/* Centered spine: the offer leads, the service chips below carry the visual. */}
       <div className="mx-auto max-w-[44rem] text-center">
         <Reveal as="h2" delayMs={0} id="was-ich-baue-heading" className="text-balance text-3xl font-semibold tracking-tight text-papier md:text-4xl">
-          Ich nehme dir die immer gleichen Aufgaben ab.
+          Automatisieren. Befähigen. Betreiben.
+        </Reveal>
+        <Reveal as="p" delayMs={80} className="mt-5 text-balance text-lg text-gletscher">
+          Von der ersten Automatisierung bis zum laufenden System: such dir aus, wo du anfängst.
         </Reveal>
       </div>
       <Reveal as="ul" delayMs={200} aria-labelledby="was-ich-baue-heading" className="mx-auto mt-10 grid max-w-3xl gap-3 sm:grid-cols-2 lg:grid-cols-3">
