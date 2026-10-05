@@ -67,10 +67,11 @@ describe("/claude-gehirn", () => {
     expect(container.querySelectorAll('a[href*="prozess-check"], a[href*="kontakt"]')).toHaveLength(0);
   });
 
-  it("has the six sections after the prompt, vision first", () => {
+  it("has the seven sections after the prompt, vision first, then the gains", () => {
     render(<GehirnPage />);
     expect(screen.getAllByRole("heading", { level: 2 }).map((h) => h.textContent)).toEqual([
       gehirnPage.vision.heading,
+      gehirnPage.vorteile.heading,
       gehirnPage.anleitung.heading,
       gehirnPage.speicherort.heading,
       gehirnPage.ordner.heading,

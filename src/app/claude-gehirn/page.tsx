@@ -3,8 +3,8 @@
 // The Claude-Gehirn gift page (spec 2026-10-03 §7). Ungated, no CTA in the
 // body, no ClosingCta: the site header is the only chrome that sells.
 // Layout by Ajdin (2026-10-04): title, requirements and a short prompt box in the
-// first screen (no image hero) with the vision band peeking in, then three bands:
-// setup + tutorial video · where the folder lives + how it is built · what to
+// first screen (no image hero) with the vision band peeking in, the gains as cards
+// (2026-10-05), then three bands: setup + tutorial video · where the folder lives + how it is built · what to
 // keep in mind + honest notes.
 // All copy: src/lib/claudeGehirnPage.ts; the prompt: content/claude-gehirn/prompt.txt.
 import type { Metadata } from "next";
@@ -85,6 +85,21 @@ export default function GehirnPage() {
           <p className="mt-8">{c.vision.ich}</p>
         </div>
       </section>
+
+      {/* Light band after the dark vision: the concrete gains as small cards. */}
+      <Section tone="paper">
+        <div className="mx-auto max-w-3xl">
+          <h2 className={h2}>{c.vorteile.heading}</h2>
+          <ul className="mt-8 grid gap-5 sm:grid-cols-2">
+            {c.vorteile.items.map((v) => (
+              <li key={v.title} className="card-depth rounded-2xl border border-faden bg-lichtpapier p-6">
+                <h3 className="text-lg font-semibold text-tiefes-wasser">{v.title}</h3>
+                <p className="mt-2 text-pretty">{v.body}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Section>
 
       <Section tint>
         <div className="mx-auto max-w-3xl">
@@ -177,10 +192,13 @@ export default function GehirnPage() {
             ))}
           </ul>
 
-          <h2 className={`${h2} mt-12`}>{c.gutZuWissen.heading}</h2>
-          <ul className="mt-4 list-disc space-y-2 pl-6">
-            {c.gutZuWissen.items.map((i) => <li key={i}>{i}</li>)}
-          </ul>
+          {/* The honest small print, set apart as a note box from the habits above. */}
+          <div className="mt-12 rounded-2xl border-l-4 border-amber bg-papier p-6 md:p-8">
+            <h2 className="text-balance text-xl font-semibold text-tiefes-wasser md:text-2xl">{c.gutZuWissen.heading}</h2>
+            <ul className="mt-4 list-disc space-y-2 pl-5 text-[0.95rem]">
+              {c.gutZuWissen.items.map((i) => <li key={i}>{i}</li>)}
+            </ul>
+          </div>
 
           <p className="mt-12 text-sm text-stumm">{withBrandWords(c.hinweis)}</p>
         </div>

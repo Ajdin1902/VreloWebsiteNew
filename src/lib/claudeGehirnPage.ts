@@ -13,6 +13,7 @@ export type GehirnPage = {
   top: { title: string; line: string; voraussetzungenLabel: string; voraussetzungen: string[] };
   prompt: { boxLabel: string; copyLabel: string; copiedLabel: string; failedLabel: string; hintLabel: string };
   vision: { heading: string; items: string[]; ziel: string; fragenLabel: string; fragen: string[]; ich: string };
+  vorteile: { heading: string; items: { title: string; body: string }[] };
   anleitung: {
     heading: string;
     steps: [string, string, string];
@@ -60,6 +61,20 @@ export const gehirnPage: GehirnPage = {
     ],
     ich: "So arbeite ich selbst jeden Tag: Mein ganzer Betrieb liegt in so einem Ordner.",
   },
+  // Ajdin 2026-10-05: the concrete gains, right after the vision. Written for one
+  // owner's brain on one machine: employees benefit through what Claude writes for
+  // them, not through their own access (that would need a shared folder + accounts).
+  vorteile: {
+    heading: "Was du davon hast",
+    items: [
+      { title: "Dein Betriebswissen an einem Ort.", body: "Kunden, Preise, Abläufe und Entscheidungen liegen in einem Ordner statt in Köpfen, Mails und Zetteln." },
+      { title: "Neue Mitarbeiter lernen schneller.", body: "Claude schreibt dir aus dem Gehirn die Einarbeitung: Abläufe, Ansprechpartner, eure Regeln." },
+      { title: "Wissen bleibt, wenn jemand geht.", body: "Lass Claude aufschreiben, was ein Mitarbeiter weiß, bevor er geht. Es bleibt im Ordner." },
+      { title: "Antworten zu deinem Betrieb.", body: "Claude antwortet aus deinen Unterlagen, mit euren Preisen, Kunden und Abläufen." },
+      { title: "Du erklärst nichts zweimal.", body: "Was du Claude einmal sagst, schreibt er auf. Beim nächsten Mal weiß er es." },
+      { title: "Es wächst mit jeder Woche.", body: "Jede Sitzung ergänzt den Ordner. Je länger du damit arbeitest, desto mehr weiß Claude." },
+    ],
+  },
   anleitung: {
     heading: "So richtest du es ein",
     steps: [
@@ -71,7 +86,7 @@ export const gehirnPage: GehirnPage = {
       src: "/video/claude-gehirn-anleitung.mp4",
       poster: "/video/claude-gehirn-anleitung.webp",
       label: "Video: die Einrichtung in Claude Cowork, Schritt für Schritt",
-      caption: "Die Einrichtung in 22 Sekunden, ohne Ton.",
+      caption: "Die Einrichtung in 17 Sekunden, ohne Ton.",
     },
   },
   speicherort: {

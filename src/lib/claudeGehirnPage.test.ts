@@ -18,8 +18,9 @@ const all = strings(gehirnPage);
 // Ajdin 2026-10-04: prompt first, then steps + video, folder table, folder tree,
 // three things to keep in mind and the honest „Gut zu wissen“.
 describe("/claude-gehirn copy", () => {
+  // Cap raised from 3,600 to 4,200 for the six benefit cards (Ajdin 2026-10-05).
   it("stays short", () => {
-    expect(all.join(" ").length).toBeLessThan(3600);
+    expect(all.join(" ").length).toBeLessThan(4200);
   });
 
   it("follows the house typography in every string", () => {
@@ -61,6 +62,19 @@ describe("/claude-gehirn copy", () => {
     expect(v.ich).toContain("So arbeite ich selbst");
   });
 
+  it("follows the vision with six concrete gains, each a title and one or two sentences", () => {
+    const v = gehirnPage.vorteile;
+    expect(v.heading).toBe("Was du davon hast");
+    expect(v.items).toHaveLength(6);
+    for (const i of v.items) {
+      expect(i.title).toMatch(/\.$/);
+      expect(i.body.length).toBeLessThan(120);
+    }
+    const titles = v.items.map((i) => i.title).join(" ");
+    expect(titles).toContain("Neue Mitarbeiter");
+    expect(titles).toContain("wenn jemand geht");
+  });
+
   it("has three setup steps, starting with an empty folder", () => {
     expect(gehirnPage.anleitung.steps).toHaveLength(3);
     expect(gehirnPage.anleitung.steps[0]).toContain("leeren Ordner");
@@ -70,6 +84,11 @@ describe("/claude-gehirn copy", () => {
     const { src, poster } = gehirnPage.anleitung.video;
     expect(existsSync(join(process.cwd(), "public", src))).toBe(true);
     expect(existsSync(join(process.cwd(), "public", poster))).toBe(true);
+  });
+
+  // The clip was cut from 21.6 to 17 s on 2026-10-05; the caption names its length.
+  it("names the clip length in the caption", () => {
+    expect(gehirnPage.anleitung.video.caption).toContain("17 Sekunden");
   });
 
   it("compares local and cloud folders in four columns, with our own backup", () => {

@@ -244,9 +244,9 @@ export const leistungenPages: LeistungPage[] = [
       heading: "Warum ich",
       body: PRACTICE_BODY,
       points: [
-        { title: "Selbst im Einsatz.", body: "Mein eigener Betrieb läuft mit Claude: Texte, Recherche, Code und die Automatisierungen, die ich für Kunden baue." },
+        { title: "Selbst im Einsatz.", body: "Mein eigener Betrieb läuft mit Claude: Texte, Recherche, Code und die Automatisierungen, die ich bei mir nutze." },
         { title: "Ein Ansprechpartner.", body: "Du redest mit dem, der einrichtet. Kein Team, keine Tickets." },
-        { title: "Ehrlich, wenn es nicht passt.", body: "Passt ChatGPT oder ein anderes Werkzeug besser zu euch, sage ich dir das." },
+        { title: "Mein zweites Gehirn.", body: "Claude ist in meinen Betrieb eingebunden und kennt Kunden, Entscheidungen und Abläufe. Je mehr ich damit arbeite, desto besser wird jeder Schritt." },
       ],
       objection:
         "Dein Team lernt dafür keine Technik. Es arbeitet mit Claude wie mit einem Kollegen, die Einrichtung übernehme ich.",
@@ -351,7 +351,7 @@ export const leistungenPages: LeistungPage[] = [
       heading: "Warum ich",
       body: "Ich arbeite selbst jeden Tag mit KI und baue die Automatisierungen, die ich empfehle. In meinen früheren Positionen und bei Kunden habe ich KI eingeführt und in bestehende Abläufe eingebunden. Ich empfehle dir nur, was ich selbst bauen und betreiben würde.",
       points: [
-        { title: "Ehrlich, wenn es sich nicht rechnet.", body: "Lohnt sich eine Automatisierung bei dir nicht, sage ich dir das. Auch wenn das heißt, dass ich nichts baue." },
+        { title: "Im Team erprobt.", body: "In meiner früheren Stelle habe ich mit KI gearbeitet und für unsere Programmierprojekte ein KI-Gehirn eingeführt. Das Team nutzt es bis heute." },
         { title: "Erst schauen, was du schon hast.", body: "Viele Programme können mehr, als genutzt wird. Bevor ich etwas baue, prüfe ich, ob dein Werkzeug es schon kann." },
         { title: "Der Fahrplan gehört dir.", body: "Du kannst ihn selbst umsetzen, umsetzen lassen oder mit mir bauen." },
       ],
@@ -406,7 +406,7 @@ export const leistungenPages: LeistungPage[] = [
     proof: {
       kind: "case",
       heading: "So betreue ich",
-      body: "Jedes System, das ich betreue, meldet sich, wenn etwas schiefgeht: Der Alarm kommt bei mir an, bevor es dir auffällt. Ich teste, dass dieser Alarm bei mir ankommt. Fehler behebe ich, kleine Änderungen sind enthalten und einmal im Monat siehst du in einer Zeile, was dein System erledigt hat.",
+      body: "Ich warte deine Automatisierungen und halte sie aktuell. Mit meinem Monitoring-System greife ich ein, bevor aus einem Fehler ein Problem wird. Dazu gehört ein monatlicher Bericht. Nutzt dein System KI, bringe ich auch die KI-Modelle und Prompts auf den neuesten Stand.",
       objection:
         "Die Betreuung ist monatlich kündbar. Kündigst du, läuft dein System sicher weiter, nur ohne Anpassungen.",
     },
