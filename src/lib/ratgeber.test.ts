@@ -111,6 +111,13 @@ Text.`);
     expect(a.leistung).toBe("ki-server");
   });
 
+  it("accepts Meinung as a kategorie for opinion pieces", () => {
+    const a = parseArticle("x.mdx", `${base}kategorie: "Meinung"
+---
+Text.`);
+    expect(a.kategorie).toBe("Meinung");
+  });
+
   it("leaves both undefined when absent", () => {
     const a = parseArticle("x.mdx", `${base}---
 Text.`);

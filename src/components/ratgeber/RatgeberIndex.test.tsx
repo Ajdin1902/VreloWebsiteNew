@@ -2,7 +2,7 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { RatgeberIndex } from "./RatgeberIndex";
-import type { Article } from "@/lib/ratgeber";
+import type { Article, RatgeberKategorie } from "@/lib/ratgeber";
 
 const a = (slug: string, title: string): Article => ({
   slug, title, description: "d", date: "2026-05-01", tags: [],
@@ -22,11 +22,11 @@ describe("RatgeberIndex", () => {
     expect(screen.getByText("Hier entsteht der Ratgeber.")).toBeInTheDocument();
   });
 
-  it("groups articles under their kategorie in the order Grundlagen, Praxis, Kosten", () => {
-    const mk = (slug: string, kategorie?: "Grundlagen" | "Praxis" | "Kosten"): Article => ({ ...a(slug, slug), kategorie });
-    render(<RatgeberIndex articles={[mk("k", "Kosten"), mk("p", "Praxis"), mk("g", "Grundlagen"), mk("w")]} />);
-    expect(screen.getAllByRole("heading", { level: 2 }).map((h) => h.textContent)).toEqual(["Grundlagen", "Praxis", "Kosten", "Weitere"]);
+  it("groups articles under their kategorie in the order Grundlagen, Praxis, Kosten, Meinung", () => {
+    const mk = (slug: string, kategorie?: RatgeberKategorie): Article => ({ ...a(slug, slug), kategorie });
+    render(<RatgeberIndex articles={[mk("m", "Meinung"), mk("k", "Kosten"), mk("p", "Praxis"), mk("g", "Grundlagen"), mk("w")]} />);
+    expect(screen.getAllByRole("heading", { level: 2 }).map((h) => h.textContent)).toEqual(["Grundlagen", "Praxis", "Kosten", "Meinung", "Weitere"]);
     // Article titles drop one level under their group heading.
-    expect(screen.getAllByRole("heading", { level: 3 }).map((h) => h.textContent)).toEqual(["g", "p", "k", "w"]);
+    expect(screen.getAllByRole("heading", { level: 3 }).map((h) => h.textContent)).toEqual(["g", "p", "k", "m", "w"]);
   });
 });

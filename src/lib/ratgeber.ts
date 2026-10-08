@@ -3,8 +3,9 @@ import path from "node:path";
 import matter from "gray-matter";
 import { getLeistungPage, type LeistungSlug } from "@/lib/leistungenPages";
 
-export type RatgeberKategorie = "Grundlagen" | "Praxis" | "Kosten";
-export const RATGEBER_KATEGORIEN: RatgeberKategorie[] = ["Grundlagen", "Praxis", "Kosten"];
+// "Meinung" holds the founder's opinion pieces, kept apart from the search-driven guides.
+export type RatgeberKategorie = "Grundlagen" | "Praxis" | "Kosten" | "Meinung";
+export const RATGEBER_KATEGORIEN: RatgeberKategorie[] = ["Grundlagen", "Praxis", "Kosten", "Meinung"];
 
 export type Article = {
   slug: string;

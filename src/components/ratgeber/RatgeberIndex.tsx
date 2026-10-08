@@ -2,7 +2,7 @@
 import { ArticleCard } from "./ArticleCard";
 import { RATGEBER_KATEGORIEN, type Article } from "@/lib/ratgeber";
 
-// Grouped by kategorie (Grundlagen → Praxis → Kosten); uncategorised articles
+// Grouped by kategorie (Grundlagen → Praxis → Kosten → Meinung); uncategorised articles
 // fall under „Weitere“. Order inside a group stays newest first.
 export function RatgeberIndex({ articles }: { articles: Article[] }) {
   if (articles.length === 0) {
