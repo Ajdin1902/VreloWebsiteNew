@@ -32,14 +32,14 @@ Client copy is German; the brand voice is calm over hype. Nothing broadcasts by 
    ---
    ```
 2. Body = the four fixed sections from the playbook, each a `## ` heading then its text:
-   `## Kurz aus der KI-Welt`, `## Der Tipp der Woche`, `## So nutzen wir es`, `## Meme der Woche`. Open with a 1-2 sentence intro; close with a „Bis zum nächsten Mal“ sign-off (`– Ajdin`), then a **`P.S.`** line – the fixed close that carries the one ask (forward-info nugget + soft reply-driven push; see the playbook §5). No body CTA before the sign-off: the P.S. is the only ask.
+   `## Kurz aus der KI-Welt`, `## Der Tipp der Woche`, `## So nutzen wir es`, `## Meme der Woche`. Open with a 1-2 sentence intro; close with a „Bis zum nächsten Mal“ sign-off (next line just `Ajdin`, no dash), then a **`P.S.`** line: the fixed close that carries the one ask (forward-info nugget + soft reply-driven push; see the playbook §5). No body CTA before the sign-off: the P.S. is the only ask.
    - `## Der Tipp der Woche` auto-renders as the warm sonnenlicht callout card; no extra markup.
    - The meme is an image line: `![<alt>](/images/newsletter/<file>.png)`. Put the PNG in `public/images/newsletter/`.
-3. **German typography (verify the bytes).** German quotes are „…“ (U+201E open / U+201C close); the Gedankenstrich is the spaced en-dash „ – “ (U+2013), never an em-dash. The Write/Edit tools silently downgrade the closing quote and the en-dash, so author the `.md` via a small `node`/`fs` script (or verify right after) instead of trusting Edit. Check:
+3. **German typography (verify the bytes).** Rules per Brand.md (it wins on conflict) and the playbook §5: German quotes are „…“ (U+201E open / U+201C close), single quotes ‚…‘ (U+201A / U+2018). **No Gedankenstrich at all**, neither the en-dash (U+2013) nor the em-dash (U+2014): join clauses with comma, period or colon; ranges with „bis“. **No comma before „und“**: rebuild the sentence where grammar would need one. The Write/Edit tools silently downgrade the closing quote, so author the `.md` via a small `node`/`fs` script (or verify right after) instead of trusting Edit. Check:
    ```bash
-   node -e 'const s=require("fs").readFileSync("content/newsletter/<slug>.md","utf8");console.log({open:(s.match(/„/g)||[]).length,close:(s.match(/“/g)||[]).length,emdash:(s.match(/—/g)||[]).length})'
+   node -e 'const s=require("fs").readFileSync("content/newsletter/<slug>.md","utf8");const c=r=>(s.match(r)||[]).length;console.log({open:c(/\u201E/g),close:c(/\u201C/g),dash:c(/[\u2013\u2014]/g),commaUnd:c(/, und /g)})'
    ```
-   `open` must equal `close`; `emdash` must be `0`.
+   `open` must equal `close`; `dash` and `commaUnd` must be `0`. (Write the patterns as unicode escapes: a literal “ in a shell one-liner can get downgraded and the check reports clean on a dirty file.)
 
 ## Ship it
 Run from `Website/`:
