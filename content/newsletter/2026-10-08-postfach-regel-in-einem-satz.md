@@ -2,11 +2,11 @@
 subject: "Erklär es mir, als wäre ich zehn"
 previewText: "Die erste Ausgabe: ein Tipp für Behördenbriefe, eine Outlook-Neuerung und ein Meme."
 date: "2026-10-08"
-draft: true
+draft: false
 ---
 Hi,
 
-willkommen zur ersten offiziellen Ausgabe des Vrelo-Newsletters. Ab jetzt bekommst du jede Woche eine Ausgabe. Darin findest du Neues aus der KI-Welt, den Tipp der Woche, wie ich diesen Tipp selbst umsetze und zum Schluss das Meme der Woche
+willkommen zur ersten offiziellen Ausgabe des Vrelo-Newsletters. Ab jetzt bekommst du jede Woche eine Ausgabe. Darin findest du Neues aus der KI-Welt, den Tipp der Woche, wie ich diesen Tipp selbst umsetze und zum Schluss das Meme der Woche.
 Danke, dass du dich angemeldet hast. Für Feedback antworte jederzeit einfach auf diese E-Mail.
 
 ## Kurz aus der KI-Welt
