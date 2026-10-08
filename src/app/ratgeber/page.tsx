@@ -22,7 +22,7 @@ export default function RatgeberPage() {
   return (
     <>
       <CompactHero
-        eyebrow="Grundlagen · Praxis · Kosten"
+        eyebrow="Grundlagen · Praxis · Kosten · Meinung"
         title="Gedanken zur ruhigen Automatisierung"
         line="Praxisnahe Notizen, wie du wiederkehrende Arbeit abgibst und Zeit zurückgewinnst."
         image="/images/ratgeber-banner.webp"

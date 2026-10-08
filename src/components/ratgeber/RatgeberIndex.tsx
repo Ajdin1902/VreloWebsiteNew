@@ -2,13 +2,17 @@
 import { ArticleCard } from "./ArticleCard";
 import { RATGEBER_KATEGORIEN, type Article } from "@/lib/ratgeber";
 
-// Grouped by kategorie (Grundlagen → Praxis → Kosten → Meinung); uncategorised articles
+// The newest article leads under „Neu“ (and stays in its kategorie too), then the
+// groups by kategorie (Grundlagen → Praxis → Kosten → Meinung); uncategorised articles
 // fall under „Weitere“. Order inside a group stays newest first.
 export function RatgeberIndex({ articles }: { articles: Article[] }) {
   if (articles.length === 0) {
     return <p className="font-serif text-xl italic text-stumm">Hier entsteht der Ratgeber.</p>;
   }
+  // Stable sort: on equal dates the first article keeps the slot.
+  const newest = [...articles].sort((x, y) => (x.date < y.date ? 1 : x.date > y.date ? -1 : 0))[0];
   const groups = [
+    { label: "Neu", items: [newest] },
     ...RATGEBER_KATEGORIEN.map((k) => ({ label: k as string, items: articles.filter((a) => a.kategorie === k) })),
     { label: "Weitere", items: articles.filter((a) => !a.kategorie) },
   ].filter((g) => g.items.length > 0);
