@@ -3,7 +3,7 @@ import type { LegalDoc } from "./impressum";
 export const datenschutz: LegalDoc = {
   title: "Datenschutzerklärung",
   intro:
-    "Diese Erklärung informiert über die Verarbeitung personenbezogener Daten auf dieser Website. Stand: September 2026.",
+    "Diese Erklärung informiert über die Verarbeitung personenbezogener Daten auf dieser Website und bei der Kontaktaufnahme per E-Mail. Stand: Oktober 2026.",
   sections: [
     {
       heading: "Verantwortlicher",
@@ -20,6 +20,10 @@ export const datenschutz: LegalDoc = {
     {
       heading: "Kontaktformular",
       body: "Wenn du das Kontaktformular nutzt, verarbeite ich die von dir angegebenen Daten (Name, E-Mail-Adresse, Nachricht und optional dein Betrieb), um deine Anfrage zu beantworten. Der Versand der E-Mail erfolgt über den Dienstleister Resend (Auftragsverarbeiter). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b und lit. f DSGVO. Die Daten werden gelöscht, sobald sie für die Bearbeitung nicht mehr erforderlich sind.",
+    },
+    {
+      heading: "E-Mail-Kontakt",
+      body: "Wenn du mir eine E-Mail schreibst (auch über das Kontaktformular), werden eingehende E-Mails mit KI-Unterstützung sortiert und zusammengefasst; dazu werden sie an die Anthropic PBC (USA) übermittelt. Kontaktdaten und wichtige Angaben aus der E-Mail speichere ich in Notion (Notion Labs, Inc., USA). Beide sind Auftragsverarbeiter; Grundlage der Übermittlung in die USA sind die EU-Standardvertragsklauseln (SCC). Jede Antwort prüfe und versende ich selbst. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b und lit. f DSGVO.",
     },
     {
       heading: "Terminbuchung (Cal.com)",
