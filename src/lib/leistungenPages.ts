@@ -1,6 +1,6 @@
 // src/lib/leistungenPages.ts
 //
-// The seven Leistungen subpages (spec 2026-10-01). Every German string for
+// The eight Leistungen subpages (spec 2026-10-01). Every German string for
 // /leistungen/<slug> lives here; the route and the block components hold none.
 // One entry = one page: a new service is a new entry, never a new component.
 // Rules for this copy: docs/superpowers/specs/2026-10-01-leistungen-hub-design.md §2, §4, §7.
@@ -13,6 +13,7 @@ export type LeistungSlug =
   | "claude"
   | "ki-schulung"
   | "ki-beratung"
+  | "ki-betriebssystem"
   | "betreuung";
 
 export type LeistungGroup = "automatisieren" | "befaehigen" | "betreiben";
@@ -381,6 +382,62 @@ export const leistungenPages: LeistungPage[] = [
       lead: "Das Erstgespräch dauert 30 Minuten und kostet nichts. Danach weißt du, ob sich ein genauerer Blick lohnt.",
     },
     related: ["selbst-bauen-oder-bauen-lassen", "was-ist-prozessautomatisierung", "was-ist-ein-ki-agent"],
+  },
+  {
+    slug: "ki-betriebssystem",
+    group: "betreiben",
+    navLabel: "KI-Betriebssystem",
+    title: "KI-Betriebssystem",
+    subline:
+      "Eine Stelle, an der alles über deinen Betrieb stimmt. Darauf arbeitet deine KI.",
+    metaDescription:
+      "KI-Betriebssystem: E-Mails, Kunden, Fristen und Belege landen mit Quelle an einer Stelle, in deinen eigenen Programmen. Darauf bauen KI und Automatisierungen auf.",
+    kurz: "Alles über deinen Betrieb an einer Stelle, damit jede KI und jede Automatisierung darauf aufbaut.",
+    heroImage: "/images/bg-bausteine-b.webp",
+    pain: {
+      heading: "Kennst du das?",
+      moments: [
+        "Kundendaten in fünf Programmen",
+        "Welche Liste stimmt eigentlich?",
+        "Das Wissen steckt in einem Kopf",
+        "Jede KI fängt bei null an",
+      ],
+      close: "Eine KI hilft erst, wenn alles über deinen Betrieb an einer Stelle stimmt.",
+    },
+    proof: {
+      kind: "practice",
+      heading: "So läuft das bei mir",
+      body: "Bei mir fängt es beim Postfach an: Mein Assistent liest jede neue E-Mail, sortiert sie ein und trägt den Absender mit Quelle in mein System ein. Im Posteingang bleibt nur, was mich braucht.",
+      points: [
+        { title: "Erst erfassen.", body: "Ich nehme Informationen dort auf, wo sie ankommen. In den meisten Betrieben ist das das Postfach." },
+        { title: "Jede Angabe mit Quelle.", body: "Was die KI einträgt, steht mit dem Satz aus der E-Mail drin. Bis ich bestätige, steht es als KI-Eintrag drin." },
+        { title: "Die KI ist der kleinste Teil.", body: "Beim ersten Durchlauf durch 174 E-Mails haben feste Regeln und bekannte Kontakte 96 einsortiert, die KI 66. Acht blieben für mich zur Prüfung." },
+      ],
+      objection:
+        "Deine Daten bleiben bei dir: in deinen Programmen, auf deinen Konten. Ich baue das System, es gehört dir.",
+    },
+    example: {
+      heading: "So sieht das aus",
+      before: "Zu jeder Kundenanfrage suchst du die Vorgeschichte in Postfach, Excel und Notizen.",
+      steps: [
+        "Die E-Mail landet im richtigen Ordner, der Kunde mit Quelle in deinem System.",
+        "Fristen, Aufgaben und Belege daraus stehen dort, wo du sie suchst.",
+        "Du fragst deinen Assistenten „Was ist bei Huber offen?“ und er antwortet aus derselben Stelle.",
+      ],
+      after: "Alles über deinen Betrieb an einer Stelle. Jede neue Automatisierung baut darauf auf.",
+    },
+    note: {
+      heading: "Zum Ausprobieren",
+      body: "Die kleine Version kannst du selbst anlegen: Ein Text baut in Claude ein Gehirn für deinen Betrieb auf. Kostenlos, ohne Anmeldung.",
+      link: { label: "Zum Claude-Gehirn", href: "/claude-gehirn" },
+    },
+    cta: {
+      kind: "kontakt",
+      src: CHECK_SRC.leistungKiBetriebssystem,
+      heading: "Wo fängt dein KI-Betriebssystem an?",
+      lead: "Im Erstgespräch schauen wir, wo bei dir die meisten Informationen ankommen. Dort fangen wir an, mit einer Aufgabe.",
+    },
+    related: ["durcheinander-oder-saubere-quelle", "was-ki-im-betrieb-wirklich-kann", "was-ist-ein-ki-agent"],
   },
   {
     slug: "betreuung",

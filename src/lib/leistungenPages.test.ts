@@ -5,7 +5,7 @@ import { leistungenPages, leistungGroups, getLeistungPage, leistungHref, type Le
 import { findCopyIssues } from "./ratgeberCopy";
 import { getAllArticles } from "./ratgeber";
 
-const SLUGS = ["prozessautomatisierung", "ki-automatisierung", "ki-server", "claude", "ki-schulung", "ki-beratung", "betreuung"];
+const SLUGS = ["prozessautomatisierung", "ki-automatisierung", "ki-server", "claude", "ki-schulung", "ki-beratung", "ki-betriebssystem", "betreuung"];
 const NON_COPY_KEYS = new Set(["slug", "group", "heroImage", "url", "src", "poster", "href", "related", "kind", "year"]);
 
 // Every German string on a page, skipping paths, URLs and enum-like keys.
@@ -29,16 +29,16 @@ function nonStudyStrings(p: LeistungPage): string[] {
 const pub = (p: string) => path.join(process.cwd(), "public", p);
 
 describe("leistungenPages", () => {
-  it("has the seven agreed pages in order", () => {
+  it("has the eight agreed pages in order", () => {
     expect(leistungenPages.map((p) => p.slug)).toEqual(SLUGS);
   });
 
-  it("groups three, three and one", () => {
+  it("groups three, three and two", () => {
     expect(leistungGroups.map((g) => g.label)).toEqual(["Automatisieren", "Befähigen", "Betreiben"]);
     const by = (g: string) => leistungenPages.filter((p) => p.group === g).map((p) => p.slug);
     expect(by("automatisieren")).toEqual(["prozessautomatisierung", "ki-automatisierung", "ki-server"]);
     expect(by("befaehigen")).toEqual(["claude", "ki-schulung", "ki-beratung"]);
-    expect(by("betreiben")).toEqual(["betreuung"]);
+    expect(by("betreiben")).toEqual(["ki-betriebssystem", "betreuung"]);
   });
 
   it.each(leistungenPages.map((p) => [p.slug, p] as const))("%s fills every block", (_s, p) => {
@@ -89,13 +89,13 @@ describe("leistungenPages", () => {
     const kinds = Object.fromEntries(leistungenPages.map((p) => [p.slug, p.cta.kind]));
     expect(kinds).toEqual({
       prozessautomatisierung: "check", "ki-automatisierung": "check", betreuung: "check",
-      "ki-server": "kontakt", claude: "kontakt", "ki-schulung": "kontakt", "ki-beratung": "kontakt",
+      "ki-server": "kontakt", claude: "kontakt", "ki-schulung": "kontakt", "ki-beratung": "kontakt", "ki-betriebssystem": "kontakt",
     });
-    expect(new Set(leistungenPages.map((p) => p.cta.src)).size).toBe(7);
+    expect(new Set(leistungenPages.map((p) => p.cta.src)).size).toBe(8);
   });
 
-  it("carries notes on Claude (gift page) and KI-Beratung (Digitalbonus, as a possibility)", () => {
-    expect(leistungenPages.filter((p) => p.note).map((p) => p.slug)).toEqual(["claude", "ki-beratung"]);
+  it("carries notes on Claude + KI-Betriebssystem (gift page) and KI-Beratung (Digitalbonus, as a possibility)", () => {
+    expect(leistungenPages.filter((p) => p.note).map((p) => p.slug)).toEqual(["claude", "ki-beratung", "ki-betriebssystem"]);
     const note = getLeistungPage("ki-beratung")!.note!;
     expect(note.body).toContain("kann");
     expect(note.body).toContain("Antrag");
@@ -103,6 +103,7 @@ describe("leistungenPages", () => {
     expect(note.body).not.toMatch(/€|%/);
     expect(note.link.href).toBe("https://www.digitalbonus.bayern/foerderprogramm/");
     expect(getLeistungPage("claude")!.note!.link.href).toBe("/claude-gehirn");
+    expect(getLeistungPage("ki-betriebssystem")!.note!.link.href).toBe("/claude-gehirn");
   });
 
   it("shows the audit card only on KI-Beratung", () => {

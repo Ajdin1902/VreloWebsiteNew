@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 // The hub (spec 2026-10-01 §3.2): the CompactHero (same as the
-// subpages), the seven services in three groups, then the
+// subpages), the eight services in three groups, then the
 // trust layer (what you get, the obstacles answered, references). The audit
 // card moved to /leistungen/ki-beratung; the six Bausteine became the example
 // runs on the subpages.

@@ -8,7 +8,7 @@ import { canonical } from "@/lib/site";
 const params = (slug: string) => ({ params: Promise.resolve({ slug }) });
 
 describe("/leistungen/[slug]", () => {
-  it("pre-renders exactly the seven pages", () => {
+  it("pre-renders exactly the eight pages", () => {
     expect(generateStaticParams()).toEqual(leistungenPages.map((p) => ({ slug: p.slug })));
   });
 

@@ -19,6 +19,7 @@ export const CHECK_SRC = {
   leistungClaude: "leistung-claude",
   leistungKiSchulung: "leistung-ki-schulung",
   leistungKiBeratung: "leistung-ki-beratung",
+  leistungKiBetriebssystem: "leistung-ki-betriebssystem",
   leistungBetreuung: "leistung-betreuung",
   ratgeber: "ratgeber",
   ueberMich: "ueber-mich",

@@ -20,20 +20,19 @@ describe("WasIchBaue", () => {
     const { container } = render(<WasIchBaue />);
     expect(container.textContent).not.toContain("Ein Ansprechpartner, der weiß");
   });
-  it("links each of the seven services to its subpage", () => {
+  it("links each of the eight services to its subpage", () => {
     render(<WasIchBaue />);
     for (const p of leistungenPages)
       expect(screen.getByRole("link", { name: p.navLabel })).toHaveAttribute("href", `/leistungen/${p.slug}`);
   });
 
-  // Ajdin 2026-10-01: seven cards leave one alone in the last row; it sits in
-  // the middle column, not at the left edge.
-  it("centers the lone last card (Betreuung & Wartung) in its row", () => {
+  // 2026-10-14: the eighth service (KI-Betriebssystem) fills the grids evenly,
+  // so the lone-card centering from 2026-10-01 is gone.
+  it("fills the grid evenly with eight cards, none pushed to the middle", () => {
     render(<WasIchBaue />);
     const items = screen.getAllByRole("listitem");
-    expect(items).toHaveLength(7);
-    expect(items[6]).toHaveTextContent("Betreuung & Wartung");
-    expect(items[6]).toHaveClass("lg:col-start-2", "sm:col-span-2", "lg:col-span-1");
-    expect(items[0]).not.toHaveClass("lg:col-start-2");
+    expect(items).toHaveLength(8);
+    expect(items[7]).toHaveTextContent("Betreuung & Wartung");
+    for (const item of items) expect(item).not.toHaveClass("lg:col-start-2");
   });
 });

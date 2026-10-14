@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { leistungGroups, leistungenPages, leistungHref } from "@/lib/leistungenPages";
 
-// The hub's service menu: seven cards in three groups (Automatisieren ·
+// The hub's service menu: eight cards in three groups (Automatisieren ·
 // Befähigen · Betreiben), so the offer reads as one system rather than a list.
 export function ServiceGroups() {
   return (
