@@ -12,7 +12,8 @@ describe("ServiceGroups", () => {
   it("links every service card to its subpage with its one-line definition", () => {
     render(<ServiceGroups />);
     for (const p of leistungenPages) {
-      const card = screen.getByRole("link", { name: new RegExp(p.navLabel.replace(/[.*+?^${}()|[\]\\&]/g, "\\$&")) });
+      // Anchored: KI-Beratung's one-liner names the Prozess-Audit too.
+      const card = screen.getByRole("link", { name: new RegExp("^" + p.navLabel.replace(/[.*+?^${}()|[\]\\&]/g, "\\$&")) });
       expect(card).toHaveAttribute("href", `/leistungen/${p.slug}`);
       expect(within(card).getByText(p.kurz)).toBeInTheDocument();
     }

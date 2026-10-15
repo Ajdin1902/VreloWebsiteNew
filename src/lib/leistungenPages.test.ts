@@ -5,7 +5,7 @@ import { leistungenPages, leistungGroups, getLeistungPage, leistungHref, type Le
 import { findCopyIssues } from "./ratgeberCopy";
 import { getAllArticles } from "./ratgeber";
 
-const SLUGS = ["prozessautomatisierung", "ki-automatisierung", "ki-server", "claude", "ki-schulung", "ki-beratung", "ki-betriebssystem", "betreuung"];
+const SLUGS = ["prozessautomatisierung", "ki-automatisierung", "ki-server", "claude", "ki-schulung", "ki-beratung", "prozess-audit", "ki-betriebssystem", "betreuung"];
 const NON_COPY_KEYS = new Set(["slug", "group", "heroImage", "url", "src", "poster", "href", "related", "kind", "year"]);
 
 // Every German string on a page, skipping paths, URLs and enum-like keys.
@@ -29,15 +29,15 @@ function nonStudyStrings(p: LeistungPage): string[] {
 const pub = (p: string) => path.join(process.cwd(), "public", p);
 
 describe("leistungenPages", () => {
-  it("has the eight agreed pages in order", () => {
+  it("has the nine agreed pages in order", () => {
     expect(leistungenPages.map((p) => p.slug)).toEqual(SLUGS);
   });
 
-  it("groups three, three and two", () => {
+  it("groups three, four and two", () => {
     expect(leistungGroups.map((g) => g.label)).toEqual(["Automatisieren", "Befähigen", "Betreiben"]);
     const by = (g: string) => leistungenPages.filter((p) => p.group === g).map((p) => p.slug);
     expect(by("automatisieren")).toEqual(["prozessautomatisierung", "ki-automatisierung", "ki-server"]);
-    expect(by("befaehigen")).toEqual(["claude", "ki-schulung", "ki-beratung"]);
+    expect(by("befaehigen")).toEqual(["claude", "ki-schulung", "ki-beratung", "prozess-audit"]);
     expect(by("betreiben")).toEqual(["ki-betriebssystem", "betreuung"]);
   });
 
@@ -79,8 +79,8 @@ describe("leistungenPages", () => {
     }
   });
 
-  it("uses practice proof on Claude, Schulung and Beratung, without client names", () => {
-    for (const s of ["claude", "ki-schulung", "ki-beratung"]) expect(getLeistungPage(s)!.proof.kind).toBe("practice");
+  it("uses practice proof on Claude, Schulung, Beratung and Audit, without client names", () => {
+    for (const s of ["claude", "ki-schulung", "ki-beratung", "prozess-audit"]) expect(getLeistungPage(s)!.proof.kind).toBe("practice");
     const all = leistungenPages.flatMap((p) => copyStrings(p)).join(" ");
     expect(all).not.toMatch(/\b(Velp|MDZ|Baude|Alen|Purisic)\b/);
   });
@@ -88,15 +88,16 @@ describe("leistungenPages", () => {
   it("splits the CTA: check on automation pages, Erstgespräch elsewhere", () => {
     const kinds = Object.fromEntries(leistungenPages.map((p) => [p.slug, p.cta.kind]));
     expect(kinds).toEqual({
-      prozessautomatisierung: "check", "ki-automatisierung": "check", betreuung: "check",
+      prozessautomatisierung: "check", "ki-automatisierung": "check", "prozess-audit": "check", betreuung: "check",
       "ki-server": "kontakt", claude: "kontakt", "ki-schulung": "kontakt", "ki-beratung": "kontakt", "ki-betriebssystem": "kontakt",
     });
-    expect(new Set(leistungenPages.map((p) => p.cta.src)).size).toBe(8);
+    expect(new Set(leistungenPages.map((p) => p.cta.src)).size).toBe(9);
   });
 
-  it("carries notes on Claude + KI-Betriebssystem (gift page) and KI-Beratung (Digitalbonus, as a possibility)", () => {
-    expect(leistungenPages.filter((p) => p.note).map((p) => p.slug)).toEqual(["claude", "ki-beratung", "ki-betriebssystem"]);
-    const note = getLeistungPage("ki-beratung")!.note!;
+  it("carries notes on Claude + KI-Betriebssystem (gift page), KI-Beratung (→ audit) and Prozess-Audit (Digitalbonus, as a possibility)", () => {
+    expect(leistungenPages.filter((p) => p.note).map((p) => p.slug)).toEqual(["claude", "ki-beratung", "prozess-audit", "ki-betriebssystem"]);
+    expect(getLeistungPage("ki-beratung")!.note!.link.href).toBe("/leistungen/prozess-audit");
+    const note = getLeistungPage("prozess-audit")!.note!;
     expect(note.body).toContain("kann");
     expect(note.body).toContain("Antrag");
     expect(note.body).toContain("bevor");
@@ -106,8 +107,8 @@ describe("leistungenPages", () => {
     expect(getLeistungPage("ki-betriebssystem")!.note!.link.href).toBe("/claude-gehirn");
   });
 
-  it("shows the audit card only on KI-Beratung", () => {
-    expect(leistungenPages.filter((p) => p.auditCard).map((p) => p.slug)).toEqual(["ki-beratung"]);
+  it("shows the audit card only on Prozess-Audit (moved from KI-Beratung 2026-10-15)", () => {
+    expect(leistungenPages.filter((p) => p.auditCard).map((p) => p.slug)).toEqual(["prozess-audit"]);
   });
 
   it("points every video at a file that exists", () => {

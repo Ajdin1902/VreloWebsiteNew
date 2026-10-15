@@ -1,6 +1,6 @@
 // src/lib/leistungenPages.ts
 //
-// The eight Leistungen subpages (spec 2026-10-01). Every German string for
+// The nine Leistungen subpages (spec 2026-10-01; Prozess-Audit added 2026-10-15). Every German string for
 // /leistungen/<slug> lives here; the route and the block components hold none.
 // One entry = one page: a new service is a new entry, never a new component.
 // Rules for this copy: docs/superpowers/specs/2026-10-01-leistungen-hub-design.md §2, §4, §7.
@@ -13,6 +13,7 @@ export type LeistungSlug =
   | "claude"
   | "ki-schulung"
   | "ki-beratung"
+  | "prozess-audit"
   | "ki-betriebssystem"
   | "betreuung";
 
@@ -43,7 +44,7 @@ export type LeistungPage = {
   example:
     | { heading: string; before: string; steps: [string, string, string]; after: string }
     | { heading: string; video: { src: string; poster: string } };
-  /** Renders the existing ProzessAudit card after the example (KI-Beratung only). */
+  /** Renders the existing ProzessAudit card after the example (Prozess-Audit only). */
   auditCard?: boolean;
   note?: { heading: string; body: string; link: { label: string; href: string } };
   cta: { kind: "check" | "kontakt"; src: CheckSrc; heading: string; lead: string };
@@ -369,11 +370,10 @@ export const leistungenPages: LeistungPage[] = [
       ],
       after: "Du weißt, womit du anfängst. Ob und mit wem du es umsetzt, entscheidest du selbst.",
     },
-    auditCard: true,
     note: {
-      heading: "Förderung",
-      body: "Sitzt dein Betrieb in Bayern und hat weniger als 50 Mitarbeiter, kann der Digitalbonus Bayern einen Teil der Kosten übernehmen, oft bis zur Hälfte. Wichtig: Der Antrag muss gestellt sein, bevor du jemanden beauftragst. Ob er bei dir passt, klären wir im Gespräch.",
-      link: { label: "Zum Förderprogramm", href: "https://www.digitalbonus.bayern/foerderprogramm/" },
+      heading: "Prozess-Audit",
+      body: "Lohnt sich nach dem Erstgespräch ein genauerer Blick, folgt der Prozess-Audit. Auch er kostet dich nichts.",
+      link: { label: "Zum Prozess-Audit", href: "/leistungen/prozess-audit" },
     },
     cta: {
       kind: "kontakt",
@@ -382,6 +382,63 @@ export const leistungenPages: LeistungPage[] = [
       lead: "Das Erstgespräch dauert 30 Minuten und kostet nichts. Danach weißt du, ob sich ein genauerer Blick lohnt.",
     },
     related: ["selbst-bauen-oder-bauen-lassen", "was-ist-prozessautomatisierung", "was-ist-ein-ki-agent"],
+  },
+  {
+    slug: "prozess-audit",
+    group: "befaehigen",
+    navLabel: "Prozess-Audit",
+    title: "Prozess-Audit",
+    subline:
+      "Kostenlos: Wir finden die Aufgabe, die du zuerst loswerden solltest.",
+    metaDescription:
+      "Kostenloser Prozess-Audit für Betriebe und Unternehmen: Ich gehe deine Abläufe mit dir durch. Lohnt sich etwas, bekommst du einen Fahrplan, der dir gehört.",
+    kurz: "Kostenlos: Ich gehe deine Abläufe mit dir durch. Lohnt sich etwas, bekommst du einen Fahrplan.",
+    heroImage: "/images/bg-proof.webp",
+    pain: {
+      heading: "Kennst du das?",
+      moments: [
+        "Viele Baustellen, kein erster Schritt",
+        "Software gekauft, halb eingerichtet",
+        "Unklar, was sich bei dir lohnt",
+        "Keine Zeit, das selbst zu sortieren",
+      ],
+      close: "Bevor ich etwas baue, klären wir, wo es dir Zeit spart.",
+    },
+    proof: {
+      kind: "practice",
+      heading: "Warum ich",
+      body: "Im Audit schaue ich mir an, wie deine Arbeit heute läuft: wo du Daten von Hand überträgst und welche Aufgabe dich die meiste Zeit kostet. Ich empfehle dir nur, was ich selbst bauen und betreiben würde.",
+      points: [
+        { title: "Erst das, was du schon hast.", body: "Dein Programm kann oft mehr, als du nutzt. Kann es die Aufgabe schon, zeige ich dir die Einstellung. Dann brauchst du keinen Bau." },
+        { title: "Du bereitest nichts vor.", body: "Ich bringe die Fragen mit. Du erzählst mir, wie dein Tag läuft." },
+        { title: "Der Fahrplan gehört dir.", body: "Du kannst ihn selbst umsetzen, umsetzen lassen oder mit mir bauen." },
+      ],
+      objection:
+        "Lohnt sich bei dir gerade nichts, sage ich dir das im Gespräch. Dann schicke ich dir auch kein Angebot.",
+    },
+    example: {
+      heading: "So läuft der Audit",
+      before: "Du verlierst jeden Tag Zeit, weißt aber nicht, wo du anfangen sollst.",
+      steps: [
+        "Im kostenlosen Gespräch gehen wir 30 Minuten lang deine Abläufe durch.",
+        "Danach schaue ich mir die Aufgaben genauer an, die dich am meisten Zeit kosten.",
+        "Lohnt sich etwas, bekommst du ein bis zwei Werktage später deinen Fahrplan. In einem kurzen Gespräch gehen wir ihn zusammen durch.",
+      ],
+      after: "Du weißt, womit du anfängst. Ob und mit wem du es umsetzt, entscheidest du.",
+    },
+    auditCard: true,
+    note: {
+      heading: "Förderung",
+      body: "Sitzt dein Betrieb in Bayern und hat weniger als 50 Mitarbeiter, kann der Digitalbonus Bayern einen Teil der Kosten übernehmen, oft bis zur Hälfte. Wichtig: Der Antrag muss gestellt sein, bevor du jemanden beauftragst. Ob er bei dir passt, klären wir im Gespräch.",
+      link: { label: "Zum Förderprogramm", href: "https://www.digitalbonus.bayern/foerderprogramm/" },
+    },
+    cta: {
+      kind: "check",
+      src: CHECK_SRC.leistungProzessAudit,
+      heading: "Fang mit drei Minuten an.",
+      lead: "Der Prozess-Check zeigt dir, wo deine Stunden hingehen. Deine Antworten nehme ich ins Gespräch mit.",
+    },
+    related: ["selbst-bauen-oder-bauen-lassen", "taeglich-stunden-zurueckgewinnen", "was-ist-prozessautomatisierung"],
   },
   {
     slug: "ki-betriebssystem",

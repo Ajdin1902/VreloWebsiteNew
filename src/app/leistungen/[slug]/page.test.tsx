@@ -8,7 +8,7 @@ import { canonical } from "@/lib/site";
 const params = (slug: string) => ({ params: Promise.resolve({ slug }) });
 
 describe("/leistungen/[slug]", () => {
-  it("pre-renders exactly the eight pages", () => {
+  it("pre-renders exactly the nine pages", () => {
     expect(generateStaticParams()).toEqual(leistungenPages.map((p) => ({ slug: p.slug })));
   });
 
@@ -34,12 +34,20 @@ describe("/leistungen/[slug]", () => {
     expect(screen.getAllByText(page.subline)).toHaveLength(1);
   });
 
-  it("shows the audit card and the Förderung note only on KI-Beratung, with the Erstgespräch first", async () => {
-    render(await LeistungSubpage(params("ki-beratung")));
+  it("shows the audit card and the Förderung note on Prozess-Audit, with the Prozess-Check close", async () => {
+    render(await LeistungSubpage(params("prozess-audit")));
+    expect(screen.getByRole("heading", { level: 1, name: "Prozess-Audit" })).toBeInTheDocument();
     expect(document.getElementById("prozess-audit")).not.toBeNull();
     expect(screen.getByLabelText("Förderung")).toBeInTheDocument();
-    // The audit card carries its own quiet „Erstgespräch buchen“ (→ /kontakt), so
-    // look for the close's attributed link among all of them.
+    const hrefs = screen.getAllByRole("link").map((l) => l.getAttribute("href"));
+    expect(hrefs).toContain("/prozess-check?src=leistung-prozess-audit");
+  });
+
+  it("keeps KI-Beratung on the Erstgespräch and points it to the audit page", async () => {
+    render(await LeistungSubpage(params("ki-beratung")));
+    expect(document.getElementById("prozess-audit")).toBeNull();
+    expect(screen.queryByLabelText("Förderung")).toBeNull();
+    expect(screen.getByRole("link", { name: "Zum Prozess-Audit" })).toHaveAttribute("href", "/leistungen/prozess-audit");
     const hrefs = screen.getAllByRole("link", { name: "Erstgespräch buchen" }).map((l) => l.getAttribute("href"));
     expect(hrefs).toContain("/kontakt?src=leistung-ki-beratung");
   });

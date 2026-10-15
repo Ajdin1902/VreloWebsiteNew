@@ -20,19 +20,22 @@ describe("WasIchBaue", () => {
     const { container } = render(<WasIchBaue />);
     expect(container.textContent).not.toContain("Ein Ansprechpartner, der weiß");
   });
-  it("links each of the eight services to its subpage", () => {
+  it("links each of the nine services to its subpage", () => {
     render(<WasIchBaue />);
     for (const p of leistungenPages)
       expect(screen.getByRole("link", { name: p.navLabel })).toHaveAttribute("href", `/leistungen/${p.slug}`);
   });
 
-  // 2026-10-14: the eighth service (KI-Betriebssystem) fills the grids evenly,
-  // so the lone-card centering from 2026-10-01 is gone.
-  it("fills the grid evenly with eight cards, none pushed to the middle", () => {
+  // 2026-10-15: nine cards fill a 3 x 3 grid; in the two-column view the
+  // ninth sits alone, so it is centered there (and only there).
+  it("lays nine cards out 3 x 3 and centers the lone last card in two columns", () => {
     render(<WasIchBaue />);
+    const list = screen.getByRole("list");
+    expect(list).toHaveClass("lg:grid-cols-3");
     const items = screen.getAllByRole("listitem");
-    expect(items).toHaveLength(8);
-    expect(items[7]).toHaveTextContent("Betreuung & Wartung");
-    for (const item of items) expect(item).not.toHaveClass("lg:col-start-2");
+    expect(items).toHaveLength(9);
+    expect(items[8]).toHaveTextContent("Betreuung & Wartung");
+    expect(items[8]).toHaveClass("sm:col-span-2", "lg:col-span-1");
+    for (const item of items.slice(0, 8)) expect(item).not.toHaveClass("sm:col-span-2");
   });
 });

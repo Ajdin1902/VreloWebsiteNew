@@ -53,7 +53,7 @@ describe("sitemap", () => {
     expect(urls).not.toContain(`${siteUrl}/karte`);
     expect(urls).not.toContain(`${siteUrl}/karte/qr`);
   });
-  it("lists all eight Leistungen subpages", () => {
+  it("lists all nine Leistungen subpages", () => {
     const urls = sitemap().map((e) => e.url);
     for (const p of leistungenPages) expect(urls).toContain(`${siteUrl}/leistungen/${p.slug}`);
   });

@@ -1,6 +1,6 @@
 // src/app/leistungen/[slug]/page.tsx
 //
-// One template, eight services (spec 2026-10-01 §4): Hero → Pain → Proof →
+// One template, nine services (spec 2026-10-01 §4): Hero → Pain → Proof →
 // Example → (audit card / note) → CTA → „Mehr dazu“. All copy comes from
 // src/lib/leistungenPages.ts.
 import type { Metadata } from "next";

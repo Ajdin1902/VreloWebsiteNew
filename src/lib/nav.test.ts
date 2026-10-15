@@ -61,9 +61,9 @@ describe("bare routes", () => {
 });
 
 describe("leistungenMenu", () => {
-  it("groups the eight subpages under three labels", () => {
+  it("groups the nine subpages under three labels", () => {
     expect(leistungenMenu.map((g) => g.label)).toEqual(["Automatisieren", "Befähigen", "Betreiben"]);
-    expect(leistungenMenu.flatMap((g) => g.items)).toHaveLength(8);
+    expect(leistungenMenu.flatMap((g) => g.items)).toHaveLength(9);
     expect(leistungenMenu[1].items[0]).toEqual({ href: "/leistungen/claude", label: "Claude für Unternehmen" });
   });
 });

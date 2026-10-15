@@ -16,13 +16,13 @@ export const metadata: Metadata = {
   alternates: { canonical: canonical("/leistungen") },
   title: "Leistungen",
   description:
-    "KI-Automatisierung, Prozessautomatisierung, KI-Server, Claude für Unternehmen, KI-Schulung, KI-Beratung sowie Betreuung und Wartung aus einer Hand.",
+    "Prozessautomatisierung, KI-Automatisierung, KI-Server, Claude für Unternehmen, KI-Schulung, KI-Beratung, Prozess-Audit, KI-Betriebssystem, Betreuung und Wartung aus einer Hand.",
 };
 
 // The hub (spec 2026-10-01 §3.2): the CompactHero (same as the
-// subpages), the eight services in three groups, then the
+// subpages), the nine services in three groups, then the
 // trust layer (what you get, the obstacles answered, references). The audit
-// card moved to /leistungen/ki-beratung; the six Bausteine became the example
+// card lives on /leistungen/prozess-audit (since 2026-10-15); the six Bausteine became the example
 // runs on the subpages.
 export default function LeistungenPage() {
   return (

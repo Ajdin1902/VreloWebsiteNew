@@ -2,8 +2,8 @@ import Link from "next/link";
 import { CTAButton } from "@/components/CTAButton";
 import { prozessAudit } from "@/lib/prozess-audit";
 
-// The free-audit on-ramp — the lead element on /leistungen since the Termin-Quelle
-// flagship was retired (Model C). A warm sonnenlicht card seated on a plain papier
+// The free-audit on-ramp — the centrepiece of /leistungen/prozess-audit
+// (moved there from KI-Beratung 2026-10-15). A warm sonnenlicht card seated on a plain papier
 // band: the deep shadow lifts the warm panel off the light page as the highlighted
 // recommended path; it stays distinct from the dark MehrMoeglich capstone at the
 // end. On-light AA: ember for small accent text

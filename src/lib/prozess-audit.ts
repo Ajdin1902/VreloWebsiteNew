@@ -1,4 +1,5 @@
-// Public, price-free copy for the free Prozess-Audit card on /leistungen.
+// Public, price-free copy for the free Prozess-Audit card on
+// /leistungen/prozess-audit (its own subpage since 2026-10-15).
 // Since 2026-08-31 the audit is FREE, fed by the /prozess-check questionnaire
 // (Prozess-Check-Funnel). The Fahrplan is price-free and travels; the price is
 // named only in the call (HQ §4). "Kostenlos" leads the heading by founder

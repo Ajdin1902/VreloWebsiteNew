@@ -12,7 +12,7 @@ describe("LeistungenMenu", () => {
     expect(screen.queryByRole("link", { name: "KI-Schulung" })).toBeNull();
   });
 
-  it("opens on click with all eight services and an overview link", () => {
+  it("opens on click with all nine services and an overview link", () => {
     render(<LeistungenMenu pathname="/" />);
     fireEvent.click(toggle());
     expect(toggle()).toHaveAttribute("aria-expanded", "true");
