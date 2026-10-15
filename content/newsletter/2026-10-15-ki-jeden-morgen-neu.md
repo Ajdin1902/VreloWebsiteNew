@@ -2,7 +2,7 @@
 subject: "Warum die KI dich jeden Morgen neu kennenlernt"
 previewText: "KI-Chat, KI-Gehirn, KI-Betriebssystem: drei Stufen, ein Tipp für heute und ein Fisch mit Gedächtnislücke."
 date: "2026-10-15"
-draft: true
+draft: false
 ---
 Hi,
 
@@ -21,7 +21,7 @@ Das kostet dich einmal eine Stunde. Tippst du heute fünfmal am Tag zwei Minuten
 ## So nutze ich es
 Vrelo hat beides. Mein Gehirn ist eine einzige Datei mit Strategie, Kunden, offenen Aufgaben und Entscheidungen. Claude liest sie zu Beginn jeder Arbeitssitzung und trägt am Ende ein, was sich geändert hat. Ich erkläre nichts zweimal.
 
-Seit dieser Woche läuft die erste Station meines Betriebssystems: Ein Assistent liest jede neue Mail in meinem Postfach, sortiert sie ein und trägt neue Kontakte mit dem passenden Satz aus der Mail in mein System ein. Abschicken kann er nichts, das bleibt bei mir. Beim ersten Durchlauf hat er 174 Mails einsortiert. In meinem Posteingang blieben 36 übrig.
+Seit dieser Woche läuft die erste Station meines Betriebssystems: Ein Assistent liest jede neue Mail in meinem Postfach, sortiert sie ein und trägt neue Kontakte mit dem passenden Satz aus der Mail in mein System ein. Abschicken kann er nichts, das bleibt bei mir. Beim ersten echten Durchlauf hat er 174 Mails einsortiert. In meinem Posteingang blieben 36 übrig.
 
 ## Meme der Woche
 ![Dory aus Findet Nemo, zweimal nebeneinander. Links steht Montag, rechts Dienstag, beide Male sagt Dory: Hallo, ich bin Dory. Darunter: Mein KI-Chat, wenn ich ihm meinen Betrieb erkläre.](/images/newsletter/2026-10-15-meme.png)
