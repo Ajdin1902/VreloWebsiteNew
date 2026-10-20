@@ -11,7 +11,10 @@ import sharp from "sharp";
 import QRCode from "qrcode";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const SRC = "C:/Users/ajdin/OneDrive/AJ19/Arbeit/Dokumente/Personal/Dzafic_Ajdin.jpg";
+const SRC = "C:/Users/ajdin/OneDrive/Pictures/Camera Roll/velp-vybe-133.jpg";
+// Source is a full-body studio shot (4000x6000), so the attention crop can't
+// find a portrait: cut a fixed head-and-shoulders square first.
+const CROP = { left: 930, top: 900, width: 1680, height: 1680 };
 const CARD_URL = "https://vrelo-ki.de/karte";
 // Brand: petrol on papier. High enough contrast to scan; on-brand.
 const QR_COLOR = { dark: "#1b5063", light: "#f4efe6" };
@@ -23,13 +26,15 @@ mkdirSync(imgDir, { recursive: true });
 
 // 1. Display portrait — square webp, attention-cropped so the face survives.
 await sharp(SRC)
-  .resize(640, 640, { fit: "cover", position: sharp.strategy.attention })
+  .extract(CROP)
+  .resize(640, 640, { fit: "cover" })
   .webp({ quality: 82 })
   .toFile(resolve(imgDir, "karte-portrait.webp"));
 
 // 2. vCard photo — small square JPEG, base64 into a committed module.
 const jpeg = await sharp(SRC)
-  .resize(300, 300, { fit: "cover", position: sharp.strategy.attention })
+  .extract(CROP)
+  .resize(300, 300, { fit: "cover" })
   .jpeg({ quality: 78 })
   .toBuffer();
 writeFileSync(
