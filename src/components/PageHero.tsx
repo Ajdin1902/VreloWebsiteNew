@@ -17,6 +17,7 @@ export function PageHero({
   imageClassName = "",
   size = "default",
   portrait,
+  leadHeading,
 }: {
   title: string;
   lead?: string;
@@ -28,6 +29,8 @@ export function PageHero({
    *  interaction sits on the first screen; default keeps the tall hero. */
   size?: "default" | "compact";
   portrait?: { src: string; alt: string; caption?: string };
+  /** A short headline above the lead (only /ueber-mich, Ajdin 2026-10-20). */
+  leadHeading?: string;
 }) {
   const height = size === "compact" ? "min-h-[34vh] py-16" : "min-h-[68vh] py-24";
   return (
@@ -58,9 +61,16 @@ export function PageHero({
       {lead ? (
         <Section tone="paper">
           <div className={portrait ? "grid items-center gap-10 md:grid-cols-[1.55fr_1fr] md:gap-16" : undefined}>
-            <p className="max-w-2xl text-pretty font-serif text-xl leading-[1.5] text-tiefes-wasser md:text-[1.6rem] first-letter:float-left first-letter:pr-2 first-letter:pt-1 first-letter:text-[2.8em] first-letter:font-medium first-letter:leading-[0.7] first-letter:text-vrelo-petrol">
-              {withBrandWords(lead)}
-            </p>
+            <div>
+              {leadHeading ? (
+                <h2 className="mb-6 max-w-2xl text-balance text-3xl font-semibold tracking-tight text-tiefes-wasser md:text-4xl">
+                  {leadHeading}
+                </h2>
+              ) : null}
+              <p className="max-w-2xl text-pretty font-serif text-xl leading-[1.5] text-tiefes-wasser md:text-[1.6rem] first-letter:float-left first-letter:pr-2 first-letter:pt-1 first-letter:text-[2.8em] first-letter:font-medium first-letter:leading-[0.7] first-letter:text-vrelo-petrol">
+                {withBrandWords(lead)}
+              </p>
+            </div>
             {portrait ? (
               <figure className="w-full max-w-sm md:max-w-none">
                 <Image

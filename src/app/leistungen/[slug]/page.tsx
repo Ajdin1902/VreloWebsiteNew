@@ -16,7 +16,8 @@ import { ProofBlock } from "@/components/leistungen/page/ProofBlock";
 import { ExampleBlock } from "@/components/leistungen/page/ExampleBlock";
 import { NoteBlock } from "@/components/leistungen/page/NoteBlock";
 import { RelatedLinks } from "@/components/leistungen/page/RelatedLinks";
-import { leistungenPages, getLeistungPage } from "@/lib/leistungenPages";
+import { VergleichBlock } from "@/components/leistungen/page/VergleichBlock";
+import { leistungenPages, getLeistungPage, automatisierungVergleich } from "@/lib/leistungenPages";
 import { getArticleBySlug, draftsVisible } from "@/lib/ratgeber";
 import { breadcrumbLd, serviceLd } from "@/lib/jsonld";
 import { canonical } from "@/lib/site";
@@ -68,6 +69,7 @@ export default async function LeistungSubpage({ params }: Params) {
       <PainBlock pain={page.pain} />
       <ProofBlock proof={page.proof} />
       <ExampleBlock example={page.example} />
+      {page.vergleich ? <VergleichBlock vergleich={automatisierungVergleich} current={page.slug} /> : null}
       {page.auditCard ? (
         <Section id="prozess-audit" tone="paper" className="scroll-mt-24">
           <Reveal>

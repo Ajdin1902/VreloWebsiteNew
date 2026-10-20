@@ -27,8 +27,9 @@ export function ExampleBlock({ example }: { example: LeistungPage["example"] }) 
           </Reveal>
         ) : (
           <>
-            {/* Vorher: a quiet dark card, the state the reader knows. */}
-            <Reveal as="div" delayMs={80} className="mt-8 flex max-w-3xl flex-col items-start gap-3 rounded-2xl border border-gletscher/25 bg-tiefes-wasser/45 p-6 sm:flex-row sm:items-center sm:gap-5 md:p-7">
+            {/* Vorher: a quiet dark card, the state the reader knows. Full
+                width, so it frames the steps like the Nachher card (Ajdin 2026-10-20). */}
+            <Reveal as="div" delayMs={80} className="mt-8 flex flex-col items-start gap-3 rounded-2xl border border-gletscher/25 bg-tiefes-wasser/45 p-6 sm:flex-row sm:items-center sm:gap-5 md:p-7">
               <span className="shrink-0 rounded-full bg-gletscher/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-gletscher">
                 Vorher
               </span>

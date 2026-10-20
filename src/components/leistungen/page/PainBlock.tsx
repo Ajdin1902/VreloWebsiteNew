@@ -10,7 +10,8 @@ import type { LeistungPage } from "@/lib/leistungenPages";
 export function PainBlock({ pain }: { pain: LeistungPage["pain"] }) {
   return (
     <Section tone="cool" className="relative isolate overflow-hidden">
-      <SectionBackdrop src="/images/bg-problem.webp" tintRgb="10 37 56" tintOpacity={0.6} />
+      {/* The dark karst pool, not the homepage's navy dusk sea (Ajdin 2026-10-20). */}
+      <SectionBackdrop src="/images/bg-wasichbaue.webp" tintRgb="10 37 56" tintOpacity={0.6} />
       <div className="grid items-center gap-8 md:grid-cols-[1fr_1.1fr] md:gap-14">
         <div>
           <Reveal as="h2" className="text-balance text-3xl font-semibold tracking-tight text-papier md:text-4xl">

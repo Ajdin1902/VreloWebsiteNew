@@ -46,6 +46,8 @@ export type LeistungPage = {
     | { heading: string; video: { src: string; poster: string } };
   /** Renders the existing ProzessAudit card after the example (Prozess-Audit only). */
   auditCard?: boolean;
+  /** Renders the Prozess- vs. KI-Automatisierung comparison after the example. */
+  vergleich?: boolean;
   note?: { heading: string; body: string; link: { label: string; href: string } };
   cta: { kind: "check" | "kontakt"; src: CheckSrc; heading: string; lead: string };
   /** Ratgeber slugs for the „Mehr dazu“ line, 1 to 3. */
@@ -82,6 +84,66 @@ export const kiStudien: StudyFigure[] = [
     url: "https://www.destatis.de/DE/Themen/Branchen-Unternehmen/Unternehmen/IKT-in-Unternehmen-IKT-Branche/Tabellen/ikti-gegen-nutzung-kuenstliche-intelligenz.html",
   },
 ];
+
+// The difference between the two automation pages, shown on both (Ajdin
+// 2026-10-20). One cell per column and row, each read as a single point.
+export type Vergleich = {
+  heading: string;
+  /** The one sentence to remember, shown under the table. */
+  faustregel: string;
+  columns: [{ slug: LeistungSlug; title: string }, { slug: LeistungSlug; title: string }];
+  rows: { label: string; cells: [string, string] }[];
+  close: string;
+};
+
+export const automatisierungVergleich: Vergleich = {
+  heading: "Prozessautomatisierung oder KI? Was ist der Unterschied?",
+  faustregel:
+    "Kommt die Information jedes Mal gleich an, reicht eine Prozessautomatisierung. Kommt sie jedes Mal anders an, braucht es KI.",
+  columns: [
+    { slug: "prozessautomatisierung", title: "Prozessautomatisierung" },
+    { slug: "ki-automatisierung", title: "KI-Automatisierung" },
+  ],
+  rows: [
+    {
+      label: "Arbeitet mit",
+      cells: [
+        "Festen Regeln: Kommt eine Anfrage rein, folgt immer derselbe Schritt.",
+        "Inhalten: Die KI liest Texte und Sprachnachrichten und erkennt, worum es geht.",
+      ],
+    },
+    {
+      label: "Passt zu",
+      cells: [
+        "Abläufen mit sauberen Daten, etwa aus Formularen und Kalendern.",
+        "Unordentlichen Eingängen wie E-Mails und Rechnungen als PDF.",
+      ],
+    },
+    {
+      label: "Ergebnis",
+      cells: [
+        "Gleich bei jedem Durchlauf und Schritt für Schritt nachvollziehbar.",
+        "Ein Vorschlag, den du prüfst und freigibst, bevor er rausgeht.",
+      ],
+    },
+    {
+      label: "Beispiel",
+      cells: [
+        "Eine Anfrage landet im System und der Zuständige bekommt Bescheid.",
+        "Die KI liest eine Rechnung und trägt Lieferant, Betrag und Datum in die Buchhaltung ein.",
+      ],
+    },
+    {
+      label: "Technik",
+      cells: [
+        "Läuft in deinen Programmen, ohne KI-Anbieter.",
+        "Läuft mit einem KI-Modell, auf Wunsch innerhalb der EU.",
+      ],
+    },
+  ],
+  close:
+    "Oft arbeiten beide zusammen: Die KI liest die Rechnung, die Automatisierung legt sie ab. Im Gespräch klären wir, was deine Aufgabe braucht.",
+};
 
 const PRACTICE_BODY =
   "Ich arbeite selbst jeden Tag mit Claude: für Code, Texte, Recherche und meine eigenen Automatisierungen. In meinen früheren Positionen und bei Kunden habe ich Claude eingeführt und in bestehende Abläufe eingebunden. Was du bekommst, habe ich selbst im Einsatz.";
@@ -125,6 +187,7 @@ export const leistungenPages: LeistungPage[] = [
       ],
       after: "Jede Anfrage liegt sofort beim Zuständigen. Du tippst nichts mehr doppelt.",
     },
+    vergleich: true,
     cta: {
       kind: "check",
       src: CHECK_SRC.leistungProzessautomatisierung,
@@ -166,6 +229,7 @@ export const leistungenPages: LeistungPage[] = [
       heading: "So sieht das aus",
       video: { src: "/video/ki-assistent.mp4", poster: "/video/ki-assistent.webp" },
     },
+    vergleich: true,
     cta: {
       kind: "check",
       src: CHECK_SRC.leistungKiAutomatisierung,
@@ -200,7 +264,7 @@ export const leistungenPages: LeistungPage[] = [
       heading: "So setze ich das auf",
       body: "Jeder KI-Server läuft in einem Konto auf deinen Namen: Du zahlst ihn direkt und besitzt die Daten vom ersten Tag an. Das KI-Modell rechnet innerhalb der EU, der Anbieter speichert deine Anfragen nicht und trainiert nicht damit. Das Betriebssystem aktualisiert sich selbst, die Software läuft auf geprüften Versionen.",
       objection:
-        "Den Server musst du nicht verstehen. Ich richte ihn ein, sichere ihn ab und dokumentiere alles. Endet unsere Zusammenarbeit, läuft er sicher weiter.",
+        "Ich richte ihn ein, sichere ihn ab und dokumentiere alles. Endet unsere Zusammenarbeit, läuft er sicher weiter.",
     },
     example: {
       heading: "So sieht das aus",

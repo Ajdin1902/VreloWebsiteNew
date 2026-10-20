@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
-import { leistungenPages, leistungGroups, getLeistungPage, leistungHref, type LeistungPage } from "./leistungenPages";
+import { leistungenPages, leistungGroups, getLeistungPage, leistungHref, automatisierungVergleich, type LeistungPage } from "./leistungenPages";
 import { findCopyIssues } from "./ratgeberCopy";
 import { getAllArticles } from "./ratgeber";
 
@@ -196,5 +196,17 @@ describe("leistungenPages", () => {
     expect("video" in ex).toBe(true);
     expect("steps" in ex).toBe(false);
     expect(JSON.stringify(ex)).not.toMatch(/Rechnung|Vorher|Nachher|Testdaten/);
+  });
+
+  // Ajdin 2026-10-20: the difference between the two automation pages, on both.
+  it("compares Prozess- and KI-Automatisierung on exactly those two pages", () => {
+    expect(leistungenPages.filter((p) => p.vergleich).map((p) => p.slug)).toEqual(["prozessautomatisierung", "ki-automatisierung"]);
+    const v = automatisierungVergleich;
+    expect(v.columns.map((c) => c.slug)).toEqual(["prozessautomatisierung", "ki-automatisierung"]);
+    expect(v.rows.length).toBeGreaterThanOrEqual(3);
+    expect(v.rows.length).toBeLessThanOrEqual(6);
+    for (const r of v.rows) for (const c of r.cells) expect(c.length, c).toBeLessThanOrEqual(95);
+    for (const s of copyStrings(v)) expect(findCopyIssues(s), s).toEqual([]);
+    expect(copyStrings(v).join(" ")).not.toMatch(/€|\bEUR\b|\d\s*Euro\b|Frankfurt/);
   });
 });

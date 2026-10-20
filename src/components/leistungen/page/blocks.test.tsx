@@ -6,7 +6,8 @@ import { ProofBlock } from "./ProofBlock";
 import { ExampleBlock } from "./ExampleBlock";
 import { NoteBlock } from "./NoteBlock";
 import { RelatedLinks } from "./RelatedLinks";
-import { getLeistungPage } from "@/lib/leistungenPages";
+import { VergleichBlock } from "./VergleichBlock";
+import { getLeistungPage, automatisierungVergleich } from "@/lib/leistungenPages";
 
 const page = (s: string) => getLeistungPage(s)!;
 
@@ -136,5 +137,16 @@ describe("RelatedLinks", () => {
     expect(screen.getByRole("link", { name: "Artikel A" })).toHaveAttribute("href", "/ratgeber/a");
     rerender(<RelatedLinks articles={[]} />);
     expect(container).toBeEmptyDOMElement();
+  });
+});
+
+describe("VergleichBlock", () => {
+  it("shows every row and links only the other page's column", () => {
+    render(<VergleichBlock vergleich={automatisierungVergleich} current="prozessautomatisierung" />);
+    expect(screen.getByRole("heading", { level: 2, name: automatisierungVergleich.heading })).toBeInTheDocument();
+    for (const r of automatisierungVergleich.rows) expect(screen.getByRole("rowheader", { name: r.label })).toBeInTheDocument();
+    const links = screen.getAllByRole("link").map((a) => a.getAttribute("href"));
+    expect(new Set(links)).toEqual(new Set(["/leistungen/ki-automatisierung"]));
+    expect(screen.getByText(automatisierungVergleich.faustregel)).toBeInTheDocument();
   });
 });
