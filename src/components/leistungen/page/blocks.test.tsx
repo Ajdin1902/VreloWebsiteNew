@@ -7,6 +7,7 @@ import { ExampleBlock } from "./ExampleBlock";
 import { NoteBlock } from "./NoteBlock";
 import { RelatedLinks } from "./RelatedLinks";
 import { VergleichBlock } from "./VergleichBlock";
+import { GrafikBlock } from "./GrafikBlock";
 import { getLeistungPage, automatisierungVergleich } from "@/lib/leistungenPages";
 
 const page = (s: string) => getLeistungPage(s)!;
@@ -148,5 +149,14 @@ describe("VergleichBlock", () => {
     const links = screen.getAllByRole("link").map((a) => a.getAttribute("href"));
     expect(new Set(links)).toEqual(new Set(["/leistungen/ki-automatisierung"]));
     expect(screen.getByText(automatisierungVergleich.faustregel)).toBeInTheDocument();
+  });
+});
+
+describe("GrafikBlock", () => {
+  it.each(["prozessautomatisierung", "ki-automatisierung", "ki-server", "claude", "ki-schulung", "ki-beratung", "prozess-audit", "ki-betriebssystem", "betreuung"])("%s: shows the heading and exposes the drawing as one labelled image", (slug) => {
+    const g = page(slug).grafik!;
+    render(<GrafikBlock grafik={g} />);
+    expect(screen.getByRole("heading", { level: 2, name: g.heading })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: g.alt })).toBeInTheDocument();
   });
 });

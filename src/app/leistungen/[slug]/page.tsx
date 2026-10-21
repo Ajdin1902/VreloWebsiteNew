@@ -17,6 +17,7 @@ import { ExampleBlock } from "@/components/leistungen/page/ExampleBlock";
 import { NoteBlock } from "@/components/leistungen/page/NoteBlock";
 import { RelatedLinks } from "@/components/leistungen/page/RelatedLinks";
 import { VergleichBlock } from "@/components/leistungen/page/VergleichBlock";
+import { GrafikBlock } from "@/components/leistungen/page/GrafikBlock";
 import { leistungenPages, getLeistungPage, automatisierungVergleich } from "@/lib/leistungenPages";
 import { getArticleBySlug, draftsVisible } from "@/lib/ratgeber";
 import { breadcrumbLd, serviceLd } from "@/lib/jsonld";
@@ -68,6 +69,7 @@ export default async function LeistungSubpage({ params }: Params) {
       <LeistungHero page={page} />
       <PainBlock pain={page.pain} />
       <ProofBlock proof={page.proof} />
+      {page.grafik ? <GrafikBlock grafik={page.grafik} /> : null}
       <ExampleBlock example={page.example} />
       {page.vergleich ? <VergleichBlock vergleich={automatisierungVergleich} current={page.slug} /> : null}
       {page.auditCard ? (

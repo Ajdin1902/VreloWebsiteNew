@@ -17,7 +17,10 @@ export type LeistungSlug =
   | "ki-betriebssystem"
   | "betreuung";
 
-export type LeistungGroup = "automatisieren" | "befaehigen" | "betreiben";
+/** One drawing per page, in src/components/leistungen/grafiken/. */
+export type LeistungGrafik = "ki-fluss" | "betriebssystem-becken" | "prozess-fliessband" | "ki-server-rahmen" | "prozess-audit-balken" | "betreuung-zeitlinie" | "claude-projekt" | "beratung-trichter" | "schulung-vorlagen";
+
+export type LeistungGroup ="automatisieren" | "befaehigen" | "betreiben";
 
 export type StudyFigure = { figure: string; claim: string; source: string; year: number; url: string };
 
@@ -48,6 +51,9 @@ export type LeistungPage = {
   auditCard?: boolean;
   /** Renders the Prozess- vs. KI-Automatisierung comparison after the example. */
   vergleich?: boolean;
+  /** A graphic to remember the service by, right after the proof block (Ajdin
+   *  2026-10-20). `kind` picks the drawing; `alt` is what a screen reader hears. */
+  grafik?: { kind: LeistungGrafik; heading: string; alt: string };
   note?: { heading: string; body: string; link: { label: string; href: string } };
   cta: { kind: "check" | "kontakt"; src: CheckSrc; heading: string; lead: string };
   /** Ratgeber slugs for the „Mehr dazu“ line, 1 to 3. */
@@ -170,6 +176,11 @@ export const leistungenPages: LeistungPage[] = [
       ],
       close: "Jeder Handgriff kostet Minuten. Zusammen sind es Stunden pro Woche.",
     },
+    grafik: {
+      kind: "prozess-fliessband",
+      heading: "Einmal festgelegt, läuft es jedes Mal gleich.",
+      alt: "Eine Anfrage kommt jedes Mal im gleichen Formular an. Eine feste Regel legt den Kontakt an, bestätigt den Eingang und informiert den Zuständigen. Bleibt die Anfrage liegen, kommt nach zwei Tagen eine Erinnerung.",
+    },
     proof: {
       kind: "case",
       heading: "Aus der Praxis",
@@ -217,6 +228,11 @@ export const leistungenPages: LeistungPage[] = [
       ],
       close: "Das braucht Aufmerksamkeit, aber kein Urteil. Das übernimmt die KI.",
     },
+    grafik: {
+      kind: "ki-fluss",
+      heading: "Unordentlich rein, geordnet raus.",
+      alt: "E-Mail, Rechnung und Sprachnachricht kommen jedes Mal anders an. Die KI liest sie und ordnet sie in gleiche Karten mit Feldern wie Absender, Lieferant, Betrag und Datum. Du gibst frei, bevor etwas weitergeht.",
+    },
     proof: {
       kind: "studies",
       heading: "Was die Zahlen sagen",
@@ -258,6 +274,11 @@ export const leistungenPages: LeistungPage[] = [
         "Abhängig vom Dienstleister",
       ],
       close: "Mit dem richtigen Aufbau nutzt du KI und deine Daten bleiben bei dir.",
+    },
+    grafik: {
+      kind: "ki-server-rahmen",
+      heading: "Die KI kommt zu deinen Daten.",
+      alt: "Dein Server läuft auf deinen Namen und rechnet innerhalb der EU. Unterlagen werden hochgeladen, die KI prüft sie und legt sie in deinen Ordner. Nur die Nachfrage nach fehlenden Unterlagen geht hinaus, an deinen eigenen Kunden.",
     },
     proof: {
       kind: "case",
@@ -304,6 +325,11 @@ export const leistungenPages: LeistungPage[] = [
         "Keine Regel für eure Daten",
       ],
       close: "Das Werkzeug habt ihr. Es fehlt die Einrichtung für euren Betrieb.",
+    },
+    grafik: {
+      kind: "claude-projekt",
+      heading: "Einmal eingerichtet, für das ganze Team.",
+      alt: "Vier Karten mit eurem Wissen: Leistungen, Preise, Vorlagen und Regeln für Daten. Sie fließen in ein gemeinsames Projekt. Daraus entstehen Angebot, E-Mail und Zusammenfassung, alle in eurem Ton.",
     },
     proof: {
       kind: "practice",
@@ -361,6 +387,11 @@ export const leistungenPages: LeistungPage[] = [
       ],
       close: "KI hilft erst, wenn dein Team weiß, wo sie in die eigene Arbeit passt.",
     },
+    grafik: {
+      kind: "schulung-vorlagen",
+      heading: "Jede Aufgabe wird zu einer Vorlage.",
+      alt: "Vorher und nachher: Vorher liegen lose Dokumente durcheinander. Nachher wird aus einer echten Aufgabe eures Teams in der Schulung eine Vorlage gebaut, die am nächsten Tag im Einsatz ist. Dann kommt die nächste Aufgabe dran.",
+    },
     proof: {
       kind: "practice",
       heading: "Warum ich",
@@ -411,6 +442,11 @@ export const leistungenPages: LeistungPage[] = [
         "Lohnt sich das für deine Größe?",
       ],
       close: "Im Gespräch klären wir, was sich bei dir lohnt und was nicht.",
+    },
+    grafik: {
+      kind: "beratung-trichter",
+      heading: "Aus vielen Ideen wird ein erster Schritt.",
+      alt: "Ein Trichter: Viele Ideen kommen hinein, etwa Rechnungen, Social Media, Angebote und Termine. Die Frage, ob es sich lohnt, sortiert sie. Chatbot und Agent fallen heraus. Am Ende steht ein erster Schritt, dahinter das, was danach und später kommt.",
     },
     proof: {
       kind: "practice",
@@ -467,6 +503,11 @@ export const leistungenPages: LeistungPage[] = [
         "Keine Zeit, das selbst zu sortieren",
       ],
       close: "Bevor ich etwas baue, klären wir, wo es dir Zeit spart.",
+    },
+    grafik: {
+      kind: "prozess-audit-balken",
+      heading: "Wir fangen dort an, wo die meiste Zeit verloren geht.",
+      alt: "Fünf Aufgaben als Balken, sortiert nach Zeitaufwand: Anfragen beantworten, Rechnungen übertragen, Termine abstimmen, Angebote schreiben und Nachfassen. Bei der Aufgabe mit dem längsten Balken fangen wir an. Der Audit läuft in drei Schritten: 30 Minuten Gespräch, genauer Blick und ein Fahrplan, wenn es sich lohnt.",
     },
     proof: {
       kind: "practice",
@@ -525,6 +566,11 @@ export const leistungenPages: LeistungPage[] = [
       ],
       close: "Eine KI hilft erst, wenn alles über deinen Betrieb an einer Stelle stimmt.",
     },
+    grafik: {
+      kind: "betriebssystem-becken",
+      heading: "Alles fließt an eine Stelle.",
+      alt: "Postfach, Chat, CRM, Formulare und Termine fließen mit ihrer Quelle an eine Stelle. Darauf bauen Automatisierungen, Fristen und Aufgaben und ein Assistent auf, der dir zum Beispiel sagt, was bei einem Kunden offen ist.",
+    },
     proof: {
       kind: "practice",
       heading: "So läuft das bei mir",
@@ -580,6 +626,11 @@ export const leistungenPages: LeistungPage[] = [
         "Läuft der Server sicher?",
       ],
       close: "Eine Automatisierung spart Zeit, solange jemand prüft, dass sie läuft.",
+    },
+    grafik: {
+      kind: "betreuung-zeitlinie",
+      heading: "Ich merke es zuerst.",
+      alt: "Eine Zeitlinie: Dein System läuft, dann bricht eine Verbindung ab. Der Alarm kommt bei mir an, ich behebe den Fehler und die liegengebliebenen Vorgänge laufen nach. Zum Arbeitsbeginn läuft alles wieder.",
     },
     proof: {
       kind: "case",

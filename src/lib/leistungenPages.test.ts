@@ -209,4 +209,26 @@ describe("leistungenPages", () => {
     for (const s of copyStrings(v)) expect(findCopyIssues(s), s).toEqual([]);
     expect(copyStrings(v).join(" ")).not.toMatch(/€|\bEUR\b|\d\s*Euro\b|Frankfurt/);
   });
+
+  // Ajdin 2026-10-20: a graphic instead of more text, one drawing per page.
+  it("draws a graphic with a short heading and a screen-reader text", () => {
+    const withGrafik = leistungenPages.filter((p) => p.grafik);
+    expect(withGrafik.map((p) => [p.slug, p.grafik!.kind])).toEqual([
+      ["prozessautomatisierung", "prozess-fliessband"],
+      ["ki-automatisierung", "ki-fluss"],
+      ["ki-server", "ki-server-rahmen"],
+      ["claude", "claude-projekt"],
+      ["ki-schulung", "schulung-vorlagen"],
+      ["ki-beratung", "beratung-trichter"],
+      ["prozess-audit", "prozess-audit-balken"],
+      ["ki-betriebssystem", "betriebssystem-becken"],
+      ["betreuung", "betreuung-zeitlinie"],
+    ]);
+    for (const p of withGrafik) {
+      expect(p.grafik!.heading.length, p.slug).toBeLessThanOrEqual(60);
+      expect(p.grafik!.alt.length, p.slug).toBeGreaterThan(80);
+    }
+    expect(getLeistungPage("ki-automatisierung")!.grafik!.alt).toMatch(/gibst frei/);
+    expect(getLeistungPage("ki-betriebssystem")!.grafik!.alt).toMatch(/Quelle/);
+  });
 });

@@ -22,7 +22,7 @@ describe("/leistungen/[slug]", () => {
     const { container } = render(await LeistungSubpage(params("prozessautomatisierung")));
     expect(screen.getByRole("heading", { level: 1, name: "Prozessautomatisierung" })).toBeInTheDocument();
     const h2s = [...container.querySelectorAll("h2")].map((h) => h.textContent?.trim());
-    expect(h2s).toEqual(["Kennst du das?", "Aus der Praxis", "So sieht das aus", "Prozessautomatisierung oder KI? Was ist der Unterschied?", "Welche Aufgabe kostet dich am meisten?"]);
+    expect(h2s).toEqual(["Kennst du das?", "Aus der Praxis", "Einmal festgelegt, läuft es jedes Mal gleich.", "So sieht das aus", "Prozessautomatisierung oder KI? Was ist der Unterschied?", "Welche Aufgabe kostet dich am meisten?"]);
   });
 
   it("puts the one line and the button in the hero, with no separate lead section", async () => {
@@ -72,5 +72,11 @@ describe("/leistungen/[slug]", () => {
     };
     expect(relatedArticles(["live", "entwurf", "fehlt"], false, stub)).toEqual([{ slug: "live", title: "Live" }]);
     expect(relatedArticles(["live", "entwurf"], true, stub).map((a) => a.slug)).toEqual(["live", "entwurf"]);
+  });
+
+  it("puts the graphic right after the proof on KI-Automatisierung", async () => {
+    const { container } = render(await LeistungSubpage(params("ki-automatisierung")));
+    const h2s = [...container.querySelectorAll("h2")].map((h) => h.textContent?.trim());
+    expect(h2s.slice(0, 3)).toEqual(["Kennst du das?", "Was die Zahlen sagen", "Unordentlich rein, geordnet raus."]);
   });
 });
