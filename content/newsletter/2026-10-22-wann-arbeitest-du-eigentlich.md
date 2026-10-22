@@ -2,7 +2,7 @@
 subject: "Wann arbeitest du eigentlich?"
 previewText: "57 Prozent Kommunikation, @ChatGPT im Teamchat, feste Antwortzeiten und ein Hund, der alles im Griff hat."
 date: "2026-10-22"
-draft: true
+draft: false
 ---
 Hi,
 
