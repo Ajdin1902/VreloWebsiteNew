@@ -26,7 +26,7 @@ describe("/bauplan copy", () => {
     expect(all.filter((s) => /€|\bEUR\b|ClickUp|HubSpot|sevDesk|Velp|Alen/i.test(s))).toEqual([]);
   });
   it("asks for nothing but the PDF", () => {
-    expect(all.filter((s) => /Erstgespräch|Prozess-Check|buchen|Termin vereinbaren|Gespräch/i.test(s))).toEqual([]);
+    expect(all.filter((s) => /Prozess-Check|buchen|Termin vereinbaren|Termin wählen|30 Minuten|melde dich|schreib mir/i.test(s))).toEqual([]);
   });
   it("names the origin agency only by shape", () => {
     expect(bauplanPage.herkunft).toMatch(/Videoagentur in Regensburg/);

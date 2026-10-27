@@ -20,7 +20,7 @@ export const bauplanPage: {
     "Entstanden ist dieser Bauplan bei meiner Arbeit mit einer Videoagentur in Regensburg. Ich habe ihn so konzipiert, dass er für jede Agentur passt.",
   fundament: {
     heading: "Das Fundament: dein Kunde",
-    body: "Verstehen, was der Kunde will. Das erste Treffen, das Briefing, die kreative Arbeit, die Feedbackrunde. Das bleibt bei dir und deinem Team. Alles darunter dient diesem einen Ziel.",
+    body: "Verstehen, was der Kunde will. Erstgespräch, Briefing, die kreative Arbeit, das Feedback-Gespräch. Das bleibt bei dir und deinem Team. Alles darunter dient diesem einen Ziel.",
   },
   stationen: {
     heading: "Der Weg eines Kunden, Station für Station",
@@ -30,14 +30,14 @@ export const bauplanPage: {
         beispiele: "Shooting-Paket · Website-Relaunch · Kampagne",
         heute: "von Hand geschrieben, Nachfassen nach Gefühl",
         imBauplan: "aus den Deal-Daten gebaut, du gibst mit einem Klick frei, Erinnerung nach 5 und 12 Tagen",
-        bleibtBeiDir: "der Preis, die Verhandlung, die Freigabe",
+        bleibtBeiDir: "der Preis, das Gespräch, die Freigabe",
       },
       {
         name: "Onboarding",
         beispiele: "Drehort und Zielgruppe · Seitenstruktur und Logos · Zielgruppe und Budget",
         heute: "Willkommensmail von Hand, Antworten abgetippt",
         imBauplan: "Fragebogen geht nach dem Ja raus, Antworten landen im Kundenordner und auf der Projektkarte",
-        bleibtBeiDir: "das Onboarding mit dem Kunden",
+        bleibtBeiDir: "das Onboarding-Gespräch",
       },
       {
         name: "Skripte",
@@ -58,7 +58,7 @@ export const bauplanPage: {
         beispiele: "Dreh → Schnitt → Feedback · Design → Entwicklung → Launch · Setup → Laufzeit → Report",
         heute: "Board von Hand nachziehen, Fristen im Kopf",
         imBauplan: "jede Phase legt ihre Aufgaben mit Frist an, die Karte rückt weiter, wenn alles erledigt ist",
-        bleibtBeiDir: "die Feedbackrunde, die Abnahme",
+        bleibtBeiDir: "das Feedback-Gespräch, die Abnahme",
       },
     ],
     tools: "Läuft in den Programmen, die du schon hast.",
