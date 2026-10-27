@@ -1,3 +1,4 @@
+import { BAUPLAN_BASE } from "@/lib/bauplan";
 import { leistungGroups, leistungenPages, leistungHref } from "@/lib/leistungenPages";
 
 export type NavLink = { href: string; label: string };
@@ -22,6 +23,12 @@ export const navLinks: NavLink[] = [
 // task — on the page the Tier-A outreach actually links to. /demo is deliberately
 // NOT a focus route: it is a sandbox people are meant to wander out of.
 export const focusRoutes: string[] = ["/makler", "/lead-check", "/prozess-check"];
+//
+// /bauplan/<code> is a focus route by prefix: the slug is a secret code, so it
+// cannot be listed exactly. The page is a gift and must carry no ask, while the
+// normal header and footer carry the Prozess-Check CTA and the newsletter form.
+// The bare /bauplan is not a page and stays a normal route.
+export const focusPrefixes: string[] = [BAUPLAN_BASE + "/"];
 
 // Bare routes: no site chrome at all — no header, no footer. The digital
 // business card (/karte) and its QR display page (/karte/qr) are shown
@@ -50,7 +57,16 @@ export const focusChrome: Record<string, { cta?: FocusCta }> = {
 // A null pathname (no router context) falls back to "show the chrome" — the
 // safe, normal case.
 export function isFocusRoute(pathname: string | null): boolean {
-  return pathname !== null && focusRoutes.includes(pathname);
+  return (
+    pathname !== null &&
+    (focusRoutes.includes(pathname) || focusPrefixes.some((p) => pathname.startsWith(p)))
+  );
+}
+
+// Exact-key lookup first; prefix routes (/bauplan/<code>) are logo-only; else none.
+export function focusChromeFor(pathname: string): { cta?: FocusCta } {
+  if (pathname in focusChrome) return focusChrome[pathname];
+  return {};
 }
 
 export function isBareRoute(pathname: string | null): boolean {

@@ -79,4 +79,15 @@ describe("ChromeGate", () => {
     expect(screen.getByRole("navigation", { name: "Rechtliches" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Impressum" })).toBeInTheDocument();
   });
+
+  it("renders the focus chrome (no CTA, no newsletter) on a /bauplan page", () => {
+    pathname.current = "/bauplan/agentur-7k3m";
+    render(
+      <ChromeGate slot="footer">
+        <p>Normaler Footer</p>
+      </ChromeGate>,
+    );
+    expect(screen.queryByText("Normaler Footer")).toBeNull();
+    expect(screen.getByRole("link", { name: "Datenschutz" })).toBeInTheDocument();
+  });
 });

@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import { usePathname } from "next/navigation";
-import { isFocusRoute, isBareRoute, focusChrome } from "@/lib/nav";
+import { isFocusRoute, isBareRoute, focusChromeFor } from "@/lib/nav";
 import { FocusHeader } from "@/components/focus/FocusHeader";
 import { FocusFooter } from "@/components/focus/FocusFooter";
 
@@ -27,7 +27,7 @@ export function ChromeGate({ children, slot }: { children: ReactNode; slot: "hea
   }
 
   if (isFocusRoute(pathname)) {
-    const config = focusChrome[pathname!] ?? {};
+    const config = focusChromeFor(pathname!);
     return slot === "header" ? <FocusHeader cta={config.cta} /> : <FocusFooter />;
   }
 

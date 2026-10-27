@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { navLinks, focusRoutes, isFocusRoute, focusChrome, bareRoutes, isBareRoute, leistungenMenu } from "./nav";
+import { navLinks, focusRoutes, isFocusRoute, focusChrome, focusChromeFor, bareRoutes, isBareRoute, leistungenMenu } from "./nav";
 
 describe("focus routes", () => {
   it("treats the two outreach landing pages as focus routes", () => {
@@ -65,5 +65,14 @@ describe("leistungenMenu", () => {
     expect(leistungenMenu.map((g) => g.label)).toEqual(["Automatisieren", "Befähigen", "Betreiben"]);
     expect(leistungenMenu.flatMap((g) => g.items)).toHaveLength(9);
     expect(leistungenMenu[1].items[0]).toEqual({ href: "/leistungen/claude", label: "Claude für Unternehmen" });
+  });
+});
+
+describe("bauplan focus route", () => {
+  it("treats every /bauplan/<code> path as a logo-only focus route", () => {
+    expect(isFocusRoute("/bauplan/agentur-7k3m")).toBe(true);
+    expect(isFocusRoute("/bauplan")).toBe(false);
+    expect(focusChromeFor("/bauplan/agentur-7k3m")).toEqual({});
+    expect(focusChromeFor("/makler").cta?.href).toBe("#termin");
   });
 });
