@@ -34,11 +34,36 @@ export function BauplanPage({ data, form }: { data: Data; form?: ReactNode }) {
         <header className="mx-auto w-full max-w-2xl">
           <p className="text-xs font-semibold uppercase tracking-widest text-stumm">{data.kicker}</p>
           <h1 className="mt-3 text-3xl font-semibold leading-tight sm:text-4xl">{data.title}</h1>
-          <p className="mt-5 text-lg leading-relaxed">{data.lead}</p>
-          <p className="mt-6 border-l-4 border-amber pl-4 text-base leading-relaxed text-stumm">
+          <p className="mt-5 border-l-4 border-amber pl-4 text-base text-stumm">
             {withBrandWords(data.herkunft)}
           </p>
         </header>
+
+        <section id="schmerz" className="mx-auto w-full max-w-2xl">
+          <h2 className="text-2xl font-semibold">{data.schmerz.heading}</h2>
+          <ul className="mt-4 flex flex-col gap-2">
+            {data.schmerz.punkte.map((p) => (
+              <li key={p} data-testid="schmerz-punkt" className="flex gap-3 leading-relaxed">
+                <span aria-hidden="true" className="mt-2 h-2 w-2 shrink-0 rounded-full bg-amber" />
+                <span>{p}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-5 font-semibold">{data.schmerz.schluss}</p>
+        </section>
+
+        <section id="schritte" className="mx-auto w-full max-w-2xl">
+          <h2 className="text-2xl font-semibold">{data.schritte.heading}</h2>
+          <ol data-testid="schritte" className="mt-4 grid gap-4 sm:grid-cols-3">
+            {data.schritte.items.map((s, i) => (
+              <li key={s.wort} className="rounded-xl border border-faden bg-lesepapier p-4">
+                <p className="text-xs font-semibold uppercase tracking-widest text-stumm">Schritt {i + 1}</p>
+                <p className="mt-1 text-xl font-semibold text-vrelo-petrol">{s.wort}</p>
+                <p className="mt-2 text-sm leading-relaxed">{s.satz}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
 
         <section id="fundament" className="mx-auto w-full max-w-2xl rounded-2xl bg-sonnenlicht p-6 sm:p-8">
           <h2 className="text-2xl font-semibold">{data.fundament.heading}</h2>
@@ -65,6 +90,23 @@ export function BauplanPage({ data, form }: { data: Data; form?: ReactNode }) {
           <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-stumm">{data.stationen.tools}</p>
         </section>
 
+        <section id="pdf-inhalt" className="mx-auto w-full max-w-2xl rounded-2xl bg-lesepapier p-6 sm:p-8">
+          <h2 className="text-2xl font-semibold">{data.pdfInhalt.heading}</h2>
+          <ul className="mt-4 flex flex-col gap-2">
+            {data.pdfInhalt.punkte.map((p) => (
+              <li key={p} data-testid="pdf-punkt" className="flex gap-3 leading-relaxed">
+                <span aria-hidden="true" className="mt-2 h-2 w-2 shrink-0 rounded-full bg-amber" />
+                <span>{p}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-5 font-semibold text-vrelo-petrol">{data.pdfInhalt.ergebnis}</p>
+        </section>
+
+        <section id="pdf" className="mx-auto w-full max-w-2xl rounded-2xl border border-faden p-6 sm:p-8">
+          <h2 className="text-2xl font-semibold">{data.pdf.heading}</h2>
+          {form ? <div className="mt-5">{form}</div> : null}
+        </section>
         <section id="merak" className="mx-auto w-full max-w-2xl rounded-2xl bg-sonnenlicht p-6 sm:p-8">
           <h2 className="text-2xl font-semibold">
             <MerakHeading text={data.merak.heading} />
@@ -78,11 +120,6 @@ export function BauplanPage({ data, form }: { data: Data; form?: ReactNode }) {
           </ul>
         </section>
 
-        <section id="pdf" className="mx-auto w-full max-w-2xl rounded-2xl border border-faden p-6 sm:p-8">
-          <h2 className="text-2xl font-semibold">{data.pdf.heading}</h2>
-          <p className="mt-3 leading-relaxed">{data.pdf.text}</p>
-          {form ? <div className="mt-5">{form}</div> : null}
-        </section>
       </div>
     </div>
   );

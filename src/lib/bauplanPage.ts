@@ -6,24 +6,44 @@ export type Station = { name: string; beispiele: string; heute: string; imBaupla
 export const bauplanPage: {
   kicker: string;
   title: string;
-  lead: string;
+  schmerz: { heading: string; punkte: string[]; schluss: string };
+  schritte: { heading: string; items: { wort: string; satz: string }[] };
   herkunft: string;
   fundament: { heading: string; body: string };
   stationen: { heading: string; items: Station[]; tools: string };
   merak: { heading: string; punkte: string[] };
-  pdf: { heading: string; text: string; label: string; button: string; pending: string; hinweis: string; success: string };
+  pdfInhalt: { heading: string; punkte: string[]; ergebnis: string };
+  pdf: { heading: string; label: string; button: string; pending: string; hinweis: string; success: string };
 } = {
   kicker: "Bauplan für Agenturen",
-  title: "Deine Agentur lebt von der Beziehung zu deinen Kunden. Dieser Bauplan nimmt dir das Drumherum ab.",
-  lead: "Ob Shooting, Website oder Kampagne: Hier steht, welche Handgriffe zwischen Zusage und Abschluss von allein laufen können und welche bei dir bleiben.",
-  herkunft:
-    "Entstanden ist dieser Bauplan bei meiner Arbeit mit einer Videoagentur in Regensburg. Ich habe ihn so konzipiert, dass er für jede Agentur passt.",
+  title: "Deine Agentur lebt von deinen Kunden. Das Drumherum frisst die Zeit dafür.",
+  schmerz: {
+    heading: "Hier geht deine Zeit hin",
+    punkte: [
+      "Angebot raus, keiner fasst nach.",
+      "Onboarding-Antworten von Hand ins Board.",
+      "Jedes Skript fängt bei null an.",
+      "Das Board stimmt nur, wenn jemand dran denkt.",
+      "Status ständig von Hand dokumentieren.",
+      "Neuer Kunde: Nein sagen oder einstellen.",
+    ],
+    schluss: "Nichts davon bezahlt dein Kunde.",
+  },
+  schritte: {
+    heading: "Der Weg raus",
+    items: [
+      { wort: "Beschreiben.", satz: "Jede Station: Input, Output, wer." },
+      { wort: "Automatisieren.", satz: "Das Drumherum läuft von allein." },
+      { wort: "Laufen lassen.", satz: "Dokumentiert. Nichts geht verloren." },
+    ],
+  },
+  herkunft: "Entstanden bei einer Videoagentur in Regensburg, konzipiert für jede Agentur.",
   fundament: {
-    heading: "Das Fundament: dein Kunde",
-    body: "Verstehen, was der Kunde will. Erstgespräch, Briefing, die kreative Arbeit, das Feedback-Gespräch. Das bleibt bei dir und deinem Team. Alles darunter dient diesem einen Ziel.",
+    heading: "Das Fundament bleibt bei dir: dein Kunde",
+    body: "Erstgespräch, Briefing, kreative Arbeit, Feedback. Alles andere ist Drumherum.",
   },
   stationen: {
-    heading: "Der Weg eines Kunden, Station für Station",
+    heading: "Der Weg eines Kunden",
     items: [
       {
         name: "Angebot",
@@ -66,19 +86,30 @@ export const bauplanPage: {
   merak: {
     heading: "So fühlt es sich an: der Merak-Effekt",
     punkte: [
-      "Deine Kunden sind zufrieden. Das Angebot kommt schnell, jeder Schritt kommt pünktlich.",
-      "Dein Team macht die Arbeit, die Spaß macht: drehen, gestalten, schreiben.",
-      "Du nimmst mehr Kunden an, ohne dass es im Büro eng wird.",
-      "Du siehst jederzeit, wo jedes Projekt steht.",
-      "Nichts geht verloren. Jeder Schritt ist dokumentiert.",
+      "Zufriedene Kunden. Jeder Schritt kommt pünktlich.",
+      "Dein Team dreht, gestaltet, schreibt.",
+      "Mehr Kunden, ohne dass es eng wird.",
+      "Du siehst, wo jedes Projekt steht.",
+      "Nichts geht verloren. Alles dokumentiert.",
       "Alles läuft ruhig.",
     ],
   },
+  pdfInhalt: {
+    heading: "Das steckt drin",
+    punkte: [
+      "Vier Prinzipien, drei Beispiele: Videodreh, Website, Kampagne.",
+      "Bögen zum Ausfüllen: Input, Output, wer, was.",
+      "Deine Programme und wie sie zusammenhängen.",
+      "Der Prüfschritt vor jedem Entwurf.",
+      "Der ganze Weg auf einer Seite.",
+      "8 Seiten zum Ausdrucken.",
+    ],
+    ergebnis: "Am Ende: eine dokumentierte Quelle deiner Abläufe. Eine ruhige Stunde und ein Stift reichen.",
+  },
   pdf: {
-    heading: "Den Bauplan als PDF",
-    text: "Mit den Prinzipien für die Umsetzung in deiner Agentur und Platz für deine eigenen Phasen. Ich schicke ihn dir per Mail.",
+    heading: "Hol dir den Bauplan als PDF. Kostenlos.",
     label: "Deine E-Mail-Adresse",
-    button: "PDF zuschicken",
+    button: "Bauplan zuschicken",
     pending: "Wird gesendet …",
     hinweis: "Du bekommst nur diese eine Mail.",
     success: "Ist unterwegs. Schau auch im Spam-Ordner nach.",

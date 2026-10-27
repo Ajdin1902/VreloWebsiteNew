@@ -11,7 +11,7 @@ it("renders the mail field, the hinweis and the Datenschutz link, and shows the 
   expect(screen.getByText(/nur diese eine Mail/)).toBeInTheDocument();
   expect(screen.getByRole("link", { name: "Datenschutz" })).toHaveAttribute("href", "/datenschutz");
   expect(document.querySelector('input[name="src"]')).toHaveAttribute("value", "ag01");
-  fireEvent.submit(screen.getByRole("button", { name: "PDF zuschicken" }).closest("form")!);
+  fireEvent.submit(screen.getByRole("button", { name: "Bauplan zuschicken" }).closest("form")!);
   expect(await screen.findByRole("status")).toHaveTextContent(/unterwegs/);
 });
 
@@ -30,7 +30,7 @@ it("carries the page code as a hidden field", () => {
 it("keeps the typed address after an invalid result", async () => {
   action.mockResolvedValueOnce({ status: "invalid", error: "Bitte prüfe die Adresse.", email: "nope@x" });
   render(<BauplanPdfForm code="c1" />);
-  fireEvent.submit(screen.getByRole("button", { name: "PDF zuschicken" }).closest("form")!);
+  fireEvent.submit(screen.getByRole("button", { name: "Bauplan zuschicken" }).closest("form")!);
   expect(await screen.findByRole("alert")).toBeInTheDocument();
   expect(screen.getByLabelText("Deine E-Mail-Adresse")).toHaveValue("nope@x");
 });
