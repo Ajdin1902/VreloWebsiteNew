@@ -7,6 +7,7 @@ export const bauplanPage: {
   kicker: string;
   title: string;
   schmerz: { heading: string; punkte: string[]; schluss: string };
+  ki: { heading: string; punkte: string[]; schluss: string };
   schritte: { heading: string; items: { wort: string; satz: string }[] };
   herkunft: string;
   fundament: { heading: string; body: string };
@@ -28,6 +29,16 @@ export const bauplanPage: {
       "Neuer Kunde: Nein sagen oder einstellen.",
     ],
     schluss: "Nichts davon bezahlt dein Kunde.",
+  },
+  ki: {
+    heading: "Und KI? Hilft dir so noch nicht.",
+    punkte: [
+      "Deine Abläufe sind verstreut: Mail, Board, Kopf.",
+      "Nichts ist miteinander verbunden.",
+      "KI arbeitet nur mit dem, was beschrieben ist.",
+      "Darum steckt sie in den Kinderschuhen. Nicht nur bei dir.",
+    ],
+    schluss: "Erst beschreiben, dann verbinden, dann läuft sie.",
   },
   schritte: {
     heading: "Der Weg raus",

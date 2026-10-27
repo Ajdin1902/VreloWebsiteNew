@@ -52,6 +52,19 @@ export function BauplanPage({ data, form }: { data: Data; form?: ReactNode }) {
           <p className="mt-5 font-semibold">{data.schmerz.schluss}</p>
         </section>
 
+        <section id="ki" className="mx-auto w-full max-w-2xl">
+          <h2 className="text-2xl font-semibold">{data.ki.heading}</h2>
+          <ul className="mt-4 flex flex-col gap-2">
+            {data.ki.punkte.map((p) => (
+              <li key={p} data-testid="ki-punkt" className="flex gap-3 leading-relaxed">
+                <span aria-hidden="true" className="mt-2 h-2 w-2 shrink-0 rounded-full bg-amber" />
+                <span>{p}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-5 font-semibold">{data.ki.schluss}</p>
+        </section>
+
         <section id="schritte" className="mx-auto w-full max-w-2xl">
           <h2 className="text-2xl font-semibold">{data.schritte.heading}</h2>
           <ol data-testid="schritte" className="mt-4 grid gap-4 sm:grid-cols-3">
