@@ -11,3 +11,8 @@ it("renders the headline, the five stations and the six Merak points in order", 
   expect(screen.getAllByTestId("merak-punkt")).toHaveLength(6);
   expect(screen.queryByRole("link", { name: /Prozess-Check|Erstgespräch/ })).toBeNull();
 });
+
+it("renders a passed form slot inside #pdf", () => {
+  const { container } = render(<BauplanPage data={bauplanPage} form={<div data-testid="slot" />} />);
+  expect(container.querySelector("#pdf")).toContainElement(screen.getByTestId("slot"));
+});

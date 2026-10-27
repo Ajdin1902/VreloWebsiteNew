@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { BauplanPage } from "@/components/bauplan/BauplanPage";
 import { isBauplanCode } from "@/lib/bauplan";
 import { bauplanPage } from "@/lib/bauplanPage";
+import { BauplanPdfForm } from "@/components/bauplan/BauplanPdfForm";
+import { normalizeSource } from "@/lib/source";
 
 export const metadata: Metadata = {
   title: "Bauplan für Agenturen",
@@ -12,8 +14,15 @@ export const metadata: Metadata = {
 // The code is read from the env per request, so rotating it needs no rebuild.
 export const dynamic = "force-dynamic";
 
-export default async function Page({ params }: { params: Promise<{ code: string }> }) {
+export default async function Page({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ code: string }>;
+  searchParams: Promise<{ src?: string }>;
+}) {
   const { code } = await params;
   if (!isBauplanCode(code)) notFound();
-  return <BauplanPage data={bauplanPage} />;
+  const { src } = await searchParams;
+  return <BauplanPage data={bauplanPage} form={<BauplanPdfForm source={normalizeSource(src)} />} />;
 }
