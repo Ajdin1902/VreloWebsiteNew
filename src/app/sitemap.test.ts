@@ -61,4 +61,8 @@ describe("sitemap", () => {
     const urls = sitemap().map((e) => e.url);
     expect(urls).toContain(`${siteUrl}/claude-gehirn`);
   });
+
+  it("never lists the unlisted /bauplan page", () => {
+    expect(sitemap().map((e) => e.url).some((u) => u.includes("/bauplan"))).toBe(false);
+  });
 });
