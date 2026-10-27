@@ -2,7 +2,10 @@ import { describe, it, expect, afterEach } from "vitest";
 import { bauplanCode, isBauplanCode } from "./bauplan";
 
 const orig = process.env.BAUPLAN_CODE;
-afterEach(() => { process.env.BAUPLAN_CODE = orig; });
+afterEach(() => {
+  if (orig === undefined) delete process.env.BAUPLAN_CODE;
+  else process.env.BAUPLAN_CODE = orig;
+});
 
 describe("bauplan code", () => {
   it("is undefined when unset or blank", () => {

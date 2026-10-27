@@ -9,7 +9,7 @@ it("renders the headline, the five stations and the six Merak points in order", 
   const names = screen.getAllByTestId("station-name").map((n) => n.textContent);
   expect(names).toEqual(["Angebot", "Onboarding", "Skripte", "Texte", "Projektdoku"]);
   expect(screen.getAllByTestId("merak-punkt")).toHaveLength(6);
-  expect(screen.queryByRole("link", { name: /Prozess-Check|Erstgespräch/ })).toBeNull();
+  expect(screen.queryAllByRole("link")).toEqual([]);
 });
 
 it("renders a passed form slot inside #pdf", () => {

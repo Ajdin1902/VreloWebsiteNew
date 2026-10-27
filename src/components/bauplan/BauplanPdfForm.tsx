@@ -7,10 +7,10 @@ import { bauplanPage } from "@/lib/bauplanPage";
 
 const initial: BauplanEmailState = { status: "idle" };
 
-export function BauplanPdfForm({ source }: { source?: string }) {
+export function BauplanPdfForm({ source, code }: { source?: string; code: string }) {
   const [state, formAction, pending] = useActionState(submitBauplanRequest, initial);
   const [renderedAt] = useState(() => Date.now());
-  const { label, button, hinweis, success } = bauplanPage.pdf;
+  const { label, button, pending: pendingLabel, hinweis, success } = bauplanPage.pdf;
 
   const errorMsg =
     state.status === "invalid" ? state.error : state.status === "error" ? state.message : undefined;
@@ -27,6 +27,7 @@ export function BauplanPdfForm({ source }: { source?: string }) {
     <form action={formAction} className="space-y-3" noValidate>
       <input type="hidden" name="renderedAt" value={renderedAt} />
       <input type="hidden" name="src" value={source ?? ""} />
+      <input type="hidden" name="code" value={code} />
       {/* honeypot */}
       <input type="text" name="website" tabIndex={-1} aria-hidden="true" autoComplete="off" className="absolute left-[-9999px] h-0 w-0 opacity-0" />
 
@@ -39,6 +40,7 @@ export function BauplanPdfForm({ source }: { source?: string }) {
           name="email"
           type="email"
           required
+          defaultValue={state.status === "invalid" || state.status === "error" ? state.email : undefined}
           autoComplete="email"
           aria-invalid={errorMsg != null}
           aria-describedby={`bp-email-hinweis${errorMsg ? " bp-email-err" : ""}`}
@@ -49,7 +51,7 @@ export function BauplanPdfForm({ source }: { source?: string }) {
           disabled={pending}
           className="inline-flex items-center justify-center rounded-lg bg-amber px-5 py-2.5 text-sm font-semibold text-tiefes-wasser transition-colors hover:bg-honig disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vrelo-petrol focus-visible:ring-offset-2"
         >
-          {pending ? "Wird gesendet …" : button}
+          {pending ? pendingLabel : button}
         </button>
       </div>
       <p id="bp-email-hinweis" className="text-sm">

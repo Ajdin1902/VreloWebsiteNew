@@ -23,7 +23,7 @@ describe("/bauplan copy", () => {
     expect(all.flatMap((s) => findCopyIssues(s).map((i) => `${i.kind}: ${s}`))).toEqual([]);
   });
   it("names no price, tool or client", () => {
-    expect(all.filter((s) => /€|\bEUR\b|ClickUp|HubSpot|sevDesk|Velp|Alen/i.test(s))).toEqual([]);
+    expect(all.filter((s) => /€|\bEUR\b|ClickUp|HubSpot|sevDesk|\b(Velp|Alen)\b/i.test(s))).toEqual([]);
   });
   it("asks for nothing but the PDF", () => {
     expect(all.filter((s) => /Prozess-Check|buchen|Termin vereinbaren|Termin wählen|30 Minuten|melde dich|schreib mir/i.test(s))).toEqual([]);

@@ -11,7 +11,7 @@ export const bauplanPage: {
   fundament: { heading: string; body: string };
   stationen: { heading: string; items: Station[]; tools: string };
   merak: { heading: string; punkte: string[] };
-  pdf: { heading: string; text: string; label: string; button: string; hinweis: string; success: string };
+  pdf: { heading: string; text: string; label: string; button: string; pending: string; hinweis: string; success: string };
 } = {
   kicker: "Bauplan für Agenturen",
   title: "Deine Agentur lebt von der Beziehung zu deinen Kunden. Dieser Bauplan nimmt dir das Drumherum ab.",
@@ -79,6 +79,7 @@ export const bauplanPage: {
     text: "Mit den Prinzipien für die Umsetzung in deiner Agentur und Platz für deine eigenen Phasen. Ich schicke ihn dir per Mail.",
     label: "Deine E-Mail-Adresse",
     button: "PDF zuschicken",
+    pending: "Wird gesendet …",
     hinweis: "Du bekommst nur diese eine Mail.",
     success: "Ist unterwegs. Schau auch im Spam-Ordner nach.",
   },

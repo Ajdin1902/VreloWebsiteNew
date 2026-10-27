@@ -23,7 +23,7 @@ export const datenschutz: LegalDoc = {
     },
     {
       heading: "Prozess-Check",
-      body: "Der Fragebogen unter /prozess-check läuft in deinem Browser. Wenn du dir das Ergebnis per E-Mail zuschicken lässt, verarbeite ich die von dir angegebene E-Mail-Adresse und das Ergebnis, um es dir zu senden. Eine Kopie geht an mich. Der Versand erfolgt über den Dienstleister Resend (Auftragsverarbeiter). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO. Die Daten werden gelöscht, sobald sie nicht mehr erforderlich sind.",
+      body: "Der Fragebogen unter /prozess-check läuft in deinem Browser. Wenn du dir das Ergebnis per E-Mail zuschicken lässt, verarbeite ich die von dir angegebene E-Mail-Adresse und das Ergebnis, um es dir zu senden. Eine Kopie geht an mich. Der Versand erfolgt über den Dienstleister Resend (Auftragsverarbeiter). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO. Setzt du den Haken „Du darfst dich bei mir melden“, nutze ich deine Adresse zusätzlich, um mich bei dir zu melden. Das ist freiwillig. Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Du kannst sie jederzeit widerrufen. Die Kopie an mich bewahre ich zusammen mit den übrigen eingehenden E-Mails auf (siehe „E-Mail-Kontakt“). Sonstige Daten werden gelöscht, sobald sie nicht mehr erforderlich sind.",
     },
     {
       heading: "Bauplan-PDF anfordern",

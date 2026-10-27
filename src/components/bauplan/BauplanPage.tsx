@@ -47,7 +47,7 @@ export function BauplanPage({ data, form }: { data: Data; form?: ReactNode }) {
 
         <section id="stationen">
           <h2 className="mx-auto max-w-2xl text-2xl font-semibold">{data.stationen.heading}</h2>
-          <ol className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-5">
+          <ol className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {data.stationen.items.map((s) => (
               <li key={s.name} className="rounded-2xl border border-faden bg-lesepapier p-5">
                 <h3 data-testid="station-name" className="text-lg font-semibold">

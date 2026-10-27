@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // The Bauplan action attaches the PDF from disk; ship it with the server function.
+  outputFileTracingIncludes: { "/bauplan/[code]": ["./public/bauplan/*.pdf"] },
   images: {
     // Next 16 locks the image optimizer to an allow-list of quality values.
     // 75 is the default used site-wide; 65 is the lighter setting for the

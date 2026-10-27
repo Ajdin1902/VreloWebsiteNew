@@ -1,28 +1,50 @@
 "use server";
 
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { Resend } from "resend";
 import { isContactConfigured, contactFrom, contactTo, resendKey } from "@/lib/contact";
 import { evaluateBauplanRequest, BAUPLAN_PDF_PATH } from "@/lib/bauplanEmail";
 import { normalizeSource } from "@/lib/source";
 import { siteUrl } from "@/lib/site";
+import { isBauplanCode } from "@/lib/bauplan";
 
 export type BauplanEmailState =
   | { status: "idle" }
   | { status: "ok" }
-  | { status: "error"; message: string }
-  | { status: "invalid"; error: string };
+  | { status: "error"; message: string; email?: string }
+  | { status: "invalid"; error: string; email?: string };
 
 const GENERIC_ERROR = "Da ist etwas schiefgelaufen. Schreib mir gern direkt.";
+
+// The PDF is attached as bytes, never as a URL: Resend would fetch a URL
+// asynchronously and mark the mail failed while the UI shows success.
+async function loadPdf(pdfUrl: string): Promise<Buffer | undefined> {
+  try {
+    return await readFile(join(process.cwd(), "public", BAUPLAN_PDF_PATH));
+  } catch (err) {
+    console.error("[bauplan] PDF read from disk failed, trying fetch:", err);
+  }
+  try {
+    const res = await fetch(pdfUrl);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return Buffer.from(await res.arrayBuffer());
+  } catch (err) {
+    console.error("[bauplan] PDF fetch fallback failed:", err);
+    return undefined;
+  }
+}
 
 export async function submitBauplanRequest(
   _prev: BauplanEmailState,
   formData: FormData,
 ): Promise<BauplanEmailState> {
   const get = (k: string) => String(formData.get(k) ?? "");
+  const email = get("email");
   const pdfUrl = `${siteUrl}${BAUPLAN_PDF_PATH}`;
   const decision = evaluateBauplanRequest(
     {
-      email: get("email"),
+      email,
       honeypot: get("website"),
       renderedAt: Number(get("renderedAt")) || 0,
       source: normalizeSource(get("src")),
@@ -32,12 +54,18 @@ export async function submitBauplanRequest(
   );
 
   if (decision.action === "drop") return { status: "ok" };
-  if (decision.action === "reject") return { status: "error", message: decision.message };
-  if (decision.action === "invalid") return { status: "invalid", error: decision.error };
+  if (decision.action === "reject") return { status: "error", message: decision.message, email };
+  if (decision.action === "invalid") return { status: "invalid", error: decision.error, email };
+
+  // A rotated code retires open pages: the action refuses without a valid code.
+  if (!isBauplanCode(get("code"))) return { status: "error", message: GENERIC_ERROR, email };
 
   if (!isContactConfigured()) {
-    return { status: "error", message: "Der Versand ist gerade nicht eingerichtet. Schreib mir bitte direkt." };
+    return { status: "error", message: "Der Versand ist gerade nicht eingerichtet. Schreib mir bitte direkt.", email };
   }
+
+  const pdf = await loadPdf(pdfUrl);
+  if (!pdf) return { status: "error", message: GENERIC_ERROR, email };
 
   try {
     const resend = new Resend(resendKey());
@@ -47,11 +75,15 @@ export async function submitBauplanRequest(
       subject: decision.readerEmail.subject,
       html: decision.readerEmail.html,
       text: decision.readerEmail.text,
-      attachments: [{ filename: "Vrelo-Bauplan-Agenturen.pdf", path: decision.readerEmail.pdfUrl }],
+      replyTo: contactTo()!,
+      attachments: [{ filename: "Vrelo-Bauplan-Agenturen.pdf", content: pdf }],
     });
-    if (reader.error) return { status: "error", message: GENERIC_ERROR };
+    if (reader.error) {
+      console.error("[bauplan] reader mail failed:", reader.error);
+      return { status: "error", message: GENERIC_ERROR, email };
+    }
     try {
-      await resend.emails.send({
+      const internal = await resend.emails.send({
         from: contactFrom()!,
         to: contactTo()!,
         replyTo: decision.internalEmail.replyTo,
@@ -59,11 +91,14 @@ export async function submitBauplanRequest(
         html: decision.internalEmail.html,
         text: decision.internalEmail.text,
       });
-    } catch {
+      if (internal.error) console.error("[bauplan] internal mail failed:", internal.error);
+    } catch (err) {
       // Internal-only failure: the reader already has the PDF.
+      console.error("[bauplan] internal mail threw:", err);
     }
     return { status: "ok" };
-  } catch {
-    return { status: "error", message: GENERIC_ERROR };
+  } catch (err) {
+    console.error("[bauplan] reader mail threw:", err);
+    return { status: "error", message: GENERIC_ERROR, email };
   }
 }
