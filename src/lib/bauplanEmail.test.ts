@@ -1,5 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { evaluateBauplanRequest } from "./bauplanEmail";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+import { BAUPLAN_PDF_PATH, evaluateBauplanRequest } from "./bauplanEmail";
 import { findCopyIssues } from "./ratgeberCopy";
 const base = { email: "a@b.de", honeypot: "", renderedAt: 0 };
 const PDF = "https://vrelo-ki.de/bauplan/x.pdf";
@@ -24,5 +26,11 @@ describe("evaluateBauplanRequest", () => {
     if (d.action !== "send") throw new Error(d.action);
     expect(findCopyIssues(d.readerEmail.text)).toEqual([]);
     expect(d.readerEmail.text).not.toMatch(/Erstgespräch|Prozess-Check|buchen/i);
+  });
+});
+
+describe("BAUPLAN_PDF_PATH", () => {
+  it("points at the rendered PDF under public/", () => {
+    expect(existsSync(join(process.cwd(), "public", BAUPLAN_PDF_PATH))).toBe(true);
   });
 });

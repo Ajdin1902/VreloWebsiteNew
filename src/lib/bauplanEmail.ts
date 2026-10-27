@@ -4,7 +4,8 @@
 import { EMAIL_RE, isHoneypotTripped, isTooFast } from "./contact";
 import { sourceLabel } from "./source";
 
-export const BAUPLAN_PDF_PATH = "/bauplan/agentur-bauplan.pdf"; // final hashed name set in Task 7
+// Rendered by `npm run bauplan:pdf`; every re-render gets a new hash, so update this line with it.
+export const BAUPLAN_PDF_PATH = "/bauplan/agentur-bauplan-e0080423.pdf";
 
 export type BauplanFields = { email: string; honeypot: string; renderedAt: number; source?: string };
 
