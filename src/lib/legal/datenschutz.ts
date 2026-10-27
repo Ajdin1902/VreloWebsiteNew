@@ -22,6 +22,14 @@ export const datenschutz: LegalDoc = {
       body: "Wenn du das Kontaktformular nutzt, verarbeite ich die von dir angegebenen Daten (Name, E-Mail-Adresse, Nachricht und optional dein Betrieb), um deine Anfrage zu beantworten. Der Versand der E-Mail erfolgt über den Dienstleister Resend (Auftragsverarbeiter). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b und lit. f DSGVO. Die Daten werden gelöscht, sobald sie für die Bearbeitung nicht mehr erforderlich sind.",
     },
     {
+      heading: "Prozess-Check",
+      body: "Der Fragebogen unter /prozess-check läuft in deinem Browser. Wenn du dir das Ergebnis per E-Mail zuschicken lässt, verarbeite ich die von dir angegebene E-Mail-Adresse und das Ergebnis, um es dir zu senden. Eine Kopie geht an mich. Der Versand erfolgt über den Dienstleister Resend (Auftragsverarbeiter). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO. Die Daten werden gelöscht, sobald sie nicht mehr erforderlich sind.",
+    },
+    {
+      heading: "Bauplan-PDF anfordern",
+      body: "Auf der nicht öffentlich verlinkten Seite zum Bauplan kannst du das PDF anfordern. Dafür verwende ich deine E-Mail-Adresse einmalig, um dir das PDF zu schicken und mich selbst zu benachrichtigen. Einen Newsletter oder ein Profiling gibt es dazu nicht. Der Versand erfolgt über den Dienstleister Resend (Auftragsverarbeiter). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO. Die Adresse bewahre ich zusammen mit den übrigen eingehenden E-Mails auf (siehe „E-Mail-Kontakt“).",
+    },
+    {
       heading: "E-Mail-Kontakt",
       body: "Wenn du mir eine E-Mail schreibst (auch über das Kontaktformular), werden eingehende E-Mails mit KI-Unterstützung sortiert und zusammengefasst; dazu werden sie an die Anthropic PBC (USA) übermittelt. Kontaktdaten und wichtige Angaben aus der E-Mail speichere ich in Notion (Notion Labs, Inc., USA). Beide sind Auftragsverarbeiter; Grundlage der Übermittlung in die USA sind die EU-Standardvertragsklauseln (SCC). Jede Antwort prüfe und versende ich selbst. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b und lit. f DSGVO.",
     },
