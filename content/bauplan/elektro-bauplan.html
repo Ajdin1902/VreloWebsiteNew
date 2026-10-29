@@ -1,0 +1,145 @@
+<!doctype html>
+<!--
+  Vrelo Elektro-Bauplan: free PDF lead magnet for owner-led Elektrobetriebe.
+  Spec: Website/docs/superpowers/specs/2026-10-29-elektro-bauplan-pdf-design.md
+  (section 4 = page content, section 6 = facts the copy must stay inside).
+  Page 1 follows the approved mockup docs/design/elektro-bauplan/page1-mockup.html.
+
+  Render:  npm run bauplan:elektro   (from Website/; review copy in .preview/, gate = exactly 5 pages;
+           add -- --publish after Ajdin's OK to copy it to Knowledge/Offers/Elektro-Bauplan-Vrelo.pdf)
+
+  RULES (do not break):
+    - No price, no running costs, no durations, no SEO agent.
+    - No client names and no Power-Connect specifics. Proof only by shape (Hausmeisterservice).
+    - Software and wholesalers are named as the reader's own tools. Never claim an interface
+      for Rexel or FEGA and Schmitt, never "all wholesalers". AI location: "innerhalb der EU".
+    - Dash-free German (no en-dash, no em-dash), no comma before "und", generic masculine, du.
+    - Pure ASCII with entities. The guard test (src/lib/elektroBauplanTemplate.test.ts) decodes
+      the set in src/lib/bauplanTemplateText.ts: add a new entity there before using it here.
+    - Full page = shorten copy, never shrink type. Every page keeps white space at its foot.
+-->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Vrelo &#183; Bauplan f&uuml;r Elektrobetriebe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>{{{BRAND_CSS}}}</style>
+<style>
+  @page { size: A4; margin: 16mm 17mm; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+
+  .page { break-before: page; }
+  .page.first { break-before: auto; }
+  .brand-word { font-weight: 500; }
+  p { margin: 0 0 8px 0; }
+  a { color: inherit; }
+
+  /* page 1: landing-page style, sizes scaled 1:1 from the approved mockup */
+  .p1 { display: flex; flex-direction: column; gap: 15pt; height: 264mm; }
+  .p1-top { display: flex; justify-content: space-between; align-items: center; font-size: 10pt; color: var(--stumm); }
+  .p1-top .logo { font-size: 18pt; gap: 7px; }
+  .p1-top .logo svg { height: 24px; }
+  .p1 h1 { font-size: 27pt; line-height: 1.12; color: var(--tiefes-wasser); margin: 2pt 0 0 0; font-weight: 700; }
+  .p1 .sub { font-size: 13pt; line-height: 1.45; color: var(--vrelo-petrol); margin: 0; }
+  .vergleich { display: grid; grid-template-columns: 1fr 1fr; gap: 9pt; }
+  .vergleich > div { border-radius: 5px; padding: 10pt 12pt; font-size: 11pt; }
+  .vergleich .heute { background: var(--papier); }
+  .vergleich .mit { background: var(--gletscher); }
+  .vergleich h4 { margin: 0 0 5pt 0; font-size: 12pt; color: var(--tiefes-wasser); }
+  .vergleich ul { margin: 0; padding-left: 15pt; }
+  .vergleich li { margin-bottom: 3pt; }
+  .stat { display: flex; gap: 12pt; align-items: center; }
+  .stat .zahl { font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 34pt; color: var(--ember); line-height: 1; white-space: nowrap; }
+  .stat .satz { font-size: 11.5pt; }
+  .quelle { display: block; font-size: 9pt; color: var(--stumm); margin-top: 2pt; }
+  .lbl { font-size: 9.5pt; letter-spacing: 0.08em; text-transform: uppercase; color: var(--stumm); font-weight: 600; margin-bottom: -6pt; }
+  ol.stufen { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5pt; }
+  ol.stufen li { display: flex; gap: 10pt; align-items: baseline; font-size: 11pt; }
+  ol.stufen .nr { font-family: 'Fraunces', Georgia, serif; font-style: italic; color: var(--amber); font-size: 17pt; min-width: 14pt; }
+  .regeln { background: var(--papier); border-left: 3px solid var(--amber); border-radius: 4px; padding: 11pt 13pt; font-size: 11pt; }
+  .p1-foot { margin-top: auto; border-top: 1px solid var(--faden); padding-top: 7pt; font-size: 10pt; color: var(--stumm); }
+
+  /* pages 2 to 5 */
+  .runhead { display: flex; justify-content: space-between; align-items: baseline;
+    border-bottom: 1px solid var(--faden); padding-bottom: 5px; margin-bottom: 18px;
+    font-size: 7.5pt; letter-spacing: 0.08em; text-transform: uppercase; color: var(--stumm); }
+  .runhead .brand-word { font-size: 11pt; letter-spacing: 0; text-transform: none; color: var(--tiefes-wasser); }
+  h2.part { font-size: 17pt; color: var(--tiefes-wasser); margin: 0 0 10px 0; line-height: 1.25; break-after: avoid; }
+</style>
+</head>
+<body>
+
+<!-- Page 1: overview -->
+<section class="page first">
+  <div class="p1">
+    <div class="p1-top">
+      <div class="logo">{{{LOGO_SVG}}}<span class="logo-word">Vrelo</span></div>
+      <span>Bauplan f&uuml;r Elektrobetriebe</span>
+    </div>
+
+    <h1>Mehr B&uuml;ro als Baustelle?</h1>
+    <p class="sub">Der Weg zu einem KI-B&uuml;roassistenten, der Angebote, Rechnungen und Bestellungen f&uuml;r dich vorbereitet, deine Regeln lernt und DSGVO-konform in deinen eigenen Konten l&auml;uft.</p>
+
+    <div class="vergleich">
+      <div class="heute">
+        <h4>Heute</h4>
+        <ul>
+          <li>Angebote abends nach der Baustelle</li>
+          <li>Preise einzeln im Shop nachschlagen</li>
+          <li>Abschl&auml;ge und Rechnungen von Hand</li>
+          <li>Das Wissen steckt nur in deinem Kopf</li>
+        </ul>
+      </div>
+      <div class="mit">
+        <h4>Mit dem B&uuml;roassistenten</h4>
+        <ul>
+          <li>Auf der Baustelle einsprechen, Entwurf liegt bereit</li>
+          <li>Deine Einkaufspreise kommen automatisch</li>
+          <li>Rechnung aus dem Angebot mit einem &#8222;passt&#8220;</li>
+          <li>Deine Regeln stehen lesbar in deiner Cloud</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stat">
+      <span class="zahl">61&#160;%</span>
+      <span class="satz">der Handwerksbetriebe sagen: Durch B&uuml;rokratie bleibt weniger Zeit f&uuml;r die Auftr&auml;ge.
+        <span class="quelle">Handwerkskammer Dortmund, Sonderumfrage 2023, rund 700 Betriebe &#183; <a href="https://www.hwk-do.de/wp-content/uploads/2023/10/HWK-Pressedienst-57-Konjunktur-Sonderumfrage_Buerokratiebelastungen-im-Handwerk.pdf">hwk-do.de</a></span>
+      </span>
+    </div>
+
+    <div class="lbl">Der Weg in f&uuml;nf Stufen</div>
+    <ol class="stufen">
+      <li><span class="nr">1</span><span><b>Fundament:</b> deine Konten, Server in Deutschland, KI in der EU</span></li>
+      <li><span class="nr">2</span><span><b>Betriebsgehirn:</b> Zeiten, Aufschl&auml;ge, Regeln, lernt mit deinem &#8222;Ja&#8220;</span></li>
+      <li><span class="nr">3</span><span><b>Angebote und Rechnungen:</b> sevDesk, Lexware, Label und Co.</span></li>
+      <li><span class="nr">4</span><span><b>Gro&szlig;handel:</b> ELDIS, Sonepar, Rexel und Co.: Preise, Suche, Bestellung</span></li>
+      <li><span class="nr">5</span><span><b>Ausbau:</b> Nachkalkulation, Telefon, Anfragen, Termine</span></li>
+    </ol>
+
+    <div class="regeln"><b>Drei Regeln, die immer gelten:</b> Nichts Verbindliches ohne deine Freigabe. Preise rechnet ein fester Rechenschritt, nicht die KI. Alles l&auml;uft auf deinen Namen.</div>
+
+    <div class="p1-foot">Ab Seite 2: jede Stufe im Detail &#183; Ajdin Dzafic, <span class="brand-word">Vrelo</span>, Regensburg</div>
+  </div>
+</section>
+
+<!-- Page 2: So arbeitet der Assistent + Stufe 1 -->
+<section class="page">
+</section>
+
+<!-- Page 3: Stufe 2 + Stufe 3 -->
+<section class="page">
+</section>
+
+<!-- Page 4: Stufe 4 -->
+<section class="page">
+</section>
+
+<!-- Page 5: Stufe 5 + Schluss -->
+<section class="page">
+</section>
+
+</body>
+</html>
