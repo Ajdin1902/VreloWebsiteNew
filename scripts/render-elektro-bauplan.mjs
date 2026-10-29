@@ -5,10 +5,12 @@
 //   gate     : ../Clients/_kit/fahrplan/check-pages.mjs, exactly 6 pages (spec section 3)
 //   output   : .preview/elektro-bauplan.pdf (git-ignored review copy)
 //   --publish[=<path>]: no new render. Gates the reviewed .preview PDF and copies exactly that file
-//              to ../Knowledge/Offers/Elektro-Bauplan-Vrelo.pdf (or <path>), so what Ajdin approved is what ships.
-// No file under public/ until the landing page exists (spec section 7); then a hashed copy like the Agentur-Bauplan.
+//              to ../Knowledge/Offers/Elektro-Bauplan-Vrelo.pdf (or <path>), so what Ajdin approved is what ships,
+//              and to public/bauplan/elektro-bauplan-<first 8 hex of sha256>.pdf for the landing page mail.
+//              The hashed name is load-bearing: update ELEKTRO_BAUPLAN_PDF_PATH in src/lib/bauplanEmail.ts with it.
 import { spawnSync } from "node:child_process";
-import { copyFileSync, existsSync, mkdirSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -54,4 +56,21 @@ if (check.status !== 0) process.exit(check.status || 1);
 if (publishArg) {
   copyFileSync(out, shareCopy);
   console.log(`Published: ${shareCopy}`);
+
+  const publicDir = resolve(root, "public/bauplan");
+  const hash = createHash("sha256").update(readFileSync(out)).digest("hex").slice(0, 8);
+  const name = `elektro-bauplan-${hash}.pdf`;
+  mkdirSync(publicDir, { recursive: true });
+  copyFileSync(out, join(publicDir, name));
+  // Old Elektro PDFs go only after the new one is in place; the Agentur file is never touched.
+  for (const f of readdirSync(publicDir)) {
+    if (!/^elektro-bauplan-.*\.pdf$/.test(f) || f === name) continue;
+    try {
+      rmSync(join(publicDir, f));
+    } catch (err) {
+      console.warn(`Could not delete ${f} (${err.code}). Close it and delete it by hand.`);
+    }
+  }
+  console.log(`public/bauplan/${name}`);
+  console.log(`ELEKTRO_BAUPLAN_PDF_PATH = "/bauplan/${name}"`);
 }
