@@ -13,6 +13,7 @@
     "karte:assets": "node scripts/build-karte-assets.mjs",
     "flyer:assets": "node scripts/build-flyer-assets.mjs",
     "bauplan:pdf": "node scripts/build-bauplan-pdf.mjs",
+    "bauplan:elektro": "node scripts/render-elektro-bauplan.mjs",
     "newsletter": "node --env-file-if-exists=.env.local scripts/send-newsletter.mjs"
   },
   "dependencies": {
