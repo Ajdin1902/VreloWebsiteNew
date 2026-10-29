@@ -40,31 +40,39 @@
   a { color: inherit; }
 
   /* page 1: landing-page style, sizes scaled 1:1 from the approved mockup */
-  .p1 { display: flex; flex-direction: column; gap: 15pt; height: 264mm; }
+  .p1 { display: flex; flex-direction: column; gap: 10pt; min-height: 264mm; }
   .p1-top { display: flex; justify-content: space-between; align-items: center; font-size: 10pt; color: var(--stumm); }
   .p1-top .logo { font-size: 18pt; gap: 7px; }
   .p1-top .logo svg { height: 24px; }
   .p1 h1 { font-size: 27pt; line-height: 1.12; color: var(--tiefes-wasser); margin: 2pt 0 0 0; font-weight: 700; }
   .p1 .sub { font-size: 13pt; line-height: 1.45; color: var(--vrelo-petrol); margin: 0; }
   .vergleich { display: grid; grid-template-columns: 1fr 1fr; gap: 9pt; }
-  .vergleich > div { border-radius: 5px; padding: 10pt 12pt; font-size: 11pt; }
+  .vergleich > div { border-radius: 5px; padding: 8pt 12pt; font-size: 11pt; }
   .vergleich .heute { background: var(--papier); }
   .vergleich .mit { background: var(--gletscher); }
   .vergleich h4 { margin: 0 0 5pt 0; font-size: 12pt; color: var(--tiefes-wasser); }
   .vergleich ul { margin: 0; padding-left: 15pt; }
-  .vergleich li { margin-bottom: 3pt; }
+  .vergleich li { margin-bottom: 2pt; }
   .schmerz { display: grid; grid-template-columns: 1.3fr 1fr; gap: 16pt; background: var(--tiefes-wasser); color: #FFFFFF;
-    border-radius: 8px; padding: 16pt 18pt; }
+    border-radius: 8px; padding: 13pt 18pt; }
   .schmerz .kicker { font-size: 8.5pt; letter-spacing: 0.1em; text-transform: uppercase; color: var(--honig); font-weight: 600; margin: 0 0 7pt 0; }
-  .schmerz .zeile { font-size: 15pt; font-weight: 600; line-height: 1.3; margin: 0 0 4pt 0; }
+  .schmerz .zeile { font-size: 15pt; font-weight: 600; line-height: 1.3; margin: 0 0 2pt 0; }
   .schmerz .rechts { border-left: 1px solid var(--vrelo-petrol); padding-left: 16pt; display: flex; flex-direction: column; justify-content: center; }
   .schmerz .zahl { font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 42pt; color: var(--honig); line-height: 1; }
   .schmerz .satz { font-size: 10.5pt; color: var(--gletscher); margin-top: 5pt; }
   .schmerz .quelle { display: block; font-size: 8.5pt; color: var(--stein); margin-top: 5pt; }
+  .loesung { background: var(--gletscher); border-radius: 8px; padding: 11pt 16pt 12pt; }
+  .loesung .kicker { font-size: 8.5pt; letter-spacing: 0.1em; text-transform: uppercase; color: var(--vrelo-petrol); font-weight: 600; margin: 0 0 5pt 0; }
+  .loesung .sub { margin: 0 0 8pt 0; color: var(--tiefes-wasser); }
+  .mini { display: flex; align-items: stretch; gap: 5pt; }
+  .mini > div { flex: 1; background: #FFFFFF; border-radius: 5px; padding: 7pt 8pt; font-size: 9.5pt; line-height: 1.35; }
+  .mini > div b { display: block; color: var(--tiefes-wasser); font-size: 10pt; margin-bottom: 2pt; }
+  .mini > div.frei { background: var(--sonnenlicht); }
+  .mini .pfeil { flex: none; align-self: center; color: var(--vrelo-petrol); font-size: 12pt; }
   .lbl { font-size: 9.5pt; letter-spacing: 0.08em; text-transform: uppercase; color: var(--stumm); font-weight: 600; margin-bottom: -6pt; }
-  ol.stufen { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5pt; }
+  ol.stufen { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2pt; }
   ol.stufen li { display: flex; gap: 10pt; align-items: baseline; font-size: 11pt; }
-  ol.stufen .nr { font-family: 'Fraunces', Georgia, serif; font-style: italic; color: var(--amber); font-size: 17pt; min-width: 14pt; }
+  ol.stufen .nr { font-family: 'Fraunces', Georgia, serif; font-style: italic; color: var(--amber); font-size: 17pt; min-width: 14pt; line-height: 1; }
   .regeln { background: var(--papier); border-left: 3px solid var(--amber); border-radius: 4px; padding: 11pt 13pt; font-size: 11pt; }
   .p1-foot { margin-top: auto; border-top: 1px solid var(--faden); padding-top: 7pt; font-size: 10pt; color: var(--stumm); }
 
@@ -137,7 +145,7 @@
       <div>
         <div class="kicker">Kennst du das?</div>
         <p class="zeile">Tags&uuml;ber auf der Baustelle.</p>
-        <p class="zeile">Abends Angebote, Preise, Rechnungen.</p>
+        <p class="zeile">Abends Angebote und Rechnungen.</p>
         <p class="zeile">Am Wochenende der Rest.</p>
       </div>
       <div class="rechts">
@@ -147,7 +155,19 @@
       </div>
     </div>
 
-    <p class="sub">Der Weg zu einem KI-B&uuml;roassistenten, der Angebote, Rechnungen und Bestellungen f&uuml;r dich vorbereitet. DSGVO-konform, in deinen eigenen Konten.</p>
+    <div class="loesung">
+      <div class="kicker">Die L&ouml;sung: Dein KI-B&uuml;roassistent</div>
+      <p class="sub">Er bereitet Angebote, Rechnungen und Bestellungen vor. DSGVO-konform.</p>
+      <div class="mini">
+        <div><b>Du sprichst ein</b>Sprache, Foto, Mail</div>
+        <span class="pfeil">&#8594;</span>
+        <div><b>Er versteht</b>und fragt nach</div>
+        <span class="pfeil">&#8594;</span>
+        <div><b>Er bereitet vor</b>Angebot, Rechnung</div>
+        <span class="pfeil">&#8594;</span>
+        <div class="frei"><b>Du gibst frei</b>dann geht es raus</div>
+      </div>
+    </div>
 
     <div class="vergleich">
       <div class="heute">
@@ -190,41 +210,41 @@
   <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 2 von 6</span></div>
   <h2 class="part">So arbeitet der Assistent</h2>
   <div class="flow">
-    <div><b>Eingang</b>Sprache, Foto, PDF, Mail</div>
+    <div><b>Eingang</b>Sprache, Text, Foto, PDF, E-Mail</div>
     <span class="pfeil">&#8594;</span>
-    <div><b>KI-Assistent</b>versteht und fragt nach</div>
+    <div><b>KI-Assistent</b>versteht die Aufgabe, w&auml;hlt Werkzeuge, fragt nach</div>
     <span class="pfeil">&#8594;</span>
-    <div><b>Werkzeuge</b>Software, Gro&szlig;handel, Gehirn</div>
+    <div><b>Werkzeuge</b>Rechnungssoftware, Gro&szlig;handel, Betriebsgehirn, Postfach</div>
     <span class="pfeil">&#8594;</span>
     <div class="frei"><b>Deine Freigabe</b>erst dann geht etwas raus</div>
   </div>
 
   <div class="szene">
-    <div class="kicker">Beispiel</div>
-    <p>Du sprichst ein: <span class="gesagt">&#8222;Angebot f&uuml;r Familie Berger, Unterverteilung tauschen, sechs Stunden zu zweit.&#8220;</span></p>
-    <p>Der Assistent holt Kunde, Artikel und Preise und legt den Entwurf an. Du antwortest <span class="gesagt">&#8222;passt&#8220;</span>.</p>
+    <div class="kicker">Ein Beispiel von der Baustelle</div>
+    <p>Du stehst im Keller und sprichst ein: <span class="gesagt">&#8222;Angebot f&uuml;r Familie Berger, Unterverteilung tauschen, zw&ouml;lf Meter NYM-J 5x10, sechs Stunden zu zweit.&#8220;</span></p>
+    <p>Der Assistent findet Kunde und Artikel, holt deine Einkaufspreise, rechnet mit deinen Regeln und legt den Entwurf in deiner Rechnungssoftware an. Du antwortest <span class="gesagt">&#8222;passt&#8220;</span> oder <span class="gesagt">&#8222;Lohn auf acht Stunden&#8220;</span>.</p>
   </div>
 
   <ul class="punkte">
-    <li><b>Ein Assistent, viele Werkzeuge.</b> Neue Aufgaben brauchen keinen neuen Ablauf.</li>
-    <li><b>Das ganze Team</b> schreibt ihm. Freigeben darf nur, wen du festlegst.</li>
+    <li><b>Ein Assistent, viele Werkzeuge.</b> Er kombiniert seine Werkzeuge selbst. &#8222;Fass mir die offenen Angebote vom Oktober zusammen&#8220; braucht keinen neuen Ablauf.</li>
+    <li><b>Das ganze Team.</b> Jeder in deinem Betrieb kann ihm schreiben. Freigeben d&uuml;rfen nur die Leute, die du daf&uuml;r festlegst.</li>
   </ul>
 
   <h2 class="part">Stufe 1: Fundament</h2>
-  <p class="intro">Hier legst du fest, wem alles geh&ouml;rt und wo deine Daten liegen.</p>
+  <p class="intro">Im Fundament legst du fest, wem alles geh&ouml;rt und wo deine Daten liegen.</p>
   <ul class="punkte">
-    <li><b>Deine Konten.</b> Server, KI, n8n und Cloud laufen auf deinen Namen.</li>
-    <li><b>DSGVO-konform.</b> Server in Deutschland, KI &uuml;ber Amazon Bedrock oder Microsoft Azure, Verarbeitung innerhalb der EU. Mit jedem Dienstleister schlie&szlig;t du einen Auftragsverarbeitungsvertrag.</li>
-    <li><b>Dein Kanal.</b> Microsoft Teams oder WhatsApp Business. Telegram bietet keinen Auftragsverarbeitungsvertrag.</li>
-    <li><b>Deine Freigabe.</b> Verbindliches zeigt er zuerst mit &#8222;Freigeben&#8220; und &#8222;&Auml;ndern&#8220;.</li>
-    <li><b>Ausfallsicher.</b> Alarm bei Fehlern, n&auml;chtliche Sicherung an einem zweiten Ort.</li>
+    <li><b>Deine Konten.</b> Server, KI-Konto, die Automatisierungsplattform n8n, der Eingangskanal und die Cloud laufen auf deinen Namen. Die Zugangsdaten liegen bei dir.</li>
+    <li><b>DSGVO-konform.</b> Der Server steht in Deutschland. Das KI-Modell l&auml;uft in deinem eigenen Konto bei Amazon Bedrock oder Microsoft Azure, die Verarbeitung bleibt innerhalb der EU. Mit jedem Dienstleister, der dein System baut oder betreut, schlie&szlig;t du einen Auftragsverarbeitungsvertrag.</li>
+    <li><b>Dein Kanal.</b> Microsoft Teams in deinem eigenen Microsoft-Konto oder WhatsApp &uuml;ber die offizielle Business-Schnittstelle. Telegram geht auch, bietet aber keinen Auftragsverarbeitungsvertrag.</li>
+    <li><b>Deine Freigabe.</b> Versand, Rechnungen und &Auml;nderungen am Ged&auml;chtnis zeigt der Assistent zuerst mit den Kn&ouml;pfen &#8222;Freigeben&#8220; und &#8222;&Auml;ndern&#8220;. Jeder Schritt landet im Protokoll.</li>
+    <li><b>Ausfallsicher.</b> Ein Fehler l&ouml;st einen Alarm aus. Datenbank und Einstellungen sichert der Server jede Nacht an einem zweiten Ort.</li>
   </ul>
   <div class="vorgehen">
     <div class="kopf">So gehst du vor</div>
     <ol>
-      <li>Leg ein KI-Konto bei Amazon Bedrock oder Microsoft Azure an.</li>
-      <li>W&auml;hl deinen Kanal: Teams oder WhatsApp Business.</li>
-      <li>Leg fest, wer freigeben darf.</li>
+      <li>Leg ein eigenes KI-Konto bei Amazon Bedrock oder Microsoft Azure an, mit Verarbeitung innerhalb der EU.</li>
+      <li>Entscheide dich f&uuml;r deinen Kanal: Microsoft Teams oder WhatsApp Business.</li>
+      <li>Leg fest, wer in deinem Team freigeben darf.</li>
     </ol>
   </div>
 </section>
@@ -233,49 +253,52 @@
 <section class="page">
   <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 3 von 6</span></div>
   <h2 class="part">Stufe 2: Betriebsgehirn</h2>
-  <p class="intro">Was heute nur in deinem Kopf steckt, steht danach in lesbaren Dokumenten.</p>
+  <p class="intro">Was heute nur in deinem Kopf steckt, schreibt der Assistent mit dir auf. So rechnet er wie du und jemand anderes kann &uuml;bernehmen, wenn du nicht da bist.</p>
   <ul class="punkte">
-    <li><b>Deine Cloud.</b> Ein Ordner in OneDrive oder Google Drive, eine Datei je Thema.</li>
-    <li><b>Deine Regeln.</b> Arbeitszeiten, Aufschl&auml;ge, Materialien, Angebotstexte.</li>
+    <li><b>Lesbare Dokumente in deiner Cloud.</b> Ein Ordner in OneDrive oder Google Drive. Nutzt du keins von beiden, nimm einen Cloud-Speicher in Deutschland. Du siehst dein Wissen am PC und auf dem Handy.</li>
+    <li><b>Eine Datei je Thema.</b> Kalkulationsregeln, Arbeitszeiten je Leistung, Materialaufschl&auml;ge, bevorzugte Materialien, Angebotstexte.</li>
   </ul>
 
   <div class="szene">
-    <div class="kicker">So lernt er</div>
-    <p>Du korrigierst eine Arbeitszeit. Er fragt: <span class="gesagt">&#8222;Soll ich mir f&uuml;r Z&auml;hlerschr&auml;nke 6 statt 4 Stunden merken?&#8220;</span></p>
-    <p>Erst nach deinem &#8222;Ja&#8220; gilt die Regel.</p>
+    <div class="kicker">So lernt er dazu</div>
+    <p>Du korrigierst im Angebot die Zeit f&uuml;r eine Z&auml;hlerschrankerneuerung. Der Assistent fragt: <span class="gesagt">&#8222;Soll ich mir f&uuml;r Z&auml;hlerschrankerneuerungen 6 statt 4 Stunden merken?&#8220;</span></p>
+    <p>Erst nach deinem &#8222;Ja&#8220; schreibt er die Regel auf und nutzt sie bei allen &auml;hnlichen Angeboten.</p>
   </div>
 
   <ul class="punkte">
-    <li><b>Alles bleibt &auml;nderbar.</b> Jede &Auml;nderung steht im Protokoll.</li>
-    <li><b>Die KI rechnet keine Preise.</b> Das macht ein fester Rechenschritt mit deinen Regeln.</li>
+    <li><b>Alles bleibt in deiner Hand.</b> Jede Regel ist einsehbar, &auml;nderbar und l&ouml;schbar, direkt im Dokument oder per Nachricht. Jede &Auml;nderung steht im &Auml;nderungsprotokoll, &auml;ltere St&auml;nde holst du aus der Versionsgeschichte deiner Cloud zur&uuml;ck.</li>
+    <li><b>Die KI rechnet keine Preise.</b> Sie w&auml;hlt Positionen und Mengen. Ein fester Rechenschritt rechnet mit deinen Regeln und deinen Einkaufspreisen.</li>
+    <li><b>Keine doppelten Daten.</b> Kunden, Artikel und Preise bleiben in deiner Rechnungssoftware. Im Gehirn steht, wie du arbeitest.</li>
   </ul>
   <div class="vorgehen">
     <div class="kopf">So gehst du vor</div>
     <ol>
-      <li>Schreib deine f&uuml;nf h&auml;ufigsten Leistungen mit Arbeitszeit auf.</li>
-      <li>Notier deine Aufschl&auml;ge so, wie du sie heute rechnest.</li>
-      <li>Leg einen Ordner in deiner Cloud an.</li>
+      <li>Schreib die f&uuml;nf Leistungen auf, die du am h&auml;ufigsten anbietest, jede mit deiner Arbeitszeit.</li>
+      <li>Notier deine Materialaufschl&auml;ge und Kalkulationsregeln so, wie du sie heute im Kopf rechnest.</li>
+      <li>Leg daf&uuml;r einen Ordner in deiner Cloud an, eine Datei je Thema.</li>
     </ol>
   </div>
+
 </section>
 
 <!-- Page 4: Stufe 3 -->
 <section class="page">
   <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 4 von 6</span></div>
   <h2 class="part">Stufe 3: Angebote und Rechnungen</h2>
-  <p class="intro">Der Assistent arbeitet in deiner Rechnungssoftware, im Beispiel sevDesk. Lexware, Label, TopKontor und andere lassen sich genauso anbinden, wenn sie eine Schnittstelle haben.</p>
+  <p class="intro">Der Assistent arbeitet in der Rechnungssoftware, die du schon hast. Im Beispiel ist das sevDesk. Lexware, Label, TopKontor und andere Handwerkersoftware lassen sich genauso anbinden, wenn sie eine Schnittstelle haben.</p>
   <ul class="punkte">
-    <li><b>Angebote</b> als Entwurf, aus dem angenommenen Angebot die Rechnung.</li>
-    <li><b>Abschlags-, Teil- und Schlussrechnungen</b> &uuml;ber deine Software.</li>
-    <li><b>&#167;&#160;35a EStG:</b> Material und Arbeitskosten getrennt, damit dein Privatkunde den Arbeitsanteil absetzen kann.</li>
-    <li><b>Versand</b> erst nach deiner Freigabe.</li>
+    <li><b>Kunden und Artikel</b> findet er in deiner Software. Bei mehreren Treffern oder einem neuen Kunden fragt er nach.</li>
+    <li><b>Angebote</b> legt er als Entwurf an. Ein angenommenes Angebot wandelt er nach deiner Freigabe in einen Rechnungsentwurf um.</li>
+    <li><b>Abschlags-, Teil- und Schlussrechnungen</b> erstellt er mit den Funktionen deiner Software.</li>
+    <li><b>&#167;&#160;35a EStG:</b> Material und Arbeitskosten stehen in getrennten Abschnitten. So kann dein Privatkunde den Arbeitsanteil von der Steuer absetzen.</li>
+    <li><b>Versenden</b> darf er erst nach deiner Freigabe.</li>
   </ul>
   <div class="vorgehen">
     <div class="kopf">So gehst du vor</div>
     <ol>
-      <li>Pr&uuml;f, ob deine Software eine Schnittstelle hat und welcher Tarif sie freischaltet.</li>
-      <li>R&auml;um doppelte Kunden und Artikel auf.</li>
-      <li>Bind zuerst die Angebote an, dann die Rechnungen.</li>
+      <li>Pr&uuml;f, ob deine Rechnungssoftware eine Schnittstelle hat und welcher Tarif sie freischaltet.</li>
+      <li>R&auml;um deine Stammdaten auf: doppelte Kunden zusammenf&uuml;hren, Artikel eindeutig benennen.</li>
+      <li>Bind zuerst die Angebote an, die Rechnungen danach.</li>
     </ol>
   </div>
 </section>
@@ -284,28 +307,30 @@
 <section class="page">
   <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 5 von 6</span></div>
   <h2 class="part">Stufe 4: Gro&szlig;handel</h2>
-  <p class="intro">Preise, Suche, Bestellung: Das &uuml;bernimmt der Assistent bei deinem Gro&szlig;h&auml;ndler, im Beispiel ELDIS. Sonepar, Rexel, Obeta, FEGA &amp; Schmitt, Alexander B&uuml;rkle und andere lassen sich genauso anbinden, wenn sie die passende Schnittstelle anbieten.</p>
+  <p class="intro">Preise nachschlagen, Artikel suchen, Material bestellen: Das &uuml;bernimmt der Assistent bei deinem Gro&szlig;h&auml;ndler. Im Beispiel ist das ELDIS aus der Obeta-Gruppe. Arbeitest du mit Sonepar, Rexel, Obeta, FEGA &amp; Schmitt, Alexander B&uuml;rkle oder einem anderen Gro&szlig;h&auml;ndler, l&auml;sst er sich auf demselben Weg anbinden, wenn er die passende Schnittstelle anbietet.</p>
 
   <div class="normen">
     <div class="kopf">Die Branchenschnittstellen, die viele Elektrogro&szlig;h&auml;ndler anbieten</div>
-    <b>Datanorm</b><span>Artikelkatalog als Datei</span>
-    <b>IDS Connect</b><span>Warenkorb und Bestellung</span>
-    <b>OpenMasterData</b><span>Artikeldaten und Preise auf Abruf</span>
+    <b>Datanorm</b><span>der Artikelkatalog deines Gro&szlig;h&auml;ndlers als Datei, f&uuml;r die Suche</span>
+    <b>IDS Connect</b><span>die Br&uuml;cke zum Onlineshop, f&uuml;r Warenkorb und Bestellung</span>
+    <b>OpenMasterData</b><span>Artikeldaten und Preise auf Abruf, Artikel f&uuml;r Artikel</span>
   </div>
 
+  <h3 class="zwischen">Was der Assistent damit macht</h3>
   <ul class="punkte">
-    <li><b>Artikel finden</b>, auch mit &#8222;Wallbox 11 kW&#8220;.</li>
-    <li><b>Einkaufspreise</b> ins Angebot holen, deine Aufschl&auml;ge drauf. Dein Kunde sieht nur den Verkaufspreis.</li>
-    <li><b>Bestellen</b> nach deiner Freigabe.</li>
-    <li><b>Lieferscheine</b> mit der Bestellung abgleichen.</li>
+    <li><b>Artikel finden</b>, auch mit Alltagsbegriffen wie &#8222;Wallbox 11 kW&#8220;.</li>
+    <li><b>Deine Einkaufspreise</b> &uuml;ber die Schnittstelle deines Gro&szlig;h&auml;ndlers ins Angebot holen.</li>
+    <li><b>Deine Aufschl&auml;ge</b> aus dem Betriebsgehirn draufrechnen. In deiner internen Ansicht siehst du zu jeder Position Einkaufspreis, Aufschlag und Regel. Dein Kunde sieht nur den Verkaufspreis.</li>
+    <li><b>Bestellungen</b> vorbereiten und nach deiner Freigabe abschicken.</li>
+    <li><b>Lieferscheine und Eingangsrechnungen</b> mit der Bestellung abgleichen und Abweichungen melden.</li>
   </ul>
-  <p class="hinweis">Nicht jede Schnittstelle meldet, ob ein Artikel lieferbar ist.</p>
+  <p class="hinweis">Ob ein Artikel lieferbar ist, meldet nicht jede Schnittstelle.</p>
   <div class="vorgehen">
     <div class="kopf">So gehst du vor</div>
     <ol>
-      <li>Frag deinen Gro&szlig;h&auml;ndler nach Datanorm, IDS Connect und OpenMasterData.</li>
-      <li>Lass dir die Zugangsdaten geben.</li>
-      <li>Teste f&uuml;nf Artikel, die du oft verbaust.</li>
+      <li>Frag deinen Gro&szlig;h&auml;ndler, welche Schnittstellen er anbietet: Datanorm, IDS Connect oder OpenMasterData.</li>
+      <li>Lass dir die Zugangsdaten f&uuml;r die Schnittstelle geben.</li>
+      <li>Teste mit f&uuml;nf Artikeln, die du oft verbaust, ob Suche und Einkaufspreis stimmen.</li>
     </ol>
   </div>
 </section>
@@ -314,27 +339,27 @@
 <section class="page">
   <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 6 von 6</span></div>
   <h2 class="part">Stufe 5: Ausbau</h2>
-  <p class="intro">L&auml;uft der Kern, bekommt derselbe Assistent neue Werkzeuge.</p>
+  <p class="intro">L&auml;uft der Kern, bekommt derselbe Assistent jede Erweiterung als neues Werkzeug. Sie nutzt dasselbe Ged&auml;chtnis, am Kern &auml;ndert sich nichts.</p>
   <div class="module">
-    <div class="modul"><b>Nachkalkulation</b><p>Stunden und Material einsprechen, mit dem Angebot vergleichen.</p></div>
-    <div class="modul"><b>Telefonassistent</b><p>Nimmt verpasste Anrufe an und meldet sich als KI-Assistent, so verlangt es die KI-Verordnung.</p></div>
-    <div class="modul"><b>Anfrageformulare</b><p>F&uuml;r Wallbox, PV und Z&auml;hlerschrank, mit Datei-Upload.</p></div>
-    <div class="modul"><b>Terminbuchung</b><p>Mit Kalender, Fahrzeiten und Erinnerungen.</p></div>
+    <div class="modul"><b>Nachkalkulation</b><p>Stunden und Material sprichst du nach dem Auftrag ein. Der Assistent vergleicht mit dem Angebot und schl&auml;gt vor, was er sich f&uuml;rs n&auml;chste Mal merken soll.</p></div>
+    <div class="modul"><b>Telefonassistent</b><p>Verpasste Anrufe nimmt er &uuml;ber eine Rufumleitung an, die du am Handy ein- und ausschaltest. Er meldet sich als KI-Assistent, so verlangt es die KI-Verordnung. Das Anliegen bekommst du mit R&uuml;ckrufnummer.</p></div>
+    <div class="modul"><b>Anfrageformulare</b><p>Auf deiner Webseite f&uuml;r Elektroinstallation, Z&auml;hlerschrank, Wallbox und PV, mit R&uuml;ckfragen und Datei-Upload. Der Assistent bekommt die Anfrage und bereitet sie f&uuml;r dich vor.</p></div>
+    <div class="modul"><b>Terminbuchung</b><p>Mit Abgleich deines Kalenders, Fahrzeiten, Puffern und Erinnerungen.</p></div>
   </div>
   <div class="vorgehen">
     <div class="kopf">So gehst du vor</div>
     <ol>
-      <li>Z&auml;hl verpasste Anrufe und Anfragen.</li>
-      <li>Nimm zuerst die Erweiterung mit der gr&ouml;&szlig;ten Zahl.</li>
-      <li>Fang erst an, wenn Angebote und Rechnungen laufen.</li>
+      <li>Z&auml;hl mit, wie viele Anrufe du verpasst und wie viele Anfragen per Mail oder Formular kommen.</li>
+      <li>Nimm die Erweiterung mit der gr&ouml;&szlig;ten Zahl zuerst.</li>
+      <li>Fang damit erst an, wenn Angebote und Rechnungen ruhig laufen.</li>
     </ol>
   </div>
 
   <div class="schluss">
     <p class="eigen">Alles geh&ouml;rt dir: Konten, Daten, Doku. So l&auml;uft dein System weiter, egal wer es baut oder betreut.</p>
-    <p>Lass dir alle Abl&auml;ufe mit Dokumentation geben.</p>
+    <p>Lass dir alle Abl&auml;ufe als Export mit Dokumentation geben, dazu eine Anleitung f&uuml;r dein Team. Dann kann jeder Entwickler mit n8n-Kenntnissen weiterbauen.</p>
     <p class="beweis">F&uuml;r einen Hausmeisterservice l&auml;uft ein Sprachassistent nach diesem Muster.</p>
-    <p>Fang mit der Stufe an, die dich am meisten Zeit kostet.</p>
+    <p>Fang mit der Stufe an, die dich heute am meisten Zeit kostet. Die n&auml;chste nimmst du dazu, wenn die erste ruhig l&auml;uft.</p>
     <p class="angebot">P.S. Bei Fragen von deiner Seite melde dich einfach bei mir.</p>
     <div class="kontakt">
       <span class="logo-word">Vrelo</span><br>

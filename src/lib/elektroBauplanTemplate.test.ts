@@ -63,6 +63,10 @@ describe("page 1", () => {
     expect(page1Html).toContain('class="schmerz"');
     expectInOrder(page1Html, ["Mehr B&uuml;ro als Baustelle?", 'class="schmerz"', 'class="sub"']);
   });
+  it("shows the solution as its own band between the pain and Heute | Mit", () => {
+    expectInOrder(page1Html, ['class="schmerz"', 'class="loesung"', 'class="vergleich"']);
+    expect(page1).toContain("Dein KI-Büroassistent");
+  });
   it("lists the stages instead of cards", () => {
     expect(page1Html).toContain("<ol");
     expect(page1Html).not.toContain('class="tiles"');
