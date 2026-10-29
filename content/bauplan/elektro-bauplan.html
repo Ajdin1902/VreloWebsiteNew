@@ -78,6 +78,11 @@
   ul.punkte b { color: var(--vrelo-petrol); font-weight: 600; }
   h3.zwischen { font-size: 8.5pt; letter-spacing: 0.08em; text-transform: uppercase; color: var(--vrelo-petrol);
     border-bottom: 1.5px solid var(--vrelo-petrol); padding-bottom: 4px; margin: 0 0 9px 0; break-after: avoid; }
+  .vorgehen { border: 1.5px solid var(--vrelo-petrol); border-radius: 8px; padding: 11px 16px 9px; margin: 16px 0 0 0; break-inside: avoid; }
+  .vorgehen .kopf { font-size: 8pt; letter-spacing: 0.1em; text-transform: uppercase; color: var(--vrelo-petrol); font-weight: 600; margin-bottom: 6px; }
+  .vorgehen ol { margin: 0; padding-left: 18px; }
+  .vorgehen li { margin-bottom: 4px; }
+  .vorgehen li::marker { color: var(--vrelo-petrol); font-weight: 600; }
   .hinweis { font-size: 9.5pt; color: var(--stumm); border-top: 1px solid var(--faden); padding-top: 7px; margin-top: 4px; }
 
   .flow { display: flex; align-items: stretch; gap: 5px; margin: 6px 0 18px 0; }
@@ -104,6 +109,7 @@
   .modul p { margin: 0; font-size: 10pt; }
 
   .schluss { border-top: 1.5px solid var(--vrelo-petrol); padding-top: 16px; }
+  .vorgehen + .schluss { margin-top: 22px; }
   .eigen { font-size: 13pt; font-weight: 600; color: var(--tiefes-wasser); line-height: 1.35; margin: 0 0 8px 0; }
   .beweis { border-left: 3px solid var(--amber); padding: 2px 0 2px 12px; margin: 14px 0 14px 0; color: var(--stumm); }
   .angebot { font-size: 12.5pt; font-weight: 600; color: var(--tiefes-wasser); margin: 18px 0 18px 0; }
@@ -188,13 +194,12 @@
   </div>
 
   <ul class="punkte">
-    <li><b>Ein Assistent, viele Werkzeuge.</b> Er kombiniert seine Werkzeuge selbst. &#8222;Fass mir die offenen Angebote vom Oktober zusammen&#8220; braucht keinen neuen Ablauf. Kommt ein Programm dazu, bekommt er ein Werkzeug mehr.</li>
-    <li><b>Er fragt nach, statt zu raten.</b> Fehlt eine Angabe, schreibt er dir eine R&uuml;ckfrage.</li>
+    <li><b>Ein Assistent, viele Werkzeuge.</b> Er kombiniert seine Werkzeuge selbst. &#8222;Fass mir die offenen Angebote vom Oktober zusammen&#8220; braucht keinen neuen Ablauf.</li>
     <li><b>Das ganze Team.</b> Jeder in deinem Betrieb kann ihm schreiben. Freigeben d&uuml;rfen nur die Leute, die du daf&uuml;r festlegst.</li>
   </ul>
 
   <h2 class="part">Stufe 1: Fundament</h2>
-  <p class="intro">Bevor der Assistent etwas f&uuml;r dich erledigt, steht das Fundament. Hier legst du fest, wem alles geh&ouml;rt und wo deine Daten liegen.</p>
+  <p class="intro">Im Fundament legst du fest, wem alles geh&ouml;rt und wo deine Daten liegen.</p>
   <ul class="punkte">
     <li><b>Deine Konten.</b> Server, KI-Konto, die Automatisierungsplattform n8n, der Eingangskanal und die Cloud laufen auf deinen Namen. Die Zugangsdaten liegen bei dir.</li>
     <li><b>DSGVO-konform.</b> Der Server steht in Deutschland. Das KI-Modell l&auml;uft in deinem eigenen Konto bei Amazon Bedrock oder Microsoft Azure, die Verarbeitung bleibt innerhalb der EU. Mit jedem Dienstleister, der dein System baut oder betreut, schlie&szlig;t du einen Auftragsverarbeitungsvertrag.</li>
@@ -202,6 +207,14 @@
     <li><b>Deine Freigabe.</b> Versand, Rechnungen und &Auml;nderungen am Ged&auml;chtnis zeigt der Assistent zuerst mit den Kn&ouml;pfen &#8222;Freigeben&#8220; und &#8222;&Auml;ndern&#8220;. Jeder Schritt landet im Protokoll.</li>
     <li><b>Ausfallsicher.</b> Ein Fehler l&ouml;st einen Alarm aus. Datenbank und Einstellungen sichert der Server jede Nacht an einem zweiten Ort.</li>
   </ul>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Leg ein eigenes KI-Konto bei Amazon Bedrock oder Microsoft Azure an, mit Verarbeitung innerhalb der EU.</li>
+      <li>Entscheide dich f&uuml;r deinen Kanal: Microsoft Teams oder WhatsApp Business.</li>
+      <li>Leg fest, wer in deinem Team freigeben darf.</li>
+    </ol>
+  </div>
 </section>
 
 <!-- Page 3: Stufe 2 -->
@@ -225,6 +238,14 @@
     <li><b>Die KI rechnet keine Preise.</b> Sie w&auml;hlt Positionen und Mengen. Ein fester Rechenschritt rechnet mit deinen Regeln und deinen Einkaufspreisen.</li>
     <li><b>Keine doppelten Daten.</b> Kunden, Artikel und Preise bleiben in deiner Rechnungssoftware. Im Gehirn steht, wie du arbeitest.</li>
   </ul>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Schreib die f&uuml;nf Leistungen auf, die du am h&auml;ufigsten anbietest, jede mit deiner Arbeitszeit.</li>
+      <li>Notier deine Materialaufschl&auml;ge und Kalkulationsregeln so, wie du sie heute im Kopf rechnest.</li>
+      <li>Leg daf&uuml;r einen Ordner in deiner Cloud an, eine Datei je Thema.</li>
+    </ol>
+  </div>
 
 </section>
 
@@ -240,7 +261,14 @@
     <li><b>&#167;&#160;35a EStG:</b> Material und Arbeitskosten stehen in getrennten Abschnitten. So kann dein Privatkunde den Arbeitsanteil von der Steuer absetzen.</li>
     <li><b>Versenden</b> darf er erst nach deiner Freigabe.</li>
   </ul>
-  <p class="hinweis">Pr&uuml;f vorher, ob deine Software eine Schnittstelle hat und welcher Tarif sie freischaltet.</p>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Pr&uuml;f, ob deine Rechnungssoftware eine Schnittstelle hat und welcher Tarif sie freischaltet.</li>
+      <li>R&auml;um deine Stammdaten auf: doppelte Kunden zusammenf&uuml;hren, Artikel eindeutig benennen.</li>
+      <li>Bind zuerst die Angebote an, die Rechnungen danach.</li>
+    </ol>
+  </div>
 </section>
 
 <!-- Page 5: Stufe 4 -->
@@ -264,7 +292,15 @@
     <li><b>Bestellungen</b> vorbereiten und nach deiner Freigabe abschicken.</li>
     <li><b>Lieferscheine und Eingangsrechnungen</b> mit der Bestellung abgleichen und Abweichungen melden.</li>
   </ul>
-  <p class="hinweis">Ob ein Artikel lieferbar ist, meldet nicht jede Schnittstelle. Frag vor dem Start bei deinem Gro&szlig;h&auml;ndler nach, welche Schnittstelle er anbietet.</p>
+  <p class="hinweis">Ob ein Artikel lieferbar ist, meldet nicht jede Schnittstelle.</p>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Frag deinen Gro&szlig;h&auml;ndler, welche Schnittstellen er anbietet: Datanorm, IDS Connect oder OpenMasterData.</li>
+      <li>Lass dir die Zugangsdaten f&uuml;r die Schnittstelle geben.</li>
+      <li>Teste mit f&uuml;nf Artikeln, die du oft verbaust, ob Suche und Einkaufspreis stimmen.</li>
+    </ol>
+  </div>
 </section>
 
 <!-- Page 6: Stufe 5 + Schluss -->
@@ -278,11 +314,19 @@
     <div class="modul"><b>Anfrageformulare</b><p>Auf deiner Webseite f&uuml;r Elektroinstallation, Z&auml;hlerschrank, Wallbox und PV, mit R&uuml;ckfragen und Datei-Upload. Der Assistent bekommt die Anfrage und bereitet sie f&uuml;r dich vor.</p></div>
     <div class="modul"><b>Terminbuchung</b><p>Mit Abgleich deines Kalenders, Fahrzeiten, Puffern und Erinnerungen.</p></div>
   </div>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Z&auml;hl mit, wie viele Anrufe du verpasst und wie viele Anfragen per Mail oder Formular kommen.</li>
+      <li>Nimm die Erweiterung mit der gr&ouml;&szlig;ten Zahl zuerst.</li>
+      <li>Fang damit erst an, wenn Angebote und Rechnungen ruhig laufen.</li>
+    </ol>
+  </div>
 
   <div class="schluss">
     <p class="eigen">Alles geh&ouml;rt dir: Konten, Daten, Doku. So l&auml;uft dein System weiter, egal wer es baut oder betreut.</p>
     <p>Lass dir alle Abl&auml;ufe als Export mit Dokumentation geben, dazu eine Anleitung f&uuml;r dein Team. Dann kann jeder Entwickler mit n8n-Kenntnissen weiterbauen.</p>
-    <p class="beweis">F&uuml;r einen Hausmeisterservice l&auml;uft ein Sprachassistent nach diesem Muster. Der Inhaber spricht unterwegs ein, der Assistent schreibt die E-Mail, legt den Termin an und erfasst die Daten f&uuml;r die Rechnung.</p>
+    <p class="beweis">F&uuml;r einen Hausmeisterservice l&auml;uft ein Sprachassistent nach diesem Muster.</p>
     <p>Fang mit der Stufe an, die dich heute am meisten Zeit kostet. Die n&auml;chste nimmst du dazu, wenn die erste ruhig l&auml;uft.</p>
     <p class="angebot">P.S. Bei Fragen von deiner Seite melde dich einfach bei mir.</p>
     <div class="kontakt">

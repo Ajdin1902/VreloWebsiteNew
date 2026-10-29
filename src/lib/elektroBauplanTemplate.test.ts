@@ -81,6 +81,14 @@ describe("pages 2 to 5", () => {
       expect(text, `missing: ${name}`).toContain(name);
     }
   });
+  it("gives every stage page its own next steps", () => {
+    const pages = html.split('<section class="page').slice(2);
+    expect(pages).toHaveLength(5);
+    pages.forEach((p, i) => {
+      expect(p, `stage page ${i + 1}`).toContain('class="vorgehen"');
+      expect(templateText(p), `stage page ${i + 1}`).toContain("So gehst du vor");
+    });
+  });
   it("promises the invoicing connection only where an interface exists", () => {
     expect(text).not.toContain("Genauso geht es mit Lexware");
     expect(text).toContain("wenn sie eine Schnittstelle haben");
