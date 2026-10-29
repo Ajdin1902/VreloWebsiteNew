@@ -10,8 +10,8 @@ export function ElektroBauplanPage({ data, form }: { data: Data; form?: ReactNod
   const letzte = schmerz.zeilen.length - 1;
   return (
     <div className="bg-papier text-tiefes-wasser">
-      <section id="schmerz" className="bg-tiefes-wasser px-4 py-10 text-papier sm:px-6 sm:py-14">
-        <div className="mx-auto max-w-2xl">
+      <section id="schmerz" className="bg-tiefes-wasser py-10 text-papier sm:py-14">
+        <div className="mx-auto max-w-2xl px-4 sm:px-6">
           <p className="text-xs font-bold uppercase tracking-widest text-honig">{data.kicker}</p>
           <h1 className="mt-3 text-3xl font-bold leading-tight sm:text-4xl">{data.title}</h1>
           <div className="mt-5 text-lg leading-relaxed">
@@ -46,7 +46,7 @@ export function ElektroBauplanPage({ data, form }: { data: Data; form?: ReactNod
 
       <div className="mx-auto flex max-w-2xl flex-col gap-9 px-4 pb-14 pt-9 sm:px-6">
         <section id="loesung">
-          <h2 className="text-2xl font-bold leading-snug">{loesung.heading}</h2>
+          <h2 className="text-balance text-2xl font-bold leading-snug">{loesung.heading}</h2>
           <p className="mt-2 leading-relaxed text-stumm">{loesung.sub}</p>
           <ol className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-4">
             {loesung.flow.map((f, i) => (
@@ -59,22 +59,24 @@ export function ElektroBauplanPage({ data, form }: { data: Data; form?: ReactNod
               </li>
             ))}
           </ol>
-          <table className="mt-5 w-full overflow-hidden rounded-xl border border-faden text-sm">
-            <thead>
-              <tr className="text-left text-xs font-bold uppercase tracking-wider">
-                <th className="w-1/2 bg-lesepapier px-3 py-2 text-stumm">{loesung.vergleich.heute}</th>
-                <th className="w-1/2 bg-gletscher px-3 py-2 text-vrelo-petrol">{loesung.vergleich.mit}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loesung.vergleich.reihen.map((r) => (
-                <tr key={r.heute} className="border-t border-faden align-top">
-                  <td className="px-3 py-2.5 leading-snug text-stumm">{r.heute}</td>
-                  <td className="bg-gletscher/35 px-3 py-2.5 font-semibold leading-snug">{r.mit}</td>
+          <div className="mt-5 overflow-hidden rounded-xl border border-faden">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="text-left text-xs font-bold uppercase tracking-wider">
+                  <th className="w-1/2 bg-lesepapier px-3 py-2 text-stumm">{loesung.vergleich.heute}</th>
+                  <th className="w-1/2 bg-gletscher px-3 py-2 text-vrelo-petrol">{loesung.vergleich.mit}</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {loesung.vergleich.reihen.map((r) => (
+                  <tr key={r.heute} className="border-t border-faden align-top">
+                    <td className="px-3 py-2.5 leading-snug text-stumm">{r.heute}</td>
+                    <td className="bg-gletscher/35 px-3 py-2.5 font-semibold leading-snug">{r.mit}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </section>
 
         <section id="inhalt" className="rounded-2xl border-l-4 border-honig bg-sonnenlicht p-6">
