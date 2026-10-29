@@ -6,11 +6,17 @@ const notFound = vi.hoisted(() =>
 );
 vi.mock("next/navigation", () => ({ notFound }));
 import Page, { generateMetadata } from "./page";
+import { ElektroBauplanPage } from "@/components/bauplan/ElektroBauplanPage";
+import { BauplanPage } from "@/components/bauplan/BauplanPage";
+import { elektroBauplanPage } from "@/lib/elektroBauplanPage";
 
 const orig = process.env.BAUPLAN_CODE;
+const origElektro = process.env.BAUPLAN_CODE_ELEKTRO;
 afterEach(() => {
   if (orig === undefined) delete process.env.BAUPLAN_CODE;
   else process.env.BAUPLAN_CODE = orig;
+  if (origElektro === undefined) delete process.env.BAUPLAN_CODE_ELEKTRO;
+  else process.env.BAUPLAN_CODE_ELEKTRO = origElektro;
   notFound.mockClear();
 });
 
@@ -46,5 +52,30 @@ describe("/bauplan/[code]", () => {
     expect(good.props.form.props.code).toBe("agentur-7k3m");
     const junk = await Page({ params, searchParams: Promise.resolve({ src: "<script>" }) });
     expect(junk.props.form.props.source).toBeUndefined();
+  });
+  it("titles and renders the Elektro page on the Elektro code", async () => {
+    process.env.BAUPLAN_CODE = "agentur-7k3m";
+    process.env.BAUPLAN_CODE_ELEKTRO = "elektro-quelle-2026";
+    const m = await generateMetadata({ params: Promise.resolve({ code: "elektro-quelle-2026" }) });
+    expect(m.title).toBe("Bauplan für Elektrobetriebe");
+    expect(m.robots).toMatchObject({ index: false, follow: false });
+    const el = await Page({ params: Promise.resolve({ code: "elektro-quelle-2026" }), searchParams: Promise.resolve({ src: "EL07" }) });
+    expect(el.type).toBe(ElektroBauplanPage);
+    expect(el.props.data).toBe(elektroBauplanPage);
+    expect(el.props.form.props.source).toBe("el07");
+    expect(el.props.form.props.code).toBe("elektro-quelle-2026");
+    expect(el.props.form.props.copy).toBe(elektroBauplanPage.pdf.form);
+  });
+  it("keeps the Agentur page on the Agentur code", async () => {
+    process.env.BAUPLAN_CODE = "agentur-7k3m";
+    process.env.BAUPLAN_CODE_ELEKTRO = "elektro-quelle-2026";
+    const el = await Page({ params: Promise.resolve({ code: "agentur-7k3m" }), searchParams: Promise.resolve({}) });
+    expect(el.type).toBe(BauplanPage);
+    expect(el.props.form.props.copy).toBeUndefined();
+  });
+  it("404s the Elektro code when its env var is unset", async () => {
+    process.env.BAUPLAN_CODE = "agentur-7k3m";
+    delete process.env.BAUPLAN_CODE_ELEKTRO;
+    await expect(Page({ params: Promise.resolve({ code: "elektro-quelle-2026" }), searchParams: Promise.resolve({}) })).rejects.toThrow("NOT_FOUND");
   });
 });
