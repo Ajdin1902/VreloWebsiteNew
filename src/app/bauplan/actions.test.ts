@@ -8,12 +8,14 @@ function fd(e: Record<string, string>) { const f = new FormData(); for (const [k
 const idle: BauplanEmailState = { status: "idle" };
 
 const origCode = process.env.BAUPLAN_CODE;
+const origElektro = process.env.BAUPLAN_CODE_ELEKTRO;
 const PDF = Buffer.from("%PDF-1.7 test");
 beforeEach(() => {
   send.mockReset();
   readFile.mockReset();
   readFile.mockResolvedValue(PDF);
   process.env.BAUPLAN_CODE = "agentur-7k3m";
+  process.env.BAUPLAN_CODE_ELEKTRO = "elektro-quelle-2026";
   vi.spyOn(console, "error").mockImplementation(() => {});
   process.env.RESEND_API_KEY = "k"; process.env.CONTACT_FROM = "Vrelo <a@vrelo-ki.de>"; process.env.CONTACT_TO = "me@vrelo-ki.de";
 });
@@ -21,6 +23,8 @@ beforeEach(() => {
 afterEach(() => {
   if (origCode === undefined) delete process.env.BAUPLAN_CODE;
   else process.env.BAUPLAN_CODE = origCode;
+  if (origElektro === undefined) delete process.env.BAUPLAN_CODE_ELEKTRO;
+  else process.env.BAUPLAN_CODE_ELEKTRO = origElektro;
   vi.restoreAllMocks();
   vi.unstubAllGlobals();
 });
@@ -96,5 +100,25 @@ describe("submitBauplanRequest", () => {
     const s = await submitBauplanRequest(idle, fd({ renderedAt: "0", email: "a@b.de", code: "agentur-7k3m" }));
     expect(s.status).toBe("error");
     expect(send).toHaveBeenCalledTimes(1);
+  });
+  it("sends the Elektro PDF and mails for the Elektro code", async () => {
+    send.mockResolvedValue({ error: null });
+    const s = await submitBauplanRequest(idle, fd({ renderedAt: "0", email: "a@b.de", src: "el07", code: "elektro-quelle-2026" }));
+    expect(s.status).toBe("ok");
+    expect(readFile.mock.calls[0][0]).toMatch(/elektro-bauplan-[0-9a-f]{8}\.pdf$/);
+    expect(send.mock.calls[0][0].attachments[0].filename).toBe("Vrelo-Bauplan-Elektrobetriebe.pdf");
+    expect(send.mock.calls[0][0].subject).toBe("Dein Bauplan für Elektrobetriebe");
+    expect(send.mock.calls[1][0].subject).toBe("Elektro-Bauplan angefordert: a@b.de");
+  });
+  it("works with only the Elektro code configured", async () => {
+    delete process.env.BAUPLAN_CODE;
+    send.mockResolvedValue({ error: null });
+    expect((await submitBauplanRequest(idle, fd({ renderedAt: "0", email: "a@b.de", code: "elektro-quelle-2026" }))).status).toBe("ok");
+  });
+  it("refuses a rotated Elektro code without sending", async () => {
+    process.env.BAUPLAN_CODE_ELEKTRO = "elektro-neu";
+    const s = await submitBauplanRequest(idle, fd({ renderedAt: "0", email: "a@b.de", code: "elektro-quelle-2026" }));
+    expect(s.status).toBe("error");
+    expect(send).not.toHaveBeenCalled();
   });
 });

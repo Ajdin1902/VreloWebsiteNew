@@ -4,10 +4,10 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { Resend } from "resend";
 import { isContactConfigured, contactFrom, contactTo, resendKey } from "@/lib/contact";
-import { evaluateBauplanRequest, BAUPLAN_PDF_PATH } from "@/lib/bauplanEmail";
+import { evaluateBauplanRequest, bauplanAttachmentName, bauplanPdfPath } from "@/lib/bauplanEmail";
 import { normalizeSource } from "@/lib/source";
 import { siteUrl } from "@/lib/site";
-import { isBauplanCode } from "@/lib/bauplan";
+import { bauplanVariant } from "@/lib/bauplan";
 
 export type BauplanEmailState =
   | { status: "idle" }
@@ -19,9 +19,9 @@ const GENERIC_ERROR = "Da ist etwas schiefgelaufen. Schreib mir gern direkt.";
 
 // The PDF is attached as bytes, never as a URL: Resend would fetch a URL
 // asynchronously and mark the mail failed while the UI shows success.
-async function loadPdf(pdfUrl: string): Promise<Buffer | undefined> {
+async function loadPdf(pdfPath: string, pdfUrl: string): Promise<Buffer | undefined> {
   try {
-    return await readFile(join(process.cwd(), "public", BAUPLAN_PDF_PATH));
+    return await readFile(join(process.cwd(), "public", pdfPath));
   } catch (err) {
     console.error("[bauplan] PDF read from disk failed, trying fetch:", err);
   }
@@ -41,7 +41,10 @@ export async function submitBauplanRequest(
 ): Promise<BauplanEmailState> {
   const get = (k: string) => String(formData.get(k) ?? "");
   const email = get("email");
-  const pdfUrl = `${siteUrl}${BAUPLAN_PDF_PATH}`;
+  // The code picks the variant; without a valid one the request is refused below.
+  const variant = bauplanVariant(get("code"));
+  const pdfPath = bauplanPdfPath(variant ?? "agentur");
+  const pdfUrl = `${siteUrl}${pdfPath}`;
   const decision = evaluateBauplanRequest(
     {
       email,
@@ -51,6 +54,7 @@ export async function submitBauplanRequest(
     },
     Date.now(),
     pdfUrl,
+    variant ?? "agentur",
   );
 
   if (decision.action === "drop") return { status: "ok" };
@@ -58,13 +62,13 @@ export async function submitBauplanRequest(
   if (decision.action === "invalid") return { status: "invalid", error: decision.error, email };
 
   // A rotated code retires open pages: the action refuses without a valid code.
-  if (!isBauplanCode(get("code"))) return { status: "error", message: GENERIC_ERROR, email };
+  if (!variant) return { status: "error", message: GENERIC_ERROR, email };
 
   if (!isContactConfigured()) {
     return { status: "error", message: "Der Versand ist gerade nicht eingerichtet. Schreib mir bitte direkt.", email };
   }
 
-  const pdf = await loadPdf(pdfUrl);
+  const pdf = await loadPdf(pdfPath, pdfUrl);
   if (!pdf) return { status: "error", message: GENERIC_ERROR, email };
 
   try {
@@ -76,7 +80,7 @@ export async function submitBauplanRequest(
       html: decision.readerEmail.html,
       text: decision.readerEmail.text,
       replyTo: contactTo()!,
-      attachments: [{ filename: "Vrelo-Bauplan-Agenturen.pdf", content: pdf }],
+      attachments: [{ filename: bauplanAttachmentName(variant), content: pdf }],
     });
     if (reader.error) {
       console.error("[bauplan] reader mail failed:", reader.error);
