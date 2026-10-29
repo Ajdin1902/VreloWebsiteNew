@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Entwurf: Bauplan für Elektrobetriebe</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --tw:#0a2538; --petrol:#1b5063; --stein:#a8b5ba; --gletscher:#dce7eb;
+    --amber:#d4a24c; --honig:#e8b86b; --sonne:#f4e4c1; --papier:#f4efe6;
+    --lese:#ece3d2; --faden:#d4ccbc; --stumm:#696359;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#2b2f33;font-family:"Plus Jakarta Sans",system-ui,sans-serif;color:var(--tw);padding:24px 16px 60px}
+  .meta{color:#cfd6d9;font-size:13px;max-width:1180px;margin:0 auto 18px;line-height:1.5}
+  .meta b{color:#fff}
+  .stage{display:flex;gap:40px;justify-content:center;align-items:flex-start;flex-wrap:wrap}
+  .label{color:#cfd6d9;font-size:12px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px;text-align:center}
+  .phone{width:390px;border:10px solid #111;border-radius:36px;overflow:hidden;background:var(--papier);box-shadow:0 20px 50px rgba(0,0,0,.4)}
+  .desk{width:760px;border-radius:10px;overflow:hidden;background:var(--papier);box-shadow:0 20px 50px rgba(0,0,0,.4)}
+  .desk .bar{height:30px;background:#ddd;display:flex;align-items:center;gap:6px;padding:0 12px}
+  .desk .bar i{width:10px;height:10px;border-radius:50%;background:#bbb;display:block}
+
+  /* ---- the page ---- */
+  .site-head{padding:16px 20px;display:flex;align-items:center}
+  .logo{font-family:"Fraunces",serif;font-style:italic;font-weight:600;font-size:24px;color:var(--tw)}
+  .col{max-width:720px;margin:0 auto;padding:0 20px}
+
+  .hero{background:var(--tw);color:var(--papier);padding:34px 0 32px}
+  .kicker{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--honig)}
+  .hero h1{font-size:34px;line-height:1.12;font-weight:700;margin-top:10px}
+  .zeilen{margin-top:18px;font-size:18px;line-height:1.55;color:#e9edee}
+  .zeilen p:last-child{color:var(--honig);font-weight:600}
+  .stat{margin-top:22px;border-top:1px solid rgba(232,184,107,.35);padding-top:18px;display:flex;gap:16px;align-items:baseline}
+  .zahl{font-family:"Fraunces",serif;font-style:italic;font-weight:600;font-size:52px;line-height:1;color:var(--honig);white-space:nowrap}
+  .stat p{font-size:15px;line-height:1.5}
+  .quelle{margin-top:8px;font-size:12px;color:var(--stein)}
+  .quelle a{color:var(--stein)}
+  .btn{display:inline-block;margin-top:24px;background:var(--amber);color:var(--tw);font-weight:700;font-size:15px;padding:13px 22px;border-radius:10px;text-decoration:none}
+
+  .sec{padding:34px 0 0}
+  h2{font-size:23px;line-height:1.25;font-weight:700}
+  .sub{margin-top:8px;color:var(--stumm);font-size:15px;line-height:1.5}
+  .flow{margin-top:18px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .chip{background:var(--gletscher);border-radius:10px;padding:10px 10px;font-size:13px;font-weight:600;line-height:1.3;position:relative}
+  .chip small{display:block;font-weight:400;color:var(--stumm);margin-top:2px;font-size:12px}
+  .chip.frei{background:var(--sonne)}
+  .vergleich{margin-top:20px;border:1px solid var(--faden);border-radius:12px;overflow:hidden;font-size:14px}
+  .vergleich .kopf,.vergleich .reihe{display:grid;grid-template-columns:1fr 1fr}
+  .vergleich .kopf div{padding:9px 12px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  .vergleich .kopf div:first-child{color:var(--stumm);background:var(--lese)}
+  .vergleich .kopf div:last-child{color:var(--petrol);background:var(--gletscher)}
+  .vergleich .reihe div{padding:10px 12px;border-top:1px solid var(--faden);line-height:1.4}
+  .vergleich .reihe div:first-child{color:var(--stumm)}
+  .vergleich .reihe div:last-child{font-weight:600;background:rgba(220,231,235,.35)}
+
+  ul.wert{margin-top:14px;list-style:none;display:flex;flex-direction:column;gap:10px}
+  ul.wert li{display:flex;gap:12px;font-size:15px;line-height:1.5}
+  ul.wert li:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0;margin-top:8px}
+
+  .form{margin:34px 0 0;border:2px solid var(--amber);border-radius:16px;padding:22px;background:var(--lese)}
+  .form p.l{margin-top:6px;font-size:15px}
+  .form label{display:block;margin-top:16px;font-size:13px}
+  .feld{margin-top:6px;display:flex;gap:10px;flex-wrap:wrap}
+  .feld input{flex:1;min-width:200px;border:1px solid var(--faden);border-radius:8px;padding:11px 12px;font:inherit;background:#fff}
+  .feld button{background:var(--amber);border:0;border-radius:10px;font:inherit;font-weight:700;padding:11px 20px;color:var(--tw)}
+  .hinweis{margin-top:10px;font-size:13px;color:var(--stumm)}
+  .hinweis a{color:var(--stumm)}
+  .site-foot{margin-top:40px;padding:18px 20px 26px;font-size:12px;color:var(--stumm);text-align:center}
+
+  .phone .flow{grid-template-columns:1fr 1fr}
+  .phone .hero h1{font-size:31px}
+  .wertbox{background:var(--sonne);border-left:4px solid var(--honig);border-radius:14px;padding:22px 22px 24px}
+  .wertbox ul.wert li:before{background:var(--tw)}
+  .phone .stat{flex-direction:column;gap:6px}
+  .quelle a{white-space:nowrap}
+</style>
+</head>
+<body>
+<p class="meta"><b>Entwurf v3: Landingpage Bauplan für Elektrobetriebe.</b> Links Handy (so liest der Meister die Mail), rechts Desktop. Die Texte sind die freigegebenen aus der Spec; Farben und Schriften wie auf vrelo-ki.de. Nur ein Bild, noch kein Code.</p>
+<div class="stage">
+  <div><p class="label">Handy, 390 px</p><div class="phone" id="phone"></div></div>
+  <div><p class="label">Desktop</p><div class="desk"><div class="bar"><i></i><i></i><i></i></div><div id="desk"></div></div></div>
+</div>
+
+<template id="page">
+  <header class="site-head"><span class="logo">Vrelo</span></header>
+
+  <section class="hero"><div class="col">
+    <p class="kicker">Bauplan für Elektrobetriebe</p>
+    <h1>Mehr Büro als Baustelle?</h1>
+    <div class="zeilen">
+      <p>Tagsüber auf der Baustelle.</p>
+      <p>Abends Angebote und Rechnungen.</p>
+      <p>Am Wochenende der Rest.</p>
+    </div>
+    <div class="stat">
+      <span class="zahl">61&#160;%</span>
+      <div>
+        <p>der befragten Handwerksbetriebe sagen: Durch Bürokratie bleibt weniger Zeit für die Aufträge.</p>
+        <p class="quelle">Handwerkskammer Dortmund, Sonderumfrage 2023, rund 700 Betriebe &#183; <a href="#">hwk-do.de</a></p>
+      </div>
+    </div>
+    <a class="btn" href="#pdf">Bauplan kostenlos anfordern</a>
+  </div></section>
+
+  <section class="sec"><div class="col">
+    <h2>Dein Bauplan zum Selbstbau: der eigene KI-Büroassistent</h2>
+    <p class="sub">Er bereitet Angebote, Rechnungen und Bestellungen vor. DSGVO-konform.</p>
+    <div class="flow">
+      <div class="chip">Du sprichst ein<small>Sprache, Foto, Mail</small></div>
+      <div class="chip">Er versteht<small>und fragt nach</small></div>
+      <div class="chip">Er bereitet vor<small>Angebot, Rechnung</small></div>
+      <div class="chip frei">Du gibst frei<small>dann geht es raus</small></div>
+    </div>
+    <div class="vergleich">
+      <div class="kopf"><div>Heute</div><div>Mit dem Büroassistenten</div></div>
+      <div class="reihe"><div>Angebote am Abend</div><div>Einsprechen, Entwurf liegt bereit</div></div>
+      <div class="reihe"><div>Preise einzeln nachschlagen</div><div>Einkaufspreise kommen automatisch</div></div>
+      <div class="reihe"><div>Rechnungen von Hand</div><div>Rechnung mit einem &#8222;passt&#8220;</div></div>
+    </div>
+  </div></section>
+
+  <section class="sec"><div class="col">
+    <div class="wertbox"><h2>Das steht im Bauplan</h2>
+    <ul class="wert">
+      <li>Fünf Stufen: Fundament, Betriebsgehirn, Angebote und Rechnungen, Großhandel, Ausbau. Du fängst mit einer an.</li>
+      <li>Zu jeder Stufe: &#8222;So gehst du vor&#8220;, Schritt für Schritt.</li>
+      <li>Beispiele mit Programmen, die du kennst: sevDesk, Lexware, ELDIS, Datanorm.</li>
+      <li>Drei Regeln, damit nichts ohne deine Freigabe rausgeht und alles DSGVO-konform bleibt.</li>
+    </ul></div>
+  </div></section>
+
+  <div class="col"><section class="form" id="pdf">
+    <h2>Den Bauplan als PDF</h2>
+    <p class="l">Kostenlos, sechs Seiten. Ich schicke ihn dir per Mail.</p>
+    <label>Deine E-Mail-Adresse</label>
+    <div class="feld"><input type="email" placeholder="name@betrieb.de"><button>PDF zuschicken</button></div>
+    <p class="hinweis">Du bekommst nur diese eine Mail. <a href="#">Datenschutz</a></p>
+  </section></div>
+
+  <footer class="site-foot">Impressum &#183; Datenschutz</footer>
+</template>
+
+<script>
+  const t = document.getElementById("page").innerHTML;
+  document.getElementById("phone").innerHTML = t;
+  document.getElementById("desk").innerHTML = t;
+</script>
+</body>
+</html>
