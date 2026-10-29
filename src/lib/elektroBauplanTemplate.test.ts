@@ -40,9 +40,9 @@ describe("page 1", () => {
     expectInOrder(page1, [
       "Bauplan für Elektrobetriebe",
       "Mehr Büro als Baustelle?",
+      "61 %",
       "Heute",
       "Mit dem Büroassistenten",
-      "61 %",
       "Der Weg in fünf Stufen",
       "Drei Regeln, die immer gelten",
     ]);
@@ -58,6 +58,10 @@ describe("page 1", () => {
     expect(page1).toContain("Nichts Verbindliches ohne deine Freigabe.");
     expect(page1).toContain("Preise rechnet ein fester Rechenschritt, nicht die KI.");
     expect(page1).toContain("Alles läuft auf deinen Namen.");
+  });
+  it("shows the pain as its own band right under the headline", () => {
+    expect(page1Html).toContain('class="schmerz"');
+    expectInOrder(page1Html, ["Mehr B&uuml;ro als Baustelle?", 'class="schmerz"', 'class="sub"']);
   });
   it("lists the stages instead of cards", () => {
     expect(page1Html).toContain("<ol");
