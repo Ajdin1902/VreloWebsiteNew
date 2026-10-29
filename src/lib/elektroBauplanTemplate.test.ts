@@ -129,6 +129,10 @@ describe("pages 2 to 5", () => {
 });
 
 describe("whole document", () => {
+  it("ends with the P.S., after the contact details", () => {
+    expect(text.trim().endsWith("P.S. Bei Fragen von deiner Seite melde dich einfach bei mir.")).toBe(true);
+    expect(text.indexOf("0176 4380 6085")).toBeLessThan(text.indexOf("P.S."));
+  });
   it("reads as a free guideline, not as an offer", () => {
     expect(text).not.toMatch(
       /[Mm]it mir|ohne mich|binde ich|richte ich|baue ich|wir zusammen|prüfen wir|klären wir|schauen wir|nehmen wir|legen wir|Wenn du magst/,
