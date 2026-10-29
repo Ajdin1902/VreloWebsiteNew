@@ -4,6 +4,7 @@ const action = vi.hoisted(() => vi.fn(async (): Promise<unknown> => ({ status: "
 vi.mock("@/app/bauplan/actions", () => ({ submitBauplanRequest: action }));
 import { BauplanPdfForm } from "./BauplanPdfForm";
 import { normalizeSource } from "@/lib/source";
+import { elektroBauplanPage } from "@/lib/elektroBauplanPage";
 
 it("renders the mail field, the hinweis and the Datenschutz link, and shows the success line after submit", async () => {
   render(<BauplanPdfForm source="ag01" code="c1" />);
@@ -33,4 +34,10 @@ it("keeps the typed address after an invalid result", async () => {
   fireEvent.submit(screen.getByRole("button", { name: "Bauplan zuschicken" }).closest("form")!);
   expect(await screen.findByRole("alert")).toBeInTheDocument();
   expect(screen.getByLabelText("Deine E-Mail-Adresse")).toHaveValue("nope@x");
+});
+
+it("renders the passed copy instead of the Agentur copy", () => {
+  render(<BauplanPdfForm code="c1" copy={elektroBauplanPage.pdf.form} />);
+  expect(screen.getByRole("button", { name: "PDF zuschicken" })).toBeInTheDocument();
+  expect(screen.queryByRole("button", { name: "Bauplan zuschicken" })).toBeNull();
 });

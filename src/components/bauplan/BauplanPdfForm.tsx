@@ -7,10 +7,13 @@ import { bauplanPage } from "@/lib/bauplanPage";
 
 const initial: BauplanEmailState = { status: "idle" };
 
-export function BauplanPdfForm({ source, code }: { source?: string; code: string }) {
+export type PdfFormCopy = { label: string; button: string; pending: string; hinweis: string; success: string };
+
+// The copy defaults to the Agentur page; the Elektro page passes its own.
+export function BauplanPdfForm({ source, code, copy = bauplanPage.pdf }: { source?: string; code: string; copy?: PdfFormCopy }) {
   const [state, formAction, pending] = useActionState(submitBauplanRequest, initial);
   const [renderedAt] = useState(() => Date.now());
-  const { label, button, pending: pendingLabel, hinweis, success } = bauplanPage.pdf;
+  const { label, button, pending: pendingLabel, hinweis, success } = copy;
 
   const errorMsg =
     state.status === "invalid" ? state.error : state.status === "error" ? state.message : undefined;
