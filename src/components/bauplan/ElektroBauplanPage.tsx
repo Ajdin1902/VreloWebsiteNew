@@ -21,7 +21,7 @@ export function ElektroBauplanPage({ data, form }: { data: Data; form?: ReactNod
               </p>
             ))}
           </div>
-          <div className="mt-6 flex flex-col gap-2 border-t border-honig/35 pt-5 sm:flex-row sm:items-baseline sm:gap-4">
+          <div className="mt-6 flex flex-col gap-2 border-t border-honig/35 pt-5 sm:flex-row sm:items-center sm:gap-5">
             <span className="whitespace-nowrap font-serif text-5xl font-semibold italic leading-none text-honig">
               {schmerz.zahl}
             </span>
