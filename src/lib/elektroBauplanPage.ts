@@ -21,6 +21,7 @@ export const elektroBauplanPage: {
   loesung: {
     heading: string;
     sub: string;
+    bild: { src: string; alt: string; width: number; height: number };
     flow: { wort: string; zusatz: string }[];
     vergleich: { heute: string; mit: string; reihen: { heute: string; mit: string }[] };
   };
@@ -40,6 +41,12 @@ export const elektroBauplanPage: {
   loesung: {
     heading: "Dein Bauplan zum Selbstbau: der eigene KI-Büroassistent",
     sub: "Er bereitet Angebote, Rechnungen und Bestellungen vor. DSGVO-konform.",
+    bild: {
+      src: "/images/bauplan-elektro-assistent.webp",
+      alt: "Ein Handy mit dem Chat des Assistenten, verbunden mit Postfach, Angeboten und Rechnungen, Großhandelskatalog, Dokumenten, Kalender und Baustellenfotos",
+      width: 1376,
+      height: 768,
+    },
     flow: [
       { wort: "Du sprichst ein", zusatz: "Sprache, Foto, Mail" },
       { wort: "Er versteht", zusatz: "und fragt nach" },

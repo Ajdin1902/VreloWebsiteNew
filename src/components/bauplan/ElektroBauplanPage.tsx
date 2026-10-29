@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Image from "next/image";
 import type { elektroBauplanPage } from "@/lib/elektroBauplanPage";
 
 type Data = typeof elektroBauplanPage;
@@ -48,6 +49,14 @@ export function ElektroBauplanPage({ data, form }: { data: Data; form?: ReactNod
         <section id="loesung">
           <h2 className="text-balance text-2xl font-bold leading-snug">{loesung.heading}</h2>
           <p className="mt-2 leading-relaxed text-stumm">{loesung.sub}</p>
+          <Image
+            src={loesung.bild.src}
+            alt={loesung.bild.alt}
+            width={loesung.bild.width}
+            height={loesung.bild.height}
+            sizes="(min-width: 672px) 624px, 100vw"
+            className="mt-5 h-auto w-full rounded-xl"
+          />
           <ol className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-4">
             {loesung.flow.map((f, i) => (
               <li

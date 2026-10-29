@@ -19,3 +19,13 @@ it("jumps from the hero to the form and links the source", () => {
   expect(screen.getByText(/61/)).toBeInTheDocument();
   expect(screen.getAllByTestId("inhalt-punkt")).toHaveLength(4);
 });
+
+it("shows the assistant picture between the sub-line and the four steps", () => {
+  const { container } = render(<ElektroBauplanPage data={elektroBauplanPage} />);
+  const img = screen.getByRole("img", { name: elektroBauplanPage.loesung.bild.alt });
+  expect(img.getAttribute("src")).toContain(encodeURIComponent(elektroBauplanPage.loesung.bild.src));
+  const loesung = container.querySelector("#loesung")!;
+  expect(loesung).toContainElement(img);
+  const ol = loesung.querySelector("ol")!;
+  expect(img.compareDocumentPosition(ol) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+});
