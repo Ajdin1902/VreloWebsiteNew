@@ -48,6 +48,7 @@ describe("page 1", () => {
     ]);
   });
   it("labels the statistic as Bürokratie and links its source", () => {
+    expect(page1).toContain("der befragten Handwerksbetriebe");
     expect(page1).toContain("Durch Bürokratie bleibt weniger Zeit für die Aufträge.");
     expect(page1).toContain("Handwerkskammer Dortmund");
     expect(page1).toContain("hwk-do.de");
@@ -79,6 +80,14 @@ describe("pages 2 to 5", () => {
     ]) {
       expect(text, `missing: ${name}`).toContain(name);
     }
+  });
+  it("promises the invoicing connection only where an interface exists", () => {
+    expect(text).not.toContain("Genauso geht es mit Lexware");
+    expect(text).toContain("wenn sie eine Schnittstelle haben");
+  });
+  it("states § 35a precisely: only the labour share", () => {
+    expect(text).toContain("Arbeitsanteil");
+    expect(text).not.toContain("die Handwerkerleistung von der Steuer absetzen");
   });
   it("keeps DSGVO and approval visible", () => {
     expect(text).toContain("innerhalb der EU");
