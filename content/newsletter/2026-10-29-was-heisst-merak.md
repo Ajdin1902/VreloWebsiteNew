@@ -2,7 +2,7 @@
 subject: "Was heißt eigentlich Merak?"
 previewText: "Ein Wort aus Bosnien, ein Assistent, der sich zuerst meldet, ein Feierabend-Zettel und ein Kopf, der um 23 Uhr an die Rechnung denkt."
 date: "2026-10-29"
-draft: true
+draft: false
 ---
 Hi,
 
