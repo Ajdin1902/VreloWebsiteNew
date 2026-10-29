@@ -65,7 +65,7 @@ describe("page 1", () => {
   });
   it("shows the solution as its own band between the pain and Heute | Mit", () => {
     expectInOrder(page1Html, ['class="schmerz"', 'class="bauplan-titel"', 'class="loesung"', 'class="vergleich"']);
-    expect(page1).toContain("Dein Bauplan für den eigenen KI-Büroassistenten");
+    expect(page1).toContain("Dein Bauplan zum Selbstbau: der eigene KI-Büroassistent");
   });
   it("lists the stages instead of cards", () => {
     expect(page1Html).toContain("<ol");
