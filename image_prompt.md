@@ -110,6 +110,8 @@ Legal pages (`/impressum`, `/datenschutz`) and `/newsletter/bestaetigt` get no i
 
 Banner above the article title; cool-dominant, low contrast + dark so a German headline reads over it.
 
+**AI label (Ajdin 2026-10-29):** a cover showing a realistic scene (not the abstract water) gets the small „KI-generiertes Bild“ label burned in bottom right, inside the visible 21:9 band (the page crops ~89 px off top and bottom of a 1376×768 file). Style as `Knowledge/marketing/linkedin/label_ai.py`. Abstract water covers stay unlabelled.
+
 ### Base prompt
 > Minimal fine-art abstract photograph of calm deep teal-petrol water with **[MOTIF]**, very soft and out of focus, low contrast, one small warm amber-honey highlight, lots of dark calm negative space for a headline to sit over. Muted, premium, meditative, cool-dominant palette: deep teal-navy and petrol with a single warm accent. No people, no text, no letters, no logos, no watermark. 16:9 aspect ratio.
 
