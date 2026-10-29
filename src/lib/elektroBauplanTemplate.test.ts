@@ -30,8 +30,8 @@ describe("template", () => {
   it("stays ASCII", () => {
     expect(/[^\x00-\x7F]/.test(html)).toBe(false);
   });
-  it("has five pages", () => {
-    expect((html.match(/<section class="page/g) ?? []).length).toBe(5);
+  it("has six pages, one per stage after the overview", () => {
+    expect((html.match(/<section class="page/g) ?? []).length).toBe(6);
   });
 });
 
@@ -98,12 +98,12 @@ describe("pages 2 to 5", () => {
     expect(text).toMatch(/meldet sich als KI-Assistent/);
     expect(text).toContain("KI-Verordnung");
   });
-  it("closes with ownership, proof and one soft next step", () => {
+  it("closes with ownership, proof and the P.S.", () => {
     for (const line of [
       "Alles gehört dir",
-      "Hörst du mit mir auf, läuft es weiter.",
+      "egal wer es baut oder betreut",
       "Für einen Hausmeisterservice läuft ein Sprachassistent nach diesem Muster.",
-      "Wenn du magst, schauen wir zusammen, welche Stufe bei dir zuerst dran ist.",
+      "P.S. Bei Fragen von deiner Seite melde dich einfach bei mir.",
       "ajdin@vrelo-ki.de",
       "0176 4380 6085",
     ]) {
@@ -113,6 +113,11 @@ describe("pages 2 to 5", () => {
 });
 
 describe("whole document", () => {
+  it("reads as a free guideline, not as an offer", () => {
+    expect(text).not.toMatch(
+      /[Mm]it mir|ohne mich|binde ich|richte ich|baue ich|wir zusammen|prüfen wir|klären wir|schauen wir|nehmen wir|legen wir|Wenn du magst/,
+    );
+  });
   it("follows the house typography", () => {
     expect(findCopyIssues(text)).toEqual([]);
   });

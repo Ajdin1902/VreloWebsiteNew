@@ -5,11 +5,14 @@
   (section 4 = page content, section 6 = facts the copy must stay inside).
   Page 1 follows the approved mockup docs/design/elektro-bauplan/page1-mockup.html.
 
-  Render:  npm run bauplan:elektro   (from Website/; review copy in .preview/, gate = exactly 5 pages;
+  Render:  npm run bauplan:elektro   (from Website/; review copy in .preview/, gate = exactly 6 pages;
            add -- --publish after Ajdin's OK to copy it to Knowledge/Offers/Elektro-Bauplan-Vrelo.pdf)
 
   RULES (do not break):
     - No price, no running costs, no durations, no SEO agent.
+    - A free guideline the reader could follow alone: no first-person service offer (no "mit mir",
+      "binde ich", "pruefen wir"). The only ask is the closing P.S. (Ajdin 2026-10-29).
+    - One stage per page after the overview: 6 pages.
     - No client names and no Power-Connect specifics. Proof only by shape (Hausmeisterservice).
     - Software and wholesalers are named as the reader's own tools. Never claim an interface
       for Rexel or FEGA and Schmitt, never "all wholesalers". AI location: "innerhalb der EU".
@@ -166,7 +169,7 @@
 
 <!-- Page 2: So arbeitet der Assistent + Stufe 1 -->
 <section class="page">
-  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 2 von 5</span></div>
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 2 von 6</span></div>
   <h2 class="part">So arbeitet der Assistent</h2>
   <div class="flow">
     <div><b>Eingang</b>Sprache, Text, Foto, PDF, E-Mail</div>
@@ -191,23 +194,23 @@
   </ul>
 
   <h2 class="part">Stufe 1: Fundament</h2>
-  <p class="intro">Bevor der Assistent etwas f&uuml;r dich erledigt, steht das Fundament. Darin legen wir fest, wem alles geh&ouml;rt und wo deine Daten liegen.</p>
+  <p class="intro">Bevor der Assistent etwas f&uuml;r dich erledigt, steht das Fundament. Hier legst du fest, wem alles geh&ouml;rt und wo deine Daten liegen.</p>
   <ul class="punkte">
     <li><b>Deine Konten.</b> Server, KI-Konto, die Automatisierungsplattform n8n, der Eingangskanal und die Cloud laufen auf deinen Namen. Die Zugangsdaten liegen bei dir.</li>
-    <li><b>DSGVO-konform.</b> Der Server steht in Deutschland. Das KI-Modell l&auml;uft in deinem eigenen Konto bei Amazon Bedrock oder Microsoft Azure, die Verarbeitung bleibt innerhalb der EU. Mit mir schlie&szlig;t du einen Auftragsverarbeitungsvertrag.</li>
+    <li><b>DSGVO-konform.</b> Der Server steht in Deutschland. Das KI-Modell l&auml;uft in deinem eigenen Konto bei Amazon Bedrock oder Microsoft Azure, die Verarbeitung bleibt innerhalb der EU. Mit jedem Dienstleister, der dein System baut oder betreut, schlie&szlig;t du einen Auftragsverarbeitungsvertrag.</li>
     <li><b>Dein Kanal.</b> Microsoft Teams in deinem eigenen Microsoft-Konto oder WhatsApp &uuml;ber die offizielle Business-Schnittstelle. Telegram geht auch, bietet aber keinen Auftragsverarbeitungsvertrag.</li>
     <li><b>Deine Freigabe.</b> Versand, Rechnungen und &Auml;nderungen am Ged&auml;chtnis zeigt der Assistent zuerst mit den Kn&ouml;pfen &#8222;Freigeben&#8220; und &#8222;&Auml;ndern&#8220;. Jeder Schritt landet im Protokoll.</li>
     <li><b>Ausfallsicher.</b> Ein Fehler l&ouml;st einen Alarm aus. Datenbank und Einstellungen sichert der Server jede Nacht an einem zweiten Ort.</li>
   </ul>
 </section>
 
-<!-- Page 3: Stufe 2 + Stufe 3 -->
+<!-- Page 3: Stufe 2 -->
 <section class="page">
-  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 3 von 5</span></div>
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 3 von 6</span></div>
   <h2 class="part">Stufe 2: Betriebsgehirn</h2>
   <p class="intro">Was heute nur in deinem Kopf steckt, schreibt der Assistent mit dir auf. So rechnet er wie du und jemand anderes kann &uuml;bernehmen, wenn du nicht da bist.</p>
   <ul class="punkte">
-    <li><b>Lesbare Dokumente in deiner Cloud.</b> Ein Ordner in OneDrive oder Google Drive. Nutzt du keins von beiden, richte ich dir einen Cloud-Speicher in Deutschland ein. Du siehst dein Wissen am PC und auf dem Handy.</li>
+    <li><b>Lesbare Dokumente in deiner Cloud.</b> Ein Ordner in OneDrive oder Google Drive. Nutzt du keins von beiden, nimm einen Cloud-Speicher in Deutschland. Du siehst dein Wissen am PC und auf dem Handy.</li>
     <li><b>Eine Datei je Thema.</b> Kalkulationsregeln, Arbeitszeiten je Leistung, Materialaufschl&auml;ge, bevorzugte Materialien, Angebotstexte.</li>
   </ul>
 
@@ -223,8 +226,13 @@
     <li><b>Keine doppelten Daten.</b> Kunden, Artikel und Preise bleiben in deiner Rechnungssoftware. Im Gehirn steht, wie du arbeitest.</li>
   </ul>
 
+</section>
+
+<!-- Page 4: Stufe 3 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 4 von 6</span></div>
   <h2 class="part">Stufe 3: Angebote und Rechnungen</h2>
-  <p class="intro">Der Assistent arbeitet in der Rechnungssoftware, die du schon hast. Im Beispiel ist das sevDesk. Lexware, Label, TopKontor und andere Handwerkersoftware binde ich genauso an, wenn sie eine Schnittstelle haben.</p>
+  <p class="intro">Der Assistent arbeitet in der Rechnungssoftware, die du schon hast. Im Beispiel ist das sevDesk. Lexware, Label, TopKontor und andere Handwerkersoftware lassen sich genauso anbinden, wenn sie eine Schnittstelle haben.</p>
   <ul class="punkte">
     <li><b>Kunden und Artikel</b> findet er in deiner Software. Bei mehreren Treffern oder einem neuen Kunden fragt er nach.</li>
     <li><b>Angebote</b> legt er als Entwurf an. Ein angenommenes Angebot wandelt er nach deiner Freigabe in einen Rechnungsentwurf um.</li>
@@ -232,14 +240,14 @@
     <li><b>&#167;&#160;35a EStG:</b> Material und Arbeitskosten stehen in getrennten Abschnitten. So kann dein Privatkunde den Arbeitsanteil von der Steuer absetzen.</li>
     <li><b>Versenden</b> darf er erst nach deiner Freigabe.</li>
   </ul>
-  <p class="hinweis">Ob deine Software eine Schnittstelle hat und welcher Tarif sie freischaltet, pr&uuml;fen wir vorher zusammen.</p>
+  <p class="hinweis">Pr&uuml;f vorher, ob deine Software eine Schnittstelle hat und welcher Tarif sie freischaltet.</p>
 </section>
 
-<!-- Page 4: Stufe 4 -->
+<!-- Page 5: Stufe 4 -->
 <section class="page">
-  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 4 von 5</span></div>
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 5 von 6</span></div>
   <h2 class="part">Stufe 4: Gro&szlig;handel</h2>
-  <p class="intro">Preise nachschlagen, Artikel suchen, Material bestellen: Das &uuml;bernimmt der Assistent bei deinem Gro&szlig;h&auml;ndler. Im Beispiel ist das ELDIS aus der Obeta-Gruppe. Arbeitest du mit Sonepar, Rexel, Obeta, FEGA &amp; Schmitt, Alexander B&uuml;rkle oder einem anderen Gro&szlig;h&auml;ndler, binde ich ihn auf demselben Weg an, wenn er die passende Schnittstelle anbietet.</p>
+  <p class="intro">Preise nachschlagen, Artikel suchen, Material bestellen: Das &uuml;bernimmt der Assistent bei deinem Gro&szlig;h&auml;ndler. Im Beispiel ist das ELDIS aus der Obeta-Gruppe. Arbeitest du mit Sonepar, Rexel, Obeta, FEGA &amp; Schmitt, Alexander B&uuml;rkle oder einem anderen Gro&szlig;h&auml;ndler, l&auml;sst er sich auf demselben Weg anbinden, wenn er die passende Schnittstelle anbietet.</p>
 
   <div class="normen">
     <div class="kopf">Die Branchenschnittstellen, die viele Elektrogro&szlig;h&auml;ndler anbieten</div>
@@ -256,14 +264,14 @@
     <li><b>Bestellungen</b> vorbereiten und nach deiner Freigabe abschicken.</li>
     <li><b>Lieferscheine und Eingangsrechnungen</b> mit der Bestellung abgleichen und Abweichungen melden.</li>
   </ul>
-  <p class="hinweis">Ob ein Artikel lieferbar ist, meldet nicht jede Schnittstelle. Vor dem Start kl&auml;ren wir, welche Schnittstelle dein Gro&szlig;h&auml;ndler anbietet.</p>
+  <p class="hinweis">Ob ein Artikel lieferbar ist, meldet nicht jede Schnittstelle. Frag vor dem Start bei deinem Gro&szlig;h&auml;ndler nach, welche Schnittstelle er anbietet.</p>
 </section>
 
-<!-- Page 5: Stufe 5 + Schluss -->
+<!-- Page 6: Stufe 5 + Schluss -->
 <section class="page">
-  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 5 von 5</span></div>
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 6 von 6</span></div>
   <h2 class="part">Stufe 5: Ausbau</h2>
-  <p class="intro">L&auml;uft der Kern, baue ich jede Erweiterung als neues Werkzeug an denselben Assistenten. Sie nutzt dasselbe Ged&auml;chtnis, am Kern &auml;ndert sich nichts.</p>
+  <p class="intro">L&auml;uft der Kern, bekommt derselbe Assistent jede Erweiterung als neues Werkzeug. Sie nutzt dasselbe Ged&auml;chtnis, am Kern &auml;ndert sich nichts.</p>
   <div class="module">
     <div class="modul"><b>Nachkalkulation</b><p>Stunden und Material sprichst du nach dem Auftrag ein. Der Assistent vergleicht mit dem Angebot und schl&auml;gt vor, was er sich f&uuml;rs n&auml;chste Mal merken soll.</p></div>
     <div class="modul"><b>Telefonassistent</b><p>Verpasste Anrufe nimmt er &uuml;ber eine Rufumleitung an, die du am Handy ein- und ausschaltest. Er meldet sich als KI-Assistent, so verlangt es die KI-Verordnung. Das Anliegen bekommst du mit R&uuml;ckrufnummer.</p></div>
@@ -272,11 +280,11 @@
   </div>
 
   <div class="schluss">
-    <p class="eigen">Alles geh&ouml;rt dir: Konten, Daten, Doku. H&ouml;rst du mit mir auf, l&auml;uft es weiter.</p>
-    <p>Alle Abl&auml;ufe bekommst du als Export mit Dokumentation, dazu eine Anleitung f&uuml;r dein Team. Jeder Entwickler mit n8n-Kenntnissen kann ohne mich weiterbauen.</p>
+    <p class="eigen">Alles geh&ouml;rt dir: Konten, Daten, Doku. So l&auml;uft dein System weiter, egal wer es baut oder betreut.</p>
+    <p>Lass dir alle Abl&auml;ufe als Export mit Dokumentation geben, dazu eine Anleitung f&uuml;r dein Team. Dann kann jeder Entwickler mit n8n-Kenntnissen weiterbauen.</p>
     <p class="beweis">F&uuml;r einen Hausmeisterservice l&auml;uft ein Sprachassistent nach diesem Muster. Der Inhaber spricht unterwegs ein, der Assistent schreibt die E-Mail, legt den Termin an und erfasst die Daten f&uuml;r die Rechnung.</p>
-    <p>Fang mit der Stufe an, die dich heute am meisten Zeit kostet. Die n&auml;chste nehmen wir dazu, wenn die erste ruhig l&auml;uft.</p>
-    <p class="angebot">Wenn du magst, schauen wir zusammen, welche Stufe bei dir zuerst dran ist.</p>
+    <p>Fang mit der Stufe an, die dich heute am meisten Zeit kostet. Die n&auml;chste nimmst du dazu, wenn die erste ruhig l&auml;uft.</p>
+    <p class="angebot">P.S. Bei Fragen von deiner Seite melde dich einfach bei mir.</p>
     <div class="kontakt">
       <span class="logo-word">Vrelo</span><br>
       Ajdin Dzafic &#183; Regensburg<br>
