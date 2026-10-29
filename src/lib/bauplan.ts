@@ -1,15 +1,28 @@
 // src/lib/bauplan.ts
 
-// Unlisted blueprint page for agencies: /bauplan/<BAUPLAN_CODE>.
+// Unlisted blueprint pages: /bauplan/<code>. Two variants, each with its own
+// secret code: BAUPLAN_CODE (Agenturen) and BAUPLAN_CODE_ELEKTRO (Elektrobetriebe).
 export const BAUPLAN_BASE = "/bauplan";
 
+export type BauplanVariant = "agentur" | "elektro";
+
 // Read at call time (not module load) so tests and Vercel both see the value.
-export function bauplanCode(): string | undefined {
-  const code = process.env.BAUPLAN_CODE?.trim();
+function envCode(name: string): string | undefined {
+  const code = process.env[name]?.trim();
   return code ? code : undefined;
 }
 
+export function bauplanCode(): string | undefined {
+  return envCode("BAUPLAN_CODE");
+}
+
+// Agentur is checked first, so a misconfigured pair of equal codes serves the Agentur page.
+export function bauplanVariant(slug: string): BauplanVariant | undefined {
+  if (slug === bauplanCode()) return "agentur";
+  if (slug === envCode("BAUPLAN_CODE_ELEKTRO")) return "elektro";
+  return undefined;
+}
+
 export function isBauplanCode(slug: string): boolean {
-  const code = bauplanCode();
-  return code !== undefined && slug === code;
+  return bauplanVariant(slug) !== undefined;
 }
