@@ -2,7 +2,7 @@
 // Offline step on Ajdin's machine, never part of the Vercel build.
 //   template : content/bauplan/elektro-bauplan.html
 //   renderer : ../Clients/_kit/brand-pdf/render-doc.mjs (sibling repo under the HQ root; puppeteer lives there)
-//   gate     : ../Clients/_kit/fahrplan/check-pages.mjs, exactly 6 pages (spec section 3)
+//   gate     : ../Clients/_kit/fahrplan/check-pages.mjs, exactly 7 pages (6 + the offer page, 2026-10-30)
 //   output   : .preview/elektro-bauplan.pdf (git-ignored review copy)
 //   --publish[=<path>]: no new render. Gates the reviewed .preview PDF and copies exactly that file
 //              to ../Knowledge/Offers/Elektro-Bauplan-Vrelo.pdf (or <path>), so what Ajdin approved is what ships,
@@ -14,7 +14,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync 
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const PAGES = 6;
+const PAGES = 7;
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const template = resolve(root, "content/bauplan/elektro-bauplan.html");
 const kitDir = resolve(root, "../Clients/_kit");

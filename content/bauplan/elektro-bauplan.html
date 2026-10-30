@@ -5,14 +5,18 @@
   (section 4 = page content, section 6 = facts the copy must stay inside).
   Page 1 follows the approved mockup docs/design/elektro-bauplan/page1-mockup.html.
 
-  Render:  npm run bauplan:elektro   (from Website/; review copy in .preview/, gate = exactly 6 pages;
+  Render:  npm run bauplan:elektro   (from Website/; review copy in .preview/, gate = exactly 7 pages;
            add -- --publish after Ajdin's OK to copy it to Knowledge/Offers/Elektro-Bauplan-Vrelo.pdf)
 
   RULES (do not break):
-    - No price, no running costs, no durations, no SEO agent.
-    - A free guideline the reader could follow alone: no first-person service offer (no "mit mir",
-      "binde ich", "pruefen wir"). The only ask is the closing P.S. (Ajdin 2026-10-29).
-    - One stage per page after the overview: 6 pages.
+    - No price, no running costs, no durations, no SEO agent. Only exception: page 7 says
+      "Erste Ergebnisse nach 2 Tagen" (Ajdin 2026-10-30); never a timeline for the rest.
+    - Pages 1 to 6 are a free guideline the reader could follow alone: no first-person service
+      offer (no "mit mir", "binde ich", "pruefen wir").
+    - Page 7 is the offer (Ajdin 2026-10-30), word for word the landing page's angebot copy in
+      src/lib/elektroBauplanPage.ts. "Geld zurueck" holds only with 50/50 payment (final invoice
+      after acceptance), never with full prepayment.
+    - One stage per page after the overview, then the offer: 7 pages.
     - No client names and no Power-Connect specifics. Proof only by shape (Hausmeisterservice).
     - Software and wholesalers are named as the reader's own tools. Never claim an interface
       for Rexel or FEGA and Schmitt, never "all wholesalers". AI location: "innerhalb der EU".
@@ -129,6 +133,23 @@
   .ps { font-size: 12.5pt; font-weight: 600; color: var(--tiefes-wasser); margin: 20px 0 0 0; }
   .kontakt { border-top: 1px solid var(--faden); padding-top: 10px; margin-top: 18px; font-size: 10pt; }
   .kontakt .logo-word { font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 20pt; color: var(--tiefes-wasser); }
+
+  /* page 7: the offer */
+  h2.angebot-titel { font-size: 21pt; line-height: 1.2; }
+  .angebot-beweis { background: var(--tiefes-wasser); color: var(--honig); border-left: 4px solid var(--amber); border-radius: 6px;
+    padding: 11px 16px; margin: 6px 0 22px 0; font-size: 13pt; font-weight: 600; line-height: 1.35; }
+  ol.schritte { list-style: none; margin: 4px 0 20px 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  ol.schritte li { display: flex; gap: 14px; align-items: baseline; font-size: 11pt; line-height: 1.5; }
+  ol.schritte .nr { font-family: 'Fraunces', Georgia, serif; font-style: italic; color: var(--amber); font-size: 20pt; min-width: 16pt; line-height: 1; }
+  ol.schritte b { color: var(--tiefes-wasser); }
+  .garantie { background: var(--sonnenlicht); border-left: 3px solid var(--amber); border-radius: 4px; padding: 13px 16px; margin: 0 0 20px 0; break-inside: avoid; }
+  .garantie .kopf { font-size: 12pt; font-weight: 700; color: var(--tiefes-wasser); margin: 0 0 4px 0; }
+  .garantie p { margin: 0; }
+  .buchen { background: var(--tiefes-wasser); color: #FFFFFF; border-radius: 8px; padding: 16px 18px; break-inside: avoid; text-align: center; }
+  .buchen p { margin: 0 0 8px 0; font-size: 12pt; }
+  .buchen p.knapp { color: var(--honig); font-weight: 600; font-size: 11pt; border-bottom: 1px solid var(--vrelo-petrol); padding-bottom: 10px; margin-bottom: 10px; }
+  .buchen a { display: inline-block; background: var(--amber); color: var(--tiefes-wasser); font-weight: 700; text-decoration: none;
+    border-radius: 6px; padding: 7px 14px; font-size: 11pt; }
 </style>
 </head>
 <body>
@@ -210,7 +231,7 @@
 
 <!-- Page 2: So arbeitet der Assistent + Stufe 1 -->
 <section class="page">
-  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 2 von 6</span></div>
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 2 von 7</span></div>
   <h2 class="part">So arbeitet der Assistent</h2>
   <div class="flow">
     <div><b>Eingang</b>Sprache, Text, Foto, PDF, E-Mail</div>
@@ -254,7 +275,7 @@
 
 <!-- Page 3: Stufe 2 -->
 <section class="page">
-  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 3 von 6</span></div>
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 3 von 7</span></div>
   <h2 class="part">Stufe 2: Betriebsgehirn</h2>
   <p class="intro">Was heute nur in deinem Kopf steckt, schreibt der Assistent mit dir auf. So rechnet er wie du und jemand anderes kann &uuml;bernehmen, wenn du nicht da bist.</p>
   <ul class="punkte">
@@ -286,7 +307,7 @@
 
 <!-- Page 4: Stufe 3 -->
 <section class="page">
-  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 4 von 6</span></div>
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 4 von 7</span></div>
   <h2 class="part">Stufe 3: Angebote und Rechnungen</h2>
   <p class="intro">Der Assistent arbeitet in der Rechnungssoftware, die du schon hast. Im Beispiel ist das sevDesk. Lexware, Label, TopKontor und andere Handwerkersoftware lassen sich genauso anbinden, wenn sie eine Schnittstelle haben.</p>
   <ul class="punkte">
@@ -308,7 +329,7 @@
 
 <!-- Page 5: Stufe 4 -->
 <section class="page">
-  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 5 von 6</span></div>
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 5 von 7</span></div>
   <h2 class="part">Stufe 4: Gro&szlig;handel</h2>
   <p class="intro">Preise nachschlagen, Artikel suchen, Material bestellen: Das &uuml;bernimmt der Assistent bei deinem Gro&szlig;h&auml;ndler. Im Beispiel ist das ELDIS aus der Obeta-Gruppe. Arbeitest du mit Sonepar, Rexel, Obeta, FEGA &amp; Schmitt, Alexander B&uuml;rkle oder einem anderen Gro&szlig;h&auml;ndler, l&auml;sst er sich auf demselben Weg anbinden, wenn er die passende Schnittstelle anbietet.</p>
 
@@ -340,7 +361,7 @@
 
 <!-- Page 6: Stufe 5 + Schluss -->
 <section class="page">
-  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 6 von 6</span></div>
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 6 von 7</span></div>
   <h2 class="part">Stufe 5: Ausbau</h2>
   <p class="intro">L&auml;uft der Kern, bekommt derselbe Assistent jede Erweiterung als neues Werkzeug. Sie nutzt dasselbe Ged&auml;chtnis, am Kern &auml;ndert sich nichts.</p>
   <div class="module">
@@ -363,12 +384,33 @@
     <p>Lass dir alle Abl&auml;ufe als Export mit Dokumentation geben, dazu eine Anleitung f&uuml;r dein Team. Dann kann jeder Entwickler mit n8n-Kenntnissen weiterbauen.</p>
     <p class="beweis">F&uuml;r einen Hausmeisterservice l&auml;uft ein Sprachassistent nach diesem Muster.</p>
     <p>Fang mit der Stufe an, die dich heute am meisten Zeit kostet. Die n&auml;chste nimmst du dazu, wenn die erste ruhig l&auml;uft.</p>
-    <div class="kontakt">
-      <span class="logo-word">Vrelo</span><br>
-      Ajdin Dzafic &#183; Regensburg<br>
-      ajdin@vrelo-ki.de &#183; vrelo-ki.de &#183; 0176 4380 6085
-    </div>
-    <p class="ps">P.S. Bei Fragen von deiner Seite melde dich einfach bei mir.</p>
+  </div>
+</section>
+
+<!-- Page 7: the offer (Ajdin 2026-10-30), same words as the landing page -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Elektrobetriebe &#183; Seite 7 von 7</span></div>
+  <h2 class="part angebot-titel">Keine Zeit zum Selbstbauen? Ich baue ihn dir mit Geld-zur&uuml;ck-Garantie.</h2>
+  <p class="angebot-beweis">Ein Hausmeisterservice arbeitet schon damit: Der Inhaber spart jeden Tag zwei Stunden B&uuml;roarbeit.</p>
+  <ol class="schritte">
+    <li><span class="nr">1</span><span><b>Eine Stunde mit dir.</b> Wir kl&auml;ren, was dein Assistent k&ouml;nnen soll. Danach baue ich, du arbeitest weiter.</span></li>
+    <li><span class="nr">2</span><span><b>Erste Ergebnisse nach 2 Tagen.</b> Dein Assistent l&auml;uft auf deinem Handy. Du sprichst Notizen, Termine und Mails ein, er legt alles an einem Ort ab.</span></li>
+    <li><span class="nr">3</span><span><b>Danach Schritt f&uuml;r Schritt.</b> Angebote, Rechnungen, Gro&szlig;handel. Jeden Baustein teste ich selbst, bevor du ihn bekommst.</span></li>
+    <li><span class="nr">4</span><span><b>Zum Schluss testest du.</b> Die Schlussrechnung kommt erst, wenn alles f&uuml;r dich passt.</span></li>
+  </ol>
+  <div class="garantie">
+    <p class="kopf">Geld-zur&uuml;ck-Garantie</p>
+    <p>Erf&uuml;llt der Assistent deine Anforderungen nicht, bekommst du deine Anzahlung zur&uuml;ck.</p>
+  </div>
+  <div class="buchen">
+    <p class="knapp">Ich habe nur Kapazit&auml;t f&uuml;r noch 3 Betriebe.</p>
+    <p>Du hast Fragen? Dann lass uns eine halbe Stunde sprechen.</p>
+    <a href="https://vrelo-ki.de/kontakt?src=bauplan-elektro-pdf">Gespr&auml;ch buchen: vrelo-ki.de/kontakt</a>
+  </div>
+  <div class="kontakt">
+    <span class="logo-word">Vrelo</span><br>
+    Ajdin Dzafic &#183; Regensburg<br>
+    ajdin@vrelo-ki.de &#183; vrelo-ki.de &#183; 0176 4380 6085
   </div>
 </section>
 

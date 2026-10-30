@@ -125,3 +125,7 @@ Sie by default, mirrored per Betrieb (du/Sie rule). Subject „Weniger Büro am 
 
 - First outreach wave via `writing-outreach-emails` (new template folder `templates/elektro/`, target CSV `leads.csv` filtered to `subsegment = elektro`).
 - HQ CLAUDE.md §2.2 line updated with the live URL pattern; Vault light sync.
+
+## Addendum 2026-10-30: the offer (Ajdin)
+
+Reverses the „guideline, not an offer“ rule for one place only. The landing page gets a last section `#angebot` after the form, the PDF a 7th page, both with the same copy (`angebot` in `src/lib/elektroBauplanPage.ts`): headline „Keine Zeit zum Selbstbauen? Ich baue ihn dir mit Geld-zurück-Garantie.“, directly under it the proof as its own band („Ein Hausmeisterservice arbeitet schon damit: Der Inhaber spart jeden Tag zwei Stunden Büroarbeit.“, Mirsad-confirmed; no intro text), four steps (one hour together · first results after 2 days · then step by step, each block tested by Ajdin · the reader tests last, the final invoice only when it fits), the guarantee („Erfüllt der Assistent deine Anforderungen nicht, bekommst du deine Anzahlung zurück.“), and a soft ask: „Du hast Fragen? Dann lass uns eine halbe Stunde sprechen.“ with a button to `/kontakt?src=bauplan-elektro` (PDF: `bauplan-elektro-pdf`). No price, no timeline beyond the 2 days (internally 2 to 3 weeks for the full build), no client names; the proof stays „ein Hausmeisterservice“. The closing P.S. of page 6 is gone, the contact block moved to page 7. Pages 1 to 6 stay a free guideline. The guarantee wording holds only with 50/50 payment.

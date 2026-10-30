@@ -5,9 +5,10 @@ import type { elektroBauplanPage } from "@/lib/elektroBauplanPage";
 type Data = typeof elektroBauplanPage;
 
 // Compact by design (spec 2026-10-29 landing §5): pain, solution, what the PDF holds, the form.
-// Nothing comes after the form. Layout follows docs/design/elektro-bauplan/landing-mockup.html.
+// Layout follows docs/design/elektro-bauplan/landing-mockup.html. Since 2026-10-30 the offer
+// follows the form as the page's last section (Ajdin: done-for-you with the deposit guarantee).
 export function ElektroBauplanPage({ data, form }: { data: Data; form?: ReactNode }) {
-  const { schmerz, loesung, inhalt, pdf } = data;
+  const { schmerz, loesung, inhalt, pdf, angebot } = data;
   const letzte = schmerz.zeilen.length - 1;
   return (
     <div className="bg-papier text-tiefes-wasser">
@@ -104,6 +105,45 @@ export function ElektroBauplanPage({ data, form }: { data: Data; form?: ReactNod
           <h2 className="text-2xl font-bold">{pdf.heading}</h2>
           <p className="mt-1.5">{pdf.intro}</p>
           {form ? <div className="mt-4">{form}</div> : null}
+        </section>
+
+        <section id="angebot" className="rounded-2xl bg-tiefes-wasser p-6 text-papier sm:p-8">
+          <h2 className="text-balance text-2xl font-bold leading-snug">{angebot.heading}</h2>
+          <p
+            data-testid="angebot-beweis"
+            className="mt-4 rounded-lg border-l-4 border-honig bg-white/10 px-4 py-3 text-lg font-semibold leading-snug text-honig"
+          >
+            {angebot.beweis}
+          </p>
+          <ol className="mt-6 flex flex-col gap-4">
+            {angebot.schritte.map((s, i) => (
+              <li key={s.titel} className="flex gap-4">
+                <span
+                  aria-hidden="true"
+                  className="w-6 shrink-0 font-serif text-3xl font-semibold italic leading-none text-honig"
+                >
+                  {i + 1}
+                </span>
+                <p className="leading-relaxed">
+                  <strong className="font-semibold">{s.titel}</strong> <span className="text-gletscher">{s.text}</span>
+                </p>
+              </li>
+            ))}
+          </ol>
+          <div className="mt-6 rounded-xl border-l-4 border-honig bg-sonnenlicht p-5 text-tiefes-wasser">
+            <p className="font-bold">{angebot.garantie.titel}</p>
+            <p className="mt-1 leading-relaxed">{angebot.garantie.text}</p>
+          </div>
+          <div className="mt-6 border-t border-honig/35 pt-5 text-center">
+            <p className="font-semibold leading-relaxed text-honig">{angebot.knappheit}</p>
+            <p className="mt-3 leading-relaxed">{angebot.frage}</p>
+            <a
+              href={angebot.cta.href}
+              className="mt-4 inline-flex items-center justify-center rounded-lg bg-amber px-5 py-3 text-sm font-bold text-tiefes-wasser transition-colors hover:bg-honig focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-honig focus-visible:ring-offset-2 focus-visible:ring-offset-tiefes-wasser"
+            >
+              {angebot.cta.text}
+            </a>
+          </div>
         </section>
       </div>
     </div>

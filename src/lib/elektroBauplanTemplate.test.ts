@@ -5,6 +5,7 @@ import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { findCopyIssues } from "./ratgeberCopy";
 import { partHeadings, templateText } from "./bauplanTemplateText";
+import { elektroBauplanPage } from "./elektroBauplanPage";
 
 const html = readFileSync("content/bauplan/elektro-bauplan.html", "utf8");
 const text = templateText(html);
@@ -13,6 +14,12 @@ const PAGE = '<section class="page';
 const secondPage = html.indexOf(PAGE, html.indexOf(PAGE) + 1);
 const page1Html = secondPage > 0 ? html.slice(0, secondPage) : html;
 const page1 = templateText(page1Html);
+// Page 7 is the offer (Ajdin 2026-10-30); pages 1 to 6 stay a free guideline.
+const pages = html.split(PAGE);
+const guide = templateText(pages.slice(0, 7).join(PAGE));
+const page7Html = pages[7] ?? "";
+const page7 = templateText(page7Html);
+const { angebot } = elektroBauplanPage;
 
 const HWK_URL =
   "https://www.hwk-do.de/wp-content/uploads/2023/10/HWK-Pressedienst-57-Konjunktur-Sonderumfrage_Buerokratiebelastungen-im-Handwerk.pdf";
@@ -30,8 +37,8 @@ describe("template", () => {
   it("stays ASCII", () => {
     expect(/[^\x00-\x7F]/.test(html)).toBe(false);
   });
-  it("has six pages, one per stage after the overview", () => {
-    expect((html.match(/<section class="page/g) ?? []).length).toBe(6);
+  it("has seven pages: overview, one per stage, the offer", () => {
+    expect((html.match(/<section class="page/g) ?? []).length).toBe(7);
   });
 });
 
@@ -90,9 +97,9 @@ describe("pages 2 to 5", () => {
     }
   });
   it("gives every stage page its own next steps", () => {
-    const pages = html.split('<section class="page').slice(2);
-    expect(pages).toHaveLength(5);
-    pages.forEach((p, i) => {
+    const stages = pages.slice(2, 7);
+    expect(stages).toHaveLength(5);
+    stages.forEach((p, i) => {
       expect(p, `stage page ${i + 1}`).toContain('class="vorgehen"');
       expect(templateText(p), `stage page ${i + 1}`).toContain("So gehst du vor");
     });
@@ -114,35 +121,64 @@ describe("pages 2 to 5", () => {
     expect(text).toMatch(/meldet sich als KI-Assistent/);
     expect(text).toContain("KI-Verordnung");
   });
-  it("closes with ownership, proof and the P.S.", () => {
+  it("closes the guide with ownership and proof", () => {
     for (const line of [
       "Alles gehört dir",
       "egal wer es baut oder betreut",
       "Für einen Hausmeisterservice läuft ein Sprachassistent nach diesem Muster.",
-      "P.S. Bei Fragen von deiner Seite melde dich einfach bei mir.",
-      "ajdin@vrelo-ki.de",
-      "0176 4380 6085",
     ]) {
-      expect(text, `missing: ${line}`).toContain(line);
+      expect(guide, `missing: ${line}`).toContain(line);
     }
   });
 });
 
-describe("whole document", () => {
-  it("ends with the P.S., after the contact details", () => {
-    expect(text.trim().endsWith("P.S. Bei Fragen von deiner Seite melde dich einfach bei mir.")).toBe(true);
-    expect(text.indexOf("0176 4380 6085")).toBeLessThan(text.indexOf("P.S."));
+// Each needle searched after the previous one ("Geld-zurück-Garantie" is in the headline too).
+function expectSequence(haystack: string, needles: string[]) {
+  let from = 0;
+  for (const n of needles) {
+    const at = haystack.indexOf(n, from);
+    expect(at, `missing after position ${from}: ${n}`).toBeGreaterThanOrEqual(0);
+    from = at + n.length;
+  }
+}
+
+describe("page 7: the offer", () => {
+  it("carries the landing page's offer word for word", () => {
+    expectSequence(page7, [
+      angebot.heading,
+      angebot.beweis,
+      ...angebot.schritte.flatMap((s) => [s.titel, s.text]),
+      angebot.garantie.titel,
+      angebot.garantie.text,
+      angebot.knappheit,
+      angebot.frage,
+    ]);
   });
-  it("reads as a free guideline, not as an offer", () => {
-    expect(text).not.toMatch(
-      /[Mm]it mir|ohne mich|binde ich|richte ich|baue ich|wir zusammen|prüfen wir|klären wir|schauen wir|nehmen wir|legen wir|Wenn du magst/,
+  it("shows the proof as its own band right under the headline", () => {
+    expect(page7Html).toMatch(/<\/h2>\s*<p class="angebot-beweis">/);
+  });
+  it("links the booking page with its own source, then the contact details", () => {
+    expect(page7Html).toContain('href="https://vrelo-ki.de/kontakt?src=bauplan-elektro-pdf"');
+    expectInOrder(page7, [angebot.frage, "vrelo-ki.de/kontakt", "ajdin@vrelo-ki.de", "0176 4380 6085"]);
+  });
+});
+
+describe("whole document", () => {
+  it("ends with the contact details", () => {
+    expect(text.trim().endsWith("0176 4380 6085")).toBe(true);
+  });
+  it("reads as a free guideline up to page 6", () => {
+    expect(guide).not.toMatch(
+      /\b[Mm]it mir\b|\bohne mich\b|binde ich|richte ich|baue ich|wir zusammen|prüfen wir|klären wir|schauen wir|nehmen wir|legen wir|Wenn du magst/,
     );
   });
   it("follows the house typography", () => {
     expect(findCopyIssues(text)).toEqual([]);
   });
-  it("names no price and no duration", () => {
-    expect(text).not.toMatch(/€|\bEuro\b|\bnetto\b|\bWochen\b|\bTagen?\b|\bMonate?n?\b/);
+  it("names no price anywhere and no duration beyond the offer's 2 days", () => {
+    expect(text).not.toMatch(/€|\bEuro\b|\bnetto\b|\bWochen\b|\bMonate?n?\b/);
+    expect(guide).not.toMatch(/\bTagen?\b/);
+    expect(page7.match(/\bTagen?\b/g)).toEqual(["Tagen"]);
   });
   it("names no client and no Power-Connect specifics", () => {
     expect(text).not.toMatch(

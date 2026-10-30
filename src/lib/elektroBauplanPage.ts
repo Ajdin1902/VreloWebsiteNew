@@ -27,6 +27,15 @@ export const elektroBauplanPage: {
   };
   inhalt: { heading: string; punkte: string[] };
   pdf: { heading: string; intro: string; form: PdfFormCopy };
+  angebot: {
+    heading: string;
+    beweis: string;
+    schritte: { titel: string; text: string }[];
+    garantie: { titel: string; text: string };
+    knappheit: string;
+    frage: string;
+    cta: { text: string; href: string };
+  };
 } = {
   kicker: "Bauplan für Elektrobetriebe",
   title: "Mehr Büro als Baustelle?",
@@ -74,7 +83,7 @@ export const elektroBauplanPage: {
   },
   pdf: {
     heading: "Den Bauplan als PDF",
-    intro: "Kostenlos, sechs Seiten. Ich schicke ihn dir per Mail.",
+    intro: "Kostenlos, sieben Seiten. Ich schicke ihn dir per Mail.",
     form: {
       label: "Deine E-Mail-Adresse",
       button: "PDF zuschicken",
@@ -82,5 +91,34 @@ export const elektroBauplanPage: {
       hinweis: "Du bekommst nur diese eine Mail.",
       success: "Ist unterwegs. Schau auch im Spam-Ordner nach.",
     },
+  },
+  // The offer (Ajdin 2026-10-30): the page's only sales part, last on the page and on PDF page 7.
+  // Public timeline = the first 2 days only. "Geld zurück" holds because the deposit is all he has
+  // paid before acceptance (50/50, final invoice after acceptance): never pair it with full prepayment.
+  angebot: {
+    heading: "Keine Zeit zum Selbstbauen? Ich baue ihn dir mit Geld-zurück-Garantie.",
+    // Proof right under the headline (Ajdin 2026-10-30); the number is Mirsad's confirmed one.
+    beweis: "Ein Hausmeisterservice arbeitet schon damit: Der Inhaber spart jeden Tag zwei Stunden Büroarbeit.",
+    schritte: [
+      { titel: "Eine Stunde mit dir.", text: "Wir klären, was dein Assistent können soll. Danach baue ich, du arbeitest weiter." },
+      {
+        titel: "Erste Ergebnisse nach 2 Tagen.",
+        text: "Dein Assistent läuft auf deinem Handy. Du sprichst Notizen, Termine und Mails ein, er legt alles an einem Ort ab.",
+      },
+      {
+        titel: "Danach Schritt für Schritt.",
+        text: "Angebote, Rechnungen, Großhandel. Jeden Baustein teste ich selbst, bevor du ihn bekommst.",
+      },
+      { titel: "Zum Schluss testest du.", text: "Die Schlussrechnung kommt erst, wenn alles für dich passt." },
+    ],
+    garantie: {
+      titel: "Geld-zurück-Garantie",
+      text: "Erfüllt der Assistent deine Anforderungen nicht, bekommst du deine Anzahlung zurück.",
+    },
+    // Real capacity, said publicly (Ajdin 2026-10-30). "noch 3" = free slots right now:
+    // lower it with every signed build, or the scarcity turns false (UWG §5).
+    knappheit: "Ich habe nur Kapazität für noch 3 Betriebe.",
+    frage: "Du hast Fragen? Dann lass uns eine halbe Stunde sprechen.",
+    cta: { text: "30 Minuten Gespräch buchen", href: "/kontakt?src=bauplan-elektro" },
   },
 };
