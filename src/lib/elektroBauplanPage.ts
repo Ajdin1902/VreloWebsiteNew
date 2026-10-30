@@ -39,7 +39,7 @@ export const elektroBauplanPage: {
     cta: "Bauplan kostenlos anfordern",
   },
   loesung: {
-    heading: "Dein Bauplan zum Selbstbau: der eigene KI-Büroassistent",
+    heading: "Dein Bauplan zum Selbstbau: der eigene Büroassistent",
     sub: "Er bereitet Angebote, Rechnungen und Bestellungen vor. DSGVO-konform.",
     bild: {
       src: "/images/bauplan-elektro-assistent.webp",

@@ -8,7 +8,7 @@ import type { BauplanVariant } from "./bauplan";
 // Rendered by `npm run bauplan:pdf`; every re-render gets a new hash, so update this line with it.
 export const BAUPLAN_PDF_PATH = "/bauplan/agentur-bauplan-52a16b4f.pdf";
 // Published by `npm run bauplan:elektro -- --publish`; update this line with the name it prints.
-export const ELEKTRO_BAUPLAN_PDF_PATH = "/bauplan/elektro-bauplan-1d65185e.pdf";
+export const ELEKTRO_BAUPLAN_PDF_PATH = "/bauplan/elektro-bauplan-20dad2a7.pdf";
 
 type VariantMail = {
   pdfPath: string;

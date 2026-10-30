@@ -56,7 +56,7 @@ describe("page 1", () => {
   });
   it("states the three rules", () => {
     expect(page1).toContain("Nichts Verbindliches ohne deine Freigabe.");
-    expect(page1).toContain("Preise rechnet ein fester Rechenschritt, nicht die KI.");
+    expect(page1).toContain("Preise rechnet ein fester Rechenschritt, nicht der Assistent.");
     expect(page1).toContain("Alles läuft auf deinen Namen.");
   });
   it("shows the pain as its own band right under the headline", () => {
@@ -65,7 +65,7 @@ describe("page 1", () => {
   });
   it("shows the solution as its own band between the pain and Heute | Mit", () => {
     expectInOrder(page1Html, ['class="schmerz"', 'class="bauplan-titel"', 'class="loesung"', 'class="vergleich"']);
-    expect(page1).toContain("Dein Bauplan zum Selbstbau: der eigene KI-Büroassistent");
+    expect(page1).toContain("Dein Bauplan zum Selbstbau: der eigene Büroassistent");
   });
   it("lists the stages instead of cards", () => {
     expect(page1Html).toContain("<ol");
