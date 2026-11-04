@@ -4,7 +4,7 @@ import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { Reveal } from "@/components/Reveal";
 import { leistungenPages, leistungHref } from "@/lib/leistungenPages";
 
-// The nine services as links into their subpages (spec 2026-10-01 §3.4).
+// The eight services as links into their subpages (spec 2026-10-01 §3.4; 4 x 2 since 2026-11-04).
 
 // Spine A "die Quelle": a dark blue-hour karst pool with ripples spreading from a
 // single drop — the effect of taking the tasks off the plate, rippling outward.
@@ -18,24 +18,15 @@ export function WasIchBaue() {
       {/* Centered spine: the offer leads, the service chips below carry the visual. */}
       <div className="mx-auto max-w-[44rem] text-center">
         <Reveal as="h2" delayMs={0} id="was-ich-baue-heading" className="text-balance text-3xl font-semibold tracking-tight text-papier md:text-4xl">
-          Automatisieren. Befähigen. Betreiben.
+          Prüfen. Bauen. Befähigen. Betreiben.
         </Reveal>
         <Reveal as="p" delayMs={80} className="mt-5 text-balance text-lg text-gletscher">
           Von der ersten Automatisierung bis zum laufenden System: such dir aus, wo du anfängst.
         </Reveal>
       </div>
-      <Reveal as="ul" delayMs={200} aria-labelledby="was-ich-baue-heading" className="mx-auto mt-10 grid max-w-3xl gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {leistungenPages.map((p, i) => (
-          // Nine cards fill the three-column grid (3 x 3). In two columns the
-          // last one sits alone, so it is centered at half width there.
-          <li
-            key={p.slug}
-            className={
-              i === leistungenPages.length - 1
-                ? "sm:col-span-2 sm:mx-auto sm:w-[calc(50%-0.375rem)] lg:col-span-1 lg:mx-0 lg:w-auto"
-                : undefined
-            }
-          >
+      <Reveal as="ul" delayMs={200} aria-labelledby="was-ich-baue-heading" className="mx-auto mt-10 grid max-w-3xl gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {leistungenPages.map((p) => (
+          <li key={p.slug}>
             <Link
               href={leistungHref(p.slug)}
               className="card-depth flex h-full items-center justify-center rounded-2xl border border-gletscher/25 bg-gletscher/10 px-4 py-3 text-center text-gletscher transition-colors hover:border-honig hover:text-papier focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-tiefes-wasser focus-visible:ring-honig"

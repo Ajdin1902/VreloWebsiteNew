@@ -24,4 +24,10 @@ describe("parked broker-era routes", () => {
       expect(r!.permanent).toBe(false);
     }
   });
+
+  it("sends the retired KI-Beratung page to the audit permanently (merged 2026-11-04)", async () => {
+    const r = (await nextConfig.redirects!()).find((x) => x.source === "/leistungen/ki-beratung");
+    expect(r?.destination).toBe("/leistungen/prozess-audit");
+    expect(r?.permanent).toBe(true);
+  });
 });

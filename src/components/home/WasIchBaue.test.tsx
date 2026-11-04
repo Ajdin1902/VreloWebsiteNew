@@ -26,16 +26,12 @@ describe("WasIchBaue", () => {
       expect(screen.getByRole("link", { name: p.navLabel })).toHaveAttribute("href", `/leistungen/${p.slug}`);
   });
 
-  // 2026-10-15: nine cards fill a 3 x 3 grid; in the two-column view the
-  // ninth sits alone, so it is centered there (and only there).
-  it("lays nine cards out 3 x 3 and centers the lone last card in two columns", () => {
+  // 2026-11-04: eight cards fill a 4 x 2 grid (2 x 4 on small screens), no lone card.
+  it("lays eight cards out 4 x 2", () => {
     render(<WasIchBaue />);
-    const list = screen.getByRole("list");
-    expect(list).toHaveClass("lg:grid-cols-3");
+    expect(screen.getByRole("list")).toHaveClass("lg:grid-cols-4");
     const items = screen.getAllByRole("listitem");
-    expect(items).toHaveLength(9);
-    expect(items[8]).toHaveTextContent("Betreuung & Wartung");
-    expect(items[8]).toHaveClass("sm:col-span-2", "lg:col-span-1");
-    for (const item of items.slice(0, 8)) expect(item).not.toHaveClass("sm:col-span-2");
+    expect(items).toHaveLength(8);
+    for (const item of items) expect(item).not.toHaveClass("sm:col-span-2");
   });
 });

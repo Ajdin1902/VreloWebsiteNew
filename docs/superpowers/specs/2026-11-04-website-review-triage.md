@@ -80,7 +80,9 @@ Buckets: **Done** (branch `fix/review-2026-11-04`) · **Wrong** (the site alread
 - **30/31** „Praxis oder Kanzlei“ removed from the Prozess-Check (no AVV/TOM page for now).
 - **37** No phone number. Decision, not an omission.
 
-## Leistungen restructure (review #1, #2, #3) — proposal, waiting on Ajdin
+## Leistungen restructure (review #1, #2, #3) — option 1 built on 2026-11-04 (hub spec §11); KI-Betriebssystem under Bauen as the roof, a „KI“ door rejected
+
+Original proposal, kept for the record:
 
 Today: nine subpages under three groups (Automatisieren: Prozessautomatisierung · KI-Automatisierung · KI-Server · KI-Betriebssystem? / Befähigen: Claude · KI-Schulung · KI-Beratung · Prozess-Audit / Betreiben: Betreuung), all under one route `/leistungen/[slug]`, copy in `leistungenPages.ts`, nine inline SVG Grafiken, `CHECK_SRC` slug per page, Ratgeber `leistung:` ties, `LeistungenMenu` dropdown, sitemap + Service JSON-LD.
 

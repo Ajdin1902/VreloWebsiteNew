@@ -8,7 +8,6 @@ import { KiServerRahmen } from "@/components/leistungen/grafiken/KiServerRahmen"
 import { ProzessAuditBalken } from "@/components/leistungen/grafiken/ProzessAuditBalken";
 import { BetreuungZeitlinie } from "@/components/leistungen/grafiken/BetreuungZeitlinie";
 import { ClaudeProjekt } from "@/components/leistungen/grafiken/ClaudeProjekt";
-import { BeratungTrichter } from "@/components/leistungen/grafiken/BeratungTrichter";
 import { SchulungVorlagen } from "@/components/leistungen/grafiken/SchulungVorlagen";
 import type { LeistungGrafik, LeistungPage } from "@/lib/leistungenPages";
 
@@ -24,7 +23,6 @@ const DRAWINGS: Record<LeistungGrafik, ComponentType> = {
   "prozess-audit-balken": ProzessAuditBalken,
   "betreuung-zeitlinie": BetreuungZeitlinie,
   "claude-projekt": ClaudeProjekt,
-  "beratung-trichter": BeratungTrichter,
   "schulung-vorlagen": SchulungVorlagen,
 };
 

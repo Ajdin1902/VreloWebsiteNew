@@ -173,3 +173,16 @@ New Ratgeber explainer articles (own batch) · new hero images (reuse existing w
 - `first-client-conversations.md` §0a: clarify that the „nie KI sagen“ Sperre applies to spoken walk-in talks with wary owners only; the website uses KI openly (2026-10-01).
 - Google-Unternehmensprofil „Leistungen“ list: align with the seven services.
 - Vault light sync.
+
+## 11. Addendum 2026-11-04: four doors, eight pages
+
+Decided by Ajdin after the external review (`2026-11-04-website-review-triage.md`): the three tech groups read as „I do everything AI“. Regrouped by the question an owner asks, URLs unchanged except one:
+
+| Door (`group`) | Pages |
+|---|---|
+| Prüfen (`pruefen`) | `prozess-audit` (absorbs KI-Beratung: `/leistungen/ki-beratung` → 308 to the audit, its one unique line folded into the audit proof body, „KI-Beratung“ kept in the audit meta description) |
+| Bauen (`bauen`) | `prozessautomatisierung` · `ki-automatisierung` · `ki-betriebssystem` (the roof, HQ §3) |
+| Befähigen (`befaehigen`) | `claude` · `ki-schulung` |
+| Betreiben (`betreiben`) | `ki-server` (infrastructure is running, not building) · `betreuung` |
+
+Homepage `WasIchBaue` = „Prüfen. Bauen. Befähigen. Betreiben.“ with eight chips in a 4 × 2 grid; header dropdown four columns. `BeratungTrichter` drawing and `CHECK_SRC.leistungKiBeratung` removed; the Ratgeber `selbst-bauen-oder-bauen-lassen` is tied to the audit now. A „KI“ door was rejected: five of the pages would land there and Bauen would stand alone.

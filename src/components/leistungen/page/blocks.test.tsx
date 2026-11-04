@@ -34,7 +34,7 @@ describe("LeistungHero", () => {
   it("shows group, title, the one line and the Prozess-Check on a check page", () => {
     const p = page("prozessautomatisierung");
     render(<LeistungHero page={p} />);
-    expect(screen.getByText(/Automatisieren/)).toBeInTheDocument();
+    expect(screen.getByText(/Leistungen · Bauen/)).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 1, name: p.title })).toBeInTheDocument();
     expect(screen.getByText(p.subline)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Prozess-Check starten/ })).toHaveAttribute(
@@ -92,7 +92,7 @@ describe("ProofBlock", () => {
 
 describe("ExampleBlock", () => {
   it("shows before, three numbered steps and after", () => {
-    const ex = page("ki-beratung").example;
+    const ex = page("ki-schulung").example;
     if (!("steps" in ex)) throw new Error("expected a step run");
     render(<ExampleBlock example={ex} />);
     expect(screen.getByText(ex.before)).toBeInTheDocument();
@@ -125,7 +125,7 @@ describe("ExampleBlock", () => {
 
 describe("NoteBlock", () => {
   it("renders the note with an external link", () => {
-    const note = page("ki-beratung").note!;
+    const note = page("ki-schulung").note!;
     render(<NoteBlock note={note} />);
     expect(screen.getByRole("complementary", { name: note.heading })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: new RegExp(note.link.label) })).toHaveAttribute("href", note.link.href);
@@ -153,7 +153,7 @@ describe("VergleichBlock", () => {
 });
 
 describe("GrafikBlock", () => {
-  it.each(["prozessautomatisierung", "ki-automatisierung", "ki-server", "claude", "ki-schulung", "ki-beratung", "prozess-audit", "ki-betriebssystem", "betreuung"])("%s: shows the heading and exposes the drawing as one labelled image", (slug) => {
+  it.each(["prozessautomatisierung", "ki-automatisierung", "ki-server", "claude", "ki-schulung", "prozess-audit", "ki-betriebssystem", "betreuung"])("%s: shows the heading and exposes the drawing as one labelled image", (slug) => {
     const g = page(slug).grafik!;
     render(<GrafikBlock grafik={g} />);
     expect(screen.getByRole("heading", { level: 2, name: g.heading })).toBeInTheDocument();

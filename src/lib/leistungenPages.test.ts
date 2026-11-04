@@ -5,7 +5,7 @@ import { leistungenPages, leistungGroups, getLeistungPage, leistungHref, automat
 import { findCopyIssues } from "./ratgeberCopy";
 import { getAllArticles } from "./ratgeber";
 
-const SLUGS = ["prozessautomatisierung", "ki-automatisierung", "ki-server", "claude", "ki-schulung", "ki-beratung", "prozess-audit", "ki-betriebssystem", "betreuung"];
+const SLUGS = ["prozessautomatisierung", "ki-automatisierung", "ki-server", "claude", "ki-schulung", "prozess-audit", "ki-betriebssystem", "betreuung"];
 const NON_COPY_KEYS = new Set(["slug", "group", "heroImage", "url", "src", "poster", "href", "related", "kind", "year"]);
 
 // Every German string on a page, skipping paths, URLs and enum-like keys.
@@ -33,12 +33,13 @@ describe("leistungenPages", () => {
     expect(leistungenPages.map((p) => p.slug)).toEqual(SLUGS);
   });
 
-  it("groups three, four and two", () => {
-    expect(leistungGroups.map((g) => g.label)).toEqual(["Automatisieren", "Befähigen", "Betreiben"]);
+  it("sorts the eight pages behind four doors (2026-11-04)", () => {
+    expect(leistungGroups.map((g) => g.label)).toEqual(["Prüfen", "Bauen", "Befähigen", "Betreiben"]);
     const by = (g: string) => leistungenPages.filter((p) => p.group === g).map((p) => p.slug);
-    expect(by("automatisieren")).toEqual(["prozessautomatisierung", "ki-automatisierung", "ki-server"]);
-    expect(by("befaehigen")).toEqual(["claude", "ki-schulung", "ki-beratung", "prozess-audit"]);
-    expect(by("betreiben")).toEqual(["ki-betriebssystem", "betreuung"]);
+    expect(by("pruefen")).toEqual(["prozess-audit"]);
+    expect(by("bauen")).toEqual(["prozessautomatisierung", "ki-automatisierung", "ki-betriebssystem"]);
+    expect(by("befaehigen")).toEqual(["claude", "ki-schulung"]);
+    expect(by("betreiben")).toEqual(["ki-server", "betreuung"]);
   });
 
   it.each(leistungenPages.map((p) => [p.slug, p] as const))("%s fills every block", (_s, p) => {
@@ -79,8 +80,8 @@ describe("leistungenPages", () => {
     }
   });
 
-  it("uses practice proof on Claude, Schulung, Beratung and Audit, without client names", () => {
-    for (const s of ["claude", "ki-schulung", "ki-beratung", "prozess-audit"]) expect(getLeistungPage(s)!.proof.kind).toBe("practice");
+  it("uses practice proof on Claude, Schulung and Audit, without client names", () => {
+    for (const s of ["claude", "ki-schulung", "prozess-audit"]) expect(getLeistungPage(s)!.proof.kind).toBe("practice");
     const all = leistungenPages.flatMap((p) => copyStrings(p)).join(" ");
     expect(all).not.toMatch(/\b(Velp|MDZ|Baude|Alen|Purisic)\b/);
   });
@@ -89,9 +90,9 @@ describe("leistungenPages", () => {
     const kinds = Object.fromEntries(leistungenPages.map((p) => [p.slug, p.cta.kind]));
     expect(kinds).toEqual({
       prozessautomatisierung: "check", "ki-automatisierung": "check", "prozess-audit": "check", betreuung: "check",
-      "ki-server": "kontakt", claude: "kontakt", "ki-schulung": "kontakt", "ki-beratung": "kontakt", "ki-betriebssystem": "kontakt",
+      "ki-server": "kontakt", claude: "kontakt", "ki-schulung": "kontakt", "ki-betriebssystem": "kontakt",
     });
-    expect(new Set(leistungenPages.map((p) => p.cta.src)).size).toBe(9);
+    expect(new Set(leistungenPages.map((p) => p.cta.src)).size).toBe(8);
   });
 
   it("carries notes: Digitalbonus on both build pages + the audit, Art. 4 on KI-Schulung, gift page on Claude + KI-Betriebssystem, KI-Beratung → audit", () => {
@@ -100,7 +101,6 @@ describe("leistungenPages", () => {
       "ki-automatisierung",
       "claude",
       "ki-schulung",
-      "ki-beratung",
       "prozess-audit",
       "ki-betriebssystem",
     ]);
@@ -108,7 +108,6 @@ describe("leistungenPages", () => {
     for (const slug of ["prozessautomatisierung", "ki-automatisierung"] as const)
       expect(getLeistungPage(slug)!.note).toEqual(getLeistungPage("prozess-audit")!.note);
     expect(getLeistungPage("ki-schulung")!.note!.body).toMatch(/Artikel 4/);
-    expect(getLeistungPage("ki-beratung")!.note!.link.href).toBe("/leistungen/prozess-audit");
     const note = getLeistungPage("prozess-audit")!.note!;
     expect(note.body).toContain("kann");
     expect(note.body).toContain("Antrag");
@@ -231,7 +230,6 @@ describe("leistungenPages", () => {
       ["ki-server", "ki-server-rahmen"],
       ["claude", "claude-projekt"],
       ["ki-schulung", "schulung-vorlagen"],
-      ["ki-beratung", "beratung-trichter"],
       ["prozess-audit", "prozess-audit-balken"],
       ["ki-betriebssystem", "betriebssystem-becken"],
       ["betreuung", "betreuung-zeitlinie"],

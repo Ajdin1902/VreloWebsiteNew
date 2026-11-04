@@ -79,7 +79,7 @@ export function LeistungenMenu({ pathname }: { pathname: string | null }) {
       {open ? (
         <div
           id="leistungen-menu"
-          className="absolute inset-x-6 top-full z-50 mx-auto mt-2 grid max-w-3xl gap-6 rounded-2xl border border-faden bg-papier p-6 shadow-deepwater sm:grid-cols-3"
+          className="absolute inset-x-6 top-full z-50 mx-auto mt-2 grid max-w-3xl gap-6 rounded-2xl border border-faden bg-papier p-6 shadow-deepwater sm:grid-cols-2 lg:grid-cols-4"
         >
           {leistungenMenu.map((g) => (
             <div key={g.label}>
@@ -103,7 +103,7 @@ export function LeistungenMenu({ pathname }: { pathname: string | null }) {
           <Link
             href="/leistungen"
             onClick={() => setOpen(false)}
-            className={`text-sm font-semibold text-vrelo-petrol sm:col-span-3 ${linkFocus}`}
+            className={`text-sm font-semibold text-vrelo-petrol sm:col-span-2 lg:col-span-4 ${linkFocus}`}
           >
             Alle Leistungen <span aria-hidden="true">→</span>
           </Link>

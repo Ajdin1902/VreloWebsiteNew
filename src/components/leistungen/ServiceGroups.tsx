@@ -2,10 +2,9 @@ import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { leistungGroups, leistungenPages, leistungHref } from "@/lib/leistungenPages";
 
-// The hub's service menu: nine cards in three groups (Automatisieren ·
-// Befähigen · Betreiben), so the offer reads as one system rather than a list.
-// A group of four (Befähigen, since the Prozess-Audit page) runs four across
-// on wide screens, so no card sits alone in a second row.
+// The hub's service menu: eight cards behind four doors (Prüfen · Bauen ·
+// Befähigen · Betreiben, review 2026-11-04), so the offer reads as one path
+// rather than a list. A group of four would run four across on wide screens.
 export function ServiceGroups() {
   return (
     <div className="flex flex-col gap-14">

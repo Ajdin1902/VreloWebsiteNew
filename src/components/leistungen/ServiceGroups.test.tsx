@@ -4,15 +4,14 @@ import { ServiceGroups } from "./ServiceGroups";
 import { leistungenPages } from "@/lib/leistungenPages";
 
 describe("ServiceGroups", () => {
-  it("shows three labelled groups", () => {
+  it("shows the four doors in order", () => {
     render(<ServiceGroups />);
-    expect(screen.getAllByRole("heading", { level: 2 }).map((h) => h.textContent)).toEqual(["Automatisieren", "Befähigen", "Betreiben"]);
+    expect(screen.getAllByRole("heading", { level: 2 }).map((h) => h.textContent)).toEqual(["Prüfen", "Bauen", "Befähigen", "Betreiben"]);
   });
 
   it("links every service card to its subpage with its one-line definition", () => {
     render(<ServiceGroups />);
     for (const p of leistungenPages) {
-      // Anchored: KI-Beratung's one-liner names the Prozess-Audit too.
       const card = screen.getByRole("link", { name: new RegExp("^" + p.navLabel.replace(/[.*+?^${}()|[\]\\&]/g, "\\$&")) });
       expect(card).toHaveAttribute("href", `/leistungen/${p.slug}`);
       expect(within(card).getByText(p.kurz)).toBeInTheDocument();

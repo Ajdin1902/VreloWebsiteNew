@@ -43,15 +43,6 @@ describe("/leistungen/[slug]", () => {
     expect(hrefs).toContain("/prozess-check?src=leistung-prozess-audit");
   });
 
-  it("keeps KI-Beratung on the Erstgespräch and points it to the audit page", async () => {
-    render(await LeistungSubpage(params("ki-beratung")));
-    expect(document.getElementById("prozess-audit")).toBeNull();
-    expect(screen.queryByLabelText("Förderung")).toBeNull();
-    expect(screen.getByRole("link", { name: "Zum Prozess-Audit" })).toHaveAttribute("href", "/leistungen/prozess-audit");
-    const hrefs = screen.getAllByRole("link", { name: "Erstgespräch buchen" }).map((l) => l.getAttribute("href"));
-    expect(hrefs).toContain("/kontakt?src=leistung-ki-beratung");
-  });
-
   it("404s an unknown slug", async () => {
     await expect(LeistungSubpage(params("gibt-es-nicht"))).rejects.toThrow();
   });

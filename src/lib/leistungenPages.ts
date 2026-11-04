@@ -1,6 +1,7 @@
 // src/lib/leistungenPages.ts
 //
-// The nine Leistungen subpages (spec 2026-10-01; Prozess-Audit added 2026-10-15). Every German string for
+// The eight Leistungen subpages (spec 2026-10-01; Prozess-Audit added 2026-10-15; KI-Beratung folded
+// into the audit and the three groups regrouped as four doors on 2026-11-04). Every German string for
 // /leistungen/<slug> lives here; the route and the block components hold none.
 // One entry = one page: a new service is a new entry, never a new component.
 // Rules for this copy: docs/superpowers/specs/2026-10-01-leistungen-hub-design.md §2, §4, §7.
@@ -20,15 +21,15 @@ export type LeistungSlug =
   | "ki-server"
   | "claude"
   | "ki-schulung"
-  | "ki-beratung"
   | "prozess-audit"
   | "ki-betriebssystem"
   | "betreuung";
 
 /** One drawing per page, in src/components/leistungen/grafiken/. */
-export type LeistungGrafik = "ki-fluss" | "betriebssystem-becken" | "prozess-fliessband" | "ki-server-rahmen" | "prozess-audit-balken" | "betreuung-zeitlinie" | "claude-projekt" | "beratung-trichter" | "schulung-vorlagen";
+export type LeistungGrafik = "ki-fluss" | "betriebssystem-becken" | "prozess-fliessband" | "ki-server-rahmen" | "prozess-audit-balken" | "betreuung-zeitlinie" | "claude-projekt" | "schulung-vorlagen";
 
-export type LeistungGroup ="automatisieren" | "befaehigen" | "betreiben";
+// Four doors (review 2026-11-04, Ajdin): the question an owner asks, not a tech category.
+export type LeistungGroup = "pruefen" | "bauen" | "befaehigen" | "betreiben";
 
 export type StudyFigure = { figure: string; claim: string; source: string; year: number; url: string };
 
@@ -69,7 +70,8 @@ export type LeistungPage = {
 };
 
 export const leistungGroups: { id: LeistungGroup; label: string }[] = [
-  { id: "automatisieren", label: "Automatisieren" },
+  { id: "pruefen", label: "Prüfen" },
+  { id: "bauen", label: "Bauen" },
   { id: "befaehigen", label: "Befähigen" },
   { id: "betreiben", label: "Betreiben" },
 ];
@@ -165,7 +167,7 @@ const PRACTICE_BODY =
 export const leistungenPages: LeistungPage[] = [
   {
     slug: "prozessautomatisierung",
-    group: "automatisieren",
+    group: "bauen",
     navLabel: "Prozessautomatisierung",
     title: "Prozessautomatisierung",
     subline:
@@ -218,7 +220,7 @@ export const leistungenPages: LeistungPage[] = [
   },
   {
     slug: "ki-automatisierung",
-    group: "automatisieren",
+    group: "bauen",
     navLabel: "KI-Automatisierung & Assistenten",
     title: "KI-Automatisierung & Assistenten",
     subline:
@@ -266,7 +268,7 @@ export const leistungenPages: LeistungPage[] = [
   },
   {
     slug: "ki-server",
-    group: "automatisieren",
+    group: "betreiben",
     navLabel: "KI-Server",
     title: "KI-Server",
     subline:
@@ -438,75 +440,14 @@ export const leistungenPages: LeistungPage[] = [
     related: ["claude-im-alltag-nutzen", "claude-oder-chatgpt", "was-ki-im-betrieb-wirklich-kann"],
   },
   {
-    slug: "ki-beratung",
-    group: "befaehigen",
-    navLabel: "KI-Beratung",
-    title: "KI-Beratung",
-    subline:
-      "Kostenloses Erstgespräch: Wir finden heraus, wo KI dir Zeit spart.",
-    metaDescription:
-      "KI-Beratung für Unternehmen: Im kostenlosen Erstgespräch und Prozess-Audit finden wir heraus, wo KI und Automatisierung sich bei dir lohnen. Mit Fahrplan, wenn es passt.",
-    kurz: "Kostenloses Erstgespräch: wo sich KI bei dir lohnt. Wenn ja, folgt ein Prozess-Audit mit Fahrplan.",
-    heroImage: "/images/bg-horizont.webp",
-    pain: {
-      heading: "Kennst du das?",
-      moments: [
-        "Alle sagen KI, keiner sagt wo",
-        "Ausprobiert, nichts ist geblieben",
-        "Agentur-Angebote, schwer zu prüfen",
-        "Lohnt sich das für deine Größe?",
-      ],
-      close: "Im Gespräch klären wir, was sich bei dir lohnt und was nicht.",
-    },
-    grafik: {
-      kind: "beratung-trichter",
-      heading: "Aus vielen Ideen wird ein erster Schritt.",
-      alt: "Ein Trichter: Viele Ideen kommen hinein, etwa Rechnungen, Social Media, Angebote und Termine. Die Frage, ob es sich lohnt, sortiert sie. Chatbot und Agent fallen heraus. Am Ende steht ein erster Schritt, dahinter das, was danach und später kommt.",
-    },
-    proof: {
-      kind: "practice",
-      heading: "Warum ich",
-      body: "Ich arbeite selbst jeden Tag mit KI und baue die Automatisierungen, die ich empfehle. In meinen früheren Positionen und bei Kunden habe ich KI eingeführt und in bestehende Abläufe eingebunden. Ich empfehle dir nur, was ich selbst bauen und betreiben würde.",
-      points: [
-        { title: "Im Team erprobt.", body: "In meiner früheren Stelle habe ich mit KI gearbeitet und für unsere Programmierprojekte ein KI-Gehirn eingeführt. Das Team nutzt es bis heute." },
-        { title: "Erst schauen, was du schon hast.", body: "Viele Programme können mehr, als genutzt wird. Bevor ich etwas baue, prüfe ich, ob dein Werkzeug es schon kann." },
-        { title: "Der Fahrplan gehört dir.", body: "Du kannst ihn selbst umsetzen, umsetzen lassen oder mit mir bauen." },
-      ],
-      objection:
-        "Mit KI auskennen musst du dich nicht. Du erzählst mir, was dich Zeit kostet. Ich suche die passende Technik dazu.",
-    },
-    example: {
-      heading: "So läuft die Beratung",
-      before: "Viele Ideen, kein klarer erster Schritt.",
-      steps: [
-        "Im kostenlosen Erstgespräch erzählst du mir, was dich jeden Tag Zeit kostet.",
-        "Lohnt es sich, schaue ich mir im Prozess-Audit deine Abläufe genauer an.",
-        "Wenn sich etwas lohnt, bekommst du ein bis zwei Werktage später einen Fahrplan: was sich automatisieren lässt, was es bringt und in welcher Reihenfolge.",
-      ],
-      after: "Du weißt, womit du anfängst. Ob und mit wem du es umsetzt, entscheidest du selbst.",
-    },
-    note: {
-      heading: "Prozess-Audit",
-      body: "Lohnt sich nach dem Erstgespräch ein genauerer Blick, folgt der Prozess-Audit. Auch er kostet dich nichts.",
-      link: { label: "Zum Prozess-Audit", href: "/leistungen/prozess-audit" },
-    },
-    cta: {
-      kind: "kontakt",
-      src: CHECK_SRC.leistungKiBeratung,
-      heading: "Lass uns herausfinden, wo es sich lohnt.",
-      lead: "Das Erstgespräch dauert 30 Minuten und kostet nichts. Danach weißt du, ob sich ein genauerer Blick lohnt.",
-    },
-    related: ["selbst-bauen-oder-bauen-lassen", "was-ist-prozessautomatisierung", "was-ist-ein-ki-agent"],
-  },
-  {
     slug: "prozess-audit",
-    group: "befaehigen",
+    group: "pruefen",
     navLabel: "Prozess-Audit",
     title: "Prozess-Audit",
     subline:
       "Kostenlos: Wir finden die Aufgabe, die du zuerst loswerden solltest.",
     metaDescription:
-      "Kostenloser Prozess-Audit für Betriebe und Unternehmen: Ich gehe deine Abläufe mit dir durch. Lohnt sich etwas, bekommst du einen Fahrplan, der dir gehört.",
+      "Kostenloser Prozess-Audit und KI-Beratung für Betriebe und Unternehmen: Ich gehe deine Abläufe mit dir durch. Lohnt sich etwas, bekommst du deinen Fahrplan.",
     kurz: "Kostenlos: Ich gehe deine Abläufe mit dir durch. Lohnt sich etwas, bekommst du einen Fahrplan.",
     heroImage: "/images/bg-proof.webp",
     pain: {
@@ -527,7 +468,7 @@ export const leistungenPages: LeistungPage[] = [
     proof: {
       kind: "practice",
       heading: "Warum ich",
-      body: "Im Audit schaue ich mir an, wie deine Arbeit heute läuft: wo du Daten von Hand überträgst und welche Aufgabe dich die meiste Zeit kostet. Ich empfehle dir nur, was ich selbst bauen und betreiben würde.",
+      body: "Im Audit schaue ich mir an, wie deine Arbeit heute läuft: wo du Daten von Hand überträgst und welche Aufgabe dich die meiste Zeit kostet. Ich empfehle dir nur, was ich selbst bauen und betreiben würde. Mit KI auskennen musst du dich nicht: Du erzählst mir, was dich Zeit kostet, ich suche die passende Technik dazu.",
       points: [
         { title: "Erst das, was du schon hast.", body: "Dein Programm kann oft mehr, als du nutzt. Kann es die Aufgabe schon, zeige ich dir die Einstellung. Dann brauchst du keinen Bau." },
         { title: "Du bereitest nichts vor.", body: "Ich bringe die Fragen mit. Du erzählst mir, wie dein Tag läuft." },
@@ -558,7 +499,7 @@ export const leistungenPages: LeistungPage[] = [
   },
   {
     slug: "ki-betriebssystem",
-    group: "betreiben",
+    group: "bauen",
     navLabel: "KI-Betriebssystem",
     title: "KI-Betriebssystem",
     subline:

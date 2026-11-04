@@ -18,6 +18,8 @@ const nextConfig: NextConfig = {
   // the redirect carries the batch as `?src=` so replies stay attributable.
   async redirects() {
     return [
+      // KI-Beratung folded into the Prozess-Audit (2026-11-04): permanent, the page is gone.
+      { source: "/leistungen/ki-beratung", destination: "/leistungen/prozess-audit", permanent: true },
       { source: "/brief", destination: "/prozess-check?src=brief", permanent: false },
       { source: "/brief/:segment", destination: "/prozess-check?src=brief-:segment", permanent: false },
       // Walk-in flyer (HQ: Knowledge/marketing/flyer/flyer-brief.md), same pattern.

@@ -61,10 +61,11 @@ describe("bare routes", () => {
 });
 
 describe("leistungenMenu", () => {
-  it("groups the nine subpages under three labels", () => {
-    expect(leistungenMenu.map((g) => g.label)).toEqual(["Automatisieren", "Befähigen", "Betreiben"]);
-    expect(leistungenMenu.flatMap((g) => g.items)).toHaveLength(9);
-    expect(leistungenMenu[1].items[0]).toEqual({ href: "/leistungen/claude", label: "Claude für Unternehmen" });
+  it("groups the eight subpages behind four doors", () => {
+    expect(leistungenMenu.map((g) => g.label)).toEqual(["Prüfen", "Bauen", "Befähigen", "Betreiben"]);
+    expect(leistungenMenu.flatMap((g) => g.items)).toHaveLength(8);
+    expect(leistungenMenu[0].items).toEqual([{ href: "/leistungen/prozess-audit", label: "Prozess-Audit" }]);
+    expect(leistungenMenu[2].items[0]).toEqual({ href: "/leistungen/claude", label: "Claude für Unternehmen" });
   });
 });
 

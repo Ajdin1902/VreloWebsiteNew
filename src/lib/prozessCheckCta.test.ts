@@ -69,10 +69,9 @@ describe("subpage attribution", () => {
       CHECK_SRC.leistungKiServer,
       CHECK_SRC.leistungClaude,
       CHECK_SRC.leistungKiSchulung,
-      CHECK_SRC.leistungKiBeratung,
       CHECK_SRC.leistungBetreuung,
     ];
-    expect(new Set(slugs).size).toBe(7);
+    expect(new Set(slugs).size).toBe(6);
     for (const s of slugs) expect(normalizeSource(s)).toBe(s);
   });
 
