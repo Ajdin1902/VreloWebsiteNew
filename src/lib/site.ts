@@ -14,6 +14,8 @@ export const siteUrl = normalizeBase(process.env.NEXT_PUBLIC_SITE_URL);
 export const siteName = "Vrelo";
 // The Vrelo company page: footer link + JSON-LD sameAs (2026-09-26).
 export const linkedinUrl = "https://www.linkedin.com/company/vrelo-ki/";
+// The founder's own profile (review 2026-11-04: the person is the trust signal).
+export const linkedinProfileUrl = "https://www.linkedin.com/in/ajdin-dzafic-776964233/";
 
 export function canonical(path: string): string {
   return `${siteUrl}${path}`;

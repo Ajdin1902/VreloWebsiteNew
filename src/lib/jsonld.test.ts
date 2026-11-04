@@ -17,6 +17,7 @@ describe("jsonld builders", () => {
 
   it("professionalServiceLd ties the business to its LinkedIn page (sameAs)", () => {
     expect(professionalServiceLd().sameAs).toEqual(["https://www.linkedin.com/company/vrelo-ki/"]);
+    expect(professionalServiceLd().founder.sameAs).toEqual(["https://www.linkedin.com/in/ajdin-dzafic-776964233/"]);
   });
 
   it("personLd describes the founder", () => {

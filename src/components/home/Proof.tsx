@@ -19,6 +19,15 @@ const values = [
     title: "Du wartest nichts.",
     body: "Einrichten, absichern, am Laufen halten. Das übernehme ich, du musst nichts lernen.",
   },
+  // Guarantee + ownership moved up from /leistungen step 6 (review 2026-11-04).
+  {
+    title: "Alles gehört dir.",
+    body: "Server, Konten, Daten und Doku laufen auf deinen Namen. Hörst du mit mir auf, läuft dein System weiter.",
+  },
+  {
+    title: "14 Tage Geld zurück.",
+    body: "Bist du nach der Übergabe nicht zufrieden, bekommst du den vollen Betrag zurück und ich baue alles sauber zurück.",
+  },
 ];
 
 export function Proof() {

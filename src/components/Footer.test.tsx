@@ -13,6 +13,13 @@ describe("Footer", () => {
     expect(screen.getByRole("link", { name: "Prozess-Check" })).toHaveAttribute("href", "/prozess-check?src=footer");
   });
 
+  it("links the founder's own LinkedIn profile, opening in a new tab", () => {
+    render(<Footer />);
+    const link = screen.getByRole("link", { name: "Ajdin Dzafic auf LinkedIn" });
+    expect(link).toHaveAttribute("href", "https://www.linkedin.com/in/ajdin-dzafic-776964233/");
+    expect(link).toHaveAttribute("target", "_blank");
+  });
+
   it("links the Vrelo LinkedIn page, opening in a new tab", () => {
     render(<Footer />);
     const link = screen.getByRole("link", { name: "Vrelo auf LinkedIn" });

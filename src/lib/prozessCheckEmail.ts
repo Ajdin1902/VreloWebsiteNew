@@ -101,7 +101,6 @@ const BRANCHE_LABEL: Record<Branche, string> = {
   immobilien: "Immobilien",
   reinigung: "Reinigung/Dienstleistung",
   agentur: "Agentur/Beratung",
-  praxis: "Praxis/Kanzlei",
   handel: "Handel",
   anderes: "Etwas anderes",
 };

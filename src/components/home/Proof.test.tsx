@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import { Proof } from "./Proof";
 
 describe("Proof", () => {
-  it("renders the heading and four value cards", () => {
+  it("renders the heading and six value cards (guarantee + ownership since 2026-11-04)", () => {
     render(<Proof />);
     expect(
       screen.getByRole("heading", { name: /Sorgfältig gebaut\. Verlässlich im Betrieb\./i }),
@@ -13,6 +13,8 @@ describe("Proof", () => {
       "Praxiserprobt.",
       "Maßgeschneidert statt von der Stange.",
       "Du wartest nichts.",
+      "Alles gehört dir.",
+      "14 Tage Geld zurück.",
     ]) {
       expect(screen.getByRole("heading", { name: title })).toBeInTheDocument();
     }

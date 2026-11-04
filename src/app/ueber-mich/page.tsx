@@ -26,7 +26,7 @@ export default function UeberMichPage() {
         title="Über mich"
         src="/images/ueber-mich-banner.webp"
         portrait={portraits.stehend}
-        leadHeading="Über 160 Stunden pro Woche im Konzern gespart. Jetzt für deinen Betrieb."
+        leadHeading="Über 160 Stunden pro Woche in der Logistik eines Automobilkonzerns gespart. Jetzt für deinen Betrieb."
         lead="Ich bin Ajdin Dzafic, Gründer von Vrelo, seit über drei Jahren Prozessautomatisierer mit einem Master of Science in Wirtschaftsinformatik und Kaffeeliebhaber. Das Schönste an meiner Arbeit war für mich immer der Moment am Ende eines Projekts: Niemand musste sich mehr um die wiederkehrenden, zeitraubenden Aufgaben kümmern. Sie liefen von selbst. Das brachte Ruhe. Genau das ist die Motivation hinter Vrelo."
       />
 

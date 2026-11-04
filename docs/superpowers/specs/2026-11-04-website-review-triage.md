@@ -70,6 +70,37 @@ Buckets: **Done** (branch `fix/review-2026-11-04`) · **Wrong** (the site alread
 16. **44 Ratgeber depth:** fewer, deeper niche pieces (Makler, Hausmeister) vs. the current 18.
 17. **21 „bulk publishing“ look:** four articles share 2026-10-01. Nothing to change now; future articles spread out.
 
+## Decided by Ajdin on 2026-11-04 (applied on the branch)
+
+- **22** Betreuung = the HQ tiers 219 · 420 · 1.019 in the FAQ (VIP stays verbal).
+- **6** Guarantee + ownership as two more cards in the homepage `Proof` („Sorgfältig gebaut. Verlässlich im Betrieb.“).
+- **16** „Logistik eines Automobilkonzerns“ on Über mich (heading + Ripples beat), employer still unnamed.
+- **7** FAQ „Was ist, wenn du mal nicht erreichbar bist?“: the system doesn't hang on him, holiday/illness covered in one answer, no more detail by decision.
+- **19** Founder profile `linkedinProfileUrl` in the footer, `personLd.sameAs`, `founder.sameAs`.
+- **30/31** „Praxis oder Kanzlei“ removed from the Prozess-Check (no AVV/TOM page for now).
+- **37** No phone number. Decision, not an omission.
+
+## Leistungen restructure (review #1, #2, #3) — proposal, waiting on Ajdin
+
+Today: nine subpages under three groups (Automatisieren: Prozessautomatisierung · KI-Automatisierung · KI-Server · KI-Betriebssystem? / Befähigen: Claude · KI-Schulung · KI-Beratung · Prozess-Audit / Betreiben: Betreuung), all under one route `/leistungen/[slug]`, copy in `leistungenPages.ts`, nine inline SVG Grafiken, `CHECK_SRC` slug per page, Ratgeber `leistung:` ties, `LeistungenMenu` dropdown, sitemap + Service JSON-LD.
+
+**Target: four doors, each one question the owner actually asks.**
+
+| Door (new hub tile) | Absorbs | Keeps as sub-page? |
+|---|---|---|
+| **Prozess-Audit** (kostenlos: „Wo lohnt es sich bei mir?“) | KI-Beratung (both free, both a talk, both end in a roadmap) | `/leistungen/ki-beratung` → 308 to the audit page; its Erstgespräch CTA becomes the audit page's first step. |
+| **Automatisierung** („Was baust du mir?“) | Prozessautomatisierung + KI-Automatisierung (+ KI-Betriebssystem as the roof) | Keep all three URLs (they rank and carry the Vergleich table and the Grafiken); the hub tile links them as three depths: ohne KI · mit KI · das ganze Haus. |
+| **KI im Team** („Wie nutzen meine Leute KI?“) | Claude für Unternehmen + KI-Schulung | Keep both URLs. |
+| **Betrieb** („Läuft das auch ohne dich?“) | Betreuung + KI-Server (infrastructure belongs to running, not building) | Keep both URLs. |
+
+Three ways to get there, cheapest first:
+
+1. **Regroup only (half a day, SEO-safe).** Change `group` on the nine entries to the four doors, rebuild `ServiceGroups` on the hub as four tiles with their sub-links, same for `LeistungenMenu`. Redirect `/leistungen/ki-beratung` → `/leistungen/prozess-audit` (308, like the parked routes) and fold its two unique sentences into the audit page. Nothing else moves. Fixes the „nine services“ impression and the category mismatch (#3) in one pass. Recommended first step.
+2. **Four real pages (two to three days).** Merge the copy into four long subpages, 308 the other five slugs, re-tie Ratgeber `leistung:` and `CHECK_SRC`, retire five Grafiken. Cleaner, but loses five ranking URLs and the per-service depth the 2026-10-01 decision was made for.
+3. **Keep nine, rename the hub headline** to say „vier Wege“ with the nine as bullets. Cosmetic; not recommended.
+
+Touch list for option 1: `leistungenPages.ts` (`group` + `LeistungGroup` type), `ServiceGroups.tsx` + test, `LeistungenMenu.tsx` + `nav.test.ts`, `next.config.ts` redirect + `parkedRoutes.test.ts` row, `leistungenPages.test.ts` note/group pins, the hub spec note, sitemap drops `ki-beratung`.
+
 ## How to continue
 
 - Branch `fix/review-2026-11-04` is built, tested, type-checked and linted; `npm start` was running on :3000 for a look. Merge to `main` = deploy (Ajdin's call, see memory „ask before pushing“).

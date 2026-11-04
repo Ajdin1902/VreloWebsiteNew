@@ -1,5 +1,5 @@
 // src/lib/jsonld.ts
-import { siteUrl, siteName, linkedinUrl } from "./site";
+import { siteUrl, siteName, linkedinUrl, linkedinProfileUrl } from "./site";
 import { faqGroups } from "./faq";
 import type { Article } from "./ratgeber";
 
@@ -20,7 +20,7 @@ export function professionalServiceLd() {
       addressLocality: "Regensburg",
       addressCountry: "DE",
     },
-    founder: { "@type": "Person", name: FOUNDER },
+    founder: { "@type": "Person", name: FOUNDER, sameAs: [linkedinProfileUrl] },
     sameAs: [linkedinUrl],
   };
 }
@@ -39,6 +39,7 @@ export function personLd() {
     },
     alumniOf: { "@type": "CollegeOrUniversity", name: "OTH Regensburg" },
     url: `${siteUrl}/ueber-mich`,
+    sameAs: [linkedinProfileUrl],
   };
 }
 

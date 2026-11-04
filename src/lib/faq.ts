@@ -45,6 +45,11 @@ export const faqGroups: FaqGroup[] = [
           "In den ersten 14 Tagen nach der Übergabe beobachte ich dein System und justiere nach, ohne dass du dich darum kümmerst. Bist du in dieser Zeit nicht zufrieden, bekommst du den vollen Betrag zurück und ich baue alles sauber zurück. Das gilt für jeden Bau, dem der kostenlose Prozess-Audit vorausging. Danach bist du nicht allein: Ich bleibe erreichbar. Weil alles sauber dokumentiert ist, lässt sich dein System anpassen, wenn sich etwas in deinem Betrieb ändert.",
       },
       {
+        question: "Was ist, wenn du mal nicht erreichbar bist?",
+        answer:
+          "Dein System hängt nicht an mir. Server, Konten, Daten und Dokumentation gehören dir. Es läuft weiter, auch wenn ich im Urlaub oder krank bin. Mit laufender Betreuung sage ich dir vorher Bescheid, wann ich weg bin. Dringendes bleibt nicht liegen.",
+      },
+      {
         question: "Ersetzt die Automatisierung mich oder meine Mitarbeiter?",
         answer:
           "Nein. Sie übernimmt die Aufgaben, die sich jeden Tag wiederholen: das Abtippen, Weiterleiten, Erinnern. Alles, was dein Urteil oder das deiner Mitarbeiter braucht, bleibt bei euch. In der Praxis heißt das: weniger Kleinkram am Schreibtisch, mehr Zeit für die Arbeit, für die deine Kunden dich bezahlen.",
@@ -87,7 +92,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Fallen laufende Kosten an?",
         answer:
-          "Den Server für dein System zahlst du direkt beim Anbieter und auf deinen Namen, rund 30 Euro im Monat. Nutzt dein System KI, kommen je nach Nutzung meist 5 bis 10 Euro im Monat dazu, gerechnet für ein normales Postfach mit ein paar Dutzend Mails am Tag. Weitere Fremdkosten entstehen nur, wenn eines deiner Programme für die Schnittstelle einen bezahlten Tarif verlangt, etwa manche CRM-Systeme. Das klären wir, bevor du dich entscheidest. Eine laufende Betreuung kannst du dazunehmen, wenn du willst: Ich überwache die Abläufe, behebe Fehler und passe Kleinigkeiten an. Je nach Umfang liegt das zwischen 350 und 1.000 Euro im Monat, netto und monatlich kündbar. Der Betrag richtet sich nach dem, was die Aufgabe dir im Jahr wert ist, nicht nach dem Baupreis. Ohne Betreuung läuft dein System weiter: Das Betriebssystem des Servers aktualisiert sich selbst, die Anwendungen bleiben auf dem Stand der Übergabe.",
+          "Den Server für dein System zahlst du direkt beim Anbieter und auf deinen Namen, rund 30 Euro im Monat. Nutzt dein System KI, kommen je nach Nutzung meist 5 bis 10 Euro im Monat dazu, gerechnet für ein normales Postfach mit ein paar Dutzend Mails am Tag. Weitere Fremdkosten entstehen nur, wenn eines deiner Programme für die Schnittstelle einen bezahlten Tarif verlangt, etwa manche CRM-Systeme. Das klären wir, bevor du dich entscheidest. Eine laufende Betreuung kannst du dazunehmen, wenn du willst: Ich überwache die Abläufe, behebe Fehler und passe Kleinigkeiten an. Drei Stufen, je nach Reaktionszeit und Umfang der Anpassungen: 219, 420 oder 1.019 Euro im Monat, netto und monatlich kündbar; für größere Unternehmen nach Absprache. Die Stufe richtet sich nach dem, was die Aufgabe dir im Jahr wert ist, nicht nach dem Baupreis. Ohne Betreuung läuft dein System weiter: Das Betriebssystem des Servers aktualisiert sich selbst, die Anwendungen bleiben auf dem Stand der Übergabe.",
       },
       {
         question: "Gibt es eine Förderung?",
