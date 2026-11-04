@@ -21,7 +21,6 @@ export const metadata: Metadata = {
   alternates: { canonical: canonical("/claude-gehirn") },
   title: c.meta.title,
   description: c.meta.description,
-  openGraph: { title: c.meta.title, description: c.meta.description },
 };
 
 const h2 = "text-balance text-2xl font-semibold text-tiefes-wasser md:text-3xl";

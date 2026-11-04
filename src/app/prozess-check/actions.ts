@@ -31,7 +31,7 @@ function parse(formData: FormData): ProzessCheckFields {
     AREA_IDS.map((id) => [id, clampHours(get(`h_${id}`))]),
   ) as ProzessCheckAnswers["stunden"];
   const answers: ProzessCheckAnswers = {
-    branche: pick(get("branche"), ["handwerk", "immobilien", "reinigung", "praxis", "handel", "anderes"], "anderes"),
+    branche: pick(get("branche"), ["handwerk", "immobilien", "reinigung", "agentur", "praxis", "handel", "anderes"], "anderes"),
     team: pick(get("team"), ["allein", "2bis5", "6bis20", "ueber20"], "allein"),
     stunden,
     nervt: pick(get("nervt"), AREA_IDS, "anfragen"),

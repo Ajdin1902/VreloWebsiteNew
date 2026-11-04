@@ -13,6 +13,13 @@ export function professionalServiceLd() {
     url: siteUrl,
     description: "Maßgeschneiderte Automatisierungen für Betriebe und Unternehmen im DACH-Raum.",
     areaServed: ["DE", "AT", "CH"],
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Dietrich-Bonhoeffer-Straße 2",
+      postalCode: "93055",
+      addressLocality: "Regensburg",
+      addressCountry: "DE",
+    },
     founder: { "@type": "Person", name: FOUNDER },
     sameAs: [linkedinUrl],
   };

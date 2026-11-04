@@ -37,10 +37,10 @@ describe("legal content", () => {
     expect(all).not.toMatch(/keine realen Personen/);
   });
 
-  it("impressum links the EU OS-Plattform URL with markdown syntax", () => {
-    const os = impressum.sections.find((s) => /EU-Streitschlichtung/i.test(s.heading));
-    expect(os).toBeDefined();
-    expect(os!.body).toContain("[https://ec.europa.eu/consumers/odr](https://ec.europa.eu/consumers/odr)");
+  it("impressum no longer links the EU ODR platform (shut down 2025-07-20) but keeps the § 36 VSBG line", () => {
+    const all = impressum.sections.map((s) => `${s.heading}\n${s.body}`).join("\n");
+    expect(all).not.toMatch(/ec\.europa\.eu\/consumers\/odr/);
+    expect(all).toMatch(/nicht bereit, an Streitbeilegungsverfahren/);
   });
 
   it("datenschutz covers the contact form, Resend, Cal.com, rights, and the newsletter (no placeholder)", () => {

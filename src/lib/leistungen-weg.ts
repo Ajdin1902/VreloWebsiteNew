@@ -10,6 +10,7 @@
 // always "rund 30", matching /makler and the FAQ).
 
 import { CHECK_SRC, checkHref } from "@/lib/prozessCheckCta";
+import { faqHref } from "@/lib/faq";
 
 export type BauPhase = {
   id: string;
@@ -55,7 +56,7 @@ export const wennDuBaust: WennDuBaust = {
     {
       id: "feinschliff",
       title: "Der Feinschliff",
-      text: "14 Tage nach der Übergabe beobachte ich dein System und justiere nach, ohne dass du dich darum kümmerst. Weil jedem Bau das kostenlose Prozess-Audit vorausgeht, gilt in dieser Zeit: Bist du nicht zufrieden, bekommst du den vollen Betrag zurück und ich baue alles sauber zurück.",
+      text: "14 Tage nach der Übergabe beobachte ich dein System und justiere nach, ohne dass du dich darum kümmerst. Weil jedem Bau der kostenlose Prozess-Audit vorausgeht, gilt in dieser Zeit: Bist du nicht zufrieden, bekommst du den vollen Betrag zurück und ich baue alles sauber zurück.",
     },
   ],
 };
@@ -84,32 +85,32 @@ export const woranEsScheitert: WoranEsScheitert = {
     {
       einwand: "„Ich weiß nicht, was sich bei mir lohnt.“",
       loesungName: "Der Fahrplan",
-      satz: "Das kostenlose Prozess-Audit endet mit einem Fahrplan: was sich automatisieren lässt, in welcher Reihenfolge. Er gehört dir.",
+      satz: "Der kostenlose Prozess-Audit endet mit einem Fahrplan: was sich automatisieren lässt, in welcher Reihenfolge. Er gehört dir.",
       link: { href: "/leistungen/prozess-audit", label: "Zum kostenlosen Audit" },
     },
     {
       einwand: "„Dafür fehlt mir das IT-Wissen.“",
       loesungName: "Alles aus einer Hand",
       satz: "Du brauchst keins. Ich baue, verbinde und dokumentiere; du konzentrierst dich auf deinen Betrieb.",
-      link: { href: "/faq", label: "Wie die Zusammenarbeit läuft" },
+      link: { href: faqHref("Wie läuft ein Projekt mit dir ab?"), label: "Wie die Zusammenarbeit läuft" },
     },
     {
       einwand: "„Was kostet mich das laufend?“",
       loesungName: "Dein eigener Server",
       satz: "Er läuft auf deinen Namen und kostet dich rund 30 Euro im Monat. Was sonst anfallen kann, steht im FAQ.",
-      link: { href: "/faq", label: "Alle laufenden Kosten" },
+      link: { href: faqHref("Fallen laufende Kosten an?"), label: "Alle laufenden Kosten" },
     },
     {
       einwand: "„Läuft das stabil, wenn niemand hinschaut?“",
       loesungName: "Dokumentiert und überwacht",
       satz: "Jedes System kommt sauber dokumentiert. In der Testphase schauen wir genau hin; danach entscheidest du, ob ich es weiter betreue.",
-      link: { href: "/faq", label: "Was nach dem Projekt passiert" },
+      link: { href: faqHref("Was passiert nach dem Projekt?"), label: "Was nach dem Projekt passiert" },
     },
     {
       einwand: "„Ersetzt das mich oder meine Mitarbeiter?“",
       loesungName: "Entlastet statt ersetzt",
       satz: "Das System übernimmt das Immergleiche. Alles, was dein Urteil braucht, bleibt bei dir und deinem Team.",
-      link: { href: "/faq", label: "Mehr dazu im FAQ" },
+      link: { href: faqHref("Ersetzt die Automatisierung mich oder meine Mitarbeiter?"), label: "Mehr dazu im FAQ" },
     },
   ],
 };

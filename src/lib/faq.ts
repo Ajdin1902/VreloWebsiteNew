@@ -4,6 +4,22 @@ import { STEPS } from "@/lib/prozessCheck";
 export type FaqEntry = { question: string; answer: string };
 export type FaqGroup = { theme: string; entries: FaqEntry[] };
 
+/** Stable `id` for a FAQ entry, so other pages can deep-link `/faq#<anchor>`. */
+export function faqAnchor(question: string): string {
+  return question
+    .toLowerCase()
+    .replace(/ä/g, "ae")
+    .replace(/ö/g, "oe")
+    .replace(/ü/g, "ue")
+    .replace(/ß/g, "ss")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+export function faqHref(question: string): string {
+  return `/faq#${faqAnchor(question)}`;
+}
+
 export const faqGroups: FaqGroup[] = [
   {
     theme: "Zusammenarbeit",
@@ -26,7 +42,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Was passiert nach dem Projekt?",
         answer:
-          "In den ersten 14 Tagen nach der Übergabe beobachte ich dein System und justiere nach, ohne dass du dich darum kümmerst. Danach bist du nicht allein: Ich bleibe erreichbar. Weil alles sauber dokumentiert ist, lässt sich dein System anpassen, wenn sich etwas in deinem Betrieb ändert.",
+          "In den ersten 14 Tagen nach der Übergabe beobachte ich dein System und justiere nach, ohne dass du dich darum kümmerst. Bist du in dieser Zeit nicht zufrieden, bekommst du den vollen Betrag zurück und ich baue alles sauber zurück. Das gilt für jeden Bau, dem der kostenlose Prozess-Audit vorausging. Danach bist du nicht allein: Ich bleibe erreichbar. Weil alles sauber dokumentiert ist, lässt sich dein System anpassen, wenn sich etwas in deinem Betrieb ändert.",
       },
       {
         question: "Ersetzt die Automatisierung mich oder meine Mitarbeiter?",
@@ -51,7 +67,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Was passiert mit meinen Daten?",
         answer:
-          "Deine Daten bleiben deine. Du entscheidest, wohin sie fließen: Entweder nutzen wir eine Cloud-Lösung, oder ich baue dir ein selbstgehostetes System mit zertifizierten Anbietern auf. Ich arbeite DSGVO-konform, nutze nur die nötigen Zugänge und dokumentiere, was wohin fließt.",
+          "Deine Daten bleiben deine. Du entscheidest, wohin sie fließen: Entweder nutzen wir eine Cloud-Lösung, oder ich baue dir ein selbstgehostetes System mit zertifizierten Anbietern auf. Ich arbeite DSGVO-konform, nutze nur die nötigen Zugänge und dokumentiere, was wohin fließt. Nutzt dein System KI mit sensiblen Daten, läuft das Modell über Server innerhalb der EU, in deinem eigenen Konto. Claude für Unternehmen ist dagegen ein Dienst des US-Anbieters Anthropic: Was dort hinein darf, legen wir vorher fest.",
       },
       {
         question: "Was, wenn etwas nicht mehr funktioniert?",
@@ -71,7 +87,12 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Fallen laufende Kosten an?",
         answer:
-          "Den Server für dein System zahlst du direkt beim Anbieter und auf deinen Namen, rund 30 Euro im Monat. Nutzt dein System KI, kommen je nach Nutzung meist 5 bis 10 Euro im Monat dazu. Weitere laufende Fremdkosten hast du nicht. Eine laufende Betreuung kannst du dazunehmen, wenn du willst: Ich überwache die Abläufe, behebe Fehler und passe Kleinigkeiten an. Je nach Umfang liegt das zwischen 350 und 1.000 Euro im Monat, netto und monatlich kündbar. Ohne Betreuung läuft dein System weiter, sicher, aber auf dem Stand der Übergabe.",
+          "Den Server für dein System zahlst du direkt beim Anbieter und auf deinen Namen, rund 30 Euro im Monat. Nutzt dein System KI, kommen je nach Nutzung meist 5 bis 10 Euro im Monat dazu, gerechnet für ein normales Postfach mit ein paar Dutzend Mails am Tag. Weitere Fremdkosten entstehen nur, wenn eines deiner Programme für die Schnittstelle einen bezahlten Tarif verlangt, etwa manche CRM-Systeme. Das klären wir, bevor du dich entscheidest. Eine laufende Betreuung kannst du dazunehmen, wenn du willst: Ich überwache die Abläufe, behebe Fehler und passe Kleinigkeiten an. Je nach Umfang liegt das zwischen 350 und 1.000 Euro im Monat, netto und monatlich kündbar. Der Betrag richtet sich nach dem, was die Aufgabe dir im Jahr wert ist, nicht nach dem Baupreis. Ohne Betreuung läuft dein System weiter: Das Betriebssystem des Servers aktualisiert sich selbst, die Anwendungen bleiben auf dem Stand der Übergabe.",
+      },
+      {
+        question: "Gibt es eine Förderung?",
+        answer:
+          "Sitzt dein Betrieb in Bayern, ist gewerbesteuerpflichtig und hat weniger als 50 Mitarbeiter, kann der Digitalbonus Bayern einen Teil der Kosten übernehmen, oft bis zur Hälfte. Wichtig: Der Antrag muss gestellt sein, bevor du mich beauftragst, auch mündlich. Arztpraxen und freie Berufe sind nicht förderfähig. Ob es bei dir passt, klären wir im Gespräch.",
       },
       {
         question: "Wie lange dauert die Umsetzung?",

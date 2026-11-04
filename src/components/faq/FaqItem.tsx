@@ -1,8 +1,10 @@
 export function FaqItem({
+  id,
   question,
   answer,
   onDark = false,
 }: {
+  id?: string;
   question: string;
   answer: string;
   onDark?: boolean;
@@ -19,7 +21,8 @@ export function FaqItem({
   const marker = onDark ? "text-honig" : "text-vrelo-petrol";
   const answerColor = onDark ? "text-gletscher" : "text-tinte";
   return (
-    <details className={`group border-b ${border} py-4`}>
+    // scroll-mt on the element carrying the id (sticky header, see CLAUDE.md gotchas).
+    <details id={id} className={`group scroll-mt-24 border-b ${border} py-4`}>
       <summary
         className={`flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-medium ${summaryColor} transition-colors ${hover} [&::-webkit-details-marker]:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${ringOffset} ${ring}`}
       >

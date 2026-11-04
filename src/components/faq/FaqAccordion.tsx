@@ -1,12 +1,14 @@
 import { Section } from "@/components/Section";
-import type { FaqGroup } from "@/lib/faq";
+import { faqAnchor, type FaqGroup } from "@/lib/faq";
 import { FaqItem } from "@/components/faq/FaqItem";
+import { OpenFaqFromHash } from "@/components/faq/OpenFaqFromHash";
 import { Reveal } from "@/components/Reveal";
 import { SectionBackdrop } from "@/components/SectionBackdrop";
 
 export function FaqAccordion({ groups }: { groups: FaqGroup[] }) {
   return (
     <>
+      <OpenFaqFromHash />
       {groups.map((group, i) => {
         // Every other theme group is a petrol-dark band (for the three real
         // groups: the middle one), giving the FAQ a light/dark reading rhythm.
@@ -33,6 +35,7 @@ export function FaqAccordion({ groups }: { groups: FaqGroup[] }) {
                 {group.entries.map((entry) => (
                   <FaqItem
                     key={entry.question}
+                    id={faqAnchor(entry.question)}
                     question={entry.question}
                     answer={entry.answer}
                     onDark={onDark}

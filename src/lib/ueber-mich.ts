@@ -28,7 +28,7 @@ export const storyBeats: StoryBeat[] = [
   {
     slug: "merak",
     heading: "Wonach es sich anfühlt",
-    body: "Was mich antreibt, ist ein bestimmter Moment: wenn mitten im Arbeitstag Ruhe einkehrt, weil etwas einfach läuft. Je weniger unnötige Reibung wir bei der Arbeit haben, desto mehr Zeit und Fokus bleiben für das, was wirklich zählt, beruflich wie privat. Das ist die eigentliche Kraft der Automatisierung.\n\nDiesen Moment der Ruhe nennen wir Merak. Eine direkte Übersetzung ins Deutsche gibt es nicht. Vielleicht, weil solche Momente viel zu selten geworden sind. Was ich dir aber sicher sagen kann: Vrelo kann dir genau dieses Gefühl zurückgeben. Melde dich und wir schauen in Ruhe gemeinsam, wo wir anfangen.",
+    body: "Was mich antreibt, ist ein bestimmter Moment: wenn mitten im Arbeitstag Ruhe einkehrt, weil etwas einfach läuft. Je weniger unnötige Reibung wir bei der Arbeit haben, desto mehr Zeit und Fokus bleiben für das, was wirklich zählt, beruflich wie privat. Das ist die eigentliche Kraft der Automatisierung.\n\nDiesen Moment der Ruhe nenne ich Merak. Eine direkte Übersetzung ins Deutsche gibt es nicht. Vielleicht, weil solche Momente viel zu selten geworden sind. Was ich dir aber sicher sagen kann: Vrelo kann dir genau dieses Gefühl zurückgeben. Melde dich und wir schauen in Ruhe gemeinsam, wo wir anfangen.",
     side: "right",
   },
 ];

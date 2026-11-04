@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
     // full-bleed PageHero heroes (the petrol scrim hides the difference, and it
     // cuts each optimized hero variant ~25-35%). See PageHero.tsx.
     qualities: [65, 75],
+    // Full-bleed heroes use sizes="100vw"; without this cap the srcset offers a
+    // 3840px candidate to 2x phones. 1920 under the scrim is visually identical.
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
   },
   // Short printed URLs for the Lead Engine letter batches (HQ: Knowledge/marketing/
   // prozess-check-funnel.md §7). `vrelo-ki.de/brief` fits on paper and in a QR;

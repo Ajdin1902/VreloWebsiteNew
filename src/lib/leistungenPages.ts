@@ -6,6 +6,14 @@
 // Rules for this copy: docs/superpowers/specs/2026-10-01-leistungen-hub-design.md §2, §4, §7.
 import { CHECK_SRC, type CheckSrc } from "@/lib/prozessCheckCta";
 
+// Digitalbonus Bayern (HQ: Knowledge/marketing/digitalbonus-bayern.md). Shown on the
+// audit page (the application must precede the order) and on both build pages.
+const FOERDERUNG_NOTE = {
+  heading: "Förderung",
+  body: "Sitzt dein Betrieb in Bayern und hat weniger als 50 Mitarbeiter, kann der Digitalbonus Bayern einen Teil der Kosten übernehmen, oft bis zur Hälfte. Wichtig: Der Antrag muss gestellt sein, bevor du jemanden beauftragst. Ob er bei dir passt, klären wir im Gespräch.",
+  link: { label: "Zum Förderprogramm", href: "https://www.digitalbonus.bayern/foerderprogramm/" },
+};
+
 export type LeistungSlug =
   | "prozessautomatisierung"
   | "ki-automatisierung"
@@ -199,6 +207,7 @@ export const leistungenPages: LeistungPage[] = [
       after: "Jede Anfrage liegt sofort beim Zuständigen. Du tippst nichts mehr doppelt.",
     },
     vergleich: true,
+    note: FOERDERUNG_NOTE,
     cta: {
       kind: "check",
       src: CHECK_SRC.leistungProzessautomatisierung,
@@ -246,6 +255,7 @@ export const leistungenPages: LeistungPage[] = [
       video: { src: "/video/ki-assistent.mp4", poster: "/video/ki-assistent.webp" },
     },
     vergleich: true,
+    note: FOERDERUNG_NOTE,
     cta: {
       kind: "check",
       src: CHECK_SRC.leistungKiAutomatisierung,
@@ -414,6 +424,11 @@ export const leistungenPages: LeistungPage[] = [
       ],
       after: "Dein Team arbeitet mit Vorlagen, die es in der Schulung selbst gebaut hat.",
     },
+    note: {
+      heading: "Gut zu wissen",
+      body: "Seit Februar 2025 verlangt die KI-Verordnung der EU (Artikel 4), dass Betriebe, die KI einsetzen, ihre Mitarbeiter dafür ausreichend schulen. Eine Schulung an euren eigenen Aufgaben erfüllt genau das und bringt dir zugleich den Nutzen.",
+      link: { label: "Zum Gesetzestext", href: "https://eur-lex.europa.eu/eli/reg/2024/1689/oj?locale=de" },
+    },
     cta: {
       kind: "kontakt",
       src: CHECK_SRC.leistungKiSchulung,
@@ -532,11 +547,7 @@ export const leistungenPages: LeistungPage[] = [
       after: "Du weißt, womit du anfängst. Ob und mit wem du es umsetzt, entscheidest du.",
     },
     auditCard: true,
-    note: {
-      heading: "Förderung",
-      body: "Sitzt dein Betrieb in Bayern und hat weniger als 50 Mitarbeiter, kann der Digitalbonus Bayern einen Teil der Kosten übernehmen, oft bis zur Hälfte. Wichtig: Der Antrag muss gestellt sein, bevor du jemanden beauftragst. Ob er bei dir passt, klären wir im Gespräch.",
-      link: { label: "Zum Förderprogramm", href: "https://www.digitalbonus.bayern/foerderprogramm/" },
-    },
+    note: FOERDERUNG_NOTE,
     cta: {
       kind: "check",
       src: CHECK_SRC.leistungProzessAudit,

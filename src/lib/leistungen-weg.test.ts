@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { wennDuBaust, woranEsScheitert } from "./leistungen-weg";
+import { faqAnchor, faqGroups } from "./faq";
 
 // Same copy-guard pattern as makler.test.ts: walk the exported objects and
 // check every string, so new rows and phases are covered automatically.
@@ -76,5 +77,14 @@ describe("leistungen-weg copy", () => {
       expect(row.link.href.length).toBeGreaterThan(0);
       expect(row.link.label.length).toBeGreaterThan(0);
     }
+  });
+});
+
+describe("FAQ deep links", () => {
+  it("point every /faq# link at an existing question", () => {
+    const anchors = new Set(faqGroups.flatMap((g) => g.entries.map((e) => faqAnchor(e.question))));
+    const hrefs = strings(woranEsScheitert).filter((s) => s.startsWith("/faq#"));
+    expect(hrefs.length).toBeGreaterThan(0);
+    for (const h of hrefs) expect(anchors.has(h.slice("/faq#".length)), h).toBe(true);
   });
 });

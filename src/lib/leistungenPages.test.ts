@@ -94,8 +94,20 @@ describe("leistungenPages", () => {
     expect(new Set(leistungenPages.map((p) => p.cta.src)).size).toBe(9);
   });
 
-  it("carries notes on Claude + KI-Betriebssystem (gift page), KI-Beratung (→ audit) and Prozess-Audit (Digitalbonus, as a possibility)", () => {
-    expect(leistungenPages.filter((p) => p.note).map((p) => p.slug)).toEqual(["claude", "ki-beratung", "prozess-audit", "ki-betriebssystem"]);
+  it("carries notes: Digitalbonus on both build pages + the audit, Art. 4 on KI-Schulung, gift page on Claude + KI-Betriebssystem, KI-Beratung → audit", () => {
+    expect(leistungenPages.filter((p) => p.note).map((p) => p.slug)).toEqual([
+      "prozessautomatisierung",
+      "ki-automatisierung",
+      "claude",
+      "ki-schulung",
+      "ki-beratung",
+      "prozess-audit",
+      "ki-betriebssystem",
+    ]);
+    // The same Förderung note on all three (review 2026-11-04: the build pages carried none).
+    for (const slug of ["prozessautomatisierung", "ki-automatisierung"] as const)
+      expect(getLeistungPage(slug)!.note).toEqual(getLeistungPage("prozess-audit")!.note);
+    expect(getLeistungPage("ki-schulung")!.note!.body).toMatch(/Artikel 4/);
     expect(getLeistungPage("ki-beratung")!.note!.link.href).toBe("/leistungen/prozess-audit");
     const note = getLeistungPage("prozess-audit")!.note!;
     expect(note.body).toContain("kann");

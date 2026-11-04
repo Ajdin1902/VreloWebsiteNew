@@ -7,7 +7,7 @@
 // (that is named in the call). Spec: Knowledge/marketing/prozess-check-funnel.md
 // Distinct from leadCheck.ts on purpose — that one does € math, this one never does.
 
-export type Branche = "handwerk" | "immobilien" | "reinigung" | "praxis" | "handel" | "anderes";
+export type Branche = "handwerk" | "immobilien" | "reinigung" | "agentur" | "praxis" | "handel" | "anderes";
 export type Team = "allein" | "2bis5" | "6bis20" | "ueber20";
 export type AreaId = "anfragen" | "auftraege" | "rechnungen" | "daten" | "erinnern" | "orga";
 export type Abende = "staendig" | "abundzu" | "nein";
@@ -64,6 +64,7 @@ export const STEPS: readonly Step[] = [
       { value: "handwerk", label: "Handwerk" },
       { value: "immobilien", label: "Immobilien" },
       { value: "reinigung", label: "Reinigung oder Dienstleistung" },
+      { value: "agentur", label: "Agentur oder Beratung" },
       { value: "praxis", label: "Praxis oder Kanzlei" },
       { value: "handel", label: "Handel" },
       { value: "anderes", label: "Etwas anderes" },

@@ -25,8 +25,9 @@ export const impressum: LegalDoc = {
       body: "Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV (V.i.S.d.P.):\nAjdin Dzafic\nDietrich-Bonhoeffer-Straße 2\n93055 Regensburg",
     },
     {
-      heading: "EU-Streitschlichtung",
-      body: "Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: [https://ec.europa.eu/consumers/odr](https://ec.europa.eu/consumers/odr). Ich bin nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.",
+      // The EU ODR platform was shut down on 2025-07-20; only the § 36 VSBG line stays.
+      heading: "Verbraucherstreitbeilegung",
+      body: "Ich bin nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.",
     },
     {
       heading: "Haftung für Inhalte",

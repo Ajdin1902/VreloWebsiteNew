@@ -47,6 +47,11 @@ export function ProzessCheck({
       <p role="status" aria-live="polite" className="text-sm text-stumm">
         Frage {index + 1} von {STEPS.length}
       </p>
+      {index === 0 ? (
+        <p className="mt-1 text-sm text-stumm">
+          Der Check läuft in deinem Browser. Gespeichert wird nur, was du dir am Ende per E-Mail schickst.
+        </p>
+      ) : null}
       <div className="mt-4">
         {step.kind === "grid" ? (
           <HoursGrid
