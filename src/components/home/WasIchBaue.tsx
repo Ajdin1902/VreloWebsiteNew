@@ -8,7 +8,7 @@ import { leistungGroups, type LeistungGroup } from "@/lib/leistungenPages";
 // the homepage). Prüfen goes straight to the audit page, the other doors land
 // on their group on the hub.
 const doors: Record<LeistungGroup, { body: string; href: string }> = {
-  pruefen: { body: "Der kostenlose Prozess-Audit: wo sich Automatisierung bei dir lohnt.", href: "/leistungen/prozess-audit" },
+  pruefen: { body: "Erst prüfen, dann bauen: dein Fahrplan zeigt, womit du anfängst.", href: "/leistungen/prozess-audit" },
   bauen: { body: "Ein Baustein, ein KI-Assistent oder das ganze KI-Betriebssystem.", href: "/leistungen#gruppe-bauen" },
   befaehigen: { body: "Claude für dein Unternehmen und eine Schulung an euren Aufgaben.", href: "/leistungen#gruppe-befaehigen" },
   betreiben: { body: "Dein eigener Server und die laufende Betreuung, wenn du sie willst.", href: "/leistungen#gruppe-betreiben" },

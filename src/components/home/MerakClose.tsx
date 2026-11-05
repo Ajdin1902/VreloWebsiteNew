@@ -37,8 +37,8 @@ export function MerakClose() {
         </Reveal>
         <Reveal delayMs={160} className="mt-8">
           <CTAButton href={checkHref(CHECK_SRC.homeClose)}>{CHECK_CTA.label}</CTAButton>
-          {/* Effort reducer at the last decision point: free, no login, result now. */}
-          <p className="mt-3 text-sm text-tinte">{CHECK_CTA.microcopy}</p>
+          {/* Effort reducer at the last decision point: the whole free path, not just the check. */}
+          <p className="mt-3 text-sm text-tinte">{CHECK_CTA.closeMicrocopy}</p>
           <SecondaryLink tone="light" prefix={CHECK_CTA.directPrefix} label={CHECK_CTA.directLabel} href={CHECK_CTA.directHref} />
         </Reveal>
       </div>

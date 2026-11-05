@@ -24,7 +24,7 @@ describe("MerakClose", () => {
       "href",
       "/prozess-check?src=home-close",
     );
-    expect(screen.getByText("Kostenlos, ohne Login. Dein Ergebnis siehst du sofort.")).toBeInTheDocument();
+    expect(screen.getByText("Check, Audit und Fahrplan: alles kostenlos.")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Erstgespräch buchen" })).toHaveAttribute("href", "/kontakt");
   });
 

@@ -47,6 +47,8 @@ export const CHECK_CTA = {
   label: "Prozess-Check starten",
   short: "Prozess-Check",
   microcopy: "Kostenlos, ohne Login. Dein Ergebnis siehst du sofort.",
+  // Homepage close only: echoes the free three-step path (DerWeg) at the last decision point.
+  closeMicrocopy: "Check, Audit und Fahrplan: alles kostenlos.",
   // The quiet second path under a check button (warm visitors).
   directPrefix: "Lieber direkt reden?",
   directLabel: "Erstgespräch buchen",
