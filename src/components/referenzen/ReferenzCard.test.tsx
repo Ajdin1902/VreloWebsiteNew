@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { ReferenzCard } from "./ReferenzCard";
-import { referenzen } from "@/lib/referenzen";
+import { referenzen, ohneHervor } from "@/lib/referenzen";
 
 const [mdz, velp] = referenzen;
 
@@ -29,6 +29,6 @@ describe("ReferenzCard", () => {
   it("leaves the long story to /referenzen", () => {
     render(<ReferenzCard referenz={mdz} />);
     expect(screen.queryByText(mdz.problem[0])).toBeNull();
-    expect(screen.queryByText(mdz.ergebnis[0])).toBeNull();
+    expect(screen.queryByText(ohneHervor(mdz.ergebnis[0]))).toBeNull();
   });
 });

@@ -27,6 +27,18 @@ export type Referenz = {
   kennzahlLabel: string;
 };
 
+// A bullet may mark its key phrase as **phrase**; the card sets it in bold.
+export function hervorTeile(s: string): { text: string; hervor: boolean }[] {
+  return s
+    .split("**")
+    .map((text, i) => ({ text, hervor: i % 2 === 1 }))
+    .filter((t) => t.text.length > 0);
+}
+
+export function ohneHervor(s: string): string {
+  return s.replaceAll("**", "");
+}
+
 export function referenzAnchorId(slug: string): string {
   return `referenz-${slug}`;
 }
@@ -50,10 +62,10 @@ export const referenzen: Referenz[] = [
       "Entsorgungsplan ohne die Objekte im Landkreis.",
     ],
     ergebnis: [
-      "Telegram-Assistent: Sprachnachricht rein, E-Mail, Termin und Aufgabe erledigt.",
-      "Rechnungsautomatisierung: Rechnung per Chat, fertig als Word und PDF in OneDrive.",
+      "**Telegram-Assistent:** Sprachnachricht rein, E-Mail, Termin und Aufgabe erledigt.",
+      "**Rechnungsautomatisierung: Rechnung per Chat**, fertig als Word und PDF in OneDrive.",
       "MDZ Core: alle Rechnungen seit 2022 in einer Datenbank.",
-      "Entsorgungsplan: Stadt und Landkreis, jeden Monat automatisch.",
+      "**Entsorgungsplan:** Stadt und Landkreis, **jeden Monat automatisch**.",
       "Website modernisiert.",
     ],
     visual: { kind: "clip", mp4: "/video/ki-assistent.mp4", poster: "/video/ki-assistent.webp" },
@@ -82,11 +94,11 @@ export const referenzen: Referenz[] = [
       "Dokumentation kostete Stunden, trotzdem ging etwas verloren.",
     ],
     ergebnis: [
-      "HubSpot ist die eine Quelle der Wahrheit.",
-      "Angebote gehen automatisch und korrekt raus, mit dokumentierter Unterschrift.",
+      "HubSpot ist die **eine Quelle der Wahrheit**.",
+      "Angebote gehen **automatisch und korrekt raus**, mit dokumentierter Unterschrift.",
       "Nach der Unterschrift: Kundenordner, Willkommensmail und ClickUp-Karte von selbst.",
-      "Jeder Schritt dokumentiert, der Stand jedes Kunden auf einen Blick.",
-      "Eingesparte Stunden fließen in die Arbeit mit den Kunden.",
+      "**Jeder Schritt dokumentiert**, der Stand jedes Kunden auf einen Blick.",
+      "**Eingesparte Stunden fließen in die Arbeit mit den Kunden.**",
     ],
     visual: {
       kind: "ablauf",

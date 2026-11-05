@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { LazyVideo } from "@/components/LazyVideo";
 import { AblaufGrafik } from "@/components/referenzen/AblaufGrafik";
-import { referenzAnchorId, type Referenz } from "@/lib/referenzen";
+import { hervorTeile, referenzAnchorId, type Referenz } from "@/lib/referenzen";
 
 const beats = [
   { key: "problem", label: "Das Problem" },
@@ -40,7 +40,21 @@ export function ReferenzDetail({ referenz }: { referenz: Referenz }) {
             {referenz[b.key].map((t) => (
               <li key={t} className="flex gap-2.5 text-pretty text-tinte">
                 <span aria-hidden className={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${b.key === "problem" ? "bg-stein" : "bg-amber"}`} />
-                <span>{t}</span>
+                <span>
+                  {hervorTeile(t).map((p, i) =>
+                    p.hervor ? (
+                      // Key result: bold on a soft amber marker stroke (lower 40 % of the line).
+                      <strong
+                        key={i}
+                        className="font-semibold bg-[linear-gradient(transparent_60%,color-mix(in_srgb,var(--color-amber)_35%,transparent)_60%)]"
+                      >
+                        {p.text}
+                      </strong>
+                    ) : (
+                      p.text
+                    ),
+                  )}
+                </span>
               </li>
             ))}
           </ul>

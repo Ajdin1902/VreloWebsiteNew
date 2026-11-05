@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import ReferenzenPage, { metadata } from "./page";
-import { referenzen, referenzAnchorId } from "@/lib/referenzen";
+import { referenzen, referenzAnchorId, ohneHervor } from "@/lib/referenzen";
 import { CHECK_CTA } from "@/lib/prozessCheckCta";
 
 const [mdz] = referenzen;
@@ -21,12 +21,23 @@ describe("/referenzen", () => {
       // The compact cards on / and /leistungen link to exactly this id.
       expect(container.querySelector(`#${referenzAnchorId(r.slug)}`)).not.toBeNull();
       expect(screen.getByText(r.intro)).toBeInTheDocument();
-      for (const t of [...r.problem, ...r.ergebnis]) expect(screen.getByText(t)).toBeInTheDocument();
+      // A highlighted bullet is split by <strong>, so match on the whole <li> text.
+      for (const t of [...r.problem, ...r.ergebnis]) {
+        expect(screen.getByText((_, el) => el?.tagName === "LI" && el.textContent === ohneHervor(t))).toBeInTheDocument();
+      }
       for (const w of r.werkzeuge) expect(screen.getAllByText(w).length).toBeGreaterThan(0);
     }
     for (const beat of ["Das Problem", "Das Ergebnis"]) {
       expect(screen.getAllByText(beat)).toHaveLength(referenzen.length);
     }
+  });
+
+  it("sets the marked results in bold", () => {
+    const { container } = render(<ReferenzenPage />);
+    const bold = [...container.querySelectorAll("li strong")].map((e) => e.textContent);
+    expect(bold).toContain("jeden Monat automatisch");
+    expect(bold).toContain("Jeder Schritt dokumentiert");
+    expect(container.textContent).not.toContain("**");
   });
 
   it("draws the Velp chain as one labelled graphic", () => {

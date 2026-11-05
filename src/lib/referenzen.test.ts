@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { referenzen, referenzAnchorId } from "./referenzen";
+import { referenzen, referenzAnchorId, hervorTeile, ohneHervor } from "./referenzen";
 
 // Walk the copy object and collect every string, so the guards below cover
 // every field of every card without listing them by hand. (Same pattern as
@@ -39,7 +39,7 @@ describe("referenzen copy", () => {
   });
 
   it("names the MDZ builds in Ajdin's order", () => {
-    const order = ["Telegram-Assistent", "Rechnungsautomat", "MDZ Core", "Entsorgungsplan", "Website"].map((w) => mdz.ergebnis.findIndex((b) => b.includes(w)));
+    const order = ["Telegram-Assistent", "Rechnungsautomat", "MDZ Core", "Entsorgungsplan", "Website"].map((w) => mdz.ergebnis.findIndex((b) => ohneHervor(b).includes(w)));
     expect(order.every((i) => i >= 0), mdz.ergebnis.join(" | ")).toBe(true);
     expect([...order].sort((a, b) => a - b)).toEqual(order);
   });
@@ -77,6 +77,30 @@ describe("referenzen copy", () => {
     expect(all.filter((s) => /kostenlos|pro bono/i.test(s))).toEqual([]);
     expect(all.filter((s) => /IBAN|Steuernummer|Umsatz/i.test(s))).toEqual([]);
     expect(all.filter((s) => /[ČčĆćŽžŠšĐđ]/.test(s))).toEqual([]);
+  });
+
+  it("splits **marked** phrases out of a bullet", () => {
+    expect(hervorTeile("A **b c** d")).toEqual([
+      { text: "A ", hervor: false },
+      { text: "b c", hervor: true },
+      { text: " d", hervor: false },
+    ]);
+    expect(ohneHervor("A **b c** d")).toBe("A b c d");
+  });
+
+  it("highlights Ajdin's key results and opens every marker it closes", () => {
+    const marked = referenzen.flatMap((r) => r.ergebnis).flatMap((b) => hervorTeile(b).filter((t) => t.hervor).map((t) => t.text));
+    expect(marked).toEqual([
+      "Telegram-Assistent:",
+      "Rechnungsautomatisierung: Rechnung per Chat",
+      "Entsorgungsplan:",
+      "jeden Monat automatisch",
+      "eine Quelle der Wahrheit",
+      "automatisch und korrekt raus",
+      "Jeder Schritt dokumentiert",
+      "Eingesparte Stunden fließen in die Arbeit mit den Kunden.",
+    ]);
+    for (const s of all) expect((s.match(/\*\*/g) ?? []).length % 2, s).toBe(0);
   });
 
   it("builds the anchor id from the slug", () => {
