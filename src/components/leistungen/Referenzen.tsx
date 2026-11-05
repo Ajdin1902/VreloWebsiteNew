@@ -1,14 +1,16 @@
+import Link from "next/link";
 import { Section } from "@/components/Section";
 import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { Reveal } from "@/components/Reveal";
 import { ReferenzCard } from "@/components/referenzen/ReferenzCard";
 import { referenzen } from "@/lib/referenzen";
 
-// Full reference cards, matching the homepage warm treatment: the bright karst-spring
+// Compact reference cards + a link to /referenzen, where the full story lives
+// (spec 2026-11-05). Same warm treatment as the homepage: the bright karst-spring
 // backdrop under a warm sonnenlicht tint. It lands just before the sunlit ClosingCta,
 // so the page comes up warm out of the dark MehrMoeglich card and holds the light
-// into the close. Opaque papier cards carry all the reading; the heading sits
-// directly on the backdrop (left-aligned), deep-espresso #33210f — contrast measured.
+// into the close. Heading and link sit directly on the backdrop: deep-espresso
+// #33210f and deep ember #6f4a20, both measured (same colours as the homepage).
 export function Referenzen() {
   return (
     <Section tone="warm" id="referenzen" className="relative isolate overflow-hidden scroll-mt-24">
@@ -19,13 +21,20 @@ export function Referenzen() {
         </h2>
         <ul className="mt-10 grid gap-6 sm:grid-cols-2">
           {referenzen.map((r) => (
-            // Anchor target for the compact homepage card's headline link.
-            // scroll-mt sits on the element carrying the id (sticky header).
-            <li key={r.slug} id={`referenz-${r.slug}`} className="scroll-mt-24">
-              <ReferenzCard referenz={r} variant="full" />
+            <li key={r.slug}>
+              <ReferenzCard referenz={r} />
             </li>
           ))}
         </ul>
+        <p className="mt-10">
+          <Link
+            href="/referenzen"
+            className="inline-flex items-center gap-1 font-medium text-[#6f4a20] underline decoration-[#6f4a20]/40 underline-offset-4 transition hover:text-[#4d3216] hover:decoration-[#4d3216]"
+          >
+            Beide Projekte im Detail ansehen
+            <span aria-hidden> →</span>
+          </Link>
+        </p>
       </Reveal>
     </Section>
   );

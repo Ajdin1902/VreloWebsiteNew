@@ -1,9 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { referenzen } from "./referenzen";
+import { referenzen, stimmen, referenzAnchorId } from "./referenzen";
 
 // Walk the copy object and collect every string, so the guards below cover
-// every field of every card without listing them by hand. (Same pattern as
-// makler.test.ts.)
+// every field of every card and every quote without listing them by hand.
+// (Same pattern as makler.test.ts.)
 function strings(value: unknown, out: string[] = []): string[] {
   if (typeof value === "string") out.push(value);
   else if (Array.isArray(value)) for (const v of value) strings(v, out);
@@ -11,25 +11,60 @@ function strings(value: unknown, out: string[] = []): string[] {
   return out;
 }
 
-const all = strings(referenzen);
+const all = strings([referenzen, stimmen]);
+const [mdz, velp] = referenzen;
 
-// No Vrelo price ever appears on the site, and these anonymized cards name no
-// figure with a currency at all.
+// No Vrelo price ever appears on the site.
 const CURRENCY = /€|\bEUR\b|\d\s*(Euro|netto)\b/i;
 
 describe("referenzen copy", () => {
-  it("ships exactly two anonymized cards with unique slugs", () => {
-    expect(referenzen).toHaveLength(2);
-    const slugs = referenzen.map((r) => r.slug);
-    expect(new Set(slugs).size).toBe(2);
+  it("ships MDZ first, then Velp, with unique slugs", () => {
+    expect(referenzen.map((r) => r.slug)).toEqual(["mdz", "velp"]);
   });
 
-  it("gives every card all content fields", () => {
+  it("gives every card its required fields and at least one Baustein", () => {
     for (const r of referenzen) {
-      for (const field of ["label", "titel", "problem", "gebaut", "laeuft", "ergebnis", "kompakt", "kennzahl", "kennzahlLabel"] as const) {
-        expect(r[field].length).toBeGreaterThan(0);
+      for (const f of ["name", "label", "inhaber", "titel", "ueberblick", "resultat", "kompakt", "kennzahl", "kennzahlLabel"] as const) {
+        expect(r[f].length, `${r.slug}.${f}`).toBeGreaterThan(0);
       }
+      expect(r.bausteine.length).toBeGreaterThan(0);
     }
+  });
+
+  it("lists the MDZ Bausteine in Ajdin's order", () => {
+    expect(mdz.bausteine.map((b) => b.titel)).toEqual(["Telegram-Assistent", "Rechnungsautomat", "MDZ Core", "Entsorgungsplan", "Website"]);
+  });
+
+  it("carries the family tie on MDZ only", () => {
+    expect(mdz.familie?.kurz).toBe("Betrieb meines Vaters");
+    expect(mdz.familie?.lang).toMatch(/^Der Betrieb meines Vaters\./);
+    expect(velp.familie).toBeUndefined();
+  });
+
+  it("publishes no Velp number until Alen approves one", () => {
+    expect(/\d/.test(velp.kennzahl + velp.kennzahlLabel)).toBe(false);
+  });
+
+  it("pins the MDZ number Mirsad confirmed", () => {
+    expect([mdz.kennzahl, mdz.kennzahlLabel]).toEqual(["2 Std./Tag", "Büroarbeit weniger"]);
+  });
+
+  it("never says kostenlos, never leaks private data, spells names in ASCII", () => {
+    expect(all.filter((s) => /kostenlos|pro bono/i.test(s))).toEqual([]);
+    expect(all.filter((s) => /IBAN|Steuernummer|Umsatz/i.test(s))).toEqual([]);
+    expect(all.filter((s) => /[ČčĆćŽžŠšĐđ]/.test(s))).toEqual([]);
+  });
+
+  it("ships Mirsad's three quotes, each wrapped in German quotes", () => {
+    expect(stimmen).toHaveLength(3);
+    for (const s of stimmen) {
+      expect(s.text.startsWith("„") && s.text.endsWith("“"), s.text).toBe(true);
+      expect([s.name, s.firma]).toEqual(["Mirsad Dzafic", "MDZ Hausmeisterservice"]);
+    }
+  });
+
+  it("builds the anchor id from the slug", () => {
+    expect(referenzAnchorId("mdz")).toBe("referenz-mdz");
   });
 
   it("uses German quotes, never ASCII double quotes", () => {
@@ -54,10 +89,5 @@ describe("referenzen copy", () => {
 
   it("uses generic masculine, no :innen gendered forms", () => {
     expect(all.filter((s) => /:innen\b/i.test(s))).toEqual([]);
-  });
-
-  it("keeps the client anonymous — no client names", () => {
-    const forbidden = /velp|purisic|alen|mdz|halilovic/i;
-    expect(all.filter((s) => forbidden.test(s))).toEqual([]);
   });
 });

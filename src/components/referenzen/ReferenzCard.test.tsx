@@ -3,42 +3,32 @@ import { render, screen } from "@testing-library/react";
 import { ReferenzCard } from "./ReferenzCard";
 import { referenzen } from "@/lib/referenzen";
 
-const agentur = referenzen[0];
+const [mdz, velp] = referenzen;
 
 describe("ReferenzCard", () => {
-  it("full variant shows label, title, all three beats, the ergebnis and the number", () => {
-    render(<ReferenzCard referenz={agentur} variant="full" />);
-    expect(screen.getByText(agentur.label)).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: agentur.titel })).toBeInTheDocument();
-    for (const beat of ["Das Problem", "Gebaut", "Läuft"]) {
-      expect(screen.getByText(beat)).toBeInTheDocument();
-    }
-    expect(screen.getByText(agentur.problem)).toBeInTheDocument();
-    expect(screen.getByText(agentur.ergebnis)).toBeInTheDocument();
-    expect(screen.getByText(agentur.kennzahl)).toBeInTheDocument();
-    expect(screen.getByText(agentur.kennzahlLabel)).toBeInTheDocument();
+  it("shows name, place and the family tie in the eyebrow for MDZ", () => {
+    render(<ReferenzCard referenz={mdz} />);
+    expect(screen.getByText("MDZ Hausmeisterservice · Regensburg · Betrieb meines Vaters")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: mdz.titel })).toBeInTheDocument();
+    expect(screen.getByText(mdz.kompakt)).toBeInTheDocument();
+    expect(screen.getByText(mdz.kennzahl)).toBeInTheDocument();
+    expect(screen.getByText(mdz.kennzahlLabel)).toBeInTheDocument();
   });
 
-  it("compact variant shows title, the kompakt summary and number but omits the beats and ergebnis", () => {
-    render(<ReferenzCard referenz={agentur} variant="compact" />);
-    expect(screen.getByRole("heading", { name: agentur.titel })).toBeInTheDocument();
-    expect(screen.getByText(agentur.kompakt)).toBeInTheDocument();
-    expect(screen.getByText(agentur.kennzahl)).toBeInTheDocument();
-    expect(screen.queryByText("Das Problem")).toBeNull();
-    expect(screen.queryByText(agentur.problem)).toBeNull();
-    expect(screen.queryByText(agentur.gebaut)).toBeNull();
-    expect(screen.queryByText(agentur.laeuft)).toBeNull();
-    expect(screen.queryByText(agentur.ergebnis)).toBeNull();
+  it("shows no family tie for Velp", () => {
+    render(<ReferenzCard referenz={velp} />);
+    expect(screen.getByText("Velp · Marketingagentur · Regensburg")).toBeInTheDocument();
+    expect(screen.queryByText(/Betrieb meines Vaters/)).toBeNull();
   });
 
-  it("compact headline links to the project's full card on /leistungen; full headline does not", () => {
-    const { unmount } = render(<ReferenzCard referenz={agentur} variant="compact" />);
-    expect(screen.getByRole("link", { name: agentur.titel })).toHaveAttribute(
-      "href",
-      `/leistungen#referenz-${agentur.slug}`,
-    );
-    unmount();
-    render(<ReferenzCard referenz={agentur} variant="full" />);
-    expect(screen.queryByRole("link", { name: agentur.titel })).toBeNull();
+  it("links the headline to the client's card on /referenzen", () => {
+    render(<ReferenzCard referenz={mdz} />);
+    expect(screen.getByRole("link", { name: mdz.titel })).toHaveAttribute("href", "/referenzen#referenz-mdz");
+  });
+
+  it("leaves the long story to /referenzen", () => {
+    render(<ReferenzCard referenz={mdz} />);
+    expect(screen.queryByText(mdz.ueberblick)).toBeNull();
+    expect(screen.queryByText(mdz.resultat)).toBeNull();
   });
 });

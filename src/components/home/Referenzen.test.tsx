@@ -15,10 +15,10 @@ describe("Referenzen (homepage)", () => {
     }
   });
 
-  it("links to the full references on /leistungen", () => {
+  it("links to the full references on /referenzen", () => {
     render(<Referenzen />);
     const link = screen.getByRole("link", { name: /Beide Projekte im Detail ansehen/i });
-    expect(link).toHaveAttribute("href", "/leistungen#referenzen");
+    expect(link).toHaveAttribute("href", "/referenzen");
   });
 
   it("carries only the detail link (the check bridge moved to its own section)", () => {

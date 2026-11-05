@@ -31,14 +31,14 @@ export function Referenzen() {
       <Reveal as="ul" delayMs={160} className="mx-auto mt-10 grid max-w-3xl gap-6 sm:grid-cols-2">
         {referenzen.map((r) => (
           <li key={r.slug}>
-            <ReferenzCard referenz={r} variant="compact" />
+            <ReferenzCard referenz={r} />
           </li>
         ))}
       </Reveal>
 
       <Reveal as="p" delayMs={240} className="mt-10 text-center">
         <Link
-          href="/leistungen#referenzen"
+          href="/referenzen"
           className="inline-flex items-center gap-1 font-medium text-[#6f4a20] underline decoration-[#6f4a20]/40 underline-offset-4 transition hover:text-[#4d3216] hover:decoration-[#4d3216]"
         >
           Beide Projekte im Detail ansehen

@@ -4,21 +4,22 @@ import { Referenzen } from "./Referenzen";
 import { referenzen } from "@/lib/referenzen";
 
 describe("Referenzen (leistungen)", () => {
-  it("renders a section heading and both full reference cards", () => {
+  it("renders a section heading and both compact cards", () => {
     render(<Referenzen />);
     expect(screen.getByRole("heading", { level: 2 })).toBeInTheDocument();
     for (const r of referenzen) {
       expect(screen.getByRole("heading", { name: r.titel })).toBeInTheDocument();
-      expect(screen.getByText(r.problem)).toBeInTheDocument();
+      expect(screen.getByText(r.kompakt)).toBeInTheDocument();
+      expect(screen.queryByText(r.ueberblick)).toBeNull();
     }
   });
 
-  it("drops the old 'coming soon' placeholder", () => {
+  it("links to the full story on /referenzen", () => {
     render(<Referenzen />);
-    expect(screen.queryByText(/Bald: Stimmen aus echten Betrieben/i)).toBeNull();
+    expect(screen.getByRole("link", { name: /Beide Projekte im Detail ansehen/i })).toHaveAttribute("href", "/referenzen");
   });
 
-  it("exposes the #referenzen anchor so the homepage can deep-link to it", () => {
+  it("keeps the #referenzen anchor", () => {
     const { container } = render(<Referenzen />);
     expect(container.querySelector("#referenzen")).not.toBeNull();
   });
