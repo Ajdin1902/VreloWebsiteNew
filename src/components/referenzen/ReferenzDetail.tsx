@@ -43,11 +43,8 @@ export function ReferenzDetail({ referenz }: { referenz: Referenz }) {
                 <span>
                   {hervorTeile(t).map((p, i) =>
                     p.hervor ? (
-                      // Key result: bold on a soft amber marker stroke (lower 40 % of the line).
-                      <strong
-                        key={i}
-                        className="font-semibold bg-[linear-gradient(transparent_60%,color-mix(in_srgb,var(--color-amber)_35%,transparent)_60%)]"
-                      >
+                      // Key result: bold in ember (#7e5527, ~6:1 on papier; plain amber is only ~2:1).
+                      <strong key={i} className="font-semibold text-ember">
                         {p.text}
                       </strong>
                     ) : (
