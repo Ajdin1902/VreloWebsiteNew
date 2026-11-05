@@ -1,5 +1,6 @@
 import { Hero } from "@/components/Hero";
 import { Problem } from "@/components/home/Problem";
+import { DerWeg } from "@/components/home/DerWeg";
 import { WasIchBaue } from "@/components/home/WasIchBaue";
 import { Werkzeuge } from "@/components/home/Werkzeuge";
 import { Proof } from "@/components/home/Proof";
@@ -19,6 +20,7 @@ export default function Home() {
     <>
       <Hero />
       <Problem />
+      <DerWeg />
       <WasIchBaue />
       <Werkzeuge />
       <Proof />

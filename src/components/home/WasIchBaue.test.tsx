@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { WasIchBaue } from "./WasIchBaue";
-import { leistungenPages } from "@/lib/leistungenPages";
+import { leistungGroups } from "@/lib/leistungenPages";
 
 describe("WasIchBaue", () => {
   it("renders on a deep cool band (Spine A god-rays)", () => {
@@ -20,18 +20,19 @@ describe("WasIchBaue", () => {
     const { container } = render(<WasIchBaue />);
     expect(container.textContent).not.toContain("Ein Ansprechpartner, der weiß");
   });
-  it("links each of the nine services to its subpage", () => {
-    render(<WasIchBaue />);
-    for (const p of leistungenPages)
-      expect(screen.getByRole("link", { name: p.navLabel })).toHaveAttribute("href", `/leistungen/${p.slug}`);
-  });
 
-  // 2026-11-04: eight cards fill a 4 x 2 grid (2 x 4 on small screens), no lone card.
-  it("lays eight cards out 4 x 2", () => {
+  // 2026-11-05: four door cards instead of eight service chips; Prüfen goes to the
+  // audit page, the other doors to their group on the hub.
+  it("shows the four doors in hub order, one card each", () => {
     render(<WasIchBaue />);
-    expect(screen.getByRole("list")).toHaveClass("lg:grid-cols-4");
     const items = screen.getAllByRole("listitem");
-    expect(items).toHaveLength(8);
-    for (const item of items) expect(item).not.toHaveClass("sm:col-span-2");
+    expect(items).toHaveLength(4);
+    expect(items.map((li) => li.textContent?.slice(0, 20))).toEqual(
+      leistungGroups.map((g) => expect.stringContaining(g.label)),
+    );
+    expect(screen.getByRole("link", { name: /^Prüfen/ })).toHaveAttribute("href", "/leistungen/prozess-audit");
+    expect(screen.getByRole("link", { name: /^Bauen/ })).toHaveAttribute("href", "/leistungen#gruppe-bauen");
+    expect(screen.getByRole("link", { name: /^Befähigen/ })).toHaveAttribute("href", "/leistungen#gruppe-befaehigen");
+    expect(screen.getByRole("link", { name: /^Betreiben/ })).toHaveAttribute("href", "/leistungen#gruppe-betreiben");
   });
 });

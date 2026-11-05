@@ -10,6 +10,7 @@ export const CHECK_SRC = {
   header: "header",
   homeHero: "home-hero",
   homeClose: "home-close",
+  homeWeg: "home-weg",
   leistungenAudit: "leistungen-audit",
   leistungenEinwand: "leistungen-einwand",
   leistungenClose: "leistungen-close",

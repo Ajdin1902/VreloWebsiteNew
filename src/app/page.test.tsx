@@ -8,6 +8,7 @@ describe("homepage", () => {
     const h2s = [...container.querySelectorAll("h2")].map((h) => h.textContent?.trim());
     expect(h2s).toEqual([
       "Der Kleinkram frisst deinen Tag.",
+      "So fängst du an. Kostenlos.",
       "Prüfen. Bauen. Befähigen. Betreiben.",
       "Läuft mit den Werkzeugen, die du schon nutzt.",
       "Sorgfältig gebaut. Verlässlich im Betrieb.",

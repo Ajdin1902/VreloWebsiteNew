@@ -13,7 +13,7 @@ export function ServiceGroups() {
         const pages = leistungenPages.filter((p) => p.group === g.id);
         return (
           <Reveal key={g.id} as="section" aria-labelledby={headingId}>
-            <h2 id={headingId} className="text-2xl font-semibold tracking-tight text-papier md:text-3xl">
+            <h2 id={headingId} className="scroll-mt-24 text-2xl font-semibold tracking-tight text-papier md:text-3xl">
               {g.label}
             </h2>
             <ul className={`mt-6 grid gap-5 sm:grid-cols-2 ${pages.length === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"}`}>
