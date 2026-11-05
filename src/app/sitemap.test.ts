@@ -10,6 +10,7 @@ describe("sitemap", () => {
     const urls = sitemap().map((e) => e.url);
     expect(urls).toContain(`${siteUrl}`);
     expect(urls).toContain(`${siteUrl}/leistungen`);
+    expect(urls).toContain(`${siteUrl}/referenzen`);
     expect(urls).toContain(`${siteUrl}/ueber-mich`);
     expect(urls).toContain(`${siteUrl}/faq`);
     expect(urls).toContain(`${siteUrl}/ratgeber`);

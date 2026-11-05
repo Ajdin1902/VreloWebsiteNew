@@ -9,6 +9,7 @@ import { metadata as kontakt } from "./kontakt/page";
 import { metadata as impressum } from "./impressum/page";
 import { metadata as datenschutz } from "./datenschutz/page";
 import { metadata as newsletter } from "./newsletter/page";
+import { metadata as referenzenMeta } from "./referenzen/page";
 import { canonical } from "@/lib/site";
 
 describe("per-page canonical", () => {
@@ -22,6 +23,7 @@ describe("per-page canonical", () => {
     ["impressum", impressum, "/impressum"],
     ["datenschutz", datenschutz, "/datenschutz"],
     ["newsletter", newsletter, "/newsletter"],
+    ["referenzen", referenzenMeta, "/referenzen"],
   ])("%s sets its canonical via canonical()", (_name, meta, path) => {
     expect(meta.alternates?.canonical).toBe(canonical(path));
   });

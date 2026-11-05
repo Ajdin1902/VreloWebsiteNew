@@ -23,6 +23,7 @@ export const CHECK_SRC = {
   leistungKiBetriebssystem: "leistung-ki-betriebssystem",
   leistungBetreuung: "leistung-betreuung",
   ratgeber: "ratgeber",
+  referenzen: "referenzen",
   ueberMich: "ueber-mich",
   faq: "faq",
   kontakt: "kontakt",
