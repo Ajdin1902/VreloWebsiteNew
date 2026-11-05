@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   alternates: { canonical: canonical("/referenzen") },
   title: "Referenzen",
   description:
-    "Zwei Betriebe aus Regensburg: was ich für MDZ Hausmeisterservice und Velp gebaut habe und was sich seitdem im Alltag verändert hat.",
+    "Zwei Betriebe aus Regensburg, einer davon der Betrieb meines Vaters: was ich gebaut habe und was sich seitdem im Alltag verändert hat.",
 };
 
 export default function ReferenzenPage() {

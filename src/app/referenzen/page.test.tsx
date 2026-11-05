@@ -47,4 +47,11 @@ describe("/referenzen", () => {
     expect(String(metadata.description).length).toBeLessThanOrEqual(170);
     expect(metadata.openGraph).toBeUndefined();
   });
+
+  it("never names MDZ in the search and share snippet without the family tie", () => {
+    // The description is also og:description (layout sets none), so it travels
+    // off-page in every shared link (UWG §5, spec anti-goal).
+    const desc = String(metadata.description);
+    if (/MDZ/.test(desc)) expect(desc).toMatch(/Vater/);
+  });
 });
