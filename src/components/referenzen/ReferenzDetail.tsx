@@ -1,53 +1,78 @@
+import Image from "next/image";
 import { LazyVideo } from "@/components/LazyVideo";
+import { PhasenGrafik } from "@/components/referenzen/PhasenGrafik";
 import { referenzAnchorId, type Referenz } from "@/lib/referenzen";
 
-// One client's full card on /referenzen (spec 2026-11-05 §5): header, family
-// line (MDZ), overview, the Bausteine, the clip (MDZ), the result with its number.
-// Facts only; the quotes are gathered in the band at the end (layout B).
+const beats = [
+  { key: "problem", label: "Das Problem" },
+  { key: "gebaut", label: "Was ich gebaut habe" },
+  { key: "laeuft", label: "So läuft es heute" },
+] as const;
+
+// One client's card on /referenzen (Ajdin 2026-11-05, second round): logo, intro,
+// Problem → Gebaut → Heute, the visual, the tools, the owner's quote at the foot.
+// Cards sit side by side; the quote is pushed to the card foot (mt-auto).
 export function ReferenzDetail({ referenz }: { referenz: Referenz }) {
   return (
     <article
       id={referenzAnchorId(referenz.slug)}
-      className="card-depth scroll-mt-24 rounded-2xl border border-tinte/10 bg-papier p-7 md:p-10"
+      className="card-depth flex h-full scroll-mt-24 flex-col rounded-2xl border border-tinte/10 bg-papier p-6 md:p-8"
     >
-      <h2 className="text-balance text-2xl font-semibold text-ember md:text-3xl">{referenz.name}</h2>
-      <p className="mt-2 text-sm font-medium uppercase tracking-wider text-stumm">
+      <h2>
+        <Image
+          src={referenz.logo.src}
+          alt={referenz.name}
+          width={referenz.logo.width}
+          height={referenz.logo.height}
+          className="h-14 w-auto rounded-md"
+        />
+      </h2>
+      <p className="mt-4 text-sm font-medium uppercase tracking-wider text-stumm">
         {referenz.label} · Inhaber {referenz.inhaber}
       </p>
-      {referenz.fakten ? <p className="mt-1 text-sm text-stumm">{referenz.fakten}</p> : null}
+      <p className="mt-2 text-pretty text-tinte">{referenz.intro}</p>
       {/* The family tie, set apart but quiet. Body font: Fraunces italic is reserved for Vrelo/Merak. */}
-      {referenz.familie ? <p className="mt-5 text-pretty italic text-[#6f4a20]">{referenz.familie.lang}</p> : null}
+      {referenz.familie ? <p className="mt-2 text-pretty text-sm italic text-[#6f4a20]">{referenz.familie.lang}</p> : null}
 
-      <p className="mt-5 max-w-2xl text-pretty text-lg text-tinte">{referenz.ueberblick}</p>
+      <ol className="mt-6 space-y-4 border-l-2 border-amber/60 pl-4">
+        {beats.map((b) => (
+          <li key={b.key}>
+            <p className="text-xs font-semibold uppercase tracking-wider text-stumm">{b.label}</p>
+            <p className="mt-1 text-pretty text-tinte">{referenz[b.key]}</p>
+          </li>
+        ))}
+      </ol>
 
-      <div className={referenz.clip ? "mt-8 grid gap-8 md:grid-cols-[1.3fr_1fr] md:items-start" : "mt-8"}>
-        <div>
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-stumm">Was ich gebaut habe</h3>
-          <ul className="mt-3 space-y-3">
-            {referenz.bausteine.map((b) => (
-              <li key={b.titel} className="border-l-2 border-amber/60 pl-4 text-pretty text-tinte">
-                <strong className="font-semibold">{b.titel}:</strong> {b.text}
-              </li>
-            ))}
-          </ul>
-        </div>
-        {/* Decorative motion; the first Baustein above says what the clip shows. */}
-        {referenz.clip ? (
-          <LazyVideo
-            mp4={referenz.clip.mp4}
-            poster={referenz.clip.poster}
-            className="w-full rounded-xl object-cover shadow-deepwater"
-          />
-        ) : null}
+      {/* Same panel height for both clients, so the two visuals line up. */}
+      <div className="mt-6 flex h-72 items-center justify-center overflow-hidden rounded-xl bg-gletscher/40">
+        {referenz.visual.kind === "clip" ? (
+          // Decorative motion; „Was ich gebaut habe“ above says what it shows.
+          <LazyVideo mp4={referenz.visual.mp4} poster={referenz.visual.poster} className="h-full w-auto" />
+        ) : (
+          <PhasenGrafik />
+        )}
       </div>
 
-      <div className="mt-8 flex flex-col gap-4 border-t border-tinte/10 pt-6 md:flex-row md:items-end md:justify-between md:gap-10">
-        <p className="max-w-2xl text-pretty font-medium text-tinte">{referenz.resultat}</p>
-        <div className="flex shrink-0 flex-col gap-0.5">
-          <span className="text-2xl font-semibold text-ember">{referenz.kennzahl}</span>
-          <span className="text-sm text-stumm">{referenz.kennzahlLabel}</span>
-        </div>
+      <div className="mt-6">
+        <p className="text-xs font-semibold uppercase tracking-wider text-stumm">Werkzeuge</p>
+        <ul className="mt-2 flex flex-wrap gap-2">
+          {referenz.werkzeuge.map((w) => (
+            <li key={w} className="rounded-full border border-tinte/15 px-3 py-1 text-sm text-tinte">
+              {w}
+            </li>
+          ))}
+        </ul>
       </div>
+
+      {/* The quote sits at the card foot (mt-auto), so both columns end on the same line. */}
+      {referenz.stimme ? (
+        <figure className="mt-auto pt-6">
+          <div className="border-t border-tinte/10 pt-5">
+            <blockquote className="text-pretty text-lg font-medium text-ember">{referenz.stimme.text}</blockquote>
+            <figcaption className="mt-2 text-sm text-stumm">{referenz.stimme.name}</figcaption>
+          </div>
+        </figure>
+      ) : null}
     </article>
   );
 }

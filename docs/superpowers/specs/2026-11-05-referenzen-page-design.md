@@ -166,3 +166,17 @@ by the bullets.
 
 1. Mirsad: OK on the exact German of his three quotes (§6.4).
 2. Alen: two or three sentences for the band, whether a Velp number may go public, the branch label.
+
+## 11. Second round (Ajdin, 2026-11-05, after the first localhost look)
+
+Supersedes D2, D3, §5 and the long copy in §6 where they differ. The build follows this section.
+- Hero: „Das sagen die Kunden.“, compact hero, no lead: the page starts on the cards.
+- Two cards **side by side** (stacked on phones), each: logo (MDZ lockup, Velp logo) · place + owner ·
+  short intro (MDZ: + father line) · **Das Problem → Was ich gebaut habe → So läuft es heute** ·
+  visual (MDZ clip; Velp an abstract phase graphic, no client data) · tools as text chips (names only,
+  never tool logos) · the owner's quote at the card foot.
+- No separate quote band; one quote per card (MDZ: the first of §6.4; Velp: none until Alen sends one).
+  The page closes on the house `ClosingCta` (`src=referenzen`).
+- MDZ tools: Telegram · n8n · Claude · Notion · Google Kalender · OneDrive · Word. Velp: ClickUp · n8n
+  (only what runs live). Ajdin checks both lists before merge.
+

@@ -1,9 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { referenzen, stimmen, referenzAnchorId } from "./referenzen";
+import { referenzen, referenzAnchorId } from "./referenzen";
 
 // Walk the copy object and collect every string, so the guards below cover
-// every field of every card and every quote without listing them by hand.
-// (Same pattern as makler.test.ts.)
+// every field of every card without listing them by hand. (Same pattern as
+// makler.test.ts.)
 function strings(value: unknown, out: string[] = []): string[] {
   if (typeof value === "string") out.push(value);
   else if (Array.isArray(value)) for (const v of value) strings(v, out);
@@ -11,7 +11,7 @@ function strings(value: unknown, out: string[] = []): string[] {
   return out;
 }
 
-const all = strings([referenzen, stimmen]);
+const all = strings(referenzen);
 const [mdz, velp] = referenzen;
 
 // No Vrelo price ever appears on the site.
@@ -22,23 +22,36 @@ describe("referenzen copy", () => {
     expect(referenzen.map((r) => r.slug)).toEqual(["mdz", "velp"]);
   });
 
-  it("gives every card its required fields and at least one Baustein", () => {
+  it("gives every card its required fields, a logo and its tools", () => {
     for (const r of referenzen) {
-      for (const f of ["name", "label", "inhaber", "titel", "ueberblick", "resultat", "kompakt", "kennzahl", "kennzahlLabel"] as const) {
+      for (const f of ["name", "label", "inhaber", "intro", "titel", "kompakt", "problem", "gebaut", "laeuft", "kennzahl", "kennzahlLabel"] as const) {
         expect(r[f].length, `${r.slug}.${f}`).toBeGreaterThan(0);
       }
-      expect(r.bausteine.length).toBeGreaterThan(0);
+      expect(r.logo.src.startsWith("/images/referenzen/"), r.slug).toBe(true);
+      expect(r.werkzeuge.length, r.slug).toBeGreaterThan(0);
     }
   });
 
-  it("lists the MDZ Bausteine in Ajdin's order", () => {
-    expect(mdz.bausteine.map((b) => b.titel)).toEqual(["Telegram-Assistent", "Rechnungsautomat", "MDZ Core", "Entsorgungsplan", "Website"]);
+  it("names the MDZ builds in Ajdin's order", () => {
+    const order = ["Telegram-Assistent", "Rechnungsautomat", "MDZ Core", "Entsorgungsplan", "Website"].map((w) => mdz.gebaut.indexOf(w));
+    expect(order.every((i) => i >= 0), mdz.gebaut).toBe(true);
+    expect([...order].sort((a, b) => a - b)).toEqual(order);
+  });
+
+  it("shows the MDZ clip and the Velp phase graphic", () => {
+    expect(mdz.visual).toEqual({ kind: "clip", mp4: "/video/ki-assistent.mp4", poster: "/video/ki-assistent.webp" });
+    expect(velp.visual).toEqual({ kind: "phasen" });
   });
 
   it("carries the family tie on MDZ only", () => {
     expect(mdz.familie?.kurz).toBe("Betrieb meines Vaters");
     expect(mdz.familie?.lang).toMatch(/^Der Betrieb meines Vaters\./);
     expect(velp.familie).toBeUndefined();
+  });
+
+  it("closes the MDZ card on Mirsad's quote in German quotes", () => {
+    expect(mdz.stimme?.name).toBe("Mirsad Dzafic");
+    expect(mdz.stimme?.text.startsWith("„") && mdz.stimme?.text.endsWith("“")).toBe(true);
   });
 
   it("publishes no Velp number until Alen approves one", () => {
@@ -53,14 +66,6 @@ describe("referenzen copy", () => {
     expect(all.filter((s) => /kostenlos|pro bono/i.test(s))).toEqual([]);
     expect(all.filter((s) => /IBAN|Steuernummer|Umsatz/i.test(s))).toEqual([]);
     expect(all.filter((s) => /[ČčĆćŽžŠšĐđ]/.test(s))).toEqual([]);
-  });
-
-  it("ships Mirsad's three quotes, each wrapped in German quotes", () => {
-    expect(stimmen).toHaveLength(3);
-    for (const s of stimmen) {
-      expect(s.text.startsWith("„") && s.text.endsWith("“"), s.text).toBe(true);
-      expect([s.name, s.firma]).toEqual(["Mirsad Dzafic", "MDZ Hausmeisterservice"]);
-    }
   });
 
   it("builds the anchor id from the slug", () => {

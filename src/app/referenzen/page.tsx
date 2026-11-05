@@ -3,15 +3,17 @@ import { PageHero } from "@/components/PageHero";
 import { Section } from "@/components/Section";
 import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { Reveal } from "@/components/Reveal";
+import { ClosingCta } from "@/components/ClosingCta";
 import { ReferenzDetail } from "@/components/referenzen/ReferenzDetail";
-import { Stimmen } from "@/components/referenzen/Stimmen";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbLd } from "@/lib/jsonld";
 import { referenzen } from "@/lib/referenzen";
+import { CHECK_SRC } from "@/lib/prozessCheckCta";
 import { canonical } from "@/lib/site";
 
 // Named references on one page, readable without a click (spec 2026-11-05).
-// No page-level openGraph: the layout's share card stays (Website/CLAUDE.md).
+// Ajdin's second round: hero straight into two cards side by side, each ending
+// on its own quote. No page-level openGraph: the layout's share card stays.
 export const metadata: Metadata = {
   alternates: { canonical: canonical("/referenzen") },
   title: "Referenzen",
@@ -22,22 +24,24 @@ export const metadata: Metadata = {
 export default function ReferenzenPage() {
   return (
     <>
-      <PageHero
-        title="So läuft es heute bei meinen Kunden."
-        src="/images/hero-flow.webp"
-        lead="Zwei Betriebe aus Regensburg. Was ich gebaut habe und was sich seitdem verändert hat."
-      />
+      <PageHero title="Das sagen die Kunden." src="/images/hero-flow.webp" size="compact" />
 
       <Section tone="warm" className="relative isolate overflow-hidden">
         <SectionBackdrop src="/images/bg-karst-quelle.webp" tintRgb="244 228 193" tintOpacity={0.7} />
-        <Reveal className="mx-auto max-w-5xl space-y-8">
+        <Reveal as="ul" className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2">
           {referenzen.map((r) => (
-            <ReferenzDetail key={r.slug} referenz={r} />
+            <li key={r.slug}>
+              <ReferenzDetail referenz={r} />
+            </li>
           ))}
         </Reveal>
       </Section>
 
-      <Stimmen />
+      <ClosingCta
+        heading="Fang klein an."
+        lead="Der Prozess-Check zeigt dir in drei Minuten, wo deine Zeit hingeht. Wenn du danach reden willst, bin ich da."
+        src={CHECK_SRC.referenzen}
+      />
 
       <JsonLd data={breadcrumbLd([{ name: "Start", path: "/" }, { name: "Referenzen", path: "/referenzen" }])} />
     </>

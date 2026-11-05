@@ -1,45 +1,45 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import ReferenzenPage, { metadata } from "./page";
-import { referenzen, stimmen, referenzAnchorId } from "@/lib/referenzen";
+import { referenzen, referenzAnchorId } from "@/lib/referenzen";
 import { CHECK_CTA } from "@/lib/prozessCheckCta";
 
 const [mdz] = referenzen;
 
 describe("/referenzen", () => {
-  it("opens on the agreed hero", () => {
+  it("opens on the agreed hero and goes straight to the cards", () => {
     render(<ReferenzenPage />);
-    expect(screen.getByRole("heading", { level: 1, name: "So läuft es heute bei meinen Kunden." })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 1, name: "Das sagen die Kunden." })).toBeInTheDocument();
+    expect(screen.queryByText(/Zwei Betriebe aus Regensburg/)).toBeNull();
   });
 
-  it("renders one named card per client with its anchor", () => {
+  it("renders one card per client: logo heading, intro, the three beats, tools, anchor", () => {
     const { container } = render(<ReferenzenPage />);
     for (const r of referenzen) {
+      // The logo carries the name, so the heading's accessible name is the logo's alt.
       expect(screen.getByRole("heading", { level: 2, name: r.name })).toBeInTheDocument();
       // The compact cards on / and /leistungen link to exactly this id.
       expect(container.querySelector(`#${referenzAnchorId(r.slug)}`)).not.toBeNull();
-      for (const b of r.bausteine) expect(screen.getByText(`${b.titel}:`)).toBeInTheDocument();
-      expect(screen.getByText(r.resultat)).toBeInTheDocument();
+      for (const t of [r.intro, r.problem, r.gebaut, r.laeuft]) expect(screen.getByText(t)).toBeInTheDocument();
+      for (const w of r.werkzeuge) expect(screen.getAllByText(w).length).toBeGreaterThan(0);
+    }
+    for (const beat of ["Das Problem", "Was ich gebaut habe", "So läuft es heute"]) {
+      expect(screen.getAllByText(beat)).toHaveLength(referenzen.length);
     }
   });
 
-  it("shows the father line and the public facts on the MDZ card", () => {
-    render(<ReferenzenPage />);
+  it("shows the father line on the MDZ card and ends it on Mirsad's quote", () => {
+    const { container } = render(<ReferenzenPage />);
     expect(screen.getByText(mdz.familie!.lang)).toBeInTheDocument();
-    expect(screen.getByText(mdz.fakten!)).toBeInTheDocument();
-  });
-
-  it("gathers the quotes at the end under their own heading", () => {
-    render(<ReferenzenPage />);
-    expect(screen.getByRole("heading", { level: 2, name: "Das sagen meine Kunden." })).toBeInTheDocument();
-    for (const s of stimmen) expect(screen.getByText(s.text)).toBeInTheDocument();
-    expect(screen.getAllByText("Mirsad Dzafic, MDZ Hausmeisterservice")).toHaveLength(stimmen.length);
+    const card = container.querySelector(`#${referenzAnchorId(mdz.slug)}`)!;
+    const quote = card.querySelector("blockquote");
+    expect(quote).toHaveTextContent(mdz.stimme!.text);
+    expect(card.lastElementChild?.contains(quote)).toBe(true);
   });
 
   it("ends on the Prozess-Check with the direct path under it", () => {
     render(<ReferenzenPage />);
     expect(screen.getByRole("link", { name: CHECK_CTA.label })).toHaveAttribute("href", "/prozess-check?src=referenzen");
-    expect(screen.getByText(CHECK_CTA.microcopy)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: CHECK_CTA.directLabel })).toHaveAttribute("href", "/kontakt");
   });
 

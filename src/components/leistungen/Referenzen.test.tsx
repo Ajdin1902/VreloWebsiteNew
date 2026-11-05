@@ -10,7 +10,7 @@ describe("Referenzen (leistungen)", () => {
     for (const r of referenzen) {
       expect(screen.getByRole("heading", { name: r.titel })).toBeInTheDocument();
       expect(screen.getByText(r.kompakt)).toBeInTheDocument();
-      expect(screen.queryByText(r.ueberblick)).toBeNull();
+      expect(screen.queryByText(r.problem)).toBeNull();
     }
   });
 
