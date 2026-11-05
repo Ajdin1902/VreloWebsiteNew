@@ -13,6 +13,12 @@ describe("Footer", () => {
     expect(screen.getByRole("link", { name: "Prozess-Check" })).toHaveAttribute("href", "/prozess-check?src=footer");
   });
 
+  it("still links the newsletter after it left the top nav", () => {
+    render(<Footer />);
+    const hrefs = screen.getAllByRole("link").map((a) => a.getAttribute("href"));
+    expect(hrefs).toContain("/newsletter");
+  });
+
   it("links the founder's own LinkedIn profile, opening in a new tab", () => {
     render(<Footer />);
     const link = screen.getByRole("link", { name: "Ajdin Dzafic auf LinkedIn" });

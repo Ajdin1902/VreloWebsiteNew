@@ -45,6 +45,12 @@ describe("focus routes", () => {
   });
 });
 
+describe("top nav", () => {
+  it("puts Referenzen right after Leistungen and drops Newsletter from the nav", () => {
+    expect(navLinks.map((l) => l.href)).toEqual(["/leistungen", "/referenzen", "/ueber-mich", "/faq", "/ratgeber", "/kontakt"]);
+  });
+});
+
 describe("bare routes", () => {
   it("treats the business card and its QR page as bare (no chrome at all)", () => {
     expect(bareRoutes).toContain("/karte");
