@@ -52,6 +52,8 @@ Buckets: **Done** (branch `fix/review-2026-11-04`) · **Wrong** (the site alread
 
 ## Ajdin (a real point, needs his call or input)
 
+> **Done 2026-11-05:** #9 (Merak explained in the homepage close) · #20 (FAQ names Hetzner, ISO 27001) · #43 (Ratgeber cards show the category, not a tag) · the free three-step path `DerWeg` on the homepage.
+
 1. **2 Merge KI-Beratung and Prozess-Audit** (both free, both a talk, both end in a roadmap). Recommendation: keep both pages but make KI-Beratung the Erstgespräch and the Audit its step 2 more explicitly, or fold KI-Beratung into the audit page. Costs the nine-services decision one item.
 2. **3 Category placement:** KI-Server under „Automatisieren“, KI-Betriebssystem under „Betreiben“, the free audit under „Befähigen“. Cheap to move in `leistungenPages.ts` (`group`), but it changes the hub spec.
 3. **6 Guarantee above the fold** on the homepage (plus ownership and the price range). Strongest proof point, currently step 6 on `/leistungen`. Needs a hero/Problem-section decision.

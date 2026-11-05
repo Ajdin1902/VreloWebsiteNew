@@ -1,7 +1,7 @@
 // src/components/claude-gehirn/PromptBox.tsx
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 // The Claude-Gehirn prompt with a copy button. The text stays selectable so a
 // failed clipboard call (old browser, denied permission) still leaves a way.
@@ -21,6 +21,7 @@ export function PromptBox({
   hintLabel: string;
 }) {
   const [state, setState] = useState<"idle" | "copied" | "failed">("idle");
+  const preRef = useRef<HTMLPreElement>(null);
 
   async function copy() {
     try {
@@ -28,6 +29,15 @@ export function PromptBox({
       setState("copied");
     } catch {
       setState("failed");
+      // Select the whole text so the hand copy is one Ctrl+C away.
+      const pre = preRef.current;
+      const sel = window.getSelection();
+      if (pre && sel) {
+        const range = document.createRange();
+        range.selectNodeContents(pre);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
     }
   }
 
@@ -49,6 +59,8 @@ export function PromptBox({
           screen; the fade says there is more, the hint says the button takes it all. */}
       <div className="relative mt-4">
         <pre
+          ref={preRef}
+          role="region"
           tabIndex={0}
           aria-label={boxLabel}
           className="max-h-48 overflow-y-auto whitespace-pre-wrap break-words rounded-xl bg-lesepapier p-4 font-mono text-sm leading-relaxed text-tinte focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vrelo-petrol"

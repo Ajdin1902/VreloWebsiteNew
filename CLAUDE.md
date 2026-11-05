@@ -106,9 +106,7 @@ Author issues as `.md` in `content/newsletter/` (frontmatter `subject`/`previewT
 - ☐ Open, minor: `*.vercel.app` → apex is **307**, make it **308** (SEO).
 
 ## Open todos (non-blocking, carry forward)
-- **Folder-rename cleanup:** the folder is now `Website/`; stale `Vrelo Website New` refs survive in ~7 docs outside this repo (`grep -r "Vrelo Website New" ..`). Leave `VreloWebsiteNew` (the GitHub remote) untouched.
 - **Polish backlog:** [Ideas.md](Ideas.md).
-- ☐ **`/claude-gehirn` deferred minors:** `PromptBox` `<pre>` `role="region"` + auto-select on copy failure.
 
 ## Tech stack
 - **Next.js 16** (App Router, Turbopack) · **TypeScript**
@@ -178,7 +176,7 @@ Frequent commits; commit messages end with a `Co-Authored-By:` line naming the m
 - No tracking cookies on load (cookieless analytics + click-to-load Cal.com) → no consent banner needed for now. **Vercel Web Analytics live since 2026-09-06** — cookieless, nothing written to the visitor's device, so § 25 TDDDG consent doesn't bite; declared in the Datenschutzerklärung as „Reichweitenmessung (Vercel Web Analytics)“ on Art. 6 Abs. 1 lit. f DSGVO. ⚠️ Any analytics product that *does* touch device storage (Speed Insights custom events, a second tool) flips this line – re-check before adding one.
 
 > **Changelog** (newest first, one line each; git has the detail):
-> - **2026-11-05** – Homepage: free three-step path `DerWeg` before the doors; the service block cut from eight chips to four door cards.
+> - **2026-11-05** – Homepage: free three-step path `DerWeg` before the doors; the service block cut from eight chips to four door cards; Merak explained in the close · FAQ names Hetzner (ISO 27001) · Ratgeber cards show the category, not a tag · `PromptBox` region + auto-select on a failed copy. The old folder name `Vrelo Website New` survives only in dated specs/plans and the Vault raw snapshot, on purpose.
 > - **2026-11-04** – External 50-point review triaged + 25 fixes live the same day (`cbbdeea`): four Leistungen doors, FAQ tiers + anchors + holiday/Förderung/Fremdkosten answers, share meta per page, ODR link out, Digitalbonus on build pages, Art.-4 note, Prozess-Check „Agentur“ in / „Praxis“ out. Rules → bullets above; open items → HQ §7.
 > - **2026-10-01 … 10-21** – Leistungen-Hub + neun Unterseiten, Leistungs-Grafiken, Vergleich Prozess vs. KI · `/claude-gehirn` · Descriptor „Betriebe und Unternehmen“ · kein Komma vor „und“ · echte Gründerfotos · Ratgeber „Meinung“ + Themenfilter · Newsletter läuft.
 > - **2026-09-02 … 09-26** – Prozess-Check als Haustür, alle Haupt-Buttons → `?src=` (09-26; Review der `src`-Zahlen am 2026-10-10) · Feinschliff-Karte nennt die Garantie-Bedingung (09-21) · `/makler`, `/demo`, `/lead-check` geparkt (09-19) · `/karte` + Print-Visitenkarte (09-11) · `/leistungen`-Feinschliff, Web Analytics, `?src=` + `/brief` (09-02 … 09-07). Rules → bullets above.

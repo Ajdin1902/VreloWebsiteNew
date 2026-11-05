@@ -14,7 +14,8 @@ export function ArticleCard({
   const meta = [
     formatDate(article.date),
     `${article.readingMinutes} Min`,
-    article.tags[0],
+    // The category, not a tag: the filter above the list runs on kategorie (review 2026-11-04).
+    article.kategorie,
     article.draft ? "Entwurf" : null,
   ].filter(Boolean).join(" · ");
 

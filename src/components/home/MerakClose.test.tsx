@@ -15,6 +15,8 @@ describe("MerakClose", () => {
   it("keeps the Merak-Effekt as the one line under the headline", () => {
     const { container } = render(<MerakClose />);
     expect(screen.getByText(/Merak/)).toBeInTheDocument();
+    // Review 2026-11-04: the page explains the word where it first uses it.
+    expect(screen.getByText(/der Moment, in dem Ruhe einkehrt, weil etwas einfach läuft\./)).toBeInTheDocument();
     expect(container.textContent).not.toContain("Der erste Schritt dauert drei Minuten");
   });
 

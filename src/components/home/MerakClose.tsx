@@ -33,7 +33,7 @@ export function MerakClose() {
           Die Prozesse laufen von selbst. Deine Zeit gehört wieder dir.
         </Reveal>
         <Reveal as="p" delayMs={80} className="mx-auto mt-6 max-w-xl text-pretty text-lg text-tinte">
-          Das ist der <BrandWord>Merak</BrandWord>-Effekt.
+          Das ist der <BrandWord>Merak</BrandWord>-Effekt: der Moment, in dem Ruhe einkehrt, weil etwas einfach läuft.
         </Reveal>
         <Reveal delayMs={160} className="mt-8">
           <CTAButton href={checkHref(CHECK_SRC.homeClose)}>{CHECK_CTA.label}</CTAButton>

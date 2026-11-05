@@ -72,7 +72,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Was passiert mit meinen Daten?",
         answer:
-          "Deine Daten bleiben deine. Du entscheidest, wohin sie fließen: Entweder nutzen wir eine Cloud-Lösung, oder ich baue dir ein selbstgehostetes System mit zertifizierten Anbietern auf. Ich arbeite DSGVO-konform, nutze nur die nötigen Zugänge und dokumentiere, was wohin fließt. Nutzt dein System KI mit sensiblen Daten, läuft das Modell über Server innerhalb der EU, in deinem eigenen Konto. Claude für Unternehmen ist dagegen ein Dienst des US-Anbieters Anthropic: Was dort hinein darf, legen wir vorher fest.",
+          "Deine Daten bleiben deine. Du entscheidest, wohin sie fließen: Entweder nutzen wir eine Cloud-Lösung, oder ich richte dir ein eigenes System auf einem Server bei Hetzner ein, in einem nach ISO 27001 zertifizierten Rechenzentrum in Deutschland. Ich arbeite DSGVO-konform, nutze nur die nötigen Zugänge und dokumentiere, was wohin fließt. Nutzt dein System KI mit sensiblen Daten, läuft das Modell über Server innerhalb der EU, in deinem eigenen Konto. Claude für Unternehmen ist dagegen ein Dienst des US-Anbieters Anthropic: Was dort hinein darf, legen wir vorher fest.",
       },
       {
         question: "Was, wenn etwas nicht mehr funktioniert?",

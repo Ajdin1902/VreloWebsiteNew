@@ -6,7 +6,7 @@ import type { Article } from "@/lib/ratgeber";
 
 const article: Article = {
   slug: "mein-artikel", title: "Mein Artikel", description: "Worum es geht.",
-  date: "2026-05-28", tags: ["Termine"], draft: false, readingMinutes: 6, body: "b",
+  date: "2026-05-28", tags: ["Termine"], kategorie: "Praxis", draft: false, readingMinutes: 6, body: "b",
   cover: "/images/ratgeber-termine.webp", coverAlt: "Ruhige Wasserringe.",
 };
 
@@ -17,7 +17,9 @@ describe("ArticleCard", () => {
     expect(link).toHaveAttribute("href", "/ratgeber/mein-artikel");
     expect(screen.getByText(/28\. Mai 2026/)).toBeInTheDocument();
     expect(screen.getByText(/6 Min/)).toBeInTheDocument();
-    expect(screen.getByText(/Termine/)).toBeInTheDocument();
+    // The meta row names the category the filter uses, never a tag.
+    expect(screen.getByText(/Praxis/)).toBeInTheDocument();
+    expect(screen.queryByText(/Termine/)).toBeNull();
     expect(screen.getByText("Worum es geht.")).toBeInTheDocument();
     expect(container.querySelector("img")).toBeNull();
   });

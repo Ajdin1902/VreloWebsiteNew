@@ -48,6 +48,13 @@ describe("PromptBox", () => {
     render(<PromptBox text={text} {...labels} />);
     fireEvent.click(screen.getByRole("button", { name: labels.copyLabel }));
     expect(await screen.findByText(labels.failedLabel)).toBeInTheDocument();
+    // The whole prompt is selected, so the hand copy is one Ctrl+C away.
+    expect(window.getSelection()?.toString()).toBe(text);
+  });
+
+  it("exposes the scrollable prompt as a labelled region", () => {
+    render(<PromptBox text={text} {...labels} />);
+    expect(screen.getByRole("region", { name: labels.boxLabel })).toBeInTheDocument();
   });
 
   it("says before any click that the button copies the whole text", () => {
