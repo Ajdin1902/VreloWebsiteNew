@@ -29,6 +29,6 @@ describe("ReferenzCard", () => {
   it("leaves the long story to /referenzen", () => {
     render(<ReferenzCard referenz={mdz} />);
     expect(screen.queryByText(mdz.problem[0])).toBeNull();
-    expect(screen.queryByText(mdz.loesung[0])).toBeNull();
+    expect(screen.queryByText(mdz.ergebnis[0])).toBeNull();
   });
 });

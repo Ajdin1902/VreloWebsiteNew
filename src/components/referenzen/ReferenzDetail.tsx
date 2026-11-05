@@ -5,11 +5,11 @@ import { referenzAnchorId, type Referenz } from "@/lib/referenzen";
 
 const beats = [
   { key: "problem", label: "Das Problem" },
-  { key: "loesung", label: "Die Lösung" },
+  { key: "ergebnis", label: "Das Ergebnis" },
 ] as const;
 
 // One client's card on /referenzen (Ajdin 2026-11-05, second round): logo, intro,
-// Problem and Lösung as bullets, the visual, the tools, the owner's quote at the foot.
+// Problem and Ergebnis as short bullets, the visual, the tools, the owner's quote at the foot.
 // Cards sit side by side; the quote is pushed to the card foot (mt-auto).
 export function ReferenzDetail({ referenz }: { referenz: Referenz }) {
   return (
@@ -50,7 +50,7 @@ export function ReferenzDetail({ referenz }: { referenz: Referenz }) {
       {/* Same panel height for both clients, so the two visuals line up. */}
       <div className="mt-6 flex h-72 items-center justify-center overflow-hidden rounded-xl bg-gletscher/40">
         {referenz.visual.kind === "clip" ? (
-          // Decorative motion; the first Lösung bullet above says what it shows.
+          // Decorative motion; the first Ergebnis bullet above says what it shows.
           <LazyVideo mp4={referenz.visual.mp4} poster={referenz.visual.poster} className="h-full w-auto" />
         ) : (
           <AblaufGrafik schritte={referenz.visual.schritte} />

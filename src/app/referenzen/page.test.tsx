@@ -13,7 +13,7 @@ describe("/referenzen", () => {
     expect(screen.queryByText(/Zwei Betriebe aus Regensburg/)).toBeNull();
   });
 
-  it("renders one card per client: logo heading, intro, problem and solution bullets, tools, anchor", () => {
+  it("renders one card per client: logo heading, intro, problem and result bullets, tools, anchor", () => {
     const { container } = render(<ReferenzenPage />);
     for (const r of referenzen) {
       // The logo carries the name, so the heading's accessible name is the logo's alt.
@@ -21,10 +21,10 @@ describe("/referenzen", () => {
       // The compact cards on / and /leistungen link to exactly this id.
       expect(container.querySelector(`#${referenzAnchorId(r.slug)}`)).not.toBeNull();
       expect(screen.getByText(r.intro)).toBeInTheDocument();
-      for (const t of [...r.problem, ...r.loesung]) expect(screen.getByText(t)).toBeInTheDocument();
+      for (const t of [...r.problem, ...r.ergebnis]) expect(screen.getByText(t)).toBeInTheDocument();
       for (const w of r.werkzeuge) expect(screen.getAllByText(w).length).toBeGreaterThan(0);
     }
-    for (const beat of ["Das Problem", "Die Lösung"]) {
+    for (const beat of ["Das Problem", "Das Ergebnis"]) {
       expect(screen.getAllByText(beat)).toHaveLength(referenzen.length);
     }
   });

@@ -15,7 +15,7 @@ export type Referenz = {
   familie?: { kurz: string; lang: string };
   intro: string;
   problem: string[];
-  loesung: string[];
+  ergebnis: string[];
   visual:
     | { kind: "clip"; mp4: string; poster: string }
     | { kind: "ablauf"; schritte: { titel: string; werkzeug: string }[] };
@@ -44,18 +44,17 @@ export const referenzen: Referenz[] = [
     },
     intro: "Hausmeisterservice seit 2008, mit eigenem Team.",
     problem: [
-      "Mirsad ist den ganzen Tag auf seinen Objekten, selten am Schreibtisch.",
-      "E-Mails, Termine, Aufgaben fürs Team und Rechnungen blieben bis zum Abend liegen.",
-      "Zwei Stunden Büroarbeit nach der eigentlichen Arbeit, jeden Tag.",
-      "Rechnungen entstanden jeden Monat von Hand aus der Vorlage des Vormonats.",
-      "Der Entsorgungsplan deckte nur die Stadt ab, die Objekte im Landkreis fehlten.",
+      "Den ganzen Tag auf den Objekten, kaum am Schreibtisch.",
+      "Zwei Stunden Büroarbeit am Abend, jeden Tag.",
+      "Rechnungen jeden Monat von Hand aus der Vorlage.",
+      "Entsorgungsplan ohne die Objekte im Landkreis.",
     ],
-    loesung: [
-      "Telegram-Assistent: Mirsad spricht eine Nachricht ein. Der Assistent schreibt und verschickt die E-Mail, trägt den Termin ein und gibt die Aufgabe an den richtigen Mitarbeiter.",
-      "Rechnungsautomat: Aus jedem Eintrag wird eine nummerierte Rechnung als Word und PDF, abgelegt im richtigen OneDrive-Ordner.",
-      "MDZ Core: Alle Objekte, Preise und Rechnungen seit 2022 in einer Datenbank. Darauf baut die Rechnung per Telegram auf.",
-      "Entsorgungsplan für Stadt und Landkreis, jeden Monat direkt aus dem offiziellen Abfallkalender.",
-      "Website: Nebenbei kam eine neue Website dazu.",
+    ergebnis: [
+      "Telegram-Assistent: Sprachnachricht rein, E-Mail, Termin und Aufgabe erledigt.",
+      "Rechnungsautomat: Rechnung per Chat, fertig als Word und PDF in OneDrive.",
+      "MDZ Core: alle Rechnungen seit 2022 in einer Datenbank.",
+      "Entsorgungsplan: Stadt und Landkreis, jeden Monat korrekt.",
+      "Website: neu, nebenbei mit dazu.",
     ],
     visual: { kind: "clip", mp4: "/video/ki-assistent.mp4", poster: "/video/ki-assistent.webp" },
     werkzeuge: ["Telegram", "n8n", "Claude", "Notion", "Google Kalender", "OneDrive", "Word"],
@@ -77,19 +76,17 @@ export const referenzen: Referenz[] = [
     logo: { src: "/images/referenzen/velp-logo.webp", width: 720, height: 354 },
     intro: "Jeder neue Kunde durchläuft bei Velp dieselben Schritte, vom Angebot bis zur Betreuung.",
     problem: [
-      "Viele verschiedene Systeme, in denen die neueste Information ständig von Hand nachgetragen werden musste.",
-      "Kein Ort, an dem der aktuelle Stand eines Kunden auf einen Blick zu sehen war.",
-      "Angebote von Hand schreiben, prüfen, verschicken und nachhalten.",
-      "Dokumentation kostete Stunden, trotzdem ging immer wieder etwas verloren.",
-      "Kundenkarten, Aufgaben und Fristen wurden von Hand angelegt und weitergeschoben.",
+      "HubSpot, ClickUp, Drive: jede Info von Hand nachgetragen.",
+      "Angebote von Hand geschrieben, geprüft und verschickt.",
+      "Kein Ort mit dem aktuellen Stand eines Kunden.",
+      "Dokumentation kostete Stunden, trotzdem ging etwas verloren.",
     ],
-    loesung: [
-      "HubSpot ist die eine Quelle der Wahrheit: Alle Kundendaten stehen an einem Ort.",
-      "Angebote gehen automatisch raus, vollständig und korrekt. Per BoldSign kommen sie unterschrieben zurück.",
-      "Nach der Unterschrift entstehen Kundenordner, Willkommensmail und Kundenkarte von selbst.",
-      "Die Kundenkarte schaltet in die nächste Phase, sobald ihre Aufgaben erledigt sind. Die neuen Aufgaben kommen mit Fristen.",
-      "Alles wird automatisch dokumentiert. Der neueste Stand jedes Kunden ist sofort lesbar.",
-      "Das Team gewinnt mehrere Stunden für die Arbeit mit den Kunden und kann sich darauf verlassen, dass alles stimmt.",
+    ergebnis: [
+      "HubSpot ist die eine Quelle der Wahrheit.",
+      "Angebote gehen automatisch und korrekt raus, Unterschrift per BoldSign.",
+      "Nach der Unterschrift: Kundenordner, Willkommensmail und ClickUp-Karte von selbst.",
+      "Jeder Schritt dokumentiert, der Stand jedes Kunden auf einen Blick.",
+      "Mehrere Stunden mehr Zeit für die Kunden.",
     ],
     visual: {
       kind: "ablauf",

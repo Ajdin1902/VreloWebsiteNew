@@ -30,13 +30,17 @@ describe("referenzen copy", () => {
       expect(r.logo.src.startsWith("/images/referenzen/"), r.slug).toBe(true);
       expect(r.werkzeuge.length, r.slug).toBeGreaterThan(0);
       expect(r.problem.length, r.slug).toBeGreaterThan(1);
-      expect(r.loesung.length, r.slug).toBeGreaterThan(1);
+      expect(r.ergebnis.length, r.slug).toBeGreaterThan(1);
     }
   });
 
+  it("keeps every bullet short", () => {
+    for (const r of referenzen) for (const b of [...r.problem, ...r.ergebnis]) expect(b.split(" ").length, b).toBeLessThanOrEqual(12);
+  });
+
   it("names the MDZ builds in Ajdin's order", () => {
-    const order = ["Telegram-Assistent", "Rechnungsautomat", "MDZ Core", "Entsorgungsplan", "Website"].map((w) => mdz.loesung.findIndex((b) => b.includes(w)));
-    expect(order.every((i) => i >= 0), mdz.loesung.join(" | ")).toBe(true);
+    const order = ["Telegram-Assistent", "Rechnungsautomat", "MDZ Core", "Entsorgungsplan", "Website"].map((w) => mdz.ergebnis.findIndex((b) => b.includes(w)));
+    expect(order.every((i) => i >= 0), mdz.ergebnis.join(" | ")).toBe(true);
     expect([...order].sort((a, b) => a - b)).toEqual(order);
   });
 
