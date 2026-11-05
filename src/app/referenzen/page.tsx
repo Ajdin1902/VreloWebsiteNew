@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 export default function ReferenzenPage() {
   return (
     <>
-      <PageHero title="Das sagen die Kunden." src="/images/hero-flow.webp" size="compact" />
+      <PageHero title="Das sagen die Kunden." src="/images/bg-steps.webp" size="compact" />
 
       <Section tone="warm" className="relative isolate overflow-hidden">
         <SectionBackdrop src="/images/bg-karst-quelle.webp" tintRgb="244 228 193" tintOpacity={0.7} />

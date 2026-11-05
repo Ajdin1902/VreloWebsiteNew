@@ -51,10 +51,10 @@ export const referenzen: Referenz[] = [
     ],
     ergebnis: [
       "Telegram-Assistent: Sprachnachricht rein, E-Mail, Termin und Aufgabe erledigt.",
-      "Rechnungsautomat: Rechnung per Chat, fertig als Word und PDF in OneDrive.",
+      "Rechnungsautomatisierung: Rechnung per Chat, fertig als Word und PDF in OneDrive.",
       "MDZ Core: alle Rechnungen seit 2022 in einer Datenbank.",
-      "Entsorgungsplan: Stadt und Landkreis, jeden Monat korrekt.",
-      "Website: neu, nebenbei mit dazu.",
+      "Entsorgungsplan: Stadt und Landkreis, jeden Monat automatisch.",
+      "Website modernisiert.",
     ],
     visual: { kind: "clip", mp4: "/video/ki-assistent.mp4", poster: "/video/ki-assistent.webp" },
     werkzeuge: ["Telegram", "n8n", "Claude", "Notion", "Google Kalender", "OneDrive", "Word"],
@@ -83,10 +83,10 @@ export const referenzen: Referenz[] = [
     ],
     ergebnis: [
       "HubSpot ist die eine Quelle der Wahrheit.",
-      "Angebote gehen automatisch und korrekt raus, Unterschrift per BoldSign.",
+      "Angebote gehen automatisch und korrekt raus, mit dokumentierter Unterschrift.",
       "Nach der Unterschrift: Kundenordner, Willkommensmail und ClickUp-Karte von selbst.",
       "Jeder Schritt dokumentiert, der Stand jedes Kunden auf einen Blick.",
-      "Mehrere Stunden mehr Zeit für die Kunden.",
+      "Eingesparte Stunden fließen in die Arbeit mit den Kunden.",
     ],
     visual: {
       kind: "ablauf",
