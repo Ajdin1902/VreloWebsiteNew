@@ -13,19 +13,25 @@ describe("/referenzen", () => {
     expect(screen.queryByText(/Zwei Betriebe aus Regensburg/)).toBeNull();
   });
 
-  it("renders one card per client: logo heading, intro, the three beats, tools, anchor", () => {
+  it("renders one card per client: logo heading, intro, problem and solution bullets, tools, anchor", () => {
     const { container } = render(<ReferenzenPage />);
     for (const r of referenzen) {
       // The logo carries the name, so the heading's accessible name is the logo's alt.
       expect(screen.getByRole("heading", { level: 2, name: r.name })).toBeInTheDocument();
       // The compact cards on / and /leistungen link to exactly this id.
       expect(container.querySelector(`#${referenzAnchorId(r.slug)}`)).not.toBeNull();
-      for (const t of [r.intro, r.problem, r.gebaut, r.laeuft]) expect(screen.getByText(t)).toBeInTheDocument();
+      expect(screen.getByText(r.intro)).toBeInTheDocument();
+      for (const t of [...r.problem, ...r.loesung]) expect(screen.getByText(t)).toBeInTheDocument();
       for (const w of r.werkzeuge) expect(screen.getAllByText(w).length).toBeGreaterThan(0);
     }
-    for (const beat of ["Das Problem", "Was ich gebaut habe", "So läuft es heute"]) {
+    for (const beat of ["Das Problem", "Die Lösung"]) {
       expect(screen.getAllByText(beat)).toHaveLength(referenzen.length);
     }
+  });
+
+  it("draws the Velp chain as one labelled graphic", () => {
+    render(<ReferenzenPage />);
+    expect(screen.getByRole("img", { name: /HubSpot.*ClickUp/ })).toBeInTheDocument();
   });
 
   it("shows the father line on the MDZ card and ends it on Mirsad's quote", () => {

@@ -180,3 +180,14 @@ Supersedes D2, D3, §5 and the long copy in §6 where they differ. The build fol
 - MDZ tools: Telegram · n8n · Claude · Notion · Google Kalender · OneDrive · Word. Velp: ClickUp · n8n
   (only what runs live). Ajdin checks both lists before merge.
 
+## 12. Third round (Ajdin, 2026-11-05)
+
+- **Publish gate moves:** the page goes live only when Velp's chain (HubSpot → Angebot in sevDesk →
+  BoldSign → Google Drive + Willkommensmail → ClickUp card) is live at Velp, not just on Alen's naming
+  OK. The Velp card already lists that chain.
+- Body as bullets, two lists per card: „Das Problem“ and „Die Lösung“ (the third beat is gone).
+- MDZ quote replaced by Mirsad's own words: „Meine ganze Büroarbeit wird unterwegs direkt per
+  Chatnachricht erledigt. Nichts wird vergessen.“ MDZ intro without the object count.
+- Velp visual: the five-step chain as one labelled graphic (tool names only). Open: a short video of
+  one Velp process, if Alen agrees; it would replace the graphic.
+

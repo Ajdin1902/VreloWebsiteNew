@@ -3,6 +3,8 @@
 // homepage and the /leistungen hub show the compact card only.
 // MDZ is Ajdin's father's business: wherever the MDZ name appears, the family
 // tie appears with it (UWG §5).
+// Velp lists the HubSpot → Angebot → BoldSign → Drive → ClickUp chain, which is
+// still in test: the page goes live only once Velp takes it live (Ajdin 2026-11-05).
 
 export type Referenz = {
   slug: string; // also the anchor suffix on /referenzen
@@ -12,10 +14,11 @@ export type Referenz = {
   logo: { src: string; width: number; height: number };
   familie?: { kurz: string; lang: string };
   intro: string;
-  problem: string;
-  gebaut: string;
-  laeuft: string;
-  visual: { kind: "clip"; mp4: string; poster: string } | { kind: "phasen" };
+  problem: string[];
+  loesung: string[];
+  visual:
+    | { kind: "clip"; mp4: string; poster: string }
+    | { kind: "ablauf"; schritte: { titel: string; werkzeug: string }[] };
   werkzeuge: string[]; // tool names only, never tool logos (trademark rule, Werkzeuge.tsx)
   stimme?: { text: string; name: string }; // the owner's approved quote
   titel: string; // compact headline
@@ -39,18 +42,26 @@ export const referenzen: Referenz[] = [
       kurz: "Betrieb meines Vaters",
       lang: "Der Betrieb meines Vaters. Hier konnte ich anfangen und habe gesehen, wie meine Systeme ihm die Arbeit leichter machen.",
     },
-    intro: "Seit 2008 betreut MDZ über 55 Objekte, mit eigenem Team.",
-    problem:
-      "Mirsad ist den ganzen Tag auf seinen Objekten. E-Mails, Termine, Aufgaben fürs Team und Rechnungen blieben bis zum Abend liegen: zwei Stunden Büroarbeit, jeden Tag.",
-    gebaut:
-      "Einen Telegram-Assistenten, einen Rechnungsautomaten auf der eigenen Datenbank MDZ Core, einen automatischen Entsorgungsplan und nebenbei eine neue Website.",
-    laeuft:
-      "Mirsad spricht eine Nachricht ein, der Rest passiert von selbst: E-Mail, Termin, Aufgabe ans Team, Rechnung als Word und PDF in OneDrive. Der Entsorgungsplan stimmt jeden Monat.",
+    intro: "Hausmeisterservice seit 2008, mit eigenem Team.",
+    problem: [
+      "Mirsad ist den ganzen Tag auf seinen Objekten, selten am Schreibtisch.",
+      "E-Mails, Termine, Aufgaben fürs Team und Rechnungen blieben bis zum Abend liegen.",
+      "Zwei Stunden Büroarbeit nach der eigentlichen Arbeit, jeden Tag.",
+      "Rechnungen entstanden jeden Monat von Hand aus der Vorlage des Vormonats.",
+      "Der Entsorgungsplan deckte nur die Stadt ab, die Objekte im Landkreis fehlten.",
+    ],
+    loesung: [
+      "Telegram-Assistent: Mirsad spricht eine Nachricht ein. Der Assistent schreibt und verschickt die E-Mail, trägt den Termin ein und gibt die Aufgabe an den richtigen Mitarbeiter.",
+      "Rechnungsautomat: Aus jedem Eintrag wird eine nummerierte Rechnung als Word und PDF, abgelegt im richtigen OneDrive-Ordner.",
+      "MDZ Core: Alle Objekte, Preise und Rechnungen seit 2022 in einer Datenbank. Darauf baut die Rechnung per Telegram auf.",
+      "Entsorgungsplan für Stadt und Landkreis, jeden Monat direkt aus dem offiziellen Abfallkalender.",
+      "Website: Nebenbei kam eine neue Website dazu.",
+    ],
     visual: { kind: "clip", mp4: "/video/ki-assistent.mp4", poster: "/video/ki-assistent.webp" },
     werkzeuge: ["Telegram", "n8n", "Claude", "Notion", "Google Kalender", "OneDrive", "Word"],
-    // Mirsad approves the exact German before the page goes live (spec §6.4).
+    // Mirsad's own words (2026-11-05).
     stimme: {
-      text: "„Ich muss mir nichts mehr merken und nichts mehr aufschreiben. Ich spreche einfach rein und alles wird erledigt.“",
+      text: "„Meine ganze Büroarbeit wird unterwegs direkt per Chatnachricht erledigt. Nichts wird vergessen.“",
       name: "Mirsad Dzafic",
     },
     titel: "Das Büro läuft per Sprachnachricht.",
@@ -64,17 +75,35 @@ export const referenzen: Referenz[] = [
     label: "Marketingagentur · Regensburg",
     inhaber: "Alen Purisic",
     logo: { src: "/images/referenzen/velp-logo.webp", width: 720, height: 354 },
-    intro: "Jeder neue Kunde durchläuft bei Velp dieselben Phasen, quer durch fünf Übersichten.",
-    problem:
-      "Jede Kundenkarte wurde von Hand in die nächste Phase geschoben, jede Aufgabe neu angelegt, jede Frist von Hand gesetzt. Das kostete täglich Zeit und ging leicht unter.",
-    gebaut:
-      "Eine Phasen-Steuerung für die Kundenübersicht. Sind alle Aufgaben einer Phase erledigt, legt sie die nächsten an, mit Werktags-Fristen und Ansprechpartner. Geförderte Kunden bekommen eine eigene BAFA-Spur.",
-    laeuft: "Niemand schiebt mehr eine Karte von Hand. Das Team arbeitet am Kunden statt an der Dokumentation.",
-    visual: { kind: "phasen" },
-    werkzeuge: ["ClickUp", "n8n"],
-    titel: "Die Kundenübersicht steuert sich selbst.",
-    kompakt:
-      "Von manueller Dokumentation und Kundensteuerung zu einem automatisierten Aufgabenkatalog mit Deadline und Ansprechpartner.",
+    intro: "Jeder neue Kunde durchläuft bei Velp dieselben Schritte, vom Angebot bis zur Betreuung.",
+    problem: [
+      "Viele verschiedene Systeme, in denen die neueste Information ständig von Hand nachgetragen werden musste.",
+      "Kein Ort, an dem der aktuelle Stand eines Kunden auf einen Blick zu sehen war.",
+      "Angebote von Hand schreiben, prüfen, verschicken und nachhalten.",
+      "Dokumentation kostete Stunden, trotzdem ging immer wieder etwas verloren.",
+      "Kundenkarten, Aufgaben und Fristen wurden von Hand angelegt und weitergeschoben.",
+    ],
+    loesung: [
+      "HubSpot ist die eine Quelle der Wahrheit: Alle Kundendaten stehen an einem Ort.",
+      "Angebote gehen automatisch raus, vollständig und korrekt. Per BoldSign kommen sie unterschrieben zurück.",
+      "Nach der Unterschrift entstehen Kundenordner, Willkommensmail und Kundenkarte von selbst.",
+      "Die Kundenkarte schaltet in die nächste Phase, sobald ihre Aufgaben erledigt sind. Die neuen Aufgaben kommen mit Fristen.",
+      "Alles wird automatisch dokumentiert. Der neueste Stand jedes Kunden ist sofort lesbar.",
+      "Das Team gewinnt mehrere Stunden für die Arbeit mit den Kunden und kann sich darauf verlassen, dass alles stimmt.",
+    ],
+    visual: {
+      kind: "ablauf",
+      schritte: [
+        { titel: "Deal", werkzeug: "HubSpot" },
+        { titel: "Angebot", werkzeug: "sevDesk" },
+        { titel: "Unterschrift", werkzeug: "BoldSign" },
+        { titel: "Kundenordner und Willkommensmail", werkzeug: "Google Drive" },
+        { titel: "Kundenkarte mit Aufgaben", werkzeug: "ClickUp" },
+      ],
+    },
+    werkzeuge: ["HubSpot", "sevDesk", "BoldSign", "Google Drive", "ClickUp", "n8n"],
+    titel: "Vom Angebot bis zur Kundenkarte läuft alles von selbst.",
+    kompakt: "Eine Quelle der Wahrheit in HubSpot: Angebot, Unterschrift, Kundenordner und Aufgaben entstehen automatisch.",
     kennzahl: "Projektdokumentation",
     kennzahlLabel: "läuft von selbst",
   },

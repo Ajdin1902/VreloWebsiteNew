@@ -1,16 +1,15 @@
 import Image from "next/image";
 import { LazyVideo } from "@/components/LazyVideo";
-import { PhasenGrafik } from "@/components/referenzen/PhasenGrafik";
+import { AblaufGrafik } from "@/components/referenzen/AblaufGrafik";
 import { referenzAnchorId, type Referenz } from "@/lib/referenzen";
 
 const beats = [
   { key: "problem", label: "Das Problem" },
-  { key: "gebaut", label: "Was ich gebaut habe" },
-  { key: "laeuft", label: "So läuft es heute" },
+  { key: "loesung", label: "Die Lösung" },
 ] as const;
 
 // One client's card on /referenzen (Ajdin 2026-11-05, second round): logo, intro,
-// Problem → Gebaut → Heute, the visual, the tools, the owner's quote at the foot.
+// Problem and Lösung as bullets, the visual, the tools, the owner's quote at the foot.
 // Cards sit side by side; the quote is pushed to the card foot (mt-auto).
 export function ReferenzDetail({ referenz }: { referenz: Referenz }) {
   return (
@@ -34,22 +33,27 @@ export function ReferenzDetail({ referenz }: { referenz: Referenz }) {
       {/* The family tie, set apart but quiet. Body font: Fraunces italic is reserved for Vrelo/Merak. */}
       {referenz.familie ? <p className="mt-2 text-pretty text-sm italic text-[#6f4a20]">{referenz.familie.lang}</p> : null}
 
-      <ol className="mt-6 space-y-4 border-l-2 border-amber/60 pl-4">
-        {beats.map((b) => (
-          <li key={b.key}>
-            <p className="text-xs font-semibold uppercase tracking-wider text-stumm">{b.label}</p>
-            <p className="mt-1 text-pretty text-tinte">{referenz[b.key]}</p>
-          </li>
-        ))}
-      </ol>
+      {beats.map((b) => (
+        <div key={b.key} className="mt-6">
+          <p className="text-xs font-semibold uppercase tracking-wider text-stumm">{b.label}</p>
+          <ul className="mt-2 space-y-1.5">
+            {referenz[b.key].map((t) => (
+              <li key={t} className="flex gap-2.5 text-pretty text-tinte">
+                <span aria-hidden className={`mt-2 h-1.5 w-1.5 shrink-0 rounded-full ${b.key === "problem" ? "bg-stein" : "bg-amber"}`} />
+                <span>{t}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
 
       {/* Same panel height for both clients, so the two visuals line up. */}
       <div className="mt-6 flex h-72 items-center justify-center overflow-hidden rounded-xl bg-gletscher/40">
         {referenz.visual.kind === "clip" ? (
-          // Decorative motion; „Was ich gebaut habe“ above says what it shows.
+          // Decorative motion; the first Lösung bullet above says what it shows.
           <LazyVideo mp4={referenz.visual.mp4} poster={referenz.visual.poster} className="h-full w-auto" />
         ) : (
-          <PhasenGrafik />
+          <AblaufGrafik schritte={referenz.visual.schritte} />
         )}
       </div>
 

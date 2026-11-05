@@ -24,23 +24,29 @@ describe("referenzen copy", () => {
 
   it("gives every card its required fields, a logo and its tools", () => {
     for (const r of referenzen) {
-      for (const f of ["name", "label", "inhaber", "intro", "titel", "kompakt", "problem", "gebaut", "laeuft", "kennzahl", "kennzahlLabel"] as const) {
+      for (const f of ["name", "label", "inhaber", "intro", "titel", "kompakt", "kennzahl", "kennzahlLabel"] as const) {
         expect(r[f].length, `${r.slug}.${f}`).toBeGreaterThan(0);
       }
       expect(r.logo.src.startsWith("/images/referenzen/"), r.slug).toBe(true);
       expect(r.werkzeuge.length, r.slug).toBeGreaterThan(0);
+      expect(r.problem.length, r.slug).toBeGreaterThan(1);
+      expect(r.loesung.length, r.slug).toBeGreaterThan(1);
     }
   });
 
   it("names the MDZ builds in Ajdin's order", () => {
-    const order = ["Telegram-Assistent", "Rechnungsautomat", "MDZ Core", "Entsorgungsplan", "Website"].map((w) => mdz.gebaut.indexOf(w));
-    expect(order.every((i) => i >= 0), mdz.gebaut).toBe(true);
+    const order = ["Telegram-Assistent", "Rechnungsautomat", "MDZ Core", "Entsorgungsplan", "Website"].map((w) => mdz.loesung.findIndex((b) => b.includes(w)));
+    expect(order.every((i) => i >= 0), mdz.loesung.join(" | ")).toBe(true);
     expect([...order].sort((a, b) => a - b)).toEqual(order);
   });
 
-  it("shows the MDZ clip and the Velp phase graphic", () => {
+  it("shows the MDZ clip and the Velp chain from HubSpot to ClickUp", () => {
     expect(mdz.visual).toEqual({ kind: "clip", mp4: "/video/ki-assistent.mp4", poster: "/video/ki-assistent.webp" });
-    expect(velp.visual).toEqual({ kind: "phasen" });
+    expect(velp.visual.kind).toBe("ablauf");
+    if (velp.visual.kind !== "ablauf") return;
+    expect(velp.visual.schritte.map((s) => s.werkzeug)).toEqual(["HubSpot", "sevDesk", "BoldSign", "Google Drive", "ClickUp"]);
+    // Every tool in the chain is also in the tool list.
+    for (const s of velp.visual.schritte) expect(velp.werkzeuge).toContain(s.werkzeug);
   });
 
   it("carries the family tie on MDZ only", () => {
@@ -50,6 +56,7 @@ describe("referenzen copy", () => {
   });
 
   it("closes the MDZ card on Mirsad's quote in German quotes", () => {
+    expect(mdz.stimme?.text).toBe("„Meine ganze Büroarbeit wird unterwegs direkt per Chatnachricht erledigt. Nichts wird vergessen.“");
     expect(mdz.stimme?.name).toBe("Mirsad Dzafic");
     expect(mdz.stimme?.text.startsWith("„") && mdz.stimme?.text.endsWith("“")).toBe(true);
   });
