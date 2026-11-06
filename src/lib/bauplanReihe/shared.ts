@@ -44,7 +44,7 @@ export const deckblatt = {
 };
 
 export const abschluss = {
-  heading: "Wenn du es nicht allein bauen willst",
+  heading: "Wenn du Fragen hast, melde dich. Kostenlos.",
   text: [
     "Im Prozess-Audit schauen wir gemeinsam, wo in deinem Betrieb die meiste Zeit hängen bleibt. Er kostet dich nichts.",
     "Den Anfang macht ein Gespräch von 30 Minuten. Ergibt sich daraus etwas Sinnvolles, schreibe ich dir einen Fahrplan. Wenn nicht, sage ich es dir ehrlich.",
