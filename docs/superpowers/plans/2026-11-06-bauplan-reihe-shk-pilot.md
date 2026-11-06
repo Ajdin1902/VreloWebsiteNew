@@ -113,7 +113,7 @@ it("names five levels in ladder order", () => {
 - Consumes: `selbstcheck`, `abschluss`, `LEVELS`, `abschlussHref` (Task 2); Task 1 `### 1.7`.
 - Produces:
   - `type ReiheSlug = "shk"` (union grows per niche)
-  - `type ReiheNische = { slug: ReiheSlug; label: string; kicker: string; title: string; schmerz: string; statistik: { zahl: string; satz: string; quelle: string; linkText: string; href: string } | null; inhalt: string[]; mail: { attachmentName: string; readerSubject: string; readerClose: string; internalPrefix: string }; pdfPath: string; template: string; pages: number; verifiedInterfaces: string[] }`
+  - `type ReiheNische = { slug: ReiheSlug; label: string; kicker: string; title: string; schmerz: string; statistik: { zahl: string; satz: string; quelle: string; linkText: string; href: string } | null; auftragsweg: { schritt: string; verlust?: string }[]; knownTools: string[]; mail: { attachmentName: string; readerSubject: string; readerClose: string; internalPrefix: string }; pdfPath: string; template: string; pages: number; verifiedInterfaces: string[] }`
   - `reiheNischen: Record<ReiheSlug, ReiheNische>` in `index.ts`
   - `checkReiheTemplate(n: ReiheNische, html?: string): string[]` in `templateGuards.ts` (reads `n.template` unless `html` is given; returns problems, `[]` = clean)
 - Template contract: `<section class="page">` per page (first gets `page first`), `<h2 class="part">` per chapter with the chapter titles in skeleton order („Wo du stehst“, „Deine Werkzeuge und Datenwege“, „Das Fundament“, „Die erste Station, Schritt für Schritt“, „Die nächsten Stockwerke“, „Wenn du es nicht allein bauen willst“), `{{{BRAND_CSS}}}`, `{{{LOGO_SVG}}}` and `{{{REIHE_CSS}}}` placeholders.
@@ -174,10 +174,10 @@ it("names five levels in ladder order", () => {
 - Modify: `src/lib/vorlagen.ts` (`vorlageBauplaene["shk-bauplan"]` with `variant: "shk"`, title, description; one hub card), `src/app/vorlagen/[slug]/page.tsx` (render `ReiheBauplanPage` for reihe variants), `src/lib/vorlagen.test.ts`, `src/app/sitemap.test.ts`
 
 **Interfaces:**
-- Consumes: `ReiheNische`, `abschluss`, `abschlussHref` (Tasks 2, 3); `BauplanPdfForm` (`copy` prop, `code = VORLAGE_TOKEN.shk`).
-- Produces: `ReiheBauplanPage({ data: ReiheNische, form?: ReactNode })` — sections: kicker + title + schmerz, statistic block (only when non-null, source link visible), „Das steht im Bauplan“ list (`inhalt`), the form, a short close teaser (`abschluss.heading` + button to `abschlussHref(slug, "web")`). Visual vocabulary from `ElektroBauplanPage` (petrol band, honig number, papier body).
+- Consumes: `ReiheNische`, `abschluss`, `abschlussHref`, `wochenplan`, `deckblatt` (Tasks 2, 3 and the owner round; `inhalt` was removed by Ajdin's cover decision 2026-11-06); `BauplanPdfForm` (`copy` prop, `code = VORLAGE_TOKEN.shk`).
+- Produces: `ReiheBauplanPage({ data: ReiheNische, form?: ReactNode })` — sections: kicker + title + schmerz, statistic block (only when non-null, source link visible), the job flow „Ein Auftrag, viele Hände“ from `auftragsweg` with the circled loss points and the `deckblatt` caption, the one-week path from `wochenplan`, the form, a short close teaser (`abschluss.heading` + button to `abschlussHref(slug, "web")`). Visual vocabulary from `ElektroBauplanPage` (petrol band, honig number, papier body).
 
-- [ ] **Step 1: Write the failing tests:** component renders title, statistic number + source link, every `inhalt` item, the form slot, and a link to `/kontakt?src=bauplan-shk`; renders no statistic block when `statistik` is `null`; sitemap contains `/vorlagen/shk-bauplan`; the hub has a card linking to `/vorlagen/shk-bauplan`; vorlagen copy guard still passes.
+- [ ] **Step 1: Write the failing tests:** component renders title, statistic number + source link, every `auftragsweg` step and circled verb, the five `wochenplan` day labels, the form slot, and a link to `/kontakt?src=bauplan-shk`; renders no statistic block when `statistik` is `null`; sitemap contains `/vorlagen/shk-bauplan`; the hub has a card linking to `/vorlagen/shk-bauplan`; vorlagen copy guard still passes.
 - [ ] **Step 2: Run** `npx vitest run src/components/bauplan src/lib/vorlagen.test.ts src/app/sitemap.test.ts` — Expected: FAIL.
 - [ ] **Step 3: Implement** the component, the route branch and the hub entry. Hub: with five cards keep the grid; grouping waits until more than six.
 - [ ] **Step 4: Run** the full suite `npx vitest run`, `npx tsc --noEmit`, `npm run lint`, `npm run build` — Expected: all pass.
