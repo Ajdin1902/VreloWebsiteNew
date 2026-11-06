@@ -8,7 +8,7 @@ import { canonical } from "@/lib/site";
 export const metadata: Metadata = {
   alternates: { canonical: canonical("/datenschutz") },
   title: "Datenschutz",
-  description: "Datenschutzerklärung von Vrelo — wie deine Daten verarbeitet werden.",
+  description: "Datenschutzerklärung von Vrelo: wie deine Daten verarbeitet werden.",
 };
 
 export default function DatenschutzPage() {

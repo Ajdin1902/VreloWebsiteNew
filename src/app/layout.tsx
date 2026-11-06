@@ -10,8 +10,8 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Vrelo — Durchdachte Automatisierung für Betriebe und Unternehmen",
-    template: "%s — Vrelo",
+    default: "Vrelo - Durchdachte Automatisierung für Betriebe und Unternehmen",
+    template: "%s - Vrelo",
   },
   description:
     "Maßgeschneiderte Automatisierungen für Betriebe und Unternehmen. Du gewinnst Zeit, Ruhe und einen freien Kopf zurück.",
