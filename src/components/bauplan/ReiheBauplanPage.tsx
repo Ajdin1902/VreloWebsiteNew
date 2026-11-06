@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import type { ReiheNische } from "@/lib/bauplanReihe";
-import { abschluss, abschlussHref, deckblatt, wochenplan } from "@/lib/bauplanReihe/shared";
-import { bauplanPage } from "@/lib/bauplanPage";
+import { abschluss, abschlussHref, deckblatt, formular, wochenplan } from "@/lib/bauplanReihe/shared";
 
 // Web mirror of the series PDF cover: the owner's question, the job flow with the circled
 // loss verbs, the statistic with its visible source, the five days, then the form and a
@@ -70,7 +69,7 @@ export function ReiheBauplanPage({ data, form }: { data: ReiheNische; form?: Rea
         </section>
 
         <section id="pdf" className="scroll-mt-6 rounded-2xl border-2 border-amber bg-lesepapier p-6">
-          <h2 className="text-2xl font-bold">{bauplanPage.pdf.heading}</h2>
+          <h2 className="text-2xl font-bold">{formular.heading}</h2>
           {form ? <div className="mt-4">{form}</div> : null}
         </section>
 

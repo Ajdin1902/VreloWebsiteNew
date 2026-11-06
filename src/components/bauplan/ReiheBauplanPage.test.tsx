@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { it, expect } from "vitest";
 import { ReiheBauplanPage } from "./ReiheBauplanPage";
 import { reiheNischen } from "@/lib/bauplanReihe";
-import { abschluss, wochenplan, deckblatt } from "@/lib/bauplanReihe/shared";
+import { abschluss, wochenplan, deckblatt, formular } from "@/lib/bauplanReihe/shared";
 
 const shk = reiheNischen.shk;
 
@@ -35,6 +35,9 @@ it("lists the five days and closes with the contact button", () => {
   expect(screen.getByText(wochenplan.heading)).toBeInTheDocument();
   for (const t of wochenplan.tage) expect(screen.getByText(t)).toBeInTheDocument();
   expect(screen.getByRole("heading", { name: abschluss.heading })).toBeInTheDocument();
+  // "Kostenlos." belongs to the close only, never twice in a row.
+  expect(screen.getByRole("heading", { name: formular.heading })).toBeInTheDocument();
+  expect(screen.getAllByText(/Kostenlos/)).toHaveLength(1);
   expect(screen.getByRole("link", { name: abschluss.button })).toHaveAttribute("href", "/kontakt?src=bauplan-shk");
 });
 

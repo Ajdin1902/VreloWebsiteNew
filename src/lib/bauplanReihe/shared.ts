@@ -43,10 +43,13 @@ export const deckblatt = {
   ziel: "Schritt für Schritt zu deinem KI-Betriebssystem.",
 };
 
+// The page's form heading; the close below already says „Kostenlos.“.
+export const formular = { heading: "Hol dir den Bauplan als PDF." };
+
 export const abschluss = {
   heading: "Wenn du Fragen hast, melde dich. Kostenlos.",
   text: [
-    "Im Prozess-Audit schauen wir gemeinsam, wo in deinem Betrieb die meiste Zeit hängen bleibt. Er kostet dich nichts.",
+    "Im Prozess-Audit schauen wir gemeinsam, wo in deinem Betrieb die meiste Zeit hängen bleibt.",
     "Den Anfang macht ein Gespräch von 30 Minuten. Ergibt sich daraus etwas Sinnvolles, schreibe ich dir einen Fahrplan. Wenn nicht, sage ich es dir ehrlich.",
   ],
   button: "30 Minuten Gespräch vereinbaren",
