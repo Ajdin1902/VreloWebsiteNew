@@ -80,7 +80,7 @@ export const vorlagenPage: {
     {
       id: "shk-bauplan",
       titel: "Bauplan für SHK-Betriebe",
-      text: "Vom ersten Anruf bis zur Rechnung: wo bei einem Auftrag Zeit verloren geht und mit welcher Station du anfängst.",
+      text: "Vom ersten Anruf bis zur Rechnung: Du siehst, wo ein Auftrag Zeit frisst. Danach wählst du deine erste Station.",
       umfang: "8 Seiten · PDF per E-Mail",
       link: { text: "Zum Bauplan", href: `${VORLAGEN_PATH}/shk-bauplan` },
     },

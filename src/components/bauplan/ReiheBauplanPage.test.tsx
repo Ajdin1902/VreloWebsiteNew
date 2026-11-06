@@ -37,3 +37,15 @@ it("lists the five days and closes with the contact button", () => {
   expect(screen.getByRole("heading", { name: abschluss.heading })).toBeInTheDocument();
   expect(screen.getByRole("link", { name: abschluss.button })).toHaveAttribute("href", "/kontakt?src=bauplan-shk");
 });
+
+it("announces each circled verb as a loss, and only where one exists", () => {
+  const { container } = render(<ReiheBauplanPage data={shk} />);
+  const items = [...container.querySelectorAll("#schmerz ol > li")];
+  expect(items).toHaveLength(shk.auftragsweg.length);
+  shk.auftragsweg.forEach((s, i) => {
+    const sr = items[i].querySelectorAll(".sr-only");
+    expect(sr).toHaveLength(s.verlust ? 1 : 0);
+    if (s.verlust) expect(items[i]).toHaveTextContent(`${s.schritt}Verlust: ${s.verlust}`);
+  });
+  expect(shk.auftragsweg.some((s) => !s.verlust)).toBe(true);
+});

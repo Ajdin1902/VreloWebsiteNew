@@ -23,7 +23,10 @@ export function ReiheBauplanPage({ data, form }: { data: ReiheNische; form?: Rea
               <li key={s.schritt} className="flex flex-wrap items-center gap-x-3 gap-y-1 rounded-lg bg-white/10 px-3 py-2 leading-snug">
                 <span>{s.schritt}</span>
                 {s.verlust ? (
-                  <span className="rounded-full border-2 border-amber px-2.5 py-0.5 text-sm font-semibold text-honig">{s.verlust}</span>
+                  <span className="rounded-full border-2 border-amber px-2.5 py-0.5 text-sm font-semibold text-honig">
+                    <span className="sr-only">Verlust: </span>
+                    {s.verlust}
+                  </span>
                 ) : null}
               </li>
             ))}
