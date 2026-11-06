@@ -12,7 +12,7 @@ export const shk: ReiheNische = {
   auftragsweg: [
     { schritt: "Kunde ruft an" },
     { schritt: "Notiz auf dem Block" },
-    { schritt: "Termin in Google Calendar", verlust: "übertragen" },
+    { schritt: "Termin im Kalender", verlust: "übertragen" },
     { schritt: "Zettel für den Monteur", verlust: "ausgedruckt" },
     { schritt: "Monteur ruft an, die Nummer fehlt", verlust: "nachtelefoniert" },
     { schritt: "Notizen vom Einsatz, abends im Büro", verlust: "abgetippt" },
