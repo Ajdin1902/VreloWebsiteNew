@@ -5,12 +5,14 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BauplanPage } from "@/components/bauplan/BauplanPage";
+import { ReiheBauplanPage } from "@/components/bauplan/ReiheBauplanPage";
 import { ElektroBauplanPage } from "@/components/bauplan/ElektroBauplanPage";
 import { BauplanPdfForm } from "@/components/bauplan/BauplanPdfForm";
 import { JsonLd } from "@/components/JsonLd";
 import { VORLAGE_TOKEN } from "@/lib/bauplan";
 import { bauplanPage } from "@/lib/bauplanPage";
 import { elektroBauplanPage } from "@/lib/elektroBauplanPage";
+import { reiheNischen } from "@/lib/bauplanReihe";
 import { breadcrumbLd } from "@/lib/jsonld";
 import { canonical } from "@/lib/site";
 import { normalizeSource } from "@/lib/source";
@@ -54,6 +56,8 @@ export default async function Page({
           data={elektroBauplanPage}
           form={<BauplanPdfForm source={source} code={token} copy={elektroBauplanPage.pdf.form} />}
         />
+      ) : v.variant === "shk" ? (
+        <ReiheBauplanPage data={reiheNischen.shk} form={<BauplanPdfForm source={source} code={token} />} />
       ) : (
         <BauplanPage data={bauplanPage} form={<BauplanPdfForm source={source} code={token} />} />
       )}

@@ -21,6 +21,12 @@ export const vorlageBauplaene: Record<string, { variant: BauplanVariant; title: 
     description:
       "Kostenloser Bauplan für Elektrobetriebe: in fünf Stufen zum eigenen Büroassistenten für Angebote, Rechnungen und Bestellungen. Als PDF per E-Mail.",
   },
+  "shk-bauplan": {
+    variant: "shk",
+    title: "Bauplan für SHK-Betriebe",
+    description:
+      "Kostenloser Bauplan für SHK-Betriebe: vom ersten Anruf bis zur Rechnung, mit einem Weg in fünf Tagen zur ersten Station. Als PDF per E-Mail.",
+  },
 };
 
 export const HAUS_PDF = "/vorlagen/vrelo-ki-betriebssystem.pdf";
@@ -35,7 +41,7 @@ export const vorlagenPage: {
   meta: {
     title: "Kostenlose Vorlagen",
     description:
-      "Kostenlose Vorlagen für Betriebe und Unternehmen: das KI-Betriebssystem auf einer Seite, ein fertiger Prompt für Claude und Baupläne für Agenturen und Elektrobetriebe.",
+      "Kostenlose Vorlagen für Betriebe und Unternehmen: das KI-Betriebssystem auf einer Seite, ein fertiger Prompt für Claude und Baupläne für Agenturen, Elektrobetriebe und SHK-Betriebe.",
   },
   hero: {
     eyebrow: "Kostenlos zum Mitnehmen",
@@ -70,6 +76,13 @@ export const vorlagenPage: {
       text: "Mehr Büro als Baustelle? In fünf Stufen zum eigenen Büroassistenten, der Angebote, Rechnungen und Bestellungen vorbereitet.",
       umfang: "7 Seiten · PDF per E-Mail",
       link: { text: "Zum Bauplan", href: `${VORLAGEN_PATH}/elektro-bauplan` },
+    },
+    {
+      id: "shk-bauplan",
+      titel: "Bauplan für SHK-Betriebe",
+      text: "Vom ersten Anruf bis zur Rechnung: wo bei einem Auftrag Zeit verloren geht und mit welcher Station du anfängst.",
+      umfang: "8 Seiten · PDF per E-Mail",
+      link: { text: "Zum Bauplan", href: `${VORLAGEN_PATH}/shk-bauplan` },
     },
   ],
 };

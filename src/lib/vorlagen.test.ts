@@ -30,4 +30,9 @@ describe("vorlagen copy", () => {
   it("ships the Haus PDF the card links to", () => {
     expect(existsSync(join(process.cwd(), "public", HAUS_PDF))).toBe(true);
   });
+
+  it("has a hub card and a public page for the SHK Bauplan", () => {
+    expect(vorlageBauplaene["shk-bauplan"].variant).toBe("shk");
+    expect(vorlagenPage.items.map((v) => v.link.href)).toContain("/vorlagen/shk-bauplan");
+  });
 });

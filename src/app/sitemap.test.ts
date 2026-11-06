@@ -30,7 +30,7 @@ describe("sitemap", () => {
 
   it("lists the Vorlagen hub and its two public Bauplan pages", () => {
     const urls = sitemap().map((e) => e.url);
-    for (const p of ["/vorlagen", "/vorlagen/agentur-bauplan", "/vorlagen/elektro-bauplan"]) {
+    for (const p of ["/vorlagen", "/vorlagen/agentur-bauplan", "/vorlagen/elektro-bauplan", "/vorlagen/shk-bauplan"]) {
       expect(urls).toContain(`${siteUrl}${p}`);
     }
     expect(urls.some((u) => u.includes("/bauplan/"))).toBe(false);
