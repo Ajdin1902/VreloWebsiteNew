@@ -33,7 +33,7 @@ export const shk: ReiheNische = {
     readerClose: "Fang mit dem Selbstcheck auf Seite 2 an, dafür reicht ein Stift.",
     internalPrefix: "SHK-Bauplan angefordert",
   },
-  pdfPath: "/bauplan/shk-bauplan-e48c716a.pdf",
+  pdfPath: "/bauplan/shk-bauplan-eae7453e.pdf",
   template: "content/bauplan/shk-bauplan.html",
   pages: 8,
   knownTools: [
