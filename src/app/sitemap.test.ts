@@ -28,6 +28,14 @@ describe("sitemap", () => {
     expect(urls).not.toContain(`${siteUrl}/newsletter/bestaetigt`);
   });
 
+  it("lists the Vorlagen hub and its two public Bauplan pages", () => {
+    const urls = sitemap().map((e) => e.url);
+    for (const p of ["/vorlagen", "/vorlagen/agentur-bauplan", "/vorlagen/elektro-bauplan"]) {
+      expect(urls).toContain(`${siteUrl}${p}`);
+    }
+    expect(urls.some((u) => u.includes("/bauplan/"))).toBe(false);
+  });
+
   it("lists every published article and never a draft", () => {
     const urls = sitemap().map((e) => e.url);
     const published = getAllArticles({ includeDrafts: false });

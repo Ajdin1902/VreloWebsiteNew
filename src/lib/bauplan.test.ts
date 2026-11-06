@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach } from "vitest";
-import { bauplanCode, bauplanVariant, isBauplanCode } from "./bauplan";
+import { bauplanCode, bauplanFormVariant, bauplanVariant, isBauplanCode, VORLAGE_TOKEN } from "./bauplan";
 
 const orig = process.env.BAUPLAN_CODE;
 const origElektro = process.env.BAUPLAN_CODE_ELEKTRO;
@@ -52,5 +52,25 @@ describe("bauplanVariant", () => {
     process.env.BAUPLAN_CODE = "a1";
     process.env.BAUPLAN_CODE_ELEKTRO = "e1";
     expect(isBauplanCode("a1") && isBauplanCode("e1")).toBe(true);
+  });
+});
+
+describe("bauplanFormVariant", () => {
+  it("accepts the secret codes and the public /vorlagen tokens", () => {
+    process.env.BAUPLAN_CODE = "agentur-7k3m";
+    process.env.BAUPLAN_CODE_ELEKTRO = "elektro-9x";
+    expect(bauplanFormVariant("agentur-7k3m")).toBe("agentur");
+    expect(bauplanFormVariant("elektro-9x")).toBe("elektro");
+    expect(bauplanFormVariant(VORLAGE_TOKEN.agentur)).toBe("agentur");
+    expect(bauplanFormVariant(VORLAGE_TOKEN.elektro)).toBe("elektro");
+    expect(bauplanFormVariant("")).toBeUndefined();
+    expect(bauplanFormVariant("agentur")).toBeUndefined();
+  });
+
+  it("never lets a public token open the coded /bauplan page", () => {
+    delete process.env.BAUPLAN_CODE;
+    delete process.env.BAUPLAN_CODE_ELEKTRO;
+    expect(bauplanVariant(VORLAGE_TOKEN.agentur)).toBeUndefined();
+    expect(bauplanVariant(VORLAGE_TOKEN.elektro)).toBeUndefined();
   });
 });

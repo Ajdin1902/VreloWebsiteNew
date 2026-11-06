@@ -3,6 +3,7 @@ import type { MetadataRoute } from "next";
 import { siteUrl } from "@/lib/site";
 import { getAllArticles } from "@/lib/ratgeber";
 import { leistungenPages } from "@/lib/leistungenPages";
+import { VORLAGEN_PATH, vorlageBauplaene } from "@/lib/vorlagen";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -15,6 +16,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/ueber-mich",
     "/faq",
     "/ratgeber",
+    VORLAGEN_PATH,
+    ...Object.keys(vorlageBauplaene).map((slug) => `${VORLAGEN_PATH}/${slug}`),
     "/kontakt",
     "/impressum",
     "/datenschutz",

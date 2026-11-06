@@ -7,7 +7,7 @@ import { isContactConfigured, contactFrom, contactTo, resendKey } from "@/lib/co
 import { evaluateBauplanRequest, bauplanAttachmentName, bauplanPdfPath } from "@/lib/bauplanEmail";
 import { normalizeSource } from "@/lib/source";
 import { siteUrl } from "@/lib/site";
-import { bauplanVariant } from "@/lib/bauplan";
+import { bauplanFormVariant } from "@/lib/bauplan";
 
 export type BauplanEmailState =
   | { status: "idle" }
@@ -41,8 +41,9 @@ export async function submitBauplanRequest(
 ): Promise<BauplanEmailState> {
   const get = (k: string) => String(formData.get(k) ?? "");
   const email = get("email");
-  // The code picks the variant; without a valid one the request is refused below.
-  const variant = bauplanVariant(get("code"));
+  // The code (or a public /vorlagen token) picks the variant; without a valid one
+  // the request is refused below.
+  const variant = bauplanFormVariant(get("code"));
   const pdfPath = bauplanPdfPath(variant ?? "agentur");
   const pdfUrl = `${siteUrl}${pdfPath}`;
   const decision = evaluateBauplanRequest(
