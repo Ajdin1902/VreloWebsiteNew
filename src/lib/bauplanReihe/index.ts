@@ -17,8 +17,11 @@ export type ReiheNische = {
   pdfPath: string;
   template: string;
   pages: number;
-  // Tools and standards the research verified as connectable; the guard rejects
-  // "Schnittstelle" next to any other tool.
+  // Every tool or standard the template may name (exact, case-sensitive spelling). The guard
+  // checks the template's tools table against it, so the list cannot fall behind the copy.
+  knownTools: string[];
+  // The subset the research verified as connectable; the guard rejects "Schnittstelle"
+  // next to any other known tool.
   verifiedInterfaces: string[];
 };
 

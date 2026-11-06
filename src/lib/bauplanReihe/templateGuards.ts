@@ -17,16 +17,6 @@ export const KAPITEL = [
   abschluss.heading,
 ];
 
-// Tool names a template may mention. A sentence with "Schnittstelle" may only name the
-// niche's verifiedInterfaces. shortcut: hand-kept list, add each niche's tools when it is written.
-const REIHE_TOOLS = [
-  "HERO", "ToolTime", "Craftboxx", "Label", "pds", "TAIFUN", "openHandwerk", "STREIT",
-  "Lexware Office", "Lexware", "sevDesk", "DATEV", "Google Calendar", "Excel", "Outlook",
-  "WhatsApp", "Telegram", "Microsoft Teams",
-  "GC-GRUPPE", "Richter+Frenzel", "Pfeiffer & May",
-  "IDS Connect", "Open Masterdata", "DATANORM", "UGL", "ZUGFeRD", "OCI", "SHK-Connect",
-];
-
 const CLIENTS = /\b(Schmid|Zilk|M1|Velp|MDZ|Power-Connect|Purisic|Winter)\b|Göcze/;
 const PRICE = /€|\bEUR\b|\d\s*(Euro|netto)\b/i;
 const DURATION = /\bin\s+\d+\s+(Tagen|Wochen|Monaten)\b/i;
@@ -35,8 +25,9 @@ const FIRST_PERSON =
   /\b[Ii]ch\b|\b[Mm]it mir\b|\bohne mich\b|binde ich|richte ich|baue ich|wir zusammen|prüfen wir|klären wir|schauen wir|nehmen wir|legen wir|Wenn du magst/;
 
 const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+// Case-sensitive on purpose: the noun "Streit" must never count as the software STREIT.
 const names = (tool: string, sentence: string) =>
-  new RegExp(`(?<![\\p{L}\\d])${escape(tool)}(?![\\p{L}\\d])`, "iu").test(sentence);
+  new RegExp(`(?<![\\p{L}\\d])${escape(tool)}(?![\\p{L}\\d])`, "u").test(sentence);
 
 export function checkReiheTemplate(n: ReiheNische, html: string = readFileSync(n.template, "utf8")): string[] {
   const out: string[] = [];
@@ -79,10 +70,17 @@ export function checkReiheTemplate(n: ReiheNische, html: string = readFileSync(n
   const promise = text.match(/Garantie|noch 3/);
   if (promise) out.push(`promise: ${promise[0]}`);
 
+  // Every tool in the template's tools table must be a known tool, so knownTools cannot fall behind.
+  const werkzeuge = html.match(/<table class="werkzeuge">([\s\S]*?)<\/table>/)?.[1] ?? "";
+  for (const m of werkzeuge.matchAll(/<tr>\s*<td>([\s\S]*?)<\/td>/g)) {
+    const tool = templateText(m[1]).trim();
+    if (!n.knownTools.includes(tool)) out.push(`tools: ${tool} is not in knownTools`);
+  }
+
   for (const sentence of text.split(". ")) {
     if (!/Schnittstelle/i.test(sentence)) continue;
     // "Lexware" inside a verified "Lexware Office" is the verified tool, not a second one.
-    const named = REIHE_TOOLS.filter(
+    const named = n.knownTools.filter(
       (t) =>
         !n.verifiedInterfaces.includes(t) &&
         names(t, sentence) &&

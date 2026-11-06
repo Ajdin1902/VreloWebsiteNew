@@ -33,12 +33,20 @@ export const shk: ReiheNische = {
   pdfPath: "", // set by Task 4's publish step
   template: "content/bauplan/shk-bauplan.html",
   pages: 8,
-  // Exactly the list "Verifizierte Schnittstellen" in 1.7. Not here on purpose:
-  // STREIT and TAIFUN (no public API found), WhatsApp (not checked), SHK-Connect.
+  knownTools: [
+    "HERO", "ToolTime", "Craftboxx", "Label", "pds", "TAIFUN", "openHandwerk", "STREIT", "STREIT V.1",
+    "Lexware Office", "Lexware", "sevDesk", "DATEV", "Google Calendar", "Google Sheets", "Excel", "Outlook",
+    "WhatsApp", "Telegram",
+    "GC-GRUPPE", "Richter+Frenzel", "Pfeiffer & May",
+    "IDS Connect", "Open Masterdata", "DATANORM", "UGL", "ZUGFeRD", "OCI", "SHK-Connect",
+  ],
+  // Exactly the list "Verifizierte Schnittstellen" in 1.7 (Telegram via the n8n Telegram
+  // node added 2026-11-06). Not here on purpose: STREIT and TAIFUN (no public API found),
+  // WhatsApp (Business API not checked), SHK-Connect.
   verifiedInterfaces: [
     "IDS Connect", "Open Masterdata", "DATANORM", "UGL", "ZUGFeRD", "OCI",
     "GC-GRUPPE", "Richter+Frenzel", "Pfeiffer & May",
     "HERO", "Craftboxx", "openHandwerk", "Label", "pds", "ToolTime",
-    "Lexware Office", "sevDesk", "DATEV", "Google Calendar",
+    "Lexware Office", "sevDesk", "DATEV", "Google Calendar", "Telegram",
   ],
 };

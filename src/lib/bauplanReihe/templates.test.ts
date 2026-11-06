@@ -108,6 +108,16 @@ describe("checkReiheTemplate on fixtures", () => {
     expect(problems(withAfter("HERO hat eine Schnittstelle."))).toEqual([]);
     expect(problems(withAfter("Frag, ob deine Software eine Schnittstelle hat."))).toEqual([]);
   });
+  it("matches tool names case-sensitively", () => {
+    expectProblem(withAfter("STREIT hat eine Schnittstelle."), "interface");
+    expect(problems(withAfter("Im Streit um eine Schnittstelle fragst du nach."))).toEqual([]);
+  });
+  it("reports a tools-table entry missing from knownTools", () => {
+    const table = (tool: string) =>
+      `<table class="werkzeuge"><tbody><tr><td>${tool}</td><td>Angebote</td></tr></tbody></table>`;
+    expectProblem(withAfter(table("Fantasiesoft")), "tools");
+    expect(problems(withAfter(table("HERO")))).toEqual([]);
+  });
   it("reports a first-person offer before the close, not inside it", () => {
     expectProblem(withBefore("<p>Das baue ich dir.</p>"), "first person");
     expect(problems(withAfter("Das baue ich dir."))).toEqual([]);
