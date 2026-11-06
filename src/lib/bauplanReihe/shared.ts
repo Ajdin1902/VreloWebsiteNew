@@ -13,26 +13,26 @@ export function levelFor(counts: { laeuft: number; papier: number; kopf: number 
 
 export const LEVELS: { level: Level; name: string; satz: string }[] = [
   { level: 0, name: "Im Kopf", satz: "Schreib auf, was du heute nur im Kopf trägst. Eine Station reicht für den Anfang." },
-  { level: 1, name: "Verstreut", satz: "Das Wissen liegt auf Papier, in Mails und Chats. Such dir die eine Station aus, die dich am meisten Zeit kostet." },
+  { level: 1, name: "Verstreut", satz: "Vieles steht schon auf Papier oder in Dateien. Such dir die eine Station aus, die dich am meisten Zeit kostet." },
   { level: 2, name: "Erste Station läuft", satz: "Eine Station läuft von selbst. Als Nächstes brauchen deine Daten einen festen Platz, damit alles auf dieselbe Quelle zugreift." },
-  { level: 3, name: "Ein Ort", satz: "Deine Daten liegen an einem Ort. Nimm dir jetzt Station für Station vor, die noch auf Papier oder im Kopf liegt." },
-  { level: 4, name: "Haus steht", satz: "Fast alles läuft. Es bleibt, die Lücken zu schließen und alles sauber zu dokumentieren." },
+  { level: 3, name: "Ein Ort", satz: "Deine Daten liegen an einem Ort. Jetzt holst du eine Station nach der anderen in dein System." },
+  { level: 4, name: "Haus steht", satz: "Fast alles läuft von selbst. Schließ die letzten Lücken und schreib auf, wie die Stationen zusammenhängen." },
 ];
 
 export const selbstcheck = {
   heading: "Wo stehst du?",
   intro:
-    "Geh die Stationen durch und mach pro Zeile ein Kreuz: Läuft von selbst, steht auf Papier oder nur im Kopf. Zähl am Ende die Kreuze je Spalte.",
+    "Mach pro Station ein Kreuz in einer der drei Spalten: läuft von selbst, auf Papier oder in Dateien, nur im Kopf. Zähl am Ende die Kreuze je Spalte.",
   spalten: ["Läuft von selbst", "Auf Papier oder in Dateien", "Nur im Kopf"] as [string, string, string],
   fundamentFrage: "Liegen deine Kundendaten an einem festen Ort, auf den alles zugreift?",
-  blankHinweis: "Eine leere Zeile zählt als \u201Eim Kopf\u201C.",
+  blankHinweis: "Eine leere Zeile zählt als \u201Enur im Kopf\u201C.",
 };
 
 export const abschluss = {
   heading: "Wenn du es nicht allein bauen willst",
   text: [
-    "Ich schaue mir mit dir an, wo in deinem Betrieb die meiste Zeit hängen bleibt. Das ist der Prozess-Audit, er kostet dich nichts.",
-    "Wir gehen ihn gemeinsam durch. Wenn sich daraus etwas Sinnvolles ergibt, schreibe ich dir einen Fahrplan. Wenn nicht, sage ich es dir ehrlich.",
+    "Im Prozess-Audit schauen wir gemeinsam, wo in deinem Betrieb die meiste Zeit hängen bleibt. Er kostet dich nichts.",
+    "Den Anfang macht ein Gespräch von 30 Minuten. Ergibt sich daraus etwas Sinnvolles, schreibe ich dir einen Fahrplan. Wenn nicht, sage ich es dir ehrlich.",
   ],
   button: "30 Minuten Gespräch vereinbaren",
 };
