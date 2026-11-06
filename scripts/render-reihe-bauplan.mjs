@@ -12,6 +12,7 @@ import { createHash } from "node:crypto";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { PROTECTED, staleFiles } from "./reihe-publish-lib.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const hq = process.env.VRELO_HQ ? resolve(process.env.VRELO_HQ) : resolve(root, "..");
@@ -64,11 +65,13 @@ if (publish) {
   const publicDir = resolve(root, "public/bauplan");
   const hash = createHash("sha256").update(readFileSync(out)).digest("hex").slice(0, 8);
   const name = `${slug}-bauplan-${hash}.pdf`;
+  if (PROTECTED.includes(name)) {
+    console.error(`Refusing to publish: ${name} is a protected file.`);
+    process.exit(1);
+  }
   mkdirSync(publicDir, { recursive: true });
   copyFileSync(out, join(publicDir, name));
-  const old = new RegExp(`^${slug}-bauplan-.*\.pdf$`);
-  for (const f of readdirSync(publicDir)) {
-    if (!old.test(f) || f === name) continue;
+  for (const f of staleFiles(slug, readdirSync(publicDir), name)) {
     try {
       rmSync(join(publicDir, f));
     } catch (err) {
