@@ -1,0 +1,50 @@
+---
+title: "Azubi, Geselle oder Meister?"
+description: "Welches KI-Modell für welche Aufgabe? Eine verwechselte Hausnummer, ein Test mit echten Mails und was der Unterschied im Monat kostet."
+date: "2026-11-06"
+tags: ["KI", "Praxis"]
+kategorie: "Praxis"
+leistung: "ki-automatisierung"
+cover: "/images/ratgeber-welches-ki-modell.webp"
+coverAlt: "Drei schmale Wasserläufe unterschiedlicher Breite fließen nebeneinander durch dunkles, ruhiges Wasser, einer fängt einen kleinen warmen Lichtpunkt."
+draft: false
+---
+
+In meinen Automatisierungen arbeiten mehrere KI-Modelle, je nach Aufgabe ein anderes. Mein Postfach-Assistent sortiert jeden Morgen meine Mails, ein Rechnungsautomat macht aus einer Sprachnachricht eine fertige Rechnung. (Gebaut habe ich beides mit einem dritten Modell. So viel Personal hatte ich noch nie.)
+
+Anthropic bietet seine Modelle in drei Größen an: Haiku, Sonnet und Opus. Am einfachsten stellt man sie sich wie in einem Handwerksbetrieb vor. Haiku ist der Azubi, Sonnet der Geselle, Opus der Meister. Der Azubi ist schnell und günstig, der Meister kann alles und kostet entsprechend. Den Meister schickst du nicht zum Fegen. Den Azubi lässt du nicht die Abnahme machen.
+
+Welcher Assistent zu deinem Team passt, steht in [Claude oder ChatGPT](/ratgeber/claude-oder-chatgpt). Hier geht es um die Frage dahinter: Wer erledigt die Arbeit, wenn sie automatisch laufen soll?
+
+## Wozu gehört die 27?
+
+Der Rechnungsautomat lief anfangs mit dem Azubi, Claude Haiku 4.5. Damals hat das gereicht. Dann kamen neue Funktionen dazu und mit ihnen mehr Objekte und mehr Regeln. Beim letzten Test vor dem Start ging es um die Hausnummer 27. Richtig wäre das Objekt 25 bis 29 gewesen. Haiku wählte 2 bis 6, obwohl die Liste aller Objekte direkt vor ihm lag. (Selbstbewusst war er dabei. Das muss man ihm lassen.)
+
+Was genau schiefging, kann ich nur vermuten. Wahrscheinlich hat er sich an der 2 am Anfang festgehalten. Die Aufgabe sieht aus wie Nachschlagen, ist aber eine kleine Rechenaufgabe: Liegt 27 zwischen 25 und 29? Der Geselle, Claude Sonnet 5, löst sie richtig und schreibt seitdem die Rechnungen. Gelandet ist die falsche Rechnung zum Glück nur im Testordner.
+
+## Erst testen, dann einstellen
+
+Beim Postfach-Assistenten habe ich es von Anfang an anders gemacht. Vor dem Start habe ich Azubi und Gesellen auf dieselben echten Mails angesetzt und die Fehler gezählt. In meinem Geschäftspostfach lagen beide bei 95 Prozent, keiner machte einen kritischen Fehler. Im privaten Postfach kam Haiku auf 90 Prozent, Sonnet auf 95. Den Job bekam der Azubi. Eine falsch einsortierte Mail kostet mich einen Klick und der Geselle steht als Vertretung bereit, falls sich die Fehler häufen.
+
+Eine Sache überlasse ich keinem der beiden: Kommt eine Anfrage über mein Kontaktformular, landet sie immer bei mir. Das steht als feste Regel im Code. Was nie schiefgehen darf, entscheide ich lieber selbst.
+
+## Was der Unterschied kostet
+
+Bezahlt wird nach der Menge Text, die ein Modell liest und schreibt. Bei Anthropic kostet der aktuelle Geselle (Sonnet 5.5) dafür rund zwanzigmal so viel wie der aktuelle Azubi (Haiku 5.5), laut Listenpreis im November 2026. Ein grobes Beispiel: Eine Mail samt Anweisungen sind etwa 2.000 Token, also Wortbausteine, die Antwort etwa 200. Mit Haiku kostet das rund 0,03 US-Cent, mit Sonnet rund 0,6 US-Cent. Bei hundert Mails am Tag sind das im Monat knapp ein Dollar gegen etwa 18 Dollar.
+
+Für ein einzelnes Postfach ist beides kein Betrag. Spürbar wird der Unterschied bei Aufgaben, die tausendfach am Tag laufen. Vor der Wahl stelle ich mir deshalb vier Fragen:
+
+- **Wie schwer ist die Aufgabe?** Text abschreiben kann der Azubi. Eine versteckte Rechenaufgabe wie die Hausnummer braucht den Gesellen.
+- **Wie oft fällt sie an?** Bei hundert Aufrufen am Tag lohnt sich das günstige Modell. Bei ein paar pro Woche darf es das gründliche sein.
+- **Was kostet ein Fehler?** Einen Klick oder eine Stornorechnung?
+- **Wohin dürfen die Daten?** Sensible Daten bleiben bei mir innerhalb der EU und dort gibt es nicht jedes Modell. Mehr dazu in [Wo läuft deine KI?](/ratgeber/wo-laeuft-deine-ki)
+
+Manchmal ist die beste Antwort auch: keins. Bei einer Buchungsseite für Terminanfragen habe ich mich bewusst gegen KI entschieden. Feste Regeln reichen dort und eine Regel erfindet nichts dazu.
+
+> Mein Fehler beim Rechnungsautomaten: Ich habe das Modell einmal ausgewählt und danach nicht mehr hingeschaut.
+
+Jede neue Funktion ist eine neue Aufgabe. Deshalb gilt bei mir jetzt: Nach jeder Erweiterung laufen zehn echte Fälle durch zwei Modelle, bevor sie live geht. So sehe ich, ob der Azubi noch mitkommt.
+
+Das neueste Modell ist dabei keine Abkürzung. Beim Wechsel habe ich auch Sonnet 5.5 ausprobiert, die neueste Version. Mein Automatisierungswerkzeug konnte mit ihr noch gar nicht umgehen. Deshalb lege ich in jedem System die genaue Modellversion fest und teste ein neues Modell an einer Kopie, nie am laufenden Betrieb.
+
+Den Azubi habe ich übrigens behalten. Er sortiert jeden Morgen meine Post, an Hausnummern lasse ich ihn nur nicht mehr ran.
