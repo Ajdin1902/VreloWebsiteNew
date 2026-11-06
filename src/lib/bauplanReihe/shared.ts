@@ -14,13 +14,13 @@ export function levelFor(counts: { laeuft: number; papier: number; kopf: number 
 export const LEVELS: { level: Level; name: string; satz: string }[] = [
   { level: 0, name: "Im Kopf", satz: "Schreib auf, was du heute nur im Kopf trägst. Eine Station reicht für den Anfang." },
   { level: 1, name: "Verstreut", satz: "Vieles steht schon auf Papier oder in Dateien. Such dir die eine Station aus, die dich am meisten Zeit kostet." },
-  { level: 2, name: "Erste Station läuft", satz: "Eine Station läuft von selbst. Als Nächstes brauchen deine Daten einen festen Platz, damit alles auf dieselbe Quelle zugreift." },
+  { level: 2, name: "Erste Station läuft", satz: "Eine Station läuft von selbst. Als Nächstes brauchen deine Daten einen festen Platz, damit alles auf denselben Ort zugreift." },
   { level: 3, name: "Ein Ort", satz: "Deine Daten liegen an einem Ort. Jetzt holst du eine Station nach der anderen in dein System." },
   { level: 4, name: "Haus steht", satz: "Fast alles läuft von selbst. Schließ die letzten Lücken und schreib auf, wie die Stationen zusammenhängen." },
 ];
 
 export const selbstcheck = {
-  heading: "Wo stehst du?",
+  heading: "Dein Stand je Station",
   intro:
     "Mach pro Station ein Kreuz in einer der drei Spalten: läuft von selbst, auf Papier oder in Dateien, nur im Kopf. Zähl am Ende die Kreuze je Spalte.",
   spalten: ["Läuft von selbst", "Auf Papier oder in Dateien", "Nur im Kopf"] as [string, string, string],
