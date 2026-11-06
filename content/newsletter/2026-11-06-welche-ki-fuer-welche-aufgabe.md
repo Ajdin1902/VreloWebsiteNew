@@ -2,7 +2,7 @@
 subject: "Welche KI für welche Aufgabe?"
 previewText: "Copilot Chat hat jetzt Grenzen, Copilot wird nach Verbrauch abgerechnet, eine verwechselte Hausnummer und zwei rote Knöpfe."
 date: "2026-11-06"
-draft: true
+draft: false
 ---
 Hi,
 
