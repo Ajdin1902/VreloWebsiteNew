@@ -23,6 +23,9 @@ describe("staleFiles", () => {
   it("deletes only older hashed files of the slug", () => {
     expect(staleFiles("shk", dir, "shk-bauplan-bbbbbbbb.pdf")).toEqual(["shk-bauplan-aaaaaaaa.pdf"]);
   });
+  it("treats the dot literally", () => {
+    expect(staleFiles("shk", ["shk-bauplan-abcdef12xpdf"], "x.pdf")).toEqual([]);
+  });
   it("never selects protected files, even for the agentur and elektro slugs", () => {
     for (const slug of ["agentur", "elektro"]) {
       const hit = staleFiles(slug, dir, "x.pdf");
