@@ -4,7 +4,7 @@
 // secret code: BAUPLAN_CODE (Agenturen) and BAUPLAN_CODE_ELEKTRO (Elektrobetriebe).
 export const BAUPLAN_BASE = "/bauplan";
 
-export type BauplanVariant = "agentur" | "elektro";
+export type BauplanVariant = "agentur" | "elektro" | "shk";
 
 // Read at call time (not module load) so tests and Vercel both see the value.
 function envCode(name: string): string | undefined {
@@ -33,6 +33,7 @@ export function isBauplanCode(slug: string): boolean {
 export const VORLAGE_TOKEN: Record<BauplanVariant, string> = {
   agentur: "vorlage-agentur",
   elektro: "vorlage-elektro",
+  shk: "vorlage-shk",
 };
 
 export function bauplanFormVariant(token: string): BauplanVariant | undefined {

@@ -67,6 +67,12 @@ describe("bauplanFormVariant", () => {
     expect(bauplanFormVariant("agentur")).toBeUndefined();
   });
 
+  it("maps the SHK public token to shk, never a coded page", () => {
+    expect(bauplanFormVariant(VORLAGE_TOKEN.shk)).toBe("shk");
+    expect(bauplanVariant("vorlage-shk")).toBeUndefined();
+    expect(bauplanVariant("shk")).toBeUndefined();
+  });
+
   it("never lets a public token open the coded /bauplan page", () => {
     delete process.env.BAUPLAN_CODE;
     delete process.env.BAUPLAN_CODE_ELEKTRO;

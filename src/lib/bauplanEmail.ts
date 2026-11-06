@@ -4,6 +4,7 @@
 import { EMAIL_RE, isHoneypotTripped, isTooFast } from "./contact";
 import { sourceLabel } from "./source";
 import type { BauplanVariant } from "./bauplan";
+import { reiheNischen } from "./bauplanReihe";
 
 // Rendered by `npm run bauplan:pdf`; every re-render gets a new hash, so update this line with it.
 export const BAUPLAN_PDF_PATH = "/bauplan/agentur-bauplan-52a16b4f.pdf";
@@ -42,6 +43,12 @@ const MAIL: Record<BauplanVariant, VariantMail> = {
     readerLead: READER_LEAD,
     readerClose: "Fang mit der Stufe an, die dich heute am meisten Zeit kostet. Zu jeder Stufe steht drin, wie du vorgehst.",
     internalPrefix: "Elektro-Bauplan angefordert",
+  },
+  shk: {
+    pdfPath: reiheNischen.shk.pdfPath,
+    label: reiheNischen.shk.label,
+    ...reiheNischen.shk.mail,
+    readerLead: READER_LEAD,
   },
 };
 

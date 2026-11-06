@@ -11,6 +11,7 @@ import { normalizeSource } from "@/lib/source";
 const TITLE: Record<BauplanVariant, string> = {
   agentur: "Bauplan für Agenturen",
   elektro: "Bauplan für Elektrobetriebe",
+  shk: "Bauplan für SHK-Betriebe", // never rendered here: SHK has no coded page
 };
 
 // The title only exists for a valid code: a wrong code's 404 must not name the page.
