@@ -36,6 +36,13 @@ export const wochenplan = {
   schluss: "Nach einer Woche weißt du, wo du anfängst.",
 };
 
+// The other series-wide cover lines: the caption under the niche's auftragsweg flow
+// (ties to the circling step of chapter 3) and the line under the week path.
+export const deckblatt = {
+  kreisSatz: "Jeder Kreis ist eine Stelle, an der Zeit verloren geht. Im Bauplan findest du deine.",
+  ziel: "Schritt für Schritt zu deinem KI-Betriebssystem.",
+};
+
 export const abschluss = {
   heading: "Wenn du es nicht allein bauen willst",
   text: [

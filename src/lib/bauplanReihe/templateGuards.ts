@@ -5,7 +5,7 @@ import { readFileSync } from "node:fs";
 import { findCopyIssues } from "../ratgeberCopy";
 import { partHeadings, templateText } from "../bauplanTemplateText";
 import type { ReiheNische } from "./index";
-import { LEVELS, abschluss, abschlussHref, selbstcheck, wochenplan } from "./shared";
+import { LEVELS, abschluss, abschlussHref, deckblatt, selbstcheck, wochenplan } from "./shared";
 
 /** The six chapter titles after the cover, in skeleton order. */
 export const KAPITEL = [
@@ -48,6 +48,7 @@ export function checkReiheTemplate(n: ReiheNische, html: string = readFileSync(n
     n.kicker, n.title, n.schmerz,
     ...n.auftragsweg.flatMap((s) => (s.verlust ? [s.schritt, s.verlust] : [s.schritt])),
     wochenplan.heading, ...wochenplan.tage.map((t, i) => `Tag ${i + 1} ${t}`), wochenplan.schluss,
+    deckblatt.kreisSatz, deckblatt.ziel,
     selbstcheck.heading, selbstcheck.intro, ...selbstcheck.spalten, selbstcheck.fundamentFrage, selbstcheck.blankHinweis,
     ...LEVELS.flatMap((l) => [l.name, l.satz]),
     abschluss.heading, ...abschluss.text, abschluss.button,

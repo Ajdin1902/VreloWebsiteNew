@@ -5,7 +5,7 @@ import { ENTITIES } from "../bauplanTemplateText";
 import { findCopyIssues } from "../ratgeberCopy";
 import { reiheNischen } from "./index";
 import { KAPITEL, checkReiheTemplate } from "./templateGuards";
-import { LEVELS, abschluss, abschlussHref, selbstcheck, wochenplan } from "./shared";
+import { LEVELS, abschluss, abschlussHref, deckblatt, selbstcheck, wochenplan } from "./shared";
 
 const shk = reiheNischen.shk;
 
@@ -29,6 +29,7 @@ function goodHtml(n = shk): string {
     n.kicker, n.title, n.schmerz, ...n.auftragsweg.flatMap((s) => [s.schritt, s.verlust ?? ""]).filter(Boolean),
     stat.zahl, stat.satz, stat.quelle,
     wochenplan.heading, ...wochenplan.tage.map((t, i) => `Tag ${i + 1} ${t}`), wochenplan.schluss,
+    deckblatt.kreisSatz, deckblatt.ziel,
     selbstcheck.heading, selbstcheck.intro, ...selbstcheck.spalten, selbstcheck.fundamentFrage, selbstcheck.blankHinweis,
     ...LEVELS.flatMap((l) => [l.name, l.satz]),
   ];
@@ -90,6 +91,8 @@ describe("checkReiheTemplate on fixtures", () => {
   });
   it("reports a missing week path or job flow step", () => {
     expectProblem(goodHtml().replace(enc(wochenplan.schluss), "x"), "missing");
+    expectProblem(goodHtml().replace(enc(deckblatt.kreisSatz), "x"), "missing");
+    expectProblem(goodHtml().replace(enc(deckblatt.ziel), "x"), "missing");
     expectProblem(goodHtml().replace(`<p>${enc(`Tag 3 ${wochenplan.tage[2]}`)}</p>`, ""), "missing");
     const lossy = shk.auftragsweg.find((s) => s.verlust)!;
     expectProblem(goodHtml().replace(`<p>${enc(lossy.verlust!)}</p>`, ""), "missing");
