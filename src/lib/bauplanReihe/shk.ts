@@ -6,8 +6,18 @@ export const shk: ReiheNische = {
   slug: "shk",
   label: "SHK-Betriebe",
   kicker: "Bauplan für SHK-Betriebe",
-  title: "Weniger Papierkram, mehr Zeit beim Kunden.",
-  schmerz: "Der Monteur ruft an, weil auf dem Zettel die Telefonnummer fehlt. Am Abend tippst du seine Notizen ab.",
+  title: "Prozesse, Automatisierung, KI: Wo fange ich überhaupt an?",
+  schmerz: "Ein Auftrag, viele Hände",
+  // Landkarte 1.1 "Heute typisch" for stations 4 to 6.
+  auftragsweg: [
+    { schritt: "Kunde ruft an" },
+    { schritt: "Notiz auf dem Block" },
+    { schritt: "Termin in Google Calendar", verlust: "übertragen" },
+    { schritt: "Zettel für den Monteur", verlust: "ausgedruckt" },
+    { schritt: "Monteur ruft an, die Nummer fehlt", verlust: "nachtelefoniert" },
+    { schritt: "Notizen vom Einsatz, abends im Büro", verlust: "abgetippt" },
+    { schritt: "Rechnung, Tage später", verlust: "zusammengesucht" },
+  ],
   // Copy rule (1.7 Statistik): Ausbaugewerbe and Buerokratie named, the report's
   // "ueberdurchschnittlich" kept, never "of SHK firms", never next to another number.
   statistik: {
@@ -17,13 +27,6 @@ export const shk: ReiheNische = {
     linkText: "zdh.de (PDF)",
     href: "https://www.zdh.de/fileadmin/Oeffentlich/Wirschaft_Energie_Umwelt/Themen/Umfragen/Sonderumfragen/2023/Buerokratiebelastung_SU-1/2023_Sonderumfrage_Buerokratie.pdf",
   },
-  inhalt: [
-    "Wo du stehst: der Selbstcheck über die 13 Stationen deines Betriebs",
-    "Deine Werkzeuge: was deine Software schon kann und wohin deine Daten gehen",
-    "Das Fundament: deine Daten an einem Ort, in deinen eigenen Programmen",
-    "Die erste Station: der Auftrag auf dem Handy des Monteurs",
-    "Die nächsten Stockwerke: von der Wartung bis zum Tagesbild",
-  ],
   mail: {
     attachmentName: "Vrelo-Bauplan-SHK-Betriebe.pdf",
     readerSubject: "Dein Bauplan für SHK-Betriebe",

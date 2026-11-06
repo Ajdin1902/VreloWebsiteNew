@@ -35,35 +35,33 @@ ul.punkte li { margin-bottom: 5px; }
 .p1-top .logo { font-size: 18pt; gap: 7px; }
 .p1-top .logo svg { height: 24px; }
 .p1 h1 { font-size: 27pt; line-height: 1.12; color: var(--tiefes-wasser); margin: 4pt 0 0 0; font-weight: 700; }
-.schmerz { display: grid; grid-template-columns: 1.2fr 1fr; gap: 16pt; background: var(--tiefes-wasser); color: #FFFFFF;
-  border-radius: 8px; padding: 13pt 18pt; }
-.schmerz .kicker { color: var(--honig); }
-.schmerz .zeile { font-size: 14pt; font-weight: 600; line-height: 1.35; margin: 0; }
-.schmerz .rechts { border-left: 1px solid var(--vrelo-petrol); padding-left: 16pt; display: flex; flex-direction: column; justify-content: center; }
-.schmerz .zahl { font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 34pt; color: var(--honig); line-height: 1; }
-.schmerz .satz { font-size: 10pt; color: var(--gletscher); margin-top: 5pt; }
-.schmerz .quelle { display: block; font-size: 8.5pt; color: var(--stein); margin-top: 5pt; }
-.quelle-link { font-size: 8pt; color: var(--stumm); margin: -5pt 0 0 0; overflow-wrap: anywhere; }
-.bauplan-titel { font-size: 15pt; line-height: 1.3; color: var(--tiefes-wasser); font-weight: 600; margin: 2pt 0 0 0;
-  padding-left: 10pt; border-left: 3px solid var(--amber); }
-.p1-mitte { display: grid; grid-template-columns: 1.25fr 1fr; gap: 16pt; align-items: start; }
-ol.inhalt { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6pt; counter-reset: k; }
-ol.inhalt li { display: flex; gap: 9pt; align-items: baseline; font-size: 10.5pt; line-height: 1.4; counter-increment: k; }
-ol.inhalt li::before { content: counter(k); font-family: 'Fraunces', Georgia, serif; font-style: italic; color: var(--amber); font-size: 15pt; min-width: 12pt; line-height: 1; }
-.lbl { font-size: 8.5pt; letter-spacing: 0.08em; text-transform: uppercase; color: var(--stumm); font-weight: 600; margin: 0 0 6pt 0; }
-.fuer { background: var(--papier); border-left: 3px solid var(--amber); border-radius: 4px; padding: 10pt 13pt; font-size: 10.5pt; }
+/* cover pain: one job today as a flow, the circled verbs mark where time is lost (page 4 asks the reader to circle his own) */
+.weg-heute { border: 1.5px solid var(--faden); border-radius: 8px; padding: 11pt 14pt 10pt; }
+.auftragsweg { display: grid; grid-template-columns: 5mm 1fr 5mm 1fr 5mm 1fr 5mm 1fr; row-gap: 9pt; align-items: stretch; margin-top: 4pt; }
+.auftragsweg .schritt { display: flex; flex-direction: column; gap: 6pt; background: var(--gletscher); border-radius: 5px; padding: 7pt 8pt;
+  font-size: 10pt; line-height: 1.3; font-weight: 600; color: var(--tiefes-wasser); }
+.auftragsweg .ende { background: var(--sonnenlicht); }
+.auftragsweg .pfeil { align-self: center; text-align: center; color: var(--vrelo-petrol); font-size: 12pt; }
+.verlust { margin-top: auto; align-self: flex-start; background: #FFFFFF; border: 2px solid var(--amber); border-radius: 50%;
+  padding: 2pt 9pt; font-size: 9pt; font-weight: 600; color: var(--ember); }
+.kreis-satz { margin: 10pt 0 0 0; font-size: 11pt; font-weight: 600; color: var(--tiefes-wasser); }
+.statistik { display: flex; gap: 12pt; align-items: center; border-left: 3px solid var(--amber); padding-left: 11pt; }
+.statistik .zahl { flex: none; font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 24pt; line-height: 1; color: var(--ember); }
+.statistik .satz { display: block; font-size: 10pt; }
+.statistik .quelle { display: block; font-size: 8.5pt; color: var(--stumm); margin-top: 2pt; }
+.quelle-link { font-size: 8pt; color: var(--stumm); margin: -6pt 0 0 0; overflow-wrap: anywhere; }
+/* cover answer: the reader's one-week path (shared.wochenplan) */
+.woche { border: 1.5px solid var(--vrelo-petrol); border-radius: 8px; padding: 11pt 14pt; }
+.woche-kopf { font-size: 15pt; font-weight: 700; color: var(--tiefes-wasser); margin: 0 0 8pt 0; }
+ol.tage { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 6pt; }
+ol.tage li { display: flex; flex-direction: column; gap: 2pt; border-top: 3px solid var(--amber); padding: 5pt 2pt 0 0; font-size: 10pt; line-height: 1.3; }
+ol.tage .tag { font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 13pt; color: var(--ember); }
+ol.tage .seite { margin-top: auto; font-size: 8.5pt; color: var(--stumm); }
+.woche-schluss { margin: 10pt 0 0 0; font-size: 11pt; font-weight: 600; color: var(--tiefes-wasser); }
+.woche-ziel { margin: 0; font-size: 10pt; color: var(--stumm); }
+.fuer { background: var(--papier); border-left: 3px solid var(--amber); border-radius: 4px; padding: 9pt 13pt; font-size: 10.5pt; }
 .fuer p:last-child { margin-bottom: 0; }
 .p1-foot { margin-top: auto; border-top: 1px solid var(--faden); padding-top: 7pt; font-size: 10pt; color: var(--stumm); }
-
-/* the house: five floors, roof, foundation (cover and chapter 6 vocabulary) */
-.haus { display: flex; flex-direction: column; gap: 2pt; font-size: 9pt; line-height: 1.3; }
-.haus > div { display: flex; justify-content: space-between; gap: 6pt; border-radius: 3px; padding: 4pt 8pt; background: var(--gletscher); color: var(--tiefes-wasser); }
-.haus > div span:last-child { color: var(--stumm); }
-.haus .dach { background: var(--sonnenlicht); }
-.haus .tuer { border-left: 3px solid var(--amber); }
-.haus .fundament { background: var(--tiefes-wasser); color: #FFFFFF; }
-.haus .fundament span:last-child { color: var(--gletscher); }
-.haus .um { background: #FFFFFF; border: 1px dashed var(--vrelo-petrol); }
 
 /* tick boxes and write lines (sized for a pen) */
 .box { display: inline-block; width: 5mm; height: 5mm; border: 1.3px solid var(--tiefes-wasser); border-radius: 1px; vertical-align: middle; }
@@ -75,7 +73,6 @@ table.check { font-size: 9.5pt; line-height: 1.3; }
 table.check th { font-size: 7.5pt; font-weight: 600; color: var(--vrelo-petrol); text-align: center; vertical-align: bottom; padding: 0 3px 5px; border-bottom: 1.5px solid var(--vrelo-petrol); }
 table.check th.links { text-align: left; }
 table.check td { border-bottom: 1px solid var(--faden); padding: 2px 4px; height: 6.5mm; vertical-align: middle; }
-table.check td.nr { width: 7mm; font-family: 'Fraunces', Georgia, serif; font-style: italic; color: var(--amber); font-size: 11pt; text-align: center; }
 table.check td.kreuz { width: 17mm; text-align: center; }
 table.check td .bsp { font-size: 8.5pt; color: var(--stumm); }
 table.check td .bsp::before { content: " \B7  "; }
@@ -104,9 +101,8 @@ table.werkzeuge td:first-child { width: 30mm; font-weight: 600; color: var(--tie
 table.karte { font-size: 9pt; line-height: 1.3; table-layout: fixed; }
 table.karte th { font-size: 8pt; font-weight: 600; color: var(--vrelo-petrol); text-align: left; padding: 0 5px 4px; border-bottom: 1.5px solid var(--vrelo-petrol); }
 table.karte td { border-bottom: 1px solid var(--stein); padding: 3px 5px; height: 10.5mm; vertical-align: middle; }
-table.karte td.nr { font-family: 'Fraunces', Georgia, serif; font-style: italic; color: var(--amber); font-size: 11pt; text-align: center; }
 table.karte td.station { font-weight: 600; color: var(--tiefes-wasser); }
-table.karte td + td + td { border-left: 1px solid var(--faden); }
+table.karte td + td { border-left: 1px solid var(--faden); }
 table.karte tr.beispiel td { background: var(--papier); color: var(--ember); font-style: italic; height: auto; border-bottom-color: var(--faden); }
 table.karte tr.beispiel td.station { color: var(--ember); }
 

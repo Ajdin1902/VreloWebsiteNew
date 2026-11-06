@@ -5,7 +5,7 @@ import { readFileSync } from "node:fs";
 import { findCopyIssues } from "../ratgeberCopy";
 import { partHeadings, templateText } from "../bauplanTemplateText";
 import type { ReiheNische } from "./index";
-import { LEVELS, abschluss, abschlussHref, selbstcheck } from "./shared";
+import { LEVELS, abschluss, abschlussHref, selbstcheck, wochenplan } from "./shared";
 
 /** The six chapter titles after the cover, in skeleton order. */
 export const KAPITEL = [
@@ -45,7 +45,9 @@ export function checkReiheTemplate(n: ReiheNische, html: string = readFileSync(n
   if (JSON.stringify(headings) !== JSON.stringify(KAPITEL)) out.push(`headings: ${JSON.stringify(headings)}`);
 
   const verbatim = [
-    n.kicker, n.title, n.schmerz, ...n.inhalt,
+    n.kicker, n.title, n.schmerz,
+    ...n.auftragsweg.flatMap((s) => (s.verlust ? [s.schritt, s.verlust] : [s.schritt])),
+    wochenplan.heading, ...wochenplan.tage.map((t, i) => `Tag ${i + 1} ${t}`), wochenplan.schluss,
     selbstcheck.heading, selbstcheck.intro, ...selbstcheck.spalten, selbstcheck.fundamentFrage, selbstcheck.blankHinweis,
     ...LEVELS.flatMap((l) => [l.name, l.satz]),
     abschluss.heading, ...abschluss.text, abschluss.button,
@@ -69,6 +71,9 @@ export function checkReiheTemplate(n: ReiheNische, html: string = readFileSync(n
   if (duration) out.push(`duration: ${duration[0]}`);
   const promise = text.match(/Garantie|noch 3/);
   if (promise) out.push(`promise: ${promise[0]}`);
+  // Stations are named, never numbered: the floor grouping reorders the spine numbers (Ajdin 2026-11-06).
+  const nummer = text.match(/\bStation(en)?\s+\d+/);
+  if (nummer) out.push(`station number: ${nummer[0]}`);
 
   // Every tool in the template's tools table must be a known tool, so knownTools cannot fall behind.
   const werkzeuge = html.match(/<table class="werkzeuge">([\s\S]*?)<\/table>/)?.[1] ?? "";
@@ -90,7 +95,8 @@ export function checkReiheTemplate(n: ReiheNische, html: string = readFileSync(n
   }
 
   const close = text.lastIndexOf(abschluss.heading);
-  const person = (close >= 0 ? text.slice(0, close) : text).match(FIRST_PERSON);
+  // The cover headline is the owner's own question, not a service offer.
+  const person = (close >= 0 ? text.slice(0, close) : text).replace(n.title, "").match(FIRST_PERSON);
   if (person) out.push(`first person before the close: ${person[0]}`);
 
   if (/Assistent|\bBot\b/.test(text) && !text.includes("meldet sich als KI-Assistent"))

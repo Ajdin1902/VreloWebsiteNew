@@ -5,7 +5,7 @@ import { ENTITIES } from "../bauplanTemplateText";
 import { findCopyIssues } from "../ratgeberCopy";
 import { reiheNischen } from "./index";
 import { KAPITEL, checkReiheTemplate } from "./templateGuards";
-import { LEVELS, abschluss, abschlussHref, selbstcheck } from "./shared";
+import { LEVELS, abschluss, abschlussHref, selbstcheck, wochenplan } from "./shared";
 
 const shk = reiheNischen.shk;
 
@@ -26,7 +26,9 @@ const visible = (url: string) => url.replace(/^https?:\/\//, "");
 function goodHtml(n = shk): string {
   const stat = n.statistik!;
   const copy = [
-    n.kicker, n.title, n.schmerz, ...n.inhalt, stat.zahl, stat.satz, stat.quelle,
+    n.kicker, n.title, n.schmerz, ...n.auftragsweg.flatMap((s) => [s.schritt, s.verlust ?? ""]).filter(Boolean),
+    stat.zahl, stat.satz, stat.quelle,
+    wochenplan.heading, ...wochenplan.tage.map((t, i) => `Tag ${i + 1} ${t}`), wochenplan.schluss,
     selbstcheck.heading, selbstcheck.intro, ...selbstcheck.spalten, selbstcheck.fundamentFrage, selbstcheck.blankHinweis,
     ...LEVELS.flatMap((l) => [l.name, l.satz]),
   ];
@@ -57,7 +59,8 @@ describe("every Bauplan-Reihe template", () => {
       expect(checkReiheTemplate(n)).toEqual([]);
     });
     it(`${n.slug}: data strings pass the copy guard`, () => {
-      const strings = [n.label, n.kicker, n.title, n.schmerz, ...n.inhalt, ...Object.values(n.mail)];
+      const strings = [n.label, n.kicker, n.title, n.schmerz, ...Object.values(n.mail)];
+      for (const s of n.auftragsweg) strings.push(s.schritt, ...(s.verlust ? [s.verlust] : []));
       if (n.statistik) strings.push(n.statistik.zahl, n.statistik.satz, n.statistik.quelle, n.statistik.linkText);
       expect(strings.flatMap((s) => findCopyIssues(s).map((i) => ({ s, i })))).toEqual([]);
     });
@@ -84,6 +87,17 @@ describe("checkReiheTemplate on fixtures", () => {
     expectProblem(goodHtml().replace(enc(selbstcheck.blankHinweis), "x"), "missing");
     expectProblem(goodHtml().replace(`<p>${enc(LEVELS[3].name)}</p>`, ""), "missing");
     expectProblem(goodHtml().replace(enc(abschluss.text[1]), "x"), "missing");
+  });
+  it("reports a missing week path or job flow step", () => {
+    expectProblem(goodHtml().replace(enc(wochenplan.schluss), "x"), "missing");
+    expectProblem(goodHtml().replace(`<p>${enc(`Tag 3 ${wochenplan.tage[2]}`)}</p>`, ""), "missing");
+    const lossy = shk.auftragsweg.find((s) => s.verlust)!;
+    expectProblem(goodHtml().replace(`<p>${enc(lossy.verlust!)}</p>`, ""), "missing");
+  });
+  it("reports a station number, not a station count", () => {
+    expectProblem(withAfter("Hier geht es um Station 4."), "station number");
+    expectProblem(withAfter("Station 9 und 10"), "station number");
+    expect(problems(withAfter("Alle 13 Stationen deines Betriebs."))).toEqual([]);
   });
   it("reports a missing close link", () =>
     expectProblem(goodHtml().replace(`href="${abschlussHref("shk", "pdf")}"`, 'href="https://vrelo-ki.de/kontakt"'), "close link"));

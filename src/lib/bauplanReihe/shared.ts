@@ -28,6 +28,14 @@ export const selbstcheck = {
   blankHinweis: "Eine leere Zeile zählt als \u201Enur im Kopf\u201C.",
 };
 
+// Cover of every Bauplan: the reader's one-week path through chapters 2 to 5 (his pace, not
+// a Vrelo duration). Rendered as "Tag <n> <titel>".
+export const wochenplan = {
+  heading: "Dieser Bauplan ist dein erster Schritt.",
+  tage: ["Wo du stehst", "Deine Werkzeuge", "Deine Datenwege", "Das Fundament", "Die erste Station"],
+  schluss: "Nach einer Woche weißt du, wo du anfängst.",
+};
+
 export const abschluss = {
   heading: "Wenn du es nicht allein bauen willst",
   text: [

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { LEVELS, abschluss, abschlussHref, levelFor, selbstcheck } from "./shared";
+import { LEVELS, abschluss, abschlussHref, levelFor, selbstcheck, wochenplan } from "./shared";
 import { findCopyIssues } from "../ratgeberCopy";
 import { normalizeSource } from "../source";
 
@@ -31,10 +31,13 @@ describe("bauplanReihe shared", () => {
     expect(normalizeSource("bauplan-shk-pdf")).toBe("bauplan-shk-pdf");
   });
   it("keeps every shared string clean", () => {
-    const all = strings([selbstcheck, abschluss, LEVELS]);
+    const all = strings([selbstcheck, abschluss, LEVELS, wochenplan]);
     expect(all.flatMap((s) => findCopyIssues(s).map((i) => ({ s, i })))).toEqual([]);
     expect(all.filter((s) => /€|\bEUR\b|\d\s*(Euro|netto)\b/i.test(s))).toEqual([]);
     expect(all.filter((s) => /Garantie|noch 3|Wochen|Tage/i.test(s))).toEqual([]);
+  });
+  it("walks the reader through five days", () => {
+    expect(wochenplan.tage).toEqual(["Wo du stehst", "Deine Werkzeuge", "Deine Datenwege", "Das Fundament", "Die erste Station"]);
   });
   it("names five levels in ladder order", () => {
     expect(LEVELS.map((l) => l.name)).toEqual(["Im Kopf", "Verstreut", "Erste Station läuft", "Ein Ort", "Haus steht"]);

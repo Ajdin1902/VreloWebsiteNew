@@ -8,11 +8,12 @@ export type ReiheNische = {
   slug: ReiheSlug;
   label: string;
   kicker: string;
-  title: string;
-  schmerz: string;
+  title: string; // the owner's question (cover headline)
+  schmerz: string; // pain headline over the auftragsweg flow
+  // One job today, first call to invoice; verlust = the circled verb where time is lost.
+  auftragsweg: { schritt: string; verlust?: string }[];
   // Primary source only; null when the niche has none (spec §5.3).
   statistik: { zahl: string; satz: string; quelle: string; linkText: string; href: string } | null;
-  inhalt: string[];
   mail: { attachmentName: string; readerSubject: string; readerClose: string; internalPrefix: string };
   pdfPath: string;
   template: string;
