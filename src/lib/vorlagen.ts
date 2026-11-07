@@ -27,11 +27,38 @@ export const vorlageBauplaene: Record<string, { variant: BauplanVariant; title: 
     description:
       "Kostenloser Bauplan für SHK-Betriebe: vom ersten Anruf bis zur Rechnung, mit einem Weg in fünf Tagen zur ersten Station. Als PDF per E-Mail.",
   },
+  "gebaeudereinigung-bauplan": {
+    variant: "gebaeudereinigung",
+    title: "Bauplan für Gebäudereiniger",
+    description:
+      "Kostenloser Bauplan für Gebäudereiniger: von der ersten Anfrage bis zur Monatsrechnung, mit einem Weg in fünf Tagen zur ersten Station. Als PDF per E-Mail.",
+  },
+  "hausmeister-bauplan": {
+    variant: "hausmeister",
+    title: "Bauplan für Hausmeisterdienste",
+    description:
+      "Kostenloser Bauplan für Hausmeisterdienste: vom Auftrag der Hausverwaltung bis zum Leistungsnachweis, mit einem Weg in fünf Tagen zur ersten Station. Als PDF per E-Mail.",
+  },
 };
 
 export const HAUS_PDF = "/vorlagen/vrelo-ki-betriebssystem.pdf";
 
-export type Vorlage = { id: string; titel: string; text: string; umfang: string; link: { text: string; href: string } };
+// Hub groups in page order; a niche group appears once its first Bauplan is live (spec §7: group past six cards).
+export const VORLAGEN_GRUPPEN = [
+  { id: "alle", titel: "Für jeden Betrieb" },
+  { id: "handwerk", titel: "Handwerk" },
+  { id: "gebaeude", titel: "Gebäudedienste" },
+  { id: "buero", titel: "Agenturen und Büros" },
+] as const;
+
+export type Vorlage = {
+  id: string;
+  gruppe: (typeof VORLAGEN_GRUPPEN)[number]["id"];
+  titel: string;
+  text: string;
+  umfang: string;
+  link: { text: string; href: string };
+};
 
 export const vorlagenPage: {
   meta: { title: string; description: string };
@@ -41,7 +68,7 @@ export const vorlagenPage: {
   meta: {
     title: "Kostenlose Vorlagen",
     description:
-      "Kostenlose Vorlagen für Betriebe und Unternehmen: das KI-Betriebssystem auf einer Seite, ein fertiger Prompt für Claude und Baupläne für Agenturen, Elektrobetriebe und SHK-Betriebe.",
+      "Kostenlose Vorlagen für Betriebe und Unternehmen: das KI-Betriebssystem auf einer Seite, ein fertiger Prompt für Claude und Baupläne für Agenturen, Elektro- und SHK-Betriebe, Gebäudereiniger und Hausmeisterdienste.",
   },
   hero: {
     eyebrow: "Kostenlos zum Mitnehmen",
@@ -51,6 +78,7 @@ export const vorlagenPage: {
   items: [
     {
       id: "haus",
+      gruppe: "alle",
       titel: "Dein KI-Betriebssystem",
       text: "Die 13 Stationen, die jeder Betrieb hat, als Haus auf einer Seite: von der ersten Anfrage bis zur Rechnung. So siehst du, wo du anfangen kannst.",
       umfang: "1 Seite · PDF, sofort",
@@ -58,6 +86,7 @@ export const vorlagenPage: {
     },
     {
       id: "claude-gehirn",
+      gruppe: "alle",
       titel: "Das Claude-Gehirn",
       text: "Ein fertiger Text für Claude Cowork: Claude legt ein Gehirn für deinen Betrieb an, lernt aus deinen Unterlagen und hält sein Wissen selbst aktuell.",
       umfang: "Ein Prompt · direkt auf der Seite",
@@ -65,6 +94,7 @@ export const vorlagenPage: {
     },
     {
       id: "agentur-bauplan",
+      gruppe: "buero",
       titel: "Bauplan für Agenturen",
       text: "Der Weg eines Kunden durch deine Agentur, vom Angebot bis zur Projektdoku. Mit Bögen zum Ausfüllen, damit du siehst, was davon von allein laufen kann.",
       umfang: "8 Seiten · PDF per E-Mail",
@@ -72,6 +102,7 @@ export const vorlagenPage: {
     },
     {
       id: "elektro-bauplan",
+      gruppe: "handwerk",
       titel: "Bauplan für Elektrobetriebe",
       text: "Mehr Büro als Baustelle? In fünf Stufen zum eigenen Büroassistenten, der Angebote, Rechnungen und Bestellungen vorbereitet.",
       umfang: "7 Seiten · PDF per E-Mail",
@@ -79,10 +110,27 @@ export const vorlagenPage: {
     },
     {
       id: "shk-bauplan",
+      gruppe: "handwerk",
       titel: "Bauplan für SHK-Betriebe",
       text: "Vom ersten Anruf bis zur Rechnung: Du siehst, wo ein Auftrag Zeit frisst. Danach wählst du deine erste Station.",
       umfang: "8 Seiten · PDF per E-Mail",
       link: { text: "Zum Bauplan", href: `${VORLAGEN_PATH}/shk-bauplan` },
+    },
+    {
+      id: "gebaeudereinigung-bauplan",
+      gruppe: "gebaeude",
+      titel: "Bauplan für Gebäudereiniger",
+      text: "Von der ersten Anfrage bis zur Monatsrechnung: Du siehst, wo ein Objekt Zeit frisst. Danach wählst du deine erste Station.",
+      umfang: "8 Seiten · PDF per E-Mail",
+      link: { text: "Zum Bauplan", href: `${VORLAGEN_PATH}/gebaeudereinigung-bauplan` },
+    },
+    {
+      id: "hausmeister-bauplan",
+      gruppe: "gebaeude",
+      titel: "Bauplan für Hausmeisterdienste",
+      text: "Vom Auftrag der Hausverwaltung bis zum Leistungsnachweis: Du siehst, wo ein Objekt Zeit frisst. Danach wählst du deine erste Station.",
+      umfang: "8 Seiten · PDF per E-Mail",
+      link: { text: "Zum Bauplan", href: `${VORLAGEN_PATH}/hausmeister-bauplan` },
     },
   ],
 };

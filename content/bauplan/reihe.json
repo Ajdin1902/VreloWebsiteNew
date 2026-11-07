@@ -1,1 +1,5 @@
-{ "shk": { "pages": 8, "shareCopy": "SHK-Bauplan-Vrelo.pdf" } }
+{
+  "shk": { "pages": 8, "shareCopy": "SHK-Bauplan-Vrelo.pdf" },
+  "gebaeudereinigung": { "pages": 8, "shareCopy": "Gebaeudereinigung-Bauplan-Vrelo.pdf" },
+  "hausmeister": { "pages": 8, "shareCopy": "Hausmeister-Bauplan-Vrelo.pdf" }
+}

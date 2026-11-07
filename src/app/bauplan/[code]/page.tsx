@@ -7,11 +7,13 @@ import { bauplanPage } from "@/lib/bauplanPage";
 import { elektroBauplanPage } from "@/lib/elektroBauplanPage";
 import { BauplanPdfForm } from "@/components/bauplan/BauplanPdfForm";
 import { normalizeSource } from "@/lib/source";
+import { reiheNischen, type ReiheSlug } from "@/lib/bauplanReihe";
 
 const TITLE: Record<BauplanVariant, string> = {
   agentur: "Bauplan für Agenturen",
   elektro: "Bauplan für Elektrobetriebe",
-  shk: "Bauplan für SHK-Betriebe", // never rendered here: SHK has no coded page
+  // Never rendered here: the series has no coded pages, only /vorlagen/<slug>-bauplan.
+  ...(Object.fromEntries(Object.values(reiheNischen).map((n) => [n.slug, n.kicker])) as Record<ReiheSlug, string>),
 };
 
 // The title only exists for a valid code: a wrong code's 404 must not name the page.

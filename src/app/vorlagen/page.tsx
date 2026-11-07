@@ -9,7 +9,11 @@ import { Section } from "@/components/Section";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbLd } from "@/lib/jsonld";
 import { canonical } from "@/lib/site";
-import { VORLAGEN_PATH, vorlagenPage as c } from "@/lib/vorlagen";
+import {
+  VORLAGEN_GRUPPEN,
+  VORLAGEN_PATH,
+  vorlagenPage as c,
+} from "@/lib/vorlagen";
 
 export const metadata: Metadata = {
   alternates: { canonical: canonical(VORLAGEN_PATH) },
@@ -20,25 +24,53 @@ export const metadata: Metadata = {
 export default function VorlagenPage() {
   return (
     <>
-      <CompactHero eyebrow={c.hero.eyebrow} title={c.hero.title} line={c.hero.line} image="/images/bg-karst-quelle.webp" />
+      <CompactHero
+        eyebrow={c.hero.eyebrow}
+        title={c.hero.title}
+        line={c.hero.line}
+        image="/images/bg-karst-quelle.webp"
+      />
       <Section>
-        <ul className="grid gap-6 md:grid-cols-2">
-          {c.items.map((v) => (
-            <li key={v.id} id={v.id} className="card-depth flex flex-col rounded-2xl border border-faden bg-papier p-6 md:p-8">
-              <p className="text-xs font-semibold uppercase tracking-wide text-stumm">{v.umfang}</p>
-              <h2 className="mt-2 text-balance text-2xl font-semibold text-tiefes-wasser">{v.titel}</h2>
-              <p className="mt-3 flex-1 text-pretty">{v.text}</p>
-              <Link
-                href={v.link.href}
-                className="mt-6 inline-flex self-start rounded-lg bg-amber px-5 py-2.5 text-sm font-semibold text-tiefes-wasser transition-colors hover:bg-honig focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vrelo-petrol focus-visible:ring-offset-2"
-              >
-                {v.link.text}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        {VORLAGEN_GRUPPEN.map((g) => {
+          const items = c.items.filter((v) => v.gruppe === g.id);
+          return items.length === 0 ? null : (
+            <div key={g.id} className="mt-12 first:mt-0">
+              <h2 className="text-sm font-semibold uppercase tracking-wide text-vrelo-petrol">
+                {g.titel}
+              </h2>
+              <ul className="mt-4 grid gap-6 md:grid-cols-2">
+                {items.map((v) => (
+                  <li
+                    key={v.id}
+                    id={v.id}
+                    className="card-depth flex flex-col rounded-2xl border border-faden bg-papier p-6 md:p-8"
+                  >
+                    <p className="text-xs font-semibold uppercase tracking-wide text-stumm">
+                      {v.umfang}
+                    </p>
+                    <h3 className="mt-2 text-balance text-2xl font-semibold text-tiefes-wasser">
+                      {v.titel}
+                    </h3>
+                    <p className="mt-3 flex-1 text-pretty">{v.text}</p>
+                    <Link
+                      href={v.link.href}
+                      className="mt-6 inline-flex self-start rounded-lg bg-amber px-5 py-2.5 text-sm font-semibold text-tiefes-wasser transition-colors hover:bg-honig focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vrelo-petrol focus-visible:ring-offset-2"
+                    >
+                      {v.link.text}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          );
+        })}
       </Section>
-      <JsonLd data={breadcrumbLd([{ name: "Start", path: "/" }, { name: "Vorlagen", path: VORLAGEN_PATH }])} />
+      <JsonLd
+        data={breadcrumbLd([
+          { name: "Start", path: "/" },
+          { name: "Vorlagen", path: VORLAGEN_PATH },
+        ])}
+      />
     </>
   );
 }
