@@ -1,0 +1,360 @@
+<!doctype html>
+<!--
+  Vrelo Bauplan-Reihe, Garten- und Landschaftsbauer: free 8-page PDF guide for owner-led GaLaBau firms.
+  Spec: docs/superpowers/specs/2026-11-06-bauplan-reihe-design.md (section 4 skeleton, section 6 constraints).
+  Facts: Knowledge/marketing/prozess-landkarten.md section 9 (9.1 Landkarte, 9.7 Recherche, 2026-11-07).
+  Data + shared copy: src/lib/bauplanReihe/galabau.ts and shared.ts. Styles: content/bauplan/reihe.css.
+
+  RULES (do not break; the guard src/lib/bauplanReihe/templates.test.ts enforces most of them):
+    - Chapters 2 and 7 carry the shared copy word for word (selbstcheck, LEVELS, abschluss).
+    - No price, no Vrelo duration, no capacity line, no guarantee, no client or prospect names.
+    - Pages 1 to 7 are a free guide the reader follows alone: no first-person service offer.
+    - GaLaBau is not Handwerk (IHK sector): never "Handwerker", no HWK/ZDH framing or numbers.
+    - "Schnittstelle" only next to tools in galabau.verifiedInterfaces; otherwise
+      "wenn deine Software eine Schnittstelle hat". DATAflor, KS21, galawork, mexXsoft, Versa Office,
+      plancraft, miamapo are never called connectable. ToolTime only with "nach eigenen Angaben".
+    - The statistic as the 9.7 copy rule says: Fachkraft-Stellen, "rechnerisch", computed from
+      Bundesagentur data (never "befragt"), never "jeder zweite Betrieb", never next to another number.
+    - The BGL Pflege share (17 to 27 Prozent) only in chapter 6, with its source, never on the cover.
+    - Photos from private gardens: only the area, no people, no neighbours' property, no number plates.
+      Gate codes and keys never in a chat card or a shared table. Never promise weather-driven rescheduling.
+    - Every link prints its target as visible text (the copy is printed).
+    - Any assistant named carries "meldet sich als KI-Assistent".
+    - Dash-free German, no comma before "und", generic masculine, du.
+    - Pure ASCII with entities from src/lib/bauplanTemplateText.ts (no degree sign: write "KS21").
+    - Office printer, A4, white page, 8 pages. Full page = shorten copy, never shrink type.
+-->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Vrelo &#183; Bauplan f&uuml;r Garten- und Landschaftsbauer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>{{{BRAND_CSS}}}</style>
+<style>{{{REIHE_CSS}}}</style>
+</head>
+<body>
+
+<!-- Page 1: cover (series pattern). Flow steps = galabau.auftragsweg. -->
+<section class="page first">
+  <div class="p1">
+    <div class="p1-top">
+      <div class="logo">{{{LOGO_SVG}}}<span class="logo-word">Vrelo</span></div>
+      <span>Bauplan f&uuml;r Garten- und Landschaftsbauer</span>
+    </div>
+
+    <h1>Prozesse, Automatisierung, KI:<br>Wo fange ich &uuml;berhaupt an?</h1>
+
+    <div class="weg-heute">
+      <div class="kicker">Ein Garten, viel B&uuml;ro am Abend</div>
+      <div class="auftragsweg">
+        <span></span>
+        <div class="schritt">Anfrage, der Chef ist drau&szlig;en</div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">R&uuml;ckruf abends, Fl&auml;che und Fotos fehlen<span class="verlust">nachtelefoniert</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Besichtigung, Ma&szlig;e auf Papier</div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Angebot am Wochenende<span class="verlust">abgetippt</span></div>
+
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Angebot raus, dann Stille<span class="verlust">vergessen</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Stundenzettel am Freitag<span class="verlust">zusammengesucht</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt ende">Rechnung, Aufma&szlig; vom Zettel<span class="verlust">&uuml;bertragen</span></div>
+      </div>
+      <p class="kreis-satz">Jeder Kreis ist eine Stelle, an der Zeit verloren geht. Im Bauplan findest du deine.</p>
+    </div>
+
+    <div class="statistik">
+      <span class="zahl">51,1 Prozent</span>
+      <div>
+        <span class="satz">der offenen Stellen f&uuml;r Fachkr&auml;fte im Garten-, Landschafts- und Sportplatzbau k&ouml;nnen rechnerisch nicht besetzt werden, im Jahresdurchschnitt 2025.</span>
+        <span class="quelle">Kompetenzzentrum Fachkr&auml;ftesicherung (KOFA) im Institut der deutschen Wirtschaft, KOFA Kompakt 6/2026. Berechnet aus Daten der Bundesagentur f&uuml;r Arbeit.</span>
+      </div>
+    </div>
+    <p class="quelle-link">Quelle: <a href="https://www.kofa.de/media/Publikationen/KOFA_Kompakt/KOFA_Kompakt_06-2026_Gartenbau.pdf">www.kofa.de/media/Publikationen/KOFA_Kompakt/KOFA_Kompakt_06-2026_Gartenbau.pdf</a></p>
+    <p class="woche-ziel">Wenn Fachkr&auml;fte fehlen, z&auml;hlt jede Stunde: Was im B&uuml;ro verloren geht, fehlt im Garten.</p>
+
+    <div class="woche">
+      <p class="woche-kopf">Dieser Bauplan ist dein erster Schritt.</p>
+      <ol class="tage">
+        <li><span class="tag">Tag 1</span><b>Wo du stehst</b><span class="seite">Seite 2</span></li>
+        <li><span class="tag">Tag 2</span><b>Deine Werkzeuge</b><span class="seite">Seite 3</span></li>
+        <li><span class="tag">Tag 3</span><b>Deine Datenwege</b><span class="seite">Seite 4</span></li>
+        <li><span class="tag">Tag 4</span><b>Das Fundament</b><span class="seite">Seite 5</span></li>
+        <li><span class="tag">Tag 5</span><b>Die erste Station</b><span class="seite">Seite 6 und 7</span></li>
+      </ol>
+      <p class="woche-schluss">Nach einer Woche wei&szlig;t du, wo du anf&auml;ngst.</p>
+      <p class="woche-ziel">Schritt f&uuml;r Schritt zu deinem KI-Betriebssystem.</p>
+    </div>
+
+    <div class="fuer"><p><b>F&uuml;r wen:</b> Inhaber von Garten- und Landschaftsbaubetrieben, von Pflanzung und Rollrasen &uuml;ber Pflaster bis zum Pflegevertrag, in der Saison mit Kolonnen und Bagger drau&szlig;en, meist f&uuml;r Privatkunden. F&uuml;r die ersten Seiten reicht ein Stift.</p></div>
+
+    <div class="p1-foot">Ajdin Dzafic, <span class="brand-word">Vrelo</span>, Regensburg &#183; vrelo-ki.de</div>
+  </div>
+</section>
+
+<!-- Page 2: Wo du stehst (shared copy: selbstcheck, LEVELS) -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Garten- und Landschaftsbauer &#183; Seite 2 von 8</span></div>
+  <h2 class="part">Wo du stehst</h2>
+  <div class="kicker">Dein Stand je Station</div>
+  <p class="intro">Mach pro Station ein Kreuz in einer der drei Spalten: l&auml;uft von selbst, auf Papier oder in Dateien, nur im Kopf. Z&auml;hl am Ende die Kreuze je Spalte.</p>
+  <table class="check">
+    <thead><tr><th></th><th class="links">Station</th><th>L&auml;uft von selbst</th><th>Auf Papier oder in Dateien</th><th>Nur im Kopf</th></tr></thead>
+    <tbody>
+      <tr class="neu"><td class="stock" rowspan="2"><b>Erdgeschoss</b> Kundeneingang</td><td>Anfrage und Besichtigung<span class="bsp">Telefon, Formular, Fotos, Termin vor Ort</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Angebot und Nachfassen<span class="bsp">wenn keine Antwort kommt</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="1"><b>2. Stock</b> Onboarding</td><td>Vor Baubeginn einsammeln<span class="bsp">Pl&auml;ne, Leitungsauskunft, Zufahrt</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="3"><b>3. Stock</b> Die Arbeit</td><td>Auftrag zur Kolonne<span class="bsp">wer, wo, welche Ger&auml;te, welches Material</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Tagesbericht und Fotos<span class="bsp">Stunden, Material, Lieferscheine</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Pflegevertr&auml;ge und Saison<span class="bsp">Rasen, Hecke, Laub</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="2"><b>4. Stock</b> Finanzwesen</td><td>Rechnung schreiben<span class="bsp">Abschlag, Schluss, Pflegepauschale</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Belege zuordnen<span class="bsp">Baustoffhandel, Baumschule, Gr&uuml;nschnitt</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="3"><b>5. Stock</b> Abschluss und Team</td><td>Bewertung<span class="bsp">Bitte um eine Google-Bewertung</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Abnahme und &Uuml;bergabe<span class="bsp">Protokoll, Pflegehinweise, Pflegeangebot</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Bewerbungen und Einarbeitung<span class="bsp">G&auml;rtner, Azubis, Saisonkr&auml;fte</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="2"><b>Dach</b> und Assistent</td><td>Tagesbild<span class="bsp">morgens sehen, was offen ist</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Assistent f&uuml;r unterwegs<span class="bsp">einsprechen statt merken</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="summe"><td></td><td>Kreuze je Spalte</td><td class="kreuz"><span class="feld"></span></td><td class="kreuz"><span class="feld"></span></td><td class="kreuz"><span class="feld"></span></td></tr>
+    </tbody>
+  </table>
+  <div class="frage">
+    <p><b>Liegen deine Kundendaten an einem festen Ort, auf den alles zugreift?</b></p>
+    <div class="antwort"><span><span class="box"></span> Ja</span><span><span class="box"></span> Nein</span></div>
+  </div>
+  <p class="hinweis">Eine leere Zeile z&auml;hlt als &#8222;nur im Kopf&#8220;. Zwei Kreuze in einer Zeile: z&auml;hl nur das rechte.</p>
+  <h3 class="zwischen">Deine Stufe</h3>
+  <table class="stufen">
+    <tbody>
+      <tr><td class="nr">0</td><td class="name">Im Kopf<span class="regel">Kein Kreuz bei &#8222;l&auml;uft&#8220;, im Kopf mindestens so viele wie auf Papier</span></td><td>Schreib auf, was du heute nur im Kopf tr&auml;gst. Eine Station reicht f&uuml;r den Anfang.</td></tr>
+      <tr><td class="nr">1</td><td class="name">Verstreut<span class="regel">Kein Kreuz bei &#8222;l&auml;uft&#8220;, auf Papier mehr als im Kopf</span></td><td>Vieles steht schon auf Papier oder in Dateien. Such dir die eine Station aus, die dich am meisten Zeit kostet.</td></tr>
+      <tr><td class="nr">2</td><td class="name">Erste Station l&auml;uft<span class="regel">Mindestens ein Kreuz bei &#8222;l&auml;uft&#8220;, Fundament: nein</span></td><td>Eine Station l&auml;uft von selbst. Als N&auml;chstes brauchen deine Daten einen festen Platz, damit alles auf denselben Ort zugreift.</td></tr>
+      <tr><td class="nr">3</td><td class="name">Ein Ort<span class="regel">Fundament: ja, 1 bis 9 Kreuze bei &#8222;l&auml;uft&#8220;</span></td><td>Deine Daten liegen an einem Ort. Jetzt holst du eine Station nach der anderen in dein System.</td></tr>
+      <tr><td class="nr">4</td><td class="name">Haus steht<span class="regel">Fundament: ja, 10 Kreuze oder mehr bei &#8222;l&auml;uft&#8220;</span></td><td>Fast alles l&auml;uft von selbst. Schlie&szlig; die letzten L&uuml;cken und schreib auf, wie die Stationen zusammenh&auml;ngen.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Page 3: Deine Werkzeuge und Datenwege (1 of 2): what GaLaBau software already ships (9.7 Werkzeuge) -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Garten- und Landschaftsbauer &#183; Seite 3 von 8</span></div>
+  <h2 class="part">Deine Werkzeuge und Datenwege</h2>
+  <p class="intro">Schau zuerst nach, was deine Software schon kann. Was sie kann, schaltest du ein. Bauen musst du nur, was fehlt.</p>
+  <h3 class="zwischen">Was GaLaBau-Software mitbringt</h3>
+  <table class="werkzeuge">
+    <thead><tr><th>Werkzeug</th><th>Was es dir abnimmt</th></tr></thead>
+    <tbody>
+      <tr><td>DATAflor BUSINESS</td><td>Kalkulation und Angebot, Baustellen-Manager f&uuml;r Personal, Ger&auml;te und Baustellen, die Apps TEAM und TIME, Abschlags-, Schluss- und E-Rechnung, &Uuml;bergabe an DATEV.</td></tr>
+      <tr><td>KS21</td><td>GaLaOffice mit der App GaLaMobil: Arbeits- und Fahrzeit, Maschinen, Material, Lieferscheine, Fotos und Tagesberichte, auch offline. Dazu Ressourcenplanung f&uuml;r Team und Ger&auml;te, Aufma&szlig; &uuml;ber die Massenliste, ein Pflegemodul und Buchungsdaten f&uuml;r DATEV.</td></tr>
+      <tr><td>galawork</td><td>Einsatzplanung f&uuml;r Projekte, Kolonnen, Ger&auml;te und Pflegeauftr&auml;ge, &Auml;nderungen sehen alle sofort. Mobile Zeiterfassung, Baustellendoku mit Fotos, Leistung je Position, Nachkalkulation.</td></tr>
+      <tr><td>mexXsoft X2</td><td>Kalkulation, Planung f&uuml;r Kolonnen, Mitarbeiter und Ger&auml;te, Pflegemodul f&uuml;r wiederkehrende Leistungen als Option. Die App mexXgo erfasst Zeiten und hat einen Chat zwischen B&uuml;ro und Kolonne.</td></tr>
+      <tr><td>Versa Office</td><td>Die GaLaBau-Software von Sander &amp; Doll: Kalkulation, Angebot und Aufma&szlig; mit Laser- und Fotoaufma&szlig;, App f&uuml;r Arbeitszeiten, &Uuml;bergabe an DATEV.</td></tr>
+      <tr><td>plancraft</td><td>Ein KI-Empfang nimmt Anrufe und Nachrichten an. Aufma&szlig; am iPad f&uuml;r Beete und Pflasterwege, Plantafel, App mit Arbeitszeit und Schlechtwetter, wiederkehrende Rechnungen f&uuml;r Pflegevertr&auml;ge, automatische Mahnungen.</td></tr>
+      <tr><td>mfr</td><td>Kundenportal: Anfragen werden nach deiner Annahme zum Auftrag. Plantafel mit Routen, App mit Fotos, Unterschrift und Checklisten, auch offline. Der Wartungsplaner legt Pflegeauftr&auml;ge aus Startdatum und Intervall an.</td></tr>
+      <tr><td>HERO</td><td>Anfragen von deiner Webseite legt HERO als Projekt an, wenn dein Formular &uuml;ber die Lead API angebunden ist. Angebot, Plantafel, App mit Baudoku, Rechnung mit Mahnlauf.</td></tr>
+      <tr><td>Lexware Office</td><td>Angebote, Serienrechnungen f&uuml;r Pflegepauschalen, automatische Mahnungen, Belege per Texterkennung, Export f&uuml;r DATEV.</td></tr>
+      <tr><td>sevDesk</td><td>Angebot und Rechnung, Abschlags- und Schlussrechnung, Mahnungen, Belege per Scan mit Buchungsvorschlag.</td></tr>
+    </tbody>
+  </table>
+  <ul class="punkte">
+    <li><b>Anfragen:</b> DATAflor BUSINESS, GaLaOffice, galawork, mexXsoft X2 und Versa Office nehmen laut Herstellerseiten keine Anfrage an. Das k&ouml;nnen plancraft, mfr, HERO und ToolTime mit seinem KI-Telefonassistenten. Pr&uuml;f vor dem Einschalten, ob sich der Empfang am Telefon als KI zu erkennen gibt.</li>
+    <li><b>Aufma&szlig; drau&szlig;en:</b> smart to plan und miamapo messen Au&szlig;enfl&auml;chen auf, miamapo zeichnet die Skizze auf der Karte und rechnet die Massen. Bau daneben nichts nach.</li>
+  </ul>
+  <p class="eigen">L&auml;uft dein Betrieb schon in einer GaLaBau-Software, nutz zuerst, was sie kann. Baust du daneben dasselbe noch einmal, pflegst du es doppelt.</p>
+  <p class="hinweis">Stand der Herstellerseiten: November 2026. Welche Funktion in deinem Tarif steckt, sagt dir dein Anbieter.</p>
+</section>
+
+<!-- Page 4: Deine Werkzeuge und Datenwege (2 of 2): the fill-in map -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Garten- und Landschaftsbauer &#183; Seite 4 von 8</span></div>
+  <h3 class="zwischen">Deine Datenwege</h3>
+  <p class="intro">Trag pro Station ein, womit du heute arbeitest, woher die Daten kommen und wohin sie danach gehen. Die zwei Zeilen oben sind Beispiele.</p>
+  <table class="karte">
+    <colgroup><col style="width:48mm"><col><col><col></colgroup>
+    <thead><tr><th>Station</th><th>Werkzeug heute</th><th>Daten kommen von</th><th>gehen nach</th></tr></thead>
+    <tbody>
+      <tr class="beispiel"><td class="station">Anfrage und Besichtigung</td><td>Handy, Notizblock</td><td>Anruf, Fotos per WhatsApp</td><td>Excel f&uuml;rs Angebot</td></tr>
+      <tr class="beispiel"><td class="station">Belege</td><td>Postfach, Lexware Office</td><td>Baustoffhandel, Baumschule, Lieferscheine im Fahrzeug</td><td>Steuerberater, per DATEV</td></tr>
+      <tr><td class="station">Anfrage und Besichtigung</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Angebot und Nachfassen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Vor Baubeginn</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Auftrag zur Kolonne</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Tagesbericht und Fotos</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Pflegevertr&auml;ge und Saison</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Rechnung schreiben</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Belege</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Bewertung</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Abnahme und &Uuml;bergabe</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Bewerbungen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Tagesbild</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Assistent f&uuml;r unterwegs</td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>F&uuml;ll jede Zeile aus, auch wenn dir nur ein Wort einf&auml;llt.</li>
+      <li>Kreis jede Stelle ein, an der jemand nachtelefoniert, etwas abtippt, vergisst, zusammensucht oder &uuml;bertr&auml;gt.</li>
+      <li>Z&auml;hl die Kreise je Station. Die Station mit den meisten Kreisen ist deine Quelle: die Arbeit, die jede Woche wiederkommt.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- Page 5: Das Fundament -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Garten- und Landschaftsbauer &#183; Seite 5 von 8</span></div>
+  <h2 class="part">Das Fundament</h2>
+  <p class="intro">Jede Station schreibt ihre Daten an einen festen Ort. Das ist dein Fundament. Du baust es einmal, zusammen mit der ersten Station, danach wird jede weitere Station kleiner. Liegen deine Daten an einem Ort, kann sp&auml;ter eine KI darin nachschlagen, sortieren und Entw&uuml;rfe schreiben.</p>
+  <p>Der Bundesverband Garten-, Landschafts- und Sportplatzbau (BGL) beschreibt in seinem Branchenreport 2026, wie es in vielen Betrieben aussieht: Die Informationen liegen verstreut in Mails, Angeboten, Notizen, Fotos, Leistungsverzeichnissen und Pflegehinweisen.</p>
+  <h3 class="zwischen">Welcher Ort zu dir passt</h3>
+  <div class="orte">
+    <div class="ort"><b>Mit GaLaBau-Software</b><p>DATAflor BUSINESS, GaLaOffice, mexXsoft X2 oder Versa Office sind dein Fundament. Kunden, Baustellen und Aufma&szlig;e liegen schon dort, du legst nichts daneben an.</p></div>
+    <div class="ort"><b>Mit Rechnungsprogramm</b><p>Kunden bleiben in Lexware Office oder sevDesk. F&uuml;r Anfragen, Baustellen und Pflegevertr&auml;ge legst du eine Tabelle an, eine Zeile je Garten.</p></div>
+    <div class="ort"><b>Mit Papier</b><p>Fang mit der Tabelle an, in Excel oder Google Sheets. Sie w&auml;chst mit jeder Station.</p></div>
+  </div>
+  <h3 class="zwischen">Welche Felder deine Stationen brauchen</h3>
+  <table class="felder">
+    <tbody>
+      <tr><td>Kunde</td><td>Name, Adresse, Telefon, Mail. Liegt in deinem Rechnungsprogramm oder deiner GaLaBau-Software.</td></tr>
+      <tr><td>Anfrage</td><td>Datum, Kunde, Gartenadresse, Wunsch, ungef&auml;hre Fl&auml;che, Fotos, Wunschzeitraum. Stand: neu, besichtigt, Angebot raus, Zusage, Absage.</td></tr>
+      <tr><td>Baustelle</td><td>Baustellennummer, Kunde, Gartenadresse, Aufma&szlig;, Kolonne, Ger&auml;te, Termin, Zufahrt.</td></tr>
+      <tr><td>Pflegevertrag</td><td>Baustellennummer, Leistungen wie Rasen, Hecke und Laub, Turnus, Beginn der Saison.</td></tr>
+      <tr><td>Rechnung</td><td>Baustellennummer, Abschlag, Schlussrechnung oder Pflegepauschale, Betrag, bezahlt oder offen.</td></tr>
+    </tbody>
+  </table>
+  <p><b>Die Baustellennummer verbindet die Stationen.</b> Angebot, Tagesbericht, Pflegevertrag und Rechnung tragen sie. So findet jede Station den richtigen Garten, ohne dass jemand sucht.</p>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Entscheide, wo deine Kunden und Baustellen leben: in deiner GaLaBau-Software oder in einer Tabelle.</li>
+      <li>Leg in der Tabelle die Spalten f&uuml;r Anfrage, Baustelle und Pflegevertrag aus der Liste oben an.</li>
+      <li>Trag deine laufenden Baustellen und Pflegekunden ein, jeden mit Baustellennummer, Adresse und Telefonnummer.</li>
+      <li>Leg fest, wer neue Anfragen eintr&auml;gt. Ein Ort, eine Person, die ihn pflegt.</li>
+    </ol>
+  </div>
+  <p class="hinweis">Alles l&auml;uft auf deinen Namen: die Tabelle, die Konten, die Zug&auml;nge. Torcodes, Schl&uuml;ssel und Hinweise zur Alarmanlage deiner Pflegekunden stehen nie in der Tabelle f&uuml;r alle und nie im Chat. Ins Feld schreibst du &#8222;siehe B&uuml;ro&#8220;.</p>
+</section>
+
+<!-- Page 6: Die erste Station (1 of 2): the door station Anfrage, Besichtigungstermin, Angebot; ways 1 and 2 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Garten- und Landschaftsbauer &#183; Seite 6 von 8</span></div>
+  <h2 class="part">Die erste Station, Schritt f&uuml;r Schritt</h2>
+  <p class="intro">Du f&auml;ngst bei der Anfrage an. Der BGL schreibt in seinem Branchenreport 2026, dass Betriebe oft beim Kunden oder auf der Baustelle sind und nicht jede Anfrage gleich beantworten k&ouml;nnen. So gehen Anfragen verloren. Mit dieser Station bekommt jede Anfrage sofort eine Antwort und eine Zeile im Fundament, auch wenn du im Garten stehst. Die Station ist klein und l&auml;uft ohne KI. Richte sie im Winter ein, bevor im Fr&uuml;hjahr die Anfragen kommen. Liegt deine Quelle woanders, gilt dieselbe Reihenfolge: erst deine Software, dann ein Workflow-Werkzeug, zuletzt ein eigener Bau.</p>
+  <div class="flow">
+    <div><b>Kunde</b>fragt &uuml;ber deine Webseite an</div>
+    <span class="pfeil">&#8594;</span>
+    <div><b>Fragen</b>Wunsch, Fl&auml;che, zwei Fotos, Zeitraum</div>
+    <span class="pfeil">&#8594;</span>
+    <div><b>Antwort</b>sofort, die Kurzfassung kommt auf dein Handy</div>
+    <span class="pfeil">&#8594;</span>
+    <div class="frei"><b>Fundament</b>Kunde und Garten stehen drin</div>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 1</div>
+    <p class="weg">Deine Software nimmt die Anfrage an, wenn sie es kann</p>
+    <p>Arbeitest du mit plancraft, mfr, HERO oder ToolTime, nimmt das Programm Anfragen schon an (Seite 3). Mit einer reinen GaLaBau-Software rechnest du Aufma&szlig;, Angebot und Rechnung dort, die Anfrage kommt laut Herstellerseiten aber nicht hinein. Nachfassen tut keines der gepr&uuml;ften Programme von selbst.</p>
+    <ol>
+      <li>Frag deinen Anbieter, ob die Anfrage-Funktion in deinem Tarif steckt. Wenn ja, schalt sie ein.</li>
+      <li>Gib deinem Kontaktformular feste Felder: Gartenadresse, Wunsch, zwei Fotos, Zeitraum.</li>
+      <li>Rechne jedes Angebot in deiner Software aus dem Aufma&szlig;, nicht in einer Datei daneben.</li>
+    </ol>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 2</div>
+    <p class="weg">Die Anfrage beantwortet sich selbst: mit einem Workflow-Werkzeug</p>
+    <p>Ein Workflow-Werkzeug wie n8n best&auml;tigt jede Anfrage sofort in deinen Worten, legt Kunde und Garten im Fundament an und schickt dir die Kurzfassung per Telegram. Beim R&uuml;ckruf schl&auml;gst du zwei Termine f&uuml;r die Besichtigung vor. Das Fundament ist deine Tabelle oder, &uuml;ber die Schnittstelle, mfr oder HERO.</p>
+    <ol>
+      <li>Leg die Fragen fest: Gartenadresse, Wunsch (Pflanzung, Pflaster, Terrasse, Rollrasen, Pflege), ungef&auml;hre Fl&auml;che, zwei Fotos, Wunschzeitraum.</li>
+      <li>Bau sie in das Formular auf deiner Webseite. Hat sie keins, reicht eine kurze Anfrage-Seite.</li>
+      <li>Leg ein Konto bei n8n an, auf deinen Namen.</li>
+      <li>Bau den Ablauf in drei Schritten: neue Anfrage, Antwortmail, neue Zeile im Fundament mit Kurzfassung an dich.</li>
+      <li>Schick dir selbst eine Testanfrage mit Fotos, bevor das Formular live geht.</li>
+    </ol>
+    <p class="hinweis">Telegram sieht in seinen Bedingungen f&uuml;r Bots keinen Auftragsverarbeitungsvertrag vor. Auf die Nachricht kommen deshalb nur Name, Telefon, Ort und Wunsch, die Fotos bleiben im Fundament. Pr&uuml;f vor dem Start, ob du mit dem Workflow-Werkzeug einen Auftragsverarbeitungsvertrag schlie&szlig;en kannst.</p>
+  </div>
+  <ul class="punkte">
+    <li><b>Fotos aus dem Garten:</b> Bitte um Bilder der Fl&auml;che, ohne Personen, ohne das Nachbargrundst&uuml;ck, ohne Autokennzeichen. Kommt kein Auftrag, l&ouml;schst du sie mit der Anfrage.</li>
+  </ul>
+</section>
+
+<!-- Page 7: Die erste Station (2 of 2): Nachfassen, example, way 3 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Garten- und Landschaftsbauer &#183; Seite 7 von 8</span></div>
+  <h3 class="zwischen">Danach: offene Angebote nachfassen</h3>
+  <p>Bleibt ein Angebot ohne Antwort, schickt der Ablauf nach f&uuml;nf Tagen eine kurze Erinnerung in deinen Worten, nach zw&ouml;lf Tagen eine zweite. Jeden Montag bekommst du die Liste der offenen Angebote mit ihrem Alter. Ein Angebot, auf das niemand mehr schaut, kostet dich die Besichtigung und den Samstag am Schreibtisch.</p>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Schreib die zwei Erinnerungen in deinen Worten, kurz und freundlich.</li>
+      <li>Trag bei jedem Angebot das Datum und den Stand ins Fundament ein: offen, Zusage oder Absage.</li>
+      <li>Erweitere den Ablauf: Angebot offen seit f&uuml;nf Tagen, Erinnerung raus, Montagsliste an dich.</li>
+    </ol>
+  </div>
+
+  <div class="szene">
+    <div class="kicker">Ein Beispiel aus dem Privatgarten</div>
+    <p>Herr Kraus fragt an einem Samstagabend im April &uuml;ber deine Webseite an: <span class="gesagt">&#8222;Terrasse, etwa 30 Quadratmeter, Pflaster statt Rasen, gern ab Juni&#8220;</span>, dazu zwei Fotos der Fl&auml;che. Die Antwort ist sofort da.</p>
+    <p>Am Montag siehst du die Kurzfassung per Telegram und schl&auml;gst ihm zwei Termine vor. Am Dienstag misst du auf, am Donnerstag geht das Angebot raus. Am Dienstag darauf schickt der Ablauf die Erinnerung, zwei Tage sp&auml;ter sagt er zu.</p>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 3</div>
+    <p class="weg">Ein eigener Bau, nur f&uuml;r die L&uuml;cke</p>
+    <p>Passt keiner der beiden Wege, etwa weil Anfragen aus einem Vermittlungsportal per Mail kommen und von selbst in deine Liste sollen, bleibt ein eigener Bau. Er schlie&szlig;t die L&uuml;cke zwischen Postfach, Webseite und Software und ersetzt nichts. Das geht, wenn deine Software eine Schnittstelle hat.</p>
+    <ol>
+      <li>Schreib auf, was dir an Weg 1 und Weg 2 fehlt.</li>
+      <li>Frag deinen Anbieter, ob seine Software eine Schnittstelle hat und was sie liest und schreibt.</li>
+      <li>Lass nur diese L&uuml;cke bauen und dir jeden Ablauf mit Dokumentation &uuml;bergeben.</li>
+    </ol>
+  </div>
+
+  <h3 class="zwischen">So merkst du, dass es l&auml;uft</h3>
+  <ul class="haken">
+    <li><span class="box"></span>Jede Anfrage hat eine Antwort, auch wenn du drau&szlig;en bist.</li>
+    <li><span class="box"></span>Kein Angebot bleibt ohne Nachfassen liegen.</li>
+    <li><span class="box"></span>Fotos ohne Auftrag hast du gel&ouml;scht.</li>
+  </ul>
+  <p class="eigen">Die Konten laufen auf deinen Namen. L&auml;uft die Station ruhig, nimmst du die n&auml;chste dazu.</p>
+</section>
+
+<!-- Page 8: Die naechsten Stockwerke + the shared close -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Garten- und Landschaftsbauer &#183; Seite 8 von 8</span></div>
+  <h2 class="part">Die n&auml;chsten Stockwerke</h2>
+  <p class="intro">L&auml;uft die Anfrage von selbst, nimm die n&auml;chste Station dazu. Die Reihenfolge ist ein Vorschlag, deine Kreise von Seite 4 gehen vor.</p>
+  <table class="naechste">
+    <tbody>
+      <tr class="zuerst"><td class="name"><b>Pflegevertr&auml;ge als Turnus</b><span class="wo">3. Stock &#183; Die Arbeit</span></td><td>Laut BGL-Branchenreport 2026 hat die Pflege seit 2021 deutlich an Bedeutung gewonnen. galawork, KS21, mexXsoft und mfr planen Pflegeauftr&auml;ge, Lexware Office und plancraft rechnen sie wiederkehrend ab: einschalten, nicht bauen. Ohne solche Software macht die Turnusliste den Wochenplan je Kolonne. Verschiebst du wegen Regen, erf&auml;hrt der Kunde den neuen Tag.</td></tr>
+      <tr><td class="name"><b>Auftrag zur Kolonne, Tagesbericht</b><span class="wo">3. Stock &#183; Die Arbeit</span></td><td>Plantafel und App haben die Programme von Seite 3, schalt sie ein. Ohne Software kommt die Tageskarte aufs Handy des Vorarbeiters, zur&uuml;ck kommen erledigt, Foto und Stunden.</td></tr>
+      <tr><td class="name"><b>Abnahme, Bewertung</b><span class="wo">5. Stock &#183; Abschluss und Team</span></td><td>Nach der Abnahme bekommt der Kunde die Pflegehinweise und das Angebot f&uuml;r den Pflegevertrag. Die Bitte um eine Bewertung gibst du frei, ohne Gegenleistung. Vorher-nachher-Fotos nur mit schriftlicher Zustimmung.</td></tr>
+      <tr><td class="name"><b>Vor Baubeginn</b><span class="wo">2. Stock &#183; Onboarding</span></td><td>Eine Checkliste je Auftragsart: Pl&auml;ne, Leitungsauskunft, Zufahrt, Baumf&auml;llgenehmigung. Was fehlt, fragt der Ablauf nach.</td></tr>
+      <tr><td class="name"><b>Rechnung, Belege</b><span class="wo">4. Stock &#183; Finanzwesen</span></td><td>Am Tag der Fertigmeldung liegt der Rechnungsentwurf aus den Tagesberichten bereit. Lexware Office und sevDesk lesen Belege schon, eine KI ordnet sie der Baustelle zu, du gibst frei.</td></tr>
+      <tr><td class="name"><b>Bewerbungen</b><span class="wo">5. Stock &#183; Abschluss und Team</span></td><td>G&auml;rtner, Azubis und Saisonkr&auml;fte bekommen sofort Antwort. Bewerbungen einsammeln und ablegen, nie bewerten.</td></tr>
+      <tr><td class="name"><b>Tagesbild</b><span class="wo">Das Dach</span></td><td>Jeden Morgen eine Nachricht: neue Anfragen, offene Angebote, Kolonnen heute, Pflegeg&auml;nge der Woche, unbezahlte Rechnungen.</td></tr>
+      <tr><td class="name"><b>Assistent f&uuml;r unterwegs</b><span class="wo">Um das ganze Haus</span></td><td>Zwischen zwei Baustellen sprichst du R&uuml;ckruf, Termin oder Notiz ein. Er meldet sich als KI-Assistent, sobald er mit Kunden schreibt.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="abschluss">
+    <h2 class="part">Wenn du Fragen hast, melde dich. Kostenlos.</h2>
+    <p>Im Prozess-Audit schauen wir gemeinsam, wo in deinem Betrieb die meiste Zeit h&auml;ngen bleibt.</p>
+    <p>Den Anfang macht ein Gespr&auml;ch von 30 Minuten. Ergibt sich daraus etwas Sinnvolles, schreibe ich dir einen Fahrplan. Wenn nicht, sage ich es dir ehrlich.</p>
+    <div class="buchen">
+      <a href="https://vrelo-ki.de/kontakt?src=bauplan-galabau-pdf">30 Minuten Gespr&auml;ch vereinbaren</a>
+      <span class="url">vrelo-ki.de/kontakt?src=bauplan-galabau-pdf</span>
+    </div>
+    <div class="kontakt">
+      <span class="logo-word">Vrelo</span>&#160;&#160;
+      Ajdin Dzafic &#183; Regensburg &#183; ajdin@vrelo-ki.de &#183; vrelo-ki.de
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

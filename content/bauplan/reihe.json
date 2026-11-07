@@ -5,5 +5,9 @@
   "dach": { "pages": 8, "shareCopy": "Dachdecker-Spengler-Bauplan-Vrelo.pdf" },
   "schreiner": { "pages": 8, "shareCopy": "Schreiner-Zimmerer-Bauplan-Vrelo.pdf" },
   "maler": { "pages": 8, "shareCopy": "Malerbetriebe-Bauplan-Vrelo.pdf" },
-  "fliesen": { "pages": 8, "shareCopy": "Fliesenleger-Bauplan-Vrelo.pdf" }
+  "fliesen": { "pages": 8, "shareCopy": "Fliesenleger-Bauplan-Vrelo.pdf" },
+  "galabau": { "pages": 8, "shareCopy": "Garten-Landschaftsbau-Bauplan-Vrelo.pdf" },
+  "spedition": { "pages": 8, "shareCopy": "Speditionen-Bauplan-Vrelo.pdf" },
+  "kurier": { "pages": 8, "shareCopy": "Kurierdienste-Bauplan-Vrelo.pdf" },
+  "umzug": { "pages": 8, "shareCopy": "Umzugsunternehmen-Bauplan-Vrelo.pdf" }
 }

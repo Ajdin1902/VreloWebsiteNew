@@ -63,6 +63,30 @@ export const vorlageBauplaene: Record<string, { variant: BauplanVariant; title: 
     description:
       "Kostenloser Bauplan für Fliesenleger: von den ersten Fotos bis zur fertigen Fuge, mit einem Weg in fünf Tagen zur ersten Station. Als PDF per E-Mail.",
   },
+  "galabau-bauplan": {
+    variant: "galabau",
+    title: "Bauplan für Garten- und Landschaftsbauer",
+    description:
+      "Kostenloser Bauplan für Garten- und Landschaftsbauer: von der Gartenanfrage bis zur Rechnung, mit einem Weg in fünf Tagen zur ersten Station. Als PDF per E-Mail.",
+  },
+  "spedition-bauplan": {
+    variant: "spedition",
+    title: "Bauplan für Speditionen",
+    description:
+      "Kostenloser Bauplan für Speditionen: von der Transportanfrage bis zur Rechnung, mit einem Weg in fünf Tagen zur ersten Station. Als PDF per E-Mail.",
+  },
+  "kurier-bauplan": {
+    variant: "kurier",
+    title: "Bauplan für Kurierdienste",
+    description:
+      "Kostenloser Bauplan für Kurierdienste: vom Auftrag am Telefon bis zum Zustellnachweis, mit einem Weg in fünf Tagen zur ersten Station. Als PDF per E-Mail.",
+  },
+  "umzug-bauplan": {
+    variant: "umzug",
+    title: "Bauplan für Umzugsunternehmen",
+    description:
+      "Kostenloser Bauplan für Umzugsunternehmen: von der Umzugsanfrage bis zum Festpreisangebot, mit einem Weg in fünf Tagen zur ersten Station. Als PDF per E-Mail.",
+  },
 };
 
 export const HAUS_PDF = "/vorlagen/vrelo-ki-betriebssystem.pdf";
@@ -71,7 +95,8 @@ export const HAUS_PDF = "/vorlagen/vrelo-ki-betriebssystem.pdf";
 export const VORLAGEN_GRUPPEN = [
   { id: "alle", titel: "Für jeden Betrieb" },
   { id: "handwerk", titel: "Handwerk" },
-  { id: "gebaeude", titel: "Gebäudedienste" },
+  { id: "gebaeude", titel: "Gebäude und Garten" },
+  { id: "logistik", titel: "Logistik" },
   { id: "buero", titel: "Agenturen und Büros" },
 ] as const;
 
@@ -92,7 +117,7 @@ export const vorlagenPage: {
   meta: {
     title: "Kostenlose Vorlagen",
     description:
-      "Kostenlose Vorlagen für Betriebe und Unternehmen: das KI-Betriebssystem auf einer Seite, ein fertiger Prompt für Claude und Baupläne für Agenturen, Handwerksbetriebe, Gebäudereiniger und Hausmeisterdienste.",
+      "Kostenlose Vorlagen für Betriebe und Unternehmen: das KI-Betriebssystem auf einer Seite, ein fertiger Prompt für Claude und Baupläne für Agenturen, Handwerk, Gebäude, Garten und Logistik.",
   },
   hero: {
     eyebrow: "Kostenlos zum Mitnehmen",
@@ -171,6 +196,38 @@ export const vorlagenPage: {
       text: "Von den ersten Fotos bis zur fertigen Fuge: Du siehst, wo ein Auftrag Zeit frisst. Danach wählst du deine erste Station.",
       umfang: "8 Seiten · PDF per E-Mail",
       link: { text: "Zum Bauplan", href: `${VORLAGEN_PATH}/fliesen-bauplan` },
+    },
+    {
+      id: "galabau-bauplan",
+      gruppe: "gebaeude",
+      titel: "Bauplan für Garten- und Landschaftsbauer",
+      text: "Von der Gartenanfrage bis zur Rechnung: Du siehst, wo ein Auftrag Zeit frisst. Danach wählst du deine erste Station.",
+      umfang: "8 Seiten · PDF per E-Mail",
+      link: { text: "Zum Bauplan", href: `${VORLAGEN_PATH}/galabau-bauplan` },
+    },
+    {
+      id: "spedition-bauplan",
+      gruppe: "logistik",
+      titel: "Bauplan für Speditionen",
+      text: "Von der Transportanfrage bis zur Rechnung: Du siehst, wo eine Tour Zeit frisst. Danach wählst du deine erste Station.",
+      umfang: "8 Seiten · PDF per E-Mail",
+      link: { text: "Zum Bauplan", href: `${VORLAGEN_PATH}/spedition-bauplan` },
+    },
+    {
+      id: "kurier-bauplan",
+      gruppe: "logistik",
+      titel: "Bauplan für Kurierdienste",
+      text: "Vom Auftrag am Telefon bis zum Zustellnachweis: Du siehst, wo eine Fahrt Zeit frisst. Danach wählst du deine erste Station.",
+      umfang: "8 Seiten · PDF per E-Mail",
+      link: { text: "Zum Bauplan", href: `${VORLAGEN_PATH}/kurier-bauplan` },
+    },
+    {
+      id: "umzug-bauplan",
+      gruppe: "logistik",
+      titel: "Bauplan für Umzugsunternehmen",
+      text: "Von der Umzugsanfrage bis zum Festpreis: Du siehst, wo ein Umzug Zeit frisst. Danach wählst du deine erste Station.",
+      umfang: "8 Seiten · PDF per E-Mail",
+      link: { text: "Zum Bauplan", href: `${VORLAGEN_PATH}/umzug-bauplan` },
     },
     {
       id: "gebaeudereinigung-bauplan",

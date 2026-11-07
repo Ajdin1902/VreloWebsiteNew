@@ -6,9 +6,13 @@ import { dach } from "./dach";
 import { fliesen } from "./fliesen";
 import { maler } from "./maler";
 import { schreiner } from "./schreiner";
+import { galabau } from "./galabau";
+import { spedition } from "./spedition";
+import { kurier } from "./kurier";
+import { umzug } from "./umzug";
 import { shk } from "./shk";
 
-export type ReiheSlug = "shk" | "gebaeudereinigung" | "hausmeister" | "dach" | "schreiner" | "maler" | "fliesen"; // grows per niche
+export type ReiheSlug = "shk" | "gebaeudereinigung" | "hausmeister" | "dach" | "schreiner" | "maler" | "fliesen" | "galabau" | "spedition" | "kurier" | "umzug"; // grows per niche
 
 export type ReiheNische = {
   slug: ReiheSlug;
@@ -32,6 +36,6 @@ export type ReiheNische = {
   verifiedInterfaces: string[];
 };
 
-export const reiheNischen: Record<ReiheSlug, ReiheNische> = { shk, gebaeudereinigung, hausmeister, dach, schreiner, maler, fliesen };
+export const reiheNischen: Record<ReiheSlug, ReiheNische> = { shk, gebaeudereinigung, hausmeister, dach, schreiner, maler, fliesen, galabau, spedition, kurier, umzug };
 
 export const isReiheSlug = (s: string): s is ReiheSlug => Object.hasOwn(reiheNischen, s);
