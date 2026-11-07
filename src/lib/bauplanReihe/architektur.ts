@@ -35,7 +35,7 @@ export const architektur: ReiheNische = {
     readerClose: "Fang mit dem Selbstcheck auf Seite 2 an, dafür reicht ein Stift.",
     internalPrefix: "Architektur-Bauplan angefordert",
   },
-  pdfPath: "", // set by npm run bauplan:reihe -- architektur --publish
+  pdfPath: "/bauplan/architektur-bauplan-d2485823.pdf",
   template: "content/bauplan/architektur-bauplan.html",
   pages: 8,
   knownTools: [

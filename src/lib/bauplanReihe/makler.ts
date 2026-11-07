@@ -31,7 +31,7 @@ export const makler: ReiheNische = {
     readerClose: "Fang mit dem Selbstcheck auf Seite 2 an, dafür reicht ein Stift.",
     internalPrefix: "Makler-Bauplan angefordert",
   },
-  pdfPath: "", // set by npm run bauplan:reihe -- makler --publish
+  pdfPath: "/bauplan/makler-bauplan-68d3067b.pdf",
   template: "content/bauplan/makler-bauplan.html",
   pages: 8,
   knownTools: [
