@@ -9,5 +9,8 @@
   "galabau": { "pages": 8, "shareCopy": "Garten-Landschaftsbau-Bauplan-Vrelo.pdf" },
   "spedition": { "pages": 8, "shareCopy": "Speditionen-Bauplan-Vrelo.pdf" },
   "kurier": { "pages": 8, "shareCopy": "Kurierdienste-Bauplan-Vrelo.pdf" },
-  "umzug": { "pages": 8, "shareCopy": "Umzugsunternehmen-Bauplan-Vrelo.pdf" }
+  "umzug": { "pages": 8, "shareCopy": "Umzugsunternehmen-Bauplan-Vrelo.pdf" },
+  "architektur": { "pages": 8, "shareCopy": "Architektur-Ingenieurbueros-Bauplan-Vrelo.pdf" },
+  "makler": { "pages": 8, "shareCopy": "Immobilienmakler-Bauplan-Vrelo.pdf" },
+  "finanzmakler": { "pages": 8, "shareCopy": "Finanz-Versicherungsmakler-Bauplan-Vrelo.pdf" }
 }

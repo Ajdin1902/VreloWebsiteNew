@@ -1,0 +1,356 @@
+<!doctype html>
+<!--
+  Vrelo Bauplan-Reihe, Architektur- und Ingenieurbueros: free 8-page PDF guide for owner-led
+  Architekturbueros and Ingenieurbueros (Hochbau, Tragwerksplanung, TGA- und Elektroplanung). One guide
+  for both, the copy names Architekt or Ingenieur where they differ. The reader is the Bueroinhaber.
+  Spec: docs/superpowers/specs/2026-11-06-bauplan-reihe-design.md (section 4 skeleton, section 6 constraints).
+  Facts: Knowledge/marketing/prozess-landkarten.md section 13 (13.1, 13.7, researched 2026-11-07).
+  Data + shared copy: src/lib/bauplanReihe/architektur.ts and shared.ts. Styles: content/bauplan/reihe.css.
+
+  RULES (do not break; the guard src/lib/bauplanReihe/templates.test.ts enforces most of them):
+    - Chapters 2 and 7 carry the shared copy word for word (selbstcheck, LEVELS, abschluss).
+    - No price, no HOAI amount, no Vrelo duration, no capacity line, no guarantee, no client or prospect names.
+    - Pages 1 to 7 are a free guide the reader follows alone: no first-person service offer.
+      Only chapter 7 offers help.
+    - "Schnittstelle" only next to tools in architektur.verifiedInterfaces; otherwise
+      "wenn deine Software eine Schnittstelle hat". PROJEKT PRO, KOBOLD CONTROL, projo and ORCA AVA are
+      never called connectable; untermStrich only reads projects, hours and fees and writes hours.
+    - The statistic exactly as Ajdin verified it (BIngK press release): nicht-projektbezogen, darunter
+      Verwaltung und Buerokratie; never "nicht abrechenbar", never per office size.
+    - Bauherren-Daten and Plaene are client data: Grundbuch, Finanzierung and plans never in a chat,
+      the card carries plan number and index only. No claim about section 203 StGB (unverified).
+      Unterlagen: einsammeln und ablegen, nie bewerten. Legal frame only as "klaerst du mit deiner Kammer".
+    - Every link prints its target as visible text (the copy is printed).
+    - Any assistant named carries "meldet sich als KI-Assistent".
+    - Dash-free German, no comma before "und", generic masculine, du.
+    - Pure ASCII with entities from src/lib/bauplanTemplateText.ts (add a new entity there first).
+    - Office printer, A4, white page, 8 pages. Full page = shorten copy, never shrink type.
+-->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Vrelo &#183; Bauplan f&uuml;r Architektur- und Ingenieurb&uuml;ros</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>{{{BRAND_CSS}}}</style>
+<style>{{{REIHE_CSS}}}</style>
+</head>
+<body>
+
+<!-- Page 1: cover (series pattern). Flow steps = architektur.auftragsweg. -->
+<section class="page first">
+  <div class="p1">
+    <div class="p1-top">
+      <div class="logo">{{{LOGO_SVG}}}<span class="logo-word">Vrelo</span></div>
+      <span>Bauplan f&uuml;r Architektur- und Ingenieurb&uuml;ros</span>
+    </div>
+
+    <h1>Prozesse, Automatisierung, KI:<br>Wo fange ich &uuml;berhaupt an?</h1>
+
+    <div class="weg-heute">
+      <div class="kicker">Ein Projekt, viele Wartezeiten</div>
+      <div class="auftragsweg">
+        <span></span>
+        <div class="schritt">Anfrage eines Bauherrn per Mail</div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">R&uuml;ckruf, Grundst&uuml;ck und Budget fehlen<span class="verlust">nachtelefoniert</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Erstgespr&auml;ch, Notizen auf dem Block</div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Honorarangebot in Excel gerechnet<span class="verlust">abgetippt</span></div>
+
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Angebot raus, keine Antwort<span class="verlust">vergessen</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Planfreigabe per Mail, ohne Frist<span class="verlust">nachgefragt</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt ende">Erste Abschlagsrechnung, Monate sp&auml;ter<span class="verlust">zusammengesucht</span></div>
+      </div>
+      <p class="kreis-satz">Jeder Kreis ist eine Stelle, an der Zeit verloren geht. Im Bauplan findest du deine.</p>
+    </div>
+
+    <div class="statistik">
+      <span class="zahl">Rund ein<br>Viertel</span>
+      <div>
+        <span class="satz">der Arbeitszeit in den B&uuml;ros entf&auml;llt auf nicht-projektbezogene T&auml;tigkeiten, darunter Verwaltung und b&uuml;rokratische Anforderungen.</span>
+        <span class="quelle">Bundesingenieurkammer, Bundesarchitektenkammer, VBI und AHO, Mitgliederbefragung 2026. Online befragt: rund 4.900 Architektur- und Ingenieurb&uuml;ros im Mai und Juni 2026.</span>
+      </div>
+    </div>
+    <p class="quelle-link">Quelle: <a href="https://bingk.de/ingenieurbueros-unter-druck-laengere-projektlaufzeiten-und-hoher-buerokratieaufwand/">bingk.de/ingenieurbueros-unter-druck-laengere-projektlaufzeiten-und-hoher-buerokratieaufwand/</a></p>
+
+    <div class="woche">
+      <p class="woche-kopf">Dieser Bauplan ist dein erster Schritt.</p>
+      <ol class="tage">
+        <li><span class="tag">Tag 1</span><b>Wo du stehst</b><span class="seite">Seite 2</span></li>
+        <li><span class="tag">Tag 2</span><b>Deine Werkzeuge</b><span class="seite">Seite 3</span></li>
+        <li><span class="tag">Tag 3</span><b>Deine Datenwege</b><span class="seite">Seite 4</span></li>
+        <li><span class="tag">Tag 4</span><b>Das Fundament</b><span class="seite">Seite 5</span></li>
+        <li><span class="tag">Tag 5</span><b>Die erste Station</b><span class="seite">Seite 6 und 7</span></li>
+      </ol>
+      <p class="woche-schluss">Nach einer Woche wei&szlig;t du, wo du anf&auml;ngst.</p>
+      <p class="woche-ziel">Schritt f&uuml;r Schritt zu deinem KI-Betriebssystem.</p>
+    </div>
+
+    <div class="fuer"><p><b>F&uuml;r wen:</b> Inhaber von Architekturb&uuml;ros und Ingenieurb&uuml;ros f&uuml;r Tragwerksplanung, TGA oder Elektroplanung. Du arbeitest mit Bauherren und Fachplanern und rechnest nach HOAI-Leistungsphasen, nach Stunden oder pauschal ab. F&uuml;r die ersten Seiten reicht ein Stift.</p></div>
+
+    <div class="p1-foot">Ajdin Dzafic, <span class="brand-word">Vrelo</span>, Regensburg &#183; vrelo-ki.de</div>
+  </div>
+</section>
+
+<!-- Page 2: Wo du stehst (shared copy: selbstcheck, LEVELS) -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Architektur- und Ingenieurb&uuml;ros &#183; Seite 2 von 8</span></div>
+  <h2 class="part">Wo du stehst</h2>
+  <div class="kicker">Dein Stand je Station</div>
+  <p class="intro">Mach pro Station ein Kreuz in einer der drei Spalten: l&auml;uft von selbst, auf Papier oder in Dateien, nur im Kopf. Z&auml;hl am Ende die Kreuze je Spalte.</p>
+  <table class="check">
+    <thead><tr><th></th><th class="links">Station</th><th>L&auml;uft von selbst</th><th>Auf Papier oder in Dateien</th><th>Nur im Kopf</th></tr></thead>
+    <tbody>
+      <tr class="neu"><td class="stock" rowspan="2"><b>Erdgeschoss</b> Kundeneingang</td><td>Anfrage und Erstgespr&auml;ch<span class="bsp">Mail, Telefon, Kontaktformular</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Honorarangebot und Nachfassen<span class="bsp">wenn keine Antwort kommt</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="1"><b>2. Stock</b> Onboarding</td><td>Unterlagen vom Bauherrn<span class="bsp">Bestandspl&auml;ne, Lageplan, Grundbuchauszug</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="3"><b>3. Stock</b> Die Arbeit</td><td>Planlauf und Freigaben<span class="bsp">Planstand, Fachplaner, Bauherr</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Protokolle und Plan&auml;nderungen<span class="bsp">Aufgaben, M&auml;ngel, Nachtr&auml;ge</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Fristen und Termine<span class="bsp">Bauantrag, Jour fixe, Stunden zum Monatsende</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="2"><b>4. Stock</b> Finanzwesen</td><td>Abschlagsrechnung<span class="bsp">Leistungsstand je Leistungsphase</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Belege zuordnen<span class="bsp">Fremdleistung zum Projekt, f&uuml;r den Steuerberater</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="3"><b>5. Stock</b> Abschluss und Team</td><td>Referenz<span class="bsp">Projektfotos, Freigabe des Bauherrn</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Projektabschluss<span class="bsp">&Uuml;bergabe, Gew&auml;hrleistung, Archiv</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Bewerbungen und Einarbeitung<span class="bsp">Antwort, Zug&auml;nge, CAD-Lizenz</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="2"><b>Dach</b> und Assistent</td><td>Tagesbild<span class="bsp">morgens sehen, was offen ist</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Assistent f&uuml;r unterwegs<span class="bsp">einsprechen statt merken</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="summe"><td></td><td>Kreuze je Spalte</td><td class="kreuz"><span class="feld"></span></td><td class="kreuz"><span class="feld"></span></td><td class="kreuz"><span class="feld"></span></td></tr>
+    </tbody>
+  </table>
+  <div class="frage">
+    <p><b>Liegen deine Kundendaten an einem festen Ort, auf den alles zugreift?</b></p>
+    <div class="antwort"><span><span class="box"></span> Ja</span><span><span class="box"></span> Nein</span></div>
+  </div>
+  <p class="hinweis">Eine leere Zeile z&auml;hlt als &#8222;nur im Kopf&#8220;. Zwei Kreuze in einer Zeile: z&auml;hl nur das rechte.</p>
+  <h3 class="zwischen">Deine Stufe</h3>
+  <table class="stufen">
+    <tbody>
+      <tr><td class="nr">0</td><td class="name">Im Kopf<span class="regel">Kein Kreuz bei &#8222;l&auml;uft&#8220;, im Kopf mindestens so viele wie auf Papier</span></td><td>Schreib auf, was du heute nur im Kopf tr&auml;gst. Eine Station reicht f&uuml;r den Anfang.</td></tr>
+      <tr><td class="nr">1</td><td class="name">Verstreut<span class="regel">Kein Kreuz bei &#8222;l&auml;uft&#8220;, auf Papier mehr als im Kopf</span></td><td>Vieles steht schon auf Papier oder in Dateien. Such dir die eine Station aus, die dich am meisten Zeit kostet.</td></tr>
+      <tr><td class="nr">2</td><td class="name">Erste Station l&auml;uft<span class="regel">Mindestens ein Kreuz bei &#8222;l&auml;uft&#8220;, Fundament: nein</span></td><td>Eine Station l&auml;uft von selbst. Als N&auml;chstes brauchen deine Daten einen festen Platz, damit alles auf denselben Ort zugreift.</td></tr>
+      <tr><td class="nr">3</td><td class="name">Ein Ort<span class="regel">Fundament: ja, 1 bis 9 Kreuze bei &#8222;l&auml;uft&#8220;</span></td><td>Deine Daten liegen an einem Ort. Jetzt holst du eine Station nach der anderen in dein System.</td></tr>
+      <tr><td class="nr">4</td><td class="name">Haus steht<span class="regel">Fundament: ja, 10 Kreuze oder mehr bei &#8222;l&auml;uft&#8220;</span></td><td>Fast alles l&auml;uft von selbst. Schlie&szlig; die letzten L&uuml;cken und schreib auf, wie die Stationen zusammenh&auml;ngen.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Page 3: Deine Werkzeuge und Datenwege (1 of 2): what office software for Planungsbueros already ships -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Architektur- und Ingenieurb&uuml;ros &#183; Seite 3 von 8</span></div>
+  <h2 class="part">Deine Werkzeuge und Datenwege</h2>
+  <p class="intro">Schau zuerst nach, was deine Software schon kann. Was sie kann, schaltest du ein. Bauen musst du nur, was fehlt.</p>
+  <h3 class="zwischen">Was B&uuml;rosoftware f&uuml;r Planungsb&uuml;ros mitbringt</h3>
+  <table class="werkzeuge">
+    <thead><tr><th>Werkzeug</th><th>Was es dir abnimmt</th></tr></thead>
+    <tbody>
+      <tr><td>untermStrich</td><td>Adressen und Projekte, Mails und Kalender aus Microsoft 365 beim Projekt. Stunden direkt auf Projekt und Leistungsphase, Aufgaben mit F&auml;lligkeit und Erinnerung. Honorarnoten gestellt oder geplant, Teilbetr&auml;ge, Mahnungsliste, E-Rechnung. DATEV als Zusatzmodul.</td></tr>
+      <tr><td>PROJEKT PRO</td><td>HOAI-Kalkulation, Musterangebote f&uuml;r jede Projektphase, Mails beim Projekt. Planliste mit Planstand, automatischer Planversand mit Versandliste, Genehmigungsstatus. Protokolle im Browser, M&auml;ngel auf dem Plan, kumulative Abrechnung, XRechnung und ZUGFeRD.</td></tr>
+      <tr><td>KOBOLD CONTROL</td><td>HOAI-Leistungsbilder und freie Kalkulation, Angebotsverfolgung mit automatischer Nachverfolgung versandter Angebote, Wiedervorlage. Ressourcenplanung je Leistungsphase, Teil- und Teilschlussrechnungen, Sicherheitseinbehalt, Rechnungsbuch mit Mahnwesen, &Uuml;bergabe an DATEV.</td></tr>
+      <tr><td>ORCA AVA</td><td>Leistungsverzeichnisse, Angebote einholen, Preisspiegel, Vergabe per GAEB, Kostenverfolgung nach DIN 276, Bauabrechnung. Daten tauschst du &uuml;ber GAEB, IFC und Excel.</td></tr>
+      <tr><td>PlanRadar</td><td>M&auml;ngel und Aufgaben als Tickets auf dem Plan, jedes mit Status.</td></tr>
+      <tr><td>Lexware Office</td><td>Angebote ohne HOAI-Logik. Abschlags- und Schlussrechnung mit Verrechnung der Abschl&auml;ge gibt es nur im Tarif XL. Belege per Texterkennung, Export f&uuml;r DATEV.</td></tr>
+      <tr><td>sevDesk</td><td>Angebot, Abschlags-, Teil- und Schlussrechnung. Belege per Foto mit Erkennung.</td></tr>
+      <tr><td>Google Calendar</td><td>Mit einem Terminplan bucht dein Bauherr das Erstgespr&auml;ch selbst &uuml;ber eine Buchungsseite.</td></tr>
+    </tbody>
+  </table>
+  <ul class="punkte">
+    <li><b>Abrechnung:</b> Neben der HOAI rechnen viele B&uuml;ros nach Stunden oder pauschal ab, kleinere B&uuml;ros &ouml;fter nach Stunden. Deine Stationen m&uuml;ssen beides k&ouml;nnen.</li>
+    <li><b>Anfrage und Angebot:</b> Offene Honorarangebote verfolgt laut Herstellerseiten nur KOBOLD CONTROL. Die Anfrage selbst kommt als Mail oder Anruf und wartet auf deinen R&uuml;ckruf.</li>
+  </ul>
+  <p class="eigen">L&auml;uft dein B&uuml;ro schon in einer B&uuml;rosoftware, nutz zuerst, was sie kann. Baust du daneben dasselbe noch einmal, pflegst du es doppelt.</p>
+  <p class="hinweis">Stand der Herstellerseiten: November 2026. Welche Funktion in deinem Tarif steckt, sagt dir dein Anbieter.</p>
+</section>
+
+<!-- Page 4: Deine Werkzeuge und Datenwege (2 of 2): the fill-in map -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Architektur- und Ingenieurb&uuml;ros &#183; Seite 4 von 8</span></div>
+  <h3 class="zwischen">Deine Datenwege</h3>
+  <p class="intro">Trag pro Station ein, womit du heute arbeitest, woher die Daten kommen und wohin sie danach gehen. Die zwei Zeilen oben sind Beispiele.</p>
+  <table class="karte">
+    <colgroup><col style="width:48mm"><col><col><col></colgroup>
+    <thead><tr><th>Station</th><th>Werkzeug heute</th><th>Daten kommen von</th><th>gehen nach</th></tr></thead>
+    <tbody>
+      <tr class="beispiel"><td class="station">Anfrage und Erstgespr&auml;ch</td><td>Outlook, Notizblock</td><td>Mail des Bauherrn</td><td>Excel f&uuml;rs Honorarangebot</td></tr>
+      <tr class="beispiel"><td class="station">Abschlagsrechnung</td><td>sevDesk</td><td>Stundenzettel, Leistungsstand im Kopf</td><td>Bauherr, Steuerberater per DATEV</td></tr>
+      <tr><td class="station">Anfrage und Erstgespr&auml;ch</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Honorarangebot und Nachfassen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Unterlagen vom Bauherrn</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Planlauf und Freigaben</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Protokolle und Plan&auml;nderungen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Fristen und Termine</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Abschlagsrechnung</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Belege</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Referenz</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Projektabschluss</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Bewerbungen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Tagesbild</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Assistent f&uuml;r unterwegs</td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>F&uuml;ll jede Zeile aus, auch wenn dir nur ein Wort einf&auml;llt.</li>
+      <li>Kreis jede Stelle ein, an der jemand nachtelefoniert, etwas abtippt, vergisst, nachfragt oder zusammensucht.</li>
+      <li>Z&auml;hl die Kreise je Station. Die Station mit den meisten Kreisen ist deine Quelle: die Arbeit, die jede Woche wiederkommt.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- Page 5: Das Fundament -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Architektur- und Ingenieurb&uuml;ros &#183; Seite 5 von 8</span></div>
+  <h2 class="part">Das Fundament</h2>
+  <p class="intro">Jede Station schreibt ihre Daten an einen festen Ort. Das ist dein Fundament. Du baust es einmal, zusammen mit der ersten Station, danach wird jede weitere Station kleiner. Liegen deine Daten an einem Ort, kann sp&auml;ter eine KI darin nachschlagen, sortieren und Entw&uuml;rfe schreiben.</p>
+  <h3 class="zwischen">Welcher Ort zu dir passt</h3>
+  <div class="orte">
+    <div class="ort"><b>Mit B&uuml;rosoftware</b><p>untermStrich, PROJEKT PRO oder KOBOLD CONTROL sind dein Fundament. Adressen, Projekte, Stunden und Honorare liegen schon dort, du legst nichts daneben an.</p></div>
+    <div class="ort"><b>Mit Rechnungsprogramm</b><p>Bauherren bleiben in Lexware Office oder sevDesk. F&uuml;r Anfragen und Projekte legst du eine Tabelle an, eine Zeile je Projekt.</p></div>
+    <div class="ort"><b>Mit Papier</b><p>Fang mit der Tabelle an, zum Beispiel in Excel. Sie w&auml;chst mit jeder Station.</p></div>
+  </div>
+  <h3 class="zwischen">Welche Felder deine Stationen brauchen</h3>
+  <table class="felder">
+    <tbody>
+      <tr><td>Bauherr</td><td>Name oder Firma, Ansprechpartner, Adresse, Telefon, Mail. Fragt ein Architekt den Fachplaner an, ist er dein Auftraggeber.</td></tr>
+      <tr><td>Anfrage</td><td>Datum, Bauherr, Vorhaben (Neubau, Umbau, Sanierung), Adresse des Grundst&uuml;cks, Bestand ja oder nein, Budget, Wunschtermin. Stand: neu, Erstgespr&auml;ch, Angebot raus, Zusage, Absage.</td></tr>
+      <tr><td>Projekt</td><td>Projektnummer, Bauherr, beauftragte Leistungsphasen, Abrechnung nach HOAI, Stunden oder pauschal, beteiligte Fachplaner, Fristen.</td></tr>
+      <tr><td>Unterlagen</td><td>Je Unterlage &#8222;liegt vor&#8220; oder &#8222;fehlt&#8220;: Bestandspl&auml;ne, Lageplan, Grundbuch- und Flurkartenauszug, Bodengutachten.</td></tr>
+      <tr><td>Abschlag</td><td>Projektnummer, Monat, Leistungsstand je Leistungsphase in Prozent oder geleistete Stunden, gestellt am, bezahlt oder offen.</td></tr>
+    </tbody>
+  </table>
+  <p><b>Die Projektnummer verbindet die Stationen.</b> Honorarangebot, Planliste, Protokoll und Abschlagsrechnung tragen sie. So findet jede Station das richtige Projekt, ohne dass jemand sucht.</p>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Entscheide, wo deine Bauherren und Projekte leben: in deiner B&uuml;rosoftware oder in einer Tabelle.</li>
+      <li>Leg in der Tabelle die Spalten f&uuml;r Anfrage und Projekt aus der Liste oben an.</li>
+      <li>Trag deine laufenden Projekte ein, jedes mit Projektnummer, Bauherr und beauftragten Leistungsphasen.</li>
+      <li>Leg fest, wer neue Anfragen und Projekte eintr&auml;gt. Ein Ort, eine Person, die ihn pflegt.</li>
+    </ol>
+  </div>
+  <p class="hinweis">Alles l&auml;uft auf deinen Namen: die Tabelle, die Konten, die Zug&auml;nge. Bauherren-Daten und Pl&auml;ne sind Daten deiner Kunden. Grundbuchausz&uuml;ge und Finanzierungsunterlagen legst du im Projektordner ab, nie in einem Chat. In die Tabelle kommt nur &#8222;liegt vor&#8220;.</p>
+</section>
+
+<!-- Page 6: Die erste Station (1 of 2): the door station Anfrage, Erstgespraech, Honorarangebot; ways 1 and 2 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Architektur- und Ingenieurb&uuml;ros &#183; Seite 6 von 8</span></div>
+  <h2 class="part">Die erste Station, Schritt f&uuml;r Schritt</h2>
+  <p class="intro">Du f&auml;ngst bei der Anfrage an: Jede Anfrage bekommt sofort eine Antwort, einen Termin f&uuml;r das Erstgespr&auml;ch und eine Zeile im Fundament. Die Station ist klein und l&auml;uft ohne KI. Umso mehr z&auml;hlt jede Anfrage. Liegt deine Quelle woanders, gilt dieselbe Reihenfolge: erst deine Software, dann ein Workflow-Werkzeug, zuletzt ein eigener Bau.</p>
+  <div class="flow">
+    <div><b>Bauherr</b>fragt &uuml;ber deine Webseite an</div>
+    <span class="pfeil">&#8594;</span>
+    <div><b>Antwort</b>sofort, mit Link zum Erstgespr&auml;ch</div>
+    <span class="pfeil">&#8594;</span>
+    <div><b>Erstgespr&auml;ch</b>bucht er selbst im Kalender</div>
+    <span class="pfeil">&#8594;</span>
+    <div class="frei"><b>Fundament</b>Bauherr und Vorhaben stehen drin</div>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 1</div>
+    <p class="weg">Deine Software rechnet das Honorarangebot</p>
+    <p>In untermStrich, PROJEKT PRO oder KOBOLD CONTROL rechnest du das Honorar nach HOAI-Leistungsphasen und schreibst das Angebot.</p>
+    <ol>
+      <li>Rechne jedes Honorarangebot in deiner B&uuml;rosoftware oder deinem HOAI-Rechner, nicht in einer Datei daneben.</li>
+      <li>Schalt die Wiedervorlage ein: die Angebotsverfolgung in KOBOLD CONTROL, eine Aufgabe mit F&auml;lligkeit in untermStrich.</li>
+      <li>Leg im Google Calendar einen Terminplan f&uuml;r Erstgespr&auml;che an und schick den Link bei jedem R&uuml;ckruf mit.</li>
+    </ol>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 2</div>
+    <p class="weg">Die Anfrage beantwortet sich selbst: mit einem Workflow-Werkzeug</p>
+    <p>Dein Formular stellt die Fragen, die du f&uuml;r das Erstgespr&auml;ch brauchst. Ein Workflow-Werkzeug wie n8n best&auml;tigt jede Anfrage sofort, schickt den Link zum Erstgespr&auml;ch und legt Bauherr und Vorhaben im Fundament an. Kommen Anfragen per Mail an eine eigene Adresse, liest n8n dieses Postfach &uuml;ber die Schnittstelle von Microsoft 365 und antwortet mit dem Link zum Formular. Du bekommst jede Anfrage gleichzeitig per Telegram aufs Handy.</p>
+    <ol>
+      <li>Leg die Fragen fest: Vorhaben, Adresse, Bestand, Budget, Wunschtermin, vorhandene Unterlagen. Als Ingenieur dazu: Auftraggeber und Leistungsphasen.</li>
+      <li>Bau sie in das Formular auf deiner Webseite. Hat sie keins, reicht eine kurze Anfrage-Seite.</li>
+      <li>Leg ein Konto bei n8n an, auf deinen Namen.</li>
+      <li>Bau den Ablauf in drei Schritten: neue Anfrage, Antwortmail mit dem Link zur Buchungsseite, neue Zeile im Fundament.</li>
+      <li>Schick dir selbst eine Testanfrage, bevor das Formular live geht.</li>
+    </ol>
+    <p class="hinweis">Telegram sieht in seinen Bedingungen f&uuml;r Bots keinen Auftragsverarbeitungsvertrag vor. Auf die Nachricht kommt deshalb nur, was du f&uuml;r den R&uuml;ckruf brauchst: Name, Telefon, Vorhaben und Ort. Pr&uuml;f vor dem Start, ob du mit dem Workflow-Werkzeug einen Auftragsverarbeitungsvertrag schlie&szlig;en kannst.</p>
+  </div>
+</section>
+
+<!-- Page 7: Die erste Station (2 of 2): Nachfassen, example, way 3 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Architektur- und Ingenieurb&uuml;ros &#183; Seite 7 von 8</span></div>
+  <h3 class="zwischen">Danach: offene Honorarangebote nachfassen</h3>
+  <p>Bleibt ein Honorarangebot ohne Antwort, schickt der Ablauf nach deiner Frist eine kurze Erinnerung in deinen Worten, sp&auml;ter eine zweite. Jeden Montag bekommst du die Liste der offenen Angebote mit Alter und Summe. Sagt der Bauherr zu, bekommt er die Liste der Unterlagen, die du brauchst.</p>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Schreib die zwei Erinnerungen in deinen Worten, kurz und freundlich.</li>
+      <li>Trag bei jedem Honorarangebot Datum und Stand ins Fundament ein: offen, Zusage, Absage.</li>
+      <li>Erweitere den Ablauf: Angebot &uuml;ber der Frist, Erinnerung raus, Montagsliste an dich.</li>
+    </ol>
+    <p class="hinweis">Was im Honorarangebot und in der Abschlagsrechnung stehen muss, kl&auml;rst du mit deiner Kammer oder deinem Anwalt. Der Ablauf verschickt nur Text, den du gepr&uuml;ft hast.</p>
+  </div>
+
+  <div class="szene">
+    <div class="kicker">Ein Beispiel aus dem Architekturb&uuml;ro</div>
+    <p>Ein Bauherr fragt am Sonntagabend &uuml;ber deine Webseite an: <span class="gesagt">&#8222;Einfamilienhaus von 1968, Umbau mit Anbau, Bestandspl&auml;ne sind da&#8220;</span>. Die Antwort mit dem Link zum Erstgespr&auml;ch ist sofort da, er bucht Mittwoch, 17 Uhr. Du siehst die Anfrage per Telegram. Im Fundament stehen Bauherr, Adresse und Vorhaben, bevor ihr sprecht.</p>
+    <p>Nach dem Erstgespr&auml;ch rechnest du das Honorarangebot, nach deiner Frist geht die Erinnerung raus, eine Woche sp&auml;ter sagt er zu. Im Ingenieurb&uuml;ro l&auml;uft es genauso, nur fragt dort oft ein Architekt die Tragwerksplanung an.</p>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 3</div>
+    <p class="weg">Ein eigener Bau, nur f&uuml;r die L&uuml;cke</p>
+    <p>Passt keiner der beiden Wege, etwa weil die Montagsliste auch die Projekte aus untermStrich zeigen soll, bleibt ein eigener Bau. Er schlie&szlig;t die L&uuml;cke zwischen Webseite und Software und ersetzt nichts. Das geht, wenn deine Software eine Schnittstelle hat. Die Schnittstelle von untermStrich liest Projekte, Stunden und Honorare und schreibt Stunden. PROJEKT PRO und KOBOLD CONTROL beschreiben auf ihren Seiten keine.</p>
+    <ol>
+      <li>Schreib auf, was dir an Weg 1 und Weg 2 fehlt.</li>
+      <li>Frag deinen Anbieter, ob seine Software eine Schnittstelle hat und was sie liest und schreibt.</li>
+      <li>Lass nur diese L&uuml;cke bauen und dir jeden Ablauf mit Dokumentation &uuml;bergeben.</li>
+    </ol>
+  </div>
+
+  <h3 class="zwischen">So merkst du, dass es l&auml;uft</h3>
+  <ul class="haken">
+    <li><span class="box"></span>Jede Anfrage hat eine Antwort, bevor du zur&uuml;ckrufst.</li>
+    <li><span class="box"></span>Kein Honorarangebot bleibt ohne Nachfassen liegen.</li>
+    <li><span class="box"></span>Zu jedem neuen Projekt stehen Bauherr, Vorhaben und Adresse im Fundament.</li>
+  </ul>
+  <p class="eigen">Die Konten laufen auf deinen Namen. L&auml;uft die Station ruhig, nimmst du die n&auml;chste dazu.</p>
+</section>
+
+<!-- Page 8: Die naechsten Stockwerke + the shared close -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Architektur- und Ingenieurb&uuml;ros &#183; Seite 8 von 8</span></div>
+  <h2 class="part">Die n&auml;chsten Stockwerke</h2>
+  <p class="intro">L&auml;uft die Anfrage von selbst, nimm die n&auml;chste Station dazu. Die Reihenfolge ist ein Vorschlag, deine Kreise von Seite 4 gehen vor.</p>
+  <table class="naechste">
+    <tbody>
+      <tr class="zuerst"><td class="name"><b>Abschlagsrechnung</b><span class="wo">4. Stock &#183; Finanzwesen</span></td><td>untermStrich, PROJEKT PRO und KOBOLD CONTROL schreiben Abschl&auml;ge selbst, schalt es ein. Ohne B&uuml;rosoftware fragt der Ablauf jeden Monat den Leistungsstand je Leistungsphase oder die Stunden ab und rechnet die Aufstellung. In sevDesk legt er daraus den Entwurf an, die Schlussrechnung schreibst du selbst. Lexware Office kennt Abschl&auml;ge nur im Tarif XL, dort bereitet der Ablauf die Zahlen vor.</td></tr>
+      <tr><td class="name"><b>Freigaben und Protokolle</b><span class="wo">3. Stock &#183; Die Arbeit</span></td><td>Die Planfreigabe geht mit Frist an den Bauherrn, mit Plannummer und Index, nie mit dem Plan. Der Ablauf erinnert, jeder Protokollpunkt wird eine Aufgabe mit Frist. PROJEKT PRO kann Planversand und Protokolle schon.</td></tr>
+      <tr><td class="name"><b>Fristen und Termine</b><span class="wo">3. Stock &#183; Die Arbeit</span></td><td>Bauantrag, Nachforderungen der Beh&ouml;rde, Gew&auml;hrleistung: eine Fristenliste je Projekt mit Erinnerung. Fehlen am Monatsende Stunden, bekommt der Mitarbeiter eine kurze Nachricht.</td></tr>
+      <tr><td class="name"><b>Unterlagen vom Bauherrn</b><span class="wo">2. Stock &#183; Onboarding</span></td><td>Eine Checkliste je Projektart mit Link zum Hochladen, der Ablauf fragt nach, was fehlt. Einsammeln und ablegen, nie bewerten. Bist du Energieeffizienz-Experte, gilt das auch f&uuml;r die F&ouml;rderunterlagen.</td></tr>
+      <tr><td class="name"><b>Belege</b><span class="wo">4. Stock &#183; Finanzwesen</span></td><td>Lexware Office und sevDesk lesen Belege schon. Eine KI ordnet Rechnungen f&uuml;r Fremdleistungen dem Projekt zu, du gibst frei.</td></tr>
+      <tr><td class="name"><b>Abschluss und Bewerbungen</b><span class="wo">5. Stock &#183; Abschluss und Team</span></td><td>Nach der Schlussrechnung gibst du die Bitte um Fotos und Referenz frei. Zum Abschluss eine Liste: &Uuml;bergabe, Gew&auml;hrleistungsfristen, Zug&auml;nge. Bewerbungen: sofort Antwort, einsammeln und ablegen, nie bewerten.</td></tr>
+      <tr><td class="name"><b>Tagesbild</b><span class="wo">Das Dach</span></td><td>Jeden Morgen eine Nachricht: offene Anfragen und Angebote, &uuml;berf&auml;llige Freigaben, f&auml;llige Abschl&auml;ge, unbezahlte Rechnungen.</td></tr>
+      <tr><td class="name"><b>Assistent f&uuml;r unterwegs</b><span class="wo">Um das ganze Haus</span></td><td>Zwischen Baustelle und Bauamt sprichst du R&uuml;ckruf oder Notiz ein. Er meldet sich als KI-Assistent, sobald er mit Kunden schreibt.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="abschluss">
+    <h2 class="part">Wenn du Fragen hast, melde dich. Kostenlos.</h2>
+    <p>Im Prozess-Audit schauen wir gemeinsam, wo in deinem Betrieb die meiste Zeit h&auml;ngen bleibt.</p>
+    <p>Den Anfang macht ein Gespr&auml;ch von 30 Minuten. Ergibt sich daraus etwas Sinnvolles, schreibe ich dir einen Fahrplan. Wenn nicht, sage ich es dir ehrlich.</p>
+    <div class="buchen">
+      <a href="https://vrelo-ki.de/kontakt?src=bauplan-architektur-pdf">30 Minuten Gespr&auml;ch vereinbaren</a>
+      <span class="url">vrelo-ki.de/kontakt?src=bauplan-architektur-pdf</span>
+    </div>
+    <div class="kontakt">
+      <span class="logo-word">Vrelo</span>&#160;&#160;
+      Ajdin Dzafic &#183; Regensburg &#183; ajdin@vrelo-ki.de &#183; vrelo-ki.de
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

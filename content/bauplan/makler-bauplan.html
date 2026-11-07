@@ -1,0 +1,352 @@
+<!doctype html>
+<!--
+  Vrelo Bauplan-Reihe, Immobilienmakler: free 8-page PDF guide for owner-led Maklerbueros
+  (Verkauf und Vermietung, Wohnen und kleines Gewerbe, 1 to 15 staff).
+  Spec: docs/superpowers/specs/2026-11-06-bauplan-reihe-design.md (section 4 skeleton, section 6 constraints).
+  Facts: Knowledge/marketing/prozess-landkarten.md section 14 (14.1 Landkarte, 14.7 Recherche, 2026-11-07);
+  general Lexware Office, sevDesk, DATEV, Google Calendar and Telegram facts from section 1.7.
+  Data + shared copy: src/lib/bauplanReihe/makler.ts and shared.ts. Styles: content/bauplan/reihe.css.
+
+  RULES (do not break; the guard src/lib/bauplanReihe/templates.test.ts enforces most of them):
+    - Chapters 2 and 7 carry the shared copy word for word (selbstcheck, LEVELS, abschluss).
+    - No price, no money amount (also not the GwG rent threshold), no Provision figure, no Vrelo
+      duration, no capacity line, no guarantee, no client or prospect names.
+    - No statistic (spec section 5.3): the cover carries a pain block in the statistic's place.
+    - "Anfragen beantworten" is never the door or a lever: all three CRMs ship it (page 3 says so).
+    - Pages 1 to 7 are a free guide the reader follows alone: no first-person service offer.
+    - "Schnittstelle" only next to tools in makler.verifiedInterfaces; FlowFact only as the Cloud
+      editions Residential/Commercial, onOffice only with its API Zusatzmodul. Never the webhook
+      character limit in copy. Portals only as channels.
+    - Energy law only as section 14.7 verified it: Gebaeudemodernisierungsgesetz (GModG), sections 80
+      and 87; never "GEG" alone. GwG section 11, Ausweiskopie line from the StMI Merkblatt, paraphrased.
+    - Einsammeln und ablegen, nie bewerten: no KI scoring of tenants or buyers (KI-VO Annex III).
+      Documents only via an EU upload, never Telegram or WhatsApp.
+    - Every link prints its target as visible text (the copy is printed).
+    - Any assistant named carries "meldet sich als KI-Assistent".
+    - Dash-free German, no comma before "und", generic masculine, du.
+    - Pure ASCII with entities from src/lib/bauplanTemplateText.ts (add a new entity there first).
+    - Office printer, A4, white page, 8 pages. Full page = shorten copy, never shrink type.
+-->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Vrelo &#183; Bauplan f&uuml;r Immobilienmakler</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>{{{BRAND_CSS}}}</style>
+<style>{{{REIHE_CSS}}}</style>
+</head>
+<body>
+
+<!-- Page 1: cover (series pattern). Flow steps = makler.auftragsweg. -->
+<section class="page first">
+  <div class="p1">
+    <div class="p1-top">
+      <div class="logo">{{{LOGO_SVG}}}<span class="logo-word">Vrelo</span></div>
+      <span>Bauplan f&uuml;r Immobilienmakler</span>
+    </div>
+
+    <h1>Prozesse, Automatisierung, KI:<br>Wo fange ich &uuml;berhaupt an?</h1>
+
+    <div class="weg-heute">
+      <div class="kicker">Ein Objekt, viele Unterlagen</div>
+      <div class="auftragsweg">
+        <span></span>
+        <div class="schritt">Eigent&uuml;mer ruft an: Wir wollen verkaufen</div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Liste per Mail, Unterlagen kommen in Etappen<span class="verlust">zusammengesucht</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Grundbuchauszug erst mit Vollmacht<span class="verlust">nachgefragt</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Teilungserkl&auml;rung liegt beim Verwalter<span class="verlust">gewartet</span></div>
+
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Energieausweis fehlt, das Inserat wartet<span class="verlust">nachtelefoniert</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Expos&eacute; am Abend, Werte vom Papier<span class="verlust">abgetippt</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt ende">Erste Besichtigung, K&auml;ufer fragt nach Protokollen<span class="verlust">nachgereicht</span></div>
+      </div>
+      <p class="kreis-satz">Jeder Kreis ist eine Stelle, an der Zeit verloren geht. Im Bauplan findest du deine.</p>
+    </div>
+
+    <!-- No statistic (spec 5.3): the pain in the reader's words, in the statistic's place and layout, without a number. -->
+    <div class="statistik">
+      <div>
+        <span class="satz"><b>Bevor ein Objekt online geht, brauchst du Unterlagen von vier Stellen.</b> Grundrisse und Mietvertr&auml;ge hat der Eigent&uuml;mer, den Grundbuchauszug das Grundbuchamt, die Bauakte das Bauamt. Bei einer Eigentumswohnung liegen Teilungserkl&auml;rung und Protokolle beim Verwalter. Fehlt dann noch der Energieausweis, wartet das Inserat, bis du alles beisammen hast.</span>
+      </div>
+    </div>
+
+    <div class="woche">
+      <p class="woche-kopf">Dieser Bauplan ist dein erster Schritt.</p>
+      <ol class="tage">
+        <li><span class="tag">Tag 1</span><b>Wo du stehst</b><span class="seite">Seite 2</span></li>
+        <li><span class="tag">Tag 2</span><b>Deine Werkzeuge</b><span class="seite">Seite 3</span></li>
+        <li><span class="tag">Tag 3</span><b>Deine Datenwege</b><span class="seite">Seite 4</span></li>
+        <li><span class="tag">Tag 4</span><b>Das Fundament</b><span class="seite">Seite 5</span></li>
+        <li><span class="tag">Tag 5</span><b>Die erste Station</b><span class="seite">Seite 6 und 7</span></li>
+      </ol>
+      <p class="woche-schluss">Nach einer Woche wei&szlig;t du, wo du anf&auml;ngst.</p>
+      <p class="woche-ziel">Schritt f&uuml;r Schritt zu deinem KI-Betriebssystem.</p>
+    </div>
+
+    <div class="fuer"><p><b>F&uuml;r wen:</b> Inhaber von Maklerb&uuml;ros f&uuml;r Verkauf und Vermietung, Wohnen und kleines Gewerbe, allein oder mit kleinem Team. F&uuml;r die ersten Seiten reicht ein Stift.</p></div>
+
+    <div class="p1-foot">Ajdin Dzafic, <span class="brand-word">Vrelo</span>, Regensburg &#183; vrelo-ki.de</div>
+  </div>
+</section>
+
+<!-- Page 2: Wo du stehst (shared copy: selbstcheck, LEVELS) -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Immobilienmakler &#183; Seite 2 von 8</span></div>
+  <h2 class="part">Wo du stehst</h2>
+  <div class="kicker">Dein Stand je Station</div>
+  <p class="intro">Mach pro Station ein Kreuz in einer der drei Spalten: l&auml;uft von selbst, auf Papier oder in Dateien, nur im Kopf. Z&auml;hl am Ende die Kreuze je Spalte.</p>
+  <table class="check">
+    <thead><tr><th></th><th class="links">Station</th><th>L&auml;uft von selbst</th><th>Auf Papier oder in Dateien</th><th>Nur im Kopf</th></tr></thead>
+    <tbody>
+      <tr class="neu"><td class="stock" rowspan="2"><b>Erdgeschoss</b> Kundeneingang</td><td>Anfrage kommt rein<span class="bsp">Portal, Webseite, Mail, Telefon</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Besichtigung und Nachfassen<span class="bsp">Termin, R&uuml;ckmeldung danach</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="1"><b>2. Stock</b> Onboarding</td><td>Objektunterlagen<span class="bsp">Energieausweis, Grundbuchauszug</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="3"><b>3. Stock</b> Die Arbeit</td><td>Vermarktung<span class="bsp">Expos&eacute;, Portale, Suchprofile</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Bericht an den Eigent&uuml;mer<span class="bsp">wer da war, was die Interessenten sagen</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Wiederkehrendes<span class="bsp">Bewertungsanfragen, Bestand</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="2"><b>4. Stock</b> Finanzwesen</td><td>Provisionsrechnung<span class="bsp">nach Notartermin oder Mietvertrag</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Belege zuordnen<span class="bsp">Portale, Fotograf, Grundbuchausz&uuml;ge</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="3"><b>5. Stock</b> Abschluss und Team</td><td>Bewertung<span class="bsp">Bitte um eine Google-Bewertung</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Abschluss<span class="bsp">Notartermin, Geldw&auml;schegesetz, &Uuml;bergabe</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Bewerbungen und Einarbeitung<span class="bsp">Assistenz, Makler</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="2"><b>Dach</b> und Assistent</td><td>Tagesbild<span class="bsp">morgens sehen, was offen ist</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Assistent f&uuml;r unterwegs<span class="bsp">einsprechen statt merken</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="summe"><td></td><td>Kreuze je Spalte</td><td class="kreuz"><span class="feld"></span></td><td class="kreuz"><span class="feld"></span></td><td class="kreuz"><span class="feld"></span></td></tr>
+    </tbody>
+  </table>
+  <div class="frage">
+    <p><b>Liegen deine Kundendaten an einem festen Ort, auf den alles zugreift?</b></p>
+    <div class="antwort"><span><span class="box"></span> Ja</span><span><span class="box"></span> Nein</span></div>
+  </div>
+  <p class="hinweis">Eine leere Zeile z&auml;hlt als &#8222;nur im Kopf&#8220;. Zwei Kreuze in einer Zeile: z&auml;hl nur das rechte.</p>
+  <h3 class="zwischen">Deine Stufe</h3>
+  <table class="stufen">
+    <tbody>
+      <tr><td class="nr">0</td><td class="name">Im Kopf<span class="regel">Kein Kreuz bei &#8222;l&auml;uft&#8220;, im Kopf mindestens so viele wie auf Papier</span></td><td>Schreib auf, was du heute nur im Kopf tr&auml;gst. Eine Station reicht f&uuml;r den Anfang.</td></tr>
+      <tr><td class="nr">1</td><td class="name">Verstreut<span class="regel">Kein Kreuz bei &#8222;l&auml;uft&#8220;, auf Papier mehr als im Kopf</span></td><td>Vieles steht schon auf Papier oder in Dateien. Such dir die eine Station aus, die dich am meisten Zeit kostet.</td></tr>
+      <tr><td class="nr">2</td><td class="name">Erste Station l&auml;uft<span class="regel">Mindestens ein Kreuz bei &#8222;l&auml;uft&#8220;, Fundament: nein</span></td><td>Eine Station l&auml;uft von selbst. Als N&auml;chstes brauchen deine Daten einen festen Platz, damit alles auf denselben Ort zugreift.</td></tr>
+      <tr><td class="nr">3</td><td class="name">Ein Ort<span class="regel">Fundament: ja, 1 bis 9 Kreuze bei &#8222;l&auml;uft&#8220;</span></td><td>Deine Daten liegen an einem Ort. Jetzt holst du eine Station nach der anderen in dein System.</td></tr>
+      <tr><td class="nr">4</td><td class="name">Haus steht<span class="regel">Fundament: ja, 10 Kreuze oder mehr bei &#8222;l&auml;uft&#8220;</span></td><td>Fast alles l&auml;uft von selbst. Schlie&szlig; die letzten L&uuml;cken und schreib auf, wie die Stationen zusammenh&auml;ngen.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Page 3: Deine Werkzeuge und Datenwege (1 of 2): what Makler-CRMs already ship (14.7 Werkzeuge) -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Immobilienmakler &#183; Seite 3 von 8</span></div>
+  <h2 class="part">Deine Werkzeuge und Datenwege</h2>
+  <p class="intro">Schau zuerst nach, was deine Software schon kann. Was sie kann, schaltest du ein. Bauen musst du nur, was fehlt.</p>
+  <h3 class="zwischen">Was Makler-Software mitbringt</h3>
+  <table class="werkzeuge">
+    <thead><tr><th>Werkzeug</th><th>Was es dir abnimmt</th></tr></thead>
+    <tbody>
+      <tr><td>onOffice</td><td>Makler-CRM in den Editionen pro und all-in. Der Enquiry Manager beantwortet Anfragen rund um die Uhr (in all-in, f&uuml;r pro dazubuchbar), das Expos&eacute; verschickt es selbst. Interessenten buchen Besichtigungen online (all-in). Nach jedem Termin geht ein Feedback-Formular an die verkn&uuml;pften Kontakte, die Ergebnisse kommen per Mail zu dir. Mit der Webseite onOffice WP Website sieht dein Eigent&uuml;mer im Service-Portal, was an seinem Objekt passiert.</td></tr>
+      <tr><td>FlowFact</td><td>Makler-CRM in der Cloud. Portal-Anfragen verarbeitet es automatisch: Kontakt und Deal legt es an, auf Wunsch geht ein interaktives Expos&eacute; raus. Das schaltest du in den Einstellungen mit einem Schalter ein. Dazu ein Kalender mit Serienfunktion f&uuml;r Besichtigungen, Werkzeuge zur Eigent&uuml;mer-Akquise zum Dazubuchen, Unterschrift per DocuSign.</td></tr>
+      <tr><td>Propstack</td><td>Makler-CRM in der Cloud. Der Anfragenmanager legt den Kontakt an und schickt das Expos&eacute;. Besichtigungstermine bucht der Interessent auf einer eigenen Seite, mit Erinnerung und Absage-Knopf. Unterlagen forderst du bei Eigent&uuml;mern und Interessenten per Upload an, Propstack meldet dir, was angekommen ist und was fehlt. Ein Dashboard zeigt Aufgaben, Termine und Wiedervorlagen.</td></tr>
+      <tr><td>Lexware Office</td><td>Rechnungen f&uuml;r die Provision, automatische Mahnungen, Belege per Texterkennung, Bankabgleich, Export f&uuml;r DATEV.</td></tr>
+      <tr><td>sevDesk</td><td>Angebot und Rechnung, Mahnungen, Belege per Scan mit Buchungsvorschlag.</td></tr>
+      <tr><td>Google Calendar</td><td>Mit einem Terminplan bucht ein Interessent die Besichtigung selbst &uuml;ber eine Buchungsseite.</td></tr>
+    </tbody>
+  </table>
+  <ul class="punkte">
+    <li><b>Anfragen beantworten:</b> Das k&ouml;nnen alle drei CRMs. onOffice, FlowFact und Propstack beantworten Portal-Anfragen von selbst und schicken das Expos&eacute;, bei onOffice in all-in oder dazugebucht. Hier baust du nichts.</li>
+    <li><b>Portale:</b> ImmoScout24, Immowelt und Kleinanzeigen sind Kan&auml;le. Dein CRM stellt das Objekt dort ein, die Anfragen landen bei ihm.</li>
+    <li><b>Unterlagen vom Eigent&uuml;mer:</b> Anfordern und melden, was fehlt, kann laut Herstellerseiten nur Propstack. Bei onOffice und FlowFact zeigen ihre Seiten so etwas nicht.</li>
+  </ul>
+  <p class="eigen">L&auml;uft dein B&uuml;ro schon in einem Makler-CRM, nutz zuerst, was es kann. Baust du daneben dasselbe noch einmal, pflegst du es doppelt.</p>
+  <p class="hinweis">Stand der Herstellerseiten: November 2026. Welche Funktion in deiner Edition steckt, sagt dir dein Anbieter.</p>
+</section>
+
+<!-- Page 4: Deine Werkzeuge und Datenwege (2 of 2): the fill-in map -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Immobilienmakler &#183; Seite 4 von 8</span></div>
+  <h3 class="zwischen">Deine Datenwege</h3>
+  <p class="intro">Trag pro Station ein, womit du heute arbeitest, woher die Daten kommen und wohin sie danach gehen. Die zwei Zeilen oben sind Beispiele.</p>
+  <table class="karte">
+    <colgroup><col style="width:48mm"><col><col><col></colgroup>
+    <thead><tr><th>Station</th><th>Werkzeug heute</th><th>Daten kommen von</th><th>gehen nach</th></tr></thead>
+    <tbody>
+      <tr class="beispiel"><td class="station">Anfrage kommt rein</td><td>CRM, Handy</td><td>Portal, Anruf, Mail</td><td>Expos&eacute; an den Interessenten</td></tr>
+      <tr class="beispiel"><td class="station">Objektunterlagen</td><td>Liste in Word, Postfach</td><td>Eigent&uuml;mer, Verwalter, Post</td><td>Ordner auf dem Laptop</td></tr>
+      <tr><td class="station">Anfrage kommt rein</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Besichtigung und Nachfassen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Objektunterlagen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Vermarktung</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Bericht an den Eigent&uuml;mer</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Wiederkehrendes</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Provisionsrechnung</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Belege</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Bewertung</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Abschluss</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Bewerbungen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Tagesbild</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Assistent f&uuml;r unterwegs</td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>F&uuml;ll jede Zeile aus, auch wenn dir nur ein Wort einf&auml;llt.</li>
+      <li>Kreis jede Stelle ein, an der jemand Unterlagen zusammensucht, nachfragt, wartet, nachtelefoniert, etwas abtippt oder nachreicht.</li>
+      <li>Z&auml;hl die Kreise je Station. Die Station mit den meisten Kreisen ist deine Quelle: die Arbeit, die jede Woche wiederkommt.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- Page 5: Das Fundament (system of record = one record per Objekt) -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Immobilienmakler &#183; Seite 5 von 8</span></div>
+  <h2 class="part">Das Fundament</h2>
+  <p class="intro">Jede Station schreibt ihre Daten an einen festen Ort. Das ist dein Fundament. Du baust es einmal, zusammen mit der ersten Station, danach wird jede weitere Station kleiner. Liegen deine Daten an einem Ort, kann sp&auml;ter eine KI darin nachschlagen, sortieren und Entw&uuml;rfe schreiben.</p>
+  <h3 class="zwischen">Welcher Ort zu dir passt</h3>
+  <div class="orte">
+    <div class="ort"><b>Mit Makler-CRM</b><p>onOffice, FlowFact oder Propstack sind dein Fundament. Eigent&uuml;mer, Objekte, Interessenten und Termine liegen schon dort, du legst nichts daneben an.</p></div>
+    <div class="ort"><b>Mit Rechnungsprogramm</b><p>Deine Kontakte bleiben in Lexware Office oder sevDesk. F&uuml;r die Objekte legst du eine Tabelle an, eine Zeile je Objekt.</p></div>
+    <div class="ort"><b>Mit Papier</b><p>Fang mit der Tabelle an, in Excel oder Google Sheets. Sie w&auml;chst mit jeder Station.</p></div>
+  </div>
+  <h3 class="zwischen">Welche Felder deine Stationen brauchen</h3>
+  <table class="felder">
+    <tbody>
+      <tr><td>Eigent&uuml;mer</td><td>Name, Telefon, Mail, Anschrift, Vollmacht f&uuml;r das Grundbuchamt ja oder nein.</td></tr>
+      <tr><td>Objekt</td><td>Objektnummer, Adresse, Objektart (Haus, Eigentumswohnung, vermietet oder frei), Verkauf oder Vermietung, Maklervertrag vom, Alleinauftrag ja oder nein, Verwalter, Stand: Unterlagen, online, reserviert, Notartermin.</td></tr>
+      <tr><td>Unterlagen</td><td>Je Unterlage: wer sie besorgt, angefordert am, da am, beim Energieausweis g&uuml;ltig bis. H&auml;ngt am Objekt.</td></tr>
+      <tr><td>Interessent</td><td>Name, Kontakt, Besichtigung am, R&uuml;ckmeldung, nach dem Geldw&auml;schegesetz identifiziert am.</td></tr>
+      <tr><td>Rechnung</td><td>Objektnummer, Notartermin oder Mietvertrag, Provision, bezahlt oder offen.</td></tr>
+    </tbody>
+  </table>
+  <p><b>Die Objektnummer verbindet die Stationen.</b> Unterlagen, Inserat, Besichtigungen, Bericht und Rechnung tragen sie. Der Maklervertrag ist das erste Dokument am Objekt: Bei einer Wohnung oder einem Einfamilienhaus braucht er die Textform (&#167; 656a BGB).</p>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Entscheide, wo deine Objekte leben: in deinem Makler-CRM oder in einer Tabelle.</li>
+      <li>Leg in der Tabelle die Spalten f&uuml;r Objekt und Unterlagen aus der Liste oben an.</li>
+      <li>Trag deine laufenden Objekte ein, jedes mit Objektnummer, Eigent&uuml;mer und Telefonnummer.</li>
+      <li>Leg fest, wer neue Objekte eintr&auml;gt. Ein Ort, eine Person, die ihn pflegt.</li>
+    </ol>
+  </div>
+  <p class="hinweis">Alles l&auml;uft auf deinen Namen: die Tabelle, die Konten, die Zug&auml;nge. Grundbuchauszug und Teilungserkl&auml;rung tragen Namen und Belastungen, sie liegen am Objekt, nie in einem Chat. Von Mietinteressenten sammelst du nur, was der Schritt gerade braucht, die Unterlagen abgesagter Bewerber l&ouml;schst du. Einsammeln und ablegen, nie bewerten: Eine KI, die Mieter oder K&auml;ufer nach ihrer Zahlungsf&auml;higkeit sortiert, z&auml;hlt nach der KI-Verordnung zu den Hochrisiko-Systemen (Anhang III).</p>
+</section>
+
+<!-- Page 6: Die erste Station (1 of 2): the door station Objektunterlagen vom Eigentuemer mit "was fehlt"-Liste; ways 1 and 2 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Immobilienmakler &#183; Seite 6 von 8</span></div>
+  <h2 class="part">Die erste Station, Schritt f&uuml;r Schritt</h2>
+  <p class="intro">Du f&auml;ngst bei den Objektunterlagen an: Mit dem Maklervertrag bekommt der Eigent&uuml;mer einen Link und die Liste, was fehlt. Ganz oben steht der Energieausweis. Beim Verkauf und bei der Vermietung braucht der Eigent&uuml;mer einen g&uuml;ltigen (&#167; 80 Geb&auml;udemodernisierungsgesetz, GModG, fr&uuml;her GEG). Liegt er vor, geh&ouml;ren seine Angaben in die Anzeige, daf&uuml;r stehst auch du ein (&#167; 87 GModG). Sp&auml;testens bei der Besichtigung legst du ihn vor. Die Station l&auml;uft ohne KI.</p>
+  <div class="flow">
+    <div><b>Maklervertrag</b>in Textform unterschrieben</div>
+    <span class="pfeil">&#8594;</span>
+    <div><b>Link</b>mit der Liste je Objektart</div>
+    <span class="pfeil">&#8594;</span>
+    <div><b>Unterlagen</b>landen am Objekt, die Liste hakt ab</div>
+    <span class="pfeil">&#8594;</span>
+    <div class="frei"><b>Inserat</b>geht online, sobald der Energieausweis da ist</div>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 1</div>
+    <p class="weg">Dein CRM fordert die Unterlagen selbst an</p>
+    <p>In Propstack forderst du Unterlagen beim Eigent&uuml;mer per Upload-Seite an, im Dateiformat, das du brauchst. Propstack meldet dir, was angekommen ist und was noch fehlt. Hast du Propstack, brauchst du an dieser Stelle nichts weiter. Bei onOffice und FlowFact zeigen die Herstellerseiten eine solche Anforderung nicht, dann hilft Weg 2.</p>
+    <ol>
+      <li>Stell dir je Objektart die Liste zusammen: Haus, Eigentumswohnung, vermietet.</li>
+      <li>Schick die Anforderung mit jedem neuen Maklervertrag, den Energieausweis an erster Stelle.</li>
+    </ol>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 2</div>
+    <p class="weg">Die Liste fordert selbst an: mit einem Workflow-Werkzeug</p>
+    <p>Arbeitest du mit onOffice, FlowFact oder einer Tabelle, legt ein Workflow-Werkzeug wie n8n zu jedem neuen Objekt die passende Liste an und schickt dem Eigent&uuml;mer den Upload-Link. Mit FlowFact in den Editionen Residential und Commercial oder mit dem Zusatzmodul f&uuml;r die Schnittstelle von onOffice legt der Ablauf jede Datei direkt am Objekt ab, sonst im Objektordner.</p>
+    <ol>
+      <li>Schreib in die Liste, wer was besorgt: Grundrisse und Mietvertr&auml;ge der Eigent&uuml;mer, den Grundbuchauszug er selbst oder du mit seiner Vollmacht, die Bauakte das Bauamt, Teilungserkl&auml;rung, Wirtschaftspl&auml;ne, Hausgeldabrechnungen und Protokolle der Verwalter.</li>
+      <li>Nimm eine Upload-Seite mit Servern in der EU. Leg ein Konto bei n8n an, auf deinen Namen.</li>
+      <li>Bau den Ablauf: neues Objekt, Liste nach Objektart, Mail mit dem Link, jede Datei ans Objekt, Haken in der Liste.</li>
+      <li>Setz das Objekt auf &#8222;noch kein Inserat&#8220;, bis der Energieausweis da ist.</li>
+    </ol>
+    <p class="hinweis">Unterlagen kommen nur &uuml;ber die Upload-Seite, nie &uuml;ber Telegram oder WhatsApp. Telegram sieht in seinen Bedingungen f&uuml;r Bots keinen Auftragsverarbeitungsvertrag vor, aufs Handy kommt deshalb nur die Meldung: Objektnummer und welche Unterlage da ist. Pr&uuml;f vor dem Start, ob du mit dem Workflow-Werkzeug und der Upload-Seite einen Auftragsverarbeitungsvertrag schlie&szlig;en kannst.</p>
+  </div>
+</section>
+
+<!-- Page 7: Die erste Station (2 of 2): reminders, example, way 3 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Immobilienmakler &#183; Seite 7 von 8</span></div>
+  <h3 class="zwischen">Danach: erinnern, bis alles da ist</h3>
+  <p>Fehlt nach drei Tagen noch etwas, bekommt der Eigent&uuml;mer die Liste der offenen Unterlagen in deinen Worten, nach sieben Tagen ein zweites Mal. Liegt eine Unterlage beim Verwalter oder beim Bauamt, steht in der Erinnerung, wer sie anfragt. Jeden Montag bekommst du die Liste der Objekte, denen noch etwas fehlt. Ist die Liste vollst&auml;ndig, setzt der Ablauf das Objekt auf &#8222;bereit f&uuml;rs Inserat&#8220;.</p>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Schreib die zwei Erinnerungen in deinen Worten, kurz und freundlich.</li>
+      <li>Trag bei jeder Unterlage ein, wann du sie angefordert hast und wer sie besorgt.</li>
+      <li>Erweitere den Ablauf: Unterlage offen seit drei Tagen, Erinnerung raus, Montagsliste an dich.</li>
+    </ol>
+  </div>
+
+  <div class="szene">
+    <div class="kicker">Ein Beispiel aus dem Verkauf</div>
+    <p>Frau Hartl unterschreibt am Montag den Maklervertrag f&uuml;r ihre vermietete Eigentumswohnung, drei Zimmer. Der Link mit der Liste geht noch am Montag raus. Am Mittwoch l&auml;dt sie Grundrisse und Mietvertrag hoch, den Grundbuchauszug holst du mit ihrer Vollmacht.</p>
+    <p>Am Telefon sagt sie: <span class="gesagt">&#8222;Den Energieausweis hat bestimmt der Verwalter.&#8220;</span> Die Erinnerung am Donnerstag geht deshalb auch an ihn. Am Freitag schickt er Teilungserkl&auml;rung, Protokolle und den Energieausweis.</p>
+    <p>Per Telegram siehst du: Liste vollst&auml;ndig. Am selben Abend geht das Inserat online, mit den Angaben aus dem Energieausweis.</p>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 3</div>
+    <p class="weg">Ein eigener Bau, nur f&uuml;r die L&uuml;cke</p>
+    <p>Passt keiner der beiden Wege, etwa weil die Werte aus dem Energieausweis gleich ins Inserat sollen, bleibt ein eigener Bau. Daf&uuml;r liest eine KI die Werte aus, auf einem Modell, das in der EU l&auml;uft. Du pr&uuml;fst jeden Wert, bevor das Inserat online geht. Das geht, wenn deine Software eine Schnittstelle hat.</p>
+    <ol>
+      <li>Schreib auf, was dir an Weg 1 und Weg 2 fehlt.</li>
+      <li>Frag deinen Anbieter, ob seine Software eine Schnittstelle hat und was sie liest und schreibt.</li>
+      <li>Lass nur diese L&uuml;cke bauen und dir jeden Ablauf mit Dokumentation &uuml;bergeben.</li>
+    </ol>
+  </div>
+
+  <h3 class="zwischen">So merkst du, dass es l&auml;uft</h3>
+  <ul class="haken">
+    <li><span class="box"></span>Jeder Eigent&uuml;mer hat am Tag des Maklervertrags seine Liste.</li>
+    <li><span class="box"></span>Kein Inserat geht ohne die Angaben aus dem Energieausweis online.</li>
+    <li><span class="box"></span>Jeden Montag wei&szlig;t du, welchem Objekt was fehlt.</li>
+  </ul>
+  <p class="eigen">Die Konten laufen auf deinen Namen. L&auml;uft die Station ruhig, nimmst du die n&auml;chste dazu.</p>
+</section>
+
+<!-- Page 8: Die naechsten Stockwerke + the shared close. Runner-up Wochenbericht an den Eigentuemer first. -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Immobilienmakler &#183; Seite 8 von 8</span></div>
+  <h2 class="part">Die n&auml;chsten Stockwerke</h2>
+  <p class="intro">Laufen die Objektunterlagen von selbst, nimm die n&auml;chste Station dazu. Die Reihenfolge ist ein Vorschlag, deine Kreise von Seite 4 gehen vor.</p>
+  <table class="naechste">
+    <tbody>
+      <tr class="zuerst"><td class="name"><b>Wochenbericht an den Eigent&uuml;mer</b><span class="wo">3. Stock &#183; Die Arbeit</span></td><td>Einmal pro Woche geht ein Bericht aus deinem CRM an den Eigent&uuml;mer: Besichtigungen, R&uuml;ckmeldungen ohne Namen der Interessenten, Zahl der Anfragen. Du gibst ihn vorher frei. onOffice bringt daf&uuml;r ein Feedback-Formular nach jedem Termin mit.</td></tr>
+      <tr><td class="name"><b>Besichtigung und Nachfassen</b><span class="wo">Erdgeschoss &#183; Kundeneingang</span></td><td>Den Termin buchen Interessenten in Propstack und onOffice selbst. Danach fragt der Ablauf nach zwei und nach sieben Tagen nach, die Antwort steht am Kontakt.</td></tr>
+      <tr><td class="name"><b>Abschluss</b><span class="wo">5. Stock &#183; Abschluss und Team</span></td><td>Bei Kauf und Miete identifizierst du beide Vertragsparteien, sobald sie ernsthaft interessiert sind (&#167; 11 Geldw&auml;schegesetz). Eine Ausweiskopie oder ein Scan per Mail reicht daf&uuml;r nicht (Merkblatt des Bayerischen Innenministeriums). Der Ablauf erinnert nur und legt ab, dazu Energieausweis f&uuml;r den K&auml;ufer, &Uuml;bergabeprotokoll und Rechnung.</td></tr>
+      <tr><td class="name"><b>Anfragen, nur die L&uuml;cke</b><span class="wo">Erdgeschoss &#183; Kundeneingang</span></td><td>Portal-Anfragen beantwortet dein CRM schon. Mails ohne Portal und R&uuml;ckrufe legt ein Ablauf als Kontakt im CRM an, bei Propstack und FlowFact &uuml;ber ihre Schnittstelle, bei onOffice &uuml;ber das Zusatzmodul.</td></tr>
+      <tr><td class="name"><b>Provision und Belege</b><span class="wo">4. Stock &#183; Finanzwesen</span></td><td>Am Tag des Notartermins liegt der Rechnungsentwurf bereit. Belege erfassen Lexware Office und sevDesk, eine KI ordnet sie &uuml;ber die Objektnummer zu.</td></tr>
+      <tr><td class="name"><b>Bestand und Bewertung</b><span class="wo">3. und 5. Stock</span></td><td>Eigent&uuml;mer mit Bewertungsanfrage h&ouml;ren nach einem, drei und sechs Monaten von dir, nur mit ihrer Einwilligung. Nach bezahlter Provision bittest du um eine Bewertung, ohne Gegenleistung.</td></tr>
+      <tr><td class="name"><b>Tagesbild</b><span class="wo">Das Dach</span></td><td>Jeden Morgen eine Nachricht: Besichtigungen heute, Objekte mit offenen Unterlagen, unbezahlte Rechnungen.</td></tr>
+      <tr><td class="name"><b>Assistent f&uuml;r unterwegs</b><span class="wo">Um das ganze Haus</span></td><td>Nach der Besichtigung sprichst du Notiz oder R&uuml;ckruf zum Objekt ein. Er meldet sich als KI-Assistent, sobald er mit Kunden schreibt.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="abschluss">
+    <h2 class="part">Wenn du Fragen hast, melde dich. Kostenlos.</h2>
+    <p>Im Prozess-Audit schauen wir gemeinsam, wo in deinem Betrieb die meiste Zeit h&auml;ngen bleibt.</p>
+    <p>Den Anfang macht ein Gespr&auml;ch von 30 Minuten. Ergibt sich daraus etwas Sinnvolles, schreibe ich dir einen Fahrplan. Wenn nicht, sage ich es dir ehrlich.</p>
+    <div class="buchen">
+      <a href="https://vrelo-ki.de/kontakt?src=bauplan-makler-pdf">30 Minuten Gespr&auml;ch vereinbaren</a>
+      <span class="url">vrelo-ki.de/kontakt?src=bauplan-makler-pdf</span>
+    </div>
+    <div class="kontakt">
+      <span class="logo-word">Vrelo</span>&#160;&#160;
+      Ajdin Dzafic &#183; Regensburg &#183; ajdin@vrelo-ki.de &#183; vrelo-ki.de
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

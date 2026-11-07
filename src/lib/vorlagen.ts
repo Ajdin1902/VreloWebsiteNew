@@ -87,6 +87,24 @@ export const vorlageBauplaene: Record<string, { variant: BauplanVariant; title: 
     description:
       "Kostenloser Bauplan für Umzugsunternehmen: von der Umzugsanfrage bis zum Festpreisangebot, mit einem Weg in fünf Tagen zur ersten Station. Als PDF per E-Mail.",
   },
+  "architektur-bauplan": {
+    variant: "architektur",
+    title: "Bauplan für Architektur- und Ingenieurbüros",
+    description:
+      "Kostenloser Bauplan für Architektur- und Ingenieurbüros: von der Anfrage bis zum Honorarangebot, mit einem Weg in fünf Tagen zur ersten Station. Als PDF per E-Mail.",
+  },
+  "makler-bauplan": {
+    variant: "makler",
+    title: "Bauplan für Immobilienmakler",
+    description:
+      "Kostenloser Bauplan für Immobilienmakler: von den Objektunterlagen bis zum Exposé, mit einem Weg in fünf Tagen zur ersten Station. Als PDF per E-Mail.",
+  },
+  "finanzmakler-bauplan": {
+    variant: "finanzmakler",
+    title: "Bauplan für Finanz- und Versicherungsmakler",
+    description:
+      "Kostenloser Bauplan für Finanz- und Versicherungsmakler: von der Schadenmeldung bis zum Jahresgespräch, mit einem Weg in fünf Tagen zur ersten Station. Als PDF per E-Mail.",
+  },
 };
 
 export const HAUS_PDF = "/vorlagen/vrelo-ki-betriebssystem.pdf";
@@ -97,7 +115,7 @@ export const VORLAGEN_GRUPPEN = [
   { id: "handwerk", titel: "Handwerk" },
   { id: "gebaeude", titel: "Gebäude und Garten" },
   { id: "logistik", titel: "Logistik" },
-  { id: "buero", titel: "Agenturen und Büros" },
+  { id: "buero", titel: "Büros, Agenturen und Makler" },
 ] as const;
 
 export type Vorlage = {
@@ -117,7 +135,7 @@ export const vorlagenPage: {
   meta: {
     title: "Kostenlose Vorlagen",
     description:
-      "Kostenlose Vorlagen für Betriebe und Unternehmen: das KI-Betriebssystem auf einer Seite, ein fertiger Prompt für Claude und Baupläne für Agenturen, Handwerk, Gebäude, Garten und Logistik.",
+      "Kostenlose Vorlagen für Betriebe und Unternehmen: das KI-Betriebssystem auf einer Seite, ein fertiger Prompt für Claude und Baupläne für Handwerk, Gebäude, Garten, Logistik, Büros, Agenturen und Makler.",
   },
   hero: {
     eyebrow: "Kostenlos zum Mitnehmen",
@@ -228,6 +246,30 @@ export const vorlagenPage: {
       text: "Von der Umzugsanfrage bis zum Festpreis: Du siehst, wo ein Umzug Zeit frisst. Danach wählst du deine erste Station.",
       umfang: "8 Seiten · PDF per E-Mail",
       link: { text: "Zum Bauplan", href: `${VORLAGEN_PATH}/umzug-bauplan` },
+    },
+    {
+      id: "architektur-bauplan",
+      gruppe: "buero",
+      titel: "Bauplan für Architektur- und Ingenieurbüros",
+      text: "Von der Anfrage bis zum Honorarangebot: Du siehst, wo ein Projekt Zeit frisst. Danach wählst du deine erste Station.",
+      umfang: "8 Seiten · PDF per E-Mail",
+      link: { text: "Zum Bauplan", href: `${VORLAGEN_PATH}/architektur-bauplan` },
+    },
+    {
+      id: "makler-bauplan",
+      gruppe: "buero",
+      titel: "Bauplan für Immobilienmakler",
+      text: "Von den Objektunterlagen bis zum Exposé: Du siehst, wo ein Objekt Zeit frisst. Danach wählst du deine erste Station.",
+      umfang: "8 Seiten · PDF per E-Mail",
+      link: { text: "Zum Bauplan", href: `${VORLAGEN_PATH}/makler-bauplan` },
+    },
+    {
+      id: "finanzmakler-bauplan",
+      gruppe: "buero",
+      titel: "Bauplan für Finanz- und Versicherungsmakler",
+      text: "Von der Schadenmeldung bis zum Jahresgespräch: Du siehst, wo ein Kunde Zeit frisst. Danach wählst du deine erste Station.",
+      umfang: "8 Seiten · PDF per E-Mail",
+      link: { text: "Zum Bauplan", href: `${VORLAGEN_PATH}/finanzmakler-bauplan` },
     },
     {
       id: "gebaeudereinigung-bauplan",

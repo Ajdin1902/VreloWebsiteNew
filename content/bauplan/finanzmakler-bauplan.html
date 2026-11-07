@@ -1,0 +1,357 @@
+<!doctype html>
+<!--
+  Vrelo Bauplan-Reihe, Finanz- und Versicherungsmakler: free 8-page PDF guide for owner-led
+  Versicherungsmakler (section 34d GewO) and Vermittler (section 34f, 34i), 1 to 15 staff.
+  Spec: docs/superpowers/specs/2026-11-06-bauplan-reihe-design.md (section 4 skeleton, section 6 constraints).
+  Facts: Knowledge/marketing/prozess-landkarten.md section 15 (15.1 Landkarte, 15.7 Recherche, 2026-11-07).
+  Data + shared copy: src/lib/bauplanReihe/finanzmakler.ts and shared.ts. Styles: content/bauplan/reihe.css.
+  Structure, classes and shared copy follow the approved SHK pilot (content/bauplan/shk-bauplan.html).
+
+  RULES (do not break; the guard src/lib/bauplanReihe/templates.test.ts enforces most of them):
+    - Chapters 2 and 7 carry the shared copy word for word (selbstcheck, LEVELS, abschluss).
+    - No price, no Courtage figure, no Vrelo duration, no capacity line, no guarantee, no client names.
+    - Pages 1 to 7 are a free guide the reader follows alone: no first-person service offer.
+    - "Schnittstelle" only next to tools in finanzmakler.verifiedInterfaces; otherwise
+      "wenn dein MVP eine Schnittstelle hat". Professional works, keasy, ASSFINET are never called
+      connectable; Smart API only as "ohne oeffentliche Dokumentation"; BiPRO only through the MVP.
+    - COMPLIANCE (load-bearing): the door station is Sach, Haftpflicht, Kfz only; Kranken, Unfall, BU,
+      Leben, Pflege are out (Art. 9 DSGVO). No KI on creditworthiness (KI-VO Anhang III Nr. 5 b) or on
+      Gesundheitsfragen (Nr. 5 c). Beratungsdokumentation never written by KI. Unterlagen: einsammeln
+      und ablegen, nie bewerten. No documents through Telegram or WhatsApp; Telegram only for a notice
+      without content.
+    - The statistic is an expectation (AfW), never a measured saving, never next to a time number.
+    - Every link prints its target as visible text (the copy is printed).
+    - Any assistant named carries "meldet sich als KI-Assistent".
+    - Dash-free German, no comma before "und", generic masculine, du.
+    - Pure ASCII with entities from src/lib/bauplanTemplateText.ts (add a new entity there first).
+    - Office printer, A4, white page, 8 pages. Full page = shorten copy, never shrink type.
+-->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Vrelo &#183; Bauplan f&uuml;r Finanz- und Versicherungsmakler</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>{{{BRAND_CSS}}}</style>
+<style>{{{REIHE_CSS}}}</style>
+</head>
+<body>
+
+<!-- Page 1: cover (series pattern). Flow steps = finanzmakler.auftragsweg. -->
+<section class="page first">
+  <div class="p1">
+    <div class="p1-top">
+      <div class="logo">{{{LOGO_SVG}}}<span class="logo-word">Vrelo</span></div>
+      <span>Bauplan f&uuml;r Finanz- und Versicherungsmakler</span>
+    </div>
+
+    <h1>Prozesse, Automatisierung, KI:<br>Wo fange ich &uuml;berhaupt an?</h1>
+
+    <div class="weg-heute">
+      <div class="kicker">Ein Schaden, viele Telefonate</div>
+      <div class="auftragsweg">
+        <span></span>
+        <div class="schritt">Kunde meldet den Schaden am Telefon</div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Fotos und Rechnungen fehlen<span class="verlust">nachgefordert</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Fotos kommen per WhatsApp<span class="verlust">weitergeleitet</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Meldung im Portal des Versicherers<span class="verlust">abgetippt</span></div>
+
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Kunde fragt nach dem Stand<span class="verlust">nachgefragt</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">R&uuml;ckfrage vom Versicherer, Kunde nicht erreicht<span class="verlust">nachtelefoniert</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt ende">Regulierung, das Schreiben von Hand<span class="verlust">abgelegt</span></div>
+      </div>
+      <p class="kreis-satz">Jeder Kreis ist eine Stelle, an der Zeit verloren geht. Im Bauplan findest du deine.</p>
+    </div>
+
+    <div class="statistik">
+      <span class="zahl">93 Prozent</span>
+      <div>
+        <span class="satz">der befragten Vermittler erwarten vom KI-Einsatz vor allem Zeitersparnis.</span>
+        <span class="quelle">AfW Bundesverband Finanzdienstleistung, 18. AfW-Vermittlerbarometer, 2026. Der AfW befragte rund 1.000 Vermittler online, von Dezember 2025 bis Februar 2026. Gefragt war nach der Erwartung, nicht nach gemessener Ersparnis.</span>
+      </div>
+    </div>
+    <p class="quelle-link">Quelle: <a href="https://afw-verband.de/presse/ki-nutzung-in-der-finanzberatung-erst-rund-jeder-vierte-vermittler-arbeitet-taeglich-mit-ki/">afw-verband.de/presse/ki-nutzung-in-der-finanzberatung-erst-rund-jeder-vierte-vermittler-arbeitet-taeglich-mit-ki/</a></p>
+    <p class="woche-ziel">Die Zeit steckt in den einfachen Schritten, die sich wiederholen. Daf&uuml;r muss keine KI urteilen.</p>
+
+    <div class="woche">
+      <p class="woche-kopf">Dieser Bauplan ist dein erster Schritt.</p>
+      <ol class="tage">
+        <li><span class="tag">Tag 1</span><b>Wo du stehst</b><span class="seite">Seite 2</span></li>
+        <li><span class="tag">Tag 2</span><b>Deine Werkzeuge</b><span class="seite">Seite 3</span></li>
+        <li><span class="tag">Tag 3</span><b>Deine Datenwege</b><span class="seite">Seite 4</span></li>
+        <li><span class="tag">Tag 4</span><b>Das Fundament</b><span class="seite">Seite 5</span></li>
+        <li><span class="tag">Tag 5</span><b>Die erste Station</b><span class="seite">Seite 6 und 7</span></li>
+      </ol>
+      <p class="woche-schluss">Nach einer Woche wei&szlig;t du, wo du anf&auml;ngst.</p>
+      <p class="woche-ziel">Schritt f&uuml;r Schritt zu deinem KI-Betriebssystem.</p>
+    </div>
+
+    <div class="fuer"><p><b>F&uuml;r wen:</b> Inhaber von Makler- und Vermittlerb&uuml;ros mit 1 bis 15 Leuten, im Vermittlerregister eingetragen nach &#167; 34d GewO, oft auch nach &#167; 34f oder &#167; 34i. Dein Bestand liegt im Maklerverwaltungsprogramm (MVP), die Courtage kommt &uuml;ber Pool oder Direktanbindung. F&uuml;r die ersten Seiten reicht ein Stift.</p></div>
+
+    <div class="p1-foot">Ajdin Dzafic, <span class="brand-word">Vrelo</span>, Regensburg &#183; vrelo-ki.de</div>
+  </div>
+</section>
+
+<!-- Page 2: Wo du stehst (shared copy: selbstcheck, LEVELS) -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Finanz- und Versicherungsmakler &#183; Seite 2 von 8</span></div>
+  <h2 class="part">Wo du stehst</h2>
+  <div class="kicker">Dein Stand je Station</div>
+  <p class="intro">Mach pro Station ein Kreuz in einer der drei Spalten: l&auml;uft von selbst, auf Papier oder in Dateien, nur im Kopf. Z&auml;hl am Ende die Kreuze je Spalte.</p>
+  <table class="check">
+    <thead><tr><th></th><th class="links">Station</th><th>L&auml;uft von selbst</th><th>Auf Papier oder in Dateien</th><th>Nur im Kopf</th></tr></thead>
+    <tbody>
+      <tr class="neu"><td class="stock" rowspan="2"><b>Erdgeschoss</b> Kundeneingang</td><td>Anfrage kommt rein<span class="bsp">Empfehlung, Anruf, Formular, Vergleichsrechner</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Angebot und Nachfassen<span class="bsp">Vergleich verschickt, keine Antwort</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="1"><b>2. Stock</b> Onboarding</td><td>Unterlagen einsammeln<span class="bsp">Maklervollmacht, Erstinformation, Selbstauskunft</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="3"><b>3. Stock</b> Die Arbeit</td><td>Antrag und Police<span class="bsp">Einreichung, Police und Nachtrag ins MVP</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Schadenmeldung<span class="bsp">Meldung, Fotos, Stand f&uuml;r den Kunden</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Jahresgespr&auml;ch und Fristen<span class="bsp">Hauptf&auml;lligkeit, Zinsbindungsende</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="2"><b>4. Stock</b> Finanzwesen</td><td>Courtage und Honorar<span class="bsp">Abrechnung pr&uuml;fen, Servicevertrag</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Belege zuordnen<span class="bsp">f&uuml;r den Steuerberater</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="3"><b>5. Stock</b> Abschluss und Team</td><td>Bewertung und Empfehlung<span class="bsp">Bitte nach einem erledigten Schaden</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Abschluss und Bestand<span class="bsp">K&uuml;ndigung, Wechsel, &Uuml;bertragung</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Bewerbungen und Einarbeitung<span class="bsp">Innendienst, Azubi</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="2"><b>Dach</b> und Assistent</td><td>Tagesbild<span class="bsp">morgens sehen, was offen ist</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Assistent f&uuml;r unterwegs<span class="bsp">einsprechen statt merken</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="summe"><td></td><td>Kreuze je Spalte</td><td class="kreuz"><span class="feld"></span></td><td class="kreuz"><span class="feld"></span></td><td class="kreuz"><span class="feld"></span></td></tr>
+    </tbody>
+  </table>
+  <div class="frage">
+    <p><b>Liegen deine Kundendaten an einem festen Ort, auf den alles zugreift?</b></p>
+    <div class="antwort"><span><span class="box"></span> Ja</span><span><span class="box"></span> Nein</span></div>
+  </div>
+  <p class="hinweis">Eine leere Zeile z&auml;hlt als &#8222;nur im Kopf&#8220;. Zwei Kreuze in einer Zeile: z&auml;hl nur das rechte.</p>
+  <h3 class="zwischen">Deine Stufe</h3>
+  <table class="stufen">
+    <tbody>
+      <tr><td class="nr">0</td><td class="name">Im Kopf<span class="regel">Kein Kreuz bei &#8222;l&auml;uft&#8220;, im Kopf mindestens so viele wie auf Papier</span></td><td>Schreib auf, was du heute nur im Kopf tr&auml;gst. Eine Station reicht f&uuml;r den Anfang.</td></tr>
+      <tr><td class="nr">1</td><td class="name">Verstreut<span class="regel">Kein Kreuz bei &#8222;l&auml;uft&#8220;, auf Papier mehr als im Kopf</span></td><td>Vieles steht schon auf Papier oder in Dateien. Such dir die eine Station aus, die dich am meisten Zeit kostet.</td></tr>
+      <tr><td class="nr">2</td><td class="name">Erste Station l&auml;uft<span class="regel">Mindestens ein Kreuz bei &#8222;l&auml;uft&#8220;, Fundament: nein</span></td><td>Eine Station l&auml;uft von selbst. Als N&auml;chstes brauchen deine Daten einen festen Platz, damit alles auf denselben Ort zugreift.</td></tr>
+      <tr><td class="nr">3</td><td class="name">Ein Ort<span class="regel">Fundament: ja, 1 bis 9 Kreuze bei &#8222;l&auml;uft&#8220;</span></td><td>Deine Daten liegen an einem Ort. Jetzt holst du eine Station nach der anderen in dein System.</td></tr>
+      <tr><td class="nr">4</td><td class="name">Haus steht<span class="regel">Fundament: ja, 10 Kreuze oder mehr bei &#8222;l&auml;uft&#8220;</span></td><td>Fast alles l&auml;uft von selbst. Schlie&szlig; die letzten L&uuml;cken und schreib auf, wie die Stationen zusammenh&auml;ngen.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Page 3: Deine Werkzeuge und Datenwege (1 of 2): what Makler software already ships (15.7 Werkzeuge) -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Finanz- und Versicherungsmakler &#183; Seite 3 von 8</span></div>
+  <h2 class="part">Deine Werkzeuge und Datenwege</h2>
+  <p class="intro">Schau zuerst nach, was deine Software schon kann. Was sie kann, schaltest du ein. Bauen musst du nur, was fehlt.</p>
+  <h3 class="zwischen">Was Makler-Software mitbringt</h3>
+  <table class="werkzeuge">
+    <thead><tr><th>Werkzeug</th><th>Was es dir abnimmt</th></tr></thead>
+    <tbody>
+      <tr><td>AMEISE</td><td>MVP des Pools blau direkt. H&auml;lt deinen Bestand &uuml;ber BiPRO bei mehr als 240 Gesellschaften aktuell und sammelt Anfragen aus simplr und aus Vergleichsrechnern an einem Ort. MAILIEN verschickt automatische Mailing-Strecken aus deinen Bestandsdaten, von der Maklervollmacht bis zur Kampagne.</td></tr>
+      <tr><td>simplr</td><td>Kunden-App zu AMEISE, in jeder Lizenz enthalten. Dein Kunde l&auml;dt dort Dokumente hoch. Eine Schadenmeldung nennt die Herstellerseite nicht.</td></tr>
+      <tr><td>Professional works</td><td>MVP f&uuml;r unabh&auml;ngige Makler mit einem Postfach f&uuml;r BiPRO. Der KI-Agent PWX legt Vorg&auml;nge an, erg&auml;nzt Notizen und bereitet Schadenmeldungen vor. &Auml;nderungen und Mails gehen erst nach deiner Best&auml;tigung raus.</td></tr>
+      <tr><td>Smart Admin</td><td>MVP mit BiPRO und Zugriff auf Kunden-, Vertrags-, Dokumenten- und Schadendaten. In der Kunden-App Your.Shur meldet dein Kunde einen Schaden direkt. Du entscheidest, welche Unterlagen er dort sieht.</td></tr>
+      <tr><td>keasy</td><td>MVP. Holt Dokumente per BiPRO bei den Gesellschaften ab und verarbeitet sie. Online-Terminbuchung, Kunden-App und digitale Unterschrift geh&ouml;ren dazu.</td></tr>
+      <tr><td>ASSFINET ams6</td><td>MVP im Browser. Zeigt den BiPRO-Stand je Versicherer und legt die Zuordnung neuer Dokumente als Aufgabe an.</td></tr>
+      <tr><td>Europace One</td><td>F&uuml;r die Baufinanzierung: Unterlagenliste mit Upload schon vor der Erstberatung, Checkliste f&uuml;r deine Kunden, automatische Vollst&auml;ndigkeitspr&uuml;fung, fehlende Unterlagen per Mail, digitale Selbstauskunft.</td></tr>
+      <tr><td>HYPOFY</td><td>Baufi-CRM mit Unterlagenliste je Bank, Pr&uuml;fung und Stand je Antragsteller. Fehlt etwas, erinnert HYPOFY deinen Kunden automatisch.</td></tr>
+      <tr><td>Lexware Office</td><td>Serienrechnungen f&uuml;r Servicevertr&auml;ge, automatische Mahnungen, Belege per Texterkennung, Export f&uuml;r DATEV.</td></tr>
+      <tr><td>sevDesk</td><td>Angebot und Rechnung, Mahnungen, Belege per Scan mit Buchungsvorschlag.</td></tr>
+    </tbody>
+  </table>
+  <ul class="punkte">
+    <li><b>Post der Versicherer:</b> Policen, Nachtr&auml;ge, Dokumente und Courtage-Abrechnungen kommen &uuml;ber BiPRO (Norm 430) in dein MVP. Du verbindest dabei nichts selbst. Frag deinen Anbieter, f&uuml;r welche Versicherer es bei dir l&auml;uft.</li>
+    <li><b>Portale der Versicherer:</b> Antr&auml;ge und Sch&auml;den meldest du weiter dort, wo der Versicherer sie haben will: in seinem Portal, &uuml;ber dein MVP oder per Mail.</li>
+  </ul>
+  <p class="eigen">L&auml;uft dein B&uuml;ro schon in einem MVP, nutz zuerst, was es kann. Baust du daneben dasselbe noch einmal, pflegst du es doppelt.</p>
+  <p class="hinweis">Stand der Herstellerseiten: November 2026. Welche Funktion in deiner Lizenz steckt, sagt dir dein Anbieter.</p>
+</section>
+
+<!-- Page 4: Deine Werkzeuge und Datenwege (2 of 2): the fill-in map -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Finanz- und Versicherungsmakler &#183; Seite 4 von 8</span></div>
+  <h3 class="zwischen">Deine Datenwege</h3>
+  <p class="intro">Trag pro Station ein, womit du heute arbeitest, woher die Daten kommen und wohin sie danach gehen. Die zwei Zeilen oben sind Beispiele.</p>
+  <table class="karte">
+    <colgroup><col style="width:48mm"><col><col><col></colgroup>
+    <thead><tr><th>Station</th><th>Werkzeug heute</th><th>Daten kommen von</th><th>gehen nach</th></tr></thead>
+    <tbody>
+      <tr class="beispiel"><td class="station">Schadenmeldung</td><td>Handy, WhatsApp, Portal des Versicherers</td><td>Kunde am Telefon</td><td>Versicherer, der Kunde nur auf Nachfrage</td></tr>
+      <tr class="beispiel"><td class="station">Jahresgespr&auml;ch und Fristen</td><td>Wiedervorlage im MVP, Kopf</td><td>Vertragsdaten im MVP</td><td>Kunde, wenn jemand daran denkt</td></tr>
+      <tr><td class="station">Anfrage kommt rein</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Angebot und Nachfassen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Unterlagen einsammeln</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Antrag und Police</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Schadenmeldung</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Jahresgespr&auml;ch und Fristen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Courtage und Honorar</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Belege</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Bewertung</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Abschluss und Bestand</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Bewerbungen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Tagesbild</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Assistent f&uuml;r unterwegs</td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>F&uuml;ll jede Zeile aus, auch wenn dir nur ein Wort einf&auml;llt.</li>
+      <li>Kreis jede Stelle ein, an der jemand etwas nachfordert, weiterleitet, abtippt, nachfragt, nachtelefoniert oder von Hand ablegt.</li>
+      <li>Z&auml;hl die Kreise je Station. Die Station mit den meisten Kreisen ist deine Quelle: die Arbeit, die jede Woche wiederkommt.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- Page 5: Das Fundament (system of record = the MVP) + where no KI decides (compliance, spec section 6) -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Finanz- und Versicherungsmakler &#183; Seite 5 von 8</span></div>
+  <h2 class="part">Das Fundament</h2>
+  <p class="intro">Jede Station schreibt ihre Daten an einen festen Ort. Das ist dein Fundament. Du baust es einmal, zusammen mit der ersten Station, danach wird jede weitere Station kleiner. Liegen deine Daten an einem Ort, kann sp&auml;ter eine KI darin nachschlagen, sortieren und Entw&uuml;rfe schreiben.</p>
+  <h3 class="zwischen">Welcher Ort zu dir passt</h3>
+  <div class="orte">
+    <div class="ort"><b>Mit MVP</b><p>Es ist dein Fundament. Kunden, Vertr&auml;ge und Dokumente liegen schon dort, BiPRO h&auml;lt sie aktuell. Du legst nichts daneben an.</p></div>
+    <div class="ort"><b>Mit Baufi-Plattform</b><p>Baufi-Vorg&auml;nge und ihre Unterlagen bleiben in Europace oder HYPOFY. Eine zweite Liste daneben brauchst du nicht.</p></div>
+    <div class="ort"><b>Mit Ordnern</b><p>Fang mit einer Tabelle in Excel an, eine Zeile je Vertrag. Unterlagen kommen nicht hinein, nur die Daten f&uuml;r Fristen und Sch&auml;den.</p></div>
+  </div>
+  <h3 class="zwischen">Welche Felder deine Stationen brauchen</h3>
+  <table class="felder">
+    <tbody>
+      <tr><td>Kunde</td><td>Name, Adresse, Telefon, Mail, Maklervollmacht ja oder nein. Liegt in deinem MVP.</td></tr>
+      <tr><td>Vertrag</td><td>Versicherer, Sparte, Versicherungsscheinnummer, Hauptf&auml;lligkeit, bei Baufi-Kunden das Zinsbindungsende.</td></tr>
+      <tr><td>Schaden</td><td>Vertrag, Schadendatum, Hergang, Fotos, Schadennummer des Versicherers, Stand: gemeldet, R&uuml;ckfrage, reguliert.</td></tr>
+      <tr><td>Gespr&auml;ch</td><td>Letztes und n&auml;chstes Jahresgespr&auml;ch, was sich ge&auml;ndert hat.</td></tr>
+    </tbody>
+  </table>
+  <p><b>Die Versicherungsscheinnummer verbindet die Stationen.</b> Schaden, Post des Versicherers und Fristen tragen sie. Kennt dein Kunde sie nicht, ordnest du &uuml;ber Name und Adresse zu.</p>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Entscheide, wo dein Bestand lebt: in deinem MVP oder vorerst in einer Tabelle.</li>
+      <li>Frag deinen Anbieter, f&uuml;r welche Versicherer BiPRO in deinem MVP l&auml;uft.</li>
+      <li>Trag bei jedem Vertrag die Hauptf&auml;lligkeit ein, bei Baufi-Kunden das Zinsbindungsende.</li>
+      <li>Leg fest, wer neue Sch&auml;den eintr&auml;gt. Ein Ort, eine Person, die ihn pflegt.</li>
+    </ol>
+  </div>
+  <h3 class="zwischen">Wo keine KI entscheidet</h3>
+  <ul class="punkte">
+    <li><b>Keine Bonit&auml;t:</b> Keine KI bewertet, ob ein Kunde kreditw&uuml;rdig ist. Das gilt nach der KI-Verordnung als Hochrisiko (Anhang III Nr. 5 b). Gehaltsnachweise und Kontoausz&uuml;ge: einsammeln und ablegen, nie bewerten.</li>
+    <li><b>Keine Gesundheitsfragen:</b> Keine KI liest Gesundheitsangaben vor, um einen Antrag f&uuml;r BU, PKV oder Lebensversicherung einzusch&auml;tzen (Anhang III Nr. 5 c).</li>
+    <li><b>Keine Beratungsdokumentation:</b> Die Dokumentation nach &#167; 61 und &#167; 62 VVG und die Geeignetheitserkl&auml;rung nach &#167; 18 FinVermV schreibst du. Eine KI macht h&ouml;chstens einen Entwurf aus deinen eigenen Notizen, den du pr&uuml;fst.</li>
+  </ul>
+  <p class="hinweis">Gesundheitsangaben, Gehaltsnachweise und Kontoausz&uuml;ge liegen nur im gesch&uuml;tzten Speicher deines MVP oder deiner Plattform, nie in der Tabelle und nie im Chat.</p>
+</section>
+
+<!-- Page 6: Die erste Station (1 of 2): the door station Schadenmeldung (Sach, Haftpflicht, Kfz), ways 1 and 2 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Finanz- und Versicherungsmakler &#183; Seite 6 von 8</span></div>
+  <h2 class="part">Die erste Station, Schritt f&uuml;r Schritt</h2>
+  <p class="intro">Du f&auml;ngst bei der Schadenmeldung an: Dein Kunde meldet &uuml;ber ein Formular und bekommt sofort eine Best&auml;tigung, danach jeden neuen Stand. Die Station ist klein, l&auml;uft ohne KI und schreibt die ersten Sch&auml;den in dein Fundament. Liegt deine Quelle woanders, gilt dieselbe Reihenfolge: erst deine Software, dann ein Workflow-Werkzeug, zuletzt ein eigener Bau.</p>
+  <p><b>Nur Sach, Haftpflicht und Kfz.</b> Kranken, Unfall, BU, Leben und Pflege bleiben drau&szlig;en: Dort geht es um Gesundheitsdaten, nach Art. 9 DSGVO besonders gesch&uuml;tzt. Diese Sch&auml;den laufen weiter &uuml;ber den Versicherer oder pers&ouml;nlich &uuml;ber dich.</p>
+  <div class="flow">
+    <div><b>Kunde</b>meldet &uuml;ber das Formular</div>
+    <span class="pfeil">&#8594;</span>
+    <div><b>Best&auml;tigung</b>sofort, mit &#8222;fehlt noch&#8220;</div>
+    <span class="pfeil">&#8594;</span>
+    <div><b>Du</b>meldest beim Versicherer</div>
+    <span class="pfeil">&#8594;</span>
+    <div class="frei"><b>Kunde</b>hat jeden Stand, bevor er fragt</div>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 1</div>
+    <p class="weg">Dein MVP hat eine Schadenmeldung</p>
+    <p>Bei Smart Admin meldet dein Kunde den Schaden in der App Your.Shur. Professional works bereitet mit PWX Schadenmeldungen vor und verschickt erst nach deiner Best&auml;tigung. Nutzt du eins davon, schalte es ein, dann baust du hier nichts. F&uuml;r simplr nennt die Herstellerseite keine Schadenmeldung.</p>
+    <ol>
+      <li>Frag deinen Anbieter, ob deine Lizenz die Schadenmeldung enth&auml;lt und ob der Kunde dort den Stand sieht.</li>
+      <li>Schick deinen Kunden den Zugang zur App.</li>
+    </ol>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 2</div>
+    <p class="weg">Keine Schadenmeldung im MVP: ein Formular je Sparte</p>
+    <p>Ein Workflow-Werkzeug wie n8n stellt f&uuml;r jede Sparte ein kurzes Formular bereit: Hausrat, Wohngeb&auml;ude, Haftpflicht, Kfz.</p>
+    <ol>
+      <li>Leg je Sparte die Felder fest: Versicherungsscheinnummer oder Name und Adresse, Schadendatum, Ort, Hergang, Fotos, Rechnungen. Bei Einbruch das Aktenzeichen der Polizei, bei Haftpflicht und Kfz den Gegner.</li>
+      <li>Leg auf deinen Namen ein Konto bei n8n an. Bau dort den Ablauf in vier Schritten: Meldung aus dem Formular, Eintrag im Fundament, Best&auml;tigung mit &#8222;fehlt noch&#8220; an den Kunden, kurzer Hinweis an dich.</li>
+      <li>Trag nach der Meldung beim Versicherer die Schadennummer ein. Jeder neue Stand geht an den Kunden: gemeldet, R&uuml;ckfrage, reguliert.</li>
+      <li>Teste ihn mit einem erfundenen Schaden, bevor du den Link verschickst.</li>
+    </ol>
+    <p class="hinweis">Der Hinweis an dich darf per Telegram kommen, nur ohne Inhalt: neuer Schaden, mehr nicht. Telegram sieht in seinen Bedingungen f&uuml;r Bots keinen Auftragsverarbeitungsvertrag vor. Fotos, Hergang und Dokumente gehen nie &uuml;ber Telegram oder WhatsApp. Pr&uuml;f vor dem Start, ob das Workflow-Werkzeug in der EU speichert und einen Auftragsverarbeitungsvertrag anbietet.</p>
+  </div>
+</section>
+
+<!-- Page 7: Die erste Station (2 of 2): why the Stand counts, the Wohngebaeude example, way 3 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Finanz- und Versicherungsmakler &#183; Seite 7 von 8</span></div>
+  <h3 class="zwischen">Warum der Stand z&auml;hlt</h3>
+  <p>Im Schaden merkt dein Kunde, wof&uuml;r er einen Makler hat. Bekommt er jeden Schritt mitgeteilt, ruft er nicht an, um nachzufragen. Du telefonierst nicht die Kette ab. Der Stand steht beim Schaden in deinem Fundament. Der Ablauf schickt nur feste Nachrichten, deshalb braucht auch dieser Schritt keine KI. Ob ein Schaden gedeckt ist und was du meldest, entscheidest du. Der Ablauf sammelt nur.</p>
+
+  <div class="szene">
+    <div class="kicker">Ein Beispiel aus der Wohngeb&auml;udeversicherung</div>
+    <p>Sonntagabend steht bei Familie Ostermeier Wasser im Keller, ein Rohr ist geplatzt. Sie &ouml;ffnet das Formular aus deiner letzten Mail, schreibt den Hergang in eigenen Worten und l&auml;dt drei Fotos hoch.</p>
+    <p>Sofort hat sie die Best&auml;tigung und die Liste, was noch fehlt: die Rechnung des Installateurs, sobald sie da ist.</p>
+    <p>Montag um zehn meldest du den Schaden beim Versicherer und tr&auml;gst die Schadennummer ein. Familie Ostermeier liest: <span class="gesagt">&#8222;Gemeldet beim Versicherer, die Schadennummer steht unten.&#8220;</span> Am Mittwoch k&uuml;ndigt der Versicherer einen Gutachter an. Auch das hat sie, bevor sie fragt.</p>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 3</div>
+    <p class="weg">Ein eigener Bau, nur f&uuml;r die L&uuml;cke</p>
+    <p>Passt keiner der beiden Wege, etwa weil der Stand aus den Schreiben der Versicherer von selbst kommen soll, bleibt ein eigener Bau. Er schlie&szlig;t nur diese L&uuml;cke und ersetzt nichts. Das geht, wenn dein MVP eine Schnittstelle hat. AMEISE bietet APIs und Webhooks in der Enterprise-Lizenz, Smart Admin nennt eine Smart API ohne &ouml;ffentliche Dokumentation.</p>
+    <ol>
+      <li>Schreib auf, was dir an Weg 1 und Weg 2 fehlt.</li>
+      <li>Frag deinen Anbieter, ob sein MVP eine Schnittstelle hat und was sie liest und schreibt.</li>
+      <li>Lass nur diese L&uuml;cke bauen und dir jeden Ablauf mit Dokumentation &uuml;bergeben.</li>
+    </ol>
+    <p class="hinweis">Liest dabei eine KI die Schreiben der Versicherer, dann nur bei Sach, Haftpflicht und Kfz und auf Servern in der EU. Sie liest den Stand aus, sie bewertet nichts.</p>
+  </div>
+
+  <h3 class="zwischen">So merkst du, dass es l&auml;uft</h3>
+  <ul class="haken">
+    <li><span class="box"></span>Kein Kunde ruft mehr an, um nach dem Stand seines Schadens zu fragen.</li>
+    <li><span class="box"></span>Jeder Schaden hat am ersten Tag einen Eintrag mit allen Angaben.</li>
+    <li><span class="box"></span>Kein Foto vom Schaden liegt mehr in deinem privaten Chat.</li>
+  </ul>
+  <p class="eigen">Die Konten laufen auf deinen Namen. L&auml;uft die Station ruhig, nimmst du die n&auml;chste dazu.</p>
+</section>
+
+<!-- Page 8: Die naechsten Stockwerke + the shared close -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Finanz- und Versicherungsmakler &#183; Seite 8 von 8</span></div>
+  <h2 class="part">Die n&auml;chsten Stockwerke</h2>
+  <p class="intro">L&auml;uft die Schadenmeldung, nimm die n&auml;chste Station dazu. Die Reihenfolge ist ein Vorschlag, deine Kreise von Seite 4 gehen vor.</p>
+  <table class="naechste">
+    <tbody>
+      <tr class="zuerst"><td class="name"><b>Jahresgespr&auml;ch und Fristen</b><span class="wo">3. Stock &#183; Die Arbeit</span></td><td>Aus dem Vertragsdatum kommt rechtzeitig die Einladung mit Terminlink und der Frage: Hat sich etwas ge&auml;ndert, Umzug, Familie, Job, Immobilie? Genauso vor Hauptf&auml;lligkeit, Zinsbindungsende und vereinbartem Geeignetheitsbericht. Kann dein MVP Wiedervorlagen oder Kampagnen wie MAILIEN, schalt sie zuerst ein.</td></tr>
+      <tr><td class="name"><b>Unterlagen einsammeln</b><span class="wo">2. Stock &#183; Onboarding</span></td><td>Maklervollmacht, Erstinformation, bei Baufi Selbstauskunft und Gehaltsnachweise: Checkliste, Upload auf einem Server in der EU, Erinnerung. Einsammeln und ablegen, nie bewerten. F&uuml;r die Baufi machen das Europace One und HYPOFY schon (siehe Seite 3).</td></tr>
+      <tr><td class="name"><b>Antrag und Police</b><span class="wo">3. Stock &#183; Die Arbeit</span></td><td>Antr&auml;ge laufen &uuml;ber Vergleicher, Portal oder Europace, Policen kommen &uuml;ber BiPRO ins MVP. Hier baust du nichts.</td></tr>
+      <tr><td class="name"><b>Anfragen, Angebote nachfassen</b><span class="wo">Erdgeschoss &#183; Kundeneingang</span></td><td>Anfragen per Mail und Formular bekommen sofort eine Best&auml;tigung mit Terminlink. Bleibt ein Vergleich unbeantwortet, geht nach einer festen Frist eine Erinnerung in deinen Worten raus.</td></tr>
+      <tr><td class="name"><b>Courtage und Belege</b><span class="wo">4. Stock &#183; Finanzwesen</span></td><td>Abrechnungen kommen &uuml;ber BiPRO, Servicevertr&auml;ge laufen als Serienrechnung in Lexware Office oder sevDesk. Belege liest es schon.</td></tr>
+      <tr><td class="name"><b>Abschluss und Bestand</b><span class="wo">5. Stock &#183; Abschluss und Team</span></td><td>Endet ein Vertrag oder wechselt ein Kunde, zeigt eine Checkliste, was zu tun ist. Ein gepflegter Bestand ist Teil vom Wert deines B&uuml;ros.</td></tr>
+      <tr><td class="name"><b>Bewertung, Bewerbungen</b><span class="wo">5. Stock &#183; Abschluss und Team</span></td><td>Nach einem erledigten Schaden gibst du die Bitte um eine Bewertung frei, ohne Gegenleistung. Bewerber bekommen sofort Antwort.</td></tr>
+      <tr><td class="name"><b>Tagesbild</b><span class="wo">Das Dach</span></td><td>Jeden Morgen eine Nachricht: offene Sch&auml;den mit ihrem Alter, f&auml;llige Gespr&auml;che, fehlende Unterlagen.</td></tr>
+      <tr><td class="name"><b>Assistent f&uuml;r unterwegs</b><span class="wo">Um das ganze Haus</span></td><td>Zwischen zwei Terminen sprichst du R&uuml;ckruf, Termin oder Notiz ein. Er meldet sich als KI-Assistent, sobald er mit Kunden schreibt. Das gilt f&uuml;r jeden Bot in deinem B&uuml;ro.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="abschluss">
+    <h2 class="part">Wenn du Fragen hast, melde dich. Kostenlos.</h2>
+    <p>Im Prozess-Audit schauen wir gemeinsam, wo in deinem Betrieb die meiste Zeit h&auml;ngen bleibt.</p>
+    <p>Den Anfang macht ein Gespr&auml;ch von 30 Minuten. Ergibt sich daraus etwas Sinnvolles, schreibe ich dir einen Fahrplan. Wenn nicht, sage ich es dir ehrlich.</p>
+    <div class="buchen">
+      <a href="https://vrelo-ki.de/kontakt?src=bauplan-finanzmakler-pdf">30 Minuten Gespr&auml;ch vereinbaren</a>
+      <span class="url">vrelo-ki.de/kontakt?src=bauplan-finanzmakler-pdf</span>
+    </div>
+    <div class="kontakt">
+      <span class="logo-word">Vrelo</span>&#160;&#160;
+      Ajdin Dzafic &#183; Regensburg &#183; ajdin@vrelo-ki.de &#183; vrelo-ki.de
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

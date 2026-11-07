@@ -14,6 +14,7 @@ export const ENTITIES: Record<string, string> = {
   "&Ouml;": "Ö",
   "&Uuml;": "Ü",
   "&szlig;": "ß",
+  "&eacute;": "é",
   "&#183;": "·",
   "&#167;": "§",
   "&#8594;": "→",
