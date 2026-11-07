@@ -34,7 +34,7 @@ export const spedition: ReiheNische = {
     readerClose: "Fang mit dem Selbstcheck auf Seite 2 an, dafür reicht ein Stift.",
     internalPrefix: "Speditions-Bauplan angefordert",
   },
-  pdfPath: "", // set by npm run bauplan:reihe -- spedition --publish
+  pdfPath: "/bauplan/spedition-bauplan-42955930.pdf",
   template: "content/bauplan/spedition-bauplan.html",
   pages: 8,
   knownTools: [

@@ -29,7 +29,7 @@ export const umzug: ReiheNische = {
     readerClose: "Fang mit dem Selbstcheck auf Seite 2 an, dafür reicht ein Stift.",
     internalPrefix: "Umzugs-Bauplan angefordert",
   },
-  pdfPath: "", // set by npm run bauplan:reihe -- umzug --publish
+  pdfPath: "/bauplan/umzug-bauplan-36e2b861.pdf",
   template: "content/bauplan/umzug-bauplan.html",
   pages: 8,
   knownTools: [

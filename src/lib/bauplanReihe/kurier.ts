@@ -27,7 +27,7 @@ export const kurier: ReiheNische = {
     readerClose: "Fang mit dem Selbstcheck auf Seite 2 an, dafür reicht ein Stift.",
     internalPrefix: "Kurier-Bauplan angefordert",
   },
-  pdfPath: "", // set by npm run bauplan:reihe -- kurier --publish
+  pdfPath: "/bauplan/kurier-bauplan-4c11ea76.pdf",
   template: "content/bauplan/kurier-bauplan.html",
   pages: 8,
   knownTools: [
