@@ -2,9 +2,13 @@
 // (spec docs/superpowers/specs/2026-11-06-bauplan-reihe-design.md §4).
 import { gebaeudereinigung } from "./gebaeudereinigung";
 import { hausmeister } from "./hausmeister";
+import { dach } from "./dach";
+import { fliesen } from "./fliesen";
+import { maler } from "./maler";
+import { schreiner } from "./schreiner";
 import { shk } from "./shk";
 
-export type ReiheSlug = "shk" | "gebaeudereinigung" | "hausmeister"; // grows per niche
+export type ReiheSlug = "shk" | "gebaeudereinigung" | "hausmeister" | "dach" | "schreiner" | "maler" | "fliesen"; // grows per niche
 
 export type ReiheNische = {
   slug: ReiheSlug;
@@ -28,6 +32,6 @@ export type ReiheNische = {
   verifiedInterfaces: string[];
 };
 
-export const reiheNischen: Record<ReiheSlug, ReiheNische> = { shk, gebaeudereinigung, hausmeister };
+export const reiheNischen: Record<ReiheSlug, ReiheNische> = { shk, gebaeudereinigung, hausmeister, dach, schreiner, maler, fliesen };
 
 export const isReiheSlug = (s: string): s is ReiheSlug => Object.hasOwn(reiheNischen, s);

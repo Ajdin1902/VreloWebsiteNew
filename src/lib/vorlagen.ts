@@ -39,6 +39,30 @@ export const vorlageBauplaene: Record<string, { variant: BauplanVariant; title: 
     description:
       "Kostenloser Bauplan für Hausmeisterdienste: vom Auftrag der Hausverwaltung bis zum Leistungsnachweis, mit einem Weg in fünf Tagen zur ersten Station. Als PDF per E-Mail.",
   },
+  "dach-bauplan": {
+    variant: "dach",
+    title: "Bauplan für Dachdecker und Spengler",
+    description:
+      "Kostenloser Bauplan für Dachdecker und Spengler: von der Schadensmeldung bis zur Rechnung, mit einem Weg in fünf Tagen zur ersten Station. Als PDF per E-Mail.",
+  },
+  "schreiner-bauplan": {
+    variant: "schreiner",
+    title: "Bauplan für Schreiner und Zimmerer",
+    description:
+      "Kostenloser Bauplan für Schreiner und Zimmerer: von der Anfrage bis zur Montage, mit einem Weg in fünf Tagen zur ersten Station. Als PDF per E-Mail.",
+  },
+  "maler-bauplan": {
+    variant: "maler",
+    title: "Bauplan für Malerbetriebe",
+    description:
+      "Kostenloser Bauplan für Malerbetriebe: von der Anfrage bis zur Schlussrechnung, mit einem Weg in fünf Tagen zur ersten Station. Als PDF per E-Mail.",
+  },
+  "fliesen-bauplan": {
+    variant: "fliesen",
+    title: "Bauplan für Fliesenleger",
+    description:
+      "Kostenloser Bauplan für Fliesenleger: von den ersten Fotos bis zur fertigen Fuge, mit einem Weg in fünf Tagen zur ersten Station. Als PDF per E-Mail.",
+  },
 };
 
 export const HAUS_PDF = "/vorlagen/vrelo-ki-betriebssystem.pdf";
@@ -68,7 +92,7 @@ export const vorlagenPage: {
   meta: {
     title: "Kostenlose Vorlagen",
     description:
-      "Kostenlose Vorlagen für Betriebe und Unternehmen: das KI-Betriebssystem auf einer Seite, ein fertiger Prompt für Claude und Baupläne für Agenturen, Elektro- und SHK-Betriebe, Gebäudereiniger und Hausmeisterdienste.",
+      "Kostenlose Vorlagen für Betriebe und Unternehmen: das KI-Betriebssystem auf einer Seite, ein fertiger Prompt für Claude und Baupläne für Agenturen, Handwerksbetriebe, Gebäudereiniger und Hausmeisterdienste.",
   },
   hero: {
     eyebrow: "Kostenlos zum Mitnehmen",
@@ -115,6 +139,38 @@ export const vorlagenPage: {
       text: "Vom ersten Anruf bis zur Rechnung: Du siehst, wo ein Auftrag Zeit frisst. Danach wählst du deine erste Station.",
       umfang: "8 Seiten · PDF per E-Mail",
       link: { text: "Zum Bauplan", href: `${VORLAGEN_PATH}/shk-bauplan` },
+    },
+    {
+      id: "dach-bauplan",
+      gruppe: "handwerk",
+      titel: "Bauplan für Dachdecker und Spengler",
+      text: "Von der Schadensmeldung bis zur Rechnung: Du siehst, wo ein Auftrag Zeit frisst. Danach wählst du deine erste Station.",
+      umfang: "8 Seiten · PDF per E-Mail",
+      link: { text: "Zum Bauplan", href: `${VORLAGEN_PATH}/dach-bauplan` },
+    },
+    {
+      id: "schreiner-bauplan",
+      gruppe: "handwerk",
+      titel: "Bauplan für Schreiner und Zimmerer",
+      text: "Von der Anfrage bis zur Montage: Du siehst, wo ein Auftrag Zeit frisst. Danach wählst du deine erste Station.",
+      umfang: "8 Seiten · PDF per E-Mail",
+      link: { text: "Zum Bauplan", href: `${VORLAGEN_PATH}/schreiner-bauplan` },
+    },
+    {
+      id: "maler-bauplan",
+      gruppe: "handwerk",
+      titel: "Bauplan für Malerbetriebe",
+      text: "Von der Anfrage bis zur Schlussrechnung: Du siehst, wo ein Auftrag Zeit frisst. Danach wählst du deine erste Station.",
+      umfang: "8 Seiten · PDF per E-Mail",
+      link: { text: "Zum Bauplan", href: `${VORLAGEN_PATH}/maler-bauplan` },
+    },
+    {
+      id: "fliesen-bauplan",
+      gruppe: "handwerk",
+      titel: "Bauplan für Fliesenleger",
+      text: "Von den ersten Fotos bis zur fertigen Fuge: Du siehst, wo ein Auftrag Zeit frisst. Danach wählst du deine erste Station.",
+      umfang: "8 Seiten · PDF per E-Mail",
+      link: { text: "Zum Bauplan", href: `${VORLAGEN_PATH}/fliesen-bauplan` },
     },
     {
       id: "gebaeudereinigung-bauplan",

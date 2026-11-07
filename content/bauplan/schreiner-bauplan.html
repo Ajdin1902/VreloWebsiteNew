@@ -1,0 +1,361 @@
+<!doctype html>
+<!--
+  Vrelo Bauplan-Reihe, Schreiner und Zimmerer: free 8-page PDF guide for owner-led Schreinereien,
+  Tischlereien and Zimmereien (one guide for both trades, the copy names the trade where they differ).
+  Spec: docs/superpowers/specs/2026-11-06-bauplan-reihe-design.md (section 4 skeleton, section 6 constraints).
+  Facts: Knowledge/marketing/prozess-landkarten.md section 6 (6.1 Landkarte, 6.7 Recherche, 2026-11-07).
+  Data + shared copy: src/lib/bauplanReihe/schreiner.ts and shared.ts. Styles: content/bauplan/reihe.css.
+
+  RULES (do not break; the guard src/lib/bauplanReihe/templates.test.ts enforces most of them):
+    - Chapters 2 and 7 carry the shared copy word for word (selbstcheck, LEVELS, abschluss).
+    - No price, no Vrelo duration, no capacity line, no guarantee, no client or prospect names.
+    - Pages 1 to 7 are a free guide the reader follows alone: no first-person service offer.
+      Only chapter 7 offers help.
+    - "Schnittstelle" only next to tools in schreiner.verifiedInterfaces; otherwise
+      "wenn deine Software eine Schnittstelle hat". Forma, Casa Zimmerer, Borm, Triviso, STREIT and
+      CAD/Abbund programs are never called connectable.
+    - The statistic exactly as the 6.7 copy rule says: both numbers from the same ZDH sentence, each
+      with its group (Tischler: Ausbaugewerbe, Zimmerer: Bauhauptgewerbe), "ueberdurchschnittlich" kept,
+      never "67 Prozent der Schreiner", never next to another survey's number.
+    - The runner-up (Kundenstatus during Fertigung) is an outlook, never a reported pain (6.7: inferred).
+    - Photos from customers' homes: the space and the measure only, no people, no personal items.
+      Plaene, Baugenehmigung, Statik: einsammeln und ablegen, nie bewerten.
+    - Every link prints its target as visible text (the copy is printed).
+    - Any assistant named carries "meldet sich als KI-Assistent".
+    - Dash-free German, no comma before "und", generic masculine, du.
+    - Pure ASCII with entities from src/lib/bauplanTemplateText.ts (add a new entity there first).
+    - Office printer, A4, white page, 8 pages. Full page = shorten copy, never shrink type.
+-->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Vrelo &#183; Bauplan f&uuml;r Schreiner und Zimmerer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>{{{BRAND_CSS}}}</style>
+<style>{{{REIHE_CSS}}}</style>
+</head>
+<body>
+
+<!-- Page 1: cover (series pattern). Flow steps = schreiner.auftragsweg. -->
+<section class="page first">
+  <div class="p1">
+    <div class="p1-top">
+      <div class="logo">{{{LOGO_SVG}}}<span class="logo-word">Vrelo</span></div>
+      <span>Bauplan f&uuml;r Schreiner und Zimmerer</span>
+    </div>
+
+    <h1>Prozesse, Automatisierung, KI:<br>Wo fange ich &uuml;berhaupt an?</h1>
+
+    <div class="weg-heute">
+      <div class="kicker">Ein Auftrag, viele offene Enden</div>
+      <div class="auftragsweg">
+        <span></span>
+        <div class="schritt">Anruf in der Werkstatt</div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">R&uuml;ckruf abends, Ma&szlig;e fehlen<span class="verlust">nachtelefoniert</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Aufma&szlig; auf dem Block<span class="verlust">abgetippt</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Angebot raus, keine Antwort<span class="verlust">vergessen</span></div>
+
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Zeichnung wartet auf Freigabe<span class="verlust">nachgefragt</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Kunde fragt nach der Montage<span class="verlust">zur&uuml;ckgerufen</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt ende">Schlussrechnung, Wochen sp&auml;ter<span class="verlust">zusammengesucht</span></div>
+      </div>
+      <p class="kreis-satz">Jeder Kreis ist eine Stelle, an der Zeit verloren geht. Im Bauplan findest du deine.</p>
+    </div>
+
+    <div class="statistik">
+      <span class="zahl">67 Prozent</span>
+      <div>
+        <span class="satz">der Betriebe des Ausbaugewerbes (dazu z&auml;hlen die Tischler) nennen l&auml;ngere Bearbeitungszeiten durch B&uuml;rokratie, ein &uuml;berdurchschnittlicher Wert. Im Bauhauptgewerbe mit den Zimmerern sind es 62 Prozent, ebenfalls &uuml;berdurchschnittlich.</span>
+        <span class="quelle">Zentralverband des Deutschen Handwerks, Sonderumfrage B&uuml;rokratiebelastung im Handwerk, 2023.</span>
+      </div>
+    </div>
+    <p class="quelle-link">Quelle: <a href="https://www.zdh.de/fileadmin/Oeffentlich/Wirschaft_Energie_Umwelt/Themen/Umfragen/Sonderumfragen/2023/Buerokratiebelastung_SU-1/2023_Sonderumfrage_Buerokratie.pdf">www.zdh.de/fileadmin/Oeffentlich/Wirschaft_Energie_Umwelt/Themen/Umfragen/Sonderumfragen/2023/Buerokratiebelastung_SU-1/2023_Sonderumfrage_Buerokratie.pdf</a></p>
+
+    <div class="woche">
+      <p class="woche-kopf">Dieser Bauplan ist dein erster Schritt.</p>
+      <ol class="tage">
+        <li><span class="tag">Tag 1</span><b>Wo du stehst</b><span class="seite">Seite 2</span></li>
+        <li><span class="tag">Tag 2</span><b>Deine Werkzeuge</b><span class="seite">Seite 3</span></li>
+        <li><span class="tag">Tag 3</span><b>Deine Datenwege</b><span class="seite">Seite 4</span></li>
+        <li><span class="tag">Tag 4</span><b>Das Fundament</b><span class="seite">Seite 5</span></li>
+        <li><span class="tag">Tag 5</span><b>Die erste Station</b><span class="seite">Seite 6 und 7</span></li>
+      </ol>
+      <p class="woche-schluss">Nach einer Woche wei&szlig;t du, wo du anf&auml;ngst.</p>
+      <p class="woche-ziel">Schritt f&uuml;r Schritt zu deinem KI-Betriebssystem.</p>
+    </div>
+
+    <div class="fuer"><p><b>F&uuml;r wen:</b> Inhaber von Schreinereien, Tischlereien und Zimmereien: K&uuml;chen und Innenausbau aus der Werkstatt, Dachst&uuml;hle und Holzbau aus der Abbundhalle. F&uuml;r die ersten Seiten reicht ein Stift.</p></div>
+
+    <div class="p1-foot">Ajdin Dzafic, <span class="brand-word">Vrelo</span>, Regensburg &#183; vrelo-ki.de</div>
+  </div>
+</section>
+
+<!-- Page 2: Wo du stehst (shared copy: selbstcheck, LEVELS) -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Schreiner und Zimmerer &#183; Seite 2 von 8</span></div>
+  <h2 class="part">Wo du stehst</h2>
+  <div class="kicker">Dein Stand je Station</div>
+  <p class="intro">Mach pro Station ein Kreuz in einer der drei Spalten: l&auml;uft von selbst, auf Papier oder in Dateien, nur im Kopf. Z&auml;hl am Ende die Kreuze je Spalte.</p>
+  <table class="check">
+    <thead><tr><th></th><th class="links">Station</th><th>L&auml;uft von selbst</th><th>Auf Papier oder in Dateien</th><th>Nur im Kopf</th></tr></thead>
+    <tbody>
+      <tr class="neu"><td class="stock" rowspan="2"><b>Erdgeschoss</b> Kundeneingang</td><td>Anfrage kommt rein<span class="bsp">K&uuml;che, Einbauschrank, Dachstuhl, Carport</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Angebot und Nachfassen<span class="bsp">nach Aufma&szlig; und Entwurf</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="1"><b>2. Stock</b> Onboarding</td><td>Freigaben und Unterlagen<span class="bsp">Zeichnung, Material, Pl&auml;ne, Statik</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="3"><b>3. Stock</b> Die Arbeit</td><td>Werkstatt und Montage planen<span class="bsp">St&uuml;ckliste, Bestellung, Montagetermin</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>R&uuml;ckmeldung von der Montage<span class="bsp">Stunden, Fotos, Restarbeiten</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Wartung und Pflege<span class="bsp">Fenster, T&uuml;ren, Au&szlig;enholz</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="2"><b>4. Stock</b> Finanzwesen</td><td>Rechnung schreiben<span class="bsp">Anzahlung, Abschlag, Schluss</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Lieferantenrechnungen zuordnen<span class="bsp">Platten, Beschl&auml;ge, Holzhandel</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="3"><b>5. Stock</b> Abschluss und Team</td><td>Bewertung und Referenzfoto<span class="bsp">Bitte um Bewertung, Erlaubnis f&uuml;rs Foto</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Abnahme und &Uuml;bergabe<span class="bsp">Pflegehinweise, Gew&auml;hrleistung</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Bewerbungen und Azubis<span class="bsp">Antwort, Maschinenunterweisung</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="2"><b>Dach</b> und Assistent</td><td>Tagesbild<span class="bsp">morgens sehen, was offen ist</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Assistent f&uuml;r unterwegs<span class="bsp">einsprechen statt merken</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="summe"><td></td><td>Kreuze je Spalte</td><td class="kreuz"><span class="feld"></span></td><td class="kreuz"><span class="feld"></span></td><td class="kreuz"><span class="feld"></span></td></tr>
+    </tbody>
+  </table>
+  <div class="frage">
+    <p><b>Liegen deine Kundendaten an einem festen Ort, auf den alles zugreift?</b></p>
+    <div class="antwort"><span><span class="box"></span> Ja</span><span><span class="box"></span> Nein</span></div>
+  </div>
+  <p class="hinweis">Eine leere Zeile z&auml;hlt als &#8222;nur im Kopf&#8220;. Zwei Kreuze in einer Zeile: z&auml;hl nur das rechte.</p>
+  <h3 class="zwischen">Deine Stufe</h3>
+  <table class="stufen">
+    <tbody>
+      <tr><td class="nr">0</td><td class="name">Im Kopf<span class="regel">Kein Kreuz bei &#8222;l&auml;uft&#8220;, im Kopf mindestens so viele wie auf Papier</span></td><td>Schreib auf, was du heute nur im Kopf tr&auml;gst. Eine Station reicht f&uuml;r den Anfang.</td></tr>
+      <tr><td class="nr">1</td><td class="name">Verstreut<span class="regel">Kein Kreuz bei &#8222;l&auml;uft&#8220;, auf Papier mehr als im Kopf</span></td><td>Vieles steht schon auf Papier oder in Dateien. Such dir die eine Station aus, die dich am meisten Zeit kostet.</td></tr>
+      <tr><td class="nr">2</td><td class="name">Erste Station l&auml;uft<span class="regel">Mindestens ein Kreuz bei &#8222;l&auml;uft&#8220;, Fundament: nein</span></td><td>Eine Station l&auml;uft von selbst. Als N&auml;chstes brauchen deine Daten einen festen Platz, damit alles auf denselben Ort zugreift.</td></tr>
+      <tr><td class="nr">3</td><td class="name">Ein Ort<span class="regel">Fundament: ja, 1 bis 9 Kreuze bei &#8222;l&auml;uft&#8220;</span></td><td>Deine Daten liegen an einem Ort. Jetzt holst du eine Station nach der anderen in dein System.</td></tr>
+      <tr><td class="nr">4</td><td class="name">Haus steht<span class="regel">Fundament: ja, 10 Kreuze oder mehr bei &#8222;l&auml;uft&#8220;</span></td><td>Fast alles l&auml;uft von selbst. Schlie&szlig; die letzten L&uuml;cken und schreib auf, wie die Stationen zusammenh&auml;ngen.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Page 3: Deine Werkzeuge und Datenwege (1 of 2): what Schreiner and Zimmerei software already ships -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Schreiner und Zimmerer &#183; Seite 3 von 8</span></div>
+  <h2 class="part">Deine Werkzeuge und Datenwege</h2>
+  <p class="intro">Schau zuerst nach, was deine Software schon kann. Was sie kann, schaltest du ein. Bauen musst du nur, was fehlt.</p>
+  <h3 class="zwischen">Was Schreiner- und Zimmerer-Software mitbringt</h3>
+  <table class="werkzeuge">
+    <thead><tr><th>Werkzeug</th><th>Was es dir abnimmt</th></tr></thead>
+    <tbody>
+      <tr><td>Forma</td><td>F&uuml;r Schreiner, Tischler und Fensterbauer: Aufma&szlig; per App und Lasermessger&auml;t, Kalkulation mit integrierter Holzliste, Angebot mit Folgedokumenten, Planungskalender, App mit Bautagebuch und Fotos, Teil- und Schlussrechnungen.</td></tr>
+      <tr><td>Casa Zimmerer</td><td>Dieselbe Basis f&uuml;r Zimmerer und Holzbauer. Die Holzliste ist die Mitte von Materialplanung und Kalkulation, die Daten kommen aus Abbundprogrammen wie Dietrich's 3D. Planungskalender, App f&uuml;r Baustelle und Abbundhalle.</td></tr>
+      <tr><td>STREIT V.1</td><td>Eigene Seiten f&uuml;r Schreiner und Zimmerei: Aufma&szlig; nach R&auml;umen und Bauabschnitten, auch mobil, Kalkulation, Angebot bis Rechnung, Plantafel, die App Monteur+, Wartung und Service.</td></tr>
+      <tr><td>Borm</td><td>ERP f&uuml;r Schreinerei, Innenausbau und Holzbau: Preisfindung, Materialwirtschaft, Planung und Lager, Zeiterfassung, Dokumente, die Borm App.</td></tr>
+      <tr><td>Triviso</td><td>ERP im Browser f&uuml;r Schreinereien und Holzbau: Kontakte und CRM, Kalkulation, automatische St&uuml;cklisten, Projektstatus, mobile Zeiterfassung, digitale Abnahme.</td></tr>
+      <tr><td>Craftnote</td><td>Handwerker-App mit Seiten f&uuml;r Schreiner und Zimmerer: Plantafel, Projektchat, Fotos, Bautagebuch, Zeiten.</td></tr>
+      <tr><td>HERO</td><td>Angebot, Plantafel, App mit Baudoku, Rechnung mit Mahnlauf. Anfragen von deiner Webseite legt HERO als Projekt an, wenn dein Formular &uuml;ber die Lead-API angebunden ist.</td></tr>
+      <tr><td>Lexware Office</td><td>Angebote, Auftragsbest&auml;tigungen, Rechnungen, automatische Mahnungen, Belege per Texterkennung, Export f&uuml;r DATEV.</td></tr>
+      <tr><td>sevDesk</td><td>Angebot und Rechnung, Abschlags- und Schlussrechnung, Mahnungen, Belege per Scan mit Buchungsvorschlag.</td></tr>
+      <tr><td>Google Calendar</td><td>Mit einem Terminplan bucht dein Kunde das Aufma&szlig; selbst &uuml;ber eine Buchungsseite. Als Werkstattplan taugt er wenig, der Eintrag ist Freitext.</td></tr>
+    </tbody>
+  </table>
+  <ul class="punkte">
+    <li><b>Werkstatt und Abbund:</b> Holzliste, Kalkulation und die Daten aus deinem CAD bleiben in deiner Branchensoftware. Daneben baust du nichts.</li>
+    <li><b>Vorne und hinten:</b> Laut Herstellerseiten nehmen Forma, Casa Zimmerer, Borm und STREIT V.1 keine Anfrage von deiner Webseite an. Offene Angebote fasst keine der Branchenl&ouml;sungen selbst nach, den Stand der Fertigung schickt keine dem Kunden.</li>
+  </ul>
+  <p class="eigen">L&auml;uft dein Betrieb schon in einer Branchensoftware, nutz zuerst, was sie kann. Baust du daneben dasselbe noch einmal, pflegst du es doppelt.</p>
+  <p class="hinweis">Stand der Herstellerseiten: November 2026. Welche Funktion in deinem Tarif steckt, sagt dir dein Anbieter.</p>
+</section>
+
+<!-- Page 4: Deine Werkzeuge und Datenwege (2 of 2): the fill-in map -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Schreiner und Zimmerer &#183; Seite 4 von 8</span></div>
+  <h3 class="zwischen">Deine Datenwege</h3>
+  <p class="intro">Trag pro Station ein, womit du heute arbeitest, woher die Daten kommen und wohin sie danach gehen. Die zwei Zeilen oben sind Beispiele.</p>
+  <table class="karte">
+    <colgroup><col style="width:48mm"><col><col><col></colgroup>
+    <thead><tr><th>Station</th><th>Werkzeug heute</th><th>Daten kommen von</th><th>gehen nach</th></tr></thead>
+    <tbody>
+      <tr class="beispiel"><td class="station">Anfrage kommt rein</td><td>Telefon in der Werkstatt, Postfach</td><td>Anruf, Mail ohne Ma&szlig;e</td><td>Zettel f&uuml;rs Aufma&szlig;</td></tr>
+      <tr class="beispiel"><td class="station">Lieferantenrechnungen</td><td>Postfach, Lexware Office</td><td>Holzhandel und Beschl&auml;ge, per Mail und Papier</td><td>Steuerberater, per DATEV</td></tr>
+      <tr><td class="station">Anfrage kommt rein</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Angebot und Nachfassen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Freigaben und Unterlagen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Werkstatt und Montage</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">R&uuml;ckmeldung von der Montage</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Wartung und Pflege</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Rechnung schreiben</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Lieferantenrechnungen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Bewertung und Referenzfoto</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Abnahme und &Uuml;bergabe</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Bewerbungen und Azubis</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Tagesbild</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Assistent f&uuml;r unterwegs</td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>F&uuml;ll jede Zeile aus, auch wenn dir nur ein Wort einf&auml;llt.</li>
+      <li>Kreis jede Stelle ein, an der jemand nachtelefoniert, abtippt, vergisst, nachfragt, zur&uuml;ckruft oder zusammensucht.</li>
+      <li>Z&auml;hl die Kreise je Station. Die Station mit den meisten Kreisen ist deine Quelle: die Arbeit, die jede Woche wiederkommt.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- Page 5: Das Fundament -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Schreiner und Zimmerer &#183; Seite 5 von 8</span></div>
+  <h2 class="part">Das Fundament</h2>
+  <p class="intro">Jede Station schreibt ihre Daten an einen festen Ort. Das ist dein Fundament. Du baust es einmal, zusammen mit der ersten Station, danach wird jede weitere Station kleiner. Liegen deine Daten an einem Ort, kann sp&auml;ter eine KI darin nachschlagen, sortieren und Entw&uuml;rfe schreiben.</p>
+  <h3 class="zwischen">Welcher Ort zu dir passt</h3>
+  <div class="orte">
+    <div class="ort"><b>Mit Branchensoftware</b><p>Sie ist dein Fundament. Kunden, Projekte, Holzliste und Rechnungen liegen dort. Nur die Anfragen vor dem Aufma&szlig; bekommen eine Tabelle, bis aus der Anfrage ein Projekt wird.</p></div>
+    <div class="ort"><b>Mit Rechnungsprogramm</b><p>Kunden bleiben in Lexware Office oder sevDesk. F&uuml;r Anfragen und Projekte legst du eine Tabelle an, eine Zeile je Projekt.</p></div>
+    <div class="ort"><b>Mit Word und Excel</b><p>Fang mit der Tabelle an, in Excel oder Google Sheets. Sie w&auml;chst mit jeder Station.</p></div>
+  </div>
+  <h3 class="zwischen">Welche Felder deine Stationen brauchen</h3>
+  <table class="felder">
+    <tbody>
+      <tr><td>Kunde</td><td>Name, Adresse, Telefon, Mail. Liegt in deinem Rechnungsprogramm oder deiner Branchensoftware.</td></tr>
+      <tr><td>Anfrage</td><td>Datum, Kunde, was gebaut wird, Raum, grobe Ma&szlig;e, Fotos, Termin f&uuml;rs Aufma&szlig;, Stand: neu, Aufma&szlig;, Angebot raus, Zusage, Absage.</td></tr>
+      <tr><td>Projekt</td><td>Projektnummer, Kunde, Montageort, Material und Holzart, Montagetermin, Stand. Bei der Zimmerei dazu: Pl&auml;ne, Baugenehmigung, Statik, jeweils da oder offen.</td></tr>
+      <tr><td>Freigabe</td><td>Was (Zeichnung, Material, Farbe), verschickt am, freigegeben am. H&auml;ngt am Projekt.</td></tr>
+      <tr><td>Rechnung</td><td>Projektnummer, Anzahlung, Abschlag, Schluss, jeweils bezahlt oder offen.</td></tr>
+    </tbody>
+  </table>
+  <p><b>Die Projektnummer verbindet die Stationen.</b> Angebot, Freigabe, Montage und Rechnung tragen sie. So findet jede Station das richtige Projekt, ohne dass jemand sucht.</p>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Entscheide, wo deine Projekte leben: in deiner Branchensoftware oder in einer Tabelle.</li>
+      <li>Leg in der Tabelle die Spalten f&uuml;r Anfrage und Projekt aus der Liste oben an.</li>
+      <li>Trag deine offenen Anfragen und Angebote ein, jede mit Datum, Kunde und Stand.</li>
+      <li>Leg fest, wer neue Anfragen eintr&auml;gt. Ein Ort, eine Person, die ihn pflegt.</li>
+    </ol>
+  </div>
+  <p class="hinweis">Alles l&auml;uft auf deinen Namen: die Tabelle, die Konten, die Zug&auml;nge. Fotos aus der Wohnung deines Kunden zeigen nur den Raum und die Einbaustelle. Sie liegen beim Projekt, nicht in einer Chatgruppe.</p>
+</section>
+
+<!-- Page 6: Die erste Station (1 of 2): the door station Anfrage, Fotos und Ma&szlig;e, Aufmass-Termin; ways 1 and 2 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Schreiner und Zimmerer &#183; Seite 6 von 8</span></div>
+  <h2 class="part">Die erste Station, Schritt f&uuml;r Schritt</h2>
+  <p class="intro">Du f&auml;ngst bei der Anfrage an: Bevor du zum Aufma&szlig; f&auml;hrst, hast du Fotos und grobe Ma&szlig;e, als Zimmerer auch Pl&auml;ne, den Stand der Baugenehmigung und die Statik. Holzbau Deutschland nennt im Lagebericht 2026 die unzureichende Planung durch den Auftraggeber als zweith&auml;ufigstes Hindernis der Zimmereien, deshalb fragst du zuerst. Die Station ist klein, l&auml;uft ohne KI und schreibt den ersten Eintrag in dein Fundament. Liegt deine Quelle woanders, gilt dieselbe Reihenfolge: erst deine Software, dann ein Workflow-Werkzeug, zuletzt ein eigener Bau.</p>
+  <div class="flow">
+    <div><b>Kunde</b>fragt an, mit Fotos und Ma&szlig;en</div>
+    <span class="pfeil">&#8594;</span>
+    <div><b>Antwort</b>sofort, mit Link zum Aufma&szlig;</div>
+    <span class="pfeil">&#8594;</span>
+    <div><b>Aufma&szlig;</b>bucht er selbst im Kalender</div>
+    <span class="pfeil">&#8594;</span>
+    <div class="frei"><b>Fundament</b>Kunde und Projekt stehen drin</div>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 1</div>
+    <p class="weg">Deine Software nimmt die Anfrage an</p>
+    <p>Mit HERO legt die Lead-API jede Anfrage von deiner Webseite als Projekt an. Mit Craftnote legt ein Workflow das Projekt &uuml;ber die offene Schnittstelle an. Mit Forma, Casa Zimmerer, Borm oder STREIT V.1 startest du mit Weg 2.</p>
+    <ol>
+      <li>Arbeitest du mit HERO, lass das Formular deiner Webseite &uuml;ber die Lead-API anbinden. Das ist ein kleiner Einbau, kein Schalter.</li>
+      <li>Leg im Google Calendar einen Terminplan f&uuml;r Aufma&szlig;-Termine an, mit festen Zeitfenstern.</li>
+      <li>Schick den Link zur Buchungsseite bei jedem R&uuml;ckruf mit und setz ihn auf deine Webseite.</li>
+    </ol>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 2</div>
+    <p class="weg">Die Anfrage stellt die Fragen vor dem Aufma&szlig;: mit einem Workflow-Werkzeug</p>
+    <p>Eine kurze Anfrage-Seite fragt ab, was du vor dem Aufma&szlig; wissen musst. Ein Workflow-Werkzeug wie n8n best&auml;tigt jede Anfrage sofort, schickt den Link zum Aufma&szlig;-Termin und legt Kunde und Projekt im Fundament an. Du bekommst die Anfrage gleichzeitig per Telegram aufs Handy.</p>
+    <ol>
+      <li>Leg die Fragen fest. Schreiner: was gebaut wird, Raum, grobe Ma&szlig;e, Fotos der Einbausituation, Material und Holz, Zeitrahmen. Zimmerer: dazu Pl&auml;ne, Stand der Baugenehmigung, Statik vorhanden ja oder nein.</li>
+      <li>Bau sie in das Formular auf deiner Webseite oder in eine kurze Anfrage-Seite.</li>
+      <li>Leg ein Konto bei n8n an, auf deinen Namen.</li>
+      <li>Bau den Ablauf in drei Schritten: neue Anfrage, Antwortmail mit dem Link zur Buchungsseite, neue Zeile im Fundament.</li>
+      <li>Schick dir selbst eine Testanfrage, bevor das Formular live geht.</li>
+    </ol>
+    <p class="hinweis">Schreib auf die Anfrage-Seite: Fotos nur vom Raum und der Einbaustelle, ohne Personen und private Gegenst&auml;nde. Telegram sieht in seinen Bedingungen f&uuml;r Bots keinen Auftragsverarbeitungsvertrag vor, auf die Nachricht kommen nur Name, Telefon und was gebaut werden soll. Pr&uuml;f vor dem Start, ob du mit dem Workflow-Werkzeug einen Auftragsverarbeitungsvertrag schlie&szlig;en kannst.</p>
+  </div>
+</section>
+
+<!-- Page 7: Die erste Station (2 of 2): Nachfassen Angebot + Zeichnungsfreigabe, example, way 3 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Schreiner und Zimmerer &#183; Seite 7 von 8</span></div>
+  <h3 class="zwischen">Danach: Angebot und Zeichnungsfreigabe nachfassen</h3>
+  <p>Bleibt ein Angebot ohne Antwort, schickt der Ablauf nach f&uuml;nf Tagen eine kurze Erinnerung in deinen Worten, nach zw&ouml;lf Tagen eine zweite. Bei einer offenen Zeichnungsfreigabe genauso. Jeden Montag bekommst du die Liste der offenen Angebote und Freigaben. Hat deine Software eine Wiedervorlage, die dir reicht, nutz sie.</p>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Schreib die Erinnerungen kurz in deinen Worten, f&uuml;rs Angebot und f&uuml;r die Freigabe.</li>
+      <li>Trag bei jedem Angebot und jeder Zeichnung Datum und Stand ins Fundament ein: offen, Zusage, Absage, freigegeben.</li>
+      <li>Erweitere den Ablauf: offen seit f&uuml;nf Tagen, Erinnerung raus, Montagsliste an dich.</li>
+    </ol>
+    <p class="hinweis">Pl&auml;ne, Baugenehmigung und Statik deines Bauherrn: einsammeln und beim Projekt ablegen, nie bewerten.</p>
+  </div>
+
+  <div class="szene">
+    <div class="kicker">Ein Beispiel aus der Schreinerei</div>
+    <p>Eine Familie fragt am Sonntagabend &uuml;ber deine Webseite nach einem Einbauschrank unter der Dachschr&auml;ge: <span class="gesagt">&#8222;Breite 2,40 Meter, Kniestock 1,10 Meter, Eiche ge&ouml;lt&#8220;</span>, dazu zwei Fotos der Nische. Die Antwort mit dem Link ist sofort da, sie bucht das Aufma&szlig; f&uuml;r Mittwoch.</p>
+    <p>Du siehst die Anfrage per Telegram. Im Fundament stehen Kunde, Raum, Ma&szlig;e und Fotos, bevor du losf&auml;hrst.</p>
+    <p>Nach dem Aufma&szlig; zeichnest und rechnest du in deiner Software. Auf die erste Erinnerung kommt die Zusage, auf die zweite die Freigabe der Zeichnung.</p>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 3</div>
+    <p class="weg">Ein eigener Bau, nur f&uuml;r die L&uuml;cke</p>
+    <p>Passt keiner der beiden Wege, etwa weil die Anfrage-Seite aus M&ouml;beltyp und Ma&szlig; gleich eine grobe Preisspanne zeigen soll, bleibt ein eigener Bau. Er schlie&szlig;t die L&uuml;cke zwischen Webseite und Software und ersetzt nichts. Das geht, wenn deine Software eine Schnittstelle hat.</p>
+    <ol>
+      <li>Schreib auf, was dir an Weg 1 und Weg 2 fehlt.</li>
+      <li>Frag deinen Anbieter, ob seine Software eine Schnittstelle hat und was sie liest und schreibt.</li>
+      <li>Lass nur diese L&uuml;cke bauen und dir jeden Ablauf mit Dokumentation &uuml;bergeben.</li>
+    </ol>
+  </div>
+
+  <h3 class="zwischen">So merkst du, dass es l&auml;uft</h3>
+  <ul class="haken">
+    <li><span class="box"></span>Vor jedem Aufma&szlig; liegen Fotos und grobe Ma&szlig;e vor.</li>
+    <li><span class="box"></span>Kein Angebot und keine Zeichnung bleibt ohne Nachfassen liegen.</li>
+    <li><span class="box"></span>Jede Anfrage steht mit ihrem Stand im Fundament.</li>
+  </ul>
+  <p class="eigen">Die Konten laufen auf deinen Namen. L&auml;uft die Station ruhig, nimmst du die n&auml;chste dazu.</p>
+</section>
+
+<!-- Page 8: Die naechsten Stockwerke + the shared close -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Schreiner und Zimmerer &#183; Seite 8 von 8</span></div>
+  <h2 class="part">Die n&auml;chsten Stockwerke</h2>
+  <p class="intro">L&auml;uft die Anfrage von selbst, nimm die n&auml;chste Station dazu. Die Reihenfolge ist ein Vorschlag, deine Kreise von Seite 4 gehen vor.</p>
+  <table class="naechste">
+    <tbody>
+      <tr class="zuerst"><td class="name"><b>Kundenstatus</b><span class="wo">3. Stock &#183; Die Arbeit</span></td><td>W&auml;hrend der Fertigung bekommt dein Kunde eine Nachricht, sobald dein B&uuml;ro den Stand setzt: Material bestellt, in Fertigung, Montage am Donnerstag. Am Vortag: Erinnerung und Hinweise zur Vorbereitung.</td></tr>
+      <tr><td class="name"><b>Freigaben und Unterlagen</b><span class="wo">2. Stock &#183; Onboarding</span></td><td>Eine Checkliste je Auftragsart: Zeichnung, Material, Farbe, bei der Zimmerei Pl&auml;ne, Baugenehmigung und Statik. Was fehlt, fragt der Ablauf nach. Einsammeln und ablegen, nie bewerten.</td></tr>
+      <tr><td class="name"><b>Rechnung</b><span class="wo">4. Stock &#183; Finanzwesen</span></td><td>Anzahlung zur Auftragsbest&auml;tigung, Schlussrechnung als Entwurf am Tag der Abnahme. Mahnen kann dein Rechnungsprogramm.</td></tr>
+      <tr><td class="name"><b>R&uuml;ckmeldung</b><span class="wo">3. Stock &#183; Die Arbeit</span></td><td>Forma, Casa Zimmerer, Craftnote und STREIT V.1 haben eine App mit Fotos, schalt sie ein. Ohne App kommen Stunden und Restarbeiten per Chat.</td></tr>
+      <tr><td class="name"><b>Abnahme und Bewertung</b><span class="wo">5. Stock &#183; Abschluss und Team</span></td><td>Nach der Abnahme bekommt der Kunde die Pflegehinweise. Die Bitte um eine Bewertung gibst du frei, ohne Gegenleistung. Referenzfoto nur mit Einverst&auml;ndnis, ohne Personen und Hausnummer.</td></tr>
+      <tr><td class="name"><b>Lieferantenrechnungen</b><span class="wo">4. Stock &#183; Finanzwesen</span></td><td>Platten, Beschl&auml;ge, Holzhandel: Lexware Office und sevDesk lesen Belege schon. Eine KI ordnet sie &uuml;ber die Projektnummer zu, du gibst frei.</td></tr>
+      <tr><td class="name"><b>Bewerbungen und Azubis</b><span class="wo">5. Stock &#183; Abschluss und Team</span></td><td>Jeder Bewerber bekommt sofort Antwort und einen Termin f&uuml;r den R&uuml;ckruf. F&uuml;r den ersten Tag gibt es eine Checkliste mit der Maschinenunterweisung.</td></tr>
+      <tr><td class="name"><b>Wartung und Pflege</b><span class="wo">3. Stock &#183; Die Arbeit</span></td><td>Fenster, T&uuml;ren und Au&szlig;enholz kommen als Terminvorschlag aus der Wartungsliste. STREIT V.1 plant Wartung und Service selbst.</td></tr>
+      <tr><td class="name"><b>Tagesbild</b><span class="wo">Das Dach</span></td><td>Jeden Morgen eine Nachricht: Montagen des Tages, offene Anfragen und Angebote, fehlende Freigaben, unbezahlte Rechnungen.</td></tr>
+      <tr><td class="name"><b>Assistent f&uuml;r unterwegs</b><span class="wo">Um das ganze Haus</span></td><td>In Werkstatt, Montage oder Auto sprichst du R&uuml;ckruf, Termin oder Notiz ein. Er meldet sich als KI-Assistent, sobald er mit Kunden schreibt.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="abschluss">
+    <h2 class="part">Wenn du Fragen hast, melde dich. Kostenlos.</h2>
+    <p>Im Prozess-Audit schauen wir gemeinsam, wo in deinem Betrieb die meiste Zeit h&auml;ngen bleibt.</p>
+    <p>Den Anfang macht ein Gespr&auml;ch von 30 Minuten. Ergibt sich daraus etwas Sinnvolles, schreibe ich dir einen Fahrplan. Wenn nicht, sage ich es dir ehrlich.</p>
+    <div class="buchen">
+      <a href="https://vrelo-ki.de/kontakt?src=bauplan-schreiner-pdf">30 Minuten Gespr&auml;ch vereinbaren</a>
+      <span class="url">vrelo-ki.de/kontakt?src=bauplan-schreiner-pdf</span>
+    </div>
+    <div class="kontakt">
+      <span class="logo-word">Vrelo</span>&#160;&#160;
+      Ajdin Dzafic &#183; Regensburg &#183; ajdin@vrelo-ki.de &#183; vrelo-ki.de
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
