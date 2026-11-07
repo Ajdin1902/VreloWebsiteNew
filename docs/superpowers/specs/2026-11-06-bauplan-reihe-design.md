@@ -114,8 +114,8 @@ Visual layout within the brand system (page 1 can follow the Elektro page-1 appr
 ## Carry-forward from the SHK pilot (2026-11-06)
 
 Fix before the next niche batch (from the pilot's reviews):
-- Guard: `Winter` (client-name check) will hit a plain „im Winter“ in Hausmeister/GaLaBau copy; scope it to the name.
-- Guard: the sentence split on ". " breaks on „z. B.“ and fails open; the page-section count includes HTML comments; the title exemption in the first-person check is broad.
+- Done 2026-11-07: Guard `Winter` (client-name check) is scoped to the person (Maximilian Winter, Herr/Herrn Winter); the season and Winterdienst pass.
+- Done 2026-11-07: the sentence split masks abbreviations (z. B., d. h., bzw., ggf. and others) before splitting on ". "; page count, headings, links and the tools table read the markup without HTML comments; the title exemption covers only the cover <h1> whose text equals the title.
 - Republish deletes the previous hash, so PDF links in already-sent mails break; keep the previous file for a while once a niche has traffic.
 - The page's form reuses the Agentur form defaults (label, button, hint, success); give the series its own copy if they ever diverge.
 - The web page shows the statistic's source but not the PDF's scope note (e.g. which trades the Ausbaugewerbe covers).

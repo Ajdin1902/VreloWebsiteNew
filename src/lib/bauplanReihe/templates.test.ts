@@ -34,7 +34,8 @@ function goodHtml(n = shk): string {
     ...LEVELS.flatMap((l) => [l.name, l.satz]),
   ];
   const first = [
-    ...copy.map((s) => `<p>${enc(s)}</p>`),
+    `<h1>${enc(n.title)}</h1>`,
+    ...copy.filter((s) => s !== n.title).map((s) => `<p>${enc(s)}</p>`),
     `<a href="${enc(stat.href)}">${enc(visible(stat.href))}</a>`,
     ...KAPITEL.slice(0, -1).map((t) => `<h2 class="part">${enc(t)}</h2>`),
     `<h2 class="part">${enc(abschluss.heading)}</h2>`,
@@ -77,6 +78,11 @@ describe("checkReiheTemplate on fixtures", () => {
   it("reports a house-typography issue", () => expectProblem(withAfter('ein "Test"'), "copy"));
   it("reports a wrong page count", () =>
     expectProblem(goodHtml().replace('<section class="page"></section>', ""), "pages"));
+  it("does not count a commented-out page section", () => {
+    expect(problems(withAfter('<!-- <section class="page"></section> -->'))).toEqual([]);
+    const commentedOut = goodHtml().replace('<section class="page"></section>', '<!-- <section class="page"></section> -->');
+    expectProblem(commentedOut, "pages");
+  });
   it("reports chapter headings out of order", () => {
     const html = goodHtml()
       .replace(`>${enc(KAPITEL[0])}<`, ">TMP<")
@@ -112,6 +118,11 @@ describe("checkReiheTemplate on fixtures", () => {
     expectProblem(withAfter("Velp"), "client");
     expectProblem(withAfter("G&ouml;cze"), "client");
   });
+  it("reports the client name Winter, not the season", () => {
+    expectProblem(withAfter("Maximilian Winter"), "client");
+    expectProblem(withAfter("Frag Herrn Winter."), "client");
+    expect(problems(withAfter("Im Winter r&auml;umst du Schnee, der Winterdienst l&auml;uft."))).toEqual([]);
+  });
   it("reports a price", () => expectProblem(withAfter("ab 400 Euro"), "price"));
   it("reports a duration", () => expectProblem(withAfter("fertig in 3 Wochen"), "duration"));
   it("reports a guarantee or a capacity line", () => {
@@ -124,6 +135,11 @@ describe("checkReiheTemplate on fixtures", () => {
     expectProblem(withAfter("STREIT V.1 hat eine Schnittstelle."), "interface");
     expect(problems(withAfter("HERO hat eine Schnittstelle."))).toEqual([]);
     expect(problems(withAfter("Frag, ob deine Software eine Schnittstelle hat."))).toEqual([]);
+  });
+  it("keeps a sentence whole across abbreviations", () => {
+    expectProblem(withAfter("STREIT V.1 verbindest du z. B. &uuml;ber eine Schnittstelle."), "interface");
+    expectProblem(withAfter("STREIT V.1 kann d. h. eine Schnittstelle nutzen."), "interface");
+    expectProblem(withAfter("Ist STREIT V.1 verbunden? Ja, &uuml;ber eine Schnittstelle."), "interface");
   });
   it("matches tool names case-sensitively", () => {
     expectProblem(withAfter("STREIT hat eine Schnittstelle."), "interface");
@@ -138,6 +154,11 @@ describe("checkReiheTemplate on fixtures", () => {
   it("reports a first-person offer before the close, not inside it", () => {
     expectProblem(withBefore("<p>Das baue ich dir.</p>"), "first person");
     expect(problems(withAfter("Das baue ich dir."))).toEqual([]);
+  });
+  it("exempts the title only as the cover headline", () => {
+    // The title in body copy is first person like any other line; only the <h1> is exempt.
+    const moved = goodHtml().replace(`<h1>${enc(shk.title)}</h1>`, `<h1>Bauplan</h1><p>${enc(shk.title)}</p>`);
+    expectProblem(moved, "first person");
   });
   it("reports an assistant without the AI disclosure", () => {
     expectProblem(withAfter("Ein Assistent hilft dir."), "disclosure");

@@ -17,12 +17,18 @@ export const KAPITEL = [
   abschluss.heading,
 ];
 
-const CLIENTS = /\b(Schmid|Zilk|M1|Velp|MDZ|Power-Connect|Purisic|Winter)\b|Göcze/;
+// "Winter" only as the person (Maximilian Winter, Herr Winter): the season and Winterdienst are trade copy.
+const CLIENTS = /\b(Schmid|Zilk|M1|Velp|MDZ|Power-Connect|Purisic|Maximilian Winter|Herrn? Winter)\b|Göcze/;
 const PRICE = /€|\bEUR\b|\d\s*(Euro|netto)\b/i;
 const DURATION = /\bin\s+\d+\s+(Tagen|Wochen|Monaten)\b/i;
 // Pages before the close are a free guide: no first-person service offer (Elektro rule).
 const FIRST_PERSON =
   /\b[Ii]ch\b|\b[Mm]it mir\b|\bohne mich\b|binde ich|richte ich|baue ich|wir zusammen|prüfen wir|klären wir|schauen wir|nehmen wir|legen wir|Wenn du magst/;
+
+// Abbreviations whose ". " must not end a sentence, else the interface check fails open.
+const ABBREV = /\b(z\. ?B|d\. ?h|u\. ?a|bzw|ggf|ca|inkl|evtl|usw|Nr)\./g;
+const sentences = (text: string) =>
+  text.replace(ABBREV, (m) => m.replace(/\./g, "\u2024")).split(". ");
 
 const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 // Case-sensitive on purpose: the noun "Streit" must never count as the software STREIT.
@@ -32,16 +38,18 @@ const names = (tool: string, sentence: string) =>
 export function checkReiheTemplate(n: ReiheNische, html: string = readFileSync(n.template, "utf8")): string[] {
   const out: string[] = [];
   const text = templateText(html).replace(/\s+/g, " ");
+  // Structure checks read the live markup only: a commented-out section is not a page.
+  const live = html.replace(/<!--[\s\S]*?-->/g, "");
 
   const nonAscii = html.match(/[^\x00-\x7F]/);
   if (nonAscii) out.push(`non-ascii: ${JSON.stringify(nonAscii[0])}`);
   for (const e of text.match(/&#?\w+;/g) ?? []) out.push(`entity: ${e} is not in ENTITIES`);
   for (const i of findCopyIssues(text)) out.push(`copy: ${i.kind}: ${i.detail}`);
 
-  const pages = (html.match(/<section class="page/g) ?? []).length;
+  const pages = (live.match(/<section class="page/g) ?? []).length;
   if (pages !== n.pages) out.push(`pages: ${pages} sections, expected ${n.pages}`);
 
-  const headings = partHeadings(html);
+  const headings = partHeadings(live);
   if (JSON.stringify(headings) !== JSON.stringify(KAPITEL)) out.push(`headings: ${JSON.stringify(headings)}`);
 
   const verbatim = [
@@ -56,7 +64,7 @@ export function checkReiheTemplate(n: ReiheNische, html: string = readFileSync(n
   ];
   for (const s of verbatim) if (!text.includes(s)) out.push(`missing: ${s}`);
 
-  const hrefs = [...html.matchAll(/<a\b[^>]*\bhref="([^"]*)"/g)].map((m) => templateText(m[1]));
+  const hrefs = [...live.matchAll(/<a\b[^>]*\bhref="([^"]*)"/g)].map((m) => templateText(m[1]));
   if (!hrefs.includes(abschlussHref(n.slug, "pdf"))) out.push(`close link: no href="${abschlussHref(n.slug, "pdf")}"`);
   if (n.statistik && !hrefs.includes(n.statistik.href)) out.push(`statistik: no href="${n.statistik.href}"`);
   for (const h of hrefs) {
@@ -77,13 +85,13 @@ export function checkReiheTemplate(n: ReiheNische, html: string = readFileSync(n
   if (nummer) out.push(`station number: ${nummer[0]}`);
 
   // Every tool in the template's tools table must be a known tool, so knownTools cannot fall behind.
-  const werkzeuge = html.match(/<table class="werkzeuge">([\s\S]*?)<\/table>/)?.[1] ?? "";
+  const werkzeuge = live.match(/<table class="werkzeuge">([\s\S]*?)<\/table>/)?.[1] ?? "";
   for (const m of werkzeuge.matchAll(/<tr>\s*<td>([\s\S]*?)<\/td>/g)) {
     const tool = templateText(m[1]).trim();
     if (!n.knownTools.includes(tool)) out.push(`tools: ${tool} is not in knownTools`);
   }
 
-  for (const sentence of text.split(". ")) {
+  for (const sentence of sentences(text)) {
     if (!/Schnittstelle/i.test(sentence)) continue;
     // "Lexware" inside a verified "Lexware Office" is the verified tool, not a second one.
     const named = n.knownTools.filter(
@@ -95,9 +103,13 @@ export function checkReiheTemplate(n: ReiheNische, html: string = readFileSync(n
     if (named.length) out.push(`interface: ${named.join(", ")} in: ${sentence.trim()}`);
   }
 
-  const close = text.lastIndexOf(abschluss.heading);
-  // The cover headline is the owner's own question, not a service offer.
-  const person = (close >= 0 ? text.slice(0, close) : text).replace(n.title, "").match(FIRST_PERSON);
+  // The cover headline is the owner's own question, not a service offer: only that <h1> is exempt.
+  const coverless = live.replace(/<h1>([\s\S]*?)<\/h1>/, (h1, inner: string) =>
+    templateText(inner).replace(/\s+/g, " ").trim() === n.title ? "" : h1,
+  );
+  const body = templateText(coverless).replace(/\s+/g, " ");
+  const close = body.lastIndexOf(abschluss.heading);
+  const person = (close >= 0 ? body.slice(0, close) : body).match(FIRST_PERSON);
   if (person) out.push(`first person before the close: ${person[0]}`);
 
   if (/Assistent|\bBot\b/.test(text) && !text.includes("meldet sich als KI-Assistent"))
