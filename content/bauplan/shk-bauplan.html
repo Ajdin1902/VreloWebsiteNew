@@ -1,0 +1,357 @@
+<!doctype html>
+<!--
+  Vrelo Bauplan-Reihe, SHK pilot: free 8-page PDF guide for owner-led SHK-Betriebe.
+  Spec: docs/superpowers/specs/2026-11-06-bauplan-reihe-design.md (section 4 skeleton, section 6 constraints).
+  Facts: Knowledge/marketing/prozess-landkarten.md section 1.7 (research approved by Ajdin 2026-11-06).
+  Data + shared copy: src/lib/bauplanReihe/shk.ts and shared.ts. Styles: content/bauplan/reihe.css.
+
+  RULES (do not break; the guard src/lib/bauplanReihe/templates.test.ts enforces most of them):
+    - Chapters 2 and 7 carry the shared copy word for word (selbstcheck, LEVELS, abschluss).
+    - No price, no Vrelo duration, no capacity line, no guarantee, no client or prospect names.
+    - Pages 1 to 7 are a free guide the reader follows alone: no first-person service offer.
+      Only chapter 7 offers help.
+    - "Schnittstelle" only next to tools in shk.verifiedInterfaces; otherwise
+      "wenn deine Software eine Schnittstelle hat". Vendor features only as section 1.7 confirms them.
+    - The statistic exactly as the 1.7 copy rule says: Ausbaugewerbe and Buerokratie, the word
+      "ueberdurchschnittlich", never as an SHK figure, never next to another number.
+    - Every link prints its target as visible text (the copy is printed).
+    - Any assistant named carries "meldet sich als KI-Assistent".
+    - Dash-free German, no comma before "und", generic masculine, du.
+    - Pure ASCII with entities from src/lib/bauplanTemplateText.ts (add a new entity there first).
+    - Office printer, A4, white page, 8 pages. Full page = shorten copy, never shrink type.
+-->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Vrelo &#183; Bauplan f&uuml;r SHK-Betriebe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>{{{BRAND_CSS}}}</style>
+<style>{{{REIHE_CSS}}}</style>
+</head>
+<body>
+
+<!-- Page 1: cover (series pattern: the owner's question, one job as a flow with circled loss points,
+     the statistic, the one-week path from shared.wochenplan). Flow steps = shk.auftragsweg. -->
+<section class="page first">
+  <div class="p1">
+    <div class="p1-top">
+      <div class="logo">{{{LOGO_SVG}}}<span class="logo-word">Vrelo</span></div>
+      <span>Bauplan f&uuml;r SHK-Betriebe</span>
+    </div>
+
+    <h1>Prozesse, Automatisierung, KI:<br>Wo fange ich &uuml;berhaupt an?</h1>
+
+    <div class="weg-heute">
+      <div class="kicker">Ein Auftrag, viele H&auml;nde</div>
+      <div class="auftragsweg">
+        <span></span>
+        <div class="schritt">Kunde ruft an</div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Notiz auf dem Block</div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Termin im Kalender<span class="verlust">&uuml;bertragen</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Zettel f&uuml;r den Monteur<span class="verlust">ausgedruckt</span></div>
+
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Monteur ruft an, die Nummer fehlt<span class="verlust">nachtelefoniert</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Notizen vom Einsatz, abends im B&uuml;ro<span class="verlust">abgetippt</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt ende">Rechnung, Tage sp&auml;ter<span class="verlust">zusammengesucht</span></div>
+      </div>
+      <p class="kreis-satz">Jeder Kreis ist eine Stelle, an der Zeit verloren geht. Im Bauplan findest du deine.</p>
+    </div>
+
+    <div class="statistik">
+      <span class="zahl">67 Prozent</span>
+      <div>
+        <span class="satz">der Betriebe des Ausbaugewerbes nennen l&auml;ngere Bearbeitungszeiten durch B&uuml;rokratie, ein &uuml;berdurchschnittlicher Wert.</span>
+        <span class="quelle">Zentralverband des Deutschen Handwerks, Sonderumfrage B&uuml;rokratiebelastung im Handwerk, 2023. Zum Ausbaugewerbe z&auml;hlen Installateure und Heizungsbauer neben weiteren Gewerken.</span>
+      </div>
+    </div>
+    <p class="quelle-link">Quelle: <a href="https://www.zdh.de/fileadmin/Oeffentlich/Wirschaft_Energie_Umwelt/Themen/Umfragen/Sonderumfragen/2023/Buerokratiebelastung_SU-1/2023_Sonderumfrage_Buerokratie.pdf">www.zdh.de/fileadmin/Oeffentlich/Wirschaft_Energie_Umwelt/Themen/Umfragen/Sonderumfragen/2023/Buerokratiebelastung_SU-1/2023_Sonderumfrage_Buerokratie.pdf</a></p>
+
+    <div class="woche">
+      <p class="woche-kopf">Dieser Bauplan ist dein erster Schritt.</p>
+      <ol class="tage">
+        <li><span class="tag">Tag 1</span><b>Wo du stehst</b><span class="seite">Seite 2</span></li>
+        <li><span class="tag">Tag 2</span><b>Deine Werkzeuge</b><span class="seite">Seite 3</span></li>
+        <li><span class="tag">Tag 3</span><b>Deine Datenwege</b><span class="seite">Seite 4</span></li>
+        <li><span class="tag">Tag 4</span><b>Das Fundament</b><span class="seite">Seite 5</span></li>
+        <li><span class="tag">Tag 5</span><b>Die erste Station</b><span class="seite">Seite 6 und 7</span></li>
+      </ol>
+      <p class="woche-schluss">Nach einer Woche wei&szlig;t du, wo du anf&auml;ngst.</p>
+      <p class="woche-ziel">Schritt f&uuml;r Schritt zu deinem KI-Betriebssystem.</p>
+    </div>
+
+    <div class="fuer"><p><b>F&uuml;r wen:</b> Inhaber von SHK-Betrieben mit Monteuren drau&szlig;en und einem B&uuml;ro, das alles zusammenh&auml;lt. F&uuml;r die ersten Seiten reicht ein Stift.</p></div>
+
+    <div class="p1-foot">Ajdin Dzafic, <span class="brand-word">Vrelo</span>, Regensburg &#183; vrelo-ki.de</div>
+  </div>
+</section>
+
+<!-- Page 2: Wo du stehst (shared copy: selbstcheck, LEVELS) -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r SHK-Betriebe &#183; Seite 2 von 8</span></div>
+  <h2 class="part">Wo du stehst</h2>
+  <div class="kicker">Dein Stand je Station</div>
+  <p class="intro">Mach pro Station ein Kreuz in einer der drei Spalten: l&auml;uft von selbst, auf Papier oder in Dateien, nur im Kopf. Z&auml;hl am Ende die Kreuze je Spalte.</p>
+  <table class="check">
+    <thead><tr><th></th><th class="links">Station</th><th>L&auml;uft von selbst</th><th>Auf Papier oder in Dateien</th><th>Nur im Kopf</th></tr></thead>
+    <tbody>
+      <tr class="neu"><td class="stock" rowspan="2"><b>Erdgeschoss</b> Kundeneingang</td><td>Anfrage kommt rein<span class="bsp">Telefon, Mail, Formular, Notdienst</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Angebot und Nachfassen<span class="bsp">wenn keine Antwort kommt</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="1"><b>2. Stock</b> Onboarding</td><td>F&ouml;rderunterlagen einsammeln<span class="bsp">f&uuml;r die Heizungsf&ouml;rderung</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="3"><b>3. Stock</b> Die Arbeit</td><td>Auftrag zum Monteur<span class="bsp">wer, wann, wohin, welches Material</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>R&uuml;ckmeldung vom Monteur<span class="bsp">Stunden, Material, Fotos</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Wartungstermine<span class="bsp">j&auml;hrlich, aus der Vertragsliste</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="2"><b>4. Stock</b> Finanzwesen</td><td>Rechnung schreiben<span class="bsp">aus Stunden und Material</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Lieferantenrechnungen zuordnen<span class="bsp">zum Auftrag</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="3"><b>5. Stock</b> Abschluss und Team</td><td>Bewertung<span class="bsp">Bitte um eine Google-Bewertung</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Abschluss und &Uuml;bergabe<span class="bsp">Abnahme, F&ouml;rder-Nachweise</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Bewerbungen und Einarbeitung<span class="bsp">Antwort, erster Tag</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="2"><b>Dach</b> und Assistent</td><td>Tagesbild<span class="bsp">morgens sehen, was offen ist</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Assistent f&uuml;r unterwegs<span class="bsp">einsprechen statt merken</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="summe"><td></td><td>Kreuze je Spalte</td><td class="kreuz"><span class="feld"></span></td><td class="kreuz"><span class="feld"></span></td><td class="kreuz"><span class="feld"></span></td></tr>
+    </tbody>
+  </table>
+  <div class="frage">
+    <p><b>Liegen deine Kundendaten an einem festen Ort, auf den alles zugreift?</b></p>
+    <div class="antwort"><span><span class="box"></span> Ja</span><span><span class="box"></span> Nein</span></div>
+  </div>
+  <p class="hinweis">Eine leere Zeile z&auml;hlt als &#8222;nur im Kopf&#8220;. Zwei Kreuze in einer Zeile: z&auml;hl nur das rechte.</p>
+  <h3 class="zwischen">Deine Stufe</h3>
+  <table class="stufen">
+    
+    <tbody>
+      <tr><td class="nr">0</td><td class="name">Im Kopf<span class="regel">Kein Kreuz bei &#8222;l&auml;uft&#8220;, im Kopf mindestens so viele wie auf Papier</span></td><td>Schreib auf, was du heute nur im Kopf tr&auml;gst. Eine Station reicht f&uuml;r den Anfang.</td></tr>
+      <tr><td class="nr">1</td><td class="name">Verstreut<span class="regel">Kein Kreuz bei &#8222;l&auml;uft&#8220;, auf Papier mehr als im Kopf</span></td><td>Vieles steht schon auf Papier oder in Dateien. Such dir die eine Station aus, die dich am meisten Zeit kostet.</td></tr>
+      <tr><td class="nr">2</td><td class="name">Erste Station l&auml;uft<span class="regel">Mindestens ein Kreuz bei &#8222;l&auml;uft&#8220;, Fundament: nein</span></td><td>Eine Station l&auml;uft von selbst. Als N&auml;chstes brauchen deine Daten einen festen Platz, damit alles auf denselben Ort zugreift.</td></tr>
+      <tr><td class="nr">3</td><td class="name">Ein Ort<span class="regel">Fundament: ja, 1 bis 9 Kreuze bei &#8222;l&auml;uft&#8220;</span></td><td>Deine Daten liegen an einem Ort. Jetzt holst du eine Station nach der anderen in dein System.</td></tr>
+      <tr><td class="nr">4</td><td class="name">Haus steht<span class="regel">Fundament: ja, 10 Kreuze oder mehr bei &#8222;l&auml;uft&#8220;</span></td><td>Fast alles l&auml;uft von selbst. Schlie&szlig; die letzten L&uuml;cken und schreib auf, wie die Stationen zusammenh&auml;ngen.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Page 3: Deine Werkzeuge und Datenwege (1 of 2): what SHK software already ships -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r SHK-Betriebe &#183; Seite 3 von 8</span></div>
+  <h2 class="part">Deine Werkzeuge und Datenwege</h2>
+  <p class="intro">Schau zuerst nach, was deine Software schon kann. Was sie kann, schaltest du ein. Bauen musst du nur, was fehlt.</p>
+  <h3 class="zwischen">Was SHK-Software mitbringt</h3>
+  <table class="werkzeuge">
+    <thead><tr><th>Werkzeug</th><th>Was es dir abnimmt</th></tr></thead>
+    <tbody>
+      <tr><td>HERO</td><td>Angebot und Kalkulation, Plantafel f&uuml;r die Eins&auml;tze, App mit Baudoku und digitaler Unterschrift, Rechnung mit Mahnlauf. Anfragen von deiner Webseite legt HERO als Projekt an, wenn dein Formular &uuml;ber die Lead-API angebunden ist. Das ist ein kleiner Einbau, kein Schalter.</td></tr>
+      <tr><td>ToolTime</td><td>Angebote, Baustellenplanung, App mit Arbeitsbericht aus Text, Sprache und Foto, digitale Unterschrift, Rechnung mit automatischen Mahnungen. Ein KI-Telefonassistent nimmt Anrufe an.</td></tr>
+      <tr><td>Craftboxx</td><td>Einsatzplanung per Drag-and-drop, &uuml;bernimmt Termine aus Google, Apple oder Outlook. Monteur-App mit Zeiterfassung, Rechnungen &uuml;ber Lexware Office oder sevDesk.</td></tr>
+      <tr><td>Label</td><td>Angebote, Rechnungen und Bestellungen, die App Label Mobile, Gro&szlig;handel &uuml;ber IDS Connect, DATANORM und Open Masterdata.</td></tr>
+      <tr><td>pds</td><td>Einsatzplanung, Service-App, Wartungsgesch&auml;ft mit Wartungsintervallen, Eingangsrechnungen als ZUGFeRD mit Abgleich gegen die Bestellung.</td></tr>
+      <tr><td>STREIT V.1</td><td>Einsatzplanung, die App Monteur+ auch ohne Netz, Wartungs- und Servicevertr&auml;ge planen und abrechnen.</td></tr>
+      <tr><td>TAIFUN</td><td>Angebot, Rechnung, Mahnwesen bis zum Mahnbescheid, Wartungsmodul, Handwerker-App.</td></tr>
+      <tr><td>Lexware Office</td><td>Angebote, Rechnungen, Serienrechnungen f&uuml;r Wartungsvertr&auml;ge, automatische Mahnungen, Belege per Texterkennung, Bankabgleich, Export f&uuml;r DATEV.</td></tr>
+      <tr><td>sevDesk</td><td>Angebot und Rechnung, Abschlags- und Schlussrechnung, Mahnungen, Belege per Scan mit Buchungsvorschlag.</td></tr>
+      <tr><td>Google Calendar</td><td>Termine auf dem Handy. Daf&uuml;r braucht jeder Monteur ein Konto, der Eintrag ist Freitext und nichts kommt zur&uuml;ck.</td></tr>
+    </tbody>
+  </table>
+  <ul class="punkte">
+    <li><b>Wartung:</b> Ein Modul, das die j&auml;hrliche Wartung plant, bringen pds, STREIT V.1 und TAIFUN mit. Lexware Office rechnet Wartungsvertr&auml;ge als Serienrechnung ab, Termine plant es nicht.</li>
+    <li><b>Gro&szlig;handel:</b> GC-GRUPPE, Richter+Frenzel und Pfeiffer &amp; May bieten die Branchenschnittstellen IDS Connect f&uuml;r Warenkorb und Bestellung, dazu DATANORM f&uuml;r den Artikelkatalog.</li>
+  </ul>
+  <p class="eigen">L&auml;uft dein Betrieb schon in einer Handwerkersoftware, nutz zuerst, was sie kann. Baust du daneben dasselbe noch einmal, pflegst du es doppelt.</p>
+  <p class="hinweis">Stand der Herstellerseiten: November 2026. Welche Funktion in deinem Tarif steckt, sagt dir dein Anbieter.</p>
+</section>
+
+<!-- Page 4: Deine Werkzeuge und Datenwege (2 of 2): the fill-in map -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r SHK-Betriebe &#183; Seite 4 von 8</span></div>
+  <h3 class="zwischen">Deine Datenwege</h3>
+  <p class="intro">Trag pro Station ein, womit du heute arbeitest, woher die Daten kommen und wohin sie danach gehen. Die zwei Zeilen oben sind Beispiele.</p>
+  <table class="karte">
+    <colgroup><col style="width:48mm"><col><col><col></colgroup>
+    <thead><tr><th>Station</th><th>Werkzeug heute</th><th>Daten kommen von</th><th>gehen nach</th></tr></thead>
+    <tbody>
+      <tr class="beispiel"><td class="station">Auftrag zum Monteur</td><td>Kalender, Ausdruck</td><td>Anruf oder Mail ins B&uuml;ro</td><td>Zettel an den Monteur</td></tr>
+      <tr class="beispiel"><td class="station">Lieferantenrechnungen</td><td>Postfach, Lexware Office</td><td>Gro&szlig;h&auml;ndler, per Mail und Papier</td><td>Steuerberater, per DATEV</td></tr>
+      <tr><td class="station">Anfrage kommt rein</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Angebot und Nachfassen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">F&ouml;rderunterlagen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Auftrag zum Monteur</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">R&uuml;ckmeldung vom Monteur</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Wartungstermine</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Rechnung schreiben</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Lieferantenrechnungen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Bewertung</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Abschluss und &Uuml;bergabe</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Bewerbungen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Tagesbild</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Assistent f&uuml;r unterwegs</td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>F&uuml;ll jede Zeile aus, auch wenn dir nur ein Wort einf&auml;llt.</li>
+      <li>Kreis jede Stelle ein, an der jemand etwas &uuml;bertr&auml;gt, ausdruckt, nachtelefoniert, abtippt oder zusammensucht.</li>
+      <li>Z&auml;hl die Kreise je Station. Die Station mit den meisten Kreisen ist deine Quelle: die Arbeit, die jede Woche wiederkommt.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- Page 5: Das Fundament -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r SHK-Betriebe &#183; Seite 5 von 8</span></div>
+  <h2 class="part">Das Fundament</h2>
+  <p class="intro">Jede Station schreibt ihre Daten an einen festen Ort. Das ist dein Fundament. Du baust es einmal, zusammen mit der ersten Station, danach wird jede weitere Station kleiner. Liegen deine Daten an einem Ort, kann sp&auml;ter eine KI darin nachschlagen, sortieren und Entw&uuml;rfe schreiben.</p>
+  <h3 class="zwischen">Welcher Ort zu dir passt</h3>
+  <div class="orte">
+    <div class="ort"><b>Mit Handwerkersoftware</b><p>Sie ist dein Fundament. Kunden, Auftr&auml;ge und Rechnungen liegen schon dort, du legst nichts daneben an.</p></div>
+    <div class="ort"><b>Mit Kalender und Rechnungsprogramm</b><p>Kunden bleiben in Lexware Office oder sevDesk. F&uuml;r Auftr&auml;ge und Wartungsvertr&auml;ge legst du eine Tabelle an, eine Zeile je Auftrag.</p></div>
+    <div class="ort"><b>Mit Papier</b><p>Fang mit der Tabelle an, in Excel oder Google Sheets. Sie w&auml;chst mit jeder Station.</p></div>
+  </div>
+  <h3 class="zwischen">Welche Felder deine Stationen brauchen</h3>
+  <table class="felder">
+    <tbody>
+      <tr><td>Kunde</td><td>Name, Adresse, Telefon, Mail. Liegt in deinem Rechnungsprogramm oder deiner Handwerkersoftware.</td></tr>
+      <tr><td>Auftrag</td><td>Auftragsnummer, Kunde, Aufgabe, Termin, Monteur, Material, Stand.</td></tr>
+      <tr><td>R&uuml;ckmeldung</td><td>Erledigt oder offen, Stunden, Material, Fotos. H&auml;ngt am Auftrag.</td></tr>
+      <tr><td>Wartungsvertrag</td><td>Kunde, Anlage mit Hersteller und Typ, letzte Wartung, Monat der n&auml;chsten.</td></tr>
+      <tr><td>Rechnung</td><td>Auftragsnummer, Betrag, bezahlt oder offen.</td></tr>
+    </tbody>
+  </table>
+  <p><b>Die Auftragsnummer verbindet die Stationen.</b> R&uuml;ckmeldung, Rechnung und Lieferantenrechnung tragen sie. So findet jede Station den richtigen Auftrag, ohne dass jemand sucht.</p>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Entscheide, wo deine Auftr&auml;ge leben: in deiner Handwerkersoftware oder in einer Tabelle.</li>
+      <li>Leg in der Tabelle die Spalten f&uuml;r Auftrag und Wartungsvertrag aus der Liste oben an.</li>
+      <li>Trag die Auftr&auml;ge der n&auml;chsten Woche ein, jeden mit Auftragsnummer, Adresse und Telefonnummer.</li>
+      <li>Leg fest, wer neue Auftr&auml;ge eintr&auml;gt. Ein Ort, eine Person, die ihn pflegt.</li>
+    </ol>
+  </div>
+  <p class="hinweis">Alles l&auml;uft auf deinen Namen: die Tabelle, die Konten, die Zug&auml;nge. Die Daten deiner Kunden bleiben in deinen Programmen.</p>
+</section>
+
+<!-- Page 6: Die erste Station (1 of 2): the door station Auftrag zum Monteur, ways 1 and 2 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r SHK-Betriebe &#183; Seite 6 von 8</span></div>
+  <h2 class="part">Die erste Station, Schritt f&uuml;r Schritt</h2>
+  <p class="intro">Du f&auml;ngst beim Auftrag zum Monteur an: Jeder Auftrag kommt als Karte auf sein Handy. Die Station ist klein, l&auml;uft ohne KI und schreibt den ersten Eintrag in dein Fundament. Liegt deine Quelle woanders, gilt dieselbe Reihenfolge: erst deine Software, dann ein Workflow-Werkzeug, zuletzt ein eigener Bau.</p>
+  <div class="flow">
+    <div><b>B&uuml;ro</b>tr&auml;gt den Auftrag ein</div>
+    <span class="pfeil">&#8594;</span>
+    <div><b>Karte</b>auf dem Handy des Monteurs</div>
+    <span class="pfeil">&#8594;</span>
+    <div><b>Monteur</b>antwortet im selben Chat</div>
+    <span class="pfeil">&#8594;</span>
+    <div class="frei"><b>Fundament</b>der Auftrag steht auf erledigt</div>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 1</div>
+    <p class="weg">Deine Software hat eine Monteur-App</p>
+    <p>HERO, ToolTime, Craftboxx, Label, pds, STREIT V.1 und TAIFUN bringen eine App f&uuml;r die Monteure mit. Arbeitest du mit einer davon, schalte die App ein, dann baust du hier nichts. Das ist der saubere Weg: Die Daten deiner Kunden bleiben in deiner Software. Frag deinen Anbieter nach dem Auftragsverarbeitungsvertrag.</p>
+    <ol>
+      <li>Frag deinen Anbieter, ob dein Tarif die Monteur-App enth&auml;lt.</li>
+      <li>Starte mit einem Monteur und seinen Auftr&auml;gen.</li>
+      <li>Schalte den Arbeitsbericht mit Fotos ein, wenn deine App einen hat. Dann kommt die R&uuml;ckmeldung in derselben App zur&uuml;ck.</li>
+    </ol>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 2</div>
+    <p class="weg">Keine Monteur-App: der schnelle Start mit Telegram</p>
+    <p>Arbeitest du mit Google Calendar und Lexware Office oder sevDesk, bleibt der Kalender f&uuml;rs B&uuml;ro. Ein Workflow-Werkzeug wie n8n liest jeden neuen Termin, legt den Auftrag im Fundament an und schickt dem Monteur die Karte per Telegram. Von einem privaten WhatsApp-Konto kann kein Ablauf automatisch Karten verschicken, daf&uuml;r braucht es WhatsApp Business mit einer eigenen Einrichtung bei Meta.</p>
+    <ol>
+      <li>Leg ein festes Muster f&uuml;r jeden Kalendereintrag fest: Kunde, Adresse, Telefon, Aufgabe, Material, Zeitfenster, Monteur. Eine Zeile je Angabe.</li>
+      <li>Jeder Monteur installiert Telegram einmal, das dauert pro Handy eine Minute. Danach kommt jede Karte dort an.</li>
+      <li>Leg ein Konto bei n8n an, auf deinen Namen.</li>
+      <li>Bau den Ablauf in drei Schritten: neuer Termin im Kalender, neue Zeile im Fundament, Karte an den Monteur.</li>
+      <li>Teste ihn mit einem Monteur, bevor alle mitmachen.</li>
+    </ol>
+    <p class="hinweis">Telegram sieht in seinen Bedingungen f&uuml;r Bots keinen Auftragsverarbeitungsvertrag vor. Auf die Karte kommt deshalb nur, was der Monteur f&uuml;r den Einsatz braucht: Adresse, Aufgabe, Zeitfenster und Ansprechpartner mit Telefonnummer. Pr&uuml;f vor dem Start, ob du mit dem Workflow-Werkzeug und dem Kalender einen Auftragsverarbeitungsvertrag schlie&szlig;en kannst.</p>
+  </div>
+</section>
+
+<!-- Page 7: Die erste Station (2 of 2): Rueckmeldung, example, way 3 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r SHK-Betriebe &#183; Seite 7 von 8</span></div>
+  <h3 class="zwischen">Danach: die R&uuml;ckmeldung vom Monteur</h3>
+  <p>Der Monteur antwortet auf die Karte, wenn er fertig ist: erledigt, Stunden, Material, Fotos. Die Antwort folgt einem festen Muster wie die Karte, deshalb braucht auch dieser Schritt keine KI. Der Ablauf schreibt die Antwort an den Auftrag im Fundament, das B&uuml;ro sieht den Stand ohne Anruf. Aus derselben Zeile legt der Ablauf am selben Tag einen Rechnungsentwurf in Lexware Office oder sevDesk an. Du pr&uuml;fst ihn und schickst ihn ab.</p>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Leg fest, was der Monteur zur&uuml;ckschreibt: erledigt oder offen, Stunden, Material, Fotos.</li>
+      <li>Erweitere den Ablauf: Antwort auf die Karte, Eintrag am Auftrag, Nachricht ans B&uuml;ro.</li>
+      <li>H&auml;ng den Rechnungsentwurf erst an, wenn die R&uuml;ckmeldungen sauber kommen.</li>
+    </ol>
+    <p class="hinweis">L&auml;uft die Antwort &uuml;ber Telegram, gilt dieselbe Regel wie f&uuml;r die Karte auf Seite 6: nur, was der Auftrag braucht. Fotos nur von der Anlage, nie von Personen oder Dokumenten.</p>
+  </div>
+
+  <div class="szene">
+    <div class="kicker">Ein Beispiel aus dem Kundendienst</div>
+    <p>Familie Huber ruft im B&uuml;ro an, die Therme liefert kein Warmwasser. Deine B&uuml;rokraft tr&auml;gt den Auftrag nach dem festen Muster in den Kalender.</p>
+    <p>Kurz danach hat dein Monteur die Karte auf dem Handy: Adresse, Aufgabe mit Thermentyp, Zeitfenster 10 bis 12 Uhr und Ansprechpartner mit Telefonnummer.</p>
+    <p>Nach dem Einsatz schreibt er zur&uuml;ck: <span class="gesagt">&#8222;erledigt, 1,5 Std, Z&uuml;ndelektrode&#8220;</span>, dazu zwei Fotos. Im Fundament steht der Auftrag auf erledigt, der Rechnungsentwurf liegt bereit.</p>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 3</div>
+    <p class="weg">Ein eigener Bau, nur f&uuml;r die L&uuml;cke</p>
+    <p>Passt keiner der beiden Wege, etwa weil deine Software keine Monteur-App hat und du sie behalten willst, bleibt ein eigener Bau. Er schlie&szlig;t die L&uuml;cke zwischen deiner Software und dem Handy und ersetzt nichts. Das geht, wenn deine Software eine Schnittstelle hat.</p>
+    <ol>
+      <li>Schreib auf, was dir an Weg 1 und Weg 2 fehlt.</li>
+      <li>Frag deinen Anbieter, ob seine Software eine Schnittstelle hat und was sie liest und schreibt.</li>
+      <li>Lass nur diese L&uuml;cke bauen und dir jeden Ablauf mit Dokumentation &uuml;bergeben.</li>
+    </ol>
+  </div>
+
+  <h3 class="zwischen">So merkst du, dass es l&auml;uft</h3>
+  <ul class="haken">
+    <li><span class="box"></span>Am Morgen druckt keiner mehr die Woche aus.</li>
+    <li><span class="box"></span>Kein Monteur ruft wegen einer fehlenden Adresse an.</li>
+    <li><span class="box"></span>Die R&uuml;ckmeldung ist am selben Tag im B&uuml;ro.</li>
+  </ul>
+  <p class="eigen">Die Konten laufen auf deinen Namen. L&auml;uft die Station ruhig, nimmst du die n&auml;chste dazu.</p>
+</section>
+
+<!-- Page 8: Die naechsten Stockwerke + the shared close -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r SHK-Betriebe &#183; Seite 8 von 8</span></div>
+  <h2 class="part">Die n&auml;chsten Stockwerke</h2>
+  <p class="intro">L&auml;uft der Auftrag aufs Handy, nimm die n&auml;chste Station dazu. Die Reihenfolge ist ein Vorschlag, deine Kreise von Seite 4 gehen vor.</p>
+  <table class="naechste">
+    <tbody>
+      <tr class="zuerst"><td class="name"><b>Wartungsvertr&auml;ge</b><span class="wo">3. Stock &#183; Die Arbeit</span></td><td>Jeder Vertragskunde bekommt rechtzeitig einen Terminvorschlag. Den gebuchten Termin bekommt der Monteur als Karte. Hat deine Software das Wartungsmodul (pds, STREIT V.1, TAIFUN, siehe Seite 3), schalt es ein, statt es nachzubauen.</td></tr>
+      <tr><td class="name"><b>Rechnung</b><span class="wo">4. Stock &#183; Finanzwesen</span></td><td>Aus der R&uuml;ckmeldung legt der Ablauf den Entwurf an. Mahnen kann dein Rechnungsprogramm selbst.</td></tr>
+      <tr><td class="name"><b>Lieferantenrechnungen</b><span class="wo">4. Stock &#183; Finanzwesen</span></td><td>Lexware Office und sevDesk lesen Belege schon. Eine KI ordnet sie &uuml;ber die Auftragsnummer zu, du gibst frei. Hat deine Software das schon (pds, siehe Seite 3), nutz sie.</td></tr>
+      <tr><td class="name"><b>Anfragen und Notdienst</b><span class="wo">Erdgeschoss &#183; Kundeneingang</span></td><td>Jede Anfrage bekommt eine Best&auml;tigung. Nach Feierabend landet sie auf dem Bereitschaftshandy statt auf der Mailbox.</td></tr>
+      <tr><td class="name"><b>Angebote nachfassen</b><span class="wo">Erdgeschoss &#183; Kundeneingang</span></td><td>Kommt keine Antwort, geht nach einer festen Frist eine Erinnerung in deinen Worten raus.</td></tr>
+      <tr><td class="name"><b>F&ouml;rderunterlagen</b><span class="wo">2. Stock &#183; Onboarding</span></td><td>Checkliste, Upload, Erinnerung. Einsammeln und ablegen, nie bewerten. Die Best&auml;tigungen f&uuml;r die KfW stellst du selbst aus.</td></tr>
+      <tr><td class="name"><b>Abschluss und &Uuml;bergabe</b><span class="wo">5. Stock &#183; Abschluss und Team</span></td><td>Der Kunde bekommt seine Unterlagen als PDF, nach einer neuen Heizung dazu das Angebot f&uuml;r die Wartung.</td></tr>
+      <tr><td class="name"><b>Bewertung, Bewerbungen</b><span class="wo">5. Stock &#183; Abschluss und Team</span></td><td>Nach bezahlter Rechnung gibst du die Bitte um eine Bewertung frei, ohne Gegenleistung. Bewerber bekommen sofort Antwort.</td></tr>
+      <tr><td class="name"><b>Tagesbild</b><span class="wo">Das Dach</span></td><td>Jeden Morgen eine Nachricht: offene Anfragen, Auftr&auml;ge des Tages je Monteur, unbezahlte Rechnungen.</td></tr>
+      <tr><td class="name"><b>Assistent f&uuml;r unterwegs</b><span class="wo">Um das ganze Haus</span></td><td>Unterwegs sprichst du R&uuml;ckruf, Termin oder Notiz ein. Er meldet sich als KI-Assistent, sobald er mit Kunden schreibt.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="abschluss">
+    <h2 class="part">Wenn du Fragen hast, melde dich. Kostenlos.</h2>
+    <p>Im Prozess-Audit schauen wir gemeinsam, wo in deinem Betrieb die meiste Zeit h&auml;ngen bleibt.</p>
+    <p>Den Anfang macht ein Gespr&auml;ch von 30 Minuten. Ergibt sich daraus etwas Sinnvolles, schreibe ich dir einen Fahrplan. Wenn nicht, sage ich es dir ehrlich.</p>
+    <div class="buchen">
+      <a href="https://vrelo-ki.de/kontakt?src=bauplan-shk-pdf">30 Minuten Gespr&auml;ch vereinbaren</a>
+      <span class="url">vrelo-ki.de/kontakt?src=bauplan-shk-pdf</span>
+    </div>
+    <div class="kontakt">
+      <span class="logo-word">Vrelo</span>&#160;&#160;
+      Ajdin Dzafic &#183; Regensburg &#183; ajdin@vrelo-ki.de &#183; vrelo-ki.de
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!doctype html>
+<!--
+  Vrelo Bauplan-Reihe, Fliesenleger: free 8-page PDF guide for owner-led Fliesen-, Platten- und
+  Mosaikleger (Bad und Kueche im Bestand, mostly private customers).
+  Spec: docs/superpowers/specs/2026-11-06-bauplan-reihe-design.md (section 4 skeleton, section 6 constraints).
+  Facts: Knowledge/marketing/prozess-landkarten.md section 8 (8.1 Landkarte, 8.7 Recherche, 2026-11-07);
+  general Handwerkersoftware facts from section 1.7.
+  Data + shared copy: src/lib/bauplanReihe/fliesen.ts and shared.ts. Styles: content/bauplan/reihe.css.
+
+  RULES (do not break; the guard src/lib/bauplanReihe/templates.test.ts enforces most of them):
+    - Chapters 2 and 7 carry the shared copy word for word (selbstcheck, LEVELS, abschluss).
+    - No price, no Vrelo duration, no capacity line, no guarantee, no client or prospect names.
+    - Pages 1 to 7 are a free guide the reader follows alone: no first-person service offer.
+      Only chapter 7 offers help.
+    - "Schnittstelle" only next to tools in fliesen.verifiedInterfaces; otherwise
+      "wenn deine Software eine Schnittstelle hat". Ceram, STREIT, plancraft, Palette CAD, ViSoft are
+      never called connectable. Vendor features only as section 8.7 confirms them.
+    - The statistic exactly as the 8.7 copy rule says: Ausbaugewerbe and Buerokratie, the word
+      "ueberdurchschnittlich", never as a Fliesenleger figure, never next to another number.
+    - Baujahr only as GefStoffV section 5a says it (no asbestos claim); DIN 18534 photos never a duty.
+    - Photos from the customer's bathroom: floor and wall only, no people, nothing personal;
+      inquiry photos deleted when no order follows.
+    - Every link prints its target as visible text (the copy is printed).
+    - Any assistant named carries "meldet sich als KI-Assistent".
+    - Dash-free German, no comma before "und", generic masculine, du.
+    - Pure ASCII with entities from src/lib/bauplanTemplateText.ts (add a new entity there first).
+    - Office printer, A4, white page, 8 pages. Full page = shorten copy, never shrink type.
+-->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Vrelo &#183; Bauplan f&uuml;r Fliesenleger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>{{{BRAND_CSS}}}</style>
+<style>{{{REIHE_CSS}}}</style>
+</head>
+<body>
+
+<!-- Page 1: cover (series pattern). Flow steps = fliesen.auftragsweg. -->
+<section class="page first">
+  <div class="p1">
+    <div class="p1-top">
+      <div class="logo">{{{LOGO_SVG}}}<span class="logo-word">Vrelo</span></div>
+      <span>Bauplan f&uuml;r Fliesenleger</span>
+    </div>
+
+    <h1>Prozesse, Automatisierung, KI:<br>Wo fange ich &uuml;berhaupt an?</h1>
+
+    <div class="weg-heute">
+      <div class="kicker">Ein Bad, viele Absprachen</div>
+      <div class="auftragsweg">
+        <span></span>
+        <div class="schritt">Anfrage per WhatsApp, Fotos vom alten Bad</div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">R&uuml;ckruf, Ma&szlig;e und Format fehlen<span class="verlust">nachtelefoniert</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Aufma&szlig;, Notizen auf dem Block</div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Angebot mit Verschnitt in Excel<span class="verlust">abgetippt</span></div>
+
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Angebot raus, keine Antwort<span class="verlust">vergessen</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Bemusterung in der Ausstellung, Etikett als Foto<span class="verlust">zusammengesucht</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt ende">Rechnung aus Stundenzetteln, Tage sp&auml;ter<span class="verlust">&uuml;bertragen</span></div>
+      </div>
+      <p class="kreis-satz">Jeder Kreis ist eine Stelle, an der Zeit verloren geht. Im Bauplan findest du deine.</p>
+    </div>
+
+    <div class="statistik">
+      <span class="zahl">67 Prozent</span>
+      <div>
+        <span class="satz">der Betriebe des Ausbaugewerbes nennen l&auml;ngere Bearbeitungszeiten durch B&uuml;rokratie, ein &uuml;berdurchschnittlicher Wert.</span>
+        <span class="quelle">Zentralverband des Deutschen Handwerks, Sonderumfrage B&uuml;rokratiebelastung im Handwerk, 2023. Zum Ausbaugewerbe z&auml;hlen Fliesen-, Platten- und Mosaikleger neben weiteren Gewerken.</span>
+      </div>
+    </div>
+    <p class="quelle-link">Quelle: <a href="https://www.zdh.de/fileadmin/Oeffentlich/Wirschaft_Energie_Umwelt/Themen/Umfragen/Sonderumfragen/2023/Buerokratiebelastung_SU-1/2023_Sonderumfrage_Buerokratie.pdf">www.zdh.de/fileadmin/Oeffentlich/Wirschaft_Energie_Umwelt/Themen/Umfragen/Sonderumfragen/2023/Buerokratiebelastung_SU-1/2023_Sonderumfrage_Buerokratie.pdf</a></p>
+
+    <div class="woche">
+      <p class="woche-kopf">Dieser Bauplan ist dein erster Schritt.</p>
+      <ol class="tage">
+        <li><span class="tag">Tag 1</span><b>Wo du stehst</b><span class="seite">Seite 2</span></li>
+        <li><span class="tag">Tag 2</span><b>Deine Werkzeuge</b><span class="seite">Seite 3</span></li>
+        <li><span class="tag">Tag 3</span><b>Deine Datenwege</b><span class="seite">Seite 4</span></li>
+        <li><span class="tag">Tag 4</span><b>Das Fundament</b><span class="seite">Seite 5</span></li>
+        <li><span class="tag">Tag 5</span><b>Die erste Station</b><span class="seite">Seite 6 und 7</span></li>
+      </ol>
+      <p class="woche-schluss">Nach einer Woche wei&szlig;t du, wo du anf&auml;ngst.</p>
+      <p class="woche-ziel">Schritt f&uuml;r Schritt zu deinem KI-Betriebssystem.</p>
+    </div>
+
+    <div class="fuer"><p><b>F&uuml;r wen:</b> Inhaber von Fliesenlegerbetrieben, die B&auml;der und K&uuml;chen im Bestand machen, von der Abdichtung bis zur Fuge im Gro&szlig;format, meist f&uuml;r Privatkunden. F&uuml;r die ersten Seiten reicht ein Stift.</p></div>
+
+    <div class="p1-foot">Ajdin Dzafic, <span class="brand-word">Vrelo</span>, Regensburg &#183; vrelo-ki.de</div>
+  </div>
+</section>
+
+<!-- Page 2: Wo du stehst (shared copy: selbstcheck, LEVELS) -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Fliesenleger &#183; Seite 2 von 8</span></div>
+  <h2 class="part">Wo du stehst</h2>
+  <div class="kicker">Dein Stand je Station</div>
+  <p class="intro">Mach pro Station ein Kreuz in einer der drei Spalten: l&auml;uft von selbst, auf Papier oder in Dateien, nur im Kopf. Z&auml;hl am Ende die Kreuze je Spalte.</p>
+  <table class="check">
+    <thead><tr><th></th><th class="links">Station</th><th>L&auml;uft von selbst</th><th>Auf Papier oder in Dateien</th><th>Nur im Kopf</th></tr></thead>
+    <tbody>
+      <tr class="neu"><td class="stock" rowspan="2"><b>Erdgeschoss</b> Kundeneingang</td><td>Anfrage kommt rein<span class="bsp">Telefon, Formular, WhatsApp mit Fotos</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Aufma&szlig; und Angebot<span class="bsp">Verschnitt, Nachfassen</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="1"><b>2. Stock</b> Onboarding</td><td>Bemusterung und Freigabe<span class="bsp">Fliese, Format, Fuge, Muster, Charge</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="3"><b>3. Stock</b> Die Arbeit</td><td>Auftrag zur Kolonne<span class="bsp">Liefertermin, Vorgewerke</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>R&uuml;ckmeldung der Kolonne<span class="bsp">Stunden, Material, Fotos</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Termine nach der Abnahme<span class="bsp">Gew&auml;hrleistung, Nachbestellung</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="2"><b>4. Stock</b> Finanzwesen</td><td>Rechnung schreiben<span class="bsp">Abschlag, Schluss nach Aufma&szlig;</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Lieferantenrechnungen zuordnen<span class="bsp">zum Projekt</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="3"><b>5. Stock</b> Abschluss und Team</td><td>Bewertung<span class="bsp">Bitte um eine Google-Bewertung</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Abnahme und &Uuml;bergabe<span class="bsp">Restfliesen, Charge je Raum</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Bewerbungen und Einarbeitung<span class="bsp">Antwort, erster Tag</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="2"><b>Dach</b> und Assistent</td><td>Tagesbild<span class="bsp">morgens sehen, was offen ist</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Assistent f&uuml;r unterwegs<span class="bsp">einsprechen statt merken</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="summe"><td></td><td>Kreuze je Spalte</td><td class="kreuz"><span class="feld"></span></td><td class="kreuz"><span class="feld"></span></td><td class="kreuz"><span class="feld"></span></td></tr>
+    </tbody>
+  </table>
+  <div class="frage">
+    <p><b>Liegen deine Kundendaten an einem festen Ort, auf den alles zugreift?</b></p>
+    <div class="antwort"><span><span class="box"></span> Ja</span><span><span class="box"></span> Nein</span></div>
+  </div>
+  <p class="hinweis">Eine leere Zeile z&auml;hlt als &#8222;nur im Kopf&#8220;. Zwei Kreuze in einer Zeile: z&auml;hl nur das rechte.</p>
+  <h3 class="zwischen">Deine Stufe</h3>
+  <table class="stufen">
+    <tbody>
+      <tr><td class="nr">0</td><td class="name">Im Kopf<span class="regel">Kein Kreuz bei &#8222;l&auml;uft&#8220;, im Kopf mindestens so viele wie auf Papier</span></td><td>Schreib auf, was du heute nur im Kopf tr&auml;gst. Eine Station reicht f&uuml;r den Anfang.</td></tr>
+      <tr><td class="nr">1</td><td class="name">Verstreut<span class="regel">Kein Kreuz bei &#8222;l&auml;uft&#8220;, auf Papier mehr als im Kopf</span></td><td>Vieles steht schon auf Papier oder in Dateien. Such dir die eine Station aus, die dich am meisten Zeit kostet.</td></tr>
+      <tr><td class="nr">2</td><td class="name">Erste Station l&auml;uft<span class="regel">Mindestens ein Kreuz bei &#8222;l&auml;uft&#8220;, Fundament: nein</span></td><td>Eine Station l&auml;uft von selbst. Als N&auml;chstes brauchen deine Daten einen festen Platz, damit alles auf denselben Ort zugreift.</td></tr>
+      <tr><td class="nr">3</td><td class="name">Ein Ort<span class="regel">Fundament: ja, 1 bis 9 Kreuze bei &#8222;l&auml;uft&#8220;</span></td><td>Deine Daten liegen an einem Ort. Jetzt holst du eine Station nach der anderen in dein System.</td></tr>
+      <tr><td class="nr">4</td><td class="name">Haus steht<span class="regel">Fundament: ja, 10 Kreuze oder mehr bei &#8222;l&auml;uft&#8220;</span></td><td>Fast alles l&auml;uft von selbst. Schlie&szlig; die letzten L&uuml;cken und schreib auf, wie die Stationen zusammenh&auml;ngen.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Page 3: Deine Werkzeuge und Datenwege (1 of 2): what Fliesen software already ships -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Fliesenleger &#183; Seite 3 von 8</span></div>
+  <h2 class="part">Deine Werkzeuge und Datenwege</h2>
+  <p class="intro">Schau zuerst nach, was deine Software schon kann. Was sie kann, schaltest du ein. Bauen musst du nur, was fehlt.</p>
+  <h3 class="zwischen">Was Fliesenleger-Software mitbringt</h3>
+  <table class="werkzeuge">
+    <thead><tr><th>Werkzeug</th><th>Was es dir abnimmt</th></tr></thead>
+    <tbody>
+      <tr><td>Ceram</td><td>Die Fliesenleger-Software von Sander &amp; Doll: Aufma&szlig;-App mit Raumbuch, rechnet Verschnitt und Mengen aus dem Aufma&szlig;. Daten aus Aufma&szlig;, CAD-Planung oder Leistungskatalog gehen ins Angebot. Projektplanung, App mit Arbeitszeiten, Fotos und Bautagebuch, Abschl&auml;ge nach Baufortschritt, Lager mit Chargen.</td></tr>
+      <tr><td>STREIT V.1</td><td>Aufma&szlig;-App, Anbindung an CAD-Programme, Kalender, der Auftr&auml;ge in Termine umwandelt und sich in beide Richtungen mit dem Google Calendar abgleicht. Bestellung beim Gro&szlig;handel, E-Rechnung, &Uuml;bergabe an den Steuerberater.</td></tr>
+      <tr><td>plancraft</td><td>Ein KI-Empfang nimmt Anrufe und Nachrichten an. Mobiles Aufma&szlig;, Kalkulation, Angebot per Mail, Plantafel, App mit Zeiterfassung, Chat und Baudoku, Rechnung mit Mahnwesen, Eingangsrechnungen, Export f&uuml;r DATEV.</td></tr>
+      <tr><td>HERO</td><td>Angebot und Kalkulation, Plantafel, App mit Baudoku und digitaler Unterschrift, Rechnung mit Mahnlauf. Anfragen von deiner Webseite legt HERO als Projekt an, wenn dein Formular &uuml;ber die Lead-API angebunden ist.</td></tr>
+      <tr><td>ToolTime</td><td>Angebote, Baustellenplanung, App mit Arbeitsbericht aus Text, Sprache und Foto, Rechnung mit automatischen Mahnungen. Ein KI-Telefonassistent nimmt Anrufe an.</td></tr>
+      <tr><td>Lexware Office</td><td>Angebote, Rechnungen, automatische Mahnungen, Belege per Texterkennung, Bankabgleich, Export f&uuml;r DATEV.</td></tr>
+      <tr><td>sevDesk</td><td>Angebot und Rechnung, Abschlags- und Schlussrechnung, Mahnungen, Belege per Scan mit Buchungsvorschlag.</td></tr>
+      <tr><td>Google Calendar</td><td>Mit einem Terminplan bucht dein Kunde das Aufma&szlig; selbst &uuml;ber eine Buchungsseite. Als Plantafel f&uuml;r die Kolonnen taugt er wenig: Jeder braucht ein Konto, der Eintrag ist Freitext.</td></tr>
+    </tbody>
+  </table>
+  <ul class="punkte">
+    <li><b>Nachfassen:</b> Ein offenes Angebot fasst laut Herstellerseiten keines dieser Programme von selbst nach. plancraft verschickt das Angebot per Mail, eine Wiedervorlage zeigt die Seite nicht.</li>
+    <li><b>Bemusterung:</b> Die Freigabe deines Kunden f&uuml;r Fliese, Format, Fuge und Muster h&auml;lt laut Herstellerseiten keines dieser Programme als eigenen Schritt fest. Ceram f&uuml;hrt Chargen im Lager.</li>
+    <li><b>Gro&szlig;handel:</b> Ceram und STREIT V.1 bestellen &uuml;ber IDS und OCI im Webshop, Artikel kommen per Datanorm.</li>
+  </ul>
+  <p class="eigen">L&auml;uft dein Betrieb schon in einer Fliesenleger-Software, nutz zuerst, was sie kann. Baust du daneben dasselbe noch einmal, pflegst du es doppelt.</p>
+  <p class="hinweis">Stand der Herstellerseiten: November 2026. Welche Funktion in deinem Tarif steckt, sagt dir dein Anbieter.</p>
+</section>
+
+<!-- Page 4: Deine Werkzeuge und Datenwege (2 of 2): the fill-in map -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Fliesenleger &#183; Seite 4 von 8</span></div>
+  <h3 class="zwischen">Deine Datenwege</h3>
+  <p class="intro">Trag pro Station ein, womit du heute arbeitest, woher die Daten kommen und wohin sie danach gehen. Die zwei Zeilen oben sind Beispiele.</p>
+  <table class="karte">
+    <colgroup><col style="width:48mm"><col><col><col></colgroup>
+    <thead><tr><th>Station</th><th>Werkzeug heute</th><th>Daten kommen von</th><th>gehen nach</th></tr></thead>
+    <tbody>
+      <tr class="beispiel"><td class="station">Anfrage kommt rein</td><td>Privathandy, Notizblock</td><td>WhatsApp mit Fotos, Anruf</td><td>Excel f&uuml;rs Angebot</td></tr>
+      <tr class="beispiel"><td class="station">Bemusterung</td><td>Fotos im Chat</td><td>Kunde aus der Ausstellung</td><td>Bestellung beim Fliesenhandel</td></tr>
+      <tr><td class="station">Anfrage kommt rein</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Aufma&szlig; und Angebot</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Bemusterung und Freigabe</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Auftrag zur Kolonne</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">R&uuml;ckmeldung der Kolonne</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Termine nach der Abnahme</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Rechnung schreiben</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Lieferantenrechnungen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Bewertung</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Abnahme und &Uuml;bergabe</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Bewerbungen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Tagesbild</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Assistent f&uuml;r unterwegs</td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>F&uuml;ll jede Zeile aus, auch wenn dir nur ein Wort einf&auml;llt.</li>
+      <li>Kreis jede Stelle ein, an der jemand nachtelefoniert, etwas abtippt, vergisst, zusammensucht oder &uuml;bertr&auml;gt.</li>
+      <li>Z&auml;hl die Kreise je Station. Die Station mit den meisten Kreisen ist deine Quelle: die Arbeit, die jede Woche wiederkommt.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- Page 5: Das Fundament -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Fliesenleger &#183; Seite 5 von 8</span></div>
+  <h2 class="part">Das Fundament</h2>
+  <p class="intro">Jede Station schreibt ihre Daten an einen festen Ort. Das ist dein Fundament. Du baust es einmal, zusammen mit der ersten Station, danach wird jede weitere Station kleiner. Liegen deine Daten an einem Ort, kann sp&auml;ter eine KI darin nachschlagen, sortieren und Entw&uuml;rfe schreiben.</p>
+  <h3 class="zwischen">Welcher Ort zu dir passt</h3>
+  <div class="orte">
+    <div class="ort"><b>Mit Fliesenleger-Software</b><p>Ceram, STREIT V.1 oder plancraft sind dein Fundament. Kunden, Projekte und Rechnungen liegen schon dort, du legst nichts daneben an.</p></div>
+    <div class="ort"><b>Mit Rechnungsprogramm</b><p>Kunden bleiben in Lexware Office oder sevDesk. F&uuml;r Anfragen und Projekte legst du eine Tabelle an, eine Zeile je Projekt.</p></div>
+    <div class="ort"><b>Mit Papier</b><p>Fang mit der Tabelle an, in Excel oder Google Sheets. Sie w&auml;chst mit jeder Station.</p></div>
+  </div>
+  <h3 class="zwischen">Welche Felder deine Stationen brauchen</h3>
+  <table class="felder">
+    <tbody>
+      <tr><td>Kunde</td><td>Name, Adresse, Telefon, Mail. Liegt in deinem Rechnungsprogramm oder deiner Fliesenleger-Software.</td></tr>
+      <tr><td>Anfrage</td><td>Datum, Kunde, R&auml;ume, Boden und Wand in Quadratmetern, Baujahr, Termin f&uuml;rs Aufma&szlig;, Stand: neu, Aufma&szlig;, Angebot raus, Zusage, Absage.</td></tr>
+      <tr><td>Projekt</td><td>Projektnummer, Kunde, R&auml;ume, je Raum Fliese mit Artikelnummer, Format, Fuge und Muster, Freigabe mit Datum, Charge und Kaliber, Liefertermin.</td></tr>
+      <tr><td>R&uuml;ckmeldung</td><td>Stunden, Material, Restfliesen, Fotos. H&auml;ngt am Projekt.</td></tr>
+      <tr><td>Rechnung</td><td>Projektnummer, Abschlag oder Schluss, Betrag, bezahlt oder offen.</td></tr>
+    </tbody>
+  </table>
+  <p><b>Die Projektnummer verbindet die Stationen.</b> Angebot, Freigabe, Lieferung und Rechnung tragen sie. So findet jede Station das richtige Projekt, ohne dass jemand sucht.</p>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Entscheide, wo deine Projekte leben: in deiner Fliesenleger-Software oder in einer Tabelle.</li>
+      <li>Leg in der Tabelle die Spalten f&uuml;r Anfrage und Projekt aus der Liste oben an.</li>
+      <li>Trag deine laufenden Projekte ein, jedes mit Projektnummer, Adresse und Telefonnummer.</li>
+      <li>Leg fest, wer neue Anfragen und Projekte eintr&auml;gt. Ein Ort, eine Person, die ihn pflegt.</li>
+    </ol>
+  </div>
+  <p class="hinweis">Alles l&auml;uft auf deinen Namen: die Tabelle, die Konten, die Zug&auml;nge. Fotos und Grundrisse deiner Kunden liegen am Projekt, nie in einem Gruppenchat. Schl&uuml;ssel und Zugangscodes geh&ouml;ren in keine Tabelle, die deine Leute sehen.</p>
+</section>
+
+<!-- Page 6: Die erste Station (1 of 2): the door station Anfrage, Fragen vor dem Aufmass, Aufmass, Angebot; ways 1 and 2 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Fliesenleger &#183; Seite 6 von 8</span></div>
+  <h2 class="part">Die erste Station, Schritt f&uuml;r Schritt</h2>
+  <p class="intro">Du f&auml;ngst bei der Anfrage an: Sie kommt mit Fotos, Grundriss und den Antworten f&uuml;rs Aufma&szlig;. Sofort geht ein Termin zur&uuml;ck, im Fundament steht eine neue Zeile. Die Station ist klein und l&auml;uft ohne KI. Liegt deine Quelle woanders, gilt dieselbe Reihenfolge: erst deine Software, dann ein Workflow-Werkzeug, zuletzt ein eigener Bau.</p>
+  <div class="flow">
+    <div><b>Kunde</b>schickt Fotos und Grundriss</div>
+    <span class="pfeil">&#8594;</span>
+    <div><b>Fragen</b>vor dem Aufma&szlig; beantwortet</div>
+    <span class="pfeil">&#8594;</span>
+    <div><b>Aufma&szlig;</b>bucht er selbst im Kalender</div>
+    <span class="pfeil">&#8594;</span>
+    <div class="frei"><b>Angebot</b>Kunde und Projekt stehen im Fundament</div>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 1</div>
+    <p class="weg">Deine Software nimmt das Aufma&szlig; und rechnet das Angebot</p>
+    <p>Ceram rechnet Verschnitt und Mengen aus dem Aufma&szlig;, STREIT V.1 und plancraft haben eine Aufma&szlig;-App. Anrufe nehmen der KI-Empfang von plancraft und der KI-Telefonassistent von ToolTime an, HERO legt Anfragen von deiner Webseite als Projekt an. Den Termin f&uuml;rs Aufma&szlig; legt laut Herstellerseiten keines davon aus der Anfrage an.</p>
+    <ol>
+      <li>Nimm jedes Aufma&szlig; in der App deiner Software auf, nicht auf dem Block.</li>
+      <li>Rechne das Angebot mit Verschnitt dort, nicht in einer Datei daneben.</li>
+      <li>Leg im Google Calendar einen Terminplan f&uuml;rs Aufma&szlig; an und schick den Link bei jedem R&uuml;ckruf mit.</li>
+    </ol>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 2</div>
+    <p class="weg">Die Anfrage stellt deine Fragen selbst: mit einem Workflow-Werkzeug</p>
+    <p>Eine Anfrage-Seite nimmt Fotos und Grundriss an und stellt deine Fragen. Ein Workflow-Werkzeug wie n8n best&auml;tigt jede Anfrage sofort, schickt den Link f&uuml;rs Aufma&szlig; und legt Kunde und Projekt im Fundament an. Per Telegram siehst du die Anfrage gleichzeitig auf dem Handy.</p>
+    <ol>
+      <li>Leg die Fragen fest: R&auml;ume, Boden und Wand in Quadratmetern, Format, Altbelag raus, Dusche bodengleich, wer Sanit&auml;r und Elektro macht, Baujahr, Wunschzeitraum.</li>
+      <li>Bau sie in dein Formular, mit Upload f&uuml;r Fotos und Grundriss. Ohne Formular reicht eine kurze Anfrage-Seite.</li>
+      <li>Leg ein Konto bei n8n an, auf deinen Namen.</li>
+      <li>Bau den Ablauf in drei Schritten: neue Anfrage, Antwortmail mit dem Link f&uuml;rs Aufma&szlig;, neue Zeile im Fundament.</li>
+      <li>Schick dir selbst eine Testanfrage mit Fotos, bevor das Formular live geht.</li>
+    </ol>
+    <p class="hinweis">Das Baujahr fragst du wegen &#167; 5a der Gefahrstoffverordnung: Dein Auftraggeber nennt dir vor Beginn das Baujahr und was er &uuml;ber Gefahrstoffe im Haus wei&szlig;, auch im Privathaushalt. Fotos nur von Boden und Wand, ohne Personen und Pers&ouml;nliches. Kommt kein Auftrag zustande, l&ouml;schst du sie. Telegram sieht in seinen Bedingungen f&uuml;r Bots keinen Auftragsverarbeitungsvertrag vor, aufs Handy kommen deshalb nur Name, Telefon, R&auml;ume und Wunschzeitraum. Pr&uuml;f vor dem Start, ob du mit dem Workflow-Werkzeug einen Auftragsverarbeitungsvertrag schlie&szlig;en kannst.</p>
+  </div>
+</section>
+
+<!-- Page 7: Die erste Station (2 of 2): Nachfassen, example, way 3 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Fliesenleger &#183; Seite 7 von 8</span></div>
+  <h3 class="zwischen">Danach: offene Angebote nachfassen</h3>
+  <p>Bleibt ein Angebot ohne Antwort, schickt der Ablauf nach f&uuml;nf Tagen eine kurze Erinnerung in deinen Worten, nach zw&ouml;lf Tagen eine zweite. Jeden Montag bekommst du die Liste der offenen Angebote. Sagt der Kunde zu, setzt der Ablauf das Projekt auf Zusage und l&auml;dt ihn zur Bemusterung ein. Die Programme von Seite 3 fassen laut Herstellerseiten nicht von selbst nach, hier lohnt der Ablauf.</p>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Schreib die zwei Erinnerungen in deinen Worten, kurz und freundlich.</li>
+      <li>Trag bei jedem Angebot das Datum und den Stand ins Fundament ein: offen, Zusage oder Absage.</li>
+      <li>Erweitere den Ablauf: Angebot offen seit f&uuml;nf Tagen, Erinnerung raus, Montagsliste an dich.</li>
+    </ol>
+  </div>
+
+  <div class="szene">
+    <div class="kicker">Ein Beispiel aus der Badsanierung</div>
+    <p>Familie Wagner fragt am Sonntagabend &uuml;ber deine Webseite an: <span class="gesagt">&#8222;Bad neu fliesen, 6 Quadratmeter Boden, W&auml;nde raumhoch, Dusche bodengleich&#8220;</span>. Fotos vom alten Boden und der Grundriss h&auml;ngen dran, den Sanit&auml;r macht ihr Installateur. Die Antwort mit dem Link ist sofort da, sie buchen das Aufma&szlig; f&uuml;r Mittwoch, 16 Uhr.</p>
+    <p>Am Montag fr&uuml;h siehst du die Anfrage per Telegram. Zum Aufma&szlig; f&auml;hrst du mit Baujahr und Format. Dass der alte Belag raus muss, wei&szlig;t du schon.</p>
+    <p>Du rechnest das Angebot mit Verschnitt. Nach f&uuml;nf Tagen ohne Antwort geht die Erinnerung raus, drei Tage sp&auml;ter kommt die Zusage.</p>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 3</div>
+    <p class="weg">Ein eigener Bau, nur f&uuml;r die L&uuml;cke</p>
+    <p>Passt keiner der beiden Wege, etwa weil die Anfrage-Seite aus Quadratmetern und Format gleich eine grobe Preisspanne zeigen soll, bleibt ein eigener Bau. Er schlie&szlig;t die L&uuml;cke zwischen Webseite und Software und ersetzt nichts. Das geht, wenn deine Software eine Schnittstelle hat.</p>
+    <ol>
+      <li>Schreib auf, was dir an Weg 1 und Weg 2 fehlt.</li>
+      <li>Frag deinen Anbieter, ob seine Software eine Schnittstelle hat und was sie liest und schreibt.</li>
+      <li>Lass nur diese L&uuml;cke bauen und dir jeden Ablauf mit Dokumentation &uuml;bergeben.</li>
+    </ol>
+  </div>
+
+  <h3 class="zwischen">So merkst du, dass es l&auml;uft</h3>
+  <ul class="haken">
+    <li><span class="box"></span>Jede Anfrage hat eine Antwort, bevor du zur&uuml;ckrufst.</li>
+    <li><span class="box"></span>Zum Aufma&szlig; f&auml;hrst du mit Fotos, Fl&auml;chen und Baujahr.</li>
+    <li><span class="box"></span>Kein Angebot bleibt ohne Nachfassen liegen.</li>
+  </ul>
+  <p class="eigen">Die Konten laufen auf deinen Namen. L&auml;uft die Station ruhig, nimmst du die n&auml;chste dazu.</p>
+</section>
+
+<!-- Page 8: Die naechsten Stockwerke + the shared close. Runner-up Bemusterung und Freigabe first. -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Fliesenleger &#183; Seite 8 von 8</span></div>
+  <h2 class="part">Die n&auml;chsten Stockwerke</h2>
+  <p class="intro">L&auml;uft die Anfrage von selbst, nimm die n&auml;chste Station dazu. Die Reihenfolge ist ein Vorschlag, deine Kreise von Seite 4 gehen vor.</p>
+  <table class="naechste">
+    <tbody>
+      <tr class="zuerst"><td class="name"><b>Bemusterung und Freigabe</b><span class="wo">2. Stock &#183; Onboarding</span></td><td>Nach der Zusage best&auml;tigt dein Kunde je Raum ein Freigabeblatt: Artikelnummer, Format, Fugenfarbe, Verlegemuster, Foto der Fliese. Sein &#8222;Ja&#8220; steht mit Datum im Fundament, dann bestellst du. Bei der Lieferung notierst du Charge und Kaliber, zwei Tage vor dem Start fragt der Ablauf beim Kunden oder Vorgewerk: Ist der Untergrund belegreif? So passt das verlegte Bad zum Muster, eine Nachbestellung trifft die Charge. Diesen Schritt h&auml;lt laut Herstellerseiten keines der Programme von Seite 3 fest.</td></tr>
+      <tr><td class="name"><b>Auftrag zur Kolonne</b><span class="wo">3. Stock &#183; Die Arbeit</span></td><td>Die Kolonne bekommt das Projekt als Karte aufs Handy: Adresse, R&auml;ume, Fliese, Fuge, Muster, Ansprechpartner. Hat deine Software eine App, schalt sie ein.</td></tr>
+      <tr><td class="name"><b>R&uuml;ckmeldung</b><span class="wo">3. Stock &#183; Die Arbeit</span></td><td>Stunden, Material, Restfliesen und Fotos von Untergrund, Abdichtung und fertigem Belag kommen ans Projekt.</td></tr>
+      <tr><td class="name"><b>Rechnung</b><span class="wo">4. Stock &#183; Finanzwesen</span></td><td>Am Tag der Fertigmeldung liegt der Entwurf bereit. Abschl&auml;ge kann Ceram selbst, mahnen kann dein Rechnungsprogramm.</td></tr>
+      <tr><td class="name"><b>Lieferantenrechnungen</b><span class="wo">4. Stock &#183; Finanzwesen</span></td><td>Lexware Office, sevDesk und plancraft erfassen Belege schon. Eine KI ordnet sie &uuml;ber die Projektnummer zu, du gibst frei.</td></tr>
+      <tr><td class="name"><b>Abnahme und &Uuml;bergabe</b><span class="wo">5. Stock &#183; Abschluss und Team</span></td><td>Dein Kunde bekommt Artikelnummer und Charge je Raum f&uuml;r eine sp&auml;tere Reparatur, die Restfliesen beschriftet.</td></tr>
+      <tr><td class="name"><b>Bewertung, Bewerbungen</b><span class="wo">5. Stock &#183; Abschluss und Team</span></td><td>Nach bezahlter Rechnung gibst du die Bitte um eine Bewertung frei, ohne Gegenleistung. Ein Foto vom Bad nur mit schriftlicher Zustimmung, ohne Pers&ouml;nliches. Bewerber bekommen sofort Antwort.</td></tr>
+      <tr><td class="name"><b>Tagesbild</b><span class="wo">Das Dach</span></td><td>Jeden Morgen eine Nachricht: neue Anfragen, offene Angebote und Freigaben, Liefertermine, unbezahlte Rechnungen.</td></tr>
+      <tr><td class="name"><b>Assistent f&uuml;r unterwegs</b><span class="wo">Um das ganze Haus</span></td><td>Auf der Baustelle sprichst du R&uuml;ckruf, Termin oder Notiz zum Projekt ein. Er meldet sich als KI-Assistent, sobald er mit Kunden schreibt.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="abschluss">
+    <h2 class="part">Wenn du Fragen hast, melde dich. Kostenlos.</h2>
+    <p>Im Prozess-Audit schauen wir gemeinsam, wo in deinem Betrieb die meiste Zeit h&auml;ngen bleibt.</p>
+    <p>Den Anfang macht ein Gespr&auml;ch von 30 Minuten. Ergibt sich daraus etwas Sinnvolles, schreibe ich dir einen Fahrplan. Wenn nicht, sage ich es dir ehrlich.</p>
+    <div class="buchen">
+      <a href="https://vrelo-ki.de/kontakt?src=bauplan-fliesen-pdf">30 Minuten Gespr&auml;ch vereinbaren</a>
+      <span class="url">vrelo-ki.de/kontakt?src=bauplan-fliesen-pdf</span>
+    </div>
+    <div class="kontakt">
+      <span class="logo-word">Vrelo</span>&#160;&#160;
+      Ajdin Dzafic &#183; Regensburg &#183; ajdin@vrelo-ki.de &#183; vrelo-ki.de
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

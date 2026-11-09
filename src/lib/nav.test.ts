@@ -47,7 +47,7 @@ describe("focus routes", () => {
 
 describe("top nav", () => {
   it("puts Referenzen right after Leistungen and drops Newsletter from the nav", () => {
-    expect(navLinks.map((l) => l.href)).toEqual(["/leistungen", "/referenzen", "/ueber-mich", "/faq", "/ratgeber", "/kontakt"]);
+    expect(navLinks.map((l) => l.href)).toEqual(["/leistungen", "/referenzen", "/ueber-mich", "/faq", "/ratgeber", "/vorlagen", "/kontakt"]);
   });
 });
 

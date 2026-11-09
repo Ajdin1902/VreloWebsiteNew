@@ -8,6 +8,7 @@ import {
   bauplanPdfPath,
   evaluateBauplanRequest,
 } from "./bauplanEmail";
+import { reiheNischen } from "./bauplanReihe";
 import { findCopyIssues } from "./ratgeberCopy";
 const base = { email: "a@b.de", honeypot: "", renderedAt: 0 };
 const PDF = "https://vrelo-ki.de/bauplan/x.pdf";
@@ -71,5 +72,29 @@ describe("Elektro variant", () => {
     expect(bauplanPdfPath("agentur")).toBe(BAUPLAN_PDF_PATH);
     expect(bauplanPdfPath("elektro")).toBe(ELEKTRO_BAUPLAN_PDF_PATH);
     expect(existsSync(join(process.cwd(), "public", ELEKTRO_BAUPLAN_PDF_PATH))).toBe(true);
+  });
+});
+
+describe("SHK variant", () => {
+  const d = evaluateBauplanRequest({ ...base, source: "vorlagen" }, 10_000, PDF, "shk");
+  if (d.action !== "send") throw new Error(d.action);
+  it("uses the SHK subjects and copy", () => {
+    expect(d.readerEmail.subject).toBe("Dein Bauplan für SHK-Betriebe");
+    expect(d.readerEmail.text).toContain(reiheNischen.shk.mail.readerClose);
+    expect(d.internalEmail.subject).toBe("SHK-Bauplan angefordert: a@b.de");
+    expect(d.internalEmail.text).toContain("Bauplan: SHK-Betriebe");
+  });
+  it("keeps the reader mail clean", () => {
+    expect(findCopyIssues(d.readerEmail.text)).toEqual([]);
+    expect(d.readerEmail.text).not.toMatch(/Erstgespräch|Prozess-Check|buchen|€|Wochen/i);
+  });
+  it("names attachment and PDF per variant, and the SHK file exists", () => {
+    expect(bauplanAttachmentName("agentur")).toBe("Vrelo-Bauplan-Agenturen.pdf");
+    expect(bauplanAttachmentName("elektro")).toBe("Vrelo-Bauplan-Elektrobetriebe.pdf");
+    expect(bauplanAttachmentName("shk")).toBe("Vrelo-Bauplan-SHK-Betriebe.pdf");
+    const paths = [bauplanPdfPath("agentur"), bauplanPdfPath("elektro"), bauplanPdfPath("shk")];
+    expect(new Set(paths).size).toBe(3);
+    expect(bauplanPdfPath("shk")).toBe(reiheNischen.shk.pdfPath);
+    expect(existsSync(join(process.cwd(), "public", bauplanPdfPath("shk")))).toBe(true);
   });
 });

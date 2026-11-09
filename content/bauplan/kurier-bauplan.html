@@ -1,0 +1,354 @@
+<!doctype html>
+<!--
+  Vrelo Bauplan-Reihe, Kurierdienste: free 8-page PDF guide for owner-led Direkt-, Express- and Same-Day-Kurierdienste (B2B).
+  Spec: docs/superpowers/specs/2026-11-06-bauplan-reihe-design.md (section 4 skeleton, section 6 constraints).
+  Facts: Knowledge/marketing/prozess-landkarten.md section 11 (11.1 Landkarte, 11.7 Recherche, 2026-11-07).
+  Data + shared copy: src/lib/bauplanReihe/kurier.ts and shared.ts. Styles: content/bauplan/reihe.css.
+
+  RULES (do not break; the guard src/lib/bauplanReihe/templates.test.ts enforces most of them):
+    - Chapters 2 and 7 carry the shared copy word for word (selbstcheck, LEVELS, abschluss).
+    - No price, no Vrelo duration, no capacity line, no guarantee, no client or prospect names.
+    - Pages 1 to 7 are a free guide the reader follows alone: no first-person service offer.
+      Only chapter 7 offers help.
+    - No statistic (decided): the KEP market share describes the parcel networks, not the reader.
+      The cover's amber block carries a pain line in his words instead.
+    - "Schnittstelle" only next to tools in kurier.verifiedInterfaces; eCourier, Opal and YellowFox
+      are never called connectable. Vendor features only as section 11.7 confirms them.
+    - Driver position = employee data, no permanent tracking. Delivery photos only of the shipment,
+      never people. Lab samples never on the card. The PostG register question is not raised.
+    - Every link prints its target as visible text (the copy is printed).
+    - Any assistant named carries "meldet sich als KI-Assistent".
+    - Dash-free German, no comma before "und", generic masculine, du.
+    - Pure ASCII with entities from src/lib/bauplanTemplateText.ts (add a new entity there first).
+    - Office printer, A4, white page, 8 pages. Full page = shorten copy, never shrink type.
+-->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Vrelo &#183; Bauplan f&uuml;r Kurierdienste</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>{{{BRAND_CSS}}}</style>
+<style>{{{REIHE_CSS}}}</style>
+</head>
+<body>
+
+<!-- Page 1: cover (series pattern). Flow steps = kurier.auftragsweg. No statistic: the amber block
+     where the other Bauplaene show their number carries a pain line instead (spec section 5.3). -->
+<section class="page first">
+  <div class="p1">
+    <div class="p1-top">
+      <div class="logo">{{{LOGO_SVG}}}<span class="logo-word">Vrelo</span></div>
+      <span>Bauplan f&uuml;r Kurierdienste</span>
+    </div>
+
+    <h1>Prozesse, Automatisierung, KI:<br>Wo fange ich &uuml;berhaupt an?</h1>
+
+    <div class="weg-heute">
+      <div class="kicker">Eine Fahrt, viele Anrufe</div>
+      <div class="auftragsweg">
+        <span></span>
+        <div class="schritt">Kunde ruft an, du sitzt im Auto</div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Notiz im Auto, der Empf&auml;nger fehlt<span class="verlust">zur&uuml;ckgerufen</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Anruf beim Fahrer, der gerade frei ist<span class="verlust">herumtelefoniert</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Kunde ruft an: Ist es schon da?<span class="verlust">nachgefragt</span></div>
+
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Quittung auf Papier im Fahrzeug<span class="verlust">nachgereicht</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Monatsende: Fahrten aus Zetteln und Chats<span class="verlust">zusammengesucht</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt ende">Sammelrechnung, Fahrt f&uuml;r Fahrt<span class="verlust">abgetippt</span></div>
+      </div>
+      <p class="kreis-satz">Jeder Kreis ist eine Stelle, an der Zeit verloren geht. Im Bauplan findest du deine.</p>
+    </div>
+
+    <div class="statistik">
+      <div>
+        <span class="satz"><b>&#8222;Kannst du heute bis 14 Uhr noch zwei Kartons zu unserem Kunden fahren?&#8220;</b></span>
+        <span class="satz">So kommt eine Same-Day-Fahrt rein, oft w&auml;hrend du selbst am Steuer sitzt. Bleibt die Best&auml;tigung aus, ruft dein Kunde beim n&auml;chsten Kurier an.</span>
+      </div>
+    </div>
+
+    <div class="woche">
+      <p class="woche-kopf">Dieser Bauplan ist dein erster Schritt.</p>
+      <ol class="tage">
+        <li><span class="tag">Tag 1</span><b>Wo du stehst</b><span class="seite">Seite 2</span></li>
+        <li><span class="tag">Tag 2</span><b>Deine Werkzeuge</b><span class="seite">Seite 3</span></li>
+        <li><span class="tag">Tag 3</span><b>Deine Datenwege</b><span class="seite">Seite 4</span></li>
+        <li><span class="tag">Tag 4</span><b>Das Fundament</b><span class="seite">Seite 5</span></li>
+        <li><span class="tag">Tag 5</span><b>Die erste Station</b><span class="seite">Seite 6 und 7</span></li>
+      </ol>
+      <p class="woche-schluss">Nach einer Woche wei&szlig;t du, wo du anf&auml;ngst.</p>
+      <p class="woche-ziel">Schritt f&uuml;r Schritt zu deinem KI-Betriebssystem.</p>
+    </div>
+
+    <div class="fuer"><p><b>F&uuml;r wen:</b> Inhaber von Kurierdiensten mit Direkt-, Express- und Same-Day-Fahrten f&uuml;r Gesch&auml;ftskunden, mit eigenen Fahrern oder Subunternehmern. F&uuml;r die ersten Seiten reicht ein Stift.</p></div>
+
+    <div class="p1-foot">Ajdin Dzafic, <span class="brand-word">Vrelo</span>, Regensburg &#183; vrelo-ki.de</div>
+  </div>
+</section>
+
+<!-- Page 2: Wo du stehst (shared copy: selbstcheck, LEVELS) -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Kurierdienste &#183; Seite 2 von 8</span></div>
+  <h2 class="part">Wo du stehst</h2>
+  <div class="kicker">Dein Stand je Station</div>
+  <p class="intro">Mach pro Station ein Kreuz in einer der drei Spalten: l&auml;uft von selbst, auf Papier oder in Dateien, nur im Kopf. Z&auml;hl am Ende die Kreuze je Spalte.</p>
+  <table class="check">
+    <thead><tr><th></th><th class="links">Station</th><th>L&auml;uft von selbst</th><th>Auf Papier oder in Dateien</th><th>Nur im Kopf</th></tr></thead>
+    <tbody>
+      <tr class="neu"><td class="stock" rowspan="2"><b>Erdgeschoss</b> Kundeneingang</td><td>Auftragsannahme<span class="bsp">Telefon, Mail, WhatsApp, Buchungsseite</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Preis nennen<span class="bsp">nach Kilometer oder Zone, mit Zuschl&auml;gen</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="1"><b>2. Stock</b> Onboarding</td><td>Sendungsdaten einsammeln<span class="bsp">Empf&auml;nger, Zeitfenster, Ablageort</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="3"><b>3. Stock</b> Die Arbeit</td><td>Disposition<span class="bsp">Auftrag an Fahrer oder Subunternehmer</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Zustellnachweis<span class="bsp">zugestellt, Empf&auml;nger, Foto, Wartezeit</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Feste Touren<span class="bsp">t&auml;gliche Abholungen bei Gesch&auml;ftskunden</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="2"><b>4. Stock</b> Finanzwesen</td><td>Rechnung<span class="bsp">Sammelrechnung im Monat, Einzelrechnung</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Belege und Subunternehmer<span class="bsp">Tanken, Parken, Gutschriften</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="3"><b>5. Stock</b> Abschluss und Team</td><td>Bewertung<span class="bsp">Bitte an zufriedene Stammkunden</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Abschluss<span class="bsp">Kunde oder Fahrer geht: Zug&auml;nge, Tankkarte</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Fahrer und Subunternehmer gewinnen<span class="bsp">Antwort, Einweisung, Nachweise</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="2"><b>Dach</b> und Assistent</td><td>Tagesbild<span class="bsp">morgens sehen, was offen ist</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Assistent f&uuml;r unterwegs<span class="bsp">einsprechen statt merken</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="summe"><td></td><td>Kreuze je Spalte</td><td class="kreuz"><span class="feld"></span></td><td class="kreuz"><span class="feld"></span></td><td class="kreuz"><span class="feld"></span></td></tr>
+    </tbody>
+  </table>
+  <div class="frage">
+    <p><b>Liegen deine Kundendaten an einem festen Ort, auf den alles zugreift?</b></p>
+    <div class="antwort"><span><span class="box"></span> Ja</span><span><span class="box"></span> Nein</span></div>
+  </div>
+  <p class="hinweis">Eine leere Zeile z&auml;hlt als &#8222;nur im Kopf&#8220;. Zwei Kreuze in einer Zeile: z&auml;hl nur das rechte.</p>
+  <h3 class="zwischen">Deine Stufe</h3>
+  <table class="stufen">
+    <tbody>
+      <tr><td class="nr">0</td><td class="name">Im Kopf<span class="regel">Kein Kreuz bei &#8222;l&auml;uft&#8220;, im Kopf mindestens so viele wie auf Papier</span></td><td>Schreib auf, was du heute nur im Kopf tr&auml;gst. Eine Station reicht f&uuml;r den Anfang.</td></tr>
+      <tr><td class="nr">1</td><td class="name">Verstreut<span class="regel">Kein Kreuz bei &#8222;l&auml;uft&#8220;, auf Papier mehr als im Kopf</span></td><td>Vieles steht schon auf Papier oder in Dateien. Such dir die eine Station aus, die dich am meisten Zeit kostet.</td></tr>
+      <tr><td class="nr">2</td><td class="name">Erste Station l&auml;uft<span class="regel">Mindestens ein Kreuz bei &#8222;l&auml;uft&#8220;, Fundament: nein</span></td><td>Eine Station l&auml;uft von selbst. Als N&auml;chstes brauchen deine Daten einen festen Platz, damit alles auf denselben Ort zugreift.</td></tr>
+      <tr><td class="nr">3</td><td class="name">Ein Ort<span class="regel">Fundament: ja, 1 bis 9 Kreuze bei &#8222;l&auml;uft&#8220;</span></td><td>Deine Daten liegen an einem Ort. Jetzt holst du eine Station nach der anderen in dein System.</td></tr>
+      <tr><td class="nr">4</td><td class="name">Haus steht<span class="regel">Fundament: ja, 10 Kreuze oder mehr bei &#8222;l&auml;uft&#8220;</span></td><td>Fast alles l&auml;uft von selbst. Schlie&szlig; die letzten L&uuml;cken und schreib auf, wie die Stationen zusammenh&auml;ngen.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Page 3: Deine Werkzeuge und Datenwege (1 of 2): what courier software already ships (11.7 Werkzeuge) -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Kurierdienste &#183; Seite 3 von 8</span></div>
+  <h2 class="part">Deine Werkzeuge und Datenwege</h2>
+  <p class="intro">Schau zuerst nach, was deine Software schon kann. Was sie kann, schaltest du ein. Bauen musst du nur, was fehlt.</p>
+  <h3 class="zwischen">Was Kurier-Software mitbringt</h3>
+  <table class="werkzeuge">
+    <thead><tr><th>Werkzeug</th><th>Was es dir abnimmt</th></tr></thead>
+    <tbody>
+      <tr><td>eCourier</td><td>Kurier-Software mit dem Kundenportal Opal und der Fahrer-App meC f&uuml;r Android. Deine Stammkunden erfassen Express-Sendungen und Direktfahrten selbst online und sehen Status und Fotos. Die Disposition schickt den Auftrag aufs Handy, Unterschrift und Fotos kommen zur&uuml;ck. Preise nach Kundenkonditionen, Abrechnung von Kunden und Subunternehmern.</td></tr>
+      <tr><td>Logistiqo</td><td>Webbasiert, mit Fahrer-App f&uuml;r eigene Fahrer und Subunternehmer, auch ohne Netz. Auftr&auml;ge kommen per Hand, Mail, PDF oder Kundenportal rein. Unterschrift, Fotos und Abliefernachweis liegen sofort im System. Rechnungen, Gutschriften, Mahnungen.</td></tr>
+      <tr><td>xRouten</td><td>Tourenplanung f&uuml;r mehrere Fahrzeuge mit Zeitfenstern, Fahrer-App, Nachweise mit Fotos, Unterschrift und Checklisten, Vorlagen f&uuml;r feste Touren.</td></tr>
+      <tr><td>Spoke Dispatch</td><td>Routenplanung und Fahrer-App f&uuml;r Lieferteams, fr&uuml;her Circuit for Teams. Stopps l&auml;sst du importieren statt abtippen.</td></tr>
+      <tr><td>YellowFox</td><td>Telematik mit Auftragsmanagement und Navigation, elektronische Formulare mit Unterschrift, voraussichtliche Ankunftszeit.</td></tr>
+      <tr><td>Webfleet</td><td>Telematik: Auftr&auml;ge ans Fahrzeug, Auftragsstatus zur&uuml;ck ins B&uuml;ro, Fahrtenbuch.</td></tr>
+      <tr><td>Lexware Office</td><td>Lieferscheine je Fahrt und daraus die Sammelrechnung am Monatsende (in der Version XL), Serienrechnungen, automatische Mahnungen, Belege per Texterkennung, Export f&uuml;r DATEV.</td></tr>
+      <tr><td>sevDesk</td><td>Angebot und Rechnung, wiederkehrende Rechnungen, Mahnungen, Belege per Scan mit Buchungsvorschlag. Eine Sammelrechnung aus Lieferscheinen zeigen seine Seiten nicht.</td></tr>
+    </tbody>
+  </table>
+  <ul class="punkte">
+    <li><b>Kundenportal:</b> Mit eCourier und Opal oder mit Logistiqo buchen deine Stammkunden selbst. Gib ihnen den Zugang, statt daneben eine eigene Buchungsseite zu bauen.</li>
+    <li><b>Tourenplaner und Telematik:</b> xRouten, Spoke Dispatch, YellowFox und Webfleet bringen den Auftrag zum Fahrer und den Nachweis zur&uuml;ck. Die Buchung durch deine Kunden und die Rechnung zeigen ihre Seiten nicht.</li>
+  </ul>
+  <p class="eigen">L&auml;uft dein Betrieb schon in einer Kurier-Software, nutz zuerst, was sie kann. Baust du daneben dasselbe noch einmal, pflegst du es doppelt.</p>
+  <p class="hinweis">Stand der Herstellerseiten: November 2026. Welche Funktion in deinem Tarif steckt, sagt dir dein Anbieter.</p>
+</section>
+
+<!-- Page 4: Deine Werkzeuge und Datenwege (2 of 2): the fill-in map -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Kurierdienste &#183; Seite 4 von 8</span></div>
+  <h3 class="zwischen">Deine Datenwege</h3>
+  <p class="intro">Trag pro Station ein, womit du heute arbeitest, woher die Daten kommen und wohin sie danach gehen. Die zwei Zeilen oben sind Beispiele.</p>
+  <table class="karte">
+    <colgroup><col style="width:48mm"><col><col><col></colgroup>
+    <thead><tr><th>Station</th><th>Werkzeug heute</th><th>Daten kommen von</th><th>gehen nach</th></tr></thead>
+    <tbody>
+      <tr class="beispiel"><td class="station">Auftragsannahme</td><td>Handy, Zettel</td><td>Anruf des Kunden, oft w&auml;hrend der Fahrt</td><td>WhatsApp an den Fahrer</td></tr>
+      <tr class="beispiel"><td class="station">Rechnung</td><td>Excel, Lexware Office</td><td>Zettel und Chats vom ganzen Monat</td><td>Kunde, Steuerberater per DATEV</td></tr>
+      <tr><td class="station">Auftragsannahme</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Preis nennen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Sendungsdaten</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Disposition</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Zustellnachweis</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Feste Touren</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Rechnung</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Belege und Subunternehmer</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Bewertung</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Abschluss</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Fahrer gewinnen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Tagesbild</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Assistent f&uuml;r unterwegs</td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>F&uuml;ll jede Zeile aus, auch wenn dir nur ein Wort einf&auml;llt.</li>
+      <li>Kreis jede Stelle ein, an der jemand zur&uuml;ckruft, herumtelefoniert, nachfragt, etwas nachreicht, zusammensucht oder abtippt.</li>
+      <li>Z&auml;hl die Kreise je Station. Die Station mit den meisten Kreisen ist deine Quelle: die Arbeit, die jede Woche wiederkommt.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- Page 5: Das Fundament (system of record = one row per Fahrt) -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Kurierdienste &#183; Seite 5 von 8</span></div>
+  <h2 class="part">Das Fundament</h2>
+  <p class="intro">Jede Station schreibt ihre Daten an einen festen Ort. Das ist dein Fundament. Du baust es einmal, zusammen mit der ersten Station, danach wird jede weitere Station kleiner. Liegen deine Daten an einem Ort, kann sp&auml;ter eine KI darin nachschlagen, sortieren und Entw&uuml;rfe schreiben.</p>
+  <h3 class="zwischen">Welcher Ort zu dir passt</h3>
+  <div class="orte">
+    <div class="ort"><b>Mit Kurier-Software</b><p>Sie ist dein Fundament. Kunden, Fahrten und Nachweise liegen schon dort, du legst nichts daneben an.</p></div>
+    <div class="ort"><b>Mit Rechnungsprogramm</b><p>Deine Kunden bleiben in Lexware Office oder sevDesk. F&uuml;r die Fahrten legst du eine Tabelle an, eine Zeile je Fahrt.</p></div>
+    <div class="ort"><b>Mit Papier</b><p>Fang mit der Tabelle an, in Excel oder Google Sheets. Sie w&auml;chst mit jeder Station.</p></div>
+  </div>
+  <h3 class="zwischen">Welche Felder deine Stationen brauchen</h3>
+  <table class="felder">
+    <tbody>
+      <tr><td>Kunde</td><td>Firma, Ansprechpartner, Rechnungsadresse, Kostenstelle, Rahmenpreis. Liegt in deinem Rechnungsprogramm oder deiner Kurier-Software.</td></tr>
+      <tr><td>Fahrt</td><td>Auftragsnummer, Kunde, Abholung mit Ansprechpartner, Ziel mit Empf&auml;nger, Abhol- und Zustellfenster, Ma&szlig;e und Gewicht, Fahrzeugklasse, Referenz, Fahrer, Preis, Stand.</td></tr>
+      <tr><td>Zustellnachweis</td><td>Uhrzeit, Name des Empf&auml;ngers, Foto der Sendung oder des Ablageorts, Wartezeit. H&auml;ngt an der Fahrt.</td></tr>
+      <tr><td>Feste Tour</td><td>Kunde, Wochentage, Abholzeit, Adressen, Fahrer.</td></tr>
+      <tr><td>Rechnung</td><td>Kunde, Monat, Auftragsnummern der Fahrten, bezahlt oder offen.</td></tr>
+    </tbody>
+  </table>
+  <p><b>Die Auftragsnummer verbindet die Stationen.</b> Karte, Zustellnachweis und Rechnung tragen sie. So findet jede Station die richtige Fahrt, ohne dass jemand sucht.</p>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Entscheide, wo deine Fahrten leben: in deiner Kurier-Software oder in einer Tabelle.</li>
+      <li>Leg in der Tabelle die Spalten f&uuml;r Fahrt und Zustellnachweis aus der Liste oben an.</li>
+      <li>Trag zuerst deine festen Touren ein, danach jede neue Fahrt mit Auftragsnummer.</li>
+      <li>Leg fest, wer Fahrten eintr&auml;gt, auch die vom Telefon im Auto. Ein Ort, eine Person, die ihn pflegt.</li>
+    </ol>
+  </div>
+  <p class="hinweis">Alles l&auml;uft auf deinen Namen: die Tabelle, die Konten, die Zug&auml;nge. Die Daten deiner Kunden bleiben in deinen Programmen. F&auml;hrst du Labortouren: Begleitscheine und Laborauftr&auml;ge enthalten Gesundheitsdaten. Sie stehen nie in der Tabelle, nie auf der Karte und nie im Chat. Dort steht nur &#8222;Abholung Labor, Box 3&#8220;.</p>
+</section>
+
+<!-- Page 6: Die erste Station (1 of 2): the door station Auftragsannahme -> Karte an den Fahrer, ways 1 and 2 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Kurierdienste &#183; Seite 6 von 8</span></div>
+  <h2 class="part">Die erste Station, Schritt f&uuml;r Schritt</h2>
+  <p class="intro">Du f&auml;ngst bei der Auftragsannahme an: Jeder Auftrag kommt vollst&auml;ndig rein und geht als Karte aufs Handy des Fahrers. Die Station ist klein, l&auml;uft ohne KI und schreibt den ersten Eintrag in dein Fundament. Liegt deine Quelle woanders, gilt dieselbe Reihenfolge: erst deine Software, dann ein Workflow-Werkzeug, zuletzt ein eigener Bau.</p>
+  <div class="flow">
+    <div><b>Kunde</b>bucht oder ruft an</div>
+    <span class="pfeil">&#8594;</span>
+    <div><b>Auftrag</b>mit Pflichtfeldern und Nummer</div>
+    <span class="pfeil">&#8594;</span>
+    <div><b>Karte</b>aufs Handy des Fahrers</div>
+    <span class="pfeil">&#8594;</span>
+    <div class="frei"><b>Kunde</b>hat die Best&auml;tigung sofort</div>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 1</div>
+    <p class="weg">Deine Software hat ein Kundenportal und eine Fahrer-App</p>
+    <p>eCourier mit Opal und meC sowie Logistiqo bringen beides mit. Arbeitest du mit einer davon, gib deinen Stammkunden den Zugang zum Portal, dann baust du hier nichts. Frag deinen Anbieter nach dem Auftragsverarbeitungsvertrag.</p>
+    <ol>
+      <li>Frag deinen Anbieter, ob dein Tarif das Kundenportal und die Fahrer-App enth&auml;lt.</li>
+      <li>Starte mit einem Stammkunden und seinen Fahrten.</li>
+      <li>Schalte den Nachweis mit Unterschrift und Foto ein. Bei Opal sieht dein Kunde ihn selbst.</li>
+    </ol>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 2</div>
+    <p class="weg">Keine Kurier-Software: Buchungsseite und Telegram</p>
+    <p>Arbeitest du mit Handy, Excel und Lexware Office oder sevDesk, bekommen deine Stammkunden eine kurze Buchungsseite. Ein Workflow-Werkzeug wie n8n best&auml;tigt jede Buchung mit Auftragsnummer, legt die Fahrt im Fundament an und schickt dem Fahrer die Karte per Telegram. Anrufe tr&auml;gt das B&uuml;ro in dieselbe Seite ein, nie der Fahrer am Steuer. Ein privates WhatsApp-Konto verschickt keine Karten automatisch, daf&uuml;r braucht es WhatsApp Business mit eigener Einrichtung bei Meta.</p>
+    <ol>
+      <li>Leg die Pflichtfelder fest: Abholung, Ziel mit Empf&auml;nger, Zeitfenster, Ma&szlig;e und Gewicht, Fahrzeugklasse, Referenz, Ablageort.</li>
+      <li>Trag deinen Tarif ein, nach Kilometer oder Zone mit Zuschl&auml;gen. Dann nennt die Seite den Preis gleich mit.</li>
+      <li>Jeder Fahrer installiert Telegram einmal, auch beim Subunternehmer.</li>
+      <li>Leg ein Konto bei n8n an, auf deinen Namen.</li>
+      <li>Bau den Ablauf: neue Buchung, Best&auml;tigung an den Kunden, Zeile im Fundament, Karte an den Fahrer.</li>
+      <li>Teste ihn mit einem Stammkunden und einem Fahrer, bevor alle mitmachen.</li>
+    </ol>
+    <p class="hinweis">Telegram sieht in seinen Bedingungen f&uuml;r Bots keinen Auftragsverarbeitungsvertrag vor. Auf die Karte kommt deshalb nur, was die Fahrt braucht: Abholung, Ziel, Zeitfenster, Ansprechpartner mit Telefonnummer, Referenz. Pr&uuml;f vor dem Start, ob du mit dem Workflow-Werkzeug und der Buchungsseite einen Auftragsverarbeitungsvertrag schlie&szlig;en kannst.</p>
+  </div>
+</section>
+
+<!-- Page 7: Die erste Station (2 of 2): Zustellnachweis back to the customer, example, way 3 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Kurierdienste &#183; Seite 7 von 8</span></div>
+  <h3 class="zwischen">Danach: der Zustellnachweis an deinen Kunden</h3>
+  <p>Der Fahrer antwortet auf die Karte: zugestellt, Empf&auml;nger, Foto der Sendung, Wartezeit. Auch das braucht keine KI, die Antwort folgt einem festen Muster. Der Ablauf schreibt sie an die Fahrt im Fundament und schickt deinem Kunden den Zustellnachweis per Mail. Er hat die Antwort, bevor er anruft.</p>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Leg fest, was zur&uuml;ckkommt: zugestellt oder nicht angetroffen, Empf&auml;nger, Foto, Wartezeit.</li>
+      <li>Erweitere den Ablauf: Antwort, Eintrag an der Fahrt, Nachweis per Mail an den Kunden.</li>
+      <li>Lass das B&uuml;ro die Nachweise pr&uuml;fen, bis die Antworten sauber kommen.</li>
+    </ol>
+    <p class="hinweis">Das Foto zeigt die Sendung an der T&uuml;r oder am Ablageort, nie Personen, nie das Innere einer Wohnung. Name und Unterschrift des Empf&auml;ngers bleiben an der Fahrt, nie als Kopie in einer Gruppe. F&uuml;r die Uhrzeit brauchst du kein GPS. Der Standort eines Fahrers, auch beim Subunternehmer, ist personenbezogen: Eine Ortung, die ihn dauerhaft kontrolliert, ist grunds&auml;tzlich unzul&auml;ssig.</p>
+  </div>
+
+  <div class="szene">
+    <div class="kicker">Ein Beispiel aus dem Same-Day-Gesch&auml;ft</div>
+    <p>Um elf bucht die Druckerei Seidl zwei Kartons, Zustellung bis 14 Uhr in der Innenstadt. Sie hat sofort ihre Auftragsnummer, dein Fahrer die Karte.</p>
+    <p>Um 13:20 schreibt er zur&uuml;ck: <span class="gesagt">&#8222;zugestellt, Empfang Frau Roth&#8220;</span>, dazu ein Foto der Kartons am Empfang. Die Druckerei hat den Zustellnachweis per Mail, die Fahrt steht f&uuml;r die Sammelrechnung im Fundament.</p>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 3</div>
+    <p class="weg">Ein eigener Bau, nur f&uuml;r die L&uuml;cke</p>
+    <p>Passt keiner der beiden Wege, etwa weil dein Tourenplaner keine Buchung durch Kunden kennt, bleibt ein eigener Bau. Er schlie&szlig;t nur diese L&uuml;cke und ersetzt nichts. Das geht, wenn deine Software eine Schnittstelle hat. Bei Logistiqo, xRouten, Spoke Dispatch und Webfleet ist sie &ouml;ffentlich beschrieben.</p>
+    <ol>
+      <li>Schreib auf, was dir an Weg 1 und Weg 2 fehlt.</li>
+      <li>Frag deinen Anbieter, ob seine Software eine Schnittstelle hat und was sie liest und schreibt.</li>
+      <li>Lass nur diese L&uuml;cke bauen und dir jeden Ablauf mit Dokumentation &uuml;bergeben.</li>
+    </ol>
+  </div>
+
+  <h3 class="zwischen">So merkst du, dass es l&auml;uft</h3>
+  <ul class="haken">
+    <li><span class="box"></span>Kein Auftrag h&auml;ngt mehr an einem Zettel im Auto.</li>
+    <li><span class="box"></span>Kein Fahrer ruft an, weil der Empf&auml;nger fehlt.</li>
+    <li><span class="box"></span>Kein Kunde fragt mehr, ob seine Sendung da ist.</li>
+  </ul>
+  <p class="eigen">Die Konten laufen auf deinen Namen. L&auml;uft die Station ruhig, nimmst du die n&auml;chste dazu.</p>
+</section>
+
+<!-- Page 8: Die naechsten Stockwerke + the shared close -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Kurierdienste &#183; Seite 8 von 8</span></div>
+  <h2 class="part">Die n&auml;chsten Stockwerke</h2>
+  <p class="intro">L&auml;uft die Auftragsannahme, nimm die n&auml;chste Station dazu. Die Reihenfolge ist ein Vorschlag, deine Kreise von Seite 4 gehen vor.</p>
+  <table class="naechste">
+    <tbody>
+      <tr class="zuerst"><td class="name"><b>Sammelrechnung im Monat</b><span class="wo">4. Stock &#183; Finanzwesen</span></td><td>Jede Fahrt wird ein Lieferschein in Lexware Office, mit Auftragsnummer. Die Sammelrechnung am Monatsende macht Lexware Office in der Version XL selbst, der Ablauf legt nur die Lieferscheine an. eCourier und Logistiqo rechnen selbst ab (siehe Seite 3).</td></tr>
+      <tr><td class="name"><b>Subunternehmer abrechnen</b><span class="wo">4. Stock &#183; Finanzwesen</span></td><td>Aus seinen Fahrten des Monats entsteht die Gutschrift, du gleichst sie mit seiner Rechnung ab. eCourier kann das schon.</td></tr>
+      <tr><td class="name"><b>Belege und Tankkarte</b><span class="wo">4. Stock &#183; Finanzwesen</span></td><td>Lexware Office und sevDesk lesen Belege schon. Die Tankvorg&auml;nge holt der Ablauf &uuml;ber die Schnittstelle von DKV Mobility, du gibst frei.</td></tr>
+      <tr><td class="name"><b>Feste Touren</b><span class="wo">3. Stock &#183; Die Arbeit</span></td><td>Aus deinen festen Touren entsteht jeden Morgen die Tagesliste je Fahrer. F&auml;llt eine Abholung aus, meldet dein Kunde es auf der Buchungsseite.</td></tr>
+      <tr><td class="name"><b>Sendungsdaten</b><span class="wo">2. Stock &#183; Onboarding</span></td><td>Adressen, die dein Kunde oft braucht, stehen auf der Buchungsseite zur Auswahl. R&uuml;ckfragen nach Empf&auml;nger und Zeitfenster fallen weg.</td></tr>
+      <tr><td class="name"><b>Fahrer gewinnen</b><span class="wo">5. Stock &#183; Abschluss und Team</span></td><td>Jeder Bewerber bekommt sofort Antwort. Eine Checkliste zeigt, was fehlt: F&uuml;hrerschein, App-Zugang, Einweisung, Nachweise des Subunternehmers. Dokumente gehen nie durch den Chat.</td></tr>
+      <tr><td class="name"><b>Abschluss</b><span class="wo">5. Stock &#183; Abschluss und Team</span></td><td>Geht ein Kunde: letzte Sammelrechnung, Zugang zum Portal schlie&szlig;en. Geht ein Fahrer: App-Zugang, Tankkarte, Fahrzeug und Schl&uuml;ssel zur&uuml;ck.</td></tr>
+      <tr><td class="name"><b>Bewertung</b><span class="wo">5. Stock &#183; Abschluss und Team</span></td><td>Ist ein Stammkunde zufrieden, gibst du die Bitte um eine Bewertung frei, ohne Gegenleistung.</td></tr>
+      <tr><td class="name"><b>Tagesbild</b><span class="wo">Das Dach</span></td><td>Jeden Morgen eine Nachricht: Fahrten und feste Touren des Tages je Fahrer, offene Zustellnachweise, unbezahlte Rechnungen.</td></tr>
+      <tr><td class="name"><b>Assistent f&uuml;r unterwegs</b><span class="wo">Um das ganze Haus</span></td><td>Zwischen zwei Fahrten sprichst du R&uuml;ckruf, Auftrag oder Notiz ein, nie am Steuer. Er meldet sich als KI-Assistent, sobald er mit Kunden schreibt.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="abschluss">
+    <h2 class="part">Wenn du Fragen hast, melde dich. Kostenlos.</h2>
+    <p>Im Prozess-Audit schauen wir gemeinsam, wo in deinem Betrieb die meiste Zeit h&auml;ngen bleibt.</p>
+    <p>Den Anfang macht ein Gespr&auml;ch von 30 Minuten. Ergibt sich daraus etwas Sinnvolles, schreibe ich dir einen Fahrplan. Wenn nicht, sage ich es dir ehrlich.</p>
+    <div class="buchen">
+      <a href="https://vrelo-ki.de/kontakt?src=bauplan-kurier-pdf">30 Minuten Gespr&auml;ch vereinbaren</a>
+      <span class="url">vrelo-ki.de/kontakt?src=bauplan-kurier-pdf</span>
+    </div>
+    <div class="kontakt">
+      <span class="logo-word">Vrelo</span>&#160;&#160;
+      Ajdin Dzafic &#183; Regensburg &#183; ajdin@vrelo-ki.de &#183; vrelo-ki.de
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

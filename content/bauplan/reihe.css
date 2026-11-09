@@ -1,0 +1,154 @@
+/* Shared stylesheet of the Bauplan series (content/bauplan/<slug>-bauplan.html).
+   Inlined at {{{REIHE_CSS}}} by the render script; brand tokens come from {{{BRAND_CSS}}}.
+   A4 portrait on a white page, printed on an office printer: no bleed, no full-page colour,
+   tick boxes and write lines big enough for a pen. Full page = shorten copy, never shrink type.
+   Type scale follows the Elektro Bauplan. Everything niche-specific stays in the template. */
+@page { size: A4; margin: 16mm 17mm; }
+body { font-size: 10.5pt; line-height: 1.5; background: #FFFFFF; }
+.page { break-before: page; }
+.page.first { break-before: auto; }
+.brand-word { font-weight: 500; }
+p { margin: 0 0 8px 0; }
+a { color: inherit; }
+b { color: var(--tiefes-wasser); }
+
+/* running head on pages 2 to n */
+.runhead { display: flex; justify-content: space-between; align-items: baseline;
+  border-bottom: 1px solid var(--faden); padding-bottom: 5px; margin-bottom: 16px;
+  font-size: 7.5pt; letter-spacing: 0.08em; text-transform: uppercase; color: var(--stumm); }
+.runhead .brand-word { font-size: 11pt; letter-spacing: 0; text-transform: none; color: var(--tiefes-wasser); }
+h2.part { font-size: 17pt; color: var(--tiefes-wasser); margin: 0 0 8px 0; line-height: 1.25; break-after: avoid; }
+* + h2.part { margin-top: 26px; }
+.runhead + h2.part { margin-top: 0; }
+.intro { font-size: 11pt; line-height: 1.5; margin: 0 0 12px 0; }
+h3.zwischen { font-size: 8.5pt; letter-spacing: 0.08em; text-transform: uppercase; color: var(--vrelo-petrol);
+  border-bottom: 1.5px solid var(--vrelo-petrol); padding-bottom: 4px; margin: 16px 0 8px 0; break-after: avoid; }
+.runhead + h3.zwischen { margin-top: 0; }
+.kicker { font-size: 8.5pt; letter-spacing: 0.1em; text-transform: uppercase; color: var(--vrelo-petrol); font-weight: 600; margin: 0 0 5px 0; }
+ul.punkte { margin: 0 0 10px 0; padding-left: 16px; }
+ul.punkte li { margin-bottom: 5px; }
+.hinweis { font-size: 9.5pt; color: var(--stumm); border-top: 1px solid var(--faden); padding-top: 6px; margin-top: 10px; }
+
+/* cover */
+.p1 { display: flex; flex-direction: column; gap: 11pt; min-height: 262mm; }
+.p1-top { display: flex; justify-content: space-between; align-items: center; font-size: 10pt; color: var(--stumm); }
+.p1-top .logo { font-size: 18pt; gap: 7px; }
+.p1-top .logo svg { height: 24px; }
+.p1 h1 { font-size: 27pt; line-height: 1.12; color: var(--tiefes-wasser); margin: 4pt 0 0 0; font-weight: 700; }
+/* cover pain: one job today as a flow, the circled verbs mark where time is lost (page 4 asks the reader to circle his own) */
+.weg-heute { border: 1.5px solid var(--faden); border-radius: 8px; padding: 11pt 14pt 10pt; }
+.auftragsweg { display: grid; grid-template-columns: 5mm 1fr 5mm 1fr 5mm 1fr 5mm 1fr; row-gap: 9pt; align-items: stretch; margin-top: 4pt; }
+.auftragsweg .schritt { display: flex; flex-direction: column; gap: 6pt; background: var(--gletscher); border-radius: 5px; padding: 7pt 8pt;
+  font-size: 10pt; line-height: 1.3; font-weight: 600; color: var(--tiefes-wasser); }
+.auftragsweg .ende { background: var(--sonnenlicht); }
+.auftragsweg .pfeil { align-self: center; text-align: center; color: var(--vrelo-petrol); font-size: 12pt; }
+.verlust { margin-top: auto; align-self: flex-start; background: #FFFFFF; border: 2px solid var(--amber); border-radius: 50%;
+  padding: 2pt 9pt; font-size: 9pt; font-weight: 600; color: var(--ember); }
+.kreis-satz { margin: 10pt 0 0 0; font-size: 11pt; font-weight: 600; color: var(--tiefes-wasser); }
+.statistik { display: flex; gap: 12pt; align-items: center; border-left: 3px solid var(--amber); padding-left: 11pt; }
+.statistik .zahl { flex: none; font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 24pt; line-height: 1; color: var(--ember); }
+.statistik .satz { display: block; font-size: 10pt; }
+.statistik .quelle { display: block; font-size: 8.5pt; color: var(--stumm); margin-top: 2pt; }
+.quelle-link { font-size: 8pt; color: var(--stumm); margin: -6pt 0 0 0; overflow-wrap: anywhere; }
+/* cover answer: the reader's one-week path (shared.wochenplan) */
+.woche { border: 1.5px solid var(--vrelo-petrol); border-radius: 8px; padding: 11pt 14pt; }
+.woche-kopf { font-size: 15pt; font-weight: 700; color: var(--tiefes-wasser); margin: 0 0 8pt 0; }
+ol.tage { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 6pt; }
+ol.tage li { display: flex; flex-direction: column; gap: 2pt; border-top: 3px solid var(--amber); padding: 5pt 2pt 0 0; font-size: 10pt; line-height: 1.3; }
+ol.tage .tag { font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 13pt; color: var(--ember); }
+ol.tage .seite { margin-top: auto; font-size: 8.5pt; color: var(--stumm); }
+.woche-schluss { margin: 10pt 0 0 0; font-size: 11pt; font-weight: 600; color: var(--tiefes-wasser); }
+.woche-ziel { margin: 0; font-size: 10pt; color: var(--stumm); }
+.fuer { background: var(--papier); border-left: 3px solid var(--amber); border-radius: 4px; padding: 9pt 13pt; font-size: 10.5pt; }
+.fuer p:last-child { margin-bottom: 0; }
+.p1-foot { margin-top: auto; border-top: 1px solid var(--faden); padding-top: 7pt; font-size: 10pt; color: var(--stumm); }
+
+/* tick boxes and write lines (sized for a pen) */
+.box { display: inline-block; width: 5mm; height: 5mm; border: 1.3px solid var(--tiefes-wasser); border-radius: 1px; vertical-align: middle; }
+.feld { display: inline-block; width: 14mm; height: 6mm; border-bottom: 1.3px solid var(--tiefes-wasser); vertical-align: bottom; }
+
+/* chapter 2: self-check */
+table { border-collapse: collapse; width: 100%; }
+table.check { font-size: 9.5pt; line-height: 1.3; }
+table.check th { font-size: 7.5pt; font-weight: 600; color: var(--vrelo-petrol); text-align: center; vertical-align: bottom; padding: 0 3px 5px; border-bottom: 1.5px solid var(--vrelo-petrol); }
+table.check th.links { text-align: left; }
+table.check td { border-bottom: 1px solid var(--faden); padding: 2px 4px; height: 6.5mm; vertical-align: middle; }
+table.check td.kreuz { width: 17mm; text-align: center; }
+table.check td .bsp { font-size: 8.5pt; color: var(--stumm); }
+table.check td .bsp::before { content: " \B7  "; }
+table.check td.stock { width: 21mm; font-size: 7.5pt; line-height: 1.25; color: var(--stumm); vertical-align: top; padding-top: 5px; border-bottom: 1.5px solid var(--faden); }
+table.check td.stock b { display: block; color: var(--vrelo-petrol); font-weight: 600; }
+table.check tr.neu td { border-top: 1.5px solid var(--faden); }
+table.check tr.summe td { border-bottom: none; padding-top: 8px; font-weight: 600; color: var(--tiefes-wasser); }
+.check-unter { display: grid; grid-template-columns: 1fr 1fr; gap: 12pt; margin: 8px 0 4px 0; font-size: 9.5pt; }
+.check-unter p { margin: 0 0 4px 0; }
+.frage { display: flex; justify-content: space-between; align-items: center; gap: 12px; border: 1.5px solid var(--vrelo-petrol); border-radius: 6px; padding: 8px 12px; margin: 10px 0 0 0; }
+.frage p { margin: 0; }
+.frage .antwort { display: flex; gap: 18px; flex: none; }
+table.stufen { font-size: 9.5pt; line-height: 1.35; }
+table.stufen th { font-size: 8pt; font-weight: 600; color: var(--vrelo-petrol); text-align: left; padding: 0 6px 4px; border-bottom: 1.5px solid var(--vrelo-petrol); }
+table.stufen tr:first-child td { border-top: 1.5px solid var(--vrelo-petrol); }
+table.stufen td { border-bottom: 1px solid var(--faden); padding: 4px 6px; vertical-align: top; }
+table.stufen td.nr { width: 7mm; font-family: 'Fraunces', Georgia, serif; font-style: italic; color: var(--amber); font-size: 13pt; line-height: 1.1; }
+table.stufen td.name { width: 58mm; font-weight: 600; color: var(--tiefes-wasser); }
+table.stufen td.name .regel { display: block; font-weight: 400; font-size: 8.5pt; color: var(--stumm); }
+
+/* chapter 3: tools and data map */
+table.werkzeuge { font-size: 9.5pt; line-height: 1.35; margin: 0 0 6px 0; }
+table.werkzeuge th { font-size: 8pt; font-weight: 600; color: var(--vrelo-petrol); text-align: left; padding: 0 6px 4px; border-bottom: 1.5px solid var(--vrelo-petrol); }
+table.werkzeuge td { border-bottom: 1px solid var(--faden); padding: 5px 6px; vertical-align: top; }
+table.werkzeuge td:first-child { width: 30mm; font-weight: 600; color: var(--tiefes-wasser); }
+table.karte { font-size: 9pt; line-height: 1.3; table-layout: fixed; }
+table.karte th { font-size: 8pt; font-weight: 600; color: var(--vrelo-petrol); text-align: left; padding: 0 5px 4px; border-bottom: 1.5px solid var(--vrelo-petrol); }
+table.karte td { border-bottom: 1px solid var(--stein); padding: 3px 5px; height: 10.5mm; vertical-align: middle; }
+table.karte td.station { font-weight: 600; color: var(--tiefes-wasser); }
+table.karte td + td { border-left: 1px solid var(--faden); }
+table.karte tr.beispiel td { background: var(--papier); color: var(--ember); font-style: italic; height: auto; border-bottom-color: var(--faden); }
+table.karte tr.beispiel td.station { color: var(--ember); }
+
+/* chapters 4 and 5 */
+table.felder { font-size: 9.5pt; line-height: 1.35; margin: 0 0 8px 0; }
+table.felder td { border-bottom: 1px solid var(--faden); padding: 5px 6px; vertical-align: top; }
+table.felder td:first-child { width: 32mm; font-weight: 600; color: var(--tiefes-wasser); }
+.orte { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin: 0 0 6px 0; }
+.ort { border: 1px solid var(--faden); border-radius: 6px; padding: 9px 11px; font-size: 9.5pt; line-height: 1.4; break-inside: avoid; }
+.ort b { display: block; font-size: 10pt; margin-bottom: 3px; }
+.ort p { margin: 0; }
+.vorgehen { border: 1.5px solid var(--vrelo-petrol); border-radius: 8px; padding: 10px 15px 8px; margin: 12px 0 0 0; break-inside: avoid; }
+.vorgehen .kopf { font-size: 8pt; letter-spacing: 0.1em; text-transform: uppercase; color: var(--vrelo-petrol); font-weight: 600; margin-bottom: 5px; }
+.vorgehen .weg { font-size: 12pt; font-weight: 700; color: var(--tiefes-wasser); margin: 0 0 4px 0; }
+.vorgehen ol { margin: 6px 0 2px 0; padding-left: 18px; }
+.vorgehen li { margin-bottom: 3px; }
+.vorgehen li::marker { color: var(--vrelo-petrol); font-weight: 600; }
+.flow { display: flex; align-items: stretch; gap: 5px; margin: 6px 0 12px 0; }
+.flow > div { flex: 1; background: var(--gletscher); border-radius: 5px; padding: 7px 8px; font-size: 9pt; line-height: 1.35; }
+.flow > div b { display: block; font-size: 9.5pt; margin-bottom: 2px; }
+.flow > div.frei { background: var(--sonnenlicht); }
+.flow .pfeil { flex: none; align-self: center; color: var(--stein); font-size: 13pt; }
+.szene { background: var(--sonnenlicht); border-left: 3px solid var(--amber); padding: 11px 15px; margin: 12px 0 0 0;
+  color: var(--ember); break-inside: avoid; }
+.szene p { margin: 0 0 6px 0; }
+.szene p:last-child { margin-bottom: 0; }
+.szene .gesagt { color: var(--tiefes-wasser); font-weight: 600; }
+ul.haken { list-style: none; margin: 0; padding: 0; }
+ul.haken li { display: flex; gap: 9px; align-items: center; margin-bottom: 6px; }
+.eigen { font-size: 12pt; font-weight: 600; color: var(--tiefes-wasser); line-height: 1.35; margin: 14px 0 6px 0; border-top: 1.5px solid var(--vrelo-petrol); padding-top: 12px; }
+
+/* chapter 6: the next floors */
+table.naechste { font-size: 9.5pt; line-height: 1.38; }
+table.naechste td { border-bottom: 1px solid var(--faden); padding: 5px 6px; vertical-align: top; }
+table.naechste td.name { width: 56mm; }
+table.naechste td.name b { display: block; font-size: 10pt; }
+table.naechste .wo { display: block; font-size: 8pt; color: var(--stumm); }
+table.naechste tr.zuerst td { background: var(--sonnenlicht); }
+
+/* chapter 7: the shared close */
+.abschluss { border-top: 1.5px solid var(--vrelo-petrol); padding-top: 12px; margin-top: 14px; break-inside: avoid; }
+.abschluss h2.part { margin-top: 0; }
+.abschluss p { font-size: 11pt; }
+.buchen { background: var(--tiefes-wasser); color: #FFFFFF; border-radius: 8px; padding: 14px 18px; margin: 12px 0 0 0; text-align: center; }
+.buchen a { display: inline-block; background: var(--amber); color: var(--tiefes-wasser); font-weight: 700; text-decoration: none;
+  border-radius: 6px; padding: 7px 14px; font-size: 11pt; }
+.buchen .url { display: block; margin-top: 8px; font-size: 10pt; color: var(--gletscher); }
+.kontakt { border-top: 1px solid var(--faden); padding-top: 10px; margin-top: 16px; font-size: 10pt; }
+.kontakt .logo-word { font-family: 'Fraunces', Georgia, serif; font-style: italic; font-size: 18pt; color: var(--tiefes-wasser); }

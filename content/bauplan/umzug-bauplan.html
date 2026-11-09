@@ -1,0 +1,354 @@
+<!doctype html>
+<!--
+  Vrelo Bauplan-Reihe, Umzugsunternehmen: free 8-page PDF guide for owner-led moving companies
+  (Privat- und Firmenumzuege, often with Entruempelung, Moebellift, Montage, Einlagerung, Halteverbotszone).
+  Spec: docs/superpowers/specs/2026-11-06-bauplan-reihe-design.md (section 4 skeleton, section 6 constraints).
+  Facts: Knowledge/marketing/prozess-landkarten.md section 12 (12.1 Landkarte, 12.7 Recherche, 2026-11-07);
+  general Lexware Office, sevDesk, DATEV, Google Calendar and Telegram facts from section 1.7.
+  Data + shared copy: src/lib/bauplanReihe/umzug.ts and shared.ts. Styles: content/bauplan/reihe.css.
+
+  RULES (do not break; the guard src/lib/bauplanReihe/templates.test.ts enforces most of them):
+    - Chapters 2 and 7 carry the shared copy word for word (selbstcheck, LEVELS, abschluss).
+    - No price or money amount anywhere (also not the HGB liability amount), no Vrelo duration,
+      no capacity line, no guarantee, no client or prospect names.
+    - No statistic (spec section 5.3): the cover carries a pain block in the statistic's place.
+    - Pages 1 to 7 are a free guide the reader follows alone: no first-person service offer.
+    - "Schnittstelle" only next to tools in umzug.verifiedInterfaces; otherwise
+      "wenn deine Software eine Schnittstelle hat". movingSTAR, Xlado, movingpilot, FastMove,
+      stressfrei solutions are never called connectable. Lead portals are never named.
+    - HGB: section 451e (liability tied to the Kubikmeter Laderaum) and 451g (inform the customer at
+      contract, Schadensanzeige note at delivery) only as 12.7 quotes them, factual, no legal advice.
+    - Halteverbot: Antrag lead time is the city's (Stuttgart only as the verified example); signs with
+      at least three full days lead per BVerwG 3 C 25.16, nothing hour-exact.
+    - Photos and videos from the customer's home: rooms and Umzugsgut only, no people, no documents;
+      deleted when no order follows; video calls not recorded; keys and codes never in a chat.
+    - Every link prints its target as visible text (the copy is printed).
+    - Any assistant named carries "meldet sich als KI-Assistent".
+    - Dash-free German, no comma before "und", generic masculine, du.
+    - Pure ASCII with entities from src/lib/bauplanTemplateText.ts (add a new entity there first).
+    - Office printer, A4, white page, 8 pages. Full page = shorten copy, never shrink type.
+-->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Vrelo &#183; Bauplan f&uuml;r Umzugsunternehmen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>{{{BRAND_CSS}}}</style>
+<style>{{{REIHE_CSS}}}</style>
+</head>
+<body>
+
+<!-- Page 1: cover (series pattern). Flow steps = umzug.auftragsweg. -->
+<section class="page first">
+  <div class="p1">
+    <div class="p1-top">
+      <div class="logo">{{{LOGO_SVG}}}<span class="logo-word">Vrelo</span></div>
+      <span>Bauplan f&uuml;r Umzugsunternehmen</span>
+    </div>
+
+    <h1>Prozesse, Automatisierung, KI:<br>Wo fange ich &uuml;berhaupt an?</h1>
+
+    <div class="weg-heute">
+      <div class="kicker">Ein Umzug, viele Anfahrten</div>
+      <div class="auftragsweg">
+        <span></span>
+        <div class="schritt">Anfrage per Telefon, Mail oder Portal</div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">R&uuml;ckruf am Abend, Etage und Aufzug fehlen<span class="verlust">nachtelefoniert</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Besichtigung vor Ort, Liste auf Papier<span class="verlust">hingefahren</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Angebot abends, Kubikmeter gesch&auml;tzt<span class="verlust">abgetippt</span></div>
+
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Angebot raus, keine Antwort<span class="verlust">vergessen</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Kolonne, M&ouml;bellift und Halteverbot per Anruf<span class="verlust">zusammengesucht</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt ende">Rechnung Tage sp&auml;ter, Mehraufwand vom Arbeitsschein<span class="verlust">&uuml;bertragen</span></div>
+      </div>
+      <p class="kreis-satz">Jeder Kreis ist eine Stelle, an der Zeit verloren geht. Im Bauplan findest du deine.</p>
+    </div>
+
+    <!-- No statistic (spec 5.3): the pain in the reader's words, in the statistic's place and layout, without a number. -->
+    <div class="statistik">
+      <div>
+        <span class="satz"><b>Jede Besichtigung kostet, bevor ein M&ouml;belst&uuml;ck bewegt ist.</b> Du f&auml;hrst hin, gehst Zimmer f&uuml;r Zimmer durch, sch&auml;tzt die Kubikmeter und schreibst abends das Angebot. Sagt der Kunde ab, war die Fahrt umsonst. Bei einem kleinen Umzug ist so ein guter Teil des Umsatzes weg, bevor du den ersten Karton packst.</span>
+      </div>
+    </div>
+
+    <div class="woche">
+      <p class="woche-kopf">Dieser Bauplan ist dein erster Schritt.</p>
+      <ol class="tage">
+        <li><span class="tag">Tag 1</span><b>Wo du stehst</b><span class="seite">Seite 2</span></li>
+        <li><span class="tag">Tag 2</span><b>Deine Werkzeuge</b><span class="seite">Seite 3</span></li>
+        <li><span class="tag">Tag 3</span><b>Deine Datenwege</b><span class="seite">Seite 4</span></li>
+        <li><span class="tag">Tag 4</span><b>Das Fundament</b><span class="seite">Seite 5</span></li>
+        <li><span class="tag">Tag 5</span><b>Die erste Station</b><span class="seite">Seite 6 und 7</span></li>
+      </ol>
+      <p class="woche-schluss">Nach einer Woche wei&szlig;t du, wo du anf&auml;ngst.</p>
+      <p class="woche-ziel">Schritt f&uuml;r Schritt zu deinem KI-Betriebssystem.</p>
+    </div>
+
+    <div class="fuer"><p><b>F&uuml;r wen:</b> Inhaber von Umzugsunternehmen mit Privat- und Firmenumz&uuml;gen, oft mit M&ouml;bellift, Montage, Einlagerung oder Entr&uuml;mpelung. F&uuml;r die ersten Seiten reicht ein Stift.</p></div>
+
+    <div class="p1-foot">Ajdin Dzafic, <span class="brand-word">Vrelo</span>, Regensburg &#183; vrelo-ki.de</div>
+  </div>
+</section>
+
+<!-- Page 2: Wo du stehst (shared copy: selbstcheck, LEVELS) -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Umzugsunternehmen &#183; Seite 2 von 8</span></div>
+  <h2 class="part">Wo du stehst</h2>
+  <div class="kicker">Dein Stand je Station</div>
+  <p class="intro">Mach pro Station ein Kreuz in einer der drei Spalten: l&auml;uft von selbst, auf Papier oder in Dateien, nur im Kopf. Z&auml;hl am Ende die Kreuze je Spalte.</p>
+  <table class="check">
+    <thead><tr><th></th><th class="links">Station</th><th>L&auml;uft von selbst</th><th>Auf Papier oder in Dateien</th><th>Nur im Kopf</th></tr></thead>
+    <tbody>
+      <tr class="neu"><td class="stock" rowspan="2"><b>Erdgeschoss</b> Kundeneingang</td><td>Anfrage kommt rein<span class="bsp">Telefon, Mail, Formular, Portal</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Umzugsgut und Angebot<span class="bsp">Besichtigung, Kubikmeter, Nachfassen</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="1"><b>2. Stock</b> Onboarding</td><td>Auftragsunterlagen<span class="bsp">Haftungsinformation, Unterschrift, Anzahlung</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="3"><b>3. Stock</b> Die Arbeit</td><td>Disposition<span class="bsp">Kolonne, Fahrzeug, M&ouml;bellift, Halteverbot</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Arbeitsschein und &Uuml;bergabe<span class="bsp">Mehraufwand, Sch&auml;den, Fotos</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Wiederkehrendes<span class="bsp">Einlagerung, Kartons abholen</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="2"><b>4. Stock</b> Finanzwesen</td><td>Rechnung schreiben<span class="bsp">Festpreis, Anzahlung, Mehraufwand</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Belege zuordnen<span class="bsp">Diesel, Maut, Packmaterial, Entsorgung</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="3"><b>5. Stock</b> Abschluss und Team</td><td>Bewertung<span class="bsp">Bitte um eine Google-Bewertung</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Abschluss<span class="bsp">Kartons, Schl&uuml;ssel, Schadensfall</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Bewerbungen und Einarbeitung<span class="bsp">M&ouml;belpacker, Fahrer, Aushilfen</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="2"><b>Dach</b> und Assistent</td><td>Tagesbild<span class="bsp">morgens sehen, was offen ist</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Assistent f&uuml;r unterwegs<span class="bsp">einsprechen statt merken</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="summe"><td></td><td>Kreuze je Spalte</td><td class="kreuz"><span class="feld"></span></td><td class="kreuz"><span class="feld"></span></td><td class="kreuz"><span class="feld"></span></td></tr>
+    </tbody>
+  </table>
+  <div class="frage">
+    <p><b>Liegen deine Kundendaten an einem festen Ort, auf den alles zugreift?</b></p>
+    <div class="antwort"><span><span class="box"></span> Ja</span><span><span class="box"></span> Nein</span></div>
+  </div>
+  <p class="hinweis">Eine leere Zeile z&auml;hlt als &#8222;nur im Kopf&#8220;. Zwei Kreuze in einer Zeile: z&auml;hl nur das rechte.</p>
+  <h3 class="zwischen">Deine Stufe</h3>
+  <table class="stufen">
+    <tbody>
+      <tr><td class="nr">0</td><td class="name">Im Kopf<span class="regel">Kein Kreuz bei &#8222;l&auml;uft&#8220;, im Kopf mindestens so viele wie auf Papier</span></td><td>Schreib auf, was du heute nur im Kopf tr&auml;gst. Eine Station reicht f&uuml;r den Anfang.</td></tr>
+      <tr><td class="nr">1</td><td class="name">Verstreut<span class="regel">Kein Kreuz bei &#8222;l&auml;uft&#8220;, auf Papier mehr als im Kopf</span></td><td>Vieles steht schon auf Papier oder in Dateien. Such dir die eine Station aus, die dich am meisten Zeit kostet.</td></tr>
+      <tr><td class="nr">2</td><td class="name">Erste Station l&auml;uft<span class="regel">Mindestens ein Kreuz bei &#8222;l&auml;uft&#8220;, Fundament: nein</span></td><td>Eine Station l&auml;uft von selbst. Als N&auml;chstes brauchen deine Daten einen festen Platz, damit alles auf denselben Ort zugreift.</td></tr>
+      <tr><td class="nr">3</td><td class="name">Ein Ort<span class="regel">Fundament: ja, 1 bis 9 Kreuze bei &#8222;l&auml;uft&#8220;</span></td><td>Deine Daten liegen an einem Ort. Jetzt holst du eine Station nach der anderen in dein System.</td></tr>
+      <tr><td class="nr">4</td><td class="name">Haus steht<span class="regel">Fundament: ja, 10 Kreuze oder mehr bei &#8222;l&auml;uft&#8220;</span></td><td>Fast alles l&auml;uft von selbst. Schlie&szlig; die letzten L&uuml;cken und schreib auf, wie die Stationen zusammenh&auml;ngen.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Page 3: Deine Werkzeuge und Datenwege (1 of 2): what Umzugssoftware already ships -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Umzugsunternehmen &#183; Seite 3 von 8</span></div>
+  <h2 class="part">Deine Werkzeuge und Datenwege</h2>
+  <p class="intro">Schau zuerst nach, was deine Software schon kann. Was sie kann, schaltest du ein. Bauen musst du nur, was fehlt.</p>
+  <h3 class="zwischen">Was Umzugssoftware mitbringt</h3>
+  <table class="werkzeuge">
+    <thead><tr><th>Werkzeug</th><th>Was es dir abnimmt</th></tr></thead>
+    <tbody>
+      <tr><td>movingSTAR</td><td>Mit der App moventuPRO erfasst du das Umzugsgut beim Kunden als Liste mit Fotos, Menge und Volumen rechnet sie selbst. Im Kundenportal meinumzug.online erfasst dein Kunde sein Umzugsgut selbst oder bucht eine Videobesichtigung. Dort l&auml;dt er AGB, HGB-Information und Versicherungszertifikat, erteilt den Auftrag mit Unterschrift und zahlt an. Dazu Disposition der Fahrzeuge, digitaler Arbeitsschein, E-Rechnung, Lagerverwaltung.</td></tr>
+      <tr><td>Xlado</td><td>Umzugsgutlisten auf Tablet und Handy mit automatischer Kalkulation, Angebote aus Anfragen und Preisen. Plant Termine, Teams und Fahrzeuge, dazu die Halteverbotszonen an Be- und Entladeadresse. Rechnung aus Angebot und Auftrag.</td></tr>
+      <tr><td>movingpilot</td><td>&Uuml;bernimmt Anfragen aus Portalen, ein Postfach erfasst Anfragen aus Portalen, Formularen und Mails per KI als Auftragsentwurf. Online-Rechner mit Festpreis, Videobesichtigung, Disposition, Arbeitsschein zum mobilen Unterschreiben, E-Rechnung, Export f&uuml;r DATEV.</td></tr>
+      <tr><td>FastMove</td><td>Je nach Tarif: Interessenten verwalten, App f&uuml;r die Besichtigung mit Umzugsgutliste und Angebot, im gr&ouml;&szlig;ten Tarif die Rechnung. Dazu automatisierte E-Mails.</td></tr>
+      <tr><td>stressfrei solutions</td><td>App f&uuml;r Besichtigungen, die Fotos ans B&uuml;ro schickt, Angebote aus Vorlagen, Disposition und Personaleinsatz, Rechnung mit offenen Posten.</td></tr>
+      <tr><td>Lexware Office</td><td>Angebote, Rechnungen, Serienrechnungen f&uuml;r die monatliche Einlagerung, automatische Mahnungen, Belege per Texterkennung, Bankabgleich, Export f&uuml;r DATEV.</td></tr>
+      <tr><td>sevDesk</td><td>Angebot und Rechnung, Abschlags- und Schlussrechnung, Mahnungen, Belege per Scan mit Buchungsvorschlag.</td></tr>
+      <tr><td>Google Calendar</td><td>Mit einem Terminplan bucht dein Kunde die Besichtigung oder den Videotermin selbst &uuml;ber eine Buchungsseite. Als Plantafel f&uuml;r Kolonnen und Fahrzeuge taugt er wenig: Jeder braucht ein Konto, der Eintrag ist Freitext.</td></tr>
+    </tbody>
+  </table>
+  <ul class="punkte">
+    <li><b>Nachfassen:</b> Ein offenes Angebot fasst laut Herstellerseiten keines dieser Programme von selbst nach. FastMove verschickt automatisierte E-Mails, ein Nachfassen beschreibt die Seite nicht.</li>
+    <li><b>Halteverbot:</b> Die Halteverbotszonen plant von diesen Programmen laut Herstellerseiten nur Xlado ein.</li>
+  </ul>
+  <p class="eigen">L&auml;uft dein Betrieb schon in einer Umzugssoftware, nutz zuerst, was sie kann. Baust du daneben dasselbe noch einmal, pflegst du es doppelt.</p>
+  <p class="hinweis">Stand der Herstellerseiten: November 2026. Welche Funktion in deinem Tarif steckt, sagt dir dein Anbieter.</p>
+</section>
+
+<!-- Page 4: Deine Werkzeuge und Datenwege (2 of 2): the fill-in map -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Umzugsunternehmen &#183; Seite 4 von 8</span></div>
+  <h3 class="zwischen">Deine Datenwege</h3>
+  <p class="intro">Trag pro Station ein, womit du heute arbeitest, woher die Daten kommen und wohin sie danach gehen. Die zwei Zeilen oben sind Beispiele.</p>
+  <table class="karte">
+    <colgroup><col style="width:48mm"><col><col><col></colgroup>
+    <thead><tr><th>Station</th><th>Werkzeug heute</th><th>Daten kommen von</th><th>gehen nach</th></tr></thead>
+    <tbody>
+      <tr class="beispiel"><td class="station">Anfrage kommt rein</td><td>Handy des Chefs, Notizblock</td><td>Anruf, Mail, Portal</td><td>Besichtigung im Kalender</td></tr>
+      <tr class="beispiel"><td class="station">Disposition</td><td>Wandkalender</td><td>Angebot, Anruf beim Kunden</td><td>Fahrer per Anruf</td></tr>
+      <tr><td class="station">Anfrage kommt rein</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Umzugsgut und Angebot</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Auftragsunterlagen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Disposition</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Arbeitsschein und &Uuml;bergabe</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Wiederkehrendes</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Rechnung schreiben</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Belege</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Bewertung</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Abschluss</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Bewerbungen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Tagesbild</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Assistent f&uuml;r unterwegs</td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>F&uuml;ll jede Zeile aus, auch wenn dir nur ein Wort einf&auml;llt.</li>
+      <li>Kreis jede Stelle ein, an der jemand nachtelefoniert, hinf&auml;hrt, etwas abtippt, vergisst, zusammensucht oder &uuml;bertr&auml;gt.</li>
+      <li>Z&auml;hl die Kreise je Station. Die Station mit den meisten Kreisen ist deine Quelle: die Arbeit, die jede Woche wiederkommt.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- Page 5: Das Fundament -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Umzugsunternehmen &#183; Seite 5 von 8</span></div>
+  <h2 class="part">Das Fundament</h2>
+  <p class="intro">Jede Station schreibt ihre Daten an einen festen Ort. Das ist dein Fundament. Du baust es einmal, zusammen mit der ersten Station, danach wird jede weitere Station kleiner. Liegen deine Daten an einem Ort, kann sp&auml;ter eine KI darin nachschlagen, sortieren und Entw&uuml;rfe schreiben.</p>
+  <h3 class="zwischen">Welcher Ort zu dir passt</h3>
+  <div class="orte">
+    <div class="ort"><b>Mit Umzugssoftware</b><p>movingSTAR, Xlado oder movingpilot sind dein Fundament. Kunden, Umzugsgut, Angebote und Termine liegen schon dort, du legst nichts daneben an.</p></div>
+    <div class="ort"><b>Mit Rechnungsprogramm</b><p>Kunden bleiben in Lexware Office oder sevDesk. F&uuml;r Anfragen und Umz&uuml;ge legst du eine Tabelle an, eine Zeile je Umzug.</p></div>
+    <div class="ort"><b>Mit Papier</b><p>Fang mit der Tabelle an, in Excel oder Google Sheets. Sie w&auml;chst mit jeder Station.</p></div>
+  </div>
+  <h3 class="zwischen">Welche Felder deine Stationen brauchen</h3>
+  <table class="felder">
+    <tbody>
+      <tr><td>Kunde</td><td>Name, Telefon, Mail, bei Firmen der Ansprechpartner. Liegt in deinem Rechnungsprogramm oder deiner Umzugssoftware.</td></tr>
+      <tr><td>Anfrage</td><td>Datum, Kunde, Auszugs- und Einzugsadresse, je Adresse Etage, Aufzug und Parkm&ouml;glichkeit, Wunschtermin, Zusatzleistungen, Stand: neu, Liste da, Besichtigung, Angebot raus, Zusage, Absage.</td></tr>
+      <tr><td>Umzug</td><td>Auftragsnummer, Kunde, Termin, Kubikmeter aus der Liste, Festpreis, Haftungsinformation &uuml;bergeben am, Halteverbot je Adresse, Kolonne, Fahrzeug, M&ouml;bellift.</td></tr>
+      <tr><td>Arbeitsschein</td><td>Mehraufwand in Stunden, Sch&auml;den mit Foto, Unterschrift, Schl&uuml;ssel&uuml;bergabe mit Name und Uhrzeit. H&auml;ngt am Umzug.</td></tr>
+      <tr><td>Rechnung</td><td>Auftragsnummer, Anzahlung oder Schluss, Betrag, bezahlt oder offen.</td></tr>
+    </tbody>
+  </table>
+  <p><b>Die Auftragsnummer verbindet die Stationen.</b> Angebot, Halteverbot, Arbeitsschein und Rechnung tragen sie. So findet jede Station den richtigen Umzug, ohne dass jemand sucht.</p>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Entscheide, wo deine Umz&uuml;ge leben: in deiner Umzugssoftware oder in einer Tabelle.</li>
+      <li>Leg in der Tabelle die Spalten f&uuml;r Anfrage und Umzug aus der Liste oben an.</li>
+      <li>Trag deine geplanten Umz&uuml;ge ein, jeden mit Auftragsnummer, beiden Adressen und Telefonnummer.</li>
+      <li>Leg fest, wer neue Anfragen und Umz&uuml;ge eintr&auml;gt. Ein Ort, eine Person, die ihn pflegt.</li>
+    </ol>
+  </div>
+  <p class="hinweis">Alles l&auml;uft auf deinen Namen: die Tabelle, die Konten, die Zug&auml;nge. Die Umzugsgutliste liegt am Umzug, nie in einem Gruppenchat. In die Liste kommt nur, was der Umzug braucht, die Kolonne sieht davon nur ihren Tag. Schl&uuml;ssel und Codes f&uuml;r Haust&uuml;r, Keller oder Tiefgarage stehen weder in einer Tabelle, die deine Leute sehen, noch in einem Chat.</p>
+</section>
+
+<!-- Page 6: Die erste Station (1 of 2): the door station Anfrage, Umzugsgut selbst erfasst, Besichtigung nur wenn noetig, Festpreisangebot; ways 1 and 2 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Umzugsunternehmen &#183; Seite 6 von 8</span></div>
+  <h2 class="part">Die erste Station, Schritt f&uuml;r Schritt</h2>
+  <p class="intro">Du f&auml;ngst bei der Anfrage an: Dein Kunde erfasst sein Umzugsgut selbst, als Liste, mit Fotos oder per Video. Hinfahren musst du nur, wenn die Liste nicht reicht. Das Volumen bestimmt deinen Preis und nach &#167; 451e HGB die Grenze deiner Haftung. Bei Privatkunden gelten die Haftungsgrenzen nach &#167; 451g HGB nur, wenn du beim Vertrag dar&uuml;ber informierst.</p>
+  <div class="flow">
+    <div><b>Anfrage</b>&uuml;ber Webseite, Mail oder Telefon</div>
+    <span class="pfeil">&#8594;</span>
+    <div><b>Umzugsgut</b>erfasst der Kunde selbst: Liste, Fotos, Video</div>
+    <span class="pfeil">&#8594;</span>
+    <div><b>Besichtigung</b>nur, wenn sie n&ouml;tig ist</div>
+    <span class="pfeil">&#8594;</span>
+    <div class="frei"><b>Festpreis</b>mit Kubikmetern und Haftungsinformation</div>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 1</div>
+    <p class="weg">Deine Umzugssoftware l&auml;sst den Kunden selbst erfassen</p>
+    <p>In meinumzug.online von movingSTAR tr&auml;gt dein Kunde sein Umzugsgut mit Fotos selbst ein oder bucht eine Videobesichtigung. Xlado kalkuliert aus der Umzugsgutliste, movingpilot bietet eine Videobesichtigung, FastMove eine App f&uuml;r die Besichtigung. Hast du eines davon, brauchst du an dieser Stelle nichts weiter.</p>
+    <ol>
+      <li>Schalt die Selbsterfassung oder die Videobesichtigung ein. Den Link schickst du bei jeder Antwort mit.</li>
+      <li>Rechne das Festpreisangebot dort aus dem Volumen der Liste, mit der Haftungsinformation im Anhang.</li>
+    </ol>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 2</div>
+    <p class="weg">Die Anfrage holt die Liste selbst: mit einem Workflow-Werkzeug</p>
+    <p>Ohne Umzugssoftware best&auml;tigt ein Workflow-Werkzeug wie n8n jede Anfrage sofort und schickt den Link zu Fragebogen und Umzugsgutliste. Das Volumen rechnet es mit festen Kubikmeterwerten je M&ouml;belst&uuml;ck, ohne KI. Per Telegram bekommst du eine Karte mit Adressen, Volumen und der Antwort, ob du hinfahren musst.</p>
+    <ol>
+      <li>Leg die Fragen fest: beide Adressen mit Etage, Aufzug und Parkm&ouml;glichkeit, Wunschtermin, Zusatzleistungen wie Montage, Einlagerung oder Entr&uuml;mpelung.</li>
+      <li>Bau die Umzugsgutliste Raum f&uuml;r Raum, jedes M&ouml;belst&uuml;ck mit festem Kubikmeterwert. Leg fest, wann du hinf&auml;hrst, etwa bei einem Klavier, bei mehr als 40 Kubikmetern oder ohne Fotos.</li>
+      <li>Leg ein Konto bei n8n an, auf deinen Namen. Bau den Ablauf: neue Anfrage, Antwortmail mit dem Link, Volumen aus der Liste, neue Zeile im Fundament.</li>
+      <li>Schreib das Angebot in Lexware Office oder sevDesk, immer mit Kubikmetern und Haftungsinformation.</li>
+    </ol>
+    <p class="hinweis">Fotos und Videos zeigen nur R&auml;ume und Umzugsgut, keine Personen und keine Unterlagen. Kommt kein Auftrag zustande, l&ouml;schst du sie, eine Videobesichtigung zeichnest du nicht auf. Telegram sieht in seinen Bedingungen f&uuml;r Bots keinen Auftragsverarbeitungsvertrag vor, auf die Karte kommen deshalb nur Vorname, Adressen, Etage, Termin und Volumen. Pr&uuml;f vor dem Start, ob du mit dem Workflow-Werkzeug einen Auftragsverarbeitungsvertrag schlie&szlig;en kannst.</p>
+  </div>
+</section>
+
+<!-- Page 7: Die erste Station (2 of 2): Nachfassen, example, way 3 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Umzugsunternehmen &#183; Seite 7 von 8</span></div>
+  <h3 class="zwischen">Danach: offene Angebote nachfassen</h3>
+  <p>Ein Umzugstermin liegt oft nah. Bleibt ein Angebot ohne Antwort, schickt der Ablauf deshalb schon nach drei Tagen eine kurze Erinnerung in deinen Worten, nach sieben Tagen eine zweite. Jeden Montag bekommst du die Liste der offenen Angebote. Sagt der Kunde zu, setzt der Ablauf den Umzug auf Zusage und schickt ihm die Auftragsunterlagen. Die Programme von Seite 3 fassen laut Herstellerseiten nicht von selbst nach, hier lohnt der Ablauf.</p>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Schreib die zwei Erinnerungen in deinen Worten, kurz und freundlich.</li>
+      <li>Trag bei jedem Angebot das Datum und den Stand ins Fundament ein: offen, Zusage oder Absage.</li>
+      <li>Erweitere den Ablauf: Angebot offen seit drei Tagen, Erinnerung raus, Montagsliste an dich.</li>
+    </ol>
+  </div>
+
+  <div class="szene">
+    <div class="kicker">Ein Beispiel aus dem Privatumzug</div>
+    <p>Familie Kessler fragt am Sonntagabend &uuml;ber deine Webseite an: <span class="gesagt">&#8222;Drei Zimmer, zweiter Stock ohne Aufzug, Ende des Monats&#8220;</span>. Die Antwort mit dem Link ist sofort da. Am Montag tragen sie ihr Umzugsgut ein, mit Fotos von Wohnzimmer und Keller.</p>
+    <p>Per Telegram siehst du: 32 Kubikmeter, kein Klavier, Fotos da. Hinfahren musst du nicht.</p>
+    <p>Am Dienstag schreibst du das Festpreisangebot mit Kubikmetern und Haftungsinformation. Am Freitag geht die Erinnerung raus, am Samstag kommt die Zusage.</p>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 3</div>
+    <p class="weg">Ein eigener Bau, nur f&uuml;r die L&uuml;cke</p>
+    <p>Passt keiner der beiden Wege, etwa weil Anfragen aus Portalen als Mail kommen und ihre Angaben gleich in Fragebogen und Liste stehen sollen, bleibt ein eigener Bau. Er schlie&szlig;t die L&uuml;cke zwischen Anfrage und Software und ersetzt nichts. Das geht, wenn deine Software eine Schnittstelle hat.</p>
+    <ol>
+      <li>Schreib auf, was dir an Weg 1 und Weg 2 fehlt.</li>
+      <li>Frag deinen Anbieter, ob seine Software eine Schnittstelle hat und was sie liest und schreibt.</li>
+      <li>Lass nur diese L&uuml;cke bauen und dir jeden Ablauf mit Dokumentation &uuml;bergeben.</li>
+    </ol>
+  </div>
+
+  <h3 class="zwischen">So merkst du, dass es l&auml;uft</h3>
+  <ul class="haken">
+    <li><span class="box"></span>Jede Anfrage hat eine Antwort, bevor du zur&uuml;ckrufst.</li>
+    <li><span class="box"></span>Du f&auml;hrst nur noch zu Besichtigungen, die deine Regeln verlangen.</li>
+    <li><span class="box"></span>Kein Angebot bleibt ohne Nachfassen liegen.</li>
+  </ul>
+  <p class="eigen">Die Konten laufen auf deinen Namen. L&auml;uft die Station ruhig, nimmst du die n&auml;chste dazu.</p>
+</section>
+
+<!-- Page 8: Die naechsten Stockwerke + the shared close. Runner-up Halteverbotszone first. -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Umzugsunternehmen &#183; Seite 8 von 8</span></div>
+  <h2 class="part">Die n&auml;chsten Stockwerke</h2>
+  <p class="intro">L&auml;uft die Anfrage von selbst, nimm die n&auml;chste Station dazu. Die Reihenfolge ist ein Vorschlag, deine Kreise von Seite 4 gehen vor.</p>
+  <table class="naechste">
+    <tbody>
+      <tr class="zuerst"><td class="name"><b>Halteverbotszone je Adresse</b><span class="wo">3. Stock &#183; Die Arbeit</span></td><td>Aus dem Umzugstermin rechnet der Ablauf die Fristen f&uuml;r Be- und Entladestelle und erinnert dich. Wie fr&uuml;h der Antrag raus muss, legt deine Stadt fest, Stuttgart verlangt mindestens zwei Wochen. Stehen die Schilder mindestens drei volle Tage, tr&auml;gt ein Falschparker die Kosten f&uuml;rs Abschleppen (Bundesverwaltungsgericht, 3 C 25.16). Notierte Kennzeichen l&ouml;schst du nach dem Umzug. Von den Programmen auf Seite 3 plant das nur Xlado.</td></tr>
+      <tr><td class="name"><b>Disposition</b><span class="wo">3. Stock &#183; Die Arbeit</span></td><td>Jede Kolonne bekommt ihren Tag als Karte aufs Handy: Adressen, Etage, Aufzug, Halteverbot, M&ouml;bellift, Besonderheiten, Ansprechpartner, ohne Schl&uuml;ssel und Codes. Disponiert deine Software schon, schalt das ein.</td></tr>
+      <tr><td class="name"><b>Arbeitsschein und &Uuml;bergabe</b><span class="wo">3. Stock &#183; Die Arbeit</span></td><td>Mehrstunden, Sch&auml;den mit Foto und die Unterschrift kommen an den Umzug. Der Schein tr&auml;gt den Hinweis auf Form und Frist der Schadensanzeige, den &#167; 451g HGB sp&auml;testens bei der Ablieferung vorsieht.</td></tr>
+      <tr><td class="name"><b>Auftragsunterlagen</b><span class="wo">2. Stock &#183; Onboarding</span></td><td>Haftungsinformation, AGB, Auftrag und Anzahlung kommen als ein Link, der Ablauf meldet, was fehlt. movingSTAR macht das im Kundenportal.</td></tr>
+      <tr><td class="name"><b>Rechnung, Belege, Lager</b><span class="wo">4. Stock &#183; Finanzwesen</span></td><td>Am Umzugstag liegt der Rechnungsentwurf mit Mehraufwand bereit. Belege erfassen Lexware Office und sevDesk schon, eine KI ordnet sie &uuml;ber die Auftragsnummer zu. Die Lagerrechnung l&auml;uft als Serienrechnung.</td></tr>
+      <tr><td class="name"><b>Abschluss, Bewertung, Bewerbungen</b><span class="wo">5. Stock &#183; Abschluss und Team</span></td><td>Zwei Wochen nach dem Umzug holst du die Kartons ab. Nach bezahlter Rechnung gibst du die Bitte um eine Bewertung frei, ohne Gegenleistung. Bewerber bekommen sofort Antwort.</td></tr>
+      <tr><td class="name"><b>Tagesbild</b><span class="wo">Das Dach</span></td><td>Jeden Morgen eine Nachricht: Umz&uuml;ge heute und morgen, Halteverbot je Adresse, offene Angebote, unbezahlte Rechnungen.</td></tr>
+      <tr><td class="name"><b>Assistent f&uuml;r unterwegs</b><span class="wo">Um das ganze Haus</span></td><td>Im Treppenhaus sprichst du R&uuml;ckruf, Termin oder Notiz zum Umzug ein. Er meldet sich als KI-Assistent, sobald er mit Kunden schreibt.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="abschluss">
+    <h2 class="part">Wenn du Fragen hast, melde dich. Kostenlos.</h2>
+    <p>Im Prozess-Audit schauen wir gemeinsam, wo in deinem Betrieb die meiste Zeit h&auml;ngen bleibt.</p>
+    <p>Den Anfang macht ein Gespr&auml;ch von 30 Minuten. Ergibt sich daraus etwas Sinnvolles, schreibe ich dir einen Fahrplan. Wenn nicht, sage ich es dir ehrlich.</p>
+    <div class="buchen">
+      <a href="https://vrelo-ki.de/kontakt?src=bauplan-umzug-pdf">30 Minuten Gespr&auml;ch vereinbaren</a>
+      <span class="url">vrelo-ki.de/kontakt?src=bauplan-umzug-pdf</span>
+    </div>
+    <div class="kontakt">
+      <span class="logo-word">Vrelo</span>&#160;&#160;
+      Ajdin Dzafic &#183; Regensburg &#183; ajdin@vrelo-ki.de &#183; vrelo-ki.de
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

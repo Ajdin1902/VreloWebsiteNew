@@ -1,0 +1,351 @@
+<!doctype html>
+<!--
+  Vrelo Bauplan-Reihe, Hausmeisterdienste: free 8-page PDF guide for owner-led Hausmeister- and
+  Objektbetreuungs-Betriebe working for Hausverwaltungen, WEGs and Gewerbe.
+  Spec: docs/superpowers/specs/2026-11-06-bauplan-reihe-design.md (section 4 skeleton, section 6 constraints).
+  Facts: Knowledge/marketing/prozess-landkarten.md section 4 (4.1 Landkarte, 4.7 Recherche, 2026-11-07).
+  Data + shared copy: src/lib/bauplanReihe/hausmeister.ts and shared.ts. Styles: content/bauplan/reihe.css.
+  Structure, classes and shared copy follow the approved SHK pilot (content/bauplan/shk-bauplan.html).
+
+  RULES (do not break; the guard src/lib/bauplanReihe/templates.test.ts enforces most of them):
+    - Chapters 2 and 7 carry the shared copy word for word (selbstcheck, LEVELS, abschluss).
+    - No price, no Vrelo duration, no capacity line, no guarantee, no client or prospect names.
+      A live Vrelo build in this trade exists: nothing from it may be recognisable.
+    - Pages 1 to 7 are a free guide the reader follows alone: no first-person service offer.
+    - "Schnittstelle" only next to tools in hausmeister.verifiedInterfaces; otherwise
+      "wenn deine Software eine Schnittstelle hat". iPM-Cloud, hausmeisterapp, wowflow, Blink,
+      casavi and facilioo are never called connectable. Vendor features only as section 4.7 confirms them.
+    - The statistic describes Immobilienverwaltungen (the reader's customers), never Hausmeisterdienste,
+      never next to another number, no sample size.
+    - Photos: only the work, no people, no Kennzeichen. Codes and keys never in the chat.
+    - Every link prints its target as visible text (the copy is printed).
+    - Any assistant named carries "meldet sich als KI-Assistent".
+    - Dash-free German, no comma before "und", generic masculine, du.
+    - Pure ASCII with entities from src/lib/bauplanTemplateText.ts (add a new entity there first).
+    - Office printer, A4, white page, 8 pages. Full page = shorten copy, never shrink type.
+-->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Vrelo &#183; Bauplan f&uuml;r Hausmeisterdienste</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>{{{BRAND_CSS}}}</style>
+<style>{{{REIHE_CSS}}}</style>
+</head>
+<body>
+
+<!-- Page 1: cover (series pattern). Flow steps = hausmeister.auftragsweg. -->
+<section class="page first">
+  <div class="p1">
+    <div class="p1-top">
+      <div class="logo">{{{LOGO_SVG}}}<span class="logo-word">Vrelo</span></div>
+      <span>Bauplan f&uuml;r Hausmeisterdienste</span>
+    </div>
+
+    <h1>Prozesse, Automatisierung, KI:<br>Wo fange ich &uuml;berhaupt an?</h1>
+
+    <div class="weg-heute">
+      <div class="kicker">Ein Auftrag, viele R&uuml;ckfragen</div>
+      <div class="auftragsweg">
+        <span></span>
+        <div class="schritt">Verwaltung schickt den Auftrag per Mail</div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Auftrag in die Liste im B&uuml;ro<span class="verlust">&uuml;bertragen</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Tagesliste f&uuml;r den Mitarbeiter<span class="verlust">ausgedruckt</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Fotos per WhatsApp an den Chef<span class="verlust">weitergeleitet</span></div>
+
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Verwaltung ruft an: erledigt oder nicht?<span class="verlust">nachgefragt</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Nachweis aus Galerie und Chat<span class="verlust">zusammengesucht</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt ende">Rechnung, die Sonderleistung aus dem Ged&auml;chtnis<span class="verlust">nachgetragen</span></div>
+      </div>
+      <p class="kreis-satz">Jeder Kreis ist eine Stelle, an der Zeit verloren geht. Im Bauplan findest du deine.</p>
+    </div>
+
+    <div class="statistik">
+      <span class="zahl">62,1 Prozent</span>
+      <div>
+        <span class="satz">der befragten Immobilienverwalter beschreiben ihre Verwaltung als &uuml;berlastet.</span>
+        <span class="quelle">Verband der Immobilienverwalter Deutschland (VDIV), Branchenbarometer 2026. Die Zahl beschreibt die Verwaltungen, f&uuml;r die du arbeitest. Ein Nachweis, nach dem sie nicht fragen m&uuml;ssen, nimmt ihnen Arbeit ab.</span>
+      </div>
+    </div>
+    <p class="quelle-link">Quelle: <a href="https://vdiv.de/news-details/branchenbarometer-2026-wirtschaftlich-auf-wachstumskurs-personell-am-limit">vdiv.de/news-details/branchenbarometer-2026-wirtschaftlich-auf-wachstumskurs-personell-am-limit</a></p>
+
+    <div class="woche">
+      <p class="woche-kopf">Dieser Bauplan ist dein erster Schritt.</p>
+      <ol class="tage">
+        <li><span class="tag">Tag 1</span><b>Wo du stehst</b><span class="seite">Seite 2</span></li>
+        <li><span class="tag">Tag 2</span><b>Deine Werkzeuge</b><span class="seite">Seite 3</span></li>
+        <li><span class="tag">Tag 3</span><b>Deine Datenwege</b><span class="seite">Seite 4</span></li>
+        <li><span class="tag">Tag 4</span><b>Das Fundament</b><span class="seite">Seite 5</span></li>
+        <li><span class="tag">Tag 5</span><b>Die erste Station</b><span class="seite">Seite 6 und 7</span></li>
+      </ol>
+      <p class="woche-schluss">Nach einer Woche wei&szlig;t du, wo du anf&auml;ngst.</p>
+      <p class="woche-ziel">Schritt f&uuml;r Schritt zu deinem KI-Betriebssystem.</p>
+    </div>
+
+    <div class="fuer"><p><b>F&uuml;r wen:</b> Inhaber von Hausmeisterdiensten, die Objekte f&uuml;r Hausverwaltungen, WEGs und Gewerbe betreuen. Deine Leute fahren die Objekte ab, das B&uuml;ro h&auml;lt Auftr&auml;ge, Turnus und Nachweise zusammen. F&uuml;r die ersten Seiten reicht ein Stift.</p></div>
+
+    <div class="p1-foot">Ajdin Dzafic, <span class="brand-word">Vrelo</span>, Regensburg &#183; vrelo-ki.de</div>
+  </div>
+</section>
+
+<!-- Page 2: Wo du stehst (shared copy: selbstcheck, LEVELS) -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Hausmeisterdienste &#183; Seite 2 von 8</span></div>
+  <h2 class="part">Wo du stehst</h2>
+  <div class="kicker">Dein Stand je Station</div>
+  <p class="intro">Mach pro Station ein Kreuz in einer der drei Spalten: l&auml;uft von selbst, auf Papier oder in Dateien, nur im Kopf. Z&auml;hl am Ende die Kreuze je Spalte.</p>
+  <table class="check">
+    <thead><tr><th></th><th class="links">Station</th><th>L&auml;uft von selbst</th><th>Auf Papier oder in Dateien</th><th>Nur im Kopf</th></tr></thead>
+    <tbody>
+      <tr class="neu"><td class="stock" rowspan="2"><b>Erdgeschoss</b> Kundeneingang</td><td>Auftrag kommt rein<span class="bsp">Mail, Anruf, Portal der Verwaltung</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Angebot und Nachfassen<span class="bsp">Sonderleistung, neuer Objektvertrag</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="1"><b>2. Stock</b> Onboarding</td><td>Neues Objekt &uuml;bernehmen<span class="bsp">Schl&uuml;ssel, Leistungsverzeichnis, Abfuhrplan</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="3"><b>3. Stock</b> Die Arbeit</td><td>Tagesliste f&uuml;r den Mitarbeiter<span class="bsp">wer f&auml;hrt heute welche Objekte</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Leistungsnachweis<span class="bsp">erledigt, Foto, Bericht an die Verwaltung</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Turnus und Saison<span class="bsp">Treppenhaus, M&uuml;lltonnen, Winterdienst</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="2"><b>4. Stock</b> Finanzwesen</td><td>Rechnung je Objekt<span class="bsp">Pauschale und Sonderleistungen</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Belege zuordnen<span class="bsp">Streusalz, Material, Entsorgung</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="3"><b>5. Stock</b> Abschluss und Team</td><td>Bewertung<span class="bsp">Bitte an die zufriedene Verwaltung</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Objekt&uuml;bergabe<span class="bsp">Schl&uuml;ssel zur&uuml;ck, letzter Nachweis</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Bewerbungen und Einarbeitung<span class="bsp">auch Saisonkr&auml;fte im Winter</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="2"><b>Dach</b> und Assistent</td><td>Tagesbild<span class="bsp">morgens sehen, was offen ist</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Assistent f&uuml;r unterwegs<span class="bsp">einsprechen statt merken</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="summe"><td></td><td>Kreuze je Spalte</td><td class="kreuz"><span class="feld"></span></td><td class="kreuz"><span class="feld"></span></td><td class="kreuz"><span class="feld"></span></td></tr>
+    </tbody>
+  </table>
+  <div class="frage">
+    <p><b>Liegen deine Kundendaten an einem festen Ort, auf den alles zugreift?</b></p>
+    <div class="antwort"><span><span class="box"></span> Ja</span><span><span class="box"></span> Nein</span></div>
+  </div>
+  <p class="hinweis">Eine leere Zeile z&auml;hlt als &#8222;nur im Kopf&#8220;. Zwei Kreuze in einer Zeile: z&auml;hl nur das rechte.</p>
+  <h3 class="zwischen">Deine Stufe</h3>
+  <table class="stufen">
+    <tbody>
+      <tr><td class="nr">0</td><td class="name">Im Kopf<span class="regel">Kein Kreuz bei &#8222;l&auml;uft&#8220;, im Kopf mindestens so viele wie auf Papier</span></td><td>Schreib auf, was du heute nur im Kopf tr&auml;gst. Eine Station reicht f&uuml;r den Anfang.</td></tr>
+      <tr><td class="nr">1</td><td class="name">Verstreut<span class="regel">Kein Kreuz bei &#8222;l&auml;uft&#8220;, auf Papier mehr als im Kopf</span></td><td>Vieles steht schon auf Papier oder in Dateien. Such dir die eine Station aus, die dich am meisten Zeit kostet.</td></tr>
+      <tr><td class="nr">2</td><td class="name">Erste Station l&auml;uft<span class="regel">Mindestens ein Kreuz bei &#8222;l&auml;uft&#8220;, Fundament: nein</span></td><td>Eine Station l&auml;uft von selbst. Als N&auml;chstes brauchen deine Daten einen festen Platz, damit alles auf denselben Ort zugreift.</td></tr>
+      <tr><td class="nr">3</td><td class="name">Ein Ort<span class="regel">Fundament: ja, 1 bis 9 Kreuze bei &#8222;l&auml;uft&#8220;</span></td><td>Deine Daten liegen an einem Ort. Jetzt holst du eine Station nach der anderen in dein System.</td></tr>
+      <tr><td class="nr">4</td><td class="name">Haus steht<span class="regel">Fundament: ja, 10 Kreuze oder mehr bei &#8222;l&auml;uft&#8220;</span></td><td>Fast alles l&auml;uft von selbst. Schlie&szlig; die letzten L&uuml;cken und schreib auf, wie die Stationen zusammenh&auml;ngen.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Page 3: Deine Werkzeuge und Datenwege (1 of 2): what Hausmeister software already ships (4.7 Werkzeuge) -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Hausmeisterdienste &#183; Seite 3 von 8</span></div>
+  <h2 class="part">Deine Werkzeuge und Datenwege</h2>
+  <p class="intro">Schau zuerst nach, was deine Software schon kann. Was sie kann, schaltest du ein. Bauen musst du nur, was fehlt.</p>
+  <h3 class="zwischen">Was Hausmeister-Software mitbringt</h3>
+  <table class="werkzeuge">
+    <thead><tr><th>Werkzeug</th><th>Was es dir abnimmt</th></tr></thead>
+    <tbody>
+      <tr><td>iPM-Cloud</td><td>Objekte mit ihren Leistungen, Tourenplanung, wiederkehrende Leistungen und Turnusse mit F&auml;lligkeitswarnung, Winterdienst je Objekt von November bis M&auml;rz. Die App h&auml;lt jede Leistung mit Foto und Zeitstempel fest und gibt einen Leistungsnachweis als PDF aus. Sie l&auml;uft nur zusammen mit der Hauptanwendung.</td></tr>
+      <tr><td>hausmeisterapp</td><td>Tickets, auch Meldungen direkt von Bewohnern, Objektverwaltung mit Abfuhrpl&auml;nen und Z&auml;hlern, Aufgabenplanung. Die App erfasst Zeiten, Fotos und Notizen, auch ohne Netz. Rechnungen landen im Kundenprofil in Lexware Office.</td></tr>
+      <tr><td>wowflow</td><td>Tickets per QR-Code im Geb&auml;ude oder per Mail, ein Kalender f&uuml;r wiederkehrende Arbeiten, Arbeitsberichte als PDF mit allen Bildern, die automatisch an den Kunden gehen.</td></tr>
+      <tr><td>Blink</td><td>Mitarbeiter-App aus der Geb&auml;udereinigung: Dienstplan, Zeiterfassung per QR-Code oder NFC, digitale Arbeitsscheine mit Unterschrift vor Ort, ein Kundenportal mit dem Stand je Objekt.</td></tr>
+      <tr><td>Lexware Office</td><td>Serien- und Sammelrechnungen f&uuml;r die Pauschale je Objekt, automatische Mahnungen, Belege per Texterkennung, Export f&uuml;r DATEV.</td></tr>
+      <tr><td>sevDesk</td><td>Angebot und Rechnung, Mahnungen, Belege per Scan mit Buchungsvorschlag.</td></tr>
+      <tr><td>Google Calendar</td><td>Serientermine je Objekt f&uuml;r den Turnus. Der Eintrag ist Freitext, eine R&uuml;ckmeldung kommt nicht zur&uuml;ck.</td></tr>
+    </tbody>
+  </table>
+  <ul class="punkte">
+    <li><b>Handwerkersoftware:</b> HERO und Craftboxx stehen auch in Listen f&uuml;r Hausmeister-Software. Einsatzplanung, eine App mit Fotos und die Rechnung bringen sie mit. Ein Modul f&uuml;r Turnus oder Winterdienst zeigen ihre Seiten nicht.</li>
+    <li><b>Portale der Verwaltung:</b> Manche Hausverwaltungen schicken Auftr&auml;ge &uuml;ber casavi oder facilioo und erwarten die R&uuml;ckmeldung mit Foto dort. Dann antwortest du dort, denn das ist die Akte deines Kunden.</li>
+  </ul>
+  <p class="eigen">L&auml;uft dein Betrieb schon in einer Hausmeister-Software, nutz zuerst, was sie kann. Baust du daneben dasselbe noch einmal, pflegst du es doppelt.</p>
+  <p class="hinweis">Stand der Herstellerseiten: November 2026. Welche Funktion in deinem Tarif steckt, sagt dir dein Anbieter.</p>
+</section>
+
+<!-- Page 4: Deine Werkzeuge und Datenwege (2 of 2): the fill-in map -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Hausmeisterdienste &#183; Seite 4 von 8</span></div>
+  <h3 class="zwischen">Deine Datenwege</h3>
+  <p class="intro">Trag pro Station ein, womit du heute arbeitest, woher die Daten kommen und wohin sie danach gehen. Die zwei Zeilen oben sind Beispiele.</p>
+  <table class="karte">
+    <colgroup><col style="width:48mm"><col><col><col></colgroup>
+    <thead><tr><th>Station</th><th>Werkzeug heute</th><th>Daten kommen von</th><th>gehen nach</th></tr></thead>
+    <tbody>
+      <tr class="beispiel"><td class="station">Leistungsnachweis</td><td>WhatsApp, private Galerie</td><td>Mitarbeiter am Objekt</td><td>Verwaltung, nur auf Nachfrage</td></tr>
+      <tr class="beispiel"><td class="station">Rechnung je Objekt</td><td>Excel, Lexware Office</td><td>Pauschale, Sonderleistung aus dem Ged&auml;chtnis</td><td>Verwaltung, Steuerberater per DATEV</td></tr>
+      <tr><td class="station">Auftrag kommt rein</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Angebot und Nachfassen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Neues Objekt</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Tagesliste</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Leistungsnachweis</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Turnus und Saison</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Rechnung je Objekt</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Belege</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Bewertung</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Objekt&uuml;bergabe</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Bewerbungen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Tagesbild</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Assistent f&uuml;r unterwegs</td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>F&uuml;ll jede Zeile aus, auch wenn dir nur ein Wort einf&auml;llt.</li>
+      <li>Kreis jede Stelle ein, an der jemand etwas &uuml;bertr&auml;gt, ausdruckt, weiterleitet, nachfragt, zusammensucht oder nachtr&auml;gt.</li>
+      <li>Z&auml;hl die Kreise je Station. Die Station mit den meisten Kreisen ist deine Quelle: die Arbeit, die jede Woche wiederkommt.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- Page 5: Das Fundament (system of record = the Objektliste) -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Hausmeisterdienste &#183; Seite 5 von 8</span></div>
+  <h2 class="part">Das Fundament</h2>
+  <p class="intro">Jede Station schreibt ihre Daten an einen festen Ort. Das ist dein Fundament. Du baust es einmal, zusammen mit der ersten Station, danach wird jede weitere Station kleiner. Liegen deine Daten an einem Ort, kann sp&auml;ter eine KI darin nachschlagen, sortieren und Entw&uuml;rfe schreiben.</p>
+  <h3 class="zwischen">Welcher Ort zu dir passt</h3>
+  <div class="orte">
+    <div class="ort"><b>Mit Hausmeister-Software</b><p>Sie ist dein Fundament. Objekte, Turnusse und Nachweise liegen schon dort, du legst nichts daneben an.</p></div>
+    <div class="ort"><b>Mit Liste und Rechnungsprogramm</b><p>Deine Verwaltungen bleiben als Kunden in Lexware Office oder sevDesk. F&uuml;r Objekte und Leistungen legst du eine Tabelle an, eine Zeile je Objekt.</p></div>
+    <div class="ort"><b>Mit Papier</b><p>Fang mit der Tabelle an, in Excel oder Google Sheets. Sie w&auml;chst mit jeder Station.</p></div>
+  </div>
+  <h3 class="zwischen">Welche Felder deine Stationen brauchen</h3>
+  <table class="felder">
+    <tbody>
+      <tr><td>Verwaltung</td><td>Name, Ansprechpartner, Adresse f&uuml;r die Nachweise. Liegt als Kunde in deinem Rechnungsprogramm.</td></tr>
+      <tr><td>Objekt</td><td>Objektnummer, Adresse, Verwaltung, Ansprechpartner vor Ort wie der Beirat einer WEG, Leistungsverzeichnis, Turnus, R&auml;umpflicht mit Fl&auml;chen und Zeiten.</td></tr>
+      <tr><td>Leistung</td><td>Objektnummer, Datum, Uhrzeit, Leistung, Mitarbeiter, Foto. H&auml;ngt am Objekt.</td></tr>
+      <tr><td>Sonderleistung</td><td>Objektnummer, Auftrag der Verwaltung, Stunden, Material. Getrennt vom Turnus.</td></tr>
+      <tr><td>Rechnung</td><td>Objektnummer, Monat, Pauschale oder Sonderleistung, bezahlt oder offen.</td></tr>
+    </tbody>
+  </table>
+  <p><b>Die Objektnummer verbindet die Stationen.</b> Leistung, Sonderleistung und Rechnung tragen sie. So findet jede Station das richtige Objekt, ohne dass jemand sucht.</p>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Entscheide, wo deine Objekte leben: in deiner Hausmeister-Software oder in einer Tabelle.</li>
+      <li>Leg in der Tabelle die Spalten f&uuml;r Objekt und Leistung aus der Liste oben an.</li>
+      <li>Trag alle Objekte ein, jedes mit Objektnummer, Verwaltung und Leistungsverzeichnis.</li>
+      <li>Leg fest, wer neue Objekte und Auftr&auml;ge eintr&auml;gt. Ein Ort, eine Person, die ihn pflegt.</li>
+    </ol>
+  </div>
+  <p class="hinweis">Alles l&auml;uft auf deinen Namen: die Tabelle, die Konten, die Zug&auml;nge. Von der Verwaltung &uuml;bernimmst du nur, was der Auftrag braucht. Schl&uuml;ssel und Zugangscodes stehen nie in der Tabelle f&uuml;r alle, nie im Chat und nie auf einem Foto. Sie geh&ouml;ren in eine eigene Liste, die nur du und dein B&uuml;ro &ouml;ffnen.</p>
+</section>
+
+<!-- Page 6: Die erste Station (1 of 2): the door station Leistungsnachweis, ways 1 and 2 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Hausmeisterdienste &#183; Seite 6 von 8</span></div>
+  <h2 class="part">Die erste Station, Schritt f&uuml;r Schritt</h2>
+  <p class="intro">Du f&auml;ngst beim Leistungsnachweis an: Dein Mitarbeiter meldet am Objekt &#8222;erledigt&#8220; mit einem Foto. Daraus bekommt jede Verwaltung ihren Bericht je Objekt, ohne nachzufragen. Die Station ist klein, l&auml;uft ohne KI und schreibt die ersten Eintr&auml;ge in dein Fundament. Liegt deine Quelle woanders, gilt dieselbe Reihenfolge: erst deine Software, dann ein Workflow-Werkzeug, zuletzt ein eigener Bau.</p>
+  <div class="flow">
+    <div><b>Mitarbeiter</b>w&auml;hlt das Objekt, schickt &#8222;erledigt&#8220; und ein Foto</div>
+    <span class="pfeil">&#8594;</span>
+    <div><b>Fundament</b>ein Eintrag mit Datum und Uhrzeit</div>
+    <span class="pfeil">&#8594;</span>
+    <div><b>Bericht</b>je Objekt als PDF</div>
+    <span class="pfeil">&#8594;</span>
+    <div class="frei"><b>Verwaltung</b>hat ihn, bevor sie fragt</div>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 1</div>
+    <p class="weg">Deine Software hat einen Leistungsnachweis</p>
+    <p>iPM-Cloud, hausmeisterapp und wowflow halten Leistungen mit Foto fest, Blink mit Arbeitsschein und Unterschrift. Arbeitest du mit einer davon, schalte den Nachweis ein, dann baust du hier nichts. Die Daten deiner Objekte bleiben in deiner Software. Frag deinen Anbieter nach dem Auftragsverarbeitungsvertrag.</p>
+    <ol>
+      <li>Frag deinen Anbieter, ob dein Tarif den Leistungsnachweis enth&auml;lt.</li>
+      <li>Leg je Verwaltung fest, wann sie ihn bekommt: einmal im Monat und nach jedem Winterdienst-Einsatz.</li>
+      <li>Schick ihn ab, bevor jemand fragt. iPM-Cloud gibt den Nachweis als PDF aus, wowflow schickt Berichte selbst an den Kunden.</li>
+    </ol>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 2</div>
+    <p class="weg">Keine Hausmeister-Software: der schnelle Start mit Telegram</p>
+    <p>Arbeitest du mit einer Liste in Excel und mit Lexware Office oder sevDesk, bleibt die Liste f&uuml;rs B&uuml;ro. Ein Workflow-Werkzeug wie n8n nimmt die Meldung deines Mitarbeiters in Telegram an, schreibt sie als Eintrag ins Fundament und stellt daraus den Bericht je Objekt zusammen. Von einem privaten WhatsApp-Konto kann kein Ablauf Meldungen automatisch annehmen, daf&uuml;r braucht es WhatsApp Business mit einer eigenen Einrichtung bei Meta.</p>
+    <ol>
+      <li>Gib jedem Objekt eine kurze Nummer. Dein Mitarbeiter w&auml;hlt sie, bevor er meldet.</li>
+      <li>Jeder Mitarbeiter installiert Telegram einmal, das dauert pro Handy eine Minute.</li>
+      <li>Leg ein Konto bei n8n an, auf deinen Namen.</li>
+      <li>Bau den Ablauf in drei Schritten: Meldung mit Objekt und Foto, neue Zeile im Fundament, Bericht je Objekt als PDF an die Verwaltung.</li>
+      <li>Teste ihn mit einem Mitarbeiter und einem Objekt, bevor alle mitmachen.</li>
+    </ol>
+    <p class="hinweis">Telegram sieht in seinen Bedingungen f&uuml;r Bots keinen Auftragsverarbeitungsvertrag vor. In die Meldung kommen deshalb nur Objekt, Leistung und Foto, keine Namen von Mietern. Pr&uuml;f vor dem Start, ob du mit dem Workflow-Werkzeug einen Auftragsverarbeitungsvertrag schlie&szlig;en kannst.</p>
+  </div>
+</section>
+
+<!-- Page 7: Die erste Station (2 of 2): why the Nachweis counts, the Winterdienst example, way 3 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Hausmeisterdienste &#183; Seite 7 von 8</span></div>
+  <h3 class="zwischen">Warum der Nachweis im Winter z&auml;hlt</h3>
+  <ul class="punkte">
+    <li><b>Bezahlt wird der Erfolg.</b> Ein Winterdienstvertrag schuldet Wege ohne Schnee- und Eisgl&auml;tte, so hat es der Bundesgerichtshof 2013 entschieden. Fehlt ein Einsatz, darf dein Auftraggeber die Verg&uuml;tung mindern. Das Protokoll ist dein Beleg, dass der Einsatz an diesem Tag stattgefunden hat.</li>
+    <li><b>Deine Verwaltung haftet mit.</b> Nach einem Urteil des Bundesgerichtshofs von 2025 steht ein Vermieter f&uuml;r Fehler seines Hausmeisterdienstes beim Winterdienst ein wie f&uuml;r eigene. Deine Auftraggeber haben damit mehr Grund, das R&auml;umprotokoll zu verlangen. Lass dich im Zweifel beraten, was dein Vertrag von dir fordert.</li>
+  </ul>
+
+  <div class="szene">
+    <div class="kicker">Ein Beispiel aus dem Winterdienst</div>
+    <p>Um f&uuml;nf Uhr fr&uuml;h liegt Schnee. Dein Mitarbeiter r&auml;umt und streut die Wege einer Wohnanlage, die du f&uuml;r eine Hausverwaltung betreust.</p>
+    <p>Am Objekt w&auml;hlt er die Nummer 14 und schreibt: <span class="gesagt">&#8222;ger&auml;umt und gestreut&#8220;</span>, dazu ein Foto vom Gehweg ohne Personen und ohne Autos.</p>
+    <p>Im Fundament steht der Einsatz mit Datum und Uhrzeit. Um acht hat die Verwaltung das R&auml;umprotokoll per Mail. Ruft im Februar ein Mieter wegen Gl&auml;tte an, schl&auml;gt sie nach, statt dich anzurufen.</p>
+  </div>
+  <p class="hinweis">Du brauchst daf&uuml;r kein GPS: Dein Mitarbeiter w&auml;hlt das Objekt, die Uhrzeit setzt der Ablauf beim Eingang der Meldung. So sammelst du keine Standortdaten deiner Leute. Speichert deine App den Standort bei der Anmeldung am Objekt, sag es deinen Mitarbeitern und nutz ihn nie als Spur &uuml;ber den Tag. Fotos zeigen nur die Fl&auml;che oder die Arbeit, nie Bewohner, Kennzeichen oder Klingelschilder.</p>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 3</div>
+    <p class="weg">Ein eigener Bau, nur f&uuml;r die L&uuml;cke</p>
+    <p>Passt keiner der beiden Wege, etwa weil Auftr&auml;ge von f&uuml;nf Verwaltungen auf drei Wegen kommen, bleibt ein eigener Bau. Er schlie&szlig;t nur diese L&uuml;cke und ersetzt nichts. Das geht, wenn deine Software eine Schnittstelle hat.</p>
+    <ol>
+      <li>Schreib auf, was dir an Weg 1 und Weg 2 fehlt.</li>
+      <li>Frag deinen Anbieter, ob seine Software eine Schnittstelle hat und was sie liest und schreibt.</li>
+      <li>Lass nur diese L&uuml;cke bauen und dir jeden Ablauf mit Dokumentation &uuml;bergeben.</li>
+    </ol>
+  </div>
+
+  <h3 class="zwischen">So merkst du, dass es l&auml;uft</h3>
+  <ul class="haken">
+    <li><span class="box"></span>Keine Verwaltung ruft mehr an, um zu fragen, ob es erledigt ist.</li>
+    <li><span class="box"></span>Nach jedem Winterdienst-Einsatz liegt das Protokoll bei der Verwaltung.</li>
+    <li><span class="box"></span>Kein Foto vom Einsatz liegt mehr in einer privaten Galerie.</li>
+  </ul>
+  <p class="eigen">Die Konten laufen auf deinen Namen. L&auml;uft die Station ruhig, nimmst du die n&auml;chste dazu.</p>
+</section>
+
+<!-- Page 8: Die naechsten Stockwerke + the shared close -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Hausmeisterdienste &#183; Seite 8 von 8</span></div>
+  <h2 class="part">Die n&auml;chsten Stockwerke</h2>
+  <p class="intro">L&auml;uft der Leistungsnachweis, nimm die n&auml;chste Station dazu. Die Reihenfolge ist ein Vorschlag, deine Kreise von Seite 4 gehen vor.</p>
+  <table class="naechste">
+    <tbody>
+      <tr class="zuerst"><td class="name"><b>Turnusliste</b><span class="wo">3. Stock &#183; Die Arbeit</span></td><td>Treppenhaus, M&uuml;lltonnen nach Abfuhrplan, Kontrollgang, Winterdienst-Bereitschaft: Aus der Liste je Objekt kommt jeden Morgen die Tagesliste aufs Handy. Jede Zeile beantwortet dein Mitarbeiter mit &#8222;erledigt&#8220; und Foto. iPM-Cloud und wowflow planen wiederkehrende Arbeiten schon (siehe Seite 3).</td></tr>
+      <tr><td class="name"><b>Auftr&auml;ge aller Verwaltungen</b><span class="wo">Erdgeschoss &#183; Kundeneingang</span></td><td>Mails und Anrufe landen in einer Liste je Objekt, die Verwaltung bekommt eine Best&auml;tigung. Auftr&auml;ge aus einem Portal bleiben dort.</td></tr>
+      <tr><td class="name"><b>Rechnung je Objekt</b><span class="wo">4. Stock &#183; Finanzwesen</span></td><td>Die Pauschale l&auml;uft als Serienrechnung. Sonderleistungen kommen getrennt, damit deine Verwaltung sie in der Nebenkostenabrechnung sauber trennen kann.</td></tr>
+      <tr><td class="name"><b>Belege</b><span class="wo">4. Stock &#183; Finanzwesen</span></td><td>Lexware Office und sevDesk lesen Belege schon. Eine KI ordnet Streusalz und Material dem Objekt zu, du gibst frei.</td></tr>
+      <tr><td class="name"><b>Angebote nachfassen</b><span class="wo">Erdgeschoss &#183; Kundeneingang</span></td><td>Bleibt ein Angebot unbeantwortet, geht nach einer festen Frist eine Erinnerung in deinen Worten raus.</td></tr>
+      <tr><td class="name"><b>Neues Objekt</b><span class="wo">2. Stock &#183; Onboarding</span></td><td>Eine Checkliste zeigt, was fehlt: Schl&uuml;ssel, Leistungsverzeichnis, Abfuhrplan. Codes bleiben in der gesch&uuml;tzten Liste.</td></tr>
+      <tr><td class="name"><b>Objekt&uuml;bergabe</b><span class="wo">5. Stock &#183; Abschluss und Team</span></td><td>Endet ein Vertrag, gehen die Schl&uuml;ssel gegen Quittung zur&uuml;ck. Die Verwaltung bekommt den letzten Nachweis.</td></tr>
+      <tr><td class="name"><b>Bewertung, Bewerbungen</b><span class="wo">5. Stock &#183; Abschluss und Team</span></td><td>Ist eine Verwaltung zufrieden, gibst du die Bitte um eine Bewertung frei, ohne Gegenleistung. Bewerber bekommen sofort Antwort.</td></tr>
+      <tr><td class="name"><b>Tagesbild</b><span class="wo">Das Dach</span></td><td>Jeden Morgen eine Nachricht: offene Auftr&auml;ge je Verwaltung, der Turnus des Tages, unbezahlte Rechnungen.</td></tr>
+      <tr><td class="name"><b>Assistent f&uuml;r unterwegs</b><span class="wo">Um das ganze Haus</span></td><td>Zwischen zwei Objekten sprichst du R&uuml;ckruf, Termin oder Notiz ein. Er meldet sich als KI-Assistent, sobald er mit Kunden schreibt.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="abschluss">
+    <h2 class="part">Wenn du Fragen hast, melde dich. Kostenlos.</h2>
+    <p>Im Prozess-Audit schauen wir gemeinsam, wo in deinem Betrieb die meiste Zeit h&auml;ngen bleibt.</p>
+    <p>Den Anfang macht ein Gespr&auml;ch von 30 Minuten. Ergibt sich daraus etwas Sinnvolles, schreibe ich dir einen Fahrplan. Wenn nicht, sage ich es dir ehrlich.</p>
+    <div class="buchen">
+      <a href="https://vrelo-ki.de/kontakt?src=bauplan-hausmeister-pdf">30 Minuten Gespr&auml;ch vereinbaren</a>
+      <span class="url">vrelo-ki.de/kontakt?src=bauplan-hausmeister-pdf</span>
+    </div>
+    <div class="kontakt">
+      <span class="logo-word">Vrelo</span>&#160;&#160;
+      Ajdin Dzafic &#183; Regensburg &#183; ajdin@vrelo-ki.de &#183; vrelo-ki.de
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

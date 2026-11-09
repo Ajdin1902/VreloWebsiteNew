@@ -1,0 +1,350 @@
+<!doctype html>
+<!--
+  Vrelo Bauplan-Reihe, Speditionen: free 8-page PDF guide for owner-led Speditionen and
+  Transportunternehmen (3 to 40 staff, Nah- und Fernverkehr, Stueckgut, Teil- und Komplettladungen, B2B).
+  Spec: docs/superpowers/specs/2026-11-06-bauplan-reihe-design.md (section 4 skeleton, section 6 constraints).
+  Facts: Knowledge/marketing/prozess-landkarten.md section 10 (10.1 Landkarte, 10.7 Recherche, 2026-11-07).
+  Data + shared copy: src/lib/bauplanReihe/spedition.ts and shared.ts. Styles: content/bauplan/reihe.css.
+  Structure, classes and shared copy follow the approved SHK pilot (content/bauplan/shk-bauplan.html).
+
+  RULES (do not break; the guard src/lib/bauplanReihe/templates.test.ts enforces most of them):
+    - Chapters 2 and 7 carry the shared copy word for word (selbstcheck, LEVELS, abschluss).
+    - No price, no Vrelo duration, no capacity line, no guarantee, no client or prospect names.
+    - Pages 1 to 7 are a free guide the reader follows alone: no first-person service offer.
+    - "Schnittstelle" only next to tools in spedition.verifiedInterfaces; otherwise
+      "wenn deine Software eine Schnittstelle hat". WinSped, CarLo, SPEDIFIX, YellowFox, SPEDION and
+      Toll Collect are never called connectable. Vendor features only as section 10.7 confirms them.
+    - The statistic: "befragte Transport- und Logistikunternehmen", never "kleine Betriebe", never a
+      claim about what the other firms use, no second number on the cover.
+    - Telematics and GPS are employee data: tour purpose only, never permanent tracking. Lenk- und
+      Ruhezeiten only as context, never a compliance promise. Photos: goods, pallets, documents, no people.
+    - Every link prints its target as visible text (the copy is printed).
+    - Any assistant named carries "meldet sich als KI-Assistent".
+    - Dash-free German, no comma before "und", generic masculine, du.
+    - Pure ASCII with entities from src/lib/bauplanTemplateText.ts (add a new entity there first).
+    - Office printer, A4, white page, 8 pages. Full page = shorten copy, never shrink type.
+-->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Vrelo &#183; Bauplan f&uuml;r Speditionen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>{{{BRAND_CSS}}}</style>
+<style>{{{REIHE_CSS}}}</style>
+</head>
+<body>
+
+<!-- Page 1: cover (series pattern). Flow steps = spedition.auftragsweg. -->
+<section class="page first">
+  <div class="p1">
+    <div class="p1-top">
+      <div class="logo">{{{LOGO_SVG}}}<span class="logo-word">Vrelo</span></div>
+      <span>Bauplan f&uuml;r Speditionen</span>
+    </div>
+
+    <h1>Prozesse, Automatisierung, KI:<br>Wo fange ich &uuml;berhaupt an?</h1>
+
+    <div class="weg-heute">
+      <div class="kicker">Eine Tour, viele Zettel</div>
+      <div class="auftragsweg">
+        <span></span>
+        <div class="schritt">Kunde fragt per Mail nach einem Preis</div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Gewicht und Lademeter fehlen<span class="verlust">nachgefragt</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Angebot raus, keiner fasst nach<span class="verlust">vergessen</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Zusage, Auftrag auf die Plantafel<span class="verlust">&uuml;bertragen</span></div>
+
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Tour per Telefon an den Fahrer<span class="verlust">durchgegeben</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt">Foto vom Lieferschein per WhatsApp<span class="verlust">weitergeleitet</span></div>
+        <span class="pfeil">&#8594;</span>
+        <div class="schritt ende">Rechnung, Tage nach der Tour<span class="verlust">zusammengesucht</span></div>
+      </div>
+      <p class="kreis-satz">Jeder Kreis ist eine Stelle, an der Zeit verloren geht. Im Bauplan findest du deine.</p>
+    </div>
+
+    <div class="statistik">
+      <span class="zahl">42 Prozent</span>
+      <div>
+        <span class="satz">der befragten Transport- und Logistikunternehmen nutzen ein Transport Management System.</span>
+        <span class="quelle">Bundesamt f&uuml;r Logistik und Mobilit&auml;t (BALM), Online-Erhebung eFTI, 2024. Online befragt, 458 Transport- und Logistikunternehmen, September bis Oktober 2024.</span>
+      </div>
+    </div>
+    <p class="quelle-link">Quelle: <a href="https://www.balm.bund.de/SharedDocs/Downloads/DE/Marktbeobachtung/Sonderberichte/Online-Erhebung_eFTI.pdf?__blob=publicationFile&amp;v=2">www.balm.bund.de/SharedDocs/Downloads/DE/Marktbeobachtung/Sonderberichte/Online-Erhebung_eFTI.pdf?__blob=publicationFile&amp;v=2</a></p>
+
+    <div class="woche">
+      <p class="woche-kopf">Dieser Bauplan ist dein erster Schritt.</p>
+      <ol class="tage">
+        <li><span class="tag">Tag 1</span><b>Wo du stehst</b><span class="seite">Seite 2</span></li>
+        <li><span class="tag">Tag 2</span><b>Deine Werkzeuge</b><span class="seite">Seite 3</span></li>
+        <li><span class="tag">Tag 3</span><b>Deine Datenwege</b><span class="seite">Seite 4</span></li>
+        <li><span class="tag">Tag 4</span><b>Das Fundament</b><span class="seite">Seite 5</span></li>
+        <li><span class="tag">Tag 5</span><b>Die erste Station</b><span class="seite">Seite 6 und 7</span></li>
+      </ol>
+      <p class="woche-schluss">Nach einer Woche wei&szlig;t du, wo du anf&auml;ngst.</p>
+      <p class="woche-ziel">Schritt f&uuml;r Schritt zu deinem KI-Betriebssystem.</p>
+    </div>
+
+    <div class="fuer"><p><b>F&uuml;r wen:</b> Inhaber von Speditionen und Transportunternehmen im Nah- oder Fernverkehr, mit St&uuml;ckgut, Teil- oder Komplettladungen f&uuml;r Stammkunden. Deine Fahrer sind auf Tour, das B&uuml;ro h&auml;lt Auftr&auml;ge, Lieferscheine und Rechnungen zusammen. F&uuml;r die ersten Seiten reicht ein Stift.</p></div>
+
+    <div class="p1-foot">Ajdin Dzafic, <span class="brand-word">Vrelo</span>, Regensburg &#183; vrelo-ki.de</div>
+  </div>
+</section>
+
+<!-- Page 2: Wo du stehst (shared copy: selbstcheck, LEVELS) -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Speditionen &#183; Seite 2 von 8</span></div>
+  <h2 class="part">Wo du stehst</h2>
+  <div class="kicker">Dein Stand je Station</div>
+  <p class="intro">Mach pro Station ein Kreuz in einer der drei Spalten: l&auml;uft von selbst, auf Papier oder in Dateien, nur im Kopf. Z&auml;hl am Ende die Kreuze je Spalte.</p>
+  <table class="check">
+    <thead><tr><th></th><th class="links">Station</th><th>L&auml;uft von selbst</th><th>Auf Papier oder in Dateien</th><th>Nur im Kopf</th></tr></thead>
+    <tbody>
+      <tr class="neu"><td class="stock" rowspan="2"><b>Erdgeschoss</b> Kundeneingang</td><td>Transportanfrage kommt rein<span class="bsp">Mail, Telefon, Frachtenb&ouml;rse, Portal des Verladers</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Angebot und Nachfassen<span class="bsp">Frachtpreis, Antwort des Kunden</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="1"><b>2. Stock</b> Onboarding</td><td>Auftragsdaten einsammeln<span class="bsp">Ladereferenz, Zeitfenster an der Rampe, Gefahrgut</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="3"><b>3. Stock</b> Die Arbeit</td><td>Tour an den Fahrer<span class="bsp">Disposition, Fahrzeug, Ladung</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Ablieferbeleg<span class="bsp">quittierter Lieferschein oder CMR, Paletten, Standzeit</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Abrufe und Fristen<span class="bsp">feste Touren, HU, Tacho, F&uuml;hrerscheinkontrolle</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="2"><b>4. Stock</b> Finanzwesen</td><td>Rechnung je Auftrag oder Monat<span class="bsp">Fracht, Maut- und Dieselzuschlag, Standgeld</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Belege zuordnen<span class="bsp">Tank, Maut, Werkstatt, Subunternehmer</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="3"><b>5. Stock</b> Abschluss und Team</td><td>Bewertung<span class="bsp">Bitte an den zufriedenen Stammkunden</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Abschluss und Paletten<span class="bsp">Palettenkonto, Tankkarte sperren</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Fahrer-Bewerbungen<span class="bsp">F&uuml;hrerschein, Fahrerkarte, Einarbeitung</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="neu"><td class="stock" rowspan="2"><b>Dach</b> und Assistent</td><td>Tagesbild<span class="bsp">morgens sehen, was offen ist</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr><td>Assistent f&uuml;r unterwegs<span class="bsp">einsprechen statt merken</span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td><td class="kreuz"><span class="box"></span></td></tr>
+      <tr class="summe"><td></td><td>Kreuze je Spalte</td><td class="kreuz"><span class="feld"></span></td><td class="kreuz"><span class="feld"></span></td><td class="kreuz"><span class="feld"></span></td></tr>
+    </tbody>
+  </table>
+  <div class="frage">
+    <p><b>Liegen deine Kundendaten an einem festen Ort, auf den alles zugreift?</b></p>
+    <div class="antwort"><span><span class="box"></span> Ja</span><span><span class="box"></span> Nein</span></div>
+  </div>
+  <p class="hinweis">Eine leere Zeile z&auml;hlt als &#8222;nur im Kopf&#8220;. Zwei Kreuze in einer Zeile: z&auml;hl nur das rechte.</p>
+  <h3 class="zwischen">Deine Stufe</h3>
+  <table class="stufen">
+    <tbody>
+      <tr><td class="nr">0</td><td class="name">Im Kopf<span class="regel">Kein Kreuz bei &#8222;l&auml;uft&#8220;, im Kopf mindestens so viele wie auf Papier</span></td><td>Schreib auf, was du heute nur im Kopf tr&auml;gst. Eine Station reicht f&uuml;r den Anfang.</td></tr>
+      <tr><td class="nr">1</td><td class="name">Verstreut<span class="regel">Kein Kreuz bei &#8222;l&auml;uft&#8220;, auf Papier mehr als im Kopf</span></td><td>Vieles steht schon auf Papier oder in Dateien. Such dir die eine Station aus, die dich am meisten Zeit kostet.</td></tr>
+      <tr><td class="nr">2</td><td class="name">Erste Station l&auml;uft<span class="regel">Mindestens ein Kreuz bei &#8222;l&auml;uft&#8220;, Fundament: nein</span></td><td>Eine Station l&auml;uft von selbst. Als N&auml;chstes brauchen deine Daten einen festen Platz, damit alles auf denselben Ort zugreift.</td></tr>
+      <tr><td class="nr">3</td><td class="name">Ein Ort<span class="regel">Fundament: ja, 1 bis 9 Kreuze bei &#8222;l&auml;uft&#8220;</span></td><td>Deine Daten liegen an einem Ort. Jetzt holst du eine Station nach der anderen in dein System.</td></tr>
+      <tr><td class="nr">4</td><td class="name">Haus steht<span class="regel">Fundament: ja, 10 Kreuze oder mehr bei &#8222;l&auml;uft&#8220;</span></td><td>Fast alles l&auml;uft von selbst. Schlie&szlig; die letzten L&uuml;cken und schreib auf, wie die Stationen zusammenh&auml;ngen.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Page 3: Deine Werkzeuge und Datenwege (1 of 2): what Speditions- and Telematik-Software already ships (10.7 Werkzeuge) -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Speditionen &#183; Seite 3 von 8</span></div>
+  <h2 class="part">Deine Werkzeuge und Datenwege</h2>
+  <p class="intro">Schau zuerst nach, was deine Software schon kann. Was sie kann, schaltest du ein. Bauen musst du nur, was fehlt.</p>
+  <h3 class="zwischen">Was Speditions- und Telematik-Software mitbringt</h3>
+  <table class="werkzeuge">
+    <thead><tr><th>Werkzeug</th><th>Was es dir abnimmt</th></tr></thead>
+    <tbody>
+      <tr><td>WinSped</td><td>Kunden erfassen Auftr&auml;ge im Browser &uuml;ber WebSped. Grafische Disposition, Tourenplanung, Frachtabrechnung. In der Fahrer-App AppSped unterschreibt der Empf&auml;nger auf dem Display, der Status kommt in Echtzeit ins B&uuml;ro.</td></tr>
+      <tr><td>CarLo</td><td>Liest Transportauftr&auml;ge aus PDF aus, Vorlagen f&uuml;r Standardauftr&auml;ge, Tourenplanung per Drag-and-drop, Abrechnung als Modul. Die App nimmt Fotos und Dokumente auf.</td></tr>
+      <tr><td>SPEDIFIX</td><td>Disposition, Abrechnung mit Gutschriften und offenen Posten, ein Modul f&uuml;r die E-Rechnung, Lademittelverwaltung. Schickt Belade- und Entladeauftr&auml;ge an FleetBoard, YellowFox oder TomTom.</td></tr>
+      <tr><td>Logistiqo</td><td>Auftr&auml;ge kommen per Hand, Mail, PDF oder Kundenportal rein. Tourenplanung, Rechnungen, Gutschriften und Mahnungen. In der App unterschreibt der Empf&auml;nger, der Abliefernachweis liegt sofort im System.</td></tr>
+      <tr><td>IMPARGO</td><td>Rechnet Transportkosten mit Maut f&uuml;r ein Angebot, Dispoplan, Ortung mit Ankunftszeit, App f&uuml;r die Fahrer.</td></tr>
+      <tr><td>Webfleet</td><td>Telematik: schickt Auftr&auml;ge mit Adresse aufs Fahrzeug und meldet ihren Stand zur&uuml;ck, dazu ein Fahrtenbuch.</td></tr>
+      <tr><td>YellowFox</td><td>Telematik: Auftr&auml;ge und Navigation auf dem Fahrerdisplay, elektronische Formulare mit Unterschrift, Ortung mit Ankunftszeit.</td></tr>
+      <tr><td>SPEDION</td><td>Telematik mit App: Auftr&auml;ge und Status je Tour, Fotos, Unterschrift, Lademittel. DocScan schickt Lieferscheine als PDF an die Zentrale.</td></tr>
+      <tr><td>Lexware Office</td><td>Rechnungen, Serienrechnungen, Mahnungen, Belege per Texterkennung, Export f&uuml;r DATEV. In der Version XL macht es aus Lieferscheinen eine Sammelrechnung.</td></tr>
+      <tr><td>sevDesk</td><td>Angebot und Rechnung, Mahnungen, Belege per Scan mit Buchungsvorschlag.</td></tr>
+    </tbody>
+  </table>
+  <ul class="punkte">
+    <li><b>Frachtenb&ouml;rse:</b> &Uuml;ber TIMOCOM bekommst du Fracht- und Laderaumangebote und siehst Frachtraten je Relation.</li>
+    <li><b>Maut und Tank:</b> Toll Collect gibt den Einzelfahrtennachweis als CSV-Datei im Kundenportal aus. DKV Mobility stellt deine Tankungen digital bereit.</li>
+  </ul>
+  <p class="eigen">L&auml;uft dein Betrieb schon in einer Speditionssoftware, nutz zuerst, was sie kann. Baust du daneben dasselbe noch einmal, pflegst du es doppelt.</p>
+  <p class="hinweis">Stand der Herstellerseiten: November 2026. Welche Funktion in deinem Tarif steckt, sagt dir dein Anbieter.</p>
+</section>
+
+<!-- Page 4: Deine Werkzeuge und Datenwege (2 of 2): the fill-in map -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Speditionen &#183; Seite 4 von 8</span></div>
+  <h3 class="zwischen">Deine Datenwege</h3>
+  <p class="intro">Trag pro Station ein, womit du heute arbeitest, woher die Daten kommen und wohin sie danach gehen. Die zwei Zeilen oben sind Beispiele.</p>
+  <table class="karte">
+    <colgroup><col style="width:48mm"><col><col><col></colgroup>
+    <thead><tr><th>Station</th><th>Werkzeug heute</th><th>Daten kommen von</th><th>gehen nach</th></tr></thead>
+    <tbody>
+      <tr class="beispiel"><td class="station">Ablieferbeleg</td><td>Papier im F&uuml;hrerhaus, WhatsApp</td><td>Fahrer an der Entladestelle</td><td>B&uuml;ro, Tage sp&auml;ter</td></tr>
+      <tr class="beispiel"><td class="station">Rechnung</td><td>Excel, Lexware Office</td><td>Auftrag, Kopie vom Lieferschein</td><td>Kunde, Steuerberater per DATEV</td></tr>
+      <tr><td class="station">Transportanfrage</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Angebot und Nachfassen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Auftragsdaten</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Tour an den Fahrer</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Ablieferbeleg</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Abrufe und Fristen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Rechnung</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Belege</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Bewertung</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Abschluss und Paletten</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Fahrer-Bewerbungen</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Tagesbild</td><td></td><td></td><td></td></tr>
+      <tr><td class="station">Assistent f&uuml;r unterwegs</td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>F&uuml;ll jede Zeile aus, auch wenn dir nur ein Wort einf&auml;llt.</li>
+      <li>Kreis jede Stelle ein, an der jemand etwas nachfragt, vergisst, &uuml;bertr&auml;gt, durchgibt, weiterleitet oder zusammensucht.</li>
+      <li>Z&auml;hl die Kreise je Station. Die Station mit den meisten Kreisen ist deine Quelle: die Arbeit, die jede Woche wiederkommt.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- Page 5: Das Fundament (system of record = the Auftragsliste) -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Speditionen &#183; Seite 5 von 8</span></div>
+  <h2 class="part">Das Fundament</h2>
+  <p class="intro">Jede Station schreibt ihre Daten an einen festen Ort. Das ist dein Fundament. Du baust es einmal, zusammen mit der ersten Station, danach wird jede weitere Station kleiner. Liegen deine Daten an einem Ort, kann sp&auml;ter eine KI darin nachschlagen, sortieren und Entw&uuml;rfe schreiben.</p>
+  <h3 class="zwischen">Welcher Ort zu dir passt</h3>
+  <div class="orte">
+    <div class="ort"><b>Mit Speditionssoftware</b><p>Sie ist dein Fundament. Kunden, Auftr&auml;ge, Belege und Rechnungen liegen schon dort, du legst nichts daneben an.</p></div>
+    <div class="ort"><b>Mit Telematik und Rechnungsprogramm</b><p>Deine Kunden bleiben in Lexware Office oder sevDesk. F&uuml;r die Auftr&auml;ge legst du eine Tabelle an, eine Zeile je Auftrag.</p></div>
+    <div class="ort"><b>Mit Plantafel und Papier</b><p>Fang mit der Tabelle an, in Excel oder Google Sheets. Sie w&auml;chst mit jeder Station.</p></div>
+  </div>
+  <h3 class="zwischen">Welche Felder deine Stationen brauchen</h3>
+  <table class="felder">
+    <tbody>
+      <tr><td>Kunde</td><td>Name, Ansprechpartner, Rechnungsadresse, vereinbarte Frachtpreise. Liegt in deinem Rechnungsprogramm.</td></tr>
+      <tr><td>Auftrag</td><td>Auftragsnummer, Kunde, Lade- und Entladestelle, Datum und Zeitfenster, Paletten, Gewicht, Lademeter, Referenz des Kunden, Fahrzeug, Fahrer.</td></tr>
+      <tr><td>Ablieferbeleg</td><td>Auftragsnummer, quittiert ja oder nein, Foto oder PDF, Paletten getauscht, Standzeit, Schaden. H&auml;ngt am Auftrag.</td></tr>
+      <tr><td>Rechnung</td><td>Auftragsnummer oder Monat, Fracht, Zuschl&auml;ge, Standgeld, bezahlt oder offen.</td></tr>
+      <tr><td>Fahrzeug</td><td>Kennzeichen, n&auml;chste HU, SP und Tachopr&uuml;fung.</td></tr>
+    </tbody>
+  </table>
+  <p><b>Die Auftragsnummer verbindet die Stationen.</b> Tour, Ablieferbeleg und Rechnung tragen sie. So findet jede Station den richtigen Auftrag, ohne dass jemand sucht.</p>
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor</div>
+    <ol>
+      <li>Entscheide, wo deine Auftr&auml;ge leben: in deiner Speditionssoftware oder in einer Tabelle.</li>
+      <li>Leg in der Tabelle die Spalten f&uuml;r Auftrag und Ablieferbeleg aus der Liste oben an.</li>
+      <li>Trag die Touren der n&auml;chsten Woche ein, jede mit Auftragsnummer, Lade- und Entladestelle und Zeitfenster.</li>
+      <li>Leg fest, wer neue Auftr&auml;ge eintr&auml;gt. Ein Ort, eine Person, die ihn pflegt.</li>
+    </ol>
+  </div>
+  <p class="hinweis">Alles l&auml;uft auf deinen Namen: die Tabelle, die Konten, die Zug&auml;nge. Deine Daten bleiben in deinen Programmen, so h&auml;ngst du an keinem Anbieter. F&uuml;hrerschein, Fahrerkarte und ADR-Bescheinigung deiner Fahrer stehen nie in der Tabelle f&uuml;r alle und nie im Chat.</p>
+</section>
+
+<!-- Page 6: Die erste Station (1 of 2): the door station Ablieferbeleg -> Rechnung, ways 1 and 2 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Speditionen &#183; Seite 6 von 8</span></div>
+  <h2 class="part">Die erste Station, Schritt f&uuml;r Schritt</h2>
+  <p class="intro">Du f&auml;ngst beim Ablieferbeleg an: Ist die Ware abgeliefert, liegt der quittierte Beleg am selben Tag im B&uuml;ro und die Rechnung geht raus. Die Station ist klein, l&auml;uft ohne KI und schreibt die ersten Eintr&auml;ge in dein Fundament. Liegt deine Quelle woanders, gilt dieselbe Reihenfolge: erst deine Software, dann ein Workflow-Werkzeug, zuletzt ein eigener Bau.</p>
+  <div class="flow">
+    <div><b>Fahrer</b>schickt an der Rampe Foto und &#8222;erledigt&#8220;</div>
+    <span class="pfeil">&#8594;</span>
+    <div><b>Fundament</b>der Beleg als PDF am Auftrag</div>
+    <span class="pfeil">&#8594;</span>
+    <div><b>Rechnung</b>als Entwurf am selben Tag</div>
+    <span class="pfeil">&#8594;</span>
+    <div class="frei"><b>Kunde</b>hat Rechnung und Beleg</div>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 1</div>
+    <p class="weg">Deine Software hat eine Fahrer-App</p>
+    <p>Mit einer Speditionssoftware liegt der Beleg dort, wo die Rechnung entsteht. In AppSped und in der App von Logistiqo unterschreibt der Empf&auml;nger direkt. Schalte die App ein, dann baust du hier nichts. Mit Telematik allein nehmen YellowFox und SPEDION am Ziel die Unterschrift auf, der Beleg bleibt aber im Portal. Diese L&uuml;cke schlie&szlig;t Weg 2.</p>
+    <ol>
+      <li>Frag deinen Anbieter, ob dein Tarif die Fahrer-App mit Unterschrift enth&auml;lt.</li>
+      <li>Rechnest du monatlich ab, leg je Fahrt einen Lieferschein in Lexware Office an. Die Version XL macht daraus am Monatsende die Sammelrechnung.</li>
+    </ol>
+  </div>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 2</div>
+    <p class="weg">Keine Fahrer-App: Auftragskarte und Beleg &uuml;ber Telegram</p>
+    <p>Zuerst kommt die Auftragskarte: Ein Workflow-Werkzeug wie n8n schickt jede neue Tour aus dem Fundament per Telegram an den Fahrer. An der Entladestelle antwortet er mit einem Foto vom quittierten Lieferschein oder CMR. Der Ablauf legt das Foto als PDF zum Auftrag und einen Rechnungsentwurf mit Beleg in Lexware Office oder sevDesk an. Mit Webfleet liest der Ablauf &uuml;ber die dokumentierte Schnittstelle, welche Auftr&auml;ge erledigt sind.</p>
+    <ol>
+      <li>Leg fest, was auf die Karte kommt: Lade- und Entladestelle, Zeitfenster, Referenz, Ansprechpartner, Ladung.</li>
+      <li>Leg fest, was zur&uuml;ckkommt: Foto vom Beleg, Paletten getauscht, Standzeit.</li>
+      <li>Jeder Fahrer installiert Telegram. Du legst ein Konto bei n8n an, auf deinen Namen.</li>
+      <li>Teste den Ablauf mit einem Fahrer und einem Stammkunden, bevor alle mitmachen.</li>
+    </ol>
+    <p class="hinweis">Telegram sieht in seinen Bedingungen f&uuml;r Bots keinen Auftragsverarbeitungsvertrag vor, auf die Karte kommt deshalb nur, was die Tour braucht. Von einem privaten WhatsApp-Konto kann kein Ablauf Karten verschicken, daf&uuml;r braucht es WhatsApp Business.</p>
+  </div>
+</section>
+
+<!-- Page 7: Die erste Station (2 of 2): why it counts, example, data rules, way 3 -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Speditionen &#183; Seite 7 von 8</span></div>
+  <h3 class="zwischen">Warum der Beleg am selben Tag z&auml;hlt</h3>
+  <ul class="punkte">
+    <li><b>Die Marge ist d&uuml;nn.</b> Nach dem Jahresbericht 2025 des Bundesamts f&uuml;r Logistik und Mobilit&auml;t hielten die Frachtraten vielfach nicht mit den Kosten Schritt, die Insolvenzen im Stra&szlig;eng&uuml;terverkehr erreichten den h&ouml;chsten Stand seit zehn Jahren. Schreibst du die Rechnung am Tag der Ablieferung, ist dein Geld fr&uuml;her da.</li>
+    <li><b>Kein Beleg geht verloren.</b> Der quittierte Lieferschein beweist, dass die Ware angekommen ist. Liegt er als PDF beim Auftrag, suchst du ihn nicht im F&uuml;hrerhaus, wenn der Kunde fragt.</li>
+  </ul>
+
+  <div class="szene">
+    <div class="kicker">Ein Beispiel aus dem Nahverkehr</div>
+    <p>Ein Baustoffh&auml;ndler bucht bei dir jede Woche Touren. Am Dienstag l&auml;dt dein Fahrer acht Paletten f&uuml;r eine Baustelle bei N&uuml;rnberg.</p>
+    <p>Um 11:40 Uhr ist er entladen. Noch an der Rampe fotografiert er den quittierten Lieferschein und schreibt auf die Karte: <span class="gesagt">&#8222;erledigt, 8 Paletten getauscht, 40 Min Standzeit&#8220;</span>.</p>
+    <p>Im Fundament steht der Auftrag auf erledigt, das PDF liegt dabei. Am Nachmittag wartet der Rechnungsentwurf mit Standgeld und Beleg in Lexware Office. Deine B&uuml;rokraft pr&uuml;ft ihn und schickt ihn ab.</p>
+  </div>
+  <p class="hinweis">Die Antwort schreibt dein Fahrer an der Rampe, nie w&auml;hrend der Fahrt. Lenk- und Ruhezeiten pr&uuml;ft der Ablauf nicht. Ortungsdaten aus der Telematik sind Daten deiner Mitarbeiter: Nutz sie nur f&uuml;r die Tour, etwa f&uuml;r die Ankunftszeit, nie zur dauerhaften Kontrolle. Sag deinen Fahrern, was erfasst wird. Gibt es einen Betriebsrat, sprich vorher mit ihm. Fotos zeigen nur Ware, Paletten oder Beleg, nie Personen. Name und Unterschrift des Empf&auml;ngers bleiben beim Auftrag und gehen in keinen anderen Chat.</p>
+
+  <div class="vorgehen">
+    <div class="kopf">So gehst du vor &#183; Weg 3</div>
+    <p class="weg">Ein eigener Bau, nur f&uuml;r die L&uuml;cke</p>
+    <p>Passt keiner der beiden Wege, etwa weil die Maut je Tour aus dem Einzelfahrtennachweis auf die Rechnung soll, bleibt ein eigener Bau. Er schlie&szlig;t nur diese L&uuml;cke und ersetzt nichts. Das geht, wenn deine Software eine Schnittstelle hat.</p>
+    <ol>
+      <li>Schreib auf, was dir an Weg 1 und Weg 2 fehlt.</li>
+      <li>Frag deinen Anbieter, ob seine Software eine Schnittstelle hat und was sie liest und schreibt.</li>
+      <li>Lass nur diese L&uuml;cke bauen und dir jeden Ablauf mit Dokumentation &uuml;bergeben.</li>
+    </ol>
+  </div>
+
+  <h3 class="zwischen">So merkst du, dass es l&auml;uft</h3>
+  <ul class="haken">
+    <li><span class="box"></span>Kein Lieferschein liegt mehr tagelang im F&uuml;hrerhaus.</li>
+    <li><span class="box"></span>Die Rechnung geht am Tag der Ablieferung raus.</li>
+    <li><span class="box"></span>Fragt ein Kunde nach dem Beleg, findest du ihn beim Auftrag.</li>
+  </ul>
+  <p class="eigen">Die Konten laufen auf deinen Namen. L&auml;uft die Station ruhig, nimmst du die n&auml;chste dazu.</p>
+</section>
+
+<!-- Page 8: Die naechsten Stockwerke + the shared close -->
+<section class="page">
+  <div class="runhead"><span class="brand-word">Vrelo</span><span>Bauplan f&uuml;r Speditionen &#183; Seite 8 von 8</span></div>
+  <h2 class="part">Die n&auml;chsten Stockwerke</h2>
+  <p class="intro">L&auml;uft der Ablieferbeleg, nimm die n&auml;chste Station dazu. Die Reihenfolge ist ein Vorschlag, deine Kreise von Seite 4 gehen vor.</p>
+  <table class="naechste">
+    <tbody>
+      <tr class="zuerst"><td class="name"><b>Anfrage, Angebot, Nachfassen</b><span class="wo">Erdgeschoss &#183; Kundeneingang</span></td><td>Ein Anfrage-Formular fragt ab, was du f&uuml;r den Preis brauchst: Lade- und Entladeort, Datum, Paletten, Gewicht, Lademeter, Gefahrgut. Bleibt ein Angebot offen, geht nach kurzer Frist eine Erinnerung in deinen Worten raus. Ein Nachfassen zeigt keins der Programme auf Seite 3. Betriebe mit festen Direktkunden stehen robuster da als solche, die vom Spotmarkt leben, so beobachtet es das BALM.</td></tr>
+      <tr><td class="name"><b>Auftragsdaten</b><span class="wo">2. Stock &#183; Onboarding</span></td><td>Eine Checkliste je Auftrag zeigt, was fehlt: Ladereferenz, Zeitfenster, Gefahrgutangaben. Am Vortag geht eine Erinnerung an den Auftraggeber.</td></tr>
+      <tr><td class="name"><b>Abrufe und Fristen</b><span class="wo">3. Stock &#183; Die Arbeit</span></td><td>Der Ablauf legt die festen Touren eines Stammkunden jede Woche als Auftrag an und best&auml;tigt sie ihm. F&uuml;r HU, SP, Tacho und F&uuml;hrerscheinkontrolle bekommst du eine Erinnerung. WinSped und CarLo legen Standardauftr&auml;ge als Vorlage an.</td></tr>
+      <tr><td class="name"><b>Belege</b><span class="wo">4. Stock &#183; Finanzwesen</span></td><td>Lexware Office und sevDesk lesen Belege schon. Maut und Tankungen ordnet der Ablauf der Tour zu, Rechnungen deiner Subunternehmer gleicht er mit dem Auftrag ab. Du gibst frei.</td></tr>
+      <tr><td class="name"><b>Abschluss und Paletten</b><span class="wo">5. Stock &#183; Abschluss und Team</span></td><td>Ein Auftrag ist fertig, wenn Beleg, Rechnung und Palettentausch erledigt sind. Geht ein Fahrer, sperrst du Tankkarte und Zug&auml;nge am selben Tag.</td></tr>
+      <tr><td class="name"><b>Bewertung, Bewerbungen</b><span class="wo">5. Stock &#183; Abschluss und Team</span></td><td>Ist ein Stammkunde zufrieden, gibst du die Bitte um eine Bewertung frei, ohne Gegenleistung. Fahrer, die sich bewerben, bekommen sofort Antwort und einen R&uuml;ckruftermin.</td></tr>
+      <tr><td class="name"><b>Tagesbild</b><span class="wo">Das Dach</span></td><td>Jeden Morgen eine Nachricht: offene Anfragen und Angebote, Touren des Tages, fehlende Ablieferbelege, unbezahlte Rechnungen.</td></tr>
+      <tr><td class="name"><b>Assistent f&uuml;r unterwegs</b><span class="wo">Um das ganze Haus</span></td><td>Zwischen zwei Terminen sprichst du R&uuml;ckruf, Aufgabe oder Notiz zum Auftrag ein, nie w&auml;hrend der Fahrt. Er meldet sich als KI-Assistent, sobald er mit Kunden schreibt.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="abschluss">
+    <h2 class="part">Wenn du Fragen hast, melde dich. Kostenlos.</h2>
+    <p>Im Prozess-Audit schauen wir gemeinsam, wo in deinem Betrieb die meiste Zeit h&auml;ngen bleibt.</p>
+    <p>Den Anfang macht ein Gespr&auml;ch von 30 Minuten. Ergibt sich daraus etwas Sinnvolles, schreibe ich dir einen Fahrplan. Wenn nicht, sage ich es dir ehrlich.</p>
+    <div class="buchen">
+      <a href="https://vrelo-ki.de/kontakt?src=bauplan-spedition-pdf">30 Minuten Gespr&auml;ch vereinbaren</a>
+      <span class="url">vrelo-ki.de/kontakt?src=bauplan-spedition-pdf</span>
+    </div>
+    <div class="kontakt">
+      <span class="logo-word">Vrelo</span>&#160;&#160;
+      Ajdin Dzafic &#183; Regensburg &#183; ajdin@vrelo-ki.de &#183; vrelo-ki.de
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

@@ -29,6 +29,14 @@ describe("sitemap", () => {
     expect(urls).not.toContain(`${siteUrl}/newsletter/bestaetigt`);
   });
 
+  it("lists the Vorlagen hub and its two public Bauplan pages", () => {
+    const urls = sitemap().map((e) => e.url);
+    for (const p of ["/vorlagen", "/vorlagen/agentur-bauplan", "/vorlagen/elektro-bauplan", "/vorlagen/shk-bauplan", "/vorlagen/gebaeudereinigung-bauplan", "/vorlagen/hausmeister-bauplan", "/vorlagen/dach-bauplan", "/vorlagen/schreiner-bauplan", "/vorlagen/maler-bauplan", "/vorlagen/fliesen-bauplan", "/vorlagen/galabau-bauplan", "/vorlagen/spedition-bauplan", "/vorlagen/kurier-bauplan", "/vorlagen/umzug-bauplan", "/vorlagen/architektur-bauplan", "/vorlagen/makler-bauplan", "/vorlagen/finanzmakler-bauplan"]) {
+      expect(urls).toContain(`${siteUrl}${p}`);
+    }
+    expect(urls.some((u) => u.includes("/bauplan/"))).toBe(false);
+  });
+
   it("lists every published article and never a draft", () => {
     const urls = sitemap().map((e) => e.url);
     const published = getAllArticles({ includeDrafts: false });
