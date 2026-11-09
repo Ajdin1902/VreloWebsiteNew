@@ -60,7 +60,7 @@ describe("referenzen copy", () => {
   });
 
   it("closes the MDZ card on Mirsad's quote in German quotes", () => {
-    expect(mdz.stimme?.text).toBe("„Meine ganze Büroarbeit wird unterwegs direkt per Chatnachricht erledigt. Nichts wird vergessen.“");
+    expect(mdz.stimme?.text).toBe("„Meine ganze Büroarbeit wird unterwegs direkt per Chatnachricht erledigt. Endlich kann ich, wenn ich nach Hause komme, wirklich Feierabend machen.“");
     expect(mdz.stimme?.name).toBe("Mirsad Dzafic");
     expect(mdz.stimme?.text.startsWith("„") && mdz.stimme?.text.endsWith("“")).toBe(true);
   });
@@ -97,7 +97,7 @@ describe("referenzen copy", () => {
       "jeden Monat automatisch",
       "eine Quelle der Wahrheit",
       "automatisch und korrekt raus",
-      "Jeder Schritt dokumentiert",
+      "Jeder Schritt automatisch dokumentiert",
       "Eingesparte Stunden fließen in die Arbeit mit den Kunden.",
     ]);
     for (const s of all) expect((s.match(/\*\*/g) ?? []).length % 2, s).toBe(0);

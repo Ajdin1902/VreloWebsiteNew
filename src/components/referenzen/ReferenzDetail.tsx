@@ -27,7 +27,7 @@ export function ReferenzDetail({ referenz }: { referenz: Referenz }) {
         />
       </h2>
       <p className="mt-4 text-sm font-medium uppercase tracking-wider text-stumm">
-        {referenz.label} · Inhaber {referenz.inhaber}
+        {[referenz.branche, referenz.label, `Inhaber ${referenz.inhaber}`].filter(Boolean).join(" · ")}
       </p>
       <p className="mt-2 text-pretty text-tinte">{referenz.intro}</p>
       {/* The family tie, set apart but quiet. Body font: Fraunces italic is reserved for Vrelo/Merak. */}

@@ -36,7 +36,7 @@ describe("/referenzen", () => {
     const { container } = render(<ReferenzenPage />);
     const bold = [...container.querySelectorAll("li strong")].map((e) => e.textContent);
     expect(bold).toContain("jeden Monat automatisch");
-    expect(bold).toContain("Jeder Schritt dokumentiert");
+    expect(bold).toContain("Jeder Schritt automatisch dokumentiert");
     expect(container.textContent).not.toContain("**");
   });
 

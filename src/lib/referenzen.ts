@@ -10,6 +10,7 @@ export type Referenz = {
   slug: string; // also the anchor suffix on /referenzen
   name: string; // the logo's alt text and the compact eyebrow
   label: string; // place line, e.g. Regensburg
+  branche?: string; // full card only, where the name doesn't already carry it (MDZ)
   inhaber: string;
   logo: { src: string; width: number; height: number };
   familie?: { kurz: string; lang: string };
@@ -48,18 +49,19 @@ export const referenzen: Referenz[] = [
     slug: "mdz",
     name: "MDZ Hausmeisterservice",
     label: "Regensburg",
+    branche: "Hausmeisterservice",
     inhaber: "Mirsad Dzafic",
     logo: { src: "/images/referenzen/mdz-logo.webp", width: 720, height: 280 },
     familie: {
       kurz: "Betrieb meines Vaters",
       lang: "Der Betrieb meines Vaters. Hier konnte ich anfangen und habe gesehen, wie meine Systeme ihm die Arbeit leichter machen.",
     },
-    intro: "Hausmeisterservice seit 2008, mit eigenem Team.",
+    intro: "Die Verwaltung der Termine, Aufgaben, Rechnungen und E-Mails nimmt viel Zeit in Anspruch.",
     problem: [
-      "Den ganzen Tag auf den Objekten, kaum am Schreibtisch.",
-      "Zwei Stunden Büroarbeit am Abend, jeden Tag.",
-      "Rechnungen jeden Monat von Hand aus der Vorlage.",
-      "Entsorgungsplan ohne die Objekte im Landkreis.",
+      "Den ganzen Tag auf den Objekten, danach zwei Stunden Büroarbeit.",
+      "E-Mails, Termine und Aufgaben abends von Hand nachgetragen.",
+      "Jede Rechnung von Hand aus der Vorlage geschrieben.",
+      "Entsorgungsplan für die Objekte im Landkreis von Hand rausgesucht.",
     ],
     ergebnis: [
       "**Telegram-Assistent:** Sprachnachricht rein, E-Mail, Termin und Aufgabe erledigt.",
@@ -69,10 +71,10 @@ export const referenzen: Referenz[] = [
       "Website modernisiert.",
     ],
     visual: { kind: "clip", mp4: "/video/ki-assistent.mp4", poster: "/video/ki-assistent.webp" },
-    werkzeuge: ["Telegram", "n8n", "Claude", "Notion", "Google Kalender", "OneDrive", "Word"],
-    // Mirsad's own words (2026-11-05).
+    werkzeuge: ["Telegram", "n8n", "Hetzner Server", "Notion", "Trello", "E-Mail", "Google Kalender", "OneDrive", "Word"],
+    // Mirsad's own words (2026-11-05); second sentence changed by Ajdin 2026-11-09, Mirsad must approve it.
     stimme: {
-      text: "„Meine ganze Büroarbeit wird unterwegs direkt per Chatnachricht erledigt. Nichts wird vergessen.“",
+      text: "„Meine ganze Büroarbeit wird unterwegs direkt per Chatnachricht erledigt. Endlich kann ich, wenn ich nach Hause komme, wirklich Feierabend machen.“",
       name: "Mirsad Dzafic",
     },
     titel: "Das Büro läuft per Sprachnachricht.",
@@ -86,18 +88,18 @@ export const referenzen: Referenz[] = [
     label: "Marketingagentur · Regensburg",
     inhaber: "Alen Purisic",
     logo: { src: "/images/referenzen/velp-logo.webp", width: 720, height: 354 },
-    intro: "Jeder neue Kunde durchläuft bei Velp dieselben Schritte, vom Angebot bis zur Betreuung.",
+    intro: "Hohe Zeitinvestition für Projektdokumentation, Onboarding und Dokumentenerstellung.",
     problem: [
-      "HubSpot, ClickUp, Drive: jede Info von Hand nachgetragen.",
+      "HubSpot, ClickUp, Google Drive: jede Info von Hand nachgetragen.",
       "Angebote von Hand geschrieben, geprüft und verschickt.",
-      "Kein Ort mit dem aktuellen Stand eines Kunden.",
-      "Dokumentation kostete Stunden, trotzdem ging etwas verloren.",
+      "Kein zentraler Ort mit einem Überblick über alle Kundenprojekte.",
+      "Onboarding jedes Kunden von Hand: Ordner, Mails, Aufgaben.",
     ],
     ergebnis: [
-      "HubSpot ist die **eine Quelle der Wahrheit**.",
+      "HubSpot ist die **eine Quelle der Wahrheit** für alle Kundendaten.",
       "Angebote gehen **automatisch und korrekt raus**, mit dokumentierter Unterschrift.",
-      "Nach der Unterschrift: Kundenordner, Willkommensmail und ClickUp-Karte von selbst.",
-      "**Jeder Schritt dokumentiert**, der Stand jedes Kunden auf einen Blick.",
+      "Nach der Unterschrift: Kundenordner, Willkommensmail und Kundenliste von selbst.",
+      "**Jeder Schritt automatisch dokumentiert**, der Stand jedes Kunden auf einen Blick.",
       "**Eingesparte Stunden fließen in die Arbeit mit den Kunden.**",
     ],
     visual: {
@@ -110,7 +112,12 @@ export const referenzen: Referenz[] = [
         { titel: "Kundenkarte mit Aufgaben", werkzeug: "ClickUp" },
       ],
     },
-    werkzeuge: ["HubSpot", "sevDesk", "BoldSign", "Google Drive", "ClickUp", "n8n"],
+    werkzeuge: ["HubSpot", "sevDesk", "BoldSign", "Google Drive", "Google Docs", "Gmail", "ClickUp", "n8n", "Hetzner Server"],
+    // ⚠ Drafted by Ajdin 2026-11-09: Alen must approve this exact wording before /referenzen goes live.
+    stimme: {
+      text: "„Unsere zentrale Übersicht über alle Kundenprojekte wird automatisch aktualisiert. Nichts bleibt liegen und alle Deadlines werden eingehalten. Das allein nimmt uns schon enorm viel Arbeit ab.“",
+      name: "Alen Purisic",
+    },
     titel: "Vom Angebot bis zur Kundenkarte läuft alles von selbst.",
     kompakt: "Eine Quelle der Wahrheit in HubSpot: Angebot, Unterschrift, Kundenordner und Aufgaben entstehen automatisch.",
     kennzahl: "Projektdokumentation",
