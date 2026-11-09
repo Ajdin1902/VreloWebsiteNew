@@ -72,7 +72,7 @@ export const referenzen: Referenz[] = [
     ],
     visual: { kind: "clip", mp4: "/video/ki-assistent.mp4", poster: "/video/ki-assistent.webp" },
     werkzeuge: ["Telegram", "n8n", "Hetzner Server", "Notion", "Trello", "E-Mail", "Google Kalender", "OneDrive", "Word"],
-    // Mirsad's own words (2026-11-05); second sentence changed by Ajdin 2026-11-09, Mirsad must approve it.
+    // Mirsad's words; second sentence reworded 2026-11-09, approved by Mirsad.
     stimme: {
       text: "„Meine ganze Büroarbeit wird unterwegs direkt per Chatnachricht erledigt. Endlich kann ich, wenn ich nach Hause komme, wirklich Feierabend machen.“",
       name: "Mirsad Dzafic",
@@ -113,7 +113,7 @@ export const referenzen: Referenz[] = [
       ],
     },
     werkzeuge: ["HubSpot", "sevDesk", "BoldSign", "Google Drive", "Google Docs", "Gmail", "ClickUp", "n8n", "Hetzner Server"],
-    // ⚠ Drafted by Ajdin 2026-11-09: Alen must approve this exact wording before /referenzen goes live.
+    // Approved by Alen 2026-11-09.
     stimme: {
       text: "„Unsere zentrale Übersicht über alle Kundenprojekte wird automatisch aktualisiert. Nichts bleibt liegen und alle Deadlines werden eingehalten. Das allein nimmt uns schon enorm viel Arbeit ab.“",
       name: "Alen Purisic",
