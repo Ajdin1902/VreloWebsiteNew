@@ -52,12 +52,18 @@ export default function VorlagenPage() {
                       {v.titel}
                     </h3>
                     <p className="mt-3 flex-1 text-pretty">{v.text}</p>
-                    <Link
-                      href={v.link.href}
-                      className="mt-6 inline-flex self-start rounded-lg bg-amber px-5 py-2.5 text-sm font-semibold text-tiefes-wasser transition-colors hover:bg-honig focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vrelo-petrol focus-visible:ring-offset-2"
-                    >
-                      {v.link.text}
-                    </Link>
+                    {/* A file needs a plain <a>: <Link> routes /vorlagen/x.pdf client-side into /vorlagen/[slug] → 404. */}
+                    {(() => {
+                      const Tag = v.link.href.endsWith(".pdf") ? "a" : Link;
+                      return (
+                        <Tag
+                          href={v.link.href}
+                          className="mt-6 inline-flex self-start rounded-lg bg-amber px-5 py-2.5 text-sm font-semibold text-tiefes-wasser transition-colors hover:bg-honig focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vrelo-petrol focus-visible:ring-offset-2"
+                        >
+                          {v.link.text}
+                        </Tag>
+                      );
+                    })()}
                   </li>
                 ))}
               </ul>
