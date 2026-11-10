@@ -18,7 +18,7 @@ import { NoteBlock } from "@/components/leistungen/page/NoteBlock";
 import { RelatedLinks } from "@/components/leistungen/page/RelatedLinks";
 import { VergleichBlock } from "@/components/leistungen/page/VergleichBlock";
 import { GrafikBlock } from "@/components/leistungen/page/GrafikBlock";
-import { leistungenPages, getLeistungPage, automatisierungVergleich } from "@/lib/leistungenPages";
+import { leistungenPages, getLeistungPage } from "@/lib/leistungenPages";
 import { getArticleBySlug, draftsVisible } from "@/lib/ratgeber";
 import { breadcrumbLd, serviceLd } from "@/lib/jsonld";
 import { canonical } from "@/lib/site";
@@ -70,7 +70,7 @@ export default async function LeistungSubpage({ params }: Params) {
       <ProofBlock proof={page.proof} />
       {page.grafik ? <GrafikBlock grafik={page.grafik} /> : null}
       <ExampleBlock example={page.example} />
-      {page.vergleich ? <VergleichBlock vergleich={automatisierungVergleich} current={page.slug} /> : null}
+      {page.vergleich ? <VergleichBlock vergleich={page.vergleich} current={page.slug} /> : null}
       {page.auditCard ? (
         <Section id="prozess-audit" tone="paper" className="scroll-mt-24">
           <Reveal>

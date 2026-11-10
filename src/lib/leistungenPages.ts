@@ -58,8 +58,8 @@ export type LeistungPage = {
     | { heading: string; video: { src: string; poster: string } };
   /** Renders the existing ProzessAudit card after the example (Prozess-Audit only). */
   auditCard?: boolean;
-  /** Renders the Prozess- vs. KI-Automatisierung comparison after the example. */
-  vergleich?: boolean;
+  /** A two-column comparison after the example (automation pages, Claude). */
+  vergleich?: Vergleich;
   /** A graphic to remember the service by, right after the proof block (Ajdin
    *  2026-10-20). `kind` picks the drawing; `alt` is what a screen reader hears. */
   grafik?: { kind: LeistungGrafik; heading: string; alt: string };
@@ -107,10 +107,12 @@ export type Vergleich = {
   heading: string;
   /** The one sentence to remember, shown under the table. */
   faustregel: string;
-  columns: [{ slug: LeistungSlug; title: string }, { slug: LeistungSlug; title: string }];
+  /** A column with a slug links to that page; the current page's column, or one marked warm, is highlighted. */
+  columns: [VergleichColumn, VergleichColumn];
   rows: { label: string; cells: [string, string] }[];
   close: string;
 };
+type VergleichColumn = { title: string; slug?: LeistungSlug; warm?: true };
 
 export const automatisierungVergleich: Vergleich = {
   heading: "Prozessautomatisierung oder KI? Was ist der Unterschied?",
@@ -161,6 +163,56 @@ export const automatisierungVergleich: Vergleich = {
     "Oft arbeiten beide zusammen: Die KI liest die Rechnung, die Automatisierung legt sie ab. Im Gespräch klären wir, was deine Aufgabe braucht.",
 };
 
+// Ajdin 2026-11-10: Claude also runs without Anthropic in the data path, via
+// Claude Desktop on Amazon Bedrock or Google Cloud in an EU region (checked
+// 2026-11-10: claude.com/docs/third-party/claude-desktop/overview). Never
+// Microsoft Foundry (Global or US only) and never "Deutschland"/"Frankfurt":
+// no Claude route pins a German region, the honest word is "innerhalb der EU".
+export const claudeVergleich: Vergleich = {
+  heading: "Direkt bei Anthropic oder über eine EU-Cloud?",
+  faustregel: "Gehen Kunden- oder Personaldaten durch Claude, nimm den Weg über die EU-Cloud.",
+  columns: [{ title: "Claude direkt" }, { title: "Claude über eine EU-Cloud", warm: true }],
+  rows: [
+    {
+      label: "Das Modell rechnet",
+      cells: [
+        "Bei Anthropic, einem US-Anbieter. Gespeichert wird in den USA.",
+        "Innerhalb der EU, bei Amazon Web Services oder Google Cloud.",
+      ],
+    },
+    {
+      label: "Gespräche liegen",
+      cells: [
+        "Im Konto bei Anthropic, auf jedem Gerät abrufbar.",
+        "Auf dem Rechner deines Mitarbeiters. Anthropic bekommt sie nicht.",
+      ],
+    },
+    {
+      label: "Vertrag",
+      cells: [
+        "Mit Anthropic, über den Team-Plan.",
+        "Mit Amazon oder Google, in einem Konto auf deinen Namen.",
+      ],
+    },
+    {
+      label: "Funktionen",
+      cells: [
+        "Neue Funktionen kommen hier zuerst an.",
+        "Dieselbe Claude-App mit Chat und Arbeit in euren Ordnern. Neues kommt etwas später.",
+      ],
+    },
+    {
+      label: "Passt zu",
+      cells: [
+        "Texten, Recherche und Entwürfen ohne Kunden- oder Personaldaten.",
+        "Arbeit mit Kunden- und Personaldaten, die in der EU bleiben sollen.",
+      ],
+    },
+  ],
+  close:
+    "Den EU-Weg richte ich in einem Konto auf deinen Namen ein: Du zahlst direkt und die Daten gehören dir. Welcher Weg zu euch passt, klären wir im Erstgespräch.",
+};
+
 const PRACTICE_BODY =
   "Ich arbeite selbst jeden Tag mit Claude: für Code, Texte, Recherche und meine eigenen Automatisierungen. In meinen früheren Positionen und bei Kunden habe ich Claude eingeführt und in bestehende Abläufe eingebunden. Was du bekommst, habe ich selbst im Einsatz.";
 
@@ -208,7 +260,7 @@ export const leistungenPages: LeistungPage[] = [
       ],
       after: "Jede Anfrage liegt sofort beim Zuständigen. Du tippst nichts mehr doppelt.",
     },
-    vergleich: true,
+    vergleich: automatisierungVergleich,
     note: FOERDERUNG_NOTE,
     cta: {
       kind: "check",
@@ -256,7 +308,7 @@ export const leistungenPages: LeistungPage[] = [
       heading: "So sieht das aus",
       video: { src: "/video/ki-assistent.mp4", poster: "/video/ki-assistent.webp" },
     },
-    vergleich: true,
+    vergleich: automatisierungVergleich,
     note: FOERDERUNG_NOTE,
     cta: {
       kind: "check",
@@ -323,10 +375,10 @@ export const leistungenPages: LeistungPage[] = [
     navLabel: "Claude für Unternehmen",
     title: "Claude für Unternehmen",
     subline:
-      "Claude, der KI-Assistent von Anthropic, eingerichtet für dein Team und eure Daten.",
+      "Claude, der KI-Assistent von Anthropic, für dein Team. Auf Wunsch innerhalb der EU.",
     metaDescription:
-      "Claude für Unternehmen einrichten: Team-Zugang, Projekte mit eurem Firmenwissen, eigene Vorlagen, Anbindung an eure Werkzeuge und klare Regeln für eure Daten.",
-    kurz: "Claude für dein Team eingerichtet, mit euren Vorlagen, eurem Wissen und klaren Datenregeln.",
+      "Claude für Unternehmen einrichten: Team-Zugang, euer Firmenwissen, eigene Vorlagen. Auf Wunsch über Amazon oder Google, gerechnet innerhalb der EU.",
+    kurz: "Claude für dein Team eingerichtet, mit euren Vorlagen und eurem Wissen. Auf Wunsch innerhalb der EU.",
     heroImage: "/images/bg-abendwellen.webp",
     pain: {
       heading: "Kennst du das?",
@@ -365,6 +417,7 @@ export const leistungenPages: LeistungPage[] = [
       ],
       after: "Jedes Angebot beginnt mit einem guten Entwurf in eurem Ton.",
     },
+    vergleich: claudeVergleich,
     note: {
       heading: "Zum Ausprobieren",
       body: "Wie ich Claude selbst nutze, kannst du nachbauen: Ein Text legt in einem Ordner ein Gehirn für deinen Betrieb an. Kostenlos, ohne Anmeldung.",

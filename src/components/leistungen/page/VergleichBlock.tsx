@@ -3,10 +3,11 @@ import { Section } from "@/components/Section";
 import { Reveal } from "@/components/Reveal";
 import { leistungHref, type LeistungSlug, type Vergleich } from "@/lib/leistungenPages";
 
-// Prozess- vs. KI-Automatisierung side by side, on both pages (Ajdin 2026-10-20).
+// Two options side by side: Prozess- vs. KI-Automatisierung (Ajdin 2026-10-20),
+// Claude direkt vs. EU-Cloud (2026-11-10).
 // A real table from md up; below md the same rows as two cards, because three
-// columns don't fit a phone. The column of the page you are on is warm, the
-// other column's title links to its page.
+// columns don't fit a phone. The column of the page you are on (or one marked
+// warm) is highlighted; a column with a slug links to its page.
 const linkClass =
   "rounded-sm underline underline-offset-4 hover:text-honig focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber";
 
@@ -19,7 +20,7 @@ function Dot() {
 }
 
 function ColumnTitle({ col, current }: { col: Vergleich["columns"][number]; current: LeistungSlug }) {
-  return col.slug === current ? (
+  return !col.slug || col.slug === current ? (
     <>{col.title}</>
   ) : (
     <Link href={leistungHref(col.slug)} className={linkClass}>
@@ -29,7 +30,7 @@ function ColumnTitle({ col, current }: { col: Vergleich["columns"][number]; curr
 }
 
 export function VergleichBlock({ vergleich, current }: { vergleich: Vergleich; current: LeistungSlug }) {
-  const isCurrent = (i: number) => vergleich.columns[i].slug === current;
+  const isCurrent = (i: number) => vergleich.columns[i].warm || vergleich.columns[i].slug === current;
   return (
     <Section tone="paper">
       <div className="mx-auto max-w-5xl">
@@ -51,7 +52,7 @@ export function VergleichBlock({ vergleich, current }: { vergleich: Vergleich; c
               <tr>
                 <td />
                 {vergleich.columns.map((c) => (
-                  <th key={c.slug} scope="col" className="px-6 py-5 text-lg font-semibold">
+                  <th key={c.title} scope="col" className="px-6 py-5 text-lg font-semibold">
                     <ColumnTitle col={c} current={current} />
                   </th>
                 ))}
@@ -82,7 +83,7 @@ export function VergleichBlock({ vergleich, current }: { vergleich: Vergleich; c
           <div className="grid gap-5 md:hidden">
             {vergleich.columns.map((col, i) => (
               <section
-                key={col.slug}
+                key={col.title}
                 aria-label={col.title}
                 className={`card-depth overflow-hidden rounded-2xl ${isCurrent(i) ? "bg-sonnenlicht" : "bg-papier"}`}
               >
