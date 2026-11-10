@@ -67,9 +67,10 @@ export default async function LeistungSubpage({ params }: Params) {
     <>
       <LeistungHero page={page} />
       <PainBlock pain={page.pain} />
-      <ProofBlock proof={page.proof} />
+      {page.proofVorVergleich ? null : <ProofBlock proof={page.proof} />}
       {page.grafik ? <GrafikBlock grafik={page.grafik} /> : null}
       <ExampleBlock example={page.example} />
+      {page.proofVorVergleich ? <ProofBlock proof={page.proof} /> : null}
       {page.vergleich ? <VergleichBlock vergleich={page.vergleich} current={page.slug} /> : null}
       {page.auditCard ? (
         <Section id="prozess-audit" tone="paper" className="scroll-mt-24">

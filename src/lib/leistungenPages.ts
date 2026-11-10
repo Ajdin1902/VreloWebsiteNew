@@ -60,6 +60,8 @@ export type LeistungPage = {
   auditCard?: boolean;
   /** A two-column comparison after the example (automation pages, Claude). */
   vergleich?: Vergleich;
+  /** Moves the proof block from after the pain block to just before the comparison (Claude, Ajdin 2026-11-10). */
+  proofVorVergleich?: true;
   /** A graphic to remember the service by, right after the proof block (Ajdin
    *  2026-10-20). `kind` picks the drawing; `alt` is what a screen reader hears. */
   grafik?: { kind: LeistungGrafik; heading: string; alt: string };
@@ -418,6 +420,7 @@ export const leistungenPages: LeistungPage[] = [
       after: "Jedes Angebot beginnt mit einem guten Entwurf in eurem Ton.",
     },
     vergleich: claudeVergleich,
+    proofVorVergleich: true,
     note: {
       heading: "Zum Ausprobieren",
       body: "Wie ich Claude selbst nutze, kannst du nachbauen: Ein Text legt in einem Ordner ein Gehirn für deinen Betrieb an. Kostenlos, ohne Anmeldung.",

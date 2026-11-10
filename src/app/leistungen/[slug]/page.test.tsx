@@ -25,6 +25,12 @@ describe("/leistungen/[slug]", () => {
     expect(h2s).toEqual(["Kennst du das?", "Aus der Praxis", "Einmal festgelegt, läuft es jedes Mal gleich.", "So sieht das aus", "Prozessautomatisierung oder KI? Was ist der Unterschied?", "Welche Aufgabe kostet dich am meisten?"]);
   });
 
+  it("puts Warum ich right before the EU comparison on Claude (Ajdin 2026-11-10)", async () => {
+    const { container } = render(await LeistungSubpage(params("claude")));
+    const h2s = [...container.querySelectorAll("h2")].map((h) => h.textContent?.trim());
+    expect(h2s.slice(0, 5)).toEqual(["Kennst du das?", "Einmal eingerichtet, für das ganze Team.", "So sieht das aus", "Warum ich", "Direkt bei Anthropic oder über eine EU-Cloud?"]);
+  });
+
   it("puts the one line and the button in the hero, with no separate lead section", async () => {
     const page = leistungenPages[0];
     render(await LeistungSubpage(params(page.slug)));
