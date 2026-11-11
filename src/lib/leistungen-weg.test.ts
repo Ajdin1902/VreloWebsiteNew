@@ -45,20 +45,24 @@ describe("leistungen-weg copy", () => {
     expect(bad).toEqual([]);
   });
 
-  it("closes the build sequence on the Feinschliff with the guarantee", () => {
+  it("closes the build sequence on the Feinschliff, without a refund (2026-11-11)", () => {
     const last = wennDuBaust.phases[wennDuBaust.phases.length - 1];
     expect(last.id).toBe("feinschliff");
     expect(last.text).toContain("14 Tage");
-    expect(last.text).toContain("vollen Betrag zurück");
+    expect(last.text).not.toMatch(/zurück|Betrag/);
   });
 
-  // HQ decision 2026-09-07: the guarantee presupposes the Prozess-Audit. The
-  // site must not promise more than the Angebot does (UWG §5).
-  it("ties the guarantee to the Prozess-Audit, before the refund promise", () => {
-    const last = wennDuBaust.phases[wennDuBaust.phases.length - 1];
-    const audit = last.text.indexOf("Prozess-Audit");
+  // Ajdin 2026-11-11: the 2-week first-result guarantee replaces the 14-day one.
+  // It still presupposes the Prozess-Audit (UWG §5: no more than the Angebot says).
+  it("promises the first result in 2 weeks, tied to the Prozess-Audit, right after the build", () => {
+    const ids = wennDuBaust.phases.map((p) => p.id);
+    expect(ids.indexOf("ergebnis")).toBe(ids.indexOf("bauen") + 1);
+    const p = wennDuBaust.phases.find((x) => x.id === "ergebnis")!;
+    expect(p.title).toBe("Erstes Ergebnis in 2 Wochen");
+    expect(p.text).toContain("Onboarding");
+    const audit = p.text.indexOf("Prozess-Audit");
     expect(audit).toBeGreaterThan(-1);
-    expect(audit).toBeLessThan(last.text.indexOf("vollen Betrag zurück"));
+    expect(audit).toBeLessThan(p.text.indexOf("alles zurück"));
   });
 
   it("keeps the free steps (Prozess-Check/Audit) out of the build phases", () => {

@@ -23,8 +23,8 @@ export type WennDuBaust = {
   phases: BauPhase[];
 };
 
-// Chronological: the Feinschliff follows the Übergabe (14 days after), and it
-// deliberately closes the sequence on the guarantee.
+// Chronological: the 2-week first result (guarantee, 2026-11-11) follows the
+// build, the Feinschliff closes the sequence 14 days after the Übergabe.
 export const wennDuBaust: WennDuBaust = {
   heading: "Wenn du mit mir baust",
   phases: [
@@ -44,6 +44,11 @@ export const wennDuBaust: WennDuBaust = {
       text: "Ich programmiere deinen Prozess und verbinde deine Systeme damit: Mail, Kalender, Buchhaltung, was bei dir eben läuft.",
     },
     {
+      id: "ergebnis",
+      title: "Erstes Ergebnis in 2 Wochen",
+      text: "Zwei Wochen nach dem Onboarding läuft der erste Punkt aus deiner Anforderungsliste. Weil jedem Bau der kostenlose Prozess-Audit vorausgeht, kann ich dir das zusagen: Läuft er nicht, bekommst du alles zurück, was du bis dahin gezahlt hast.",
+    },
+    {
       id: "test",
       title: "Test auf deinen echten Daten",
       text: "Das System läuft zuerst an deinen echten Fällen, nicht an Beispieldaten. Du nimmst erst ab, wenn es sauber durchläuft.",
@@ -56,7 +61,7 @@ export const wennDuBaust: WennDuBaust = {
     {
       id: "feinschliff",
       title: "Der Feinschliff",
-      text: "14 Tage nach der Übergabe beobachte ich dein System und justiere nach, ohne dass du dich darum kümmerst. Weil jedem Bau der kostenlose Prozess-Audit vorausgeht, gilt in dieser Zeit: Bist du nicht zufrieden, bekommst du den vollen Betrag zurück und ich baue alles sauber zurück.",
+      text: "14 Tage nach der Übergabe beobachte ich dein System und justiere nach, ohne dass du dich darum kümmerst.",
     },
   ],
 };

@@ -14,7 +14,7 @@ describe("Proof", () => {
       "Maßgeschneidert statt von der Stange.",
       "Du wartest nichts.",
       "Alles gehört dir.",
-      "14 Tage Geld zurück.",
+      "Erste Ergebnisse in 2 Wochen. Sonst Geld zurück.",
     ]) {
       expect(screen.getByRole("heading", { name: title })).toBeInTheDocument();
     }

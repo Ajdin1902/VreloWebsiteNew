@@ -1,4 +1,5 @@
 import { questionCountPhrase } from "@/lib/prozessCheckCta";
+import { GARANTIE } from "@/lib/garantie";
 import { STEPS } from "@/lib/prozessCheck";
 
 export type FaqEntry = { question: string; answer: string };
@@ -40,9 +41,13 @@ export const faqGroups: FaqGroup[] = [
           "Ja, komplett remote. Die Zusammenarbeit läuft über kurze Calls und klare Absprachen, egal, wo dein Betrieb sitzt.",
       },
       {
+        question: GARANTIE.faqFrage,
+        answer: GARANTIE.faqAntwort,
+      },
+      {
         question: "Was passiert nach dem Projekt?",
         answer:
-          "In den ersten 14 Tagen nach der Übergabe beobachte ich dein System und justiere nach, ohne dass du dich darum kümmerst. Bist du in dieser Zeit nicht zufrieden, bekommst du den vollen Betrag zurück und ich baue alles sauber zurück. Das gilt für jeden Bau, dem der kostenlose Prozess-Audit vorausging. Danach bist du nicht allein: Ich bleibe erreichbar. Weil alles sauber dokumentiert ist, lässt sich dein System anpassen, wenn sich etwas in deinem Betrieb ändert.",
+          "Nach der Übergabe beobachte ich dein System 14 Tage lang und justiere nach, ohne dass du dich darum kümmerst. Danach bin ich weiter erreichbar. Weil alles sauber dokumentiert ist, lässt sich dein System anpassen, wenn sich etwas in deinem Betrieb ändert.",
       },
       {
         question: "Was ist, wenn du mal nicht erreichbar bist?",

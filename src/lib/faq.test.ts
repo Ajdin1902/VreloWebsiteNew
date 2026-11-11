@@ -1,3 +1,4 @@
+import { GARANTIE } from "./garantie";
 import { describe, it, expect } from "vitest";
 import { faqGroups } from "./faq";
 import { questionCountPhrase } from "./prozessCheckCta";
@@ -32,6 +33,14 @@ describe("faq data", () => {
     const after = all.find((e) => /Was passiert nach dem Projekt/i.test(e.question));
     expect(after).toBeDefined();
     expect(after!.answer).toMatch(/erreichbar|anpass/i);
+  });
+
+  it("explains the 2-week guarantee with its conditions (2026-11-11)", () => {
+    const all = faqGroups.flatMap((g) => g.entries);
+    const g = all.find((e) => e.question === GARANTIE.faqFrage);
+    expect(g?.answer).toBe(GARANTIE.faqAntwort);
+    const after = all.find((e) => /Was passiert nach dem Projekt/i.test(e.question))!;
+    expect(after.answer).not.toMatch(/vollen Betrag|zurück/);
   });
 
   it("starts people with the Prozess-Check", () => {

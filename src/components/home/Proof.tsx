@@ -1,6 +1,7 @@
 import { Section } from "@/components/Section";
 import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { Reveal } from "@/components/Reveal";
+import { GARANTIE } from "@/lib/garantie";
 
 const values = [
   {
@@ -24,10 +25,8 @@ const values = [
     title: "Alles gehört dir.",
     body: "Server, Konten, Daten und Doku laufen auf deinen Namen. Hörst du mit mir auf, läuft dein System weiter.",
   },
-  {
-    title: "14 Tage Geld zurück.",
-    body: "Bist du nach der Übergabe nicht zufrieden, bekommst du den vollen Betrag zurück und ich baue alles sauber zurück.",
-  },
+  // The 2-week first-result guarantee (2026-11-11), same words as the hero and the FAQ.
+  { title: GARANTIE.titel, body: GARANTIE.text },
 ];
 
 export function Proof() {
