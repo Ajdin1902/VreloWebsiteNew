@@ -68,9 +68,6 @@ export const VORLAGEN_CTA = {
   microcopy: "Bauplan für deine Branche. Danach machen wir zusammen deinen Fahrplan, auch kostenlos.",
   // Homepage close only: echoes the free path (DerWeg) at the last decision point.
   closeMicrocopy: "Vorlage, Gespräch und Fahrplan: alles kostenlos.",
-  // The quiet second path under a /kontakt button.
-  secondaryPrefix: "Noch unsicher?",
-  secondaryLabel: "Erst eine kostenlose Vorlage ansehen",
 } as const;
 
 export const CHECK_CTA = {

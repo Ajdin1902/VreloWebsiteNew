@@ -3,7 +3,6 @@ import { Section } from "@/components/Section";
 import { portraits } from "@/lib/portraits";
 import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { CTAButton } from "@/components/CTAButton";
-import { SecondaryLink } from "@/components/SecondaryLink";
 import { withBrandWords } from "@/components/BrandWord";
 import { CHECK_CTA, VORLAGEN_CTA, kontaktHref, vorlagenHref, type CheckSrc } from "@/lib/prozessCheckCta";
 
@@ -14,10 +13,9 @@ import { CHECK_CTA, VORLAGEN_CTA, kontaktHref, vorlagenHref, type CheckSrc } fro
 // hot spots; the ember heading and tinte body were measured against the
 // darkest (blue) patch and the brightest highlight — both clear AA.
 //
-// Front door (2026-11-11): the button goes to /vorlagen with the
-// caller's ?src= slug and the Erstgespräch sits under it as the quiet second
-// path. primary="kontakt" flips the two (only /faq, where the visitor has a
-// question and wants to write).
+// Front door (2026-11-11): the button goes to /vorlagen with the caller's
+// ?src= slug. primary="kontakt" books the Erstgespräch instead (/faq and
+// /leistungen/ki-agenten). Either way the button stands alone (Ajdin 2026-11-11).
 //
 // The founder's sitting photo sits beside the close on desktop and below the
 // buttons on mobile, on every caller (decided 2026-10-01): the person you would
@@ -52,7 +50,6 @@ export function ClosingCta({
             <CTAButton href={kontaktHref(src)} variant="inverse">
               {CHECK_CTA.directLabel}
             </CTAButton>
-            <SecondaryLink tone="light" prefix={VORLAGEN_CTA.secondaryPrefix} label={VORLAGEN_CTA.secondaryLabel} href={vorlagenHref(src)} />
           </>
         )}
       </div>

@@ -21,13 +21,12 @@ describe("ClosingCta", () => {
     expect(screen.queryByRole("link", { name: "Erstgespräch buchen" })).toBeNull();
   });
 
-  it("flips to /kontakt primary with the check as secondary (FAQ exception)", () => {
+  // Ajdin 2026-11-11: the Erstgespräch button stands alone, no „Noch unsicher?“ link under it.
+  it("flips to /kontakt primary with the button alone (FAQ, KI-Agenten)", () => {
     render(<ClosingCta heading="h" lead="l" src="faq" primary="kontakt" />);
     expect(screen.getByRole("link", { name: "Erstgespräch buchen" })).toHaveAttribute("href", "/kontakt?src=faq");
-    expect(screen.getByRole("link", { name: "Erst eine kostenlose Vorlage ansehen" })).toHaveAttribute(
-      "href",
-      "/vorlagen?src=faq",
-    );
+    expect(screen.getAllByRole("link")).toHaveLength(1);
+    expect(screen.queryByText(/Noch unsicher/)).toBeNull();
   });
 
   // 2026-10-01: every close carries the founder's sitting photo.
