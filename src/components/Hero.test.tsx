@@ -45,9 +45,9 @@ describe("Hero", () => {
     expect(screen.getByText("Bauplan für deine Branche. Danach machen wir zusammen deinen Fahrplan, auch kostenlos.")).toBeInTheDocument();
   });
 
-  it("keeps the Erstgespräch as a quiet secondary link", () => {
+  it("has no Erstgespräch link in the hero (Ajdin 2026-11-11)", () => {
     render(<Hero />);
-    expect(screen.getByRole("link", { name: "Erstgespräch buchen" })).toHaveAttribute("href", "/kontakt");
+    expect(screen.queryByRole("link", { name: "Erstgespräch buchen" })).toBeNull();
   });
 
   it("applies the staggered reveal classes (H1 rise-only, sub + CTA fade-up)", () => {

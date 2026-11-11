@@ -25,9 +25,6 @@ export function Problem() {
         <Reveal as="h2" delayMs={0} className="text-balance text-3xl font-semibold tracking-tight text-papier md:text-4xl">
           Der Kleinkram frisst deinen Tag.
         </Reveal>
-        <Reveal as="p" delayMs={80} className="mt-5 text-pretty text-lg text-gletscher">
-          Es sind nicht die großen Dinge. Es ist das, was sich jeden Tag wiederholt:
-        </Reveal>
         <Reveal as="div" delayMs={160} className="card-depth mx-auto mt-8 max-w-xl rounded-2xl border border-gletscher/25 bg-gletscher/10 p-8 text-left">
           <ul className="flex flex-col gap-3 text-lg text-gletscher">
             {tasks.map((task) => (

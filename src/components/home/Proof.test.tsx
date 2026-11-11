@@ -1,6 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { Proof } from "./Proof";
+import { GARANTIE } from "@/lib/garantie";
+import { faqGroups, faqHref } from "@/lib/faq";
 
 describe("Proof", () => {
   it("renders the heading and six value cards (guarantee + ownership since 2026-11-04)", () => {
@@ -18,6 +20,14 @@ describe("Proof", () => {
     ]) {
       expect(screen.getByRole("heading", { name: title })).toBeInTheDocument();
     }
+  });
+
+  it("links the guarantee card to its conditions in the FAQ (UWG §5)", () => {
+    render(<Proof />);
+    const link = screen.getByRole("link", { name: GARANTIE.faqLink });
+    expect(link).toHaveAttribute("href", faqHref(GARANTIE.faqFrage));
+    const questions = faqGroups.flatMap((g) => g.entries.map((e) => e.question));
+    expect(questions).toContain(GARANTIE.faqFrage);
   });
 
   it("no longer carries the references (they live in their own section now)", () => {

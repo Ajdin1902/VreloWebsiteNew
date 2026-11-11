@@ -1,8 +1,7 @@
 import Image from "next/image";
 import { CTAButton } from "@/components/CTAButton";
-import { SecondaryLink } from "@/components/SecondaryLink";
 import { GARANTIE } from "@/lib/garantie";
-import { CHECK_CTA, VORLAGEN_CTA, CHECK_SRC, vorlagenHref } from "@/lib/prozessCheckCta";
+import { VORLAGEN_CTA, CHECK_SRC, vorlagenHref } from "@/lib/prozessCheckCta";
 
 export function Hero() {
   return (
@@ -41,7 +40,6 @@ export function Hero() {
         </CTAButton>
         {/* Friction reducer: name what the click costs (nothing) and returns (a result now). */}
         <p className="mt-3 text-sm text-gletscher">{VORLAGEN_CTA.microcopy}</p>
-        <SecondaryLink tone="dark" prefix={CHECK_CTA.directPrefix} label={CHECK_CTA.directLabel} href={CHECK_CTA.directHref} />
       </div>
     </section>
   );

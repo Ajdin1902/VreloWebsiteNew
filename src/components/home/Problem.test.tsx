@@ -21,6 +21,11 @@ describe("Problem", () => {
     expect(screen.queryAllByRole("link")).toHaveLength(0);
   });
 
+  it("goes straight from the heading to the tasks (intro line cut 2026-11-11)", () => {
+    render(<Problem />);
+    expect(screen.queryByText(/großen Dinge/)).toBeNull();
+  });
+
   it("wraps the task list in a card-depth panel", () => {
     const { container } = render(<Problem />);
     const panel = container.querySelector(".card-depth");

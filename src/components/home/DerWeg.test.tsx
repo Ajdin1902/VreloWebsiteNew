@@ -16,4 +16,9 @@ describe("DerWeg", () => {
     expect(screen.getByRole("link", { name: "Kostenlose Vorlagen ansehen" })).toHaveAttribute("href", "/vorlagen?src=home-weg");
     expect(screen.getByRole("link", { name: "Erstgespräch buchen" })).toHaveAttribute("href", "/kontakt");
   });
+
+  it("drops the intro line under the heading (Ajdin 2026-11-11)", () => {
+    render(<DerWeg />);
+    expect(screen.queryByText(/Drei Schritte/)).toBeNull();
+  });
 });

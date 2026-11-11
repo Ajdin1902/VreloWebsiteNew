@@ -65,6 +65,13 @@ describe("leistungen-weg copy", () => {
     expect(audit).toBeLessThan(p.text.indexOf("alles zurück"));
   });
 
+  it("names the clock start, the pause and the Rückbau like the Angebot does", () => {
+    const p = wennDuBaust.phases.find((x) => x.id === "ergebnis")!;
+    expect(p.text).toContain("Zugänge");
+    expect(p.text).toMatch(/ruht/);
+    expect(p.text).toMatch(/baue ich .*zurück/);
+  });
+
   it("keeps the free steps (Prozess-Check/Audit) out of the build phases", () => {
     const titles = wennDuBaust.phases.map((p) => p.title.toLowerCase());
     expect(titles.some((t) => t.includes("check") || t.includes("audit"))).toBe(false);

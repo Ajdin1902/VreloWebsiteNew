@@ -33,9 +33,6 @@ export function DerWeg() {
         <Reveal as="h2" delayMs={0} className="text-balance text-3xl font-semibold tracking-tight text-papier md:text-4xl">
           So fängst du an. Kostenlos.
         </Reveal>
-        <Reveal as="p" delayMs={80} className="mt-5 text-pretty text-lg text-gletscher">
-          Drei Schritte von der Frage zum Plan. Keiner davon kostet dich etwas.
-        </Reveal>
       </div>
       <Reveal as="ol" delayMs={160} className="mx-auto mt-10 grid max-w-4xl gap-5 text-left md:grid-cols-3">
         {steps.map((s, i) => (

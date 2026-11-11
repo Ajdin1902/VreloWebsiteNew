@@ -46,7 +46,7 @@ export const wennDuBaust: WennDuBaust = {
     {
       id: "ergebnis",
       title: "Erstes Ergebnis in 2 Wochen",
-      text: "Zwei Wochen nach dem Onboarding läuft der erste Punkt aus deiner Anforderungsliste. Weil jedem Bau der kostenlose Prozess-Audit vorausgeht, kann ich dir das zusagen: Läuft er nicht, bekommst du alles zurück, was du bis dahin gezahlt hast.",
+      text: "Zwei Wochen nach dem Onboarding läuft der erste Punkt aus deiner Anforderungsliste. Die Frist beginnt, sobald ich alle Zugänge habe. Warte ich auf etwas von dir, ruht sie so lange. Weil jedem Bau der kostenlose Prozess-Audit vorausgeht, kann ich dir das zusagen: Läuft er nicht, baue ich alles sauber zurück. Du bekommst alles zurück, was du bis dahin gezahlt hast.",
     },
     {
       id: "test",

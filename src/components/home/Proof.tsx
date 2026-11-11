@@ -1,9 +1,11 @@
 import { Section } from "@/components/Section";
 import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { Reveal } from "@/components/Reveal";
+import Link from "next/link";
 import { GARANTIE } from "@/lib/garantie";
+import { faqHref } from "@/lib/faq";
 
-const values = [
+const values: { title: string; body: string; link?: { href: string; label: string } }[] = [
   {
     title: "Ein Ansprechpartner.",
     body: "Du redest immer mit mir. Kein Team, keine Tickets, keine Warteschleife.",
@@ -26,7 +28,7 @@ const values = [
     body: "Server, Konten, Daten und Doku laufen auf deinen Namen. Hörst du mit mir auf, läuft dein System weiter.",
   },
   // The 2-week first-result guarantee (2026-11-11), same words as the hero and the FAQ.
-  { title: GARANTIE.titel, body: GARANTIE.text },
+  { title: GARANTIE.titel, body: GARANTIE.text, link: { href: faqHref(GARANTIE.faqFrage), label: GARANTIE.faqLink } },
 ];
 
 export function Proof() {
@@ -75,6 +77,11 @@ export function Proof() {
           <li key={v.title} className="card-depth rounded-2xl border border-papier/50 bg-papier/70 p-6 backdrop-blur-sm">
             <h3 className="text-xl font-semibold text-ember">{v.title}</h3>
             <p className="mt-2 text-tinte">{v.body}</p>
+            {v.link && (
+              <Link href={v.link.href} className="mt-3 inline-block text-sm text-tiefes-wasser underline underline-offset-2 transition-colors hover:text-vrelo-petrol">
+                {v.link.label}
+              </Link>
+            )}
           </li>
         ))}
       </Reveal>
