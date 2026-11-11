@@ -1,4 +1,4 @@
-import { WARTUNG_HINWEIS, WARTUNG_PREIS_ZUSATZ, wartungPreis, wartungTiers, wartungZeilen, type WartungTier } from "@/lib/wartung";
+import { WARTUNG_HINWEIS, WARTUNG_PREIS_LABEL, WARTUNG_PREIS_ZUSATZ, wartungPreis, wartungTiers, wartungZeilen, type WartungTier } from "@/lib/wartung";
 
 // The three Wartung tiers side by side with their prices (Ajdin 2026-11-11:
 // details and prices as a table, so the differences read at a glance). A real
@@ -6,8 +6,8 @@ import { WARTUNG_HINWEIS, WARTUNG_PREIS_ZUSATZ, wartungPreis, wartungTiers, wart
 // the page never scrolls sideways. Standard is the tier to push: it carries the
 // sunlit column and the petrol frame, no beliebt label (that would be a claim).
 // A cell with several lines renders as bullets, a single line as plain text.
-// The last row (Ergebnis) is where the reader decides, so it closes the table
-// as a dark band: the short result in honig serif, the fit sentence below.
+// Ergebnis and Preis close the table as one dark band (Ajdin 2026-11-11: prices
+// at the bottom): the reader first sees what each tier gives, then what it costs.
 const hervor = (t: WartungTier) => t.id === "standard";
 const details = wartungZeilen.filter((z) => z.id !== "ergebnis");
 const ergebnisLabel = wartungZeilen.find((z) => z.id === "ergebnis")!.label;
@@ -42,12 +42,21 @@ function Kopf({ t }: { t: WartungTier }) {
     <>
       <span className="block text-2xl font-semibold text-tiefes-wasser">{t.name}</span>
       <span className="mt-1 block text-pretty font-serif text-lg italic leading-snug text-ember">{t.motto}</span>
-      <span className="mt-3 block text-3xl font-semibold text-tiefes-wasser">{wartungPreis(t)}</span>
-      <span className="block text-sm text-stumm">{WARTUNG_PREIS_ZUSATZ}</span>
-      {t.grenze ? <span className="mt-2 block text-sm font-semibold text-stumm">{t.grenze}</span> : null}
     </>
   );
 }
+
+function Preis({ t }: { t: WartungTier }) {
+  return (
+    <>
+      <span className="block text-3xl font-semibold text-papier">{wartungPreis(t)}</span>
+      <span className="block text-sm text-gletscher">{WARTUNG_PREIS_ZUSATZ}</span>
+      {t.grenze ? <span className="mt-2 block text-sm font-semibold text-honig">{t.grenze}</span> : null}
+    </>
+  );
+}
+
+const bandLabel = "text-sm font-semibold uppercase tracking-wide text-honig";
 
 export function WartungTabelle() {
   return (
@@ -85,17 +94,32 @@ export function WartungTabelle() {
               </tr>
             ))}
             <tr data-ergebnis>
-              <th scope="row" className="rounded-bl-2xl bg-tiefes-wasser py-6 pl-5 pr-4 align-top text-sm font-semibold uppercase tracking-wide text-honig">
+              <th scope="row" className={`rounded-tl-2xl bg-tiefes-wasser py-6 pl-5 pr-4 align-top ${bandLabel}`}>
                 {ergebnisLabel}
               </th>
               {wartungTiers.map((t, i) => (
                 <td
                   key={t.id}
-                  className={`px-5 py-6 align-top ${
-                    hervor(t) ? "rounded-b-2xl border-x-2 border-b-2 border-vrelo-petrol bg-vrelo-petrol" : "bg-tiefes-wasser"
-                  } ${i === wartungTiers.length - 1 ? "rounded-br-2xl" : ""}`}
+                  className={`px-5 py-6 align-top ${hervor(t) ? "border-x-2 border-vrelo-petrol bg-vrelo-petrol" : "bg-tiefes-wasser"} ${
+                    i === wartungTiers.length - 1 ? "rounded-tr-2xl" : ""
+                  }`}
                 >
                   <Ergebnis t={t} />
+                </td>
+              ))}
+            </tr>
+            <tr data-preis>
+              <th scope="row" className={`rounded-bl-2xl border-t border-gletscher/20 bg-tiefes-wasser py-6 pl-5 pr-4 align-top ${bandLabel}`}>
+                {WARTUNG_PREIS_LABEL}
+              </th>
+              {wartungTiers.map((t, i) => (
+                <td
+                  key={t.id}
+                  className={`border-t border-t-gletscher/20 px-5 py-6 align-top ${
+                    hervor(t) ? "rounded-b-2xl border-x-2 border-b-2 border-x-vrelo-petrol border-b-vrelo-petrol bg-vrelo-petrol" : "bg-tiefes-wasser"
+                  } ${i === wartungTiers.length - 1 ? "rounded-br-2xl" : ""}`}
+                >
+                  <Preis t={t} />
                 </td>
               ))}
             </tr>
@@ -122,13 +146,19 @@ export function WartungTabelle() {
                   </dd>
                 </div>
               ))}
-              <div data-ergebnis className="rounded-xl bg-tiefes-wasser p-5">
-                <dt className="text-xs font-semibold uppercase tracking-wide text-honig">{ergebnisLabel}</dt>
-                <dd className="mt-2">
-                  <Ergebnis t={t} />
-                </dd>
-              </div>
             </dl>
+            <div className="mt-6 rounded-xl bg-tiefes-wasser p-5">
+              <div data-ergebnis>
+                <p className={bandLabel}>{ergebnisLabel}</p>
+                <div className="mt-2">
+                  <Ergebnis t={t} />
+                </div>
+              </div>
+              <div data-preis className="mt-5 border-t border-gletscher/20 pt-5">
+                <p className={`${bandLabel} sr-only`}>{WARTUNG_PREIS_LABEL}</p>
+                <Preis t={t} />
+              </div>
+            </div>
           </article>
         ))}
       </div>

@@ -101,6 +101,9 @@ export function wartungPreis(t: WartungTier): string {
 
 export const WARTUNG_PREIS_ZUSATZ = "im Monat, netto";
 
+/** Label of the price row, the last row of the Betreuung table (Ajdin 2026-11-11). */
+export const WARTUNG_PREIS_LABEL = "Preis";
+
 /** The FAQ's price sentence (the Betreuung table shows the same prices). */
 export function wartungPreisSatz(): string {
   const [m, s, p] = wartungTiers;
