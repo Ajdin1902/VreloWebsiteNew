@@ -3,8 +3,8 @@
 // The KI-Agenten examples page (Ajdin 2026-11-11): one agent per company
 // department, copy approved in docs/superpowers/specs/2026-11-11-abteilungs-agenten-copy.md.
 // Rules: no price; the Inhaber-Assistent is the paid top floor, never a bonus
-// or included; a client is named only where I built that agent (built, not
-// necessarily live: the Velp go-live waits on Alen, so never say it runs there).
+// or included; no client names on the agents (Ajdin 2026-11-11). The page shows
+// them on a ring around Dein Betrieb, a click shows the tasks in the middle.
 import { CHECK_SRC, type CheckSrc } from "@/lib/prozessCheckCta";
 
 export const KI_AGENTEN_PATH = "/leistungen/ki-agenten";
@@ -14,13 +14,9 @@ export type Agent = {
   name: string;
   aufgaben: string[];
   ergebnis: string;
-  gebautFuer?: string;
   /** The top floor: built on the others, shown apart. */
   oberste?: true;
 };
-
-const MDZ = "MDZ Hausmeisterservice";
-const VELP = "Velp";
 
 export const KI_AGENTEN: {
   title: string;
@@ -28,7 +24,9 @@ export const KI_AGENTEN: {
   metaDescription: string;
   heroImage: string;
   heading: string;
-  gebautPrefix: string;
+  mitte: { titel: string; text: string };
+  hinweis: string;
+  schliessen: string;
   agenten: Agent[];
   cta: { heading: string; lead: string; src: CheckSrc };
 } = {
@@ -38,7 +36,9 @@ export const KI_AGENTEN: {
     "Beispiele für KI-Agenten im Betrieb: Marketing, Vertrieb, Kundenservice, Projektdoku, Buchhaltung und ein Assistent für den Inhaber.",
   heroImage: "/images/leistung-ki-agenten.webp",
   heading: "Ein Agent für jede Abteilung",
-  gebautPrefix: "Gebaut für",
+  mitte: { titel: "Dein Betrieb", text: "Alle Agenten arbeiten mit denselben Daten." },
+  hinweis: "Klick auf einen Agenten, um zu sehen, was er übernimmt.",
+  schliessen: "Zurück zur Übersicht",
   agenten: [
     {
       id: "marketing",
@@ -60,7 +60,6 @@ export const KI_AGENTEN: {
         "Schreibt den Angebotsentwurf und fasst nach drei und sieben Tagen nach",
       ],
       ergebnis: "Alles über einen Kunden steht in deinem CRM, bevor du zum Hörer greifst.",
-      gebautFuer: VELP,
     },
     {
       id: "kundenservice",
@@ -71,7 +70,6 @@ export const KI_AGENTEN: {
         "Beantwortet Fragen wie „Wann kommt ihr?“ sofort",
       ],
       ergebnis: "Neue Kunden sind startklar, ohne dass du hinterhertelefonierst.",
-      gebautFuer: VELP,
     },
     {
       id: "projektdoku",
@@ -82,7 +80,6 @@ export const KI_AGENTEN: {
         "Schiebt den Auftrag in die nächste Phase, sobald ein Schritt erledigt ist",
       ],
       ergebnis: "Dein Team arbeitet am Auftrag. Die Doku führt der Agent.",
-      gebautFuer: VELP,
     },
     {
       id: "buchhaltung",
@@ -94,7 +91,6 @@ export const KI_AGENTEN: {
       ],
       // Ajdin 2026-11-11: replaces the absolute promise on errors (UWG §5).
       ergebnis: "Kein Abtippen und Rumkopieren mehr bei Rechnungen. Das Geld kommt früher.",
-      gebautFuer: MDZ,
     },
     {
       id: "inhaber",
@@ -105,7 +101,6 @@ export const KI_AGENTEN: {
         "Schickt dir jeden Morgen ein Tagesbild",
       ],
       ergebnis: "Du behältst den Überblick, auch wenn du draußen bist.",
-      gebautFuer: MDZ,
       oberste: true,
     },
   ],

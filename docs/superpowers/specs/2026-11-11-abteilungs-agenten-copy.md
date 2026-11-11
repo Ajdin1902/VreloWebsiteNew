@@ -1,6 +1,6 @@
 # Abteilungs-Agenten: website section (handoff, 2026-11-11)
 
-Copy approved by Ajdin in chat on 2026-11-11. **Built 2026-11-11** as the separate page `/leistungen/ki-agenten` (Ajdin: own page, not in the nav, client names on the cards). Changes against the handoff below: Buchhaltung result reworded (see Decisions), proof chips say „Gebaut für <Kunde>“ instead of „läuft“ (Velp #5/#9 are built and tested, go-live waits on Alen), the close uses the site button „Erstgespräch buchen“.
+Copy approved by Ajdin in chat on 2026-11-11. **Built 2026-11-11** as the separate page `/leistungen/ki-agenten` (Ajdin: own page, not in the nav, client names on the cards). Changes against the handoff below: Buchhaltung result reworded (see Decisions), no client names on the agents (Ajdin, same day), the agents sit on a ring around „Dein Betrieb“ with the tasks shown in the middle on click (new copy: „Dein Betrieb“, „Alle Agenten arbeiten mit denselben Daten.“, the click hint, „Zurück zur Übersicht“), the close uses the site button „Erstgespräch buchen“.
 
 ## What it is
 

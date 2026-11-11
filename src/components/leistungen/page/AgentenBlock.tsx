@@ -1,70 +1,72 @@
 import { Section } from "@/components/Section";
+import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { Reveal } from "@/components/Reveal";
 import type { Agent } from "@/lib/kiAgenten";
+import { AgentenKreis } from "./AgentenKreis";
 
-// One agent per department (Ajdin 2026-11-11), on paper after the dark hero.
-// Five sunlit cards (three, then two on a six-column grid, so no row ends in
-// a gap), then the Inhaber-Assistent as a dark card across the full width: the
-// top floor that builds on the others, never a sixth card that comes along.
-// Each card ends on its result in ember serif, the way Ergebnis closes the
-// Wartung table; under it a chip names the client, only where I built that agent.
-const spans = (i: number) => (i < 3 ? "lg:col-span-2" : i === 4 ? "md:col-span-2 lg:col-span-3" : "lg:col-span-3");
-
-function Karte({ a, gebautPrefix, className }: { a: Agent; gebautPrefix: string; className: string }) {
-  const dunkel = Boolean(a.oberste);
+// One agent per department (Ajdin 2026-11-11) on a deep, calm band (the same
+// near-featureless texture as the proof band, so the diagram stays readable).
+// From lg up the agents circle Dein Betrieb (AgentenKreis); below lg the circle
+// would not fit, so Dein Betrieb sits on top and the agents hang off one line
+// as cards with tasks and result. Both are in the DOM; CSS shows one.
+export function AgentenBlock({
+  heading,
+  agenten,
+  mitte,
+  hinweis,
+  schliessen,
+}: {
+  heading: string;
+  agenten: Agent[];
+  mitte: { titel: string; text: string };
+  hinweis: string;
+  schliessen: string;
+}) {
   return (
-    <li
-      data-agent={a.id}
-      data-oberste={a.oberste ? "" : undefined}
-      className={`card-depth flex flex-col rounded-2xl p-6 md:p-7 ${dunkel ? "bg-tiefes-wasser" : "bg-sonnenlicht"} ${className}`}
-    >
-      <h3 className={`text-xl font-semibold ${dunkel ? "text-papier" : "text-tiefes-wasser"}`}>{a.name}</h3>
-      <ul
-        className={`mt-4 flex list-disc flex-col gap-2 pl-5 ${dunkel ? "text-gletscher marker:text-honig md:grid md:grid-cols-3 md:gap-x-8" : "text-tinte marker:text-vrelo-petrol"}`}
-      >
-        {a.aufgaben.map((t) => (
-          <li key={t} className="text-pretty">
-            {t}
-          </li>
-        ))}
-      </ul>
-      <div className="mt-auto pt-6">
-        <p
-          className={`border-t pt-4 font-serif text-lg italic leading-snug text-pretty ${
-            dunkel ? "border-gletscher/20 text-honig" : "border-ember/20 text-ember"
-          }`}
-        >
-          {a.ergebnis}
-        </p>
-        {a.gebautFuer ? (
-          <span
-            className={`mt-4 inline-block rounded-full px-3 py-1 text-xs font-semibold ${dunkel ? "bg-honig text-tiefes-wasser" : "bg-tiefes-wasser text-papier"}`}
-          >
-            {gebautPrefix} {a.gebautFuer}
-          </span>
-        ) : null}
-      </div>
-    </li>
-  );
-}
-
-export function AgentenBlock({ heading, agenten, gebautPrefix }: { heading: string; agenten: Agent[]; gebautPrefix: string }) {
-  const abteilungen = agenten.filter((a) => !a.oberste);
-  const oberste = agenten.filter((a) => a.oberste);
-  return (
-    <Section tone="paper">
+    <Section tone="cool" className="relative isolate overflow-hidden">
+      <SectionBackdrop src="/images/section-texture.webp" tintRgb="10 37 56" tintOpacity={0.7} />
       <div className="mx-auto max-w-6xl">
-        <Reveal as="h2" className="text-balance text-3xl font-semibold tracking-tight text-tiefes-wasser md:text-4xl">
+        <Reveal as="h2" className="text-balance text-center text-3xl font-semibold tracking-tight text-papier md:text-4xl">
           {heading}
         </Reveal>
-        <ul className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-6">
-          {abteilungen.map((a, i) => (
-            <Karte key={a.id} a={a} gebautPrefix={gebautPrefix} className={spans(i)} />
-          ))}
-          {oberste.map((a) => (
-            <Karte key={a.id} a={a} gebautPrefix={gebautPrefix} className="md:col-span-2 lg:col-span-6" />
-          ))}
-        </ul>
+
+        <div className="mt-12 hidden lg:block">
+          <AgentenKreis agenten={agenten} mitte={mitte} hinweis={hinweis} schliessen={schliessen} />
+        </div>
+
+        <div data-liste className="mt-10 lg:hidden">
+          <div className="rounded-2xl bg-sonnenlicht p-6 text-center shadow-deepwater">
+            <p className="text-2xl font-semibold tracking-tight text-tiefes-wasser">{mitte.titel}</p>
+            <p className="mt-2 text-pretty text-tinte">{mitte.text}</p>
+          </div>
+          <ul className="ml-4 flex flex-col gap-5 border-l-2 border-honig/40 pb-2 pl-6 pt-6">
+            {agenten.map((a) => {
+              const oben = Boolean(a.oberste);
+              return (
+                <li
+                  key={a.id}
+                  data-agent={a.id}
+                  className={`relative rounded-2xl border p-5 ${oben ? "border-honig bg-honig" : "border-gletscher/20 bg-vrelo-petrol/80"}`}
+                >
+                  <span aria-hidden className="absolute -left-[33px] top-7 h-3 w-3 rounded-full bg-honig" />
+                  <h3 className={`text-lg font-semibold ${oben ? "text-tiefes-wasser" : "text-papier"}`}>{a.name}</h3>
+                  <ul className={`mt-3 flex list-disc flex-col gap-1.5 pl-5 ${oben ? "text-tiefes-wasser marker:text-tiefes-wasser" : "text-gletscher marker:text-honig"}`}>
+                    {a.aufgaben.map((t) => (
+                      <li key={t} className="text-pretty">
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                  <p
+                    className={`mt-4 border-t pt-3 text-pretty font-serif italic leading-snug ${oben ? "border-tiefes-wasser/20 text-tiefes-wasser" : "border-gletscher/20 text-honig"}`}
+                  >
+                    {a.ergebnis}
+                  </p>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
     </Section>
   );

@@ -212,6 +212,14 @@ body {
 .hero-dust span:nth-child(3) { left: 43%; top: 60%; width: 5px; height: 5px; animation-duration: 15s; animation-delay: 8s; }
 .hero-dust span:nth-child(4) { left: 50%; top: 34%; width: 7px; height: 7px; animation-duration: 23s; animation-delay: 2s; }
 .hero-dust span:nth-child(5) { left: 26%; top: 30%; width: 3px; height: 3px; animation-duration: 19s; animation-delay: 11s; }
+/* KI-Agenten circle (2026-11-11): a dot runs from an agent node into the middle.
+   --x/--y are the node position in percent, set inline per dot. */
+@keyframes agenten-puls {
+  0% { left: var(--x); top: var(--y); opacity: 0; }
+  15%, 80% { opacity: 1; }
+  100% { left: 50%; top: 50%; opacity: 0; }
+}
+
 @keyframes dust-float {
   0%   { opacity: 0; transform: translate(0, 8px) scale(0.8); }
   12%  { opacity: 0.75; }

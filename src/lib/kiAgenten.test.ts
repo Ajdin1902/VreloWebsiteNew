@@ -45,17 +45,15 @@ describe("KI-Agenten page copy", () => {
     expect(JSON.stringify(KI_AGENTEN)).not.toMatch(/Keine Fehler/);
   });
 
-  // Only built cases name a client; built, not necessarily live (Velp go-live waits on Alen).
-  it("names a client only where I built that agent, Marketing none", () => {
-    expect(Object.fromEntries(KI_AGENTEN.agenten.map((a) => [a.id, a.gebautFuer ?? null]))).toEqual({
-      marketing: null,
-      vertrieb: "Velp",
-      kundenservice: "Velp",
-      projektdoku: "Velp",
-      buchhaltung: "MDZ Hausmeisterservice",
-      inhaber: "MDZ Hausmeisterservice",
-    });
-    expect(JSON.stringify(KI_AGENTEN)).not.toMatch(/Läuft schon/);
+  // Ajdin 2026-11-11: no client names on the agents.
+  it("names no client on the agents", () => {
+    expect(JSON.stringify(KI_AGENTEN)).not.toMatch(/Gebaut für|Läuft schon|MDZ|Velp/);
+  });
+
+  // Ajdin 2026-11-11: the agents circle around the company in the middle.
+  it("puts Dein Betrieb in the middle of the circle", () => {
+    expect(KI_AGENTEN.mitte).toEqual({ titel: "Dein Betrieb", text: "Alle Agenten arbeiten mit denselben Daten." });
+    expect(KI_AGENTEN.hinweis.trim()).not.toBe("");
   });
 
   it("books the call with its own src and names no price", () => {
@@ -69,7 +67,10 @@ describe("KI-Agenten page copy", () => {
       KI_AGENTEN.line,
       KI_AGENTEN.metaDescription,
       KI_AGENTEN.heading,
-      KI_AGENTEN.gebautPrefix,
+      KI_AGENTEN.mitte.titel,
+      KI_AGENTEN.mitte.text,
+      KI_AGENTEN.hinweis,
+      KI_AGENTEN.schliessen,
       KI_AGENTEN.cta.heading,
       KI_AGENTEN.cta.lead,
       ...KI_AGENTEN.agenten.flatMap((a) => [a.name, a.ergebnis, ...a.aufgaben]),

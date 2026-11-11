@@ -32,7 +32,13 @@ export default function KiAgentenPage() {
         image={KI_AGENTEN.heroImage}
         cta={{ primary: "kontakt", src: cta.src }}
       />
-      <AgentenBlock heading={KI_AGENTEN.heading} agenten={KI_AGENTEN.agenten} gebautPrefix={KI_AGENTEN.gebautPrefix} />
+      <AgentenBlock
+        heading={KI_AGENTEN.heading}
+        agenten={KI_AGENTEN.agenten}
+        mitte={KI_AGENTEN.mitte}
+        hinweis={KI_AGENTEN.hinweis}
+        schliessen={KI_AGENTEN.schliessen}
+      />
       <WarumBlock warum={leistungenHub.warum} />
       <ClosingCta heading={cta.heading} lead={cta.lead} src={cta.src} primary="kontakt" />
       <JsonLd
