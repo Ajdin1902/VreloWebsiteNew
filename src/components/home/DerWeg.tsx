@@ -3,20 +3,18 @@ import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { Reveal } from "@/components/Reveal";
 import { CTAButton } from "@/components/CTAButton";
 import { SecondaryLink } from "@/components/SecondaryLink";
-import { CHECK_CTA, VORLAGEN_CTA, CHECK_SRC, vorlagenHref, questionCountPhrase } from "@/lib/prozessCheckCta";
-import { STEPS } from "@/lib/prozessCheck";
+import { CHECK_CTA, VORLAGEN_CTA, CHECK_SRC, vorlagenHref } from "@/lib/prozessCheckCta";
 
-// The free path (Ajdin 2026-11-05): Prozess-Check → Prozess-Audit → Fahrplan,
-// shown before the service doors so a visitor knows what to do before what
-// exists. The question count is spelled from STEPS, like the FAQ (UWG §5).
+// The free path (Ajdin 2026-11-11): Vorlage → Gespräch → Fahrplan, shown
+// before the service doors so a visitor knows what to do before what exists.
 const steps = [
   {
-    title: "Prozess-Check",
-    body: `Drei Minuten, ${questionCountPhrase(STEPS.length)}. Du siehst sofort, wie viele Stunden pro Woche der Kleinkram kostet.`,
+    title: "Vorlage holen",
+    body: "Nimm dir den Bauplan für deine Branche oder mach den Prozess-Check. Ohne Gespräch, ohne Kosten.",
   },
   {
-    title: "Prozess-Audit",
-    body: "30 Minuten Gespräch. Ich gehe deine Abläufe mit dir durch und finde die Aufgabe, die dich am meisten Zeit kostet.",
+    title: "Gespräch",
+    body: "30 Minuten. Ich gehe deine Abläufe mit dir durch und finde die Aufgabe, die dich am meisten Zeit kostet.",
   },
   {
     title: "Fahrplan",

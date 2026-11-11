@@ -22,7 +22,17 @@ describe("Hero", () => {
     expect(section?.getAttribute("style")).toBeFalsy();
   });
 
-  it("sends the one primary CTA to the Prozess-Check", () => {
+  // Ajdin 2026-11-11: the hero names what is free and what is guaranteed.
+  it("names the free audit and the 2-week guarantee in the sub line", () => {
+    render(<Hero />);
+    expect(
+      screen.getByText(
+        "Maßgeschneiderte Automatisierungen geben dir deine Stunden zurück. Kostenloser Prozess-Audit mit Fahrplan. Erste Ergebnisse nach 2 Wochen, sonst bekommst du dein Geld zurück.",
+      ),
+    ).toBeInTheDocument();
+  });
+
+  it("sends the one primary CTA to the Vorlagen", () => {
     render(<Hero />);
     expect(screen.getByRole("link", { name: "Kostenlose Vorlagen ansehen" })).toHaveAttribute(
       "href",
@@ -43,7 +53,7 @@ describe("Hero", () => {
   it("applies the staggered reveal classes (H1 rise-only, sub + CTA fade-up)", () => {
     render(<Hero />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveClass("hero-reveal-h1");
-    expect(screen.getByText("Maßgeschneiderte Automatisierungen geben dir deine Stunden zurück. Finde in drei Minuten heraus, wo du anfängst.")).toHaveClass("hero-reveal-sub");
+    expect(screen.getByText(/^Maßgeschneiderte Automatisierungen geben dir deine Stunden zurück\./)).toHaveClass("hero-reveal-sub");
     const ctaWrapper = screen.getByRole("link", { name: "Kostenlose Vorlagen ansehen" }).parentElement as HTMLElement;
     expect(ctaWrapper).toHaveClass("hero-reveal-cta");
   });

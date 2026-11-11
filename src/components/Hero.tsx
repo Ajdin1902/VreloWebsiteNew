@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { CTAButton } from "@/components/CTAButton";
 import { SecondaryLink } from "@/components/SecondaryLink";
+import { GARANTIE } from "@/lib/garantie";
 import { CHECK_CTA, VORLAGEN_CTA, CHECK_SRC, vorlagenHref } from "@/lib/prozessCheckCta";
 
 export function Hero() {
@@ -32,7 +33,7 @@ export function Hero() {
         Manuelle Prozesse rauben dir die Zeit.
       </h1>
       <p className="hero-reveal-sub mt-6 max-w-xl text-pretty text-[1.05rem] leading-relaxed tracking-[-0.005em] text-gletscher md:text-xl md:leading-relaxed">
-        Maßgeschneiderte Automatisierungen geben dir deine Stunden zurück. Finde in drei Minuten heraus, wo du anfängst.
+        Maßgeschneiderte Automatisierungen geben dir deine Stunden zurück. Kostenloser Prozess-Audit mit Fahrplan. {GARANTIE.hero}
       </p>
       <div className="hero-reveal-cta mt-9">
         <CTAButton href={vorlagenHref(CHECK_SRC.homeHero)} tone="dark">
