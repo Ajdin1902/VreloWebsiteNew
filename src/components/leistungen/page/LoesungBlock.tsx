@@ -25,7 +25,8 @@ export function LoesungBlock({ loesung }: { loesung: Loesung }) {
           ))}
         </Reveal>
         {loesung.karten ? (
-          <Reveal delayMs={200} className="mt-14">
+          // No Reveal here: its hidden offset would move the 308 anchors under the header.
+          <div className="mt-14">
             <h3 className="text-2xl font-semibold tracking-tight text-tiefes-wasser">{loesung.kartenHeading}</h3>
             <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {loesung.karten.map((k) => (
@@ -35,7 +36,7 @@ export function LoesungBlock({ loesung }: { loesung: Loesung }) {
                 </li>
               ))}
             </ul>
-          </Reveal>
+          </div>
         ) : null}
       </div>
     </Section>

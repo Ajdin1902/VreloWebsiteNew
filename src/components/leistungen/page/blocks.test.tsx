@@ -67,6 +67,8 @@ describe("LoesungBlock", () => {
       expect(el, k.id).toHaveClass("scroll-mt-24");
       expect(el).toHaveTextContent(k.title);
       expect(el).toHaveTextContent(k.kurz);
+      // A Reveal's hidden offset would skew where the 308 anchor lands (header overlap).
+      expect(el.closest("[data-shown]"), k.id).toBeNull();
     }
   });
 
