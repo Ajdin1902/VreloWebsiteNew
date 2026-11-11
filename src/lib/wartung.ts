@@ -58,7 +58,7 @@ export const wartungTiers: WartungTier[] = [
     zeilen: {
       zeit: ["Alle 2 Wochen 30 Minuten Call", "Antwort auf deine Fragen am selben Werktag"],
       fehler: ["24 Stunden"],
-      laeuft: ["Alles aus Minimum", "Jedes Quartal teste ich, ob sich dein System aus dem Backup wiederherstellen lässt"],
+      laeuft: ["Alles aus Minimum", "Jedes Quartal ein Backup-Test", "Höhere Priorität"],
       anpassen: ["Ich passe an, bevor ein Update etwas kaputt macht", "Drei Änderungen im Monat, etwa ein neues Feld oder eine neue Regel"],
       verbessern: ["Jedes Quartal ein neuer Baustein, etwa eine Erinnerung oder eine Auswertung", "Im Quartalsgespräch planen wir den nächsten Schritt in deinem Fahrplan"],
       team: ["Jedes Quartal weise ich einen neuen Mitarbeiter ein"],
@@ -75,7 +75,7 @@ export const wartungTiers: WartungTier[] = [
     zeilen: {
       zeit: ["Jede Woche 90 Minuten Arbeitssitzung", "Direkter Draht per Telegram oder WhatsApp, Antwort in 2 Stunden", "Ein Tag im Monat mit deinem Team"],
       fehler: ["12 Stunden"],
-      laeuft: ["Alles aus Standard"],
+      laeuft: ["Alles aus Standard", "Höchste Priorität"],
       anpassen: ["Alles, sobald es ansteht"],
       verbessern: ["Jeden Monat ein fester Bautag für den nächsten Baustein"],
       team: ["So oft ihr es braucht"],

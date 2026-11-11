@@ -98,8 +98,14 @@ describe("LoesungBlock with the Wartung table", () => {
       const cells = [...r.querySelectorAll("td")];
       cells.forEach((c, j) => {
         const items = wartungTiers[j].zeilen[wartungZeilen[i].id];
+        // Ergebnis is the highlighted row: headline plus sentence, no bullets.
+        if (wartungZeilen[i].id === "ergebnis") {
+          expect(r).toHaveAttribute("data-ergebnis");
+          expect(c.querySelector("li")).toBeNull();
+          expect([...c.querySelectorAll("p")].map((p) => p.textContent)).toEqual(items);
+        }
         // Several lines read as bullets; a single line stays plain text.
-        if (items.length > 1) expect([...c.querySelectorAll("li")].map((li) => li.textContent)).toEqual(items);
+        else if (items.length > 1) expect([...c.querySelectorAll("li")].map((li) => li.textContent)).toEqual(items);
         else {
           expect(c.querySelector("li")).toBeNull();
           expect(c.textContent).toBe(items[0]);
@@ -119,6 +125,8 @@ describe("LoesungBlock with the Wartung table", () => {
       expect(cards[i]).toHaveTextContent(wartungPreis(t));
       expect(cards[i]).toHaveTextContent(t.motto);
       for (const z of wartungZeilen) for (const item of t.zeilen[z.id]) expect(cards[i]).toHaveTextContent(item);
+      expect(cards[i].querySelector("[data-ergebnis] li")).toBeNull();
+      expect(cards[i].querySelector("[data-ergebnis]")).toHaveTextContent(t.zeilen.ergebnis[0]);
     });
   });
 });

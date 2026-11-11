@@ -52,7 +52,9 @@ describe("wartung tiers (Ajdin 2026-11-11)", () => {
   // Ajdin 2026-11-11: Standard concrete enough that the step up from Minimum shows.
   it("spells out Standard against Minimum", () => {
     const [m, s] = wartungTiers;
-    expect(txt(s.zeilen.laeuft)).toMatch(/aus dem Backup wiederherstellen/);
+    // Ajdin 2026-11-11: the backup line names the test; Standard gets higher priority.
+    expect(s.zeilen.laeuft).toEqual(["Alles aus Minimum", "Jedes Quartal ein Backup-Test", "Höhere Priorität"]);
+    expect(wartungTiers[2].zeilen.laeuft).toEqual(["Alles aus Standard", "Höchste Priorität"]);
     expect(txt(s.zeilen.anpassen)).toMatch(/Drei Änderungen im Monat, etwa/);
     expect(txt(m.zeilen.anpassen)).toMatch(/Eine Änderung im Monat, etwa/);
     for (const t of wartungTiers) expect(txt(t.zeilen.anpassen)).not.toMatch(/kleine Änderung/);

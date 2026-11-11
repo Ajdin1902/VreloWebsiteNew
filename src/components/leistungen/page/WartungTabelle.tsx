@@ -4,10 +4,13 @@ import { WARTUNG_HINWEIS, WARTUNG_PREIS_ZUSATZ, wartungPreis, wartungTiers, wart
 // details and prices as a table, so the differences read at a glance). A real
 // table from md up; below md the same content stacks as one card per tier, so
 // the page never scrolls sideways. Standard is the tier to push: it carries the
-// sunlit column and the petrol frame, no „beliebt“ label (that would be a claim).
-// The last row (Ergebnis) is set bolder: it is where the reader decides.
+// sunlit column and the petrol frame, no beliebt label (that would be a claim).
 // A cell with several lines renders as bullets, a single line as plain text.
+// The last row (Ergebnis) is where the reader decides, so it closes the table
+// as a dark band: the short result in honig serif, the fit sentence below.
 const hervor = (t: WartungTier) => t.id === "standard";
+const details = wartungZeilen.filter((z) => z.id !== "ergebnis");
+const ergebnisLabel = wartungZeilen.find((z) => z.id === "ergebnis")!.label;
 
 function Zelle({ items }: { items: string[] }) {
   if (items.length === 1) return <>{items[0]}</>;
@@ -17,6 +20,20 @@ function Zelle({ items }: { items: string[] }) {
         <li key={item}>{item}</li>
       ))}
     </ul>
+  );
+}
+
+function Ergebnis({ t }: { t: WartungTier }) {
+  const [kurz, ...rest] = t.zeilen.ergebnis;
+  return (
+    <>
+      <p className="font-serif text-xl italic leading-snug text-honig">{kurz}</p>
+      {rest.map((s) => (
+        <p key={s} className="mt-2 text-pretty text-gletscher">
+          {s}
+        </p>
+      ))}
+    </>
   );
 }
 
@@ -52,26 +69,36 @@ export function WartungTabelle() {
             </tr>
           </thead>
           <tbody>
-            {wartungZeilen.map((z, i) => {
-              const last = i === wartungZeilen.length - 1;
-              return (
-                <tr key={z.id}>
-                  <th scope="row" className="border-t border-faden py-4 pr-4 align-top text-sm font-semibold text-tiefes-wasser">
-                    {z.label}
-                  </th>
-                  {wartungTiers.map((t) => (
-                    <td
-                      key={t.id}
-                      className={`border-t border-faden px-5 py-4 align-top text-pretty ${z.id === "ergebnis" ? "font-semibold text-tiefes-wasser" : "text-tinte"} ${
-                        hervor(t) ? `border-x-2 border-x-vrelo-petrol bg-sonnenlicht ${last ? "rounded-b-2xl border-b-2 border-b-vrelo-petrol" : ""}` : ""
-                      }`}
-                    >
-                      <Zelle items={t.zeilen[z.id]} />
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
+            {details.map((z) => (
+              <tr key={z.id}>
+                <th scope="row" className="border-t border-faden py-4 pr-4 align-top text-sm font-semibold text-tiefes-wasser">
+                  {z.label}
+                </th>
+                {wartungTiers.map((t) => (
+                  <td
+                    key={t.id}
+                    className={`border-t border-faden px-5 py-4 align-top text-pretty text-tinte ${hervor(t) ? "border-x-2 border-x-vrelo-petrol bg-sonnenlicht" : ""}`}
+                  >
+                    <Zelle items={t.zeilen[z.id]} />
+                  </td>
+                ))}
+              </tr>
+            ))}
+            <tr data-ergebnis>
+              <th scope="row" className="rounded-bl-2xl bg-tiefes-wasser py-6 pl-5 pr-4 align-top text-sm font-semibold uppercase tracking-wide text-honig">
+                {ergebnisLabel}
+              </th>
+              {wartungTiers.map((t, i) => (
+                <td
+                  key={t.id}
+                  className={`px-5 py-6 align-top ${
+                    hervor(t) ? "rounded-b-2xl border-x-2 border-b-2 border-vrelo-petrol bg-vrelo-petrol" : "bg-tiefes-wasser"
+                  } ${i === wartungTiers.length - 1 ? "rounded-br-2xl" : ""}`}
+                >
+                  <Ergebnis t={t} />
+                </td>
+              ))}
+            </tr>
           </tbody>
         </table>
       </div>
@@ -87,14 +114,20 @@ export function WartungTabelle() {
               <Kopf t={t} />
             </h3>
             <dl className="mt-6 flex flex-col gap-4">
-              {wartungZeilen.map((z) => (
+              {details.map((z) => (
                 <div key={z.id}>
                   <dt className="text-xs font-semibold uppercase tracking-wide text-stumm">{z.label}</dt>
-                  <dd className={`mt-1 text-pretty ${z.id === "ergebnis" ? "font-semibold text-tiefes-wasser" : "text-tinte"}`}>
+                  <dd className="mt-1 text-pretty text-tinte">
                     <Zelle items={t.zeilen[z.id]} />
                   </dd>
                 </div>
               ))}
+              <div data-ergebnis className="rounded-xl bg-tiefes-wasser p-5">
+                <dt className="text-xs font-semibold uppercase tracking-wide text-honig">{ergebnisLabel}</dt>
+                <dd className="mt-2">
+                  <Ergebnis t={t} />
+                </dd>
+              </div>
             </dl>
           </article>
         ))}
