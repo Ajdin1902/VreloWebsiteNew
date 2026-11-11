@@ -73,6 +73,13 @@ describe("LoesungBlock", () => {
     }
   });
 
+  // Ajdin 2026-11-11: the KI-Assistenten card leads to the agent examples page.
+  it("links the KI-Assistenten card to the agent examples", () => {
+    const { container } = render(<LoesungBlock loesung={page("ki-automatisierung").loesung} />);
+    const links = [...container.querySelectorAll("li a")];
+    expect(links.map((a) => [a.closest("li")?.id, a.getAttribute("href")])).toEqual([["ki-assistenten", "/leistungen/ki-agenten"]]);
+  });
+
   it("renders no cards where a page has none", () => {
     const { container } = render(<LoesungBlock loesung={page("prozess-audit").loesung} />);
     expect(container.querySelectorAll("h3")).toHaveLength(3);

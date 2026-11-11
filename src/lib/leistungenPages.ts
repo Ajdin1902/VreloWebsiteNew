@@ -4,6 +4,7 @@
 // 2026-11-11): every page is Hero → Kennst du das? → Lösung in three steps →
 // proof (MDZ, Velp) → Warum ich → CTA, nothing else. Components hold no
 // German; guards in leistungenPages.test.ts.
+import { KI_AGENTEN_PATH } from "@/lib/kiAgenten";
 import { CHECK_SRC, type CheckSrc } from "@/lib/prozessCheckCta";
 import { GARANTIE } from "@/lib/garantie";
 import { faqHref } from "@/lib/faq";
@@ -19,7 +20,7 @@ export type WarumPunkt = { title: string; body: string; link?: { label: string; 
 // The four former KI pages (and the assistant scene) live on as one card each;
 // their old URLs 308 to these anchors (next.config.ts).
 export const KI_KARTEN_IDS = ["ki-assistenten", "ki-betriebssystem", "claude", "ki-server", "ki-schulung"] as const;
-export type KiKarte = { id: (typeof KI_KARTEN_IDS)[number]; title: string; kurz: string };
+export type KiKarte = { id: (typeof KI_KARTEN_IDS)[number]; title: string; kurz: string; link?: { href: string; label: string } };
 
 export type Pain = { heading: string; moments: string[]; close: string };
 // Betreuung shows the Wartung comparison table (wartung.ts) instead of steps.
@@ -218,7 +219,13 @@ export const leistungenPages: LeistungPage[] = [
       ],
       kartenHeading: "Was dazugehört",
       karten: [
-        { id: "ki-assistenten", title: "KI-Assistenten", kurz: "Die KI liest Belege, sortiert E-Mails und erledigt Aufgaben per Sprachnachricht." },
+        {
+          id: "ki-assistenten",
+          title: "KI-Assistenten",
+          kurz: "Die KI liest Belege, sortiert E-Mails und erledigt Aufgaben per Sprachnachricht.",
+          // Ajdin 2026-11-11: the agent examples live on their own page.
+          link: { href: KI_AGENTEN_PATH, label: "Beispiele für jede Abteilung" },
+        },
         { id: "ki-betriebssystem", title: "KI-Betriebssystem", kurz: "Alles über deinen Betrieb an einer Stelle, damit jede KI darauf aufbaut." },
         { id: "claude", title: "Claude für Unternehmen", kurz: "Claude, der KI-Assistent von Anthropic, eingerichtet für dein Team. Auf Wunsch über eine EU-Cloud." },
         { id: "ki-server", title: "KI-Server", kurz: "KI für sensible Daten auf einem Server, der dir gehört. Das Modell rechnet innerhalb der EU." },

@@ -20,6 +20,7 @@ export const CHECK_SRC = {
   leistungKiAutomatisierung: "leistung-ki-automatisierung",
   leistungProzessAudit: "leistung-prozess-audit",
   leistungBetreuung: "leistung-betreuung",
+  kiAgenten: "agenten",
   ratgeber: "ratgeber",
   referenzen: "referenzen",
   ueberMich: "ueber-mich",

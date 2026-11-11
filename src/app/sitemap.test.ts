@@ -14,6 +14,7 @@ describe("sitemap", () => {
     expect(urls).toContain(`${siteUrl}/ueber-mich`);
     expect(urls).toContain(`${siteUrl}/faq`);
     expect(urls).toContain(`${siteUrl}/ratgeber`);
+    expect(urls).toContain(`${siteUrl}/leistungen/ki-agenten`);
   });
 
   it("includes the new Kontakt + legal routes", () => {

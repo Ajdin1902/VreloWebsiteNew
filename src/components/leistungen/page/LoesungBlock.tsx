@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Section } from "@/components/Section";
 import { Reveal } from "@/components/Reveal";
 import type { Loesung } from "@/lib/leistungenPages";
@@ -38,6 +39,14 @@ export function LoesungBlock({ loesung }: { loesung: Loesung }) {
                 <li key={k.id} id={k.id} className="scroll-mt-24 rounded-2xl bg-sonnenlicht p-5">
                   <p className="font-semibold text-tiefes-wasser">{k.title}</p>
                   <p className="mt-1 text-pretty text-tinte">{k.kurz}</p>
+                  {k.link ? (
+                    <Link
+                      href={k.link.href}
+                      className="mt-3 inline-block text-sm font-semibold text-tiefes-wasser underline underline-offset-2 transition-colors hover:text-vrelo-petrol"
+                    >
+                      {k.link.label}
+                    </Link>
+                  ) : null}
                 </li>
               ))}
             </ul>

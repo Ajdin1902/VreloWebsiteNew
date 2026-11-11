@@ -3,6 +3,7 @@ import type { MetadataRoute } from "next";
 import { siteUrl } from "@/lib/site";
 import { getAllArticles } from "@/lib/ratgeber";
 import { leistungenPages } from "@/lib/leistungenPages";
+import { KI_AGENTEN_PATH } from "@/lib/kiAgenten";
 import { VORLAGEN_PATH, vorlageBauplaene } from "@/lib/vorlagen";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -11,6 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/leistungen",
     ...leistungenPages.map((p) => `/leistungen/${p.slug}`),
+    KI_AGENTEN_PATH,
     "/referenzen",
     "/prozess-check",
     "/claude-gehirn",
