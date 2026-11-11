@@ -1,8 +1,7 @@
 import { Section } from "@/components/Section";
 import { BrandWord } from "@/components/BrandWord";
 import { CTAButton } from "@/components/CTAButton";
-import { SecondaryLink } from "@/components/SecondaryLink";
-import { CHECK_CTA, VORLAGEN_CTA, CHECK_SRC, vorlagenHref } from "@/lib/prozessCheckCta";
+import { VORLAGEN_CTA, CHECK_SRC, vorlagenHref } from "@/lib/prozessCheckCta";
 import { LazyVideo } from "@/components/LazyVideo";
 import { Reveal } from "@/components/Reveal";
 
@@ -26,8 +25,8 @@ export function MerakClose() {
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(120%_120%_at_50%_120%,#f4e4c1,#e8b86b_55%,#f4e4c1_100%)] opacity-90"
       />
       {/* Centered spine: the payoff lands on the spine like the rest of the page.
-          The headline mirrors the hero („Manuelle Prozesse rauben dir die Zeit.“):
-          the page opens on the pain and closes on it solved (decision 2026-09-26). */}
+          The headline answers the Problem section („Der Kleinkram frisst deinen Tag.“):
+          the page names the pain early and closes on it solved (decision 2026-09-26). */}
       <div className="mx-auto max-w-[44rem] text-center">
         <Reveal as="h2" delayMs={0} className="text-balance font-serif text-3xl italic leading-snug text-ember md:text-4xl">
           Die Prozesse laufen von selbst. Deine Zeit gehört wieder dir.
@@ -39,7 +38,6 @@ export function MerakClose() {
           <CTAButton href={vorlagenHref(CHECK_SRC.homeClose)}>{VORLAGEN_CTA.label}</CTAButton>
           {/* Effort reducer at the last decision point: the whole free path, not just the check. */}
           <p className="mt-3 text-sm text-tinte">{VORLAGEN_CTA.closeMicrocopy}</p>
-          <SecondaryLink tone="light" prefix={CHECK_CTA.directPrefix} label={CHECK_CTA.directLabel} href={CHECK_CTA.directHref} />
         </Reveal>
       </div>
     </Section>

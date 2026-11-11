@@ -47,7 +47,7 @@ describe("LeistungHero", () => {
       "href",
       "/vorlagen?src=leistung-prozessautomatisierung",
     );
-    expect(screen.getByRole("link", { name: "Erstgespräch buchen" })).toHaveAttribute("href", "/kontakt");
+    expect(screen.queryByRole("link", { name: "Erstgespräch buchen" })).toBeNull();
   });
 
   it("leads with the Erstgespräch on a kontakt page", () => {

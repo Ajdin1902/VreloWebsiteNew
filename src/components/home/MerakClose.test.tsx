@@ -3,8 +3,7 @@ import { render, screen } from "@testing-library/react";
 import { MerakClose } from "./MerakClose";
 
 describe("MerakClose", () => {
-  // The close answers the hero („Manuelle Prozesse rauben dir die Zeit.“) with
-  // the dream outcome, so the page opens on the pain and ends on it solved.
+  // The close answers the Problem section with the dream outcome.
   it("mirrors the hero problem with the dream outcome", () => {
     render(<MerakClose />);
     expect(
@@ -27,7 +26,7 @@ describe("MerakClose", () => {
       "/vorlagen?src=home-close",
     );
     expect(screen.getByText("Vorlage, Gespräch und Fahrplan: alles kostenlos.")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Erstgespräch buchen" })).toHaveAttribute("href", "/kontakt");
+    expect(screen.queryByRole("link", { name: "Erstgespräch buchen" })).toBeNull();
   });
 
   it("drops the no-sales-call line (the button leads to a questionnaire now)", () => {

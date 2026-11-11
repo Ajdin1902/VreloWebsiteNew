@@ -16,9 +16,9 @@ describe("ClosingCta", () => {
     expect(cta).toHaveAttribute("href", "/vorlagen?src=leistungen-close");
   });
 
-  it("keeps the Erstgespräch as the quiet secondary link", () => {
+  it("has no Erstgespräch link under the Vorlagen button (Ajdin 2026-11-11)", () => {
     render(<ClosingCta heading="h" lead="l" src="ratgeber" />);
-    expect(screen.getByRole("link", { name: "Erstgespräch buchen" })).toHaveAttribute("href", "/kontakt");
+    expect(screen.queryByRole("link", { name: "Erstgespräch buchen" })).toBeNull();
   });
 
   it("flips to /kontakt primary with the check as secondary (FAQ exception)", () => {

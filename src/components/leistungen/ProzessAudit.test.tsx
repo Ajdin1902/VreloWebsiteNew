@@ -24,8 +24,8 @@ describe("ProzessAudit", () => {
     );
   });
 
-  it("links the quiet secondary path to the booking page", () => {
+  it("offers no Erstgespräch link next to the button (Ajdin 2026-11-11)", () => {
     render(<ProzessAudit />);
-    expect(screen.getByRole("link", { name: prozessAudit.secondary.label })).toHaveAttribute("href", "/kontakt");
+    expect(screen.queryByRole("link", { name: "Erstgespräch buchen" })).toBeNull();
   });
 });

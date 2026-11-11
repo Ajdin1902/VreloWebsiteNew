@@ -1,6 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 import { CTAButton } from "@/components/CTAButton";
 import { GARANTIE } from "@/lib/garantie";
+import { faqHref } from "@/lib/faq";
 import { VORLAGEN_CTA, CHECK_SRC, vorlagenHref } from "@/lib/prozessCheckCta";
 
 export function Hero() {
@@ -29,17 +31,19 @@ export function Hero() {
       </div>
 
       <h1 className="hero-reveal-h1 text-balance text-[2.25rem] font-semibold leading-[1.12] tracking-[-0.02em] text-papier md:text-[3.5rem] lg:text-[4rem]">
-        Manuelle Prozesse rauben dir die Zeit.
+        Dein Fahrplan zum früheren Feierabend. Kostenlos.
       </h1>
       <p className="hero-reveal-sub mt-6 max-w-xl text-pretty text-[1.05rem] leading-relaxed tracking-[-0.005em] text-gletscher md:text-xl md:leading-relaxed">
-        Maßgeschneiderte Automatisierungen geben dir deine Stunden zurück. Kostenloser Prozess-Audit mit Fahrplan. {GARANTIE.hero}
+        Nimm dir die kostenlose Vorlage für deine Branche. Danach machen wir zusammen deinen Fahrplan, auch kostenlos.{" "}
+        {/* The guarantee links to its conditions (final review 2026-11-11, UWG §5). */}
+        <Link href={faqHref(GARANTIE.faqFrage)} className="underline decoration-gletscher/40 underline-offset-4 transition-colors hover:text-papier hover:decoration-papier">
+          {GARANTIE.hero}
+        </Link>
       </p>
       <div className="hero-reveal-cta mt-9">
         <CTAButton href={vorlagenHref(CHECK_SRC.homeHero)} tone="dark">
           {VORLAGEN_CTA.label}
         </CTAButton>
-        {/* Friction reducer: name what the click costs (nothing) and returns (a result now). */}
-        <p className="mt-3 text-sm text-gletscher">{VORLAGEN_CTA.microcopy}</p>
       </div>
     </section>
   );

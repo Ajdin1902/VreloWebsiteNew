@@ -2,8 +2,7 @@ import { Section } from "@/components/Section";
 import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { Reveal } from "@/components/Reveal";
 import { CTAButton } from "@/components/CTAButton";
-import { SecondaryLink } from "@/components/SecondaryLink";
-import { CHECK_CTA, VORLAGEN_CTA, CHECK_SRC, vorlagenHref } from "@/lib/prozessCheckCta";
+import { VORLAGEN_CTA, CHECK_SRC, vorlagenHref } from "@/lib/prozessCheckCta";
 
 // The free path (Ajdin 2026-11-11): Vorlage → Gespräch → Fahrplan, shown
 // before the service doors so a visitor knows what to do before what exists.
@@ -50,7 +49,6 @@ export function DerWeg() {
           {VORLAGEN_CTA.label}
         </CTAButton>
         <p className="mt-3 text-sm text-gletscher">{VORLAGEN_CTA.microcopy}</p>
-        <SecondaryLink tone="dark" prefix={CHECK_CTA.directPrefix} label={CHECK_CTA.directLabel} href={CHECK_CTA.directHref} />
       </Reveal>
     </Section>
   );

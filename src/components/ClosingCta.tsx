@@ -46,12 +46,6 @@ export function ClosingCta({
             <CTAButton href={vorlagenHref(src)} variant="inverse">
               {VORLAGEN_CTA.label}
             </CTAButton>
-            <SecondaryLink
-              tone="light"
-              prefix={CHECK_CTA.directPrefix}
-              label={CHECK_CTA.directLabel}
-              href={CHECK_CTA.directHref}
-            />
           </>
         ) : (
           <>

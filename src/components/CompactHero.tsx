@@ -53,9 +53,7 @@ export function CompactHero({
             <CTAButton href={check ? vorlagenHref(cta.src) : kontaktHref(cta.src)} tone="dark">
               {check ? VORLAGEN_CTA.label : CHECK_CTA.directLabel}
             </CTAButton>
-            {check ? (
-              <SecondaryLink tone="dark" prefix={CHECK_CTA.directPrefix} label={CHECK_CTA.directLabel} href={CHECK_CTA.directHref} />
-            ) : (
+            {check ? null : (
               <SecondaryLink tone="dark" prefix={VORLAGEN_CTA.secondaryPrefix} label={VORLAGEN_CTA.secondaryLabel} href={vorlagenHref(cta.src)} />
             )}
           </div>

@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import ReferenzenPage, { metadata } from "./page";
 import { referenzen, referenzAnchorId, ohneHervor } from "@/lib/referenzen";
-import { CHECK_CTA, VORLAGEN_CTA } from "@/lib/prozessCheckCta";
+import { VORLAGEN_CTA } from "@/lib/prozessCheckCta";
 
 const [mdz] = referenzen;
 
@@ -54,10 +54,10 @@ describe("/referenzen", () => {
     expect(card.lastElementChild?.contains(quote)).toBe(true);
   });
 
-  it("ends on the Vorlagen with the direct path under it", () => {
+  it("ends on the Vorlagen alone", () => {
     render(<ReferenzenPage />);
     expect(screen.getByRole("link", { name: VORLAGEN_CTA.label })).toHaveAttribute("href", "/vorlagen?src=referenzen");
-    expect(screen.getByRole("link", { name: CHECK_CTA.directLabel })).toHaveAttribute("href", "/kontakt");
+    expect(screen.queryByRole("link", { name: "Erstgespräch buchen" })).toBeNull();
   });
 
   it("keeps its description in the search-snippet budget and the layout's share card", () => {

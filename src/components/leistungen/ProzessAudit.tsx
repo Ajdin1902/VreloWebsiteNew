@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { CTAButton } from "@/components/CTAButton";
 import { prozessAudit } from "@/lib/prozess-audit";
 
@@ -40,15 +39,6 @@ export function ProzessAudit() {
         <CTAButton href={o.cta.href} variant="inverse">
           {o.cta.label}
         </CTAButton>
-        <p className="text-sm text-tinte">
-          {o.secondary.prefix}{" "}
-          <Link
-            href={o.secondary.href}
-            className="font-medium text-tiefes-wasser underline decoration-amber/60 underline-offset-4 transition-colors hover:decoration-amber"
-          >
-            {o.secondary.label}
-          </Link>
-        </p>
       </div>
     </div>
   );

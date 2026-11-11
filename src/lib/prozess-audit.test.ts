@@ -59,8 +59,7 @@ describe("prozess-audit copy", () => {
     expect(prozessAudit.heading.startsWith("Kostenlos")).toBe(true);
   });
 
-  it("keeps the Erstgespräch as the quiet secondary path", () => {
-    expect(prozessAudit.secondary.href).toBe("/kontakt");
-    expect(prozessAudit.secondary.label).toBe("Erstgespräch buchen");
+  it("has no secondary Erstgespräch path (Ajdin 2026-11-11)", () => {
+    expect("secondary" in prozessAudit).toBe(false);
   });
 });
