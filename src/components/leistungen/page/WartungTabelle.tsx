@@ -5,14 +5,14 @@ import { WARTUNG_HINWEIS, WARTUNG_PREIS_ZUSATZ, wartungPreis, wartungTiers, wart
 // table from md up; below md the same content stacks as one card per tier, so
 // the page never scrolls sideways. Standard is the tier to push: it carries the
 // sunlit column and the petrol frame, no „beliebt“ label (that would be a claim).
+// The last row (Ergebnis) is set bolder: it is where the reader decides.
 const hervor = (t: WartungTier) => t.id === "standard";
 
 function Kopf({ t }: { t: WartungTier }) {
   return (
     <>
       <span className="block text-2xl font-semibold text-tiefes-wasser">{t.name}</span>
-      <span className="mt-1 block font-serif text-lg italic text-ember">{t.motto}</span>
-      <span className="mt-4 block text-3xl font-semibold text-tiefes-wasser">{wartungPreis(t)}</span>
+      <span className="mt-3 block text-3xl font-semibold text-tiefes-wasser">{wartungPreis(t)}</span>
       <span className="block text-sm text-stumm">{WARTUNG_PREIS_ZUSATZ}</span>
       {t.grenze ? <span className="mt-2 block text-sm font-semibold text-stumm">{t.grenze}</span> : null}
     </>
@@ -49,7 +49,7 @@ export function WartungTabelle() {
                   {wartungTiers.map((t) => (
                     <td
                       key={t.id}
-                      className={`border-t border-faden px-5 py-4 align-top text-pretty text-tinte ${
+                      className={`border-t border-faden px-5 py-4 align-top text-pretty ${z.id === "ergebnis" ? "font-semibold text-tiefes-wasser" : "text-tinte"} ${
                         hervor(t) ? `border-x-2 border-x-vrelo-petrol bg-sonnenlicht ${last ? "rounded-b-2xl border-b-2 border-b-vrelo-petrol" : ""}` : ""
                       }`}
                     >
@@ -77,7 +77,7 @@ export function WartungTabelle() {
               {wartungZeilen.map((z) => (
                 <div key={z.id}>
                   <dt className="text-xs font-semibold uppercase tracking-wide text-stumm">{z.label}</dt>
-                  <dd className="mt-1 text-pretty text-tinte">{t.zeilen[z.id]}</dd>
+                  <dd className={`mt-1 text-pretty ${z.id === "ergebnis" ? "font-semibold text-tiefes-wasser" : "text-tinte"}`}>{t.zeilen[z.id]}</dd>
                 </div>
               ))}
             </dl>

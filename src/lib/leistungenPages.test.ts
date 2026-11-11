@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { leistungenPages, leistungenHub, leistungGroups, getLeistungPage, leistungHref, KI_KARTEN_IDS } from "./leistungenPages";
 import { findCopyIssues } from "./ratgeberCopy";
-import { wartungTiers, WARTUNG_TITEL } from "./wartung";
+import { wartungTiers, WARTUNG_TITEL, WARTUNG_KUENDIGUNG } from "./wartung";
 import { GARANTIE } from "./garantie";
 import { faqGroups, faqHref } from "./faq";
 
@@ -124,7 +124,8 @@ describe("leistungenPages", () => {
     for (const slug of ["prozessautomatisierung", "ki-automatisierung"]) expect(titles(page(slug).warum), slug).toEqual(build);
     expect(titles(leistungenHub.warum)).toEqual(build);
     expect(titles(page("prozess-audit").warum)).toEqual(["Ein Ansprechpartner.", GARANTIE.titel, "Der Fahrplan gehört dir."]);
-    expect(titles(page("betreuung").warum)).toEqual(["Ein Ansprechpartner.", "Monatlich kündbar.", "Alles gehört dir."]);
+    expect(titles(page("betreuung").warum)).toEqual(["Ein Ansprechpartner.", WARTUNG_KUENDIGUNG, "Alles gehört dir."]);
+    for (const s of copyStrings(page("betreuung"))) expect(s).not.toMatch(/(?<!dem 3\. Monat )monatlich kündbar/i);
     const questions = faqGroups.flatMap((g) => g.entries.map((e) => e.question));
     for (const p of everything())
       for (const w of p.warum) if (w.title === GARANTIE.titel) {

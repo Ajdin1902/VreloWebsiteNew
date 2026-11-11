@@ -7,7 +7,7 @@
 import { CHECK_SRC, type CheckSrc } from "@/lib/prozessCheckCta";
 import { GARANTIE } from "@/lib/garantie";
 import { faqHref } from "@/lib/faq";
-import { WARTUNG_TITEL } from "@/lib/wartung";
+import { WARTUNG_KUENDIGUNG, WARTUNG_TITEL } from "@/lib/wartung";
 
 export type LeistungSlug = "prozess-audit" | "prozessautomatisierung" | "ki-automatisierung" | "betreuung";
 export type LeistungGroup = "pruefen" | "bauen" | "betreiben";
@@ -241,8 +241,8 @@ export const leistungenPages: LeistungPage[] = [
     title: "Betreuung & Wartung",
     subline: "Ich halte deine Automatisierungen am Laufen. Du merkst nur, dass alles läuft.",
     metaDescription:
-      "Betreuung und Wartung für Automatisierungen und KI-Systeme: drei Stufen, Überwachung mit Alarm, Fehlerbehebung, Anpassungen. Monatlich kündbar.",
-    kurz: "Drei Stufen, je nachdem, wie viel Zeit du von mir brauchst. Monatlich kündbar.",
+      "Betreuung und Wartung für Automatisierungen und KI-Systeme: drei Stufen, Überwachung mit Alarm, Fehlerbehebung, Anpassungen. Ab dem 3. Monat monatlich kündbar.",
+    kurz: `Drei Stufen, je nachdem, wie viel Zeit du von mir brauchst. ${WARTUNG_KUENDIGUNG}`,
     heroImage: "/images/leistung-betreuung.webp",
     pain: {
       heading: "Kennst du das?",
@@ -258,7 +258,7 @@ export const leistungenPages: LeistungPage[] = [
     szenen: { heading: "Das betreue ich heute", items: [MDZ_ASSISTENT, VELP_PHASEN] },
     warum: [
       ANSPRECHPARTNER,
-      { title: "Monatlich kündbar.", body: "Du bleibst, solange es dir etwas bringt. Keine Laufzeit über Jahre." },
+      { title: WARTUNG_KUENDIGUNG, body: "Drei Monate Mindestlaufzeit, danach bleibst du nur, solange es dir etwas bringt." },
       { title: "Alles gehört dir.", body: "Kündigst du, läuft dein System sicher weiter. Server, Konten, Daten und Doku bleiben bei dir." },
     ],
     cta: {
