@@ -339,7 +339,7 @@ export const leistungenPages: LeistungPage[] = [
       heading: "Was ich automatisiere",
       karten: [
         { title: "Rechnungen und Belege", kurz: "Aus einem Eintrag wird die Rechnung, Belege landen im richtigen Ordner." },
-        { title: "Angebot bis Auftrag", kurz: "Aus der Anfrage wird ein Angebot, aus der Zusage ein Auftrag. Ohne Abtippen." },
+        { title: "Angebot bis Auftrag", kurz: "Aus der Anfrage wird ein Angebot, aus der Zusage ein Auftrag, ohne dass du etwas abtippst." },
         { title: "Kunden-Onboarding", kurz: "Ist ein Kunde gewonnen, laufen Begrüßung, Ordner und Aufgaben von selbst an." },
         { title: "Datenübernahme zwischen Programmen", kurz: "Was in einem Programm steht, steht auch im nächsten. Du tippst nichts doppelt." },
       ],
@@ -352,7 +352,7 @@ export const leistungenPages: LeistungPage[] = [
     proof: {
       kind: "case",
       heading: "So baue ich",
-      body: "Ich baue jeden Ablauf in deinen eigenen Programmen, Schritt für Schritt dokumentiert. Zwei echte Beispiele siehst du hier auf der Seite.",
+      body: "Ich baue jeden Ablauf in deinen eigenen Programmen und dokumentiere jeden Schritt.",
       objection:
         "Deine Leute behalten ihre Arbeit. Das System nimmt ihnen das Abtippen ab, damit sie Zeit für die Aufgaben haben, für die du sie eingestellt hast.",
     },
@@ -567,7 +567,7 @@ export const leistungenPages: LeistungPage[] = [
     proof: {
       kind: "case",
       heading: "So betreue ich",
-      body: "Ich warte deine Automatisierungen und halte sie aktuell. Mit meinem Monitoring-System greife ich ein, bevor aus einem Fehler ein Problem wird. Der Unterschied zwischen den Stufen ist, wie viel Zeit du von mir bekommst und wie viel ich an deinem System verbessere.",
+      body: "Ich warte deine Automatisierungen und halte sie aktuell. Mit meinem Monitoring-System greife ich ein, bevor aus einem Fehler ein Problem wird. Ab der Stufe Standard baue ich dein System außerdem weiter aus.",
       objection:
         "Die Betreuung ist monatlich kündbar. Kündigst du, läuft dein System sicher weiter, nur ohne Anpassungen.",
     },

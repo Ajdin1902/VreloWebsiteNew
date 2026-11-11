@@ -10,7 +10,7 @@ import { leistungGroups, type LeistungGroup } from "@/lib/leistungenPages";
 const doors: Record<LeistungGroup, { body: string; href: string }> = {
   pruefen: { body: "Erst prüfen, dann bauen: dein Fahrplan zeigt, womit du anfängst.", href: "/leistungen/prozess-audit" },
   bauen: { body: "Prozessautomatisierung und KI: vom kleinen Baustein bis zum Assistenten.", href: "/leistungen#gruppe-bauen" },
-  betreiben: { body: "Wartung, wenn du sie willst. Was ich baue, gehört dir.", href: "/leistungen/betreuung" },
+  betreiben: { body: "Wartung, wenn du sie willst. Dein System gehört dir.", href: "/leistungen/betreuung" },
 };
 
 // Spine A "die Quelle": a dark blue-hour karst pool with ripples spreading from a
