@@ -8,14 +8,18 @@
 // how much the system is adapted and improved. Partner is the anchor (×10).
 // Standard is spelled out row by row against Minimum, so the step up shows;
 // the last row (Ergebnis) tells the reader which tier fits what they want.
+// Each cell is a list of short fragments (no full stops): one item renders as
+// plain text, several as bullets (Ajdin 2026-11-11).
 export type WartungTierId = "minimum" | "standard" | "partner";
 export type WartungZeile = "zeit" | "fehler" | "laeuft" | "anpassen" | "verbessern" | "team" | "bericht" | "ergebnis";
 export type WartungTier = {
   id: WartungTierId;
   name: string;
+  /** Line under the name: how close I work with them. */
+  motto: string;
   preisNetto: number;
   grenze?: string;
-  zeilen: Record<WartungZeile, string>;
+  zeilen: Record<WartungZeile, string[]>;
 };
 
 export const wartungZeilen: { id: WartungZeile; label: string }[] = [
@@ -33,47 +37,50 @@ export const wartungTiers: WartungTier[] = [
   {
     id: "minimum",
     name: "Minimum",
+    motto: "Ich passe im Hintergrund auf",
     preisNetto: 249,
     zeilen: {
-      zeit: "Alle 4 Wochen 30 Minuten Call, wenn du ihn brauchst. Fragen per E-Mail.",
-      fehler: "48 Stunden",
-      laeuft: "Überwachung mit echtem Alarm, Updates, Backup geprüft, Doku bei jeder Änderung. KI-Modelle und Prompts aktuell, wenn dein System KI nutzt.",
-      anpassen: "Ich behebe, was bricht. Eine Änderung im Monat, etwa ein neues Feld oder ein geänderter Text.",
-      verbessern: "Nicht enthalten",
-      team: "Nicht enthalten",
-      bericht: "Eine Zahl im Monat: wie viele Vorgänge dein System erledigt hat.",
-      ergebnis: "Es läuft. Richtig, wenn dein System zuverlässig laufen soll und sonst nichts.",
+      zeit: ["Alle 4 Wochen 30 Minuten Call, wenn du ihn brauchst", "Fragen per E-Mail"],
+      fehler: ["48 Stunden"],
+      laeuft: ["Überwachung mit echtem Alarm", "Updates und Backup geprüft", "Doku bei jeder Änderung", "KI-Modelle und Prompts aktuell, wenn dein System KI nutzt"],
+      anpassen: ["Ich behebe, was bricht", "Eine Änderung im Monat, etwa ein neues Feld"],
+      verbessern: ["Nicht enthalten"],
+      team: ["Nicht enthalten"],
+      bericht: ["Jeden Monat eine Zahl: wie viele Vorgänge dein System erledigt hat"],
+      ergebnis: ["Es läuft", "Richtig, wenn dein System zuverlässig laufen soll und sonst nichts"],
     },
   },
   {
     id: "standard",
     name: "Standard",
+    motto: "Ich bin regelmäßig an deiner Seite",
     preisNetto: 945,
     zeilen: {
-      zeit: "Alle 2 Wochen 30 Minuten Call. Deine Fragen beantworte ich am selben Werktag.",
-      fehler: "24 Stunden",
-      laeuft: "Alles aus Minimum. Dazu prüfe ich jedes Quartal, ob sich dein System aus dem Backup wirklich wiederherstellen lässt.",
-      anpassen: "Ich beobachte deine Programme und passe an, bevor ein Update etwas kaputt macht. Drei Änderungen im Monat, etwa ein neues Feld, eine neue Regel oder eine neue Vorlage.",
-      verbessern: "Jedes Quartal baue ich einen neuen kleinen Baustein, etwa eine Erinnerung oder eine Auswertung. Im Quartalsgespräch planen wir den nächsten Schritt in deinem Fahrplan.",
-      team: "Jedes Quartal weise ich einen neuen Mitarbeiter ein.",
-      bericht: "Jeden Monat: was gelaufen ist, was ich geändert habe und was als Nächstes möglich ist.",
-      ergebnis: "Es läuft und wird besser. Richtig, wenn dein System mit deinem Betrieb wachsen soll.",
+      zeit: ["Alle 2 Wochen 30 Minuten Call", "Antwort auf deine Fragen am selben Werktag"],
+      fehler: ["24 Stunden"],
+      laeuft: ["Alles aus Minimum", "Jedes Quartal teste ich, ob sich dein System aus dem Backup wiederherstellen lässt"],
+      anpassen: ["Ich passe an, bevor ein Update etwas kaputt macht", "Drei Änderungen im Monat, etwa ein neues Feld oder eine neue Regel"],
+      verbessern: ["Jedes Quartal ein neuer Baustein, etwa eine Erinnerung oder eine Auswertung", "Im Quartalsgespräch planen wir den nächsten Schritt in deinem Fahrplan"],
+      team: ["Jedes Quartal weise ich einen neuen Mitarbeiter ein"],
+      bericht: ["Jeden Monat: was gelaufen ist, was ich geändert habe und was als Nächstes möglich ist"],
+      ergebnis: ["Es läuft und wird besser", "Richtig, wenn dein System mit deinem Betrieb wachsen soll"],
     },
   },
   {
     id: "partner",
     name: "Partner",
+    motto: "Ich bin Teil von deinem Team",
     preisNetto: 9900,
     grenze: "Für höchstens zwei Betriebe",
     zeilen: {
-      zeit: "Jede Woche 90 Minuten Arbeitssitzung. Direkter Draht per Telegram oder WhatsApp, Antwort in 2 Stunden. Ein Tag im Monat mit deinem Team.",
-      fehler: "12 Stunden",
-      laeuft: "Alles aus Standard.",
-      anpassen: "Alles, sobald es ansteht.",
-      verbessern: "Jeden Monat ein fester Bautag für den nächsten Baustein.",
-      team: "So oft ihr es braucht",
-      bericht: "Jede Woche",
-      ergebnis: "Wir automatisieren deinen Betrieb. Richtig, wenn du Schritt für Schritt alles automatisieren willst, was sich lohnt.",
+      zeit: ["Jede Woche 90 Minuten Arbeitssitzung", "Direkter Draht per Telegram oder WhatsApp, Antwort in 2 Stunden", "Ein Tag im Monat mit deinem Team"],
+      fehler: ["12 Stunden"],
+      laeuft: ["Alles aus Standard"],
+      anpassen: ["Alles, sobald es ansteht"],
+      verbessern: ["Jeden Monat ein fester Bautag für den nächsten Baustein"],
+      team: ["So oft ihr es braucht"],
+      bericht: ["Jede Woche"],
+      ergebnis: ["Wir automatisieren deinen Betrieb", "Richtig, wenn du Schritt für Schritt alles automatisieren willst, was sich lohnt"],
     },
   },
 ];

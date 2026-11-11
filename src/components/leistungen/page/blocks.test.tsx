@@ -89,13 +89,22 @@ describe("LoesungBlock with the Wartung table", () => {
       expect(cols[i]).toHaveTextContent(t.name);
       expect(cols[i]).toHaveTextContent(wartungPreis(t));
       expect(cols[i]).toHaveTextContent(WARTUNG_PREIS_ZUSATZ);
+      expect(cols[i]).toHaveTextContent(t.motto);
     });
     expect(cols[2]).toHaveTextContent(wartungTiers[2].grenze!);
     const rows = [...table.querySelectorAll("tbody tr")];
     expect(rows.map((r) => r.querySelector("th[scope=row]")?.textContent)).toEqual(wartungZeilen.map((z) => z.label));
     rows.forEach((r, i) => {
       const cells = [...r.querySelectorAll("td")];
-      expect(cells.map((c) => c.textContent)).toEqual(wartungTiers.map((t) => t.zeilen[wartungZeilen[i].id]));
+      cells.forEach((c, j) => {
+        const items = wartungTiers[j].zeilen[wartungZeilen[i].id];
+        // Several lines read as bullets; a single line stays plain text.
+        if (items.length > 1) expect([...c.querySelectorAll("li")].map((li) => li.textContent)).toEqual(items);
+        else {
+          expect(c.querySelector("li")).toBeNull();
+          expect(c.textContent).toBe(items[0]);
+        }
+      });
     });
     expect(screen.getByText(WARTUNG_HINWEIS)).toBeInTheDocument();
     expect(container.querySelector("ol")).toBeNull();
@@ -108,7 +117,8 @@ describe("LoesungBlock with the Wartung table", () => {
     wartungTiers.forEach((t, i) => {
       expect(cards[i]).toHaveTextContent(t.name);
       expect(cards[i]).toHaveTextContent(wartungPreis(t));
-      for (const z of wartungZeilen) expect(cards[i]).toHaveTextContent(t.zeilen[z.id]);
+      expect(cards[i]).toHaveTextContent(t.motto);
+      for (const z of wartungZeilen) for (const item of t.zeilen[z.id]) expect(cards[i]).toHaveTextContent(item);
     });
   });
 });

@@ -6,12 +6,25 @@ import { WARTUNG_HINWEIS, WARTUNG_PREIS_ZUSATZ, wartungPreis, wartungTiers, wart
 // the page never scrolls sideways. Standard is the tier to push: it carries the
 // sunlit column and the petrol frame, no „beliebt“ label (that would be a claim).
 // The last row (Ergebnis) is set bolder: it is where the reader decides.
+// A cell with several lines renders as bullets, a single line as plain text.
 const hervor = (t: WartungTier) => t.id === "standard";
+
+function Zelle({ items }: { items: string[] }) {
+  if (items.length === 1) return <>{items[0]}</>;
+  return (
+    <ul className="flex list-disc flex-col gap-1.5 pl-4 marker:text-vrelo-petrol">
+      {items.map((item) => (
+        <li key={item}>{item}</li>
+      ))}
+    </ul>
+  );
+}
 
 function Kopf({ t }: { t: WartungTier }) {
   return (
     <>
       <span className="block text-2xl font-semibold text-tiefes-wasser">{t.name}</span>
+      <span className="mt-1 block text-pretty font-serif text-lg italic leading-snug text-ember">{t.motto}</span>
       <span className="mt-3 block text-3xl font-semibold text-tiefes-wasser">{wartungPreis(t)}</span>
       <span className="block text-sm text-stumm">{WARTUNG_PREIS_ZUSATZ}</span>
       {t.grenze ? <span className="mt-2 block text-sm font-semibold text-stumm">{t.grenze}</span> : null}
@@ -53,7 +66,7 @@ export function WartungTabelle() {
                         hervor(t) ? `border-x-2 border-x-vrelo-petrol bg-sonnenlicht ${last ? "rounded-b-2xl border-b-2 border-b-vrelo-petrol" : ""}` : ""
                       }`}
                     >
-                      {t.zeilen[z.id]}
+                      <Zelle items={t.zeilen[z.id]} />
                     </td>
                   ))}
                 </tr>
@@ -77,7 +90,9 @@ export function WartungTabelle() {
               {wartungZeilen.map((z) => (
                 <div key={z.id}>
                   <dt className="text-xs font-semibold uppercase tracking-wide text-stumm">{z.label}</dt>
-                  <dd className={`mt-1 text-pretty ${z.id === "ergebnis" ? "font-semibold text-tiefes-wasser" : "text-tinte"}`}>{t.zeilen[z.id]}</dd>
+                  <dd className={`mt-1 text-pretty ${z.id === "ergebnis" ? "font-semibold text-tiefes-wasser" : "text-tinte"}`}>
+                    <Zelle items={t.zeilen[z.id]} />
+                  </dd>
                 </div>
               ))}
             </dl>

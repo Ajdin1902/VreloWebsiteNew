@@ -2,8 +2,10 @@ import { describe, it, expect } from "vitest";
 import { wartungTiers, wartungZeilen, WARTUNG_HINWEIS, WARTUNG_TITEL, WARTUNG_PREIS_ZUSATZ, WARTUNG_KUENDIGUNG, wartungPreis, wartungPreisSatz } from "./wartung";
 import { findCopyIssues } from "./ratgeberCopy";
 
+const txt = (items: string[]) => items.join(" ");
+
 describe("wartung tiers (Ajdin 2026-11-11)", () => {
-  it("has three tiers with the agreed names, mottos and prices", () => {
+  it("has three tiers with the agreed names and prices", () => {
     expect(wartungTiers.map((t) => [t.id, t.name, t.preisNetto])).toEqual([
       ["minimum", "Minimum", 249],
       ["standard", "Standard", 945],
@@ -12,31 +14,51 @@ describe("wartung tiers (Ajdin 2026-11-11)", () => {
     expect(wartungTiers[2].grenze).toBe("Für höchstens zwei Betriebe");
   });
 
-  it("fills every row for every tier and keeps fix times 48/24/12", () => {
-    expect(wartungZeilen).toHaveLength(8);
-    for (const t of wartungTiers) for (const z of wartungZeilen) expect(t.zeilen[z.id].trim(), `${t.id}.${z.id}`).not.toBe("");
-    expect(wartungTiers.map((t) => t.zeilen.fehler)).toEqual(["48 Stunden", "24 Stunden", "12 Stunden"]);
+  // Ajdin 2026-11-11: a second line under each name says how close I work with them.
+  it("gives every tier a line about our time together, Partner as part of the team", () => {
+    expect(wartungTiers[2].motto).toBe("Ich bin Teil von deinem Team");
+    for (const t of wartungTiers) expect(t.motto.trim(), t.id).not.toBe("");
+    expect(new Set(wartungTiers.map((t) => t.motto)).size).toBe(3);
   });
 
-  // Ajdin 2026-11-11: the last row tells which tier to pick, led by the old mottos.
+  it("fills every row for every tier and keeps fix times 48/24/12", () => {
+    expect(wartungZeilen).toHaveLength(8);
+    for (const t of wartungTiers)
+      for (const z of wartungZeilen) {
+        expect(t.zeilen[z.id].length, `${t.id}.${z.id}`).toBeGreaterThan(0);
+        for (const item of t.zeilen[z.id]) expect(item.trim(), `${t.id}.${z.id}`).not.toBe("");
+      }
+    expect(wartungTiers.map((t) => t.zeilen.fehler)).toEqual([["48 Stunden"], ["24 Stunden"], ["12 Stunden"]]);
+  });
+
+  // Ajdin 2026-11-11: several lines become bullets, short and concise.
+  it("writes each cell as short bullets, one fragment each", () => {
+    for (const t of wartungTiers)
+      for (const z of wartungZeilen)
+        for (const item of t.zeilen[z.id]) {
+          expect(item, `${t.id}.${z.id}`).not.toMatch(/\.$/);
+          expect(item, `${t.id}.${z.id}`).not.toMatch(/\. /);
+          expect(item.length, `${t.id}.${z.id}: ${item}`).toBeLessThanOrEqual(90);
+        }
+  });
+
+  // Ajdin 2026-11-11: the last row tells which tier to pick.
   it("ends on an Ergebnis row that says which tier fits whom", () => {
     expect(wartungZeilen.at(-1)).toEqual({ id: "ergebnis", label: "Ergebnis" });
-    const leads = wartungTiers.map((t) => t.zeilen.ergebnis);
-    expect(leads[0]).toMatch(/^Es läuft\. /);
-    expect(leads[1]).toMatch(/^Es läuft und wird besser\. /);
-    expect(leads[2]).toMatch(/^Wir automatisieren deinen Betrieb\. /);
+    expect(wartungTiers.map((t) => t.zeilen.ergebnis[0])).toEqual(["Es läuft", "Es läuft und wird besser", "Wir automatisieren deinen Betrieb"]);
+    for (const t of wartungTiers) expect(t.zeilen.ergebnis[1], t.id).toMatch(/^Richtig, wenn /);
   });
 
   // Ajdin 2026-11-11: Standard concrete enough that the step up from Minimum shows.
   it("spells out Standard against Minimum", () => {
     const [m, s] = wartungTiers;
-    expect(s.zeilen.laeuft).toMatch(/Backup wirklich wiederherstellen/);
-    expect(s.zeilen.anpassen).toMatch(/Drei Änderungen im Monat, etwa/);
-    expect(m.zeilen.anpassen).toMatch(/Eine Änderung im Monat, etwa/);
-    for (const t of wartungTiers) expect(t.zeilen.anpassen).not.toMatch(/kleine Änderung/);
-    expect(s.zeilen.verbessern).toMatch(/Baustein, etwa/);
-    expect(s.zeilen.bericht).toBe("Jeden Monat: was gelaufen ist, was ich geändert habe und was als Nächstes möglich ist.");
-    expect(m.zeilen.verbessern).toBe("Nicht enthalten");
+    expect(txt(s.zeilen.laeuft)).toMatch(/aus dem Backup wiederherstellen/);
+    expect(txt(s.zeilen.anpassen)).toMatch(/Drei Änderungen im Monat, etwa/);
+    expect(txt(m.zeilen.anpassen)).toMatch(/Eine Änderung im Monat, etwa/);
+    for (const t of wartungTiers) expect(txt(t.zeilen.anpassen)).not.toMatch(/kleine Änderung/);
+    expect(txt(s.zeilen.verbessern)).toMatch(/Baustein, etwa/);
+    expect(s.zeilen.bericht).toEqual(["Jeden Monat: was gelaufen ist, was ich geändert habe und was als Nächstes möglich ist"]);
+    expect(m.zeilen.verbessern).toEqual(["Nicht enthalten"]);
   });
 
   // Ajdin 2026-11-11: three months minimum, then monthly.
@@ -48,14 +70,15 @@ describe("wartung tiers (Ajdin 2026-11-11)", () => {
   });
 
   it("puts calls every 4 weeks in Minimum and every 2 weeks in Standard", () => {
-    expect(wartungTiers[0].zeilen.zeit).toMatch(/4 Wochen/);
-    expect(wartungTiers[1].zeilen.zeit).toMatch(/2 Wochen/);
+    expect(txt(wartungTiers[0].zeilen.zeit)).toMatch(/4 Wochen/);
+    expect(txt(wartungTiers[1].zeilen.zeit)).toMatch(/2 Wochen/);
   });
 
   it("never calls a tier Basis and passes the copy guards", () => {
     const all = [JSON.stringify(wartungTiers), JSON.stringify(wartungZeilen), WARTUNG_HINWEIS].join(" ");
     expect(all).not.toMatch(/Basis/);
-    for (const t of wartungTiers) for (const s of [t.name, t.grenze ?? "", ...Object.values(t.zeilen)]) expect(findCopyIssues(s), s).toEqual([]);
+    for (const t of wartungTiers)
+      for (const s of [t.name, t.motto, t.grenze ?? "", ...Object.values(t.zeilen).flat()]) expect(findCopyIssues(s), s).toEqual([]);
     for (const s of [WARTUNG_TITEL, WARTUNG_HINWEIS, ...wartungZeilen.map((z) => z.label)]) expect(findCopyIssues(s), s).toEqual([]);
   });
 
