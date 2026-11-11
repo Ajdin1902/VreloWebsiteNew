@@ -4,9 +4,9 @@ import { ServiceGroups } from "./ServiceGroups";
 import { leistungenPages } from "@/lib/leistungenPages";
 
 describe("ServiceGroups", () => {
-  it("shows the four doors in order", () => {
+  it("shows the three doors in order", () => {
     render(<ServiceGroups />);
-    expect(screen.getAllByRole("heading", { level: 2 }).map((h) => h.textContent)).toEqual(["Prüfen", "Bauen", "Befähigen", "Betreiben"]);
+    expect(screen.getAllByRole("heading", { level: 2 }).map((h) => h.textContent)).toEqual(["Prüfen", "Bauen", "Betreiben"]);
   });
 
   it("links every service card to its subpage with its one-line definition", () => {

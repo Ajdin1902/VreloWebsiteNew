@@ -65,19 +65,19 @@ describe("questionCountPhrase", () => {
 describe("subpage attribution", () => {
   it("has one normalisable slug per Leistungen subpage", () => {
     const slugs = [
+      CHECK_SRC.leistungProzessAudit,
       CHECK_SRC.leistungProzessautomatisierung,
       CHECK_SRC.leistungKiAutomatisierung,
-      CHECK_SRC.leistungKiServer,
-      CHECK_SRC.leistungClaude,
-      CHECK_SRC.leistungKiSchulung,
       CHECK_SRC.leistungBetreuung,
     ];
-    expect(new Set(slugs).size).toBe(6);
+    expect(new Set(slugs).size).toBe(4);
+    // 2026-11-11: the folded pages lost their slugs.
+    expect(Object.keys(CHECK_SRC)).not.toContain("leistungClaude");
     for (const s of slugs) expect(normalizeSource(s)).toBe(s);
   });
 
   it("builds the Erstgespräch link with the same src", () => {
-    expect(kontaktHref(CHECK_SRC.leistungClaude)).toBe("/kontakt?src=leistung-claude");
+    expect(kontaktHref(CHECK_SRC.leistungBetreuung)).toBe("/kontakt?src=leistung-betreuung");
   });
 });
 

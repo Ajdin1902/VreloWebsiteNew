@@ -9,7 +9,7 @@ describe("homepage", () => {
     expect(h2s).toEqual([
       "Der Kleinkram frisst deinen Tag.",
       "So fängst du an. Kostenlos.",
-      "Prüfen. Bauen. Befähigen. Betreiben.",
+      "Prüfen. Bauen. Betreiben.",
       "Läuft mit den Werkzeugen, die du schon nutzt.",
       "Sorgfältig gebaut. Verlässlich im Betrieb.",
       "So läuft es in echten Betrieben.",

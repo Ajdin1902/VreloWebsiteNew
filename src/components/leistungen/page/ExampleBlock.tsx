@@ -7,7 +7,7 @@ import type { LeistungPage } from "@/lib/leistungenPages";
 // The comprehension core: one concrete run, before → three steps → after.
 // Nobody understands „Prozessautomatisierung“, everyone understands three
 // steps. A page can instead show a real clip on its own (credibility in action).
-export function ExampleBlock({ example }: { example: LeistungPage["example"] }) {
+export function ExampleBlock({ example }: { example: NonNullable<LeistungPage["example"]> }) {
   return (
     <Section tone="petrol" className="relative isolate overflow-hidden">
       <SectionBackdrop src="/images/bg-bausteine-b.webp" tintRgb="27 80 99" tintOpacity={0.7} />

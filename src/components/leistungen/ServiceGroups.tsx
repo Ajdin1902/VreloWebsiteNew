@@ -2,9 +2,8 @@ import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { leistungGroups, leistungenPages, leistungHref } from "@/lib/leistungenPages";
 
-// The hub's service menu: eight cards behind four doors (Prüfen · Bauen ·
-// Befähigen · Betreiben, review 2026-11-04), so the offer reads as one path
-// rather than a list. A group of four would run four across on wide screens.
+// The hub's service menu: four cards behind three doors (Prüfen · Bauen ·
+// Betreiben, 2026-11-11), so the offer reads as one path rather than a list.
 export function ServiceGroups() {
   return (
     <div className="flex flex-col gap-14">
@@ -16,7 +15,7 @@ export function ServiceGroups() {
             <h2 id={headingId} className="scroll-mt-24 text-2xl font-semibold tracking-tight text-papier md:text-3xl">
               {g.label}
             </h2>
-            <ul className={`mt-6 grid gap-5 sm:grid-cols-2 ${pages.length === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"}`}>
+            <ul className={`mt-6 grid gap-5 sm:grid-cols-2 ${pages.length === 1 ? "lg:grid-cols-2" : "lg:grid-cols-3"}`}>
               {pages.map((p) => (
                   <li key={p.slug}>
                     <Link

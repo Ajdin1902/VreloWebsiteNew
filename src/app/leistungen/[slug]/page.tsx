@@ -1,8 +1,9 @@
 // src/app/leistungen/[slug]/page.tsx
 //
-// One template, nine services (spec 2026-10-01 §4): Hero → Pain → Proof →
-// Example → (audit card / note) → CTA → „Mehr dazu“. All copy comes from
-// src/lib/leistungenPages.ts.
+// One template, four services (spec 2026-10-01 §4, cut to four 2026-11-11):
+// Hero → Pain → Angebote → Proof → Grafik → Szenen → Example → Abschnitte →
+// Vergleich → Wartung → audit card → Eigentum → note → CTA → „Mehr dazu“.
+// All copy comes from src/lib/leistungenPages.ts.
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Section } from "@/components/Section";
@@ -18,6 +19,11 @@ import { NoteBlock } from "@/components/leistungen/page/NoteBlock";
 import { RelatedLinks } from "@/components/leistungen/page/RelatedLinks";
 import { VergleichBlock } from "@/components/leistungen/page/VergleichBlock";
 import { GrafikBlock } from "@/components/leistungen/page/GrafikBlock";
+import { AngeboteBlock } from "@/components/leistungen/page/AngeboteBlock";
+import { SzenenBlock } from "@/components/leistungen/page/SzenenBlock";
+import { AbschnitteBlock } from "@/components/leistungen/page/AbschnitteBlock";
+import { EigentumBlock } from "@/components/leistungen/page/EigentumBlock";
+import { WartungBlock } from "@/components/leistungen/page/WartungBlock";
 import { leistungenPages, getLeistungPage } from "@/lib/leistungenPages";
 import { getArticleBySlug, draftsVisible } from "@/lib/ratgeber";
 import { breadcrumbLd, serviceLd } from "@/lib/jsonld";
@@ -67,11 +73,14 @@ export default async function LeistungSubpage({ params }: Params) {
     <>
       <LeistungHero page={page} />
       <PainBlock pain={page.pain} />
-      {page.proofVorVergleich ? null : <ProofBlock proof={page.proof} />}
+      {page.angebote ? <AngeboteBlock angebote={page.angebote} /> : null}
+      <ProofBlock proof={page.proof} />
       {page.grafik ? <GrafikBlock grafik={page.grafik} /> : null}
-      <ExampleBlock example={page.example} />
-      {page.proofVorVergleich ? <ProofBlock proof={page.proof} /> : null}
+      {page.szenen ? <SzenenBlock szenen={page.szenen} /> : null}
+      {page.example ? <ExampleBlock example={page.example} /> : null}
+      {page.abschnitte ? <AbschnitteBlock abschnitte={page.abschnitte} /> : null}
       {page.vergleich ? <VergleichBlock vergleich={page.vergleich} current={page.slug} /> : null}
+      {page.wartung ? <WartungBlock /> : null}
       {page.auditCard ? (
         <Section id="prozess-audit" tone="paper" className="scroll-mt-24">
           <Reveal>
@@ -79,6 +88,7 @@ export default async function LeistungSubpage({ params }: Params) {
           </Reveal>
         </Section>
       ) : null}
+      {page.eigentum ? <EigentumBlock /> : null}
       {page.note ? <NoteBlock note={page.note} /> : null}
       <ClosingCta heading={page.cta.heading} lead={page.cta.lead} src={page.cta.src} primary={page.cta.kind} />
       <RelatedLinks articles={relatedArticles(page.related, draftsVisible())} />

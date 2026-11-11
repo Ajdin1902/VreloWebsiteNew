@@ -4,14 +4,13 @@ import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { Reveal } from "@/components/Reveal";
 import { leistungGroups, type LeistungGroup } from "@/lib/leistungenPages";
 
-// The four doors as four cards (Ajdin 2026-11-05: eight chips were too much on
-// the homepage). Prüfen goes straight to the audit page, the other doors land
-// on their group on the hub.
+// The three doors as three cards (four until 2026-11-11, when Befähigen folded
+// into KI-Automatisierung). Prüfen and Betreiben are one page each, so they go
+// straight there; Bauen lands on its group on the hub.
 const doors: Record<LeistungGroup, { body: string; href: string }> = {
   pruefen: { body: "Erst prüfen, dann bauen: dein Fahrplan zeigt, womit du anfängst.", href: "/leistungen/prozess-audit" },
-  bauen: { body: "Ein Baustein, ein KI-Assistent oder das ganze KI-Betriebssystem.", href: "/leistungen#gruppe-bauen" },
-  befaehigen: { body: "Claude für dein Unternehmen und eine Schulung an euren Aufgaben.", href: "/leistungen#gruppe-befaehigen" },
-  betreiben: { body: "Dein eigener Server und die laufende Betreuung, wenn du sie willst.", href: "/leistungen#gruppe-betreiben" },
+  bauen: { body: "Prozessautomatisierung und KI: vom kleinen Baustein bis zum Assistenten.", href: "/leistungen#gruppe-bauen" },
+  betreiben: { body: "Wartung, wenn du sie willst. Was ich baue, gehört dir.", href: "/leistungen/betreuung" },
 };
 
 // Spine A "die Quelle": a dark blue-hour karst pool with ripples spreading from a
@@ -26,13 +25,13 @@ export function WasIchBaue() {
       {/* Centered spine: the offer leads, the four door cards below carry the visual. */}
       <div className="mx-auto max-w-[44rem] text-center">
         <Reveal as="h2" delayMs={0} id="was-ich-baue-heading" className="text-balance text-3xl font-semibold tracking-tight text-papier md:text-4xl">
-          Prüfen. Bauen. Befähigen. Betreiben.
+          Prüfen. Bauen. Betreiben.
         </Reveal>
         <Reveal as="p" delayMs={80} className="mt-5 text-balance text-lg text-gletscher">
-          Vier Wege, ein System: such dir aus, wo du anfängst.
+          Drei Wege, ein System: such dir aus, wo du anfängst.
         </Reveal>
       </div>
-      <Reveal as="ul" delayMs={200} aria-labelledby="was-ich-baue-heading" className="mx-auto mt-10 grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <Reveal as="ul" delayMs={200} aria-labelledby="was-ich-baue-heading" className="mx-auto mt-10 grid max-w-4xl gap-4 sm:grid-cols-3">
         {leistungGroups.map((g) => (
           <li key={g.id}>
             <Link

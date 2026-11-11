@@ -69,11 +69,11 @@ describe("bare routes", () => {
 });
 
 describe("leistungenMenu", () => {
-  it("groups the eight subpages behind four doors", () => {
-    expect(leistungenMenu.map((g) => g.label)).toEqual(["Prüfen", "Bauen", "Befähigen", "Betreiben"]);
-    expect(leistungenMenu.flatMap((g) => g.items)).toHaveLength(8);
+  it("groups the four subpages behind three doors (2026-11-11)", () => {
+    expect(leistungenMenu.map((g) => g.label)).toEqual(["Prüfen", "Bauen", "Betreiben"]);
+    expect(leistungenMenu.flatMap((g) => g.items)).toHaveLength(4);
     expect(leistungenMenu[0].items).toEqual([{ href: "/leistungen/prozess-audit", label: "Prozess-Audit" }]);
-    expect(leistungenMenu[2].items[0]).toEqual({ href: "/leistungen/claude", label: "Claude für Unternehmen" });
+    expect(leistungenMenu[1].items[1]).toEqual({ href: "/leistungen/ki-automatisierung", label: "KI-Automatisierung" });
   });
 });
 

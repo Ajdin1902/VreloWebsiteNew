@@ -12,11 +12,11 @@ describe("LeistungenMenu", () => {
     expect(screen.queryByRole("link", { name: "KI-Schulung" })).toBeNull();
   });
 
-  it("opens on click with all nine services and an overview link", () => {
+  it("opens on click with all four services and an overview link", () => {
     render(<LeistungenMenu pathname="/" />);
     fireEvent.click(toggle());
     expect(toggle()).toHaveAttribute("aria-expanded", "true");
-    expect(screen.getByRole("link", { name: "KI-Schulung" })).toHaveAttribute("href", "/leistungen/ki-schulung");
+    expect(screen.getByRole("link", { name: "KI-Automatisierung" })).toHaveAttribute("href", "/leistungen/ki-automatisierung");
     expect(screen.getByRole("link", { name: /Alle Leistungen/ })).toHaveAttribute("href", "/leistungen");
   });
 
@@ -44,10 +44,10 @@ describe("LeistungenMenu", () => {
   });
 
   it("marks the current subpage and highlights the section", () => {
-    render(<LeistungenMenu pathname="/leistungen/claude" />);
+    render(<LeistungenMenu pathname="/leistungen/betreuung" />);
     expect(screen.getByRole("link", { name: "Leistungen" })).toHaveClass("text-vrelo-petrol");
     fireEvent.click(toggle());
-    expect(screen.getByRole("link", { name: "Claude für Unternehmen" })).toHaveAttribute("aria-current", "page");
+    expect(screen.getByRole("link", { name: "Betreuung & Wartung" })).toHaveAttribute("aria-current", "page");
   });
 
   it("closes when the route changes (Header persists across navigation)", () => {

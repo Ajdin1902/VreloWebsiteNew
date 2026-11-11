@@ -23,6 +23,11 @@ const nextConfig: NextConfig = {
     return [
       // KI-Beratung folded into the Prozess-Audit (2026-11-04): permanent, the page is gone.
       { source: "/leistungen/ki-beratung", destination: "/leistungen/prozess-audit", permanent: true },
+      // 2026-11-11: four KI pages folded into anchored sections of KI-Automatisierung.
+      { source: "/leistungen/ki-server", destination: "/leistungen/ki-automatisierung#ki-server", permanent: true },
+      { source: "/leistungen/claude", destination: "/leistungen/ki-automatisierung#claude", permanent: true },
+      { source: "/leistungen/ki-betriebssystem", destination: "/leistungen/ki-automatisierung#ki-betriebssystem", permanent: true },
+      { source: "/leistungen/ki-schulung", destination: "/leistungen/ki-automatisierung#ki-schulung", permanent: true },
       { source: "/brief", destination: "/prozess-check?src=brief", permanent: false },
       { source: "/brief/:segment", destination: "/prozess-check?src=brief-:segment", permanent: false },
       // Walk-in flyer (HQ: Knowledge/marketing/flyer/flyer-brief.md), same pattern.

@@ -61,7 +61,7 @@ describe("MobileNav", () => {
   it("lists the Leistungen subpages under Leistungen in the drawer", () => {
     render(<MobileNav />);
     fireEvent.click(screen.getByRole("button", { name: /menü öffnen/i }));
-    expect(screen.getByRole("link", { name: "KI-Server" })).toHaveAttribute("href", "/leistungen/ki-server");
+    expect(screen.getByRole("link", { name: "KI-Automatisierung" })).toHaveAttribute("href", "/leistungen/ki-automatisierung");
     expect(screen.getByRole("link", { name: "Betreuung & Wartung" })).toHaveAttribute("href", "/leistungen/betreuung");
   });
 });

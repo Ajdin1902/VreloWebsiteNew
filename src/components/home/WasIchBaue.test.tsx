@@ -23,16 +23,16 @@ describe("WasIchBaue", () => {
 
   // 2026-11-05: four door cards instead of eight service chips; Prüfen goes to the
   // audit page, the other doors to their group on the hub.
-  it("shows the four doors in hub order, one card each", () => {
+  // 2026-11-11: three doors, Befähigen folded into KI-Automatisierung.
+  it("shows the three doors in hub order, one card each", () => {
     render(<WasIchBaue />);
     const items = screen.getAllByRole("listitem");
-    expect(items).toHaveLength(4);
+    expect(items).toHaveLength(3);
     expect(items.map((li) => li.textContent?.slice(0, 20))).toEqual(
       leistungGroups.map((g) => expect.stringContaining(g.label)),
     );
     expect(screen.getByRole("link", { name: /^Prüfen/ })).toHaveAttribute("href", "/leistungen/prozess-audit");
     expect(screen.getByRole("link", { name: /^Bauen/ })).toHaveAttribute("href", "/leistungen#gruppe-bauen");
-    expect(screen.getByRole("link", { name: /^Befähigen/ })).toHaveAttribute("href", "/leistungen#gruppe-befaehigen");
-    expect(screen.getByRole("link", { name: /^Betreiben/ })).toHaveAttribute("href", "/leistungen#gruppe-betreiben");
+    expect(screen.getByRole("link", { name: /^Betreiben/ })).toHaveAttribute("href", "/leistungen/betreuung");
   });
 });

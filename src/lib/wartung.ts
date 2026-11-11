@@ -75,6 +75,8 @@ export const wartungTiers: WartungTier[] = [
   },
 ];
 
+export const WARTUNG_TITEL = "Drei Stufen. Der Unterschied ist meine Zeit.";
+
 export const WARTUNG_HINWEIS =
   "KI-Modelle und Prompts halte ich aktuell, wenn dein System KI nutzt. Monatlich kündbar: Kündigst du, läuft dein System sicher weiter, nur ohne Anpassungen.";
 

@@ -13,22 +13,33 @@ describe("/leistungen/[slug]", () => {
   });
 
   it("sets title, description and canonical per page", async () => {
-    const meta = await generateMetadata(params("ki-server"));
-    expect(meta.title).toBe("KI-Server");
-    expect(meta.alternates?.canonical).toBe(canonical("/leistungen/ki-server"));
+    const meta = await generateMetadata(params("ki-automatisierung"));
+    expect(meta.title).toBe("KI-Automatisierung");
+    expect(meta.alternates?.canonical).toBe(canonical("/leistungen/ki-automatisierung"));
   });
 
-  it("renders the five blocks in order", async () => {
+  it("renders the blocks in order", async () => {
     const { container } = render(await LeistungSubpage(params("prozessautomatisierung")));
     expect(screen.getByRole("heading", { level: 1, name: "Prozessautomatisierung" })).toBeInTheDocument();
     const h2s = [...container.querySelectorAll("h2")].map((h) => h.textContent?.trim());
-    expect(h2s).toEqual(["Kennst du das?", "Aus der Praxis", "Einmal festgelegt, läuft es jedes Mal gleich.", "So sieht das aus", "Prozessautomatisierung oder KI? Was ist der Unterschied?", "Welche Aufgabe kostet dich am meisten?"]);
+    expect(h2s).toEqual(["Kennst du das?", "Was ich automatisiere", "So baue ich", "Einmal festgelegt, läuft es jedes Mal gleich.", "So läuft das bei meinen Kunden", "Prozessautomatisierung oder KI? Was ist der Unterschied?", "Welche Aufgabe kostet dich am meisten?"]);
+    expect(screen.getByRole("link", { name: "Zu Betreuung & Wartung" })).toHaveAttribute("href", "/leistungen/betreuung");
   });
 
-  it("puts Warum ich right before the EU comparison on Claude (Ajdin 2026-11-10)", async () => {
-    const { container } = render(await LeistungSubpage(params("claude")));
+  // 2026-11-11: the former Claude page is a section; its EU comparison follows its graphic.
+  it("carries the four KI sections with the Claude EU comparison after its graphic", async () => {
+    const { container } = render(await LeistungSubpage(params("ki-automatisierung")));
     const h2s = [...container.querySelectorAll("h2")].map((h) => h.textContent?.trim());
-    expect(h2s.slice(0, 5)).toEqual(["Kennst du das?", "Einmal eingerichtet, für das ganze Team.", "So sieht das aus", "Warum ich", "Direkt bei Anthropic oder über eine EU-Cloud?"]);
+    const at = (s: string) => h2s.indexOf(s);
+    for (const s of ["KI-Betriebssystem", "Claude für Unternehmen", "KI-Server", "KI-Schulung"]) expect(at(s), s).toBeGreaterThan(-1);
+    expect(at("Claude für Unternehmen")).toBeLessThan(at("Einmal eingerichtet, für das ganze Team."));
+    expect(at("Einmal eingerichtet, für das ganze Team.")).toBeLessThan(at("Direkt bei Anthropic oder über eine EU-Cloud?"));
+    expect(container.querySelector("#ki-assistenten")).not.toBeNull();
+  });
+
+  it("shows the Wartung tiers on Betreuung", async () => {
+    render(await LeistungSubpage(params("betreuung")));
+    for (const n of ["Minimum", "Standard", "Partner"]) expect(screen.getByRole("heading", { level: 3, name: n })).toBeInTheDocument();
   });
 
   it("puts the one line and the button in the hero, with no separate lead section", async () => {
@@ -71,9 +82,9 @@ describe("/leistungen/[slug]", () => {
     expect(relatedArticles(["live", "entwurf"], true, stub).map((a) => a.slug)).toEqual(["live", "entwurf"]);
   });
 
-  it("puts the graphic right after the proof on KI-Automatisierung", async () => {
+  it("puts the overview first and the graphic right after the proof on KI-Automatisierung", async () => {
     const { container } = render(await LeistungSubpage(params("ki-automatisierung")));
     const h2s = [...container.querySelectorAll("h2")].map((h) => h.textContent?.trim());
-    expect(h2s.slice(0, 3)).toEqual(["Kennst du das?", "Was die Zahlen sagen", "Unordentlich rein, geordnet raus."]);
+    expect(h2s.slice(0, 4)).toEqual(["Kennst du das?", "Was KI bei dir übernimmt", "Was die Zahlen sagen", "Unordentlich rein, geordnet raus."]);
   });
 });

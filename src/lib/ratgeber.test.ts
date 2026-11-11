@@ -104,11 +104,11 @@ coverAlt: "Alt"
 
   it("reads a known kategorie and leistung", () => {
     const a = parseArticle("x.mdx", `${base}kategorie: "Grundlagen"
-leistung: "ki-server"
+leistung: "ki-automatisierung"
 ---
 Text.`);
     expect(a.kategorie).toBe("Grundlagen");
-    expect(a.leistung).toBe("ki-server");
+    expect(a.leistung).toBe("ki-automatisierung");
   });
 
   it("accepts Meinung as a kategorie for opinion pieces", () => {

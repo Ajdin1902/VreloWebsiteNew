@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { wartungTiers, wartungZeilen, WARTUNG_HINWEIS, wartungPreisSatz } from "./wartung";
+import { wartungTiers, wartungZeilen, WARTUNG_HINWEIS, WARTUNG_TITEL, wartungPreisSatz } from "./wartung";
 import { findCopyIssues } from "./ratgeberCopy";
 
 describe("wartung tiers (Ajdin 2026-11-11)", () => {
@@ -28,7 +28,7 @@ describe("wartung tiers (Ajdin 2026-11-11)", () => {
     const all = [JSON.stringify(wartungTiers), JSON.stringify(wartungZeilen), WARTUNG_HINWEIS].join(" ");
     expect(all).not.toMatch(/Basis/);
     for (const t of wartungTiers) for (const s of [t.name, t.motto, t.grenze ?? "", ...Object.values(t.zeilen)]) expect(findCopyIssues(s), s).toEqual([]);
-    for (const s of [WARTUNG_HINWEIS, ...wartungZeilen.map((z) => z.label)]) expect(findCopyIssues(s), s).toEqual([]);
+    for (const s of [WARTUNG_TITEL, WARTUNG_HINWEIS, ...wartungZeilen.map((z) => z.label)]) expect(findCopyIssues(s), s).toEqual([]);
   });
 
   it("builds the FAQ price sentence from the tiers", () => {
