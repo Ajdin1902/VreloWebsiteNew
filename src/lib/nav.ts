@@ -1,5 +1,5 @@
 import { BAUPLAN_BASE } from "@/lib/bauplan";
-import { leistungGroups, leistungenPages, leistungHref } from "@/lib/leistungenPages";
+import { leistungGroups, leistungEintraege } from "@/lib/leistungenPages";
 
 export type NavLink = { href: string; label: string };
 
@@ -79,7 +79,5 @@ export type NavGroup = { label: string; items: NavLink[] };
 // the nav can never list a service that has no page.
 export const leistungenMenu: NavGroup[] = leistungGroups.map((g) => ({
   label: g.label,
-  items: leistungenPages
-    .filter((p) => p.group === g.id)
-    .map((p) => ({ href: leistungHref(p.slug), label: p.navLabel })),
+  items: leistungEintraege(g.id).map(({ href, label }) => ({ href, label })),
 }));

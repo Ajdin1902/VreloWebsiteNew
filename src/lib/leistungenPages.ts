@@ -4,7 +4,7 @@
 // 2026-11-11): every page is Hero → Kennst du das? → Lösung in three steps →
 // proof (MDZ, Velp) → Warum ich → CTA, nothing else. Components hold no
 // German; guards in leistungenPages.test.ts.
-import { KI_AGENTEN_PATH } from "@/lib/kiAgenten";
+import { KI_AGENTEN, KI_AGENTEN_PATH } from "@/lib/kiAgenten";
 import { CHECK_SRC, type CheckSrc } from "@/lib/prozessCheckCta";
 import { GARANTIE } from "@/lib/garantie";
 import { faqHref } from "@/lib/faq";
@@ -305,4 +305,15 @@ export function getLeistungPage(slug: string): LeistungPage | undefined {
 
 export function leistungHref(slug: LeistungSlug): string {
   return `/leistungen/${slug}`;
+}
+
+/** What a door lists in the menu and on the hub: its service pages, plus (Bauen)
+ *  the KI-Agenten examples page, linked since Ajdin 2026-11-11. */
+export type LeistungEintrag = { href: string; label: string; kurz: string };
+
+export function leistungEintraege(group: LeistungGroup): LeistungEintrag[] {
+  const pages = leistungenPages
+    .filter((p) => p.group === group)
+    .map((p) => ({ href: leistungHref(p.slug), label: p.navLabel, kurz: p.kurz }));
+  return group === "bauen" ? [...pages, { href: KI_AGENTEN_PATH, label: KI_AGENTEN.title, kurz: KI_AGENTEN.line }] : pages;
 }

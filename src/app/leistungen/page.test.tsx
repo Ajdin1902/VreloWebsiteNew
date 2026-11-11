@@ -34,4 +34,13 @@ describe("/leistungen", () => {
     const links = screen.getAllByRole("link", { name: /Kostenlose Vorlagen ansehen/ });
     expect(links.at(-1)).toHaveAttribute("href", "/vorlagen?src=leistungen-close");
   });
+
+  // Ajdin 2026-11-11: the KI-Agenten examples get their own card in the Bauen row.
+  it("shows the KI-Agenten page as a card under Bauen", () => {
+    const { container } = render(<LeistungenPage />);
+    const bauen = container.querySelector("#gruppe-bauen")!.closest("section")!;
+    const hrefs = [...bauen.querySelectorAll("a")].map((a) => a.getAttribute("href"));
+    expect(hrefs).toEqual(["/leistungen/prozessautomatisierung", "/leistungen/ki-automatisierung", "/leistungen/ki-agenten"]);
+    expect(bauen).toHaveTextContent("KI-Agenten");
+  });
 });
