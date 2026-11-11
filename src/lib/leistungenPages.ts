@@ -129,7 +129,7 @@ export const leistungenPages: LeistungPage[] = [
       close: "Bevor ich etwas baue, klären wir, wo es dir Zeit spart.",
     },
     loesung: {
-      heading: "So läuft der Audit",
+      heading: "So läuft der Audit. Alles kostenlos.",
       schritte: [
         { title: "Vorlage ansehen", text: "Der Bauplan für deine Branche zeigt dir, wo die Zeit hingeht. Kostenlos." },
         { title: "30 Minuten Gespräch", text: "Wir gehen deine Abläufe zusammen durch. Du bereitest nichts vor." },

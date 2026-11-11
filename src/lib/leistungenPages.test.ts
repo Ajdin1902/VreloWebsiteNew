@@ -165,6 +165,11 @@ describe("leistungenPages", () => {
 
   // Funnel rule (prozess-check-funnel §1a): the audit is at Vrelo's discretion,
   // so any string that mentions the Fahrplan must make it conditional.
+  // Ajdin 2026-11-11: the audit steps say up front that none of it costs anything.
+  it("heads the audit steps with Alles kostenlos", () => {
+    expect(getLeistungPage("prozess-audit")!.loesung.heading).toBe("So läuft der Audit. Alles kostenlos.");
+  });
+
   it("promises the Fahrplan only conditionally", () => {
     const promises = [
       ...everything().flatMap((p) => [...p.warum.map((w) => w.body), p.cta.lead]),
