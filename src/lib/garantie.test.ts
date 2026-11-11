@@ -15,7 +15,8 @@ function sourceFiles(dir: string, out: string[] = []): string[] {
 
 describe("GARANTIE", () => {
   it("holds the approved guarantee copy (Ajdin 2026-11-11)", () => {
-    expect(GARANTIE.hero).toBe("Erste Ergebnisse nach 2 Wochen, sonst bekommst du dein Geld zurück.");
+    // The hero line left the site 2026-11-11 (Ajdin).
+    expect(GARANTIE).not.toHaveProperty("hero");
     expect(GARANTIE.titel).toBe("Erste Ergebnisse in 2 Wochen. Sonst Geld zurück.");
     expect(GARANTIE.text).toBe(
       "Im Angebot steht die Liste deiner Anforderungen. Der erste Punkt läuft zwei Wochen nach dem Onboarding. Wenn nicht, bekommst du alles zurück, was du bis dahin gezahlt hast.",

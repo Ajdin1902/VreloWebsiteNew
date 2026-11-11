@@ -1,7 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { Hero } from "./Hero";
-import { GARANTIE } from "@/lib/garantie";
 import { VORLAGEN_CTA } from "@/lib/prozessCheckCta";
 
 describe("Hero", () => {
@@ -25,14 +24,14 @@ describe("Hero", () => {
     expect(section?.getAttribute("style")).toBeFalsy();
   });
 
-  // Ajdin 2026-11-11: the hero names what is free and what is guaranteed.
-  // Ajdin 2026-11-11: no link in the sub, the one click is the Vorlagen button.
-  it("sends the sub line to the Vorlagen, names the free Fahrplan and the guarantee as plain text", () => {
+  // Ajdin 2026-11-11: the hero names what is free; the guarantee left the hero
+  // the same day (it stays on the Proof card and the Leistungen pages).
+  it("sends the sub line to the Vorlagen and names the free Fahrplan, without the guarantee", () => {
     render(<Hero />);
     expect(
-      screen.getByText((_, el) => el?.tagName === "P" && el.textContent === "Nimm dir die kostenlose Vorlage für deine Branche. Danach machen wir zusammen deinen Fahrplan, auch kostenlos. " + GARANTIE.hero),
+      screen.getByText((_, el) => el?.tagName === "P" && el.textContent === "Nimm dir die kostenlose Vorlage für deine Branche. Danach machen wir zusammen deinen Fahrplan, auch kostenlos."),
     ).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: GARANTIE.hero })).toBeNull();
+    expect(screen.queryByText(/Geld zurück/)).toBeNull();
   });
 
   it("sends the one primary CTA to the Vorlagen", () => {
