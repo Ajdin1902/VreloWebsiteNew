@@ -1,12 +1,14 @@
 import { describe, it, expect } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
-import { leistungenPages, leistungGroups, getLeistungPage, leistungHref, automatisierungVergleich, claudeVergleich, EIGENTUM, type LeistungPage } from "./leistungenPages";
+import { leistungenPages, leistungenHub, leistungGroups, getLeistungPage, leistungHref, KI_KARTEN_IDS } from "./leistungenPages";
 import { findCopyIssues } from "./ratgeberCopy";
-import { getAllArticles } from "./ratgeber";
+import { wartungTiers } from "./wartung";
+import { GARANTIE } from "./garantie";
+import { faqGroups, faqHref } from "./faq";
 
 const SLUGS = ["prozess-audit", "prozessautomatisierung", "ki-automatisierung", "betreuung"];
-const NON_COPY_KEYS = new Set(["slug", "group", "heroImage", "url", "src", "poster", "href", "related", "kind", "year", "id"]);
+const NON_COPY_KEYS = new Set(["slug", "group", "heroImage", "href", "src", "kind", "id"]);
 
 // Every German string on a page, skipping paths, URLs and enum-like keys.
 function copyStrings(value: unknown, out: string[] = [], key = ""): string[] {
@@ -18,19 +20,14 @@ function copyStrings(value: unknown, out: string[] = [], key = ""): string[] {
   return out;
 }
 
-function nonStudyStrings(p: LeistungPage): string[] {
-  const { proof, ...rest } = p;
-  const proofCopy = proof.kind === "studies"
-    ? [proof.heading, proof.caseLine ?? "", proof.objection]
-    : copyStrings(proof);
-  return [...copyStrings(rest), ...proofCopy];
-}
-
 const pub = (p: string) => path.join(process.cwd(), "public", p);
-const ki = () => getLeistungPage("ki-automatisierung")!;
+const page = (slug: string) => getLeistungPage(slug)!;
+const ki = () => page("ki-automatisierung");
+const everything = () => [...leistungenPages, leistungenHub];
 
+// Ajdin 2026-11-11 (second pass): every Leistungen page is Hero → Kennst du
+// das? → Lösung in steps → proof (MDZ, Velp) → Warum ich → CTA. Nothing else.
 describe("leistungenPages", () => {
-  // Ajdin 2026-11-11: four pages instead of eight, the sub-services shown on the page.
   it("has the four agreed pages in order", () => {
     expect(leistungenPages.map((p) => p.slug)).toEqual(SLUGS);
   });
@@ -43,236 +40,140 @@ describe("leistungenPages", () => {
     expect(by("betreiben")).toEqual(["betreuung"]);
   });
 
-  it.each(leistungenPages.map((p) => [p.slug, p] as const))("%s fills every block", (_s, p) => {
-    for (const s of [p.navLabel, p.title, p.subline, p.metaDescription, p.kurz, p.pain.heading, p.pain.close, p.proof.heading, p.proof.objection, p.cta.heading, p.cta.lead])
-      expect(s.trim().length).toBeGreaterThan(0);
+  it.each(leistungenPages.map((p) => [p.slug, p] as const))("%s fills the six blocks and nothing else", (_s, p) => {
+    expect(Object.keys(p).sort()).toEqual(
+      ["cta", "group", "heroImage", "kurz", "loesung", "metaDescription", "navLabel", "pain", "slug", "subline", "szenen", "title", "warum"],
+    );
     expect(p.pain.moments.length).toBeGreaterThanOrEqual(3);
     expect(p.pain.moments.length).toBeLessThanOrEqual(4);
-    if (p.example && "steps" in p.example) {
-      expect(p.example.before.trim()).not.toBe("");
-      expect(p.example.after.trim()).not.toBe("");
-      expect(p.example.steps).toHaveLength(3);
-    } else if (p.example) {
-      expect(p.example.video.src).toMatch(/^\/video\//);
-    }
-    expect(p.example || p.szenen, p.slug).toBeTruthy();
-    expect(p.related.length).toBeGreaterThanOrEqual(1);
-    expect(p.related.length).toBeLessThanOrEqual(3);
-    expect(fs.existsSync(pub(p.heroImage))).toBe(true);
+    expect(p.loesung.schritte).toHaveLength(3);
+    expect(p.szenen.items).toHaveLength(2);
+    expect(p.warum).toHaveLength(3);
     expect(p.metaDescription.length).toBeLessThanOrEqual(170);
   });
 
-  it("links only Ratgeber articles that exist", () => {
-    const slugs = new Set(getAllArticles({ includeDrafts: true }).map((a) => a.slug));
-    for (const p of leistungenPages) for (const r of p.related) expect(slugs.has(r), `${p.slug} → ${r}`).toBe(true);
-  });
-
-  it("proves KI-Automatisierung with 2–3 complete, recent, linked study figures", () => {
-    const proof = ki().proof;
-    expect(proof.kind).toBe("studies");
-    if (proof.kind !== "studies") return;
-    expect(proof.figures.length).toBeGreaterThanOrEqual(2);
-    expect(proof.figures.length).toBeLessThanOrEqual(3);
-    for (const f of proof.figures) {
-      expect(f.figure.trim()).not.toBe("");
-      expect(f.claim.trim()).not.toBe("");
-      expect(f.source.trim()).not.toBe("");
-      expect(f.year).toBeGreaterThanOrEqual(2024);
-      expect(f.url).toMatch(/^https:\/\//);
+  it("gives every page its own new hero image, and the file exists", () => {
+    for (const p of leistungenPages) {
+      expect(p.heroImage).toBe(`/images/leistung-${p.slug}.webp`);
+      expect(fs.existsSync(pub(p.heroImage)), p.heroImage).toBe(true);
     }
   });
 
-  it("states the EZB figure as a median, not an average", () => {
-    const proof = ki().proof;
-    if (proof.kind !== "studies") throw new Error("expected studies");
-    const ezb = proof.figures.find((f) => f.source === "Europäische Zentralbank")!;
-    expect(ezb.claim).toContain("Median");
-    expect(ezb.claim).not.toContain("im Mittel");
-  });
-
-  // MDZ is Ajdin's father's business (UWG §5): never named without the family tie.
-  it("names MDZ only with the family tie and no other client but Velp", () => {
-    for (const p of leistungenPages)
-      for (const s of copyStrings(p)) if (/\bMDZ\b/.test(s)) expect(s, `${p.slug}: ${s}`).toMatch(/meines Vaters/);
-    const all = leistungenPages.flatMap((p) => copyStrings(p)).join(" ");
-    expect(all).not.toMatch(/\b(Baude|Alen|Purisic|Zilk|Schmid)\b/);
-  });
-
-  // Ajdin 2026-11-11: only confirmed numbers in the scenes.
-  it("uses only the confirmed numbers in the scenes", () => {
-    const results = leistungenPages.flatMap((p) => p.szenen?.items ?? []).map((s) => s.ergebnis).filter(Boolean);
-    expect(results.sort()).toEqual(["Rund 2 Stunden am Tag gespart", "Rund 5 Stunden pro Kunde gespart"]);
-    for (const p of leistungenPages)
-      for (const s of p.szenen?.items ?? []) {
-        const digits = (s.vorher + " " + s.nachher).match(/\d+/g) ?? [];
-        for (const d of digits) expect(["174", "96", "66"], `${p.slug}: ${s.titel}`).toContain(d);
+  it("keeps hero line, pain points and steps short", () => {
+    for (const p of everything()) {
+      for (const m of p.pain.moments) expect(m.length, m).toBeLessThanOrEqual(42);
+      expect(p.pain.close.length, p.pain.close).toBeLessThanOrEqual(75);
+    }
+    for (const p of leistungenPages) {
+      expect(p.subline.length, p.subline).toBeLessThanOrEqual(90);
+      for (const s of p.loesung.schritte) {
+        expect(s.title.length, s.title).toBeLessThanOrEqual(32);
+        expect(s.text.length, s.text).toBeLessThanOrEqual(110);
       }
-    expect(copyStrings(ki().szenen)).toContain("Beim ersten Durchlauf durch 174 E-Mails haben feste Regeln und bekannte Kontakte 96 einsortiert, die KI 66. Acht blieben für mich zur Prüfung.");
+    }
+    for (const p of everything())
+      for (const s of p.szenen.items) for (const t of [s.vorher, s.nachher]) expect(t.length, t).toBeLessThanOrEqual(150);
   });
 
-  it("attaches each number to the right scene", () => {
-    const mdzKi = ki().szenen!.items.find((s) => /MDZ/.test(s.kunde))!;
-    expect(mdzKi.ergebnis).toBe("Rund 2 Stunden am Tag gespart");
-    const pa = getLeistungPage("prozessautomatisierung")!.szenen!.items;
-    expect(pa.find((s) => /MDZ/.test(s.kunde))!.ergebnis).toBeUndefined();
-    expect(pa.find((s) => /Velp/.test(s.kunde))!.ergebnis).toBe("Rund 5 Stunden pro Kunde gespart");
-    expect(getLeistungPage("prozess-audit")!.szenen!.items.every((s) => !s.ergebnis)).toBe(true);
+  // The four former KI pages live on as one card each; the old URLs 308 to these anchors.
+  it("shows the five KI sub-services as anchored cards on KI-Automatisierung only", () => {
+    expect(KI_KARTEN_IDS).toEqual(["ki-assistenten", "ki-betriebssystem", "claude", "ki-server", "ki-schulung"]);
+    expect(ki().loesung.karten!.map((k) => k.id)).toEqual(KI_KARTEN_IDS);
+    for (const k of ki().loesung.karten!) expect(k.kurz.length, k.title).toBeLessThanOrEqual(110);
+    expect(leistungenPages.filter((p) => p.loesung.karten).map((p) => p.slug)).toEqual(["ki-automatisierung"]);
+  });
+
+  // Ajdin 2026-11-10: the EU route. Microsoft Foundry has no EU option for Claude, no route pins Germany.
+  it("explains Claude and its EU route without Microsoft, Frankfurt or Germany", () => {
+    const claude = ki().loesung.karten!.find((k) => k.id === "claude")!;
+    expect(claude.kurz).toContain("Anthropic");
+    expect(claude.kurz).toMatch(/EU/);
+    expect(copyStrings(ki()).join(" ")).not.toMatch(/Microsoft|Azure|Foundry|Frankfurt|Deutschland/);
+  });
+
+  // Ajdin 2026-11-11: proof = MDZ and Velp, only confirmed numbers. MDZ without the
+  // family tie on these pages (the tie stays on /referenzen).
+  it("proves with MDZ and Velp and only the confirmed numbers", () => {
+    const results = everything().flatMap((p) => p.szenen.items).map((s) => s.ergebnis).filter(Boolean);
+    expect([...new Set(results)].sort()).toEqual([
+      "Rund 2 Stunden am Tag gespart",
+      "Rund 4 Stunden Buchhaltung im Monat gespart",
+      "Rund 5 Stunden pro Kunde gespart",
+    ]);
+    for (const p of everything()) {
+      const kunden = p.szenen.items.map((s) => s.kunde).join(" ");
+      expect(kunden).toMatch(/MDZ/);
+    }
+    for (const slug of ["prozess-audit", "prozessautomatisierung", "betreuung"])
+      expect(page(slug).szenen.items.map((s) => s.kunde).join(" "), slug).toMatch(/Velp/);
+    expect(leistungenHub.szenen.items.map((s) => s.kunde).join(" ")).toMatch(/Velp/);
+    const mdzRechnung = page("prozessautomatisierung").szenen.items.find((s) => /MDZ/.test(s.kunde))!;
+    expect(mdzRechnung.ergebnis).toBe("Rund 4 Stunden Buchhaltung im Monat gespart");
+    expect(ki().szenen.items.find((s) => /MDZ/.test(s.kunde))!.ergebnis).toBe("Rund 2 Stunden am Tag gespart");
+    // Velp's phase engine runs without KI, so it never proves the KI page.
+    expect(ki().szenen.items.map((s) => s.kunde).join(" ")).not.toMatch(/Velp/);
+    const all = everything().flatMap((p) => copyStrings(p)).join(" ");
+    expect(all).not.toMatch(/meines Vaters|\b(Baude|Alen|Purisic|Zilk|Schmid)\b/);
+  });
+
+  // Ajdin 2026-11-11: one Ansprechpartner, the guarantee, it belongs to you (pay once).
+  it("says Warum ich in three points, with the guarantee linked to its conditions", () => {
+    const titles = (w: { title: string }[]) => w.map((x) => x.title);
+    const build = ["Ein Ansprechpartner.", GARANTIE.titel, "Einmal zahlen, alles gehört dir."];
+    for (const slug of ["prozessautomatisierung", "ki-automatisierung"]) expect(titles(page(slug).warum), slug).toEqual(build);
+    expect(titles(leistungenHub.warum)).toEqual(build);
+    expect(titles(page("prozess-audit").warum)).toEqual(["Ein Ansprechpartner.", GARANTIE.titel, "Der Fahrplan gehört dir."]);
+    expect(titles(page("betreuung").warum)).toEqual(["Ein Ansprechpartner.", "Monatlich kündbar.", "Alles gehört dir."]);
+    const questions = faqGroups.flatMap((g) => g.entries.map((e) => e.question));
+    for (const p of everything())
+      for (const w of p.warum) if (w.title === GARANTIE.titel) {
+        expect(w.link?.label).toBe(GARANTIE.faqLink);
+        expect(w.link?.href).toBe(faqHref(GARANTIE.faqFrage));
+        expect(questions).toContain(GARANTIE.faqFrage);
+      }
+  });
+
+  it("lists the three Wartung tiers as Betreuung's steps, from wartung.ts", () => {
+    const b = page("betreuung").loesung.schritte;
+    expect(b.map((s) => s.title)).toEqual(wartungTiers.map((t) => t.name));
+    expect(b.map((s) => s.text)).toEqual(wartungTiers.map((t) => t.kurz));
   });
 
   it("leads every page to the Vorlagen with its own src", () => {
     expect(leistungenPages.map((p) => p.cta.kind)).toEqual(["vorlagen", "vorlagen", "vorlagen", "vorlagen"]);
-    expect(new Set(leistungenPages.map((p) => p.cta.src)).size).toBe(4);
-  });
-
-  it("shows the sub-services as overview cards on the audit and both build pages", () => {
-    expect(leistungenPages.filter((p) => p.angebote).map((p) => p.slug)).toEqual(["prozess-audit", "prozessautomatisierung", "ki-automatisierung"]);
-    expect(ki().angebote!.karten.map((k) => k.href)).toEqual(["#ki-assistenten", "#ki-betriebssystem", "#claude", "#ki-server", "#ki-schulung"]);
-    expect(getLeistungPage("prozess-audit")!.angebote!.karten[0].href).toBe("/prozess-check?src=leistung-prozess-audit");
-    for (const p of leistungenPages) for (const k of p.angebote?.karten ?? []) expect(k.kurz.length, k.title).toBeLessThanOrEqual(110);
-  });
-
-  it("folds the four former KI pages into anchored sections", () => {
-    expect(ki().abschnitte!.map((a) => a.id)).toEqual(["ki-betriebssystem", "claude", "ki-server", "ki-schulung"]);
-    expect(ki().szenen!.id).toBe("ki-assistenten");
-    for (const a of ki().abschnitte!) {
-      expect(a.absaetze.length, a.id).toBeGreaterThanOrEqual(2);
-      expect(a.absaetze.length, a.id).toBeLessThanOrEqual(3);
-      expect(a.lead.length, a.id).toBeLessThanOrEqual(90);
-    }
-  });
-
-  // Ajdin 2026-11-10: the EU route. Microsoft Foundry has no EU option for Claude, no route pins Germany.
-  it("keeps the Claude section's EU route verbatim", () => {
-    const claude = ki().abschnitte!.find((a) => a.id === "claude")!;
-    expect(claude.vergleich).toBe(claudeVergleich);
-    expect(claude.note!.link.href).toBe("/claude-gehirn");
-    expect(claude.lead).toContain("Anthropic");
-    const all = [...copyStrings(claudeVergleich), ...copyStrings(claude)].join(" ");
-    expect(all).toMatch(/innerhalb der EU/);
-    expect(all).not.toMatch(/Microsoft|Azure|Foundry|Frankfurt|Deutschland|€/);
-    const v = claudeVergleich;
-    expect(v.columns.map((c) => !!c.warm)).toEqual([false, true]);
-    for (const r of v.rows) for (const c of r.cells) expect(c.length, c).toBeLessThanOrEqual(95);
-  });
-
-  it("keeps the gift link on KI-Betriebssystem and the Art. 4 note on KI-Schulung", () => {
-    const by = (id: string) => ki().abschnitte!.find((a) => a.id === id)!;
-    expect(by("ki-betriebssystem").note!.link.href).toBe("/claude-gehirn");
-    expect(by("ki-schulung").note!.body).toMatch(/Artikel 4/);
-  });
-
-  it("carries the Förderung note on both build pages and the audit", () => {
-    expect(leistungenPages.filter((p) => p.note).map((p) => p.slug)).toEqual(["prozess-audit", "prozessautomatisierung", "ki-automatisierung"]);
-    for (const slug of ["prozessautomatisierung", "ki-automatisierung"] as const)
-      expect(getLeistungPage(slug)!.note).toEqual(getLeistungPage("prozess-audit")!.note);
-    const note = getLeistungPage("prozess-audit")!.note!;
-    expect(note.body).toContain("Antrag");
-    expect(note.body).not.toMatch(/€|%/);
-    expect(note.link.href).toBe("https://www.digitalbonus.bayern/foerderprogramm/");
-  });
-
-  it("says build once, it is yours, on both build pages; the tiers only on Betreuung", () => {
-    expect(leistungenPages.filter((p) => p.eigentum).map((p) => p.slug)).toEqual(["prozessautomatisierung", "ki-automatisierung"]);
-    expect(leistungenPages.filter((p) => p.wartung).map((p) => p.slug)).toEqual(["betreuung"]);
-    expect(EIGENTUM.text).toBe("Einmal gebaut, gehört es dir. Keine monatliche Pflicht: Wartung nur, wenn du sie willst.");
-    expect(EIGENTUM.link.href).toBe("/leistungen/betreuung");
-  });
-
-  it("shows the audit card only on Prozess-Audit", () => {
-    expect(leistungenPages.filter((p) => p.auditCard).map((p) => p.slug)).toEqual(["prozess-audit"]);
-  });
-
-  it("points every video at a file that exists", () => {
-    for (const p of leistungenPages) {
-      if (!p.example || !("video" in p.example)) continue;
-      expect(fs.existsSync(pub(p.example.video.src))).toBe(true);
-      expect(fs.existsSync(pub(p.example.video.poster))).toBe(true);
-    }
+    expect(new Set([...leistungenPages, leistungenHub].map((p) => p.cta.src)).size).toBe(5);
   });
 
   it("passes the site's German copy guards", () => {
-    for (const p of leistungenPages)
-      for (const s of copyStrings(p)) expect(findCopyIssues(s), `${p.slug}: ${s}`).toEqual([]);
-    expect(findCopyIssues(EIGENTUM.text)).toEqual([]);
+    for (const p of everything())
+      for (const s of copyStrings(p)) expect(findCopyIssues(s), s).toEqual([]);
   });
 
   it("names no price, no Frankfurt, no partner or certification claim", () => {
-    for (const p of leistungenPages) {
-      const text = nonStudyStrings(p).join(" ");
-      expect(text, p.slug).not.toMatch(/€|\bEUR\b|\d\s*Euro\b/);
-      expect(text, p.slug).not.toMatch(/Frankfurt/);
+    const tierNames = new Set(wartungTiers.map((t) => t.name));
+    for (const p of everything()) {
+      const text = copyStrings(p).filter((s) => !tierNames.has(s)).join(" ");
+      expect(text).not.toMatch(/€|\bEUR\b|\d\s*Euro\b/);
+      expect(text).not.toMatch(/Frankfurt/);
       // \bPartner\b, case-sensitive: „Ansprechpartner“ is fine, a partner claim is not.
-      // The Wartung tier „Partner“ lives in src/lib/wartung.ts, not in the page data.
-      expect(text, p.slug).not.toMatch(/\bPartner\b|zertifiziert/);
+      // The tier „Partner“ comes from wartung.ts, so its name is exempt.
+      expect(text).not.toMatch(/\bPartner\b|zertifiziert/);
     }
+  });
+
+  // Funnel rule (prozess-check-funnel §1a): the audit is at Vrelo's discretion,
+  // so any string that mentions the Fahrplan must make it conditional.
+  it("promises the Fahrplan only conditionally", () => {
+    const promises = [
+      ...everything().flatMap((p) => [...p.warum.map((w) => w.body), p.cta.lead]),
+      ...leistungenPages.flatMap((p) => [p.kurz, p.subline, p.metaDescription, ...p.loesung.schritte.map((s) => s.text)]),
+    ];
+    for (const s of promises) if (/Fahrplan/.test(s)) expect(s).toMatch(/[Ww]enn|[Ll]ohnt|Bekommst/);
   });
 
   it("looks pages up by slug and builds their href", () => {
     expect(getLeistungPage("ki-automatisierung")?.title).toBe("KI-Automatisierung");
     expect(getLeistungPage("claude")).toBeUndefined();
     expect(leistungHref("betreuung")).toBe("/leistungen/betreuung");
-  });
-
-  // Funnel rule (prozess-check-funnel §1a): the audit is at Vrelo's discretion,
-  // so any string that mentions the Fahrplan must make it conditional.
-  it("promises the Fahrplan only conditionally", () => {
-    for (const p of leistungenPages) {
-      const run = p.example && "steps" in p.example ? [...p.example.steps, p.example.after] : [];
-      const promises = [p.kurz, p.subline, p.metaDescription, ...run, p.cta.lead];
-      for (const s of promises)
-        if (/Fahrplan/.test(s)) expect(s, `${p.slug}: ${s}`).toMatch(/[Ww]enn|[Ll]ohnt/);
-    }
-  });
-
-  it("explains Claude in the subline wherever the subline names it", () => {
-    for (const p of leistungenPages)
-      if (/Claude/.test(p.subline)) expect(p.subline, p.slug).toContain("Anthropic");
-  });
-
-  it("keeps the hero line and the pain points short", () => {
-    for (const p of leistungenPages) {
-      expect(p.subline.length, `${p.slug}: ${p.subline}`).toBeLessThanOrEqual(90);
-      for (const m of p.pain.moments) expect(m.length, `${p.slug}: ${m}`).toBeLessThanOrEqual(42);
-      expect(p.pain.close.length, `${p.slug}: ${p.pain.close}`).toBeLessThanOrEqual(75);
-    }
-  });
-
-  it("keeps before and after short and unprefixed", () => {
-    const pairs = leistungenPages.flatMap((p) => [
-      ...(p.example && "steps" in p.example ? [p.example.before, p.example.after] : []),
-      ...(p.szenen?.items ?? []).flatMap((s) => [s.vorher, s.nachher]),
-    ]);
-    for (const s of pairs) {
-      expect(s).not.toMatch(/^(Vorher|Nachher):/);
-      expect(s.length, s).toBeLessThanOrEqual(150);
-    }
-  });
-
-  it("shows the clip on KI-Automatisierung", () => {
-    const ex = ki().example!;
-    expect("video" in ex).toBe(true);
-  });
-
-  it("compares Prozess- and KI-Automatisierung on exactly those two pages", () => {
-    expect(leistungenPages.filter((p) => p.vergleich === automatisierungVergleich).map((p) => p.slug)).toEqual(["prozessautomatisierung", "ki-automatisierung"]);
-    const v = automatisierungVergleich;
-    expect(v.columns.map((c) => c.slug)).toEqual(["prozessautomatisierung", "ki-automatisierung"]);
-    for (const r of v.rows) for (const c of r.cells) expect(c.length, c).toBeLessThanOrEqual(95);
-    for (const s of copyStrings(v)) expect(findCopyIssues(s), s).toEqual([]);
-  });
-
-  it("draws one graphic per page and one per KI section", () => {
-    expect(leistungenPages.map((p) => [p.slug, p.grafik?.kind])).toEqual([
-      ["prozess-audit", "prozess-audit-balken"],
-      ["prozessautomatisierung", "prozess-fliessband"],
-      ["ki-automatisierung", "ki-fluss"],
-      ["betreuung", "betreuung-zeitlinie"],
-    ]);
-    expect(ki().abschnitte!.map((a) => a.grafik?.kind)).toEqual(["betriebssystem-becken", "claude-projekt", "ki-server-rahmen", "schulung-vorlagen"]);
-    const all = [...leistungenPages.map((p) => p.grafik!), ...ki().abschnitte!.map((a) => a.grafik!)];
-    for (const g of all) {
-      expect(g.heading.length, g.kind).toBeLessThanOrEqual(60);
-      expect(g.alt.length, g.kind).toBeGreaterThan(80);
-    }
   });
 });

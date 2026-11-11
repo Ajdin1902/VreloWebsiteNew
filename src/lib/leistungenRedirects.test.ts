@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
 import nextConfig from "../../next.config";
-import { getLeistungPage } from "./leistungenPages";
+import { KI_KARTEN_IDS } from "./leistungenPages";
 
-// 2026-11-11: four KI pages folded into sections of KI-Automatisierung. Links
+// 2026-11-11: four KI pages folded into KI-Automatisierung, one anchored card each since the slim redesign. Links
 // already out (LinkedIn, mails, Ratgeber) land on their section, never a 404.
 const want: Record<string, string> = {
   "/leistungen/ki-server": "/leistungen/ki-automatisierung#ki-server",
@@ -24,10 +24,10 @@ describe("folded Leistungen pages", () => {
   });
 
   it("point only at anchors that exist on the KI page", () => {
-    const ids = new Set(getLeistungPage("ki-automatisierung")!.abschnitte!.map((a) => a.id));
+    const ids = new Set<string>(KI_KARTEN_IDS);
     for (const d of Object.values(want)) {
       const hash = d.split("#")[1];
-      if (hash) expect(ids.has(hash as never), d).toBe(true);
+      if (hash) expect(ids.has(hash), d).toBe(true);
     }
   });
 });

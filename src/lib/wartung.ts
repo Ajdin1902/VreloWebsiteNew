@@ -11,6 +11,8 @@ export type WartungTier = {
   id: WartungTierId;
   name: string;
   motto: string;
+  /** One line for the Betreuung page's steps (2026-11-11 slim redesign). */
+  kurz: string;
   preisNetto: number;
   grenze?: string;
   zeilen: Record<WartungZeile, string>;
@@ -31,6 +33,7 @@ export const wartungTiers: WartungTier[] = [
     id: "minimum",
     name: "Minimum",
     motto: "Es läuft.",
+    kurz: "Es läuft. Alle 4 Wochen ein Call, Fehler behebe ich in 48 Stunden.",
     preisNetto: 249,
     zeilen: {
       zeit: "Alle 4 Wochen 30 Minuten Call, wenn du ihn brauchst. Dazu E-Mail.",
@@ -46,6 +49,7 @@ export const wartungTiers: WartungTier[] = [
     id: "standard",
     name: "Standard",
     motto: "Es läuft und wird besser.",
+    kurz: "Es läuft und wird besser. Alle 2 Wochen ein Call, Fehler in 24 Stunden, jedes Quartal ein neuer Baustein.",
     preisNetto: 945,
     zeilen: {
       zeit: "Alle 2 Wochen 30 Minuten Call, wenn du ihn brauchst. Antwort am selben Werktag.",
@@ -61,6 +65,7 @@ export const wartungTiers: WartungTier[] = [
     id: "partner",
     name: "Partner",
     motto: "Ich gehöre zu deinem Team.",
+    kurz: "Ich gehöre zu deinem Team. Jede Woche 90 Minuten Arbeitssitzung, direkter Draht, Fehler in 12 Stunden.",
     preisNetto: 9900,
     grenze: "Für höchstens zwei Betriebe",
     zeilen: {

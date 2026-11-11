@@ -1,8 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 import { CTAButton } from "@/components/CTAButton";
 import { GARANTIE } from "@/lib/garantie";
-import { faqHref } from "@/lib/faq";
 import { VORLAGEN_CTA, CHECK_SRC, vorlagenHref } from "@/lib/prozessCheckCta";
 
 export function Hero() {
@@ -34,11 +32,7 @@ export function Hero() {
         Dein Fahrplan zum früheren Feierabend. Kostenlos.
       </h1>
       <p className="hero-reveal-sub mt-6 max-w-xl text-pretty text-[1.05rem] leading-relaxed tracking-[-0.005em] text-gletscher md:text-xl md:leading-relaxed">
-        Nimm dir die kostenlose Vorlage für deine Branche. Danach machen wir zusammen deinen Fahrplan, auch kostenlos.{" "}
-        {/* The guarantee links to its conditions (final review 2026-11-11, UWG §5). */}
-        <Link href={faqHref(GARANTIE.faqFrage)} className="underline decoration-gletscher/40 underline-offset-4 transition-colors hover:text-papier hover:decoration-papier">
-          {GARANTIE.hero}
-        </Link>
+        Nimm dir die kostenlose Vorlage für deine Branche. Danach machen wir zusammen deinen Fahrplan, auch kostenlos. {GARANTIE.hero}
       </p>
       <div className="hero-reveal-cta mt-9">
         <CTAButton href={vorlagenHref(CHECK_SRC.homeHero)} tone="dark">

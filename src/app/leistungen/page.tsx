@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { CompactHero } from "@/components/CompactHero";
 import { Section } from "@/components/Section";
-import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { ClosingCta } from "@/components/ClosingCta";
-import { CHECK_SRC } from "@/lib/prozessCheckCta";
 import { ServiceGroups } from "@/components/leistungen/ServiceGroups";
-import { Referenzen } from "@/components/leistungen/Referenzen";
-import { WennDuBaust } from "@/components/leistungen/WennDuBaust";
-import { WoranEsScheitert } from "@/components/leistungen/WoranEsScheitert";
+import { PainBlock } from "@/components/leistungen/page/PainBlock";
+import { SzenenBlock } from "@/components/leistungen/page/SzenenBlock";
+import { WarumBlock } from "@/components/leistungen/page/WarumBlock";
+import { leistungenHub } from "@/lib/leistungenPages";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbLd } from "@/lib/jsonld";
 import { canonical } from "@/lib/site";
@@ -16,14 +15,11 @@ export const metadata: Metadata = {
   alternates: { canonical: canonical("/leistungen") },
   title: "Leistungen",
   description:
-    "Prozessautomatisierung, KI-Automatisierung, KI-Server, Claude für Unternehmen, KI-Schulung, KI-Beratung, Prozess-Audit, KI-Betriebssystem, Betreuung und Wartung aus einer Hand.",
+    "Prozess-Audit, Prozessautomatisierung, KI-Automatisierung mit Claude, KI-Server und KI-Schulung, Betreuung und Wartung aus einer Hand.",
 };
 
-// The hub (spec 2026-10-01 §3.2): the CompactHero (same as the
-// subpages), the nine services in three groups, then the
-// trust layer (what you get, the obstacles answered, references). The audit
-// card lives on /leistungen/prozess-audit (since 2026-10-15); the six Bausteine became the example
-// runs on the subpages.
+// The hub (slim redesign, Ajdin 2026-11-11): the subpages' order, with the
+// three doors (ServiceGroups) as the Lösung. Copy in src/lib/leistungenPages.ts.
 export default function LeistungenPage() {
   return (
     <>
@@ -34,18 +30,13 @@ export default function LeistungenPage() {
         image="/images/leistungen-banner.webp"
         imageClassName="scale-125 origin-bottom"
       />
-      <Section tone="petrol" className="relative isolate overflow-hidden">
-        <SectionBackdrop src="/images/bg-bausteine-b.webp" tintRgb="27 80 99" tintOpacity={0.7} />
+      <PainBlock pain={leistungenHub.pain} />
+      <Section tone="paper">
         <ServiceGroups />
       </Section>
-      <WennDuBaust />
-      <WoranEsScheitert />
-      <Referenzen />
-      <ClosingCta
-        heading="Lass uns deine Quelle bauen."
-        lead="Fang mit drei Minuten an: Der Prozess-Check zeigt dir, welche Aufgabe dich am meisten kostet. Danach reden wir, wenn du willst."
-        src={CHECK_SRC.leistungenClose}
-      />
+      <SzenenBlock szenen={leistungenHub.szenen} />
+      <WarumBlock warum={leistungenHub.warum} />
+      <ClosingCta heading={leistungenHub.cta.heading} lead={leistungenHub.cta.lead} src={leistungenHub.cta.src} />
       <JsonLd data={breadcrumbLd([{ name: "Start", path: "/" }, { name: "Leistungen", path: "/leistungen" }])} />
     </>
   );

@@ -1,31 +1,18 @@
 // src/app/leistungen/[slug]/page.tsx
 //
-// One template, four services (spec 2026-10-01 §4, cut to four 2026-11-11):
-// Hero → Pain → Angebote → Proof → Grafik → Szenen → Example → Abschnitte →
-// Vergleich → Wartung → audit card → Eigentum → note → CTA → „Mehr dazu“.
+// One template, four services. Slim redesign (Ajdin 2026-11-11): Hero →
+// Kennst du das? → Lösung → proof → Warum ich → CTA, nothing else.
 // All copy comes from src/lib/leistungenPages.ts.
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Section } from "@/components/Section";
-import { Reveal } from "@/components/Reveal";
 import { ClosingCta } from "@/components/ClosingCta";
 import { JsonLd } from "@/components/JsonLd";
-import { ProzessAudit } from "@/components/leistungen/ProzessAudit";
 import { LeistungHero } from "@/components/leistungen/page/LeistungHero";
 import { PainBlock } from "@/components/leistungen/page/PainBlock";
-import { ProofBlock } from "@/components/leistungen/page/ProofBlock";
-import { ExampleBlock } from "@/components/leistungen/page/ExampleBlock";
-import { NoteBlock } from "@/components/leistungen/page/NoteBlock";
-import { RelatedLinks } from "@/components/leistungen/page/RelatedLinks";
-import { VergleichBlock } from "@/components/leistungen/page/VergleichBlock";
-import { GrafikBlock } from "@/components/leistungen/page/GrafikBlock";
-import { AngeboteBlock } from "@/components/leistungen/page/AngeboteBlock";
+import { LoesungBlock } from "@/components/leistungen/page/LoesungBlock";
 import { SzenenBlock } from "@/components/leistungen/page/SzenenBlock";
-import { AbschnitteBlock } from "@/components/leistungen/page/AbschnitteBlock";
-import { EigentumBlock } from "@/components/leistungen/page/EigentumBlock";
-import { WartungBlock } from "@/components/leistungen/page/WartungBlock";
+import { WarumBlock } from "@/components/leistungen/page/WarumBlock";
 import { leistungenPages, getLeistungPage } from "@/lib/leistungenPages";
-import { getArticleBySlug, draftsVisible } from "@/lib/ratgeber";
 import { breadcrumbLd, serviceLd } from "@/lib/jsonld";
 import { canonical } from "@/lib/site";
 
@@ -48,22 +35,6 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   };
 }
 
-/** Ratgeber links for the „Mehr dazu“ line: unknown slugs and hidden drafts drop out. */
-export function relatedArticles(
-  slugs: string[],
-  showDrafts: boolean,
-  lookup: (slug: string) => { slug: string; title: string; draft: boolean } = getArticleBySlug,
-): { slug: string; title: string }[] {
-  return slugs.flatMap((s) => {
-    try {
-      const a = lookup(s);
-      return a.draft && !showDrafts ? [] : [{ slug: a.slug, title: a.title }];
-    } catch {
-      return [];
-    }
-  });
-}
-
 export default async function LeistungSubpage({ params }: Params) {
   const { slug } = await params;
   const page = getLeistungPage(slug);
@@ -73,25 +44,10 @@ export default async function LeistungSubpage({ params }: Params) {
     <>
       <LeistungHero page={page} />
       <PainBlock pain={page.pain} />
-      {page.angebote ? <AngeboteBlock angebote={page.angebote} /> : null}
-      <ProofBlock proof={page.proof} />
-      {page.grafik ? <GrafikBlock grafik={page.grafik} /> : null}
-      {page.szenen ? <SzenenBlock szenen={page.szenen} /> : null}
-      {page.example ? <ExampleBlock example={page.example} /> : null}
-      {page.abschnitte ? <AbschnitteBlock abschnitte={page.abschnitte} /> : null}
-      {page.vergleich ? <VergleichBlock vergleich={page.vergleich} current={page.slug} /> : null}
-      {page.wartung ? <WartungBlock /> : null}
-      {page.auditCard ? (
-        <Section id="prozess-audit" tone="paper" className="scroll-mt-24">
-          <Reveal>
-            <ProzessAudit />
-          </Reveal>
-        </Section>
-      ) : null}
-      {page.eigentum ? <EigentumBlock /> : null}
-      {page.note ? <NoteBlock note={page.note} /> : null}
+      <LoesungBlock loesung={page.loesung} />
+      <SzenenBlock szenen={page.szenen} />
+      <WarumBlock warum={page.warum} />
       <ClosingCta heading={page.cta.heading} lead={page.cta.lead} src={page.cta.src} primary={page.cta.kind} />
-      <RelatedLinks articles={relatedArticles(page.related, draftsVisible())} />
       <JsonLd data={serviceLd(page)} />
       <JsonLd
         data={breadcrumbLd([

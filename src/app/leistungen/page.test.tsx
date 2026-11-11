@@ -1,10 +1,9 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import LeistungenPage from "./page";
+import { leistungenHub } from "@/lib/leistungenPages";
 
-// Ajdin 2026-10-01: the hub opens like the subpages, one short line on the
-// image and no separate lead band. Unlike the subpages it carries no button:
-// the page itself is the menu, the close makes the ask.
+// Ajdin 2026-11-11: the hub follows the subpages' order, with the three doors as the Lösung.
 describe("/leistungen", () => {
   it("puts the line on the hero image, without a button", () => {
     render(<LeistungenPage />);
@@ -14,13 +13,25 @@ describe("/leistungen", () => {
     expect(hero.querySelectorAll("a")).toHaveLength(0);
   });
 
-  it("drops the separate lead band", () => {
+  it("runs Kennst du das?, the three doors, proof, Warum ich and the close, nothing else", () => {
     const { container } = render(<LeistungenPage />);
-    expect(container.textContent).not.toContain("Such dir aus, wo du anfangen willst.");
+    const h2s = [...container.querySelectorAll("h2")].map((h) => h.textContent?.trim());
+    expect(h2s).toEqual([
+      leistungenHub.pain.heading,
+      "Prüfen",
+      "Bauen",
+      "Betreiben",
+      leistungenHub.szenen.heading,
+      "Warum ich",
+      leistungenHub.cta.heading,
+    ]);
+    expect(container.textContent).not.toContain("Wenn du mit mir baust");
+    expect(container.textContent).not.toContain("Woran es bei den meisten scheitert");
   });
 
-  it("keeps the closing call to the Prozess-Check", () => {
+  it("closes on the Vorlagen with the hub's own src", () => {
     render(<LeistungenPage />);
-    expect(screen.getByRole("heading", { level: 2, name: "Lass uns deine Quelle bauen." })).toBeInTheDocument();
+    const links = screen.getAllByRole("link", { name: /Kostenlose Vorlagen ansehen/ });
+    expect(links.at(-1)).toHaveAttribute("href", "/vorlagen?src=leistungen-close");
   });
 });
