@@ -1,13 +1,12 @@
 import Image from "next/image";
 import { CTAButton } from "@/components/CTAButton";
-import { SecondaryLink } from "@/components/SecondaryLink";
 import { CHECK_CTA, VORLAGEN_CTA, kontaktHref, vorlagenHref, type CheckSrc } from "@/lib/prozessCheckCta";
 
 // The compact hero (Ajdin 2026-10-01, variant A): half a screen of water
 // carrying an eyebrow, the title, one short line and the page's button, so the
 // first screen says what it is and where to click. No separate lead band.
 // primary="vorlagen" leads with the Vorlagen, "kontakt" with the
-// Erstgespräch; the other path sits underneath as the quiet second link.
+// Erstgespräch; the button stands alone, no second link (Ajdin 2026-11-11).
 // Without `cta` the hero carries no button (the hub, Ajdin 2026-10-01).
 // Used by /leistungen, its subpages (via LeistungHero), /faq and /ratgeber.
 export function CompactHero({
@@ -53,9 +52,6 @@ export function CompactHero({
             <CTAButton href={check ? vorlagenHref(cta.src) : kontaktHref(cta.src)} tone="dark">
               {check ? VORLAGEN_CTA.label : CHECK_CTA.directLabel}
             </CTAButton>
-            {check ? null : (
-              <SecondaryLink tone="dark" prefix={VORLAGEN_CTA.secondaryPrefix} label={VORLAGEN_CTA.secondaryLabel} href={vorlagenHref(cta.src)} />
-            )}
           </div>
         ) : null}
       </div>

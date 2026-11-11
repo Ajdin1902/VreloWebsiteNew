@@ -26,6 +26,9 @@ describe("/leistungen/ki-agenten", () => {
     render(<KiAgentenPage />);
     const hero = screen.getByRole("heading", { level: 1 }).closest("section")!;
     expect(hero.querySelector("a[href='/kontakt?src=agenten']")).not.toBeNull();
+    // Ajdin 2026-11-11: the button stands alone, no hint under it.
+    expect(hero.querySelectorAll("a")).toHaveLength(1);
+    expect(hero).not.toHaveTextContent("Noch unsicher");
     const close = screen.getByRole("heading", { level: 2, name: KI_AGENTEN.cta.heading }).closest("section")!;
     expect(close.querySelector("a[href='/kontakt?src=agenten']")).not.toBeNull();
   });
