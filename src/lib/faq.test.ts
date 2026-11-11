@@ -1,4 +1,5 @@
 import { GARANTIE } from "./garantie";
+import { wartungPreisSatz } from "./wartung";
 import { describe, it, expect } from "vitest";
 import { faqGroups } from "./faq";
 import { questionCountPhrase } from "./prozessCheckCta";
@@ -41,6 +42,13 @@ describe("faq data", () => {
     expect(g?.answer).toBe(GARANTIE.faqAntwort);
     const after = all.find((e) => /Was passiert nach dem Projekt/i.test(e.question))!;
     expect(after.answer).not.toMatch(/vollen Betrag|zurück/);
+  });
+
+  it("names the Wartung tiers from the one source (2026-11-11)", () => {
+    const all = faqGroups.flatMap((g) => g.entries);
+    const kosten = all.find((e) => e.question === "Fallen laufende Kosten an?")!;
+    expect(kosten.answer).toContain(wartungPreisSatz());
+    expect(kosten.answer).not.toMatch(/219|420|1\.019|nach Absprache/);
   });
 
   it("starts people with the Prozess-Check", () => {

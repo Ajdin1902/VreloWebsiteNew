@@ -1,5 +1,6 @@
 import { questionCountPhrase } from "@/lib/prozessCheckCta";
 import { GARANTIE } from "@/lib/garantie";
+import { wartungPreisSatz } from "@/lib/wartung";
 import { STEPS } from "@/lib/prozessCheck";
 
 export type FaqEntry = { question: string; answer: string };
@@ -97,7 +98,7 @@ export const faqGroups: FaqGroup[] = [
       {
         question: "Fallen laufende Kosten an?",
         answer:
-          "Den Server für dein System zahlst du direkt beim Anbieter und auf deinen Namen, rund 30 Euro im Monat. Nutzt dein System KI, kommen je nach Nutzung meist 5 bis 10 Euro im Monat dazu, gerechnet für ein normales Postfach mit ein paar Dutzend Mails am Tag. Weitere Fremdkosten entstehen nur, wenn eines deiner Programme für die Schnittstelle einen bezahlten Tarif verlangt, etwa manche CRM-Systeme. Das klären wir, bevor du dich entscheidest. Eine laufende Betreuung kannst du dazunehmen, wenn du willst: Ich überwache die Abläufe, behebe Fehler und passe Kleinigkeiten an. Drei Stufen, je nach Reaktionszeit und Umfang der Anpassungen: 219, 420 oder 1.019 Euro im Monat, netto und monatlich kündbar; für größere Unternehmen nach Absprache. Die Stufe richtet sich nach dem, was die Aufgabe dir im Jahr wert ist, nicht nach dem Baupreis. Ohne Betreuung läuft dein System weiter: Das Betriebssystem des Servers aktualisiert sich selbst, die Anwendungen bleiben auf dem Stand der Übergabe.",
+          `Den Server für dein System zahlst du direkt beim Anbieter und auf deinen Namen, rund 30 Euro im Monat. Nutzt dein System KI, kommen je nach Nutzung meist 5 bis 10 Euro im Monat dazu, gerechnet für ein normales Postfach mit ein paar Dutzend Mails am Tag. Weitere Fremdkosten entstehen nur, wenn eines deiner Programme für die Schnittstelle einen bezahlten Tarif verlangt, etwa manche CRM-Systeme. Das klären wir, bevor du dich entscheidest. Eine laufende Betreuung kannst du dazunehmen, wenn du willst: Ich überwache die Abläufe, behebe Fehler und passe Kleinigkeiten an. ${wartungPreisSatz()} Die Stufe richtet sich nach dem, was die Aufgabe dir im Jahr wert ist, nicht nach dem Baupreis. Ohne Betreuung läuft dein System weiter: Das Betriebssystem des Servers aktualisiert sich selbst, die Anwendungen bleiben auf dem Stand der Übergabe.`,
       },
       {
         question: "Gibt es eine Förderung?",
