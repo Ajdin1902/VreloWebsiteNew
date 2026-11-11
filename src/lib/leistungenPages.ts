@@ -7,7 +7,7 @@
 import { CHECK_SRC, type CheckSrc } from "@/lib/prozessCheckCta";
 import { GARANTIE } from "@/lib/garantie";
 import { faqHref } from "@/lib/faq";
-import { wartungTiers, WARTUNG_TITEL } from "@/lib/wartung";
+import { WARTUNG_TITEL } from "@/lib/wartung";
 
 export type LeistungSlug = "prozess-audit" | "prozessautomatisierung" | "ki-automatisierung" | "betreuung";
 export type LeistungGroup = "pruefen" | "bauen" | "betreiben";
@@ -22,7 +22,14 @@ export const KI_KARTEN_IDS = ["ki-assistenten", "ki-betriebssystem", "claude", "
 export type KiKarte = { id: (typeof KI_KARTEN_IDS)[number]; title: string; kurz: string };
 
 export type Pain = { heading: string; moments: string[]; close: string };
-export type Loesung = { heading: string; schritte: [Schritt, Schritt, Schritt]; kartenHeading?: string; karten?: KiKarte[] };
+// Betreuung shows the Wartung comparison table (wartung.ts) instead of steps.
+export type Loesung = {
+  heading: string;
+  schritte?: [Schritt, Schritt, Schritt];
+  kartenHeading?: string;
+  karten?: KiKarte[];
+  tabelle?: "wartung";
+};
 export type Szenen = { heading: string; items: Szene[] };
 export type LeistungCta = { kind: "vorlagen" | "kontakt"; src: CheckSrc; heading: string; lead: string };
 
@@ -247,10 +254,7 @@ export const leistungenPages: LeistungPage[] = [
       ],
       close: "Eine Automatisierung spart Zeit, solange jemand prüft, dass sie läuft.",
     },
-    loesung: {
-      heading: WARTUNG_TITEL,
-      schritte: wartungTiers.map((t) => ({ title: t.name, text: t.kurz })) as [Schritt, Schritt, Schritt],
-    },
+    loesung: { heading: WARTUNG_TITEL, tabelle: "wartung" },
     szenen: { heading: "Das betreue ich heute", items: [MDZ_ASSISTENT, VELP_PHASEN] },
     warum: [
       ANSPRECHPARTNER,

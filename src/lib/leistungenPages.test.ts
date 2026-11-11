@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { leistungenPages, leistungenHub, leistungGroups, getLeistungPage, leistungHref, KI_KARTEN_IDS } from "./leistungenPages";
 import { findCopyIssues } from "./ratgeberCopy";
-import { wartungTiers } from "./wartung";
+import { wartungTiers, WARTUNG_TITEL } from "./wartung";
 import { GARANTIE } from "./garantie";
 import { faqGroups, faqHref } from "./faq";
 
@@ -46,7 +46,8 @@ describe("leistungenPages", () => {
     );
     expect(p.pain.moments.length).toBeGreaterThanOrEqual(3);
     expect(p.pain.moments.length).toBeLessThanOrEqual(4);
-    expect(p.loesung.schritte).toHaveLength(3);
+    if (p.slug === "betreuung") expect(p.loesung).toEqual({ heading: WARTUNG_TITEL, tabelle: "wartung" });
+    else expect(p.loesung.schritte).toHaveLength(3);
     expect(p.szenen.items).toHaveLength(2);
     expect(p.warum).toHaveLength(3);
     expect(p.metaDescription.length).toBeLessThanOrEqual(170);
@@ -66,7 +67,7 @@ describe("leistungenPages", () => {
     }
     for (const p of leistungenPages) {
       expect(p.subline.length, p.subline).toBeLessThanOrEqual(90);
-      for (const s of p.loesung.schritte) {
+      for (const s of p.loesung.schritte ?? []) {
         expect(s.title.length, s.title).toBeLessThanOrEqual(32);
         expect(s.text.length, s.text).toBeLessThanOrEqual(110);
       }
@@ -133,10 +134,10 @@ describe("leistungenPages", () => {
       }
   });
 
-  it("lists the three Wartung tiers as Betreuung's steps, from wartung.ts", () => {
-    const b = page("betreuung").loesung.schritte;
-    expect(b.map((s) => s.title)).toEqual(wartungTiers.map((t) => t.name));
-    expect(b.map((s) => s.text)).toEqual(wartungTiers.map((t) => t.kurz));
+  // Ajdin 2026-11-11: Betreuung lists details and prices as a comparison table (wartung.ts).
+  it("shows Betreuung's tiers as the Wartung table, with no copy of its own", () => {
+    expect(page("betreuung").loesung.tabelle).toBe("wartung");
+    expect(leistungenPages.filter((p) => p.loesung.tabelle).map((p) => p.slug)).toEqual(["betreuung"]);
   });
 
   it("leads every page to the Vorlagen with its own src", () => {
@@ -166,7 +167,7 @@ describe("leistungenPages", () => {
   it("promises the Fahrplan only conditionally", () => {
     const promises = [
       ...everything().flatMap((p) => [...p.warum.map((w) => w.body), p.cta.lead]),
-      ...leistungenPages.flatMap((p) => [p.kurz, p.subline, p.metaDescription, ...p.loesung.schritte.map((s) => s.text)]),
+      ...leistungenPages.flatMap((p) => [p.kurz, p.subline, p.metaDescription, ...(p.loesung.schritte ?? []).map((s) => s.text)]),
     ];
     for (const s of promises) if (/Fahrplan/.test(s)) expect(s).toMatch(/[Ww]enn|[Ll]ohnt|Bekommst/);
   });

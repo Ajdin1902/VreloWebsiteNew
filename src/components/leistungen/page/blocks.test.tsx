@@ -8,6 +8,7 @@ import { WarumBlock } from "./WarumBlock";
 import { getLeistungPage } from "@/lib/leistungenPages";
 import { GARANTIE } from "@/lib/garantie";
 import { faqHref } from "@/lib/faq";
+import { wartungTiers, wartungZeilen, wartungPreis, WARTUNG_HINWEIS, WARTUNG_PREIS_ZUSATZ } from "@/lib/wartung";
 
 const page = (s: string) => getLeistungPage(s)!;
 
@@ -51,7 +52,7 @@ describe("LoesungBlock", () => {
     expect(screen.getByRole("heading", { level: 2, name: l.heading })).toBeInTheDocument();
     const steps = container.querySelectorAll("ol > li");
     expect(steps).toHaveLength(3);
-    l.schritte.forEach((s, i) => {
+    l.schritte!.forEach((s, i) => {
       expect(steps[i]).toHaveTextContent(String(i + 1));
       expect(steps[i]).toHaveTextContent(s.title);
       expect(steps[i]).toHaveTextContent(s.text);
@@ -75,6 +76,40 @@ describe("LoesungBlock", () => {
   it("renders no cards where a page has none", () => {
     const { container } = render(<LoesungBlock loesung={page("prozess-audit").loesung} />);
     expect(container.querySelectorAll("h3")).toHaveLength(3);
+  });
+});
+
+describe("LoesungBlock with the Wartung table", () => {
+  it("compares the three tiers in one table: price in the header, one row per detail", () => {
+    const { container } = render(<LoesungBlock loesung={page("betreuung").loesung} />);
+    const table = container.querySelector("table")!;
+    const cols = [...table.querySelectorAll("thead th[scope=col]")];
+    expect(cols).toHaveLength(3);
+    wartungTiers.forEach((t, i) => {
+      expect(cols[i]).toHaveTextContent(t.name);
+      expect(cols[i]).toHaveTextContent(wartungPreis(t));
+      expect(cols[i]).toHaveTextContent(WARTUNG_PREIS_ZUSATZ);
+    });
+    expect(cols[2]).toHaveTextContent(wartungTiers[2].grenze!);
+    const rows = [...table.querySelectorAll("tbody tr")];
+    expect(rows.map((r) => r.querySelector("th[scope=row]")?.textContent)).toEqual(wartungZeilen.map((z) => z.label));
+    rows.forEach((r, i) => {
+      const cells = [...r.querySelectorAll("td")];
+      expect(cells.map((c) => c.textContent)).toEqual(wartungTiers.map((t) => t.zeilen[wartungZeilen[i].id]));
+    });
+    expect(screen.getByText(WARTUNG_HINWEIS)).toBeInTheDocument();
+    expect(container.querySelector("ol")).toBeNull();
+  });
+
+  it("stacks the same tiers as cards for small screens", () => {
+    const { container } = render(<LoesungBlock loesung={page("betreuung").loesung} />);
+    const cards = container.querySelectorAll("[data-wartung-karte]");
+    expect(cards).toHaveLength(3);
+    wartungTiers.forEach((t, i) => {
+      expect(cards[i]).toHaveTextContent(t.name);
+      expect(cards[i]).toHaveTextContent(wartungPreis(t));
+      for (const z of wartungZeilen) expect(cards[i]).toHaveTextContent(t.zeilen[z.id]);
+    });
   });
 });
 

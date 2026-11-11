@@ -35,9 +35,10 @@ describe("/leistungen/[slug]", () => {
     expect(screen.getAllByText(page.subline)).toHaveLength(1);
   });
 
-  it("shows the Wartung tiers as Betreuung's steps", async () => {
-    render(await LeistungSubpage(params("betreuung")));
-    for (const n of ["Minimum", "Standard", "Partner"]) expect(screen.getByRole("heading", { level: 3, name: n })).toBeInTheDocument();
+  it("shows the Wartung tiers with their prices on Betreuung", async () => {
+    const { container } = render(await LeistungSubpage(params("betreuung")));
+    expect(container.querySelector("table")).not.toBeNull();
+    for (const p of ["249 €", "945 €", "9.900 €"]) expect(screen.getAllByText(p).length).toBeGreaterThan(0);
   });
 
   it("lands the old KI links on their card", async () => {
