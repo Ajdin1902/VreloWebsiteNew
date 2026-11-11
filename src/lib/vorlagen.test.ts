@@ -3,6 +3,8 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { HAUS_PDF, VORLAGEN_GRUPPEN, vorlageBauplaene, vorlagenPage } from "./vorlagen";
 import { findCopyIssues } from "./ratgeberCopy";
+import { questionCountPhrase } from "./prozessCheckCta";
+import { STEPS } from "./prozessCheck";
 
 function strings(value: unknown, out: string[] = []): string[] {
   if (typeof value === "string") out.push(value);
@@ -39,5 +41,21 @@ describe("vorlagen copy", () => {
   it("has a hub card and a public page for the SHK Bauplan", () => {
     expect(vorlageBauplaene["shk-bauplan"].variant).toBe("shk");
     expect(vorlagenPage.items.map((v) => v.link.href)).toContain("/vorlagen/shk-bauplan");
+  });
+});
+
+// Ajdin 2026-11-11: the Prozess-Check stays as one of the free tools here.
+describe("prozess-check card", () => {
+  it("leads the first group and links to the check with src=vorlagen", () => {
+    const first = vorlagenPage.items[0];
+    expect(first.id).toBe("prozess-check");
+    expect(first.gruppe).toBe("alle");
+    expect(first.link.href).toBe("/prozess-check?src=vorlagen");
+    expect(first.text).toContain(questionCountPhrase(STEPS.length));
+  });
+
+  it("closes the hub with the free next step", () => {
+    expect(vorlagenPage.weiter.text).toBe("Danach: 30 Minuten Gespräch, dann dein Fahrplan. Kostenlos.");
+    expect(vorlagenPage.weiter.link.href).toBe("/kontakt?src=vorlagen");
   });
 });

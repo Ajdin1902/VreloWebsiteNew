@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { CTAButton } from "@/components/CTAButton";
 import { SecondaryLink } from "@/components/SecondaryLink";
-import { CHECK_CTA, CHECK_SRC, checkHref } from "@/lib/prozessCheckCta";
+import { CHECK_CTA, VORLAGEN_CTA, CHECK_SRC, vorlagenHref } from "@/lib/prozessCheckCta";
 
 export function Hero() {
   return (
@@ -35,11 +35,11 @@ export function Hero() {
         Maßgeschneiderte Automatisierungen geben dir deine Stunden zurück. Finde in drei Minuten heraus, wo du anfängst.
       </p>
       <div className="hero-reveal-cta mt-9">
-        <CTAButton href={checkHref(CHECK_SRC.homeHero)} tone="dark">
-          {CHECK_CTA.label}
+        <CTAButton href={vorlagenHref(CHECK_SRC.homeHero)} tone="dark">
+          {VORLAGEN_CTA.label}
         </CTAButton>
         {/* Friction reducer: name what the click costs (nothing) and returns (a result now). */}
-        <p className="mt-3 text-sm text-gletscher">{CHECK_CTA.microcopy}</p>
+        <p className="mt-3 text-sm text-gletscher">{VORLAGEN_CTA.microcopy}</p>
         <SecondaryLink tone="dark" prefix={CHECK_CTA.directPrefix} label={CHECK_CTA.directLabel} href={CHECK_CTA.directHref} />
       </div>
     </section>

@@ -16,6 +16,6 @@ describe("homepage", () => {
       "Die Prozesse laufen von selbst. Deine Zeit gehört wieder dir.",
     ]);
     expect(container.textContent).not.toContain("Wie viele Stunden sind es bei dir?");
-    expect(container.querySelector('a[href="/prozess-check?src=home-hero"]')).not.toBeNull();
+    expect(container.querySelector('a[href="/vorlagen?src=home-hero"]')).not.toBeNull();
   });
 });

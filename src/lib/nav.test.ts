@@ -42,12 +42,14 @@ describe("focus routes", () => {
     expect(isFocusRoute("/prozess-check")).toBe(true);
     expect(focusChrome["/prozess-check"].cta).toBeUndefined();
     expect(navLinks.map((l) => l.href)).not.toContain("/prozess-check");
+    // 2026-11-11: the header button goes to /vorlagen, so the nav drops its own link there.
+    expect(navLinks.map((l) => l.href)).not.toContain("/vorlagen");
   });
 });
 
 describe("top nav", () => {
   it("puts Referenzen right after Leistungen and drops Newsletter from the nav", () => {
-    expect(navLinks.map((l) => l.href)).toEqual(["/leistungen", "/referenzen", "/ueber-mich", "/faq", "/ratgeber", "/vorlagen", "/kontakt"]);
+    expect(navLinks.map((l) => l.href)).toEqual(["/leistungen", "/referenzen", "/ueber-mich", "/faq", "/ratgeber", "/kontakt"]);
   });
 });
 

@@ -53,9 +53,9 @@ describe("MobileNav", () => {
   it("puts the Prozess-Check CTA at the bottom of the open drawer", () => {
     render(<MobileNav />);
     fireEvent.click(screen.getByRole("button", { name: /menü öffnen/i }));
-    expect(screen.getByRole("link", { name: "Prozess-Check starten" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Kostenlose Vorlagen ansehen" })).toHaveAttribute(
       "href",
-      "/prozess-check?src=header",
+      "/vorlagen?src=header",
     );
   });
   it("lists the Leistungen subpages under Leistungen in the drawer", () => {

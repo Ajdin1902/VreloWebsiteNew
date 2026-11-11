@@ -10,7 +10,7 @@ describe("Footer", () => {
 
   it("links the Prozess-Check outside navLinks (it is a focus route)", () => {
     render(<Footer />);
-    expect(screen.getByRole("link", { name: "Prozess-Check" })).toHaveAttribute("href", "/prozess-check?src=footer");
+    expect(screen.getByRole("link", { name: "Vorlagen" })).toHaveAttribute("href", "/vorlagen?src=footer");
   });
 
   it("still links the newsletter after it left the top nav", () => {

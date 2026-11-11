@@ -38,6 +38,6 @@ describe("KartePage", () => {
 
   it("offers the Prozess-Check under the save button", () => {
     render(<KartePage />);
-    expect(screen.getByRole("link", { name: "Prozess-Check" }).getAttribute("href")).toBe("/prozess-check?src=karte");
+    expect(screen.getByRole("link", { name: "Vorlagen" }).getAttribute("href")).toBe("/vorlagen?src=karte");
   });
 });

@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { CHECK_SRC, CHECK_CTA, checkHref, kontaktHref, questionCountPhrase } from "./prozessCheckCta";
+import { CHECK_SRC, CHECK_CTA, VORLAGEN_CTA, checkHref, kontaktHref, vorlagenHref, withSrc, questionCountPhrase } from "./prozessCheckCta";
 import { normalizeSource } from "./source";
+import { findCopyIssues } from "./ratgeberCopy";
 
 function strings(value: unknown, out: string[] = []): string[] {
   if (typeof value === "string") out.push(value);
@@ -77,5 +78,34 @@ describe("subpage attribution", () => {
 
   it("builds the Erstgespräch link with the same src", () => {
     expect(kontaktHref(CHECK_SRC.leistungClaude)).toBe("/kontakt?src=leistung-claude");
+  });
+});
+
+// Ajdin 2026-11-11: every primary CTA leads to /vorlagen (Vorlage, Gespräch, Fahrplan, all free).
+describe("vorlagen front door", () => {
+  it("builds the Vorlagen href with the slug", () => {
+    expect(vorlagenHref(CHECK_SRC.homeHero)).toBe("/vorlagen?src=home-hero");
+  });
+
+  it("carries the approved CTA copy", () => {
+    expect(VORLAGEN_CTA.label).toBe("Kostenlose Vorlagen ansehen");
+    expect(VORLAGEN_CTA.short).toBe("Vorlagen");
+    expect(VORLAGEN_CTA.microcopy).toBe("Bauplan für deine Branche. Danach machen wir zusammen deinen Fahrplan, auch kostenlos.");
+    expect(VORLAGEN_CTA.closeMicrocopy).toBe("Vorlage, Gespräch und Fahrplan: alles kostenlos.");
+  });
+
+  it("passes a valid src on to internal links and nothing else", () => {
+    expect(withSrc("/vorlagen/shk-bauplan", "home-hero")).toBe("/vorlagen/shk-bauplan?src=home-hero");
+    expect(withSrc("/vorlagen/shk-bauplan", null)).toBe("/vorlagen/shk-bauplan");
+    expect(withSrc("/vorlagen/shk-bauplan", undefined)).toBe("/vorlagen/shk-bauplan");
+    expect(withSrc("/vorlagen/shk-bauplan", "<script>")).toBe("/vorlagen/shk-bauplan");
+    expect(withSrc("/vorlagen/shk-bauplan", "x".repeat(40))).toBe("/vorlagen/shk-bauplan");
+    expect(withSrc("/prozess-check?src=vorlagen", "home-weg")).toBe("/prozess-check?src=home-weg");
+    expect(withSrc("/vorlagen/vrelo-ki-betriebssystem.pdf", "home-hero")).toBe("/vorlagen/vrelo-ki-betriebssystem.pdf");
+    expect(withSrc("https://example.com/x", "home-hero")).toBe("https://example.com/x");
+  });
+
+  it("passes the copy guards", () => {
+    for (const s of Object.values(VORLAGEN_CTA)) expect(findCopyIssues(s), s).toEqual([]);
   });
 });

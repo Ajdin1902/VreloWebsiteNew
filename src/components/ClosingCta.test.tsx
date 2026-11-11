@@ -12,8 +12,8 @@ describe("ClosingCta", () => {
 
   it("sends the primary button to the check with the caller's slug", () => {
     render(<ClosingCta heading="h" lead="l" src="leistungen-close" />);
-    const cta = screen.getByRole("link", { name: "Prozess-Check starten" });
-    expect(cta).toHaveAttribute("href", "/prozess-check?src=leistungen-close");
+    const cta = screen.getByRole("link", { name: "Kostenlose Vorlagen ansehen" });
+    expect(cta).toHaveAttribute("href", "/vorlagen?src=leistungen-close");
   });
 
   it("keeps the Erstgespräch as the quiet secondary link", () => {
@@ -24,9 +24,9 @@ describe("ClosingCta", () => {
   it("flips to /kontakt primary with the check as secondary (FAQ exception)", () => {
     render(<ClosingCta heading="h" lead="l" src="faq" primary="kontakt" />);
     expect(screen.getByRole("link", { name: "Erstgespräch buchen" })).toHaveAttribute("href", "/kontakt?src=faq");
-    expect(screen.getByRole("link", { name: "Erst den Prozess-Check machen" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Erst eine kostenlose Vorlage ansehen" })).toHaveAttribute(
       "href",
-      "/prozess-check?src=faq",
+      "/vorlagen?src=faq",
     );
   });
 
@@ -37,12 +37,12 @@ describe("ClosingCta", () => {
       "src",
       expect.stringContaining("portrait-sitzend"),
     );
-    expect(screen.getByRole("link", { name: "Prozess-Check starten" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Kostenlose Vorlagen ansehen" })).toBeInTheDocument();
   });
 
   it("keeps the ember heading and the navy (inverse) button on the warm band", () => {
     render(<ClosingCta heading="Los." lead="l" src="ratgeber" />);
     expect(screen.getByRole("heading", { level: 2, name: "Los." })).toHaveClass("text-ember");
-    expect(screen.getByRole("link", { name: "Prozess-Check starten" })).toHaveClass("bg-tiefes-wasser");
+    expect(screen.getByRole("link", { name: "Kostenlose Vorlagen ansehen" })).toHaveClass("bg-tiefes-wasser");
   });
 });

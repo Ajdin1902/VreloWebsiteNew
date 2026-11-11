@@ -4,6 +4,8 @@
 // ungated gift page, the two Baupläne are sent by e-mail (the request notifies
 // Ajdin). The coded /bauplan/<code> outreach pages stay separate and noindex.
 import type { BauplanVariant } from "@/lib/bauplan";
+import { CHECK_SRC, kontaktHref, questionCountPhrase } from "@/lib/prozessCheckCta";
+import { STEPS } from "@/lib/prozessCheck";
 
 export const VORLAGEN_PATH = "/vorlagen";
 
@@ -131,6 +133,8 @@ export const vorlagenPage: {
   meta: { title: string; description: string };
   hero: { eyebrow: string; title: string; line: string };
   items: Vorlage[];
+  /** The free next step under the cards (2026-11-11): Vorlage, then Gespräch, then Fahrplan. */
+  weiter: { text: string; link: { text: string; href: string } };
 } = {
   meta: {
     title: "Kostenlose Vorlagen",
@@ -143,6 +147,14 @@ export const vorlagenPage: {
     line: "Übersichten, Baupläne und ein Prompt für deinen Betrieb.",
   },
   items: [
+    {
+      id: "prozess-check",
+      gruppe: "alle",
+      titel: "Prozess-Check",
+      text: `Drei Minuten, ${questionCountPhrase(STEPS.length)}. Du siehst sofort, wie viele Stunden pro Woche der Kleinkram kostet.`,
+      umfang: "3 Minuten · direkt auf der Seite",
+      link: { text: "Prozess-Check starten", href: "/prozess-check?src=vorlagen" },
+    },
     {
       id: "haus",
       gruppe: "alle",
@@ -288,4 +300,8 @@ export const vorlagenPage: {
       link: { text: "Zum Bauplan", href: `${VORLAGEN_PATH}/hausmeister-bauplan` },
     },
   ],
+  weiter: {
+    text: "Danach: 30 Minuten Gespräch, dann dein Fahrplan. Kostenlos.",
+    link: { text: "Gespräch buchen", href: kontaktHref(CHECK_SRC.vorlagen) },
+  },
 };

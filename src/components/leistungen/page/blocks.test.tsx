@@ -37,9 +37,9 @@ describe("LeistungHero", () => {
     expect(screen.getByText(/Leistungen · Bauen/)).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 1, name: p.title })).toBeInTheDocument();
     expect(screen.getByText(p.subline)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Prozess-Check starten/ })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: /Kostenlose Vorlagen ansehen/ })).toHaveAttribute(
       "href",
-      "/prozess-check?src=leistung-prozessautomatisierung",
+      "/vorlagen?src=leistung-prozessautomatisierung",
     );
     expect(screen.getByRole("link", { name: "Erstgespräch buchen" })).toHaveAttribute("href", "/kontakt");
   });
@@ -49,9 +49,9 @@ describe("LeistungHero", () => {
     render(<LeistungHero page={p} />);
     expect(screen.getByText(/Befähigen/)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Erstgespräch buchen/ })).toHaveAttribute("href", "/kontakt?src=leistung-claude");
-    expect(screen.getByRole("link", { name: "Erst den Prozess-Check machen" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Erst eine kostenlose Vorlage ansehen" })).toHaveAttribute(
       "href",
-      "/prozess-check?src=leistung-claude",
+      "/vorlagen?src=leistung-claude",
     );
   });
 });

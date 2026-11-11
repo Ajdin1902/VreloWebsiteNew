@@ -66,7 +66,7 @@ export type LeistungPage = {
    *  2026-10-20). `kind` picks the drawing; `alt` is what a screen reader hears. */
   grafik?: { kind: LeistungGrafik; heading: string; alt: string };
   note?: { heading: string; body: string; link: { label: string; href: string } };
-  cta: { kind: "check" | "kontakt"; src: CheckSrc; heading: string; lead: string };
+  cta: { kind: "vorlagen" | "kontakt"; src: CheckSrc; heading: string; lead: string };
   /** Ratgeber slugs for the „Mehr dazu“ line, 1 to 3. */
   related: string[];
 };
@@ -265,7 +265,7 @@ export const leistungenPages: LeistungPage[] = [
     vergleich: automatisierungVergleich,
     note: FOERDERUNG_NOTE,
     cta: {
-      kind: "check",
+      kind: "vorlagen",
       src: CHECK_SRC.leistungProzessautomatisierung,
       heading: "Welche Aufgabe kostet dich am meisten?",
       lead: "Der Prozess-Check zeigt dir in drei Minuten, wo deine Stunden hingehen und womit du anfängst.",
@@ -313,7 +313,7 @@ export const leistungenPages: LeistungPage[] = [
     vergleich: automatisierungVergleich,
     note: FOERDERUNG_NOTE,
     cta: {
-      kind: "check",
+      kind: "vorlagen",
       src: CHECK_SRC.leistungKiAutomatisierung,
       heading: "Wo würde dir eine KI am meisten abnehmen?",
       lead: "Der Prozess-Check zeigt dir in drei Minuten, welche Aufgaben bei dir die meiste Zeit kosten. Danach reden wir, wenn du willst.",
@@ -546,7 +546,7 @@ export const leistungenPages: LeistungPage[] = [
     auditCard: true,
     note: FOERDERUNG_NOTE,
     cta: {
-      kind: "check",
+      kind: "vorlagen",
       src: CHECK_SRC.leistungProzessAudit,
       heading: "Fang mit drei Minuten an.",
       lead: "Der Prozess-Check zeigt dir, wo deine Stunden hingehen. Deine Antworten nehme ich ins Gespräch mit.",
@@ -658,7 +658,7 @@ export const leistungenPages: LeistungPage[] = [
       after: "Der Fehler ist behoben, bevor dein Kunde ihn bemerkt.",
     },
     cta: {
-      kind: "check",
+      kind: "vorlagen",
       src: CHECK_SRC.leistungBetreuung,
       heading: "Erst bauen, dann betreuen.",
       lead: "Betreuung gibt es für Systeme, die ich gebaut habe. Der Prozess-Check zeigt dir, womit du anfängst.",

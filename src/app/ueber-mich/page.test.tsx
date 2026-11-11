@@ -23,9 +23,9 @@ describe("/ueber-mich", () => {
 
   it("closes on the Prozess-Check with the ueber-mich slug", () => {
     render(<UeberMichPage />);
-    expect(screen.getByRole("link", { name: "Prozess-Check starten" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Kostenlose Vorlagen ansehen" })).toHaveAttribute(
       "href",
-      "/prozess-check?src=ueber-mich",
+      "/vorlagen?src=ueber-mich",
     );
   });
 });

@@ -89,7 +89,7 @@ describe("leistungenPages", () => {
   it("splits the CTA: check on automation pages, Erstgespräch elsewhere", () => {
     const kinds = Object.fromEntries(leistungenPages.map((p) => [p.slug, p.cta.kind]));
     expect(kinds).toEqual({
-      prozessautomatisierung: "check", "ki-automatisierung": "check", "prozess-audit": "check", betreuung: "check",
+      prozessautomatisierung: "vorlagen", "ki-automatisierung": "vorlagen", "prozess-audit": "vorlagen", betreuung: "vorlagen",
       "ki-server": "kontakt", claude: "kontakt", "ki-schulung": "kontakt", "ki-betriebssystem": "kontakt",
     });
     expect(new Set(leistungenPages.map((p) => p.cta.src)).size).toBe(8);

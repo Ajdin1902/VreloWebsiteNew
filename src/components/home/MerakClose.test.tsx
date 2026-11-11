@@ -22,11 +22,11 @@ describe("MerakClose", () => {
 
   it("leads straight to the check, with the cost line and the quiet call link", () => {
     render(<MerakClose />);
-    expect(screen.getByRole("link", { name: "Prozess-Check starten" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Kostenlose Vorlagen ansehen" })).toHaveAttribute(
       "href",
-      "/prozess-check?src=home-close",
+      "/vorlagen?src=home-close",
     );
-    expect(screen.getByText("Check, Audit und Fahrplan: alles kostenlos.")).toBeInTheDocument();
+    expect(screen.getByText("Vorlage, Gespräch und Fahrplan: alles kostenlos.")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Erstgespräch buchen" })).toHaveAttribute("href", "/kontakt");
   });
 

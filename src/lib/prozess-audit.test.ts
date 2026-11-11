@@ -46,8 +46,8 @@ describe("prozess-audit copy", () => {
   });
 
   it("routes the primary CTA to the Prozess-Check (front door, 2026-09-26)", () => {
-    expect(prozessAudit.cta.href).toBe("/prozess-check?src=leistungen-audit");
-    expect(prozessAudit.cta.label).toBe("Prozess-Check starten");
+    expect(prozessAudit.cta.href).toBe("/vorlagen?src=leistungen-audit");
+    expect(prozessAudit.cta.label).toBe("Kostenlose Vorlagen ansehen");
   });
 
   it("lists five deliverables (incl. the no-preparation Fragenkatalog)", () => {

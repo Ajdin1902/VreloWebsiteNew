@@ -7,7 +7,7 @@ import { BrandLockup } from "@/components/BrandLockup";
 import { CTAButton } from "@/components/CTAButton";
 import { MobileNav } from "@/components/MobileNav";
 import { LeistungenMenu } from "@/components/LeistungenMenu";
-import { CHECK_CTA, CHECK_SRC, checkHref } from "@/lib/prozessCheckCta";
+import { VORLAGEN_CTA, CHECK_SRC, vorlagenHref } from "@/lib/prozessCheckCta";
 
 export function Header() {
   const pathname = usePathname();
@@ -52,7 +52,7 @@ export function Header() {
         </ul>
 
         <div className="hidden md:block">
-          <CTAButton href={checkHref(CHECK_SRC.header)}>{CHECK_CTA.label}</CTAButton>
+          <CTAButton href={vorlagenHref(CHECK_SRC.header)}>{VORLAGEN_CTA.label}</CTAButton>
         </div>
 
         {/* Mobile: keep conversion one tap away — a compact CTA beside the burger
@@ -60,8 +60,8 @@ export function Header() {
             Front door since 2026-09-26: the check, not the call; „Kontakt“ in
             the nav stays the path to a call. */}
         <div className="flex items-center gap-1 md:hidden">
-          <CTAButton href={checkHref(CHECK_SRC.header)} size="compact">
-            {CHECK_CTA.short}
+          <CTAButton href={vorlagenHref(CHECK_SRC.header)} size="compact">
+            {VORLAGEN_CTA.short}
           </CTAButton>
           <MobileNav />
         </div>

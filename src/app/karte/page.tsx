@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { BrandLockup } from "@/components/BrandLockup";
 import { KARTE } from "@/lib/karte";
-import { CHECK_CTA, CHECK_SRC, checkHref } from "@/lib/prozessCheckCta";
+import { VORLAGEN_CTA, CHECK_SRC, vorlagenHref } from "@/lib/prozessCheckCta";
 
 export const metadata: Metadata = {
   title: "Visitenkarte: Ajdin Dzafic",
@@ -47,10 +47,10 @@ export default function KartePage() {
         </a>
 
         <Link
-          href={checkHref(CHECK_SRC.karte)}
+          href={vorlagenHref(CHECK_SRC.karte)}
           className="mt-3 inline-block w-full rounded-xl border border-vrelo-petrol px-6 py-3 font-semibold text-vrelo-petrol"
         >
-          {CHECK_CTA.short}
+          {VORLAGEN_CTA.short}
         </Link>
 
         <Link href="/" className="mt-4 block py-2 text-xs text-tinte/60 underline">

@@ -15,7 +15,7 @@ describe("DerWeg", () => {
     ]);
     // The question count follows the quiz, like the FAQ.
     expect(screen.getByText(new RegExp(questionCountPhrase(STEPS.length)))).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Prozess-Check starten" })).toHaveAttribute("href", "/prozess-check?src=home-weg");
+    expect(screen.getByRole("link", { name: "Kostenlose Vorlagen ansehen" })).toHaveAttribute("href", "/vorlagen?src=home-weg");
     expect(screen.getByRole("link", { name: "Erstgespräch buchen" })).toHaveAttribute("href", "/kontakt");
   });
 });

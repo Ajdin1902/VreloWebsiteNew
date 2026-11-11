@@ -2,7 +2,7 @@ import { Section } from "@/components/Section";
 import { BrandWord } from "@/components/BrandWord";
 import { CTAButton } from "@/components/CTAButton";
 import { SecondaryLink } from "@/components/SecondaryLink";
-import { CHECK_CTA, CHECK_SRC, checkHref } from "@/lib/prozessCheckCta";
+import { CHECK_CTA, VORLAGEN_CTA, CHECK_SRC, vorlagenHref } from "@/lib/prozessCheckCta";
 import { LazyVideo } from "@/components/LazyVideo";
 import { Reveal } from "@/components/Reveal";
 
@@ -36,9 +36,9 @@ export function MerakClose() {
           Das ist der <BrandWord>Merak</BrandWord>-Effekt: der Moment, in dem Ruhe einkehrt, weil etwas einfach läuft.
         </Reveal>
         <Reveal delayMs={160} className="mt-8">
-          <CTAButton href={checkHref(CHECK_SRC.homeClose)}>{CHECK_CTA.label}</CTAButton>
+          <CTAButton href={vorlagenHref(CHECK_SRC.homeClose)}>{VORLAGEN_CTA.label}</CTAButton>
           {/* Effort reducer at the last decision point: the whole free path, not just the check. */}
-          <p className="mt-3 text-sm text-tinte">{CHECK_CTA.closeMicrocopy}</p>
+          <p className="mt-3 text-sm text-tinte">{VORLAGEN_CTA.closeMicrocopy}</p>
           <SecondaryLink tone="light" prefix={CHECK_CTA.directPrefix} label={CHECK_CTA.directLabel} href={CHECK_CTA.directHref} />
         </Reveal>
       </div>

@@ -3,7 +3,7 @@ import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { Reveal } from "@/components/Reveal";
 import { CTAButton } from "@/components/CTAButton";
 import { SecondaryLink } from "@/components/SecondaryLink";
-import { CHECK_CTA, CHECK_SRC, checkHref, questionCountPhrase } from "@/lib/prozessCheckCta";
+import { CHECK_CTA, VORLAGEN_CTA, CHECK_SRC, vorlagenHref, questionCountPhrase } from "@/lib/prozessCheckCta";
 import { STEPS } from "@/lib/prozessCheck";
 
 // The free path (Ajdin 2026-11-05): Prozess-Check → Prozess-Audit → Fahrplan,
@@ -51,10 +51,10 @@ export function DerWeg() {
         ))}
       </Reveal>
       <Reveal delayMs={240} className="mt-10 text-center">
-        <CTAButton tone="dark" href={checkHref(CHECK_SRC.homeWeg)}>
-          {CHECK_CTA.label}
+        <CTAButton tone="dark" href={vorlagenHref(CHECK_SRC.homeWeg)}>
+          {VORLAGEN_CTA.label}
         </CTAButton>
-        <p className="mt-3 text-sm text-gletscher">{CHECK_CTA.microcopy}</p>
+        <p className="mt-3 text-sm text-gletscher">{VORLAGEN_CTA.microcopy}</p>
         <SecondaryLink tone="dark" prefix={CHECK_CTA.directPrefix} label={CHECK_CTA.directLabel} href={CHECK_CTA.directHref} />
       </Reveal>
     </Section>

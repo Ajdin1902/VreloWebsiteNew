@@ -20,7 +20,7 @@ describe("ProzessAudit", () => {
     render(<ProzessAudit />);
     expect(screen.getByRole("link", { name: prozessAudit.cta.label })).toHaveAttribute(
       "href",
-      "/prozess-check?src=leistungen-audit",
+      "/vorlagen?src=leistungen-audit",
     );
   });
 

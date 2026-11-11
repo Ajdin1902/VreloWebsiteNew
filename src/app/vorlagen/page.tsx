@@ -1,9 +1,12 @@
 // src/app/vorlagen/page.tsx
-// Public hub for the free assets (2026-11-06). Gifts, so no ClosingCta: the
-// Baupläne carry their own offer, the header carries the Prozess-Check.
+// Public hub for the free assets (2026-11-06), the site's front door since
+// 2026-11-11: every primary CTA lands here with ?src=, which SrcLink passes on
+// to the card pages. Gifts, so no ClosingCta; one quiet line names the free next step.
 // All copy: src/lib/vorlagen.ts.
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Suspense } from "react";
+import { SrcLink } from "@/components/vorlagen/SrcLink";
 import { CompactHero } from "@/components/CompactHero";
 import { Section } from "@/components/Section";
 import { JsonLd } from "@/components/JsonLd";
@@ -20,6 +23,9 @@ export const metadata: Metadata = {
   title: c.meta.title,
   description: c.meta.description,
 };
+
+const cardButton =
+  "mt-6 inline-flex self-start rounded-lg bg-amber px-5 py-2.5 text-sm font-semibold text-tiefes-wasser transition-colors hover:bg-honig focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vrelo-petrol focus-visible:ring-offset-2";
 
 export default function VorlagenPage() {
   return (
@@ -53,23 +59,38 @@ export default function VorlagenPage() {
                     </h3>
                     <p className="mt-3 flex-1 text-pretty">{v.text}</p>
                     {/* A file needs a plain <a>: <Link> routes /vorlagen/x.pdf client-side into /vorlagen/[slug] → 404. */}
-                    {(() => {
-                      const Tag = v.link.href.endsWith(".pdf") ? "a" : Link;
-                      return (
-                        <Tag
-                          href={v.link.href}
-                          className="mt-6 inline-flex self-start rounded-lg bg-amber px-5 py-2.5 text-sm font-semibold text-tiefes-wasser transition-colors hover:bg-honig focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vrelo-petrol focus-visible:ring-offset-2"
-                        >
+                    {v.link.href.endsWith(".pdf") ? (
+                      <a href={v.link.href} className={cardButton}>
+                        {v.link.text}
+                      </a>
+                    ) : (
+                      <Suspense
+                        fallback={
+                          <Link href={v.link.href} className={cardButton}>
+                            {v.link.text}
+                          </Link>
+                        }
+                      >
+                        <SrcLink href={v.link.href} className={cardButton}>
                           {v.link.text}
-                        </Tag>
-                      );
-                    })()}
+                        </SrcLink>
+                      </Suspense>
+                    )}
                   </li>
                 ))}
               </ul>
             </div>
           );
         })}
+        <p className="mt-14 text-pretty text-lg text-tinte">
+          {c.weiter.text}{" "}
+          <Link
+            href={c.weiter.link.href}
+            className="rounded-sm font-semibold text-vrelo-petrol underline underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vrelo-petrol focus-visible:ring-offset-2"
+          >
+            {c.weiter.link.text}
+          </Link>
+        </p>
       </Section>
       <JsonLd
         data={breadcrumbLd([

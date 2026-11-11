@@ -36,7 +36,7 @@ describe("/leistungen/[slug]", () => {
     render(await LeistungSubpage(params(page.slug)));
     const hero = screen.getByRole("heading", { level: 1 }).closest("section")!;
     expect(hero).toHaveTextContent(page.subline);
-    expect(hero.querySelector("a[href^='/prozess-check']")).not.toBeNull();
+    expect(hero.querySelector("a[href^='/vorlagen']")).not.toBeNull();
     expect(screen.getAllByText(page.subline)).toHaveLength(1);
   });
 
@@ -46,7 +46,7 @@ describe("/leistungen/[slug]", () => {
     expect(document.getElementById("prozess-audit")).not.toBeNull();
     expect(screen.getByLabelText("Förderung")).toBeInTheDocument();
     const hrefs = screen.getAllByRole("link").map((l) => l.getAttribute("href"));
-    expect(hrefs).toContain("/prozess-check?src=leistung-prozess-audit");
+    expect(hrefs).toContain("/vorlagen?src=leistung-prozess-audit");
   });
 
   it("404s an unknown slug", async () => {

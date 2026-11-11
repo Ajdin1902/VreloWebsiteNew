@@ -6,7 +6,7 @@ import Link from "next/link";
 import { navLinks, leistungenMenu } from "@/lib/nav";
 import { BrandLockup } from "@/components/BrandLockup";
 import { CTAButton } from "@/components/CTAButton";
-import { CHECK_CTA, CHECK_SRC, checkHref } from "@/lib/prozessCheckCta";
+import { VORLAGEN_CTA, CHECK_SRC, vorlagenHref } from "@/lib/prozessCheckCta";
 
 // Mobile-only navigation: a burger that opens a full-screen tiefes-wasser drawer.
 // Hidden at md+ (the desktop nav in Header takes over). a11y: aria-expanded,
@@ -119,8 +119,8 @@ export function MobileNav() {
           </ul>
 
           <div className="mt-auto pt-8">
-            <CTAButton href={checkHref(CHECK_SRC.header)} tone="dark">
-              {CHECK_CTA.label}
+            <CTAButton href={vorlagenHref(CHECK_SRC.header)} tone="dark">
+              {VORLAGEN_CTA.label}
             </CTAButton>
           </div>
             </div>,

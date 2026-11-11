@@ -6,6 +6,8 @@
 // page writes into the Cal booking notes and the result e-mail, so each booked
 // call shows the button it came from. Components hold no German.
 
+import { normalizeSource } from "@/lib/source";
+
 export const CHECK_SRC = {
   header: "header",
   homeHero: "home-hero",
@@ -29,6 +31,7 @@ export const CHECK_SRC = {
   kontakt: "kontakt",
   footer: "footer",
   karte: "karte",
+  vorlagen: "vorlagen",
 } as const;
 
 export type CheckSrc = (typeof CHECK_SRC)[keyof typeof CHECK_SRC];
@@ -44,6 +47,35 @@ export function kontaktHref(src: CheckSrc): string {
   return `/kontakt?src=${src}`;
 }
 
+// Front door since 2026-11-11 (Ajdin): every primary CTA leads to /vorlagen.
+// Vorlage, Gespräch and Fahrplan are all free; the Prozess-Check is one of the
+// free tools there (spec docs/superpowers/specs/2026-11-11-leistungen-vorlagen-garantie-design.md §3.3).
+export function vorlagenHref(src: CheckSrc): string {
+  return `/vorlagen?src=${src}`;
+}
+
+/** Appends the visitor's ?src= to an internal page link so attribution survives one hop.
+ *  Invalid slugs, files and external links are left as they are. */
+export function withSrc(href: string, raw: string | null | undefined): string {
+  const src = normalizeSource(raw);
+  if (!src || !href.startsWith("/") || href.endsWith(".pdf")) return href;
+  const [path, query = ""] = href.split("?");
+  const params = new URLSearchParams(query);
+  params.set("src", src);
+  return `${path}?${params.toString()}`;
+}
+
+export const VORLAGEN_CTA = {
+  label: "Kostenlose Vorlagen ansehen",
+  short: "Vorlagen",
+  microcopy: "Bauplan für deine Branche. Danach machen wir zusammen deinen Fahrplan, auch kostenlos.",
+  // Homepage close only: echoes the free path (DerWeg) at the last decision point.
+  closeMicrocopy: "Vorlage, Gespräch und Fahrplan: alles kostenlos.",
+  // The quiet second path under a /kontakt button.
+  secondaryPrefix: "Noch unsicher?",
+  secondaryLabel: "Erst eine kostenlose Vorlage ansehen",
+} as const;
+
 export const CHECK_CTA = {
   label: "Prozess-Check starten",
   short: "Prozess-Check",
@@ -54,9 +86,6 @@ export const CHECK_CTA = {
   directPrefix: "Lieber direkt reden?",
   directLabel: "Erstgespräch buchen",
   directHref: "/kontakt",
-  // The quiet second path under a /kontakt button (the FAQ exception).
-  checkPrefix: "Noch unsicher?",
-  checkLabel: "Erst den Prozess-Check machen",
   // One line above the scheduler on /kontakt.
   kontaktHintPrefix: "Noch unsicher, ob sich ein Gespräch lohnt?",
   kontaktHintLink: "Der Prozess-Check",

@@ -6,7 +6,7 @@
 // decision (2026-08-31); the body carries the fahrplan-is-yours close, so there
 // is no separate keep-note or price line anymore. Spec:
 // Knowledge/marketing/prozess-check-funnel.md
-import { CHECK_CTA, CHECK_SRC, checkHref } from "@/lib/prozessCheckCta";
+import { CHECK_CTA, VORLAGEN_CTA, CHECK_SRC, vorlagenHref } from "@/lib/prozessCheckCta";
 
 export type ProzessAudit = {
   label: string;
@@ -32,6 +32,6 @@ export const prozessAudit: ProzessAudit = {
   ],
   // Front door since 2026-09-26: primary = the Prozess-Check (answers travel
   // into the booking), secondary = the Erstgespräch for warm visitors.
-  cta: { label: CHECK_CTA.label, href: checkHref(CHECK_SRC.leistungenAudit) },
+  cta: { label: VORLAGEN_CTA.label, href: vorlagenHref(CHECK_SRC.leistungenAudit) },
   secondary: { prefix: CHECK_CTA.directPrefix, label: CHECK_CTA.directLabel, href: CHECK_CTA.directHref },
 };

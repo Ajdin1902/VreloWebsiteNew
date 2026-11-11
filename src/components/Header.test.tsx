@@ -23,16 +23,16 @@ describe("Header", () => {
 
   it("sends the desktop CTA to the Prozess-Check", () => {
     render(<Header />);
-    expect(screen.getByRole("link", { name: "Prozess-Check starten" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Kostenlose Vorlagen ansehen" })).toHaveAttribute(
       "href",
-      "/prozess-check?src=header",
+      "/vorlagen?src=header",
     );
   });
 
   it("keeps a compact Prozess-Check CTA reachable on mobile (one tap, outside the drawer)", () => {
     render(<Header />);
-    expect(screen.getByRole("link", { name: "Prozess-Check" })).toHaveAttribute("href", "/prozess-check?src=header");
-    expect(screen.getByRole("link", { name: "Prozess-Check" })).toHaveClass("whitespace-nowrap");
+    expect(screen.getByRole("link", { name: "Vorlagen" })).toHaveAttribute("href", "/vorlagen?src=header");
+    expect(screen.getByRole("link", { name: "Vorlagen" })).toHaveClass("whitespace-nowrap");
   });
 
   it("keeps Kontakt in the nav as the path to a call", () => {
