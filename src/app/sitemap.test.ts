@@ -75,4 +75,14 @@ describe("sitemap", () => {
   it("never lists the unlisted /bauplan page", () => {
     expect(sitemap().map((e) => e.url).some((u) => u.includes("/bauplan"))).toBe(false);
   });
+
+  it("gives static routes no lastModified and articles their own date", () => {
+    const entries = sitemap();
+    const home = entries.find((e) => e.url === siteUrl)!;
+    expect(home.lastModified).toBeUndefined();
+    for (const a of getAllArticles({ includeDrafts: false })) {
+      const e = entries.find((x) => x.url === `${siteUrl}/ratgeber/${a.slug}`)!;
+      expect(e.lastModified).toEqual(new Date(a.date));
+    }
+  });
 });

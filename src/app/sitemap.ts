@@ -7,7 +7,6 @@ import { KI_AGENTEN_PATH } from "@/lib/kiAgenten";
 import { VORLAGEN_PATH, vorlageBauplaene } from "@/lib/vorlagen";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
   const staticRoutes = [
     "",
     "/leistungen",
@@ -25,10 +24,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/impressum",
     "/datenschutz",
     "/newsletter",
-  ].map((p) => ({
-    url: `${siteUrl}${p}`,
-    lastModified: now,
-  }));
+    // No lastModified on static routes: a build date would tell Google everything changes on each deploy.
+  ].map((p) => ({ url: `${siteUrl}${p}` }));
   // Always production semantics for the sitemap — drafts are never listed.
   const articles = getAllArticles({ includeDrafts: false }).map((a) => ({
     url: `${siteUrl}/ratgeber/${a.slug}`,
