@@ -81,7 +81,8 @@ describe("leistungenPages", () => {
 
   // The four former KI pages live on as one card each; the old URLs 308 to these anchors.
   it("shows the five KI sub-services as anchored cards on KI-Automatisierung only", () => {
-    expect(KI_KARTEN_IDS).toEqual(["ki-assistenten", "ki-betriebssystem", "claude", "ki-server", "ki-schulung"]);
+    // River order since 2026-11-12: from the data to the team.
+    expect(KI_KARTEN_IDS).toEqual(["ki-betriebssystem", "ki-server", "claude", "ki-assistenten", "ki-schulung"]);
     expect(ki().loesung.karten!.map((k) => k.id)).toEqual(KI_KARTEN_IDS);
     for (const k of ki().loesung.karten!) expect(k.kurz.length, k.title).toBeLessThanOrEqual(110);
     expect(leistungenPages.filter((p) => p.loesung.karten).map((p) => p.slug)).toEqual(["ki-automatisierung"]);

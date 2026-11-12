@@ -1,14 +1,13 @@
-import Link from "next/link";
 import { Section } from "@/components/Section";
 import { Reveal } from "@/components/Reveal";
 import type { Loesung } from "@/lib/leistungenPages";
 import { WartungTabelle } from "./WartungTabelle";
+import { KiFluss } from "./KiFluss";
 
 // The Lösung in three numbered steps (slim redesign 2026-11-11), on paper after
-// the dark „Kennst du das?“. KI-Automatisierung adds its sub-services as small
-// cards; Betreuung swaps the steps for the Wartung table. Each KI card
-// carries the anchor an old URL 308s to, scroll margin on the same element so
-// the sticky header never covers it.
+// the dark „Kennst du das?“. KI-Automatisierung adds its sub-services as
+// stations on a river (KiFluss, Ajdin 2026-11-12); Betreuung swaps the steps
+// for the Wartung table. Each KI station carries the anchor an old URL 308s to.
 export function LoesungBlock({ loesung }: { loesung: Loesung }) {
   return (
     <Section tone="paper">
@@ -34,22 +33,8 @@ export function LoesungBlock({ loesung }: { loesung: Loesung }) {
           // No Reveal here: its hidden offset would move the 308 anchors under the header.
           <div className="mt-14">
             <h3 className="text-2xl font-semibold tracking-tight text-tiefes-wasser">{loesung.kartenHeading}</h3>
-            <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {loesung.karten.map((k) => (
-                <li key={k.id} id={k.id} className="scroll-mt-24 rounded-2xl bg-sonnenlicht p-5">
-                  <p className="font-semibold text-tiefes-wasser">{k.title}</p>
-                  <p className="mt-1 text-pretty text-tinte">{k.kurz}</p>
-                  {k.link ? (
-                    <Link
-                      href={k.link.href}
-                      className="mt-3 inline-block text-sm font-semibold text-tiefes-wasser underline underline-offset-2 transition-colors hover:text-vrelo-petrol"
-                    >
-                      {k.link.label}
-                    </Link>
-                  ) : null}
-                </li>
-              ))}
-            </ul>
+            {loesung.kartenHinweis ? <p className="mt-2 text-pretty text-lg text-tinte">{loesung.kartenHinweis}</p> : null}
+            <KiFluss karten={loesung.karten} />
           </div>
         ) : null}
       </div>

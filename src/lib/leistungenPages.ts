@@ -19,7 +19,8 @@ export type WarumPunkt = { title: string; body: string; link?: { label: string; 
 
 // The four former KI pages (and the assistant scene) live on as one card each;
 // their old URLs 308 to these anchors (next.config.ts).
-export const KI_KARTEN_IDS = ["ki-assistenten", "ki-betriebssystem", "claude", "ki-server", "ki-schulung"] as const;
+// River order (Ajdin 2026-11-12): from the client's data down to the team.
+export const KI_KARTEN_IDS = ["ki-betriebssystem", "ki-server", "claude", "ki-assistenten", "ki-schulung"] as const;
 export type KiKarte = { id: (typeof KI_KARTEN_IDS)[number]; title: string; kurz: string; link?: { href: string; label: string } };
 
 export type Pain = { heading: string; moments: string[]; close: string };
@@ -28,6 +29,8 @@ export type Loesung = {
   heading: string;
   schritte?: [Schritt, Schritt, Schritt];
   kartenHeading?: string;
+  /** One line under the heading: the services can be booked on their own. */
+  kartenHinweis?: string;
   karten?: KiKarte[];
   tabelle?: "wartung";
 };
@@ -219,7 +222,11 @@ export const leistungenPages: LeistungPage[] = [
         { title: "Du gibst frei", text: "Nichts geht raus, bevor du es bestätigst." },
       ],
       kartenHeading: "Was dazugehört",
+      kartenHinweis: "Jede Leistung bekommst du auch einzeln, ganz unabhängig von den anderen.",
       karten: [
+        { id: "ki-betriebssystem", title: "KI-Betriebssystem", kurz: "Alles über deinen Betrieb an einer Stelle, damit jede KI darauf aufbaut." },
+        { id: "ki-server", title: "KI-Server", kurz: "KI für sensible Daten auf einem Server, der dir gehört. Das Modell rechnet innerhalb der EU." },
+        { id: "claude", title: "Claude für Unternehmen", kurz: "Claude, der KI-Assistent von Anthropic, eingerichtet für dein Team. Auf Wunsch über eine EU-Cloud." },
         {
           id: "ki-assistenten",
           title: "KI-Assistenten",
@@ -227,9 +234,6 @@ export const leistungenPages: LeistungPage[] = [
           // Ajdin 2026-11-11: the agent examples live on their own page.
           link: { href: KI_AGENTEN_PATH, label: "Beispiele für jede Abteilung" },
         },
-        { id: "ki-betriebssystem", title: "KI-Betriebssystem", kurz: "Alles über deinen Betrieb an einer Stelle, damit jede KI darauf aufbaut." },
-        { id: "claude", title: "Claude für Unternehmen", kurz: "Claude, der KI-Assistent von Anthropic, eingerichtet für dein Team. Auf Wunsch über eine EU-Cloud." },
-        { id: "ki-server", title: "KI-Server", kurz: "KI für sensible Daten auf einem Server, der dir gehört. Das Modell rechnet innerhalb der EU." },
         { id: "ki-schulung", title: "KI-Schulung", kurz: "Dein Team lernt Claude an euren eigenen Aufgaben." },
       ],
     },

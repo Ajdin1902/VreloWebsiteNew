@@ -73,6 +73,20 @@ describe("LoesungBlock", () => {
     }
   });
 
+  // Ajdin 2026-11-12: the KI services as stations on a river from Deine Daten to
+  // Dein Team, with the note that each one can be booked on its own.
+  it("shows the KI services as stations on a river, each bookable on its own", () => {
+    const l = page("ki-automatisierung").loesung;
+    const { container } = render(<LoesungBlock loesung={l} />);
+    const fluss = container.querySelector("[data-fluss]")!;
+    expect([...fluss.querySelectorAll("li")].map((li) => li.id)).toEqual(["ki-betriebssystem", "ki-server", "claude", "ki-assistenten", "ki-schulung"]);
+    expect(fluss).toHaveTextContent("Deine Daten");
+    expect(fluss).toHaveTextContent("Dein Team");
+    expect(fluss.querySelector("svg path")).not.toBeNull();
+    expect(screen.getByText(l.kartenHinweis!)).toBeInTheDocument();
+    expect(l.kartenHinweis).toBe("Jede Leistung bekommst du auch einzeln, ganz unabhängig von den anderen.");
+  });
+
   // Ajdin 2026-11-11: the KI-Assistenten card leads to the agent examples page.
   it("links the KI-Assistenten card to the agent examples", () => {
     const { container } = render(<LoesungBlock loesung={page("ki-automatisierung").loesung} />);
