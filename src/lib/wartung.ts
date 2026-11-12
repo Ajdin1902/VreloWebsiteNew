@@ -67,7 +67,7 @@ export const wartungTiers: WartungTier[] = [
       verbessern: ["Nicht enthalten"],
       team: ["Nicht enthalten"],
       bericht: ["Jeden Monat eine Zahl: wie viele Vorgänge dein System erledigt hat"],
-      ergebnis: ["Es läuft", "Richtig, wenn dein System zuverlässig laufen soll und sonst nichts"],
+      ergebnis: ["Es läuft", "Richtig, wenn dein System zuverlässig laufen soll"],
     },
   },
   {

@@ -79,6 +79,9 @@ describe("wartung tiers (Ajdin 2026-11-11, four tiers since 2026-11-12)", () => 
       "Wir automatisieren deinen Betrieb",
     ]);
     for (const t of wartungTiers) expect(t.zeilen.ergebnis[1], t.id).toMatch(/^Richtig, wenn /);
+    // Only Minimum is the "nothing else" tier since 2026-11-12.
+    expect(wartungTiers[1].zeilen.ergebnis[1]).toBe("Richtig, wenn dein System zuverlässig laufen soll");
+    expect(JSON.stringify(wartungTiers.slice(1))).not.toMatch(/sonst nichts/);
   });
 
   // Basis adds the real alarm over Minimum; Standard is spelled out against Basis.
