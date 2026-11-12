@@ -8,7 +8,7 @@ import {
   WARTUNG_PREIS_ZUSATZ,
   WARTUNG_PREIS_LABEL,
   wartungPreis,
-  wartungPreisSatz,
+  wartungPreisPunkte,
 } from "./wartung";
 import { findCopyIssues } from "./ratgeberCopy";
 
@@ -113,7 +113,7 @@ describe("wartung tiers (Ajdin 2026-11-11, four tiers since 2026-11-12)", () => 
     expect(WARTUNG_HINWEIS).toBe(
       "Ab dem 3. Monat monatlich kündbar. Kündigst du, läuft dein System weiter, nur ohne Updates und Anpassungen von mir.",
     );
-    for (const s of [WARTUNG_HINWEIS, wartungPreisSatz(), JSON.stringify(wartungTiers)]) {
+    for (const s of [WARTUNG_HINWEIS, ...wartungPreisPunkte(), JSON.stringify(wartungTiers)]) {
       expect(s).not.toMatch(/(?<!dem 3\. Monat )monatlich kündbar/i);
       expect(s).not.toMatch(/sicher weiter/);
     }
@@ -136,10 +136,13 @@ describe("wartung tiers (Ajdin 2026-11-11, four tiers since 2026-11-12)", () => 
     expect(JSON.stringify(wartungTiers)).not.toMatch(/Hosting|bei mir gehostet/i);
   });
 
-  it("builds the FAQ price sentence from the tiers, Partner without a number", () => {
-    expect(wartungPreisSatz()).toBe(
-      "Vier Stufen, je nach Zeit mit mir und wie viel ich anpasse und verbessere: Minimum für 95, Basis für 249 oder Standard für 945 Euro im Monat, netto und ab dem 3. Monat monatlich kündbar. Partner gibt es auf Anfrage und für höchstens zwei Betriebe.",
-    );
-    expect(wartungPreisSatz()).not.toMatch(/9\.?900|undefined|NaN/);
+  it("builds the FAQ price bullets from the tiers, Partner without a number", () => {
+    expect(wartungPreisPunkte()).toEqual([
+      "Betreuung, wenn du willst: Minimum 95, Basis 249 oder Standard 945 Euro im Monat, netto",
+      "Partner auf Anfrage, für höchstens zwei Betriebe",
+      "Ab dem 3. Monat monatlich kündbar",
+      "Ohne Betreuung läuft dein System weiter, nur ohne Updates und Anpassungen von mir",
+    ]);
+    expect(wartungPreisPunkte().join(" ")).not.toMatch(/9\.?900|undefined|NaN/);
   });
 });

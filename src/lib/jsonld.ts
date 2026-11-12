@@ -50,7 +50,7 @@ export function faqPageLd() {
     mainEntity: faqGroups.flatMap((g) => g.entries).map((e) => ({
       "@type": "Question",
       name: e.question,
-      acceptedAnswer: { "@type": "Answer", text: e.answer },
+      acceptedAnswer: { "@type": "Answer", text: `${e.answer.join(". ")}.` },
     })),
   };
 }

@@ -3,7 +3,6 @@ import { CompactHero } from "@/components/CompactHero";
 import { Section } from "@/components/Section";
 import { ClosingCta } from "@/components/ClosingCta";
 import { ServiceGroups } from "@/components/leistungen/ServiceGroups";
-import { PainBlock } from "@/components/leistungen/page/PainBlock";
 import { SzenenBlock } from "@/components/leistungen/page/SzenenBlock";
 import { WarumBlock } from "@/components/leistungen/page/WarumBlock";
 import { leistungenHub } from "@/lib/leistungenPages";
@@ -19,7 +18,8 @@ export const metadata: Metadata = {
 };
 
 // The hub (slim redesign, Ajdin 2026-11-11): the subpages' order, with the
-// three doors (ServiceGroups) as the Lösung. Copy in src/lib/leistungenPages.ts.
+// three doors (ServiceGroups) as the Lösung; no Kennst-du-das since 2026-11-12.
+// Copy in src/lib/leistungenPages.ts.
 export default function LeistungenPage() {
   return (
     <>
@@ -30,7 +30,6 @@ export default function LeistungenPage() {
         image="/images/leistungen-banner.webp"
         imageClassName="scale-125 origin-bottom"
       />
-      <PainBlock pain={leistungenHub.pain} />
       <Section tone="paper">
         <ServiceGroups />
       </Section>

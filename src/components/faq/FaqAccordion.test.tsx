@@ -7,13 +7,13 @@ const groups: FaqGroup[] = [
   {
     theme: "Zusammenarbeit",
     entries: [
-      { question: "Frage A?", answer: "Antwort A." },
-      { question: "Frage B?", answer: "Antwort B." },
+      { question: "Frage A?", answer: ["Antwort A"] },
+      { question: "Frage B?", answer: ["Antwort B"] },
     ],
   },
   {
     theme: "Kosten",
-    entries: [{ question: "Frage C?", answer: "Antwort C." }],
+    entries: [{ question: "Frage C?", answer: ["Antwort C"] }],
   },
 ];
 
@@ -33,9 +33,9 @@ describe("FaqAccordion", () => {
 
   it("renders the middle group on a petrol section, the others on paper", () => {
     const three: FaqGroup[] = [
-      { theme: "Eins", entries: [{ question: "F1?", answer: "A1." }] },
-      { theme: "Zwei", entries: [{ question: "F2?", answer: "A2." }] },
-      { theme: "Drei", entries: [{ question: "F3?", answer: "A3." }] },
+      { theme: "Eins", entries: [{ question: "F1?", answer: ["A1"] }] },
+      { theme: "Zwei", entries: [{ question: "F2?", answer: ["A2"] }] },
+      { theme: "Drei", entries: [{ question: "F3?", answer: ["A3"] }] },
     ];
     const { container } = render(<FaqAccordion groups={three} />);
     const sections = container.querySelectorAll("section");
@@ -47,6 +47,12 @@ describe("FaqAccordion", () => {
 
   // The FAQ now opens on the compact image hero (2026-10-01), so the first
   // group must not be pulled up over it.
+  // Ajdin 2026-11-12: less padding on the FAQ page.
+  it("keeps the bands compact", () => {
+    const { container } = render(<FaqAccordion groups={groups} />);
+    for (const s of container.querySelectorAll("section")) expect(s.firstElementChild).toHaveClass("py-12", "md:py-16");
+  });
+
   it("does not pull the first group up under the hero", () => {
     const { container } = render(<FaqAccordion groups={groups} />);
     expect(container.querySelector("section")).not.toHaveClass("-mt-24");

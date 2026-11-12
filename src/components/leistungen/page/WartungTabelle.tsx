@@ -3,12 +3,11 @@ import { WARTUNG_HINWEIS, WARTUNG_PREIS_LABEL, WARTUNG_PREIS_ZUSATZ, wartungPrei
 // The four Wartung tiers side by side with their prices (Ajdin 2026-11-11, four
 // tiers and Partner on request since 2026-11-12). A real table from lg up (four
 // columns are too tight on a tablet); below lg the same content stacks as one card
-// per tier, so the page never scrolls sideways. Standard is the tier to push: it
-// carries the sunlit column and the petrol frame, no beliebt label (that would be a
-// claim). A cell with several lines renders as bullets, a single line as plain text.
+// per tier, so the page never scrolls sideways. No tier is marked as the suggested
+// one (Ajdin 2026-11-12: most clients take Minimum or Basis). A cell with several
+// lines renders as bullets, a single line as plain text.
 // Ergebnis and Preis close the table as one dark band: the reader first sees what
 // each tier gives, then what it costs.
-const hervor = (t: WartungTier) => t.id === "standard";
 const details = wartungZeilen.filter((z) => z.id !== "ergebnis");
 const ergebnisLabel = wartungZeilen.find((z) => z.id === "ergebnis")!.label;
 const letzte = (i: number) => i === wartungTiers.length - 1;
@@ -73,7 +72,7 @@ export function WartungTabelle() {
                 <th
                   key={t.id}
                   scope="col"
-                  className={`rounded-t-2xl p-5 align-top font-normal ${hervor(t) ? "border-x-2 border-t-2 border-vrelo-petrol bg-sonnenlicht" : ""}`}
+                  className="p-5 align-top font-normal"
                 >
                   <Kopf t={t} />
                 </th>
@@ -89,7 +88,7 @@ export function WartungTabelle() {
                 {wartungTiers.map((t) => (
                   <td
                     key={t.id}
-                    className={`border-t border-faden px-5 py-4 align-top text-pretty text-tinte ${hervor(t) ? "border-x-2 border-x-vrelo-petrol bg-sonnenlicht" : ""}`}
+                    className="border-t border-faden px-5 py-4 align-top text-pretty text-tinte"
                   >
                     <Zelle items={t.zeilen[z.id]} />
                   </td>
@@ -103,9 +102,7 @@ export function WartungTabelle() {
               {wartungTiers.map((t, i) => (
                 <td
                   key={t.id}
-                  className={`px-5 py-6 align-top ${hervor(t) ? "border-x-2 border-vrelo-petrol bg-vrelo-petrol" : "bg-tiefes-wasser"} ${
-                    letzte(i) ? "rounded-tr-2xl" : ""
-                  }`}
+                  className={`bg-tiefes-wasser px-5 py-6 align-top ${letzte(i) ? "rounded-tr-2xl" : ""}`}
                 >
                   <Ergebnis t={t} />
                 </td>
@@ -118,9 +115,7 @@ export function WartungTabelle() {
               {wartungTiers.map((t, i) => (
                 <td
                   key={t.id}
-                  className={`border-t border-t-gletscher/20 px-5 py-6 align-top ${
-                    hervor(t) ? "rounded-b-2xl border-x-2 border-b-2 border-x-vrelo-petrol border-b-vrelo-petrol bg-vrelo-petrol" : "bg-tiefes-wasser"
-                  } ${letzte(i) ? "rounded-br-2xl" : ""}`}
+                  className={`border-t border-t-gletscher/20 bg-tiefes-wasser px-5 py-6 align-top ${letzte(i) ? "rounded-br-2xl" : ""}`}
                 >
                   <Preis t={t} />
                 </td>
@@ -135,7 +130,7 @@ export function WartungTabelle() {
           <article
             key={t.id}
             data-wartung-karte
-            className={`card-depth rounded-2xl p-6 ${hervor(t) ? "border-2 border-vrelo-petrol bg-sonnenlicht" : "border border-faden bg-papier"}`}
+            className="card-depth rounded-2xl border border-faden bg-papier p-6"
           >
             <h3>
               <Kopf t={t} />

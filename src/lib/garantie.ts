@@ -11,6 +11,15 @@ export const GARANTIE = {
   faqFrage: "Wie funktioniert die Garantie?",
   // Link from the Proof card to the conditions (final review 2026-11-11, UWG §5).
   faqLink: "So funktioniert die Garantie",
-  faqAntwort:
-    "Im Angebot steht die Liste deiner Anforderungen. Der erste Punkt läuft zwei Wochen nach dem Onboarding. Die zwei Wochen beginnen, sobald ich alle Zugänge habe. Warte ich auf etwas von dir, etwa Daten oder eine Antwort, ruht die Frist so lange. Läuft der erste Punkt dann nicht, baue ich alles sauber zurück. Du bekommst alles zurück, was du bis dahin gezahlt hast. Das gilt für jeden Bau, dem der kostenlose Prozess-Audit vorausging. Nach der Übergabe folgen 14 Tage Feinschliff: Ich justiere nach, eine Erstattung gehört nicht dazu.",
+  // FAQ bullets (Ajdin 2026-11-12: every FAQ answer is a short list).
+  faqAntwort: [
+    "Im Angebot steht die Liste deiner Anforderungen",
+    "Der erste Punkt läuft zwei Wochen nach dem Onboarding",
+    "Die zwei Wochen beginnen, sobald ich alle Zugänge habe",
+    "Warte ich auf etwas von dir, etwa Daten oder eine Antwort, ruht die Frist",
+    "Läuft der erste Punkt dann nicht, baue ich alles zurück",
+    "Du bekommst alles zurück, was du bis dahin gezahlt hast",
+    "Gilt für jeden Bau nach dem kostenlosen Prozess-Audit",
+    "Danach 14 Tage Feinschliff, ohne Erstattung",
+  ],
 } as const;

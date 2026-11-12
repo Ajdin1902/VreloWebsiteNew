@@ -1,12 +1,12 @@
 // src/lib/wartung.ts
 //
-// The three Wartung tiers (Ajdin 2026-11-11, spec
+// The Wartung tiers (Ajdin 2026-11-11, spec
 // docs/superpowers/specs/2026-11-11-leistungen-vorlagen-garantie-design.md §3.5).
-// One source for the Betreuung page (comparison table, no prices since
-// Ajdin 2026-11-12) and the FAQ price sentence.
+// One source for the Betreuung page (comparison table with prices) and the FAQ
+// price bullets.
 // The tiers differ first by how much of Ajdin's time the client gets, then by
 // how much the system is adapted and improved. Partner is the anchor (×10).
-// Standard is spelled out row by row against Minimum, so the step up shows;
+// Each tier is spelled out row by row, so the step up shows;
 // the last row (Ergebnis) tells the reader which tier fits what they want.
 // Each cell is a list of short fragments (no full stops): one item renders as
 // plain text, several as bullets (Ajdin 2026-11-11).
@@ -125,9 +125,14 @@ export const WARTUNG_PREIS_ZUSATZ = "im Monat, netto";
 /** Label of the price row, the last row of the Betreuung table. */
 export const WARTUNG_PREIS_LABEL = "Preis";
 
-/** The FAQ's price sentence (the Betreuung table shows the same prices). */
-export function wartungPreisSatz(): string {
+/** The FAQ's price bullets (the Betreuung table shows the same prices). */
+export function wartungPreisPunkte(): string[] {
   const [m, b, s, p] = wartungTiers;
   const n = (t: WartungTier) => eur.format(t.preisNetto!);
-  return `Vier Stufen, je nach Zeit mit mir und wie viel ich anpasse und verbessere: ${m.name} für ${n(m)}, ${b.name} für ${n(b)} oder ${s.name} für ${n(s)} Euro im Monat, netto und ab dem 3. Monat monatlich kündbar. ${p.name} gibt es auf Anfrage und für höchstens zwei Betriebe.`;
+  return [
+    `Betreuung, wenn du willst: ${m.name} ${n(m)}, ${b.name} ${n(b)} oder ${s.name} ${n(s)} Euro im Monat, netto`,
+    `${p.name} auf Anfrage, für höchstens zwei Betriebe`,
+    WARTUNG_KUENDIGUNG.replace(/\.$/, ""),
+    "Ohne Betreuung läuft dein System weiter, nur ohne Updates und Anpassungen von mir",
+  ];
 }

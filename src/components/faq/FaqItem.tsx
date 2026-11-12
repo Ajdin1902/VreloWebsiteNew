@@ -6,7 +6,8 @@ export function FaqItem({
 }: {
   id?: string;
   question: string;
-  answer: string;
+  /** A list renders as bullets (FAQ); a string stays one paragraph (parked /makler). */
+  answer: string | readonly string[];
   onDark?: boolean;
 }) {
   // On a petrol band the accordion adopts the on-dark palette (papier question,
@@ -19,10 +20,11 @@ export function FaqItem({
     : "focus-visible:ring-offset-papier";
   const ring = onDark ? "focus-visible:ring-honig" : "focus-visible:ring-vrelo-petrol";
   const marker = onDark ? "text-honig" : "text-vrelo-petrol";
+  const bullet = onDark ? "marker:text-honig" : "marker:text-vrelo-petrol";
   const answerColor = onDark ? "text-gletscher" : "text-tinte";
   return (
     // scroll-mt on the element carrying the id (sticky header, see CLAUDE.md gotchas).
-    <details id={id} className={`group scroll-mt-24 border-b ${border} py-4`}>
+    <details id={id} className={`group scroll-mt-24 border-b ${border} py-3`}>
       <summary
         className={`flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-medium ${summaryColor} transition-colors ${hover} [&::-webkit-details-marker]:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${ringOffset} ${ring}`}
       >
@@ -34,7 +36,15 @@ export function FaqItem({
           +
         </span>
       </summary>
-      <p className={`mt-3 max-w-2xl text-pretty leading-relaxed ${answerColor}`}>{answer}</p>
+      {typeof answer === "string" ? (
+        <p className={`mt-3 max-w-2xl text-pretty leading-relaxed ${answerColor}`}>{answer}</p>
+      ) : (
+        <ul className={`mt-2 flex max-w-2xl list-disc flex-col gap-1 pl-5 text-pretty leading-relaxed ${bullet} ${answerColor}`}>
+          {answer.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      )}
     </details>
   );
 }

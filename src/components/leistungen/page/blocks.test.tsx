@@ -157,6 +157,14 @@ describe("LoesungBlock with the Wartung table", () => {
     expect(cards[3]).not.toHaveTextContent("€");
     expect(cards[3].querySelector("[data-preis]")).toHaveTextContent(wartungTiers[3].grenze!);
   });
+
+  // Ajdin 2026-11-12: most clients take Minimum or Basis, so no tier is pushed.
+  it("marks no tier as the suggested one", () => {
+    const { container } = render(<LoesungBlock loesung={page("betreuung").loesung} />);
+    expect(container.querySelector("table .bg-sonnenlicht, table .border-vrelo-petrol, table .bg-vrelo-petrol")).toBeNull();
+    const klassen = [...container.querySelectorAll("[data-wartung-karte]")].map((k) => k.className);
+    expect(new Set(klassen).size).toBe(1);
+  });
 });
 
 describe("SzenenBlock", () => {

@@ -268,18 +268,8 @@ export const leistungenPages: LeistungPage[] = [
   },
 ];
 
-// The hub (/leistungen): same order, ServiceGroups (the three doors) is its Lösung.
-export const leistungenHub: Pick<LeistungPage, "szenen" | "warum" | "cta"> & { pain: Pain } = {
-  pain: {
-    heading: "Kennst du das?",
-    moments: [
-      "Anfragen von Hand abtippen",
-      "Rechnungen nach Feierabend",
-      "Das Wichtige geht im Postfach unter",
-      "Dieselben Daten in drei Programmen",
-    ],
-    close: "Jeder Handgriff kostet Minuten. Zusammen sind es Stunden pro Woche.",
-  },
+// The hub (/leistungen): same order, ServiceGroups (the three doors) is its Lösung, no Kennst-du-das.
+export const leistungenHub: Pick<LeistungPage, "szenen" | "warum" | "cta"> = {
   szenen: BEI_KUNDEN,
   warum: WARUM_BAU,
   cta: {

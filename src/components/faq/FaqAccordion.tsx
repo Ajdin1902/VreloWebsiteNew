@@ -19,6 +19,7 @@ export function FaqAccordion({ groups }: { groups: FaqGroup[] }) {
           <Section
             key={group.theme}
             tone={onDark ? "petrol" : "paper"}
+            dense
             className={onDark ? "relative isolate overflow-hidden" : undefined}
           >
             {/* Petrol bands carry the calm water texture (subpage rule: dark =

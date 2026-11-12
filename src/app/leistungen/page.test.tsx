@@ -13,11 +13,11 @@ describe("/leistungen", () => {
     expect(hero.querySelectorAll("a")).toHaveLength(0);
   });
 
-  it("runs Kennst du das?, the three doors, proof, Warum ich and the close, nothing else", () => {
+  // Ajdin 2026-11-12: no Kennst du das? on the hub either.
+  it("runs the three doors, proof, Warum ich and the close, nothing else", () => {
     const { container } = render(<LeistungenPage />);
     const h2s = [...container.querySelectorAll("h2")].map((h) => h.textContent?.trim());
     expect(h2s).toEqual([
-      leistungenHub.pain.heading,
       "Prüfen",
       "Bauen",
       "Betreiben",
@@ -25,6 +25,7 @@ describe("/leistungen", () => {
       "Warum ich",
       leistungenHub.cta.heading,
     ]);
+    expect(container.textContent).not.toContain("Kennst du das?");
     expect(container.textContent).not.toContain("Wenn du mit mir baust");
     expect(container.textContent).not.toContain("Woran es bei den meisten scheitert");
   });

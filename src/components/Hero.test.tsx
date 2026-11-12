@@ -23,13 +23,12 @@ describe("Hero", () => {
     expect(section?.getAttribute("style")).toBeFalsy();
   });
 
-  // Ajdin 2026-11-12: the sub says what we do and links the free start; no guarantee in the hero.
-  it("explains the three words in the sub and links the Vorlage there", () => {
+  // Ajdin 2026-11-12: the sub says what we do, plain text (the button carries the link); no guarantee in the hero.
+  it("explains the three words in the sub, without a link", () => {
     render(<Hero />);
-    const sub = screen.getByText((_, el) => el?.tagName === "P" && el.textContent === "Wir prüfen deine Prozesse und automatisieren, was dich jeden Tag Zeit kostet. Fang mit der kostenlosen Vorlage für deine Branche an.");
-    const link = screen.getByRole("link", { name: "kostenlosen Vorlage für deine Branche" });
-    expect(sub).toContainElement(link);
-    expect(link).toHaveAttribute("href", "/vorlagen?src=home-hero");
+    const sub = screen.getByText("Wir prüfen deine Prozesse und automatisieren, was dich jeden Tag Zeit kostet. Fang mit der kostenlosen Vorlage für deine Branche an.");
+    expect(sub.tagName).toBe("P");
+    expect(sub.querySelector("a")).toBeNull();
     expect(screen.queryByText(/Geld zurück/)).toBeNull();
   });
 

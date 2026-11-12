@@ -1,9 +1,8 @@
-import { questionCountPhrase } from "@/lib/prozessCheckCta";
 import { GARANTIE } from "@/lib/garantie";
-import { wartungPreisSatz } from "@/lib/wartung";
-import { STEPS } from "@/lib/prozessCheck";
+import { wartungPreisPunkte } from "@/lib/wartung";
 
-export type FaqEntry = { question: string; answer: string };
+// Ajdin 2026-11-12: every answer is a short bullet list, only the concrete points.
+export type FaqEntry = { question: string; answer: readonly string[] };
 export type FaqGroup = { theme: string; entries: FaqEntry[] };
 
 /** Stable `id` for a FAQ entry, so other pages can deep-link `/faq#<anchor>`. */
@@ -28,18 +27,12 @@ export const faqGroups: FaqGroup[] = [
     entries: [
       {
         question: "Wie läuft ein Projekt mit dir ab?",
-        answer:
-          "In drei Schritten: Zuerst legen wir in einem unverbindlichen Erstgespräch den Grundstein: womit du arbeitest, wo es hakt, wo du hinwillst. Dann erstelle ich dir einen genauen Plan, wie wir dorthin kommen: Welche Prozesse lassen sich automatisieren, wo lohnt es sich am meisten und was bringt dir das konkret? Zum Schluss entscheidest du, wann du diesen Weg gehen möchtest. Nach dem Projekt bleibe ich für Anpassungen erreichbar.",
-      },
-      {
-        question: "Für welche Betriebe baust du?",
-        answer:
-          "Für Betriebe und Unternehmen jeder Größe im DACH-Raum, vom Handwerk über Agenturen und Praxen bis zum Mittelstand. Wenn sich bei dir täglich derselbe Kleinkram wiederholt, lohnt es sich.",
-      },
-      {
-        question: "Arbeitest du auch remote?",
-        answer:
-          "Ja, komplett remote. Die Zusammenarbeit läuft über kurze Calls und klare Absprachen, egal, wo dein Betrieb sitzt.",
+        answer: [
+          "Erstgespräch: womit du arbeitest, wo es hakt, wo du hinwillst",
+          "Fahrplan: welche Abläufe sich automatisieren lassen und was dir das bringt",
+          "Du entscheidest, ob und wann wir bauen",
+          "Nach dem Projekt bleibe ich für Anpassungen erreichbar",
+        ],
       },
       {
         question: GARANTIE.faqFrage,
@@ -47,23 +40,27 @@ export const faqGroups: FaqGroup[] = [
       },
       {
         question: "Was passiert nach dem Projekt?",
-        answer:
-          "Nach der Übergabe beobachte ich dein System 14 Tage lang und justiere nach, ohne dass du dich darum kümmerst. Danach bin ich weiter erreichbar. Weil alles sauber dokumentiert ist, lässt sich dein System anpassen, wenn sich etwas in deinem Betrieb ändert.",
+        answer: [
+          "14 Tage beobachte ich dein System und justiere nach",
+          "Danach bin ich weiter erreichbar",
+          "Alles ist dokumentiert, also lässt sich dein System später anpassen",
+        ],
       },
       {
         question: "Was ist, wenn du mal nicht erreichbar bist?",
-        answer:
-          "Dein System hängt nicht an mir. Server, Konten, Daten und Dokumentation gehören dir. Es läuft weiter, auch wenn ich im Urlaub oder krank bin. Mit laufender Betreuung sage ich dir vorher Bescheid, wann ich weg bin. Dringendes bleibt nicht liegen.",
-      },
-      {
-        question: "Ersetzt die Automatisierung mich oder meine Mitarbeiter?",
-        answer:
-          "Nein. Sie übernimmt die Aufgaben, die sich jeden Tag wiederholen: das Abtippen, Weiterleiten, Erinnern. Alles, was dein Urteil oder das deiner Mitarbeiter braucht, bleibt bei euch. In der Praxis heißt das: weniger Kleinkram am Schreibtisch, mehr Zeit für die Arbeit, für die deine Kunden dich bezahlen.",
+        answer: [
+          "Server, Konten, Daten und Doku gehören dir",
+          "Dein System läuft weiter, auch wenn ich im Urlaub oder krank bin",
+          "Mit Betreuung sage ich dir vorher Bescheid, wann ich weg bin",
+        ],
       },
       {
         question: "Müssen meine Mitarbeiter etwas Neues lernen?",
-        answer:
-          "Meistens nicht, oder nur einen kleinen Schritt, etwa eine Nachricht an einer neuen Stelle lesen. Die Abläufe bleiben, wie dein Team sie kennt; das System arbeitet im Hintergrund. Zur Übergabe gehört eine Dokumentation für deine Mitarbeiter, in klarer Sprache und ohne Fachbegriffe.",
+        answer: [
+          "Meistens nicht, höchstens einen kleinen Schritt, etwa eine Nachricht an einer neuen Stelle lesen",
+          "Die Abläufe bleiben, wie dein Team sie kennt",
+          "Zur Übergabe gehört eine Anleitung für deine Mitarbeiter, ohne Fachbegriffe",
+        ],
       },
     ],
   },
@@ -72,23 +69,37 @@ export const faqGroups: FaqGroup[] = [
     entries: [
       {
         question: "Muss ich meine bestehenden Tools wechseln?",
-        answer:
-          "Nicht zwingend. Wenn eine andere Lösung dein Problem an der Wurzel löst, schlage ich sie dir vor. Manchmal ist damit schon das Grundproblem behoben. Oft reicht es aber, deine bestehenden Tools sauber miteinander zu verbinden. Ich zwinge dir kein neues System auf, sondern passe mich deiner Lage an.",
+        answer: [
+          "Meistens nicht: Ich verbinde die Programme, die du schon nutzt",
+          "Löst ein anderes Programm dein Problem an der Wurzel, schlage ich es dir vor",
+          "Du entscheidest",
+        ],
       },
       {
         question: "Was passiert mit meinen Daten?",
-        answer:
-          "Deine Daten bleiben deine. Dein System läuft auf einem eigenen Server bei Hetzner, auf deinen Namen, in einem nach ISO 27001 zertifizierten Rechenzentrum in Deutschland. Ich arbeite DSGVO-konform, nutze nur die nötigen Zugänge und dokumentiere, was wohin fließt. Nutzt dein System KI mit sensiblen Daten, läuft das Modell über Server innerhalb der EU, in deinem eigenen Konto. Claude für Unternehmen geht auf zwei Wegen: direkt beim US-Anbieter Anthropic oder über Amazon oder Google, mit einem Modell, das innerhalb der EU rechnet. Sollen eure Daten in der EU bleiben, richte ich den zweiten Weg ein.",
+        answer: [
+          "Dein System läuft auf einem eigenen Server bei Hetzner, auf deinen Namen",
+          "Rechenzentrum in Deutschland, nach ISO 27001 zertifiziert",
+          "DSGVO-konform, nur die nötigen Zugänge, dokumentiert, was wohin fließt",
+          "KI mit sensiblen Daten läuft über Server innerhalb der EU, in deinem eigenen Konto",
+        ],
       },
       {
         question: "Unterschreibst du einen Vertrag zur Auftragsverarbeitung?",
-        answer:
-          "Ja. Verarbeitet dein System personenbezogene Daten, etwa von Kunden oder Mitarbeitern, schließen wir vor dem Start einen Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO. Telegram nutze ich nur, wenn du es willst. Für sensible Daten läuft dein System über E-Mail oder einen Kanal, den dein Betrieb schon nutzt.",
+        answer: [
+          "Ja, vor dem Start, nach Art. 28 DSGVO",
+          "Sobald dein System personenbezogene Daten verarbeitet, etwa von Kunden oder Mitarbeitern",
+          "Telegram nur, wenn du es willst",
+          "Für sensible Daten: E-Mail oder ein Kanal, den dein Betrieb schon nutzt",
+        ],
       },
       {
         question: "Was, wenn etwas nicht mehr funktioniert?",
-        answer:
-          "Während der Testphase schauen wir ganz genau hin und reagieren, sobald sich etwas ändert. Jede Automatisierung ist dabei dokumentiert und überwacht. Ist der Prozess etabliert, entscheidest du, ob du eine laufende Wartung möchtest.",
+        answer: [
+          "In der Testphase schaue ich genau hin und reagiere sofort",
+          "Jede Automatisierung ist dokumentiert",
+          "Danach entscheidest du, ob du eine Betreuung möchtest",
+        ],
       },
     ],
   },
@@ -97,33 +108,45 @@ export const faqGroups: FaqGroup[] = [
     entries: [
       {
         question: "Was kostet eine Automatisierung?",
-        answer:
-          "Je nach Umfang liegt eine Automatisierung zwischen 1.500 und 25.000 Euro netto. Wie viel es bei dir wird, hängt davon ab, wie viel sich automatisieren lässt, vom kleinen Baustein bis zum ganzen Ablauf, daher die große Spanne. Den genauen Betrag rechne ich für deinen Fall aus und erkläre ihn dir im Gespräch Schritt für Schritt, damit du nachvollziehen kannst, wie er zustande kommt.",
+        answer: [
+          "1.500 bis 25.000 Euro netto, je nach Umfang",
+          "Vom kleinen Baustein bis zum ganzen Ablauf",
+          "Den genauen Betrag rechne ich für deinen Fall aus und erkläre ihn dir im Gespräch",
+        ],
       },
       {
         question: "Fallen laufende Kosten an?",
-        answer:
-          `Den Server für dein System zahlst du direkt beim Anbieter und auf deinen Namen, rund 30 Euro im Monat. Nutzt dein System KI, kommen je nach Nutzung meist 5 bis 10 Euro im Monat dazu, gerechnet für ein normales Postfach mit ein paar Dutzend Mails am Tag. Weitere Fremdkosten entstehen nur, wenn eines deiner Programme für die Schnittstelle einen bezahlten Tarif verlangt, etwa manche CRM-Systeme. Das klären wir, bevor du dich entscheidest. Eine laufende Betreuung kannst du dazunehmen, wenn du willst: Je nach Stufe halte ich dein System aktuell, überwache die Abläufe, behebe Fehler und passe es an. ${wartungPreisSatz()} Die Stufe richtet sich nach dem, was die Aufgabe dir im Jahr wert ist, nicht nach dem Baupreis. Ohne Betreuung läuft dein System weiter: Das Betriebssystem des Servers aktualisiert sich selbst, die Anwendungen bleiben auf dem Stand der Übergabe.`,
+        answer: [
+          "Server: rund 30 Euro im Monat, direkt beim Anbieter und auf deinen Namen",
+          "KI, wenn dein System sie nutzt: meist 5 bis 10 Euro im Monat",
+          "Verlangt eines deiner Programme einen bezahlten Tarif für die Schnittstelle, klären wir das vorher",
+          ...wartungPreisPunkte(),
+        ],
       },
       {
         question: "Gibt es eine Förderung?",
-        answer:
-          "Sitzt dein Betrieb in Bayern, ist gewerbesteuerpflichtig und hat weniger als 50 Mitarbeiter, kann der Digitalbonus Bayern einen Teil der Kosten übernehmen, oft bis zur Hälfte. Wichtig: Der Antrag muss gestellt sein, bevor du mich beauftragst, auch mündlich. Arztpraxen und freie Berufe sind nicht förderfähig. Ob es bei dir passt, klären wir im Gespräch.",
+        answer: [
+          "Digitalbonus Bayern: oft bis zur Hälfte der Kosten",
+          "Für gewerbesteuerpflichtige Betriebe in Bayern mit weniger als 50 Mitarbeitern",
+          "Der Antrag muss vor dem Auftrag gestellt sein, auch vor einer mündlichen Zusage",
+          "Arztpraxen und freie Berufe sind nicht förderfähig",
+        ],
       },
       {
         question: "Wie lange dauert die Umsetzung?",
-        answer:
-          "Die meisten ersten Automatisierungen stehen innerhalb weniger Wochen, kleinere Abläufe oft schon in Tagen. Je genauer wir Ausgangslage und Ziel am Anfang festlegen, desto reibungsloser läuft die Umsetzung.",
+        answer: [
+          "Erste Ergebnisse siehst du in den ersten zwei Wochen nach dem Onboarding",
+          "Kleinere Abläufe stehen oft schon nach wenigen Tagen",
+        ],
       },
       {
         question: "Wie fange ich an?",
-        answer:
-          `Mit dem Prozess-Check: ${questionCountPhrase(STEPS.length)}, drei Minuten, dein Ergebnis sofort. Wenn du danach reden willst, buchst du dir direkt 30 Minuten mit mir.`,
-      },
-      {
-        question: "Ist der Prozess-Check wirklich kostenlos?",
-        answer:
-          "Ja. Du bekommst Klarheit über deine Zeit, ich lerne deinen Betrieb kennen. Ob wir danach zusammenarbeiten, entscheidest du.",
+        answer: [
+          "Schau dir die kostenlosen Vorlagen an",
+          "Geh die Vorlage für deine Branche durch",
+          "Dann vereinbarst du ein Gespräch mit mir und wir erstellen deinen Fahrplan",
+          "Alles kostenlos",
+        ],
       },
     ],
   },

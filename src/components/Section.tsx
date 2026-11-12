@@ -14,12 +14,15 @@ const toneClasses: Record<Tone, string> = {
 export function Section({
   tone = "paper",
   tint = false,
+  dense = false,
   className = "",
   id,
   children,
 }: {
   tone?: Tone;
   tint?: boolean;
+  /** Half the vertical padding, for bands that only hold a short list (FAQ). */
+  dense?: boolean;
   className?: string;
   id?: string;
   children: ReactNode;
@@ -29,7 +32,7 @@ export function Section({
   const base = tint ? "bg-gletscher/30 text-tinte" : toneClasses[tone];
   return (
     <section id={id} className={[base, className].filter(Boolean).join(" ")}>
-      <div className="mx-auto max-w-6xl px-6 py-24 md:py-32">{children}</div>
+      <div className={`mx-auto max-w-6xl px-6 ${dense ? "py-12 md:py-16" : "py-24 md:py-32"}`}>{children}</div>
     </section>
   );
 }

@@ -24,11 +24,11 @@ describe("GARANTIE", () => {
   });
 
   it("spells out all four conditions in the FAQ answer", () => {
-    for (const s of ["Prozess-Audit", "Zugänge", "Warte ich", "zurück", "Feinschliff"]) expect(GARANTIE.faqAntwort).toContain(s);
+    for (const s of ["Prozess-Audit", "Zugänge", "Warte ich", "zurück", "Feinschliff"]) expect(GARANTIE.faqAntwort.join(" ")).toContain(s);
   });
 
   it("passes the copy guards", () => {
-    for (const s of Object.values(GARANTIE)) expect(findCopyIssues(s), s).toEqual([]);
+    for (const s of Object.values(GARANTIE).flat()) expect(findCopyIssues(s), s).toEqual([]);
   });
 
   // The hero promises 2 weeks; a leftover 14-day money-back line elsewhere would contradict it (UWG §5).

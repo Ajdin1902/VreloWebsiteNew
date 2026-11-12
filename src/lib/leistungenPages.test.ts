@@ -63,7 +63,7 @@ describe("leistungenPages", () => {
   });
 
   it("keeps hero line, pain points and steps short", () => {
-    for (const p of everything()) {
+    for (const p of leistungenPages) {
       if (!p.pain) continue;
       for (const m of p.pain.moments) expect(m.length, m).toBeLessThanOrEqual(42);
       expect(p.pain.close.length, p.pain.close).toBeLessThanOrEqual(75);
