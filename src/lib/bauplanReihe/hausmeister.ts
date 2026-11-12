@@ -34,7 +34,7 @@ export const hausmeister: ReiheNische = {
     readerClose: "Fang mit dem Selbstcheck auf Seite 2 an, dafür reicht ein Stift.",
     internalPrefix: "Hausmeister-Bauplan angefordert",
   },
-  pdfPath: "/bauplan/hausmeister-bauplan-81b6e821.pdf",
+  pdfPath: "/bauplan/hausmeister-bauplan-19376ea5.pdf",
   template: "content/bauplan/hausmeister-bauplan.html",
   pages: 8,
   knownTools: [

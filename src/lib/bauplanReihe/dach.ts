@@ -35,7 +35,7 @@ export const dach: ReiheNische = {
     readerClose: "Fang mit dem Selbstcheck auf Seite 2 an, dafür reicht ein Stift.",
     internalPrefix: "Dach-Bauplan angefordert",
   },
-  pdfPath: "/bauplan/dach-bauplan-cf92a56c.pdf",
+  pdfPath: "/bauplan/dach-bauplan-443673ef.pdf",
   template: "content/bauplan/dach-bauplan.html",
   pages: 8,
   knownTools: [

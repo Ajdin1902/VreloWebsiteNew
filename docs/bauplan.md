@@ -1,6 +1,6 @@
 # Baupläne + /vorlagen
 
-Lead-magnet PDFs, their pages and the `/vorlagen` hub, read on demand when touching `/bauplan/*`, `/vorlagen/*`, `content/bauplan/` or `src/lib/bauplan*`. Business context (codes, outreach, the load-bearing Agentur PDF name) → HQ root CLAUDE.md §2.2. Always-needed rules → [../CLAUDE.md](../CLAUDE.md).
+Lead-magnet PDFs, their pages and the `/vorlagen` hub, read on demand when touching `/bauplan/*`, `/vorlagen/*`, `content/bauplan/` or `src/lib/bauplan*`. Business context (codes, outreach, the load-bearing Agentur PDF name) → [Knowledge/INDEX.md](../../Knowledge/INDEX.md). Always-needed rules → [../CLAUDE.md](../CLAUDE.md).
 
 ## /vorlagen hub
 

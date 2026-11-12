@@ -35,7 +35,7 @@ export const schreiner: ReiheNische = {
     readerClose: "Fang mit dem Selbstcheck auf Seite 2 an, dafür reicht ein Stift.",
     internalPrefix: "Schreiner-Bauplan angefordert",
   },
-  pdfPath: "/bauplan/schreiner-bauplan-9d7559a6.pdf",
+  pdfPath: "/bauplan/schreiner-bauplan-e2768c19.pdf",
   template: "content/bauplan/schreiner-bauplan.html",
   pages: 8,
   knownTools: [

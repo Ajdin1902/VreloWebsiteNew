@@ -32,7 +32,7 @@ The operational subset of the Vrelo voice for blog articles. Source of depth: `B
 | **Honest hedges** | „meiner Meinung nach“ · „Dieses Gefühl hatte ich zumindest.“ · „habe ich noch nicht getestet“ | Mark opinion as opinion; admit what I don't know. That is where the trust comes from. |
 | **„Ob A, B oder C.“ fragment** | „Ob Designer, Programmierer, Steuerberater oder sogar Beziehungsberater.“ | Part of his rhythm, but at most twice per article (the voice model uses it more; don't). Put the odd one out last. |
 
-**Who the jokes hit:** hype, the market, the AI, and me. Never the reader, his staff or a named competitor (no competitor names in public content, HQ §4). Casting the AI as staff (der neue Azubi, ein Kollege im Betriebsrat) is fine: the joke is on the AI in that role, never on the real Azubi or Kollege.
+**Who the jokes hit:** hype, the market, the AI, and me. Never the reader, his staff or a named competitor (no competitor names in public content, root CLAUDE.md „Hard rules“). Casting the AI as staff (der neue Azubi, ein Kollege im Betriebsrat) is fine: the joke is on the AI in that role, never on the real Azubi or Kollege.
 
 **Only claim what is real.** Every „ich nutze“ / „bei mir läuft“ must be live today, not planned; no time-saved figure or client result unless the founder confirmed it (HQ: never a number without confirmation). When unsure, describe what the system does, not what it saved.
 

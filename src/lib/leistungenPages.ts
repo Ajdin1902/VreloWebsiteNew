@@ -81,7 +81,7 @@ const MDZ_ASSISTENT: Szene = {
   ergebnis: "Rund 2 Stunden am Tag gespart",
 };
 const VELP_PHASEN: Szene = {
-  kunde: "Velp, Marketingagentur in Regensburg",
+  kunde: "Velp, Videoagentur in Regensburg",
   titel: "Jede Projektphase legt ihre Aufgaben selbst an",
   vorher: "Aufgaben, Fristen und Zuständige für jedes Projekt von Hand angelegt.",
   nachher: "Jede Phase legt ihre Aufgaben, Fristen und Zuständigkeiten selbst an.",

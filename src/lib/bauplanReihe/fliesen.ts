@@ -35,7 +35,7 @@ export const fliesen: ReiheNische = {
     readerClose: "Fang mit dem Selbstcheck auf Seite 2 an, dafür reicht ein Stift.",
     internalPrefix: "Fliesen-Bauplan angefordert",
   },
-  pdfPath: "/bauplan/fliesen-bauplan-37c8cff6.pdf",
+  pdfPath: "/bauplan/fliesen-bauplan-58eeb572.pdf",
   template: "content/bauplan/fliesen-bauplan.html",
   pages: 8,
   knownTools: [

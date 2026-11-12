@@ -13,7 +13,7 @@ Per-page design and copy notes for the Vrelo website, read on demand. The always
 
 ## Parked pages (code kept, rules for a revival)
 
-Redirect mechanics and un-parking → CLAUDE.md *Routes*.
+Redirect mechanics and un-parking → CLAUDE.md *Routes*. `/makler` + `/lead-check` were focus routes (`focusRoutes`), `/demo` kept full chrome: restore that on a revival.
 
 - **`/makler`** (copy `src/lib/makler.ts`): `MidCta` is the only CTA before the close · price-free except „rund 30 €“ for the client's own server (`makler.test.ts` allows one currency string) · never say Vrelo *provides* the server (the client owns it).
 - **`/lead-check`** (core `src/lib/leadCheck.ts`): its four constants are the whole commercial claim (`RECOVERY_RATE` 30 % keeps a solo broker at 188.000 € instead of 624.000 €); re-read the worst case in `leadCheck.test.ts` before changing one; verify the HBR study URL before un-parking.
@@ -66,16 +66,11 @@ Redirect mechanics and un-parking → CLAUDE.md *Routes*.
 ## SEO + /automatisierung-regensburg
 
 - **Titles + structured data:** homepage default title „KI- und Prozessautomatisierung aus Regensburg - Vrelo“ (`src/app/layout.tsx`); Leistungen pages set `metaTitle` (→ /leistungen). Business JSON-LD carries Regensburg/Oberpfalz + phone + mail + logo. The sitemap sets `lastModified` only on articles. Makler articles point to the Makler Bauplan (`bauplan:` frontmatter).
-- **Local page `/automatisierung-regensburg`** (copy `src/lib/regensburg.ts`): in the footer + sitemap, no link in the homepage body (Ajdin's call); visits promised for Regensburg only; MDZ only as „Betrieb meines Vaters“. The footer has no Vorlagen line, since every page ends on the Vorlagen CTA. Plan `docs/superpowers/plans/2026-11-12-seo-pass.md`; owner steps (Search Console, Google profile, directories, backlinks) → HQ §7.
+- **Local page `/automatisierung-regensburg`** (copy `src/lib/regensburg.ts`): in the footer + sitemap, no link in the homepage body (Ajdin's call); visits promised for Regensburg only; MDZ only as „Betrieb meines Vaters“. The footer has no Vorlagen line, since every page ends on the Vorlagen CTA. Plan `docs/superpowers/plans/2026-11-12-seo-pass.md`; owner steps (Search Console, Google profile, directories, backlinks) → [todos.md](../../Knowledge/todos.md).
 
 ## Ratgeber
 
-One list newest first under a `KategorieFilter` row (Alle/Grundlagen/Praxis/Kosten/**Meinung**; Meinung = founder opinion pieces kept apart from the search guides). Filter and card chip run on `kategorie`; `tags` show in the article header. `leistung:` ties an article to its `/leistungen/<slug>` subpage (back-link on the article, `related` on the subpage); `bauplan:` ties it to a niche Bauplan (`/vorlagen/<slug>`, a `vorlageBauplaene` key, unknown slug throws; set only when the reader *is* that niche, today the three Makler articles). Marktspannen dürfen vorkommen, ein Vrelo-Preis nie (HQ §4); Listenpreise eines Anbieters nur mit Monat dazu (erster Fall `welches-ki-modell`); die einzige Zahl ist der Server „rund 30 €“ und sie muss auf `/makler` und im Ratgeber **gleich** lauten. **New article → skill `.claude/skills/ratgeber-article/`** (from the HQ root the Skill tool doesn't list it: read its `SKILL.md`); the covers test fails until the cover WebP exists.
-
-## KI-Kennzeichnung + Bildwelt (summary of the rules)
-
-- Ratgeber + Newsletter need **no** KI label: Art. 50 Abs. 4 b exempts human-reviewed text with **named** editorial responsibility → **V.i.S.d.P. Ajdin Dzafic** in the Impressum (must stand *before* publication). `/prozess-check` is deterministic → no duty.
-- Water imagery + the four Über-mich clips are generated, no label. **No people in generated imagery**: the only people are the real founder photos (`src/lib/portraits.ts`; a portrait is never generated); Meinung covers may show non-real people, never a real or look-alike person. **No KI hint on the site** (`legal.test.ts` + `ueber-mich/page.test.tsx` pin it). A realistic Ratgeber cover carries „KI-generiertes Bild“ **in the image**, inside the visible 21:9 band. ⚠️ `sharp`/ffmpeg strip metadata: **never claim** Google's machine-readable marking survives.
+One list newest first under a `KategorieFilter` row (Alle/Grundlagen/Praxis/Kosten/**Meinung**; Meinung = founder opinion pieces kept apart from the search guides). Filter and card chip run on `kategorie`; `tags` show in the article header. `leistung:` ties an article to its `/leistungen/<slug>` subpage (back-link on the article, `related` on the subpage); `bauplan:` ties it to a niche Bauplan (`/vorlagen/<slug>`, a `vorlageBauplaene` key, unknown slug throws; set only when the reader *is* that niche, today the three Makler articles). Marktspannen dürfen vorkommen, ein Vrelo-Preis nie (root CLAUDE.md „Hard rules“); Listenpreise eines Anbieters nur mit Monat dazu (erster Fall `welches-ki-modell`); die einzige Zahl ist der Server „rund 30 €“ und sie muss auf `/makler` und im Ratgeber **gleich** lauten. **New article → skill `.claude/skills/ratgeber-article/`** (from the HQ root the Skill tool doesn't list it: read its `SKILL.md`); the covers test fails until the cover WebP exists.
 
 ## Hero copy + the guarantee source
 
@@ -83,7 +78,7 @@ One list newest first under a `KategorieFilter` row (Alle/Grundlagen/Praxis/Kost
 
 ## External review calls (2026-11-04)
 
-- **External review calls (triage `docs/superpowers/specs/2026-11-04-website-review-triage.md`):** guarantee + ownership as cards on the homepage `Proof` · phone shown only on `/kontakt` (`KARTE.phone` as a `tel:` link in the name line) · „Praxis oder Kanzlei“ not in the Prozess-Check (Praxen/Kanzleien out, HQ) · founder profile linked (`linkedinProfileUrl`, footer + Person JSON-LD) · the 160-hours claim says „Logistik eines Automobilkonzerns“, never the employer's name · FAQ answers holiday/illness in one entry. Kept against the review: nine-to-four regroup only (URLs stay), „du“, Merak/Quelle, wide buyer, price-free offer pages. Open items → HQ §7.
+- **External review calls (triage `docs/superpowers/specs/2026-11-04-website-review-triage.md`):** guarantee + ownership as cards on the homepage `Proof` · phone shown only on `/kontakt` (`KARTE.phone` as a `tel:` link in the name line) · „Praxis oder Kanzlei“ not in the Prozess-Check (Praxen/Kanzleien out, HQ) · founder profile linked (`linkedinProfileUrl`, footer + Person JSON-LD) · the 160-hours claim says „Logistik eines Automobilkonzerns“, never the employer's name · FAQ answers holiday/illness in one entry. Kept against the review: nine-to-four regroup only (URLs stay), „du“, Merak/Quelle, wide buyer, price-free offer pages. Open items → [todos.md](../../Knowledge/todos.md).
 
 ## Legal pages, services + privacy
 

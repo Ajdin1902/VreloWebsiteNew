@@ -50,7 +50,7 @@ export const abschluss = {
   heading: "Wenn du Fragen hast, melde dich. Kostenlos.",
   text: [
     "Im Prozess-Audit schauen wir gemeinsam, wo in deinem Betrieb die meiste Zeit hängen bleibt.",
-    "Den Anfang macht ein Gespräch von 30 Minuten. Ergibt sich daraus etwas Sinnvolles, schreibe ich dir einen Fahrplan. Wenn nicht, sage ich es dir ehrlich.",
+    "Den Anfang macht ein Gespräch von 30 Minuten. Danach bekommst du in jedem Fall deinen Fahrplan.",
   ],
   button: "30 Minuten Gespräch vereinbaren",
 };

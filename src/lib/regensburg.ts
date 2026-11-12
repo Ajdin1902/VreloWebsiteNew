@@ -1,6 +1,6 @@
 // src/lib/regensburg.ts
 // Copy for the local page /automatisierung-regensburg (SEO pass 2026-11-12, Ajdin
-// approved; stop-slop applied). One honest page, never a template doorway (HQ §7).
+// approved; stop-slop applied). One honest page, never a template doorway (Knowledge/todos.md).
 // Visits are promised for Regensburg only (Ajdin 2026-11-12). MDZ appears only as
 // „der Betrieb meines Vaters“ (UWG §5, same as /referenzen).
 import { leistungHref } from "@/lib/leistungenPages";

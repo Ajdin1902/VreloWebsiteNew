@@ -17,7 +17,7 @@ describe("ReferenzCard", () => {
 
   it("shows no family tie for Velp", () => {
     render(<ReferenzCard referenz={velp} />);
-    expect(screen.getByText("Velp · Marketingagentur · Regensburg")).toBeInTheDocument();
+    expect(screen.getByText("Velp · Videoagentur · Regensburg")).toBeInTheDocument();
     expect(screen.queryByText(/Betrieb meines Vaters/)).toBeNull();
   });
 

@@ -37,7 +37,7 @@ export const finanzmakler: ReiheNische = {
     readerClose: "Fang mit dem Selbstcheck auf Seite 2 an, dafür reicht ein Stift.",
     internalPrefix: "Finanzmakler-Bauplan angefordert",
   },
-  pdfPath: "/bauplan/finanzmakler-bauplan-fd172a11.pdf",
+  pdfPath: "/bauplan/finanzmakler-bauplan-c4c6dbd2.pdf",
   template: "content/bauplan/finanzmakler-bauplan.html",
   pages: 8,
   knownTools: [

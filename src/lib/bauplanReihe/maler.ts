@@ -34,7 +34,7 @@ export const maler: ReiheNische = {
     readerClose: "Fang mit dem Selbstcheck auf Seite 2 an, dafür reicht ein Stift.",
     internalPrefix: "Maler-Bauplan angefordert",
   },
-  pdfPath: "/bauplan/maler-bauplan-4bd06071.pdf",
+  pdfPath: "/bauplan/maler-bauplan-b00210ad.pdf",
   template: "content/bauplan/maler-bauplan.html",
   pages: 8,
   knownTools: [

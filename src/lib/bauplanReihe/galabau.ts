@@ -35,7 +35,7 @@ export const galabau: ReiheNische = {
     readerClose: "Fang mit dem Selbstcheck auf Seite 2 an, dafür reicht ein Stift.",
     internalPrefix: "GaLaBau-Bauplan angefordert",
   },
-  pdfPath: "/bauplan/galabau-bauplan-c77774c6.pdf",
+  pdfPath: "/bauplan/galabau-bauplan-b2528614.pdf",
   template: "content/bauplan/galabau-bauplan.html",
   pages: 8,
   // "KS21" stands for GaLaOffice 360 in the tools table: the degree sign has no entity in ENTITIES.

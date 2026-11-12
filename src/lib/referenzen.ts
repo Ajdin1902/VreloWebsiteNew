@@ -84,7 +84,7 @@ export const referenzen: Referenz[] = [
   {
     slug: "velp",
     name: "Velp",
-    label: "Marketingagentur · Regensburg",
+    label: "Videoagentur · Regensburg",
     inhaber: "Alen Purisic",
     logo: { src: "/images/referenzen/velp-logo.webp", width: 720, height: 354 },
     intro: "Hohe Zeitinvestition für Projektdokumentation, Onboarding und Dokumentenerstellung.",

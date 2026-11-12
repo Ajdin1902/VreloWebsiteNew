@@ -38,15 +38,15 @@ Pronunciation: **VREH-lo**. Origin: Vrelo Bosne, the turquoise spring near Saraj
 
 **Website hero:**
 - H1: *Vrelo* errichtet die Quelle. Du erlebst den *Merak*-Effekt.
-- Sub: Maßgeschneiderte Automatisierungen für kleine Betriebe. Sie übernehmen den wiederkehrenden Kleinkram — du gewinnst Zeit, Ruhe und einen freien Kopf zurück.
+- Sub: Maßgeschneiderte Automatisierungen für Betriebe und Unternehmen. Sie übernehmen den wiederkehrenden Kleinkram. Du gewinnst Zeit, Ruhe und einen freien Kopf zurück.
 - CTA: **Quelle erkunden**
 
-**Service blurb ("Was wir tun"):** *Vrelo* baut maßgeschneiderte Automatisierungssysteme für kleine Betriebe im DACH-Raum. Wir schauen uns deinen Arbeitsalltag an, finden die Aufgaben, die dich täglich Zeit kosten — Termine, Nachfass-Mails, Dateneingabe, wiederkehrende Kommunikation — und bauen daraus eine saubere, dokumentierte Quelle, aus der diese Arbeit von selbst fließt. Keine Vorlagen von der Stange, keine Fachbegriffe. Nur ein ruhiges, verlässliches System im Hintergrund. Das ist der *Merak*-Effekt.
+**Service blurb ("Was wir tun"):** *Vrelo* baut maßgeschneiderte Automatisierungssysteme für Betriebe und Unternehmen im DACH-Raum. Wir schauen uns deinen Arbeitsalltag an und finden die Aufgaben, die dich täglich Zeit kosten: Termine, Nachfass-Mails, Dateneingabe, wiederkehrende Kommunikation. Daraus bauen wir eine saubere, dokumentierte Quelle, aus der diese Arbeit von selbst fließt. Keine Vorlagen von der Stange, keine Fachbegriffe. Nur ein ruhiges, verlässliches System im Hintergrund. Das ist der *Merak*-Effekt.
 
 Other approved taglines: *Die Quelle. Der Merak-Effekt.* · *Aus der Quelle in den Fluss.* · *Wo dein Workflow entspringt.*
 
-> **Descriptor rules:** keep `du`-voice OUT of the descriptor (it's a targeting line). The audience tag „kleine Betriebe" is a *swappable slot* — never fuse the descriptor into the logo; keep it as separate text. Variants: *für Selbstständige* / *für kleine Betriebe* / *für kleine Unternehmen* / **für Betriebe und Unternehmen (current)**.
-> 2026-10-01: Zielgruppe für die Website erweitert (auch größere Unternehmen), siehe HQ CLAUDE.md §3. Die Website-Texte mit „kleine Betriebe“ (Footer, Metadaten, OG-Bild, FAQ, Ratgeber, JSON-LD) ziehen erst nach, wenn Ajdin die neue Formulierung freigibt.
+> **Descriptor rules:** keep `du`-voice OUT of the descriptor (it's a targeting line). The audience tag is a *swappable slot* — never fuse the descriptor into the logo; keep it as separate text. Variants: *für Selbstständige* / *für kleine Betriebe* / *für kleine Unternehmen* / **für Betriebe und Unternehmen (current)**.
+> 2026-10-01: Zielgruppe für die Website erweitert (auch größere Unternehmen), siehe root CLAUDE.md „Strategy“.
 
 ---
 
@@ -130,7 +130,7 @@ Generous breathing room · clean lines, no clutter · calm + clarity · cool wat
 ---
 
 ## 5. Audience
-Primary: DACH Solo-Selbstständige & Kleinunternehmer drowning in manual work — admin, follow-ups, scheduling, data entry, repetitive comms. Intimidated by "tech"/"KI". They want: calm over complexity, time back, control, lightness (the *Merak*-Effekt). Define the *market* wide; aim the *descriptor* narrow (currently „kleine Betriebe").
+Primary: owner-led DACH Betriebe with one decider, from Solo-Selbstständige to Mittelstand, drowning in manual work — admin, follow-ups, scheduling, data entry, repetitive comms. Intimidated by "tech"/"KI". They want: calm over complexity, time back, control, lightness (the *Merak*-Effekt). Define the *market* wide; aim the *descriptor* narrow (currently „Betriebe und Unternehmen“).
 
 ---
 

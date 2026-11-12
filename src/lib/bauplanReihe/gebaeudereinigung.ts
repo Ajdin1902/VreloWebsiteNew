@@ -33,7 +33,7 @@ export const gebaeudereinigung: ReiheNische = {
     readerClose: "Fang mit dem Selbstcheck auf Seite 2 an, dafür reicht ein Stift.",
     internalPrefix: "Gebäudereiniger-Bauplan angefordert",
   },
-  pdfPath: "/bauplan/gebaeudereinigung-bauplan-c78dfe76.pdf",
+  pdfPath: "/bauplan/gebaeudereinigung-bauplan-2445acb6.pdf",
   template: "content/bauplan/gebaeudereinigung-bauplan.html",
   pages: 8,
   knownTools: [
