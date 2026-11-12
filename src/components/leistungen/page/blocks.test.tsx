@@ -8,10 +8,7 @@ import { WarumBlock } from "./WarumBlock";
 import { getLeistungPage } from "@/lib/leistungenPages";
 import { GARANTIE } from "@/lib/garantie";
 import { faqHref } from "@/lib/faq";
-import { wartungTiers, wartungZeilen, WARTUNG_HINWEIS } from "@/lib/wartung";
-
-// Ajdin 2026-11-12: no prices on the Betreuung table (FAQ keeps them).
-const preis = (t: (typeof wartungTiers)[number]) => new Intl.NumberFormat("de-DE").format(t.preisNetto);
+import { wartungTiers, wartungZeilen, wartungPreis, WARTUNG_HINWEIS, WARTUNG_PREIS_ZUSATZ, WARTUNG_PREIS_LABEL } from "@/lib/wartung";
 
 const page = (s: string) => getLeistungPage(s)!;
 
@@ -90,21 +87,28 @@ describe("LoesungBlock", () => {
 });
 
 describe("LoesungBlock with the Wartung table", () => {
-  // Ajdin 2026-11-11: name and time line on top, Ergebnis last; no prices since 2026-11-12.
-  it("compares the three tiers in one table: one row per detail, no prices", () => {
+  // Ajdin 2026-11-12: four tiers, prices back in the last row, Partner on request.
+  it("compares the four tiers in one table: one row per detail, prices in the last row", () => {
     const { container } = render(<LoesungBlock loesung={page("betreuung").loesung} />);
     const table = container.querySelector("table")!;
     const cols = [...table.querySelectorAll("thead th[scope=col]")];
-    expect(cols).toHaveLength(3);
+    expect(cols).toHaveLength(4);
     wartungTiers.forEach((t, i) => {
       expect(cols[i]).toHaveTextContent(t.name);
       expect(cols[i]).toHaveTextContent(t.motto);
+      expect(cols[i]).not.toHaveTextContent(wartungPreis(t));
     });
-    expect(cols[2]).toHaveTextContent(wartungTiers[2].grenze!);
-    expect(table.querySelector("tbody tr:last-child")).toHaveAttribute("data-ergebnis");
-    for (const t of wartungTiers) expect(table).not.toHaveTextContent(preis(t));
-    expect(table).not.toHaveTextContent("€");
-    const rows = [...table.querySelectorAll("tbody tr")];
+    const preisRow = table.querySelector("tbody tr:last-child")!;
+    expect(preisRow).toHaveAttribute("data-preis");
+    expect(preisRow.previousElementSibling).toHaveAttribute("data-ergebnis");
+    expect(preisRow.querySelector("th[scope=row]")).toHaveTextContent(WARTUNG_PREIS_LABEL);
+    const zellen = [...preisRow.querySelectorAll("td")];
+    expect(zellen.map((z) => z.querySelector("[data-betrag]")?.textContent)).toEqual(["95 €", "249 €", "945 €", "Auf Anfrage"]);
+    zellen.slice(0, 3).forEach((z) => expect(z).toHaveTextContent(WARTUNG_PREIS_ZUSATZ));
+    expect(zellen[3]).not.toHaveTextContent(WARTUNG_PREIS_ZUSATZ);
+    expect(zellen[3]).toHaveTextContent(wartungTiers[3].grenze!);
+    expect(table).not.toHaveTextContent(/undefined|NaN|9\.900/);
+    const rows = [...table.querySelectorAll("tbody tr:not([data-preis])")];
     expect(rows.map((r) => r.querySelector("th[scope=row]")?.textContent)).toEqual(wartungZeilen.map((z) => z.label));
     rows.forEach((r, i) => {
       const cells = [...r.querySelectorAll("td")];
@@ -128,20 +132,30 @@ describe("LoesungBlock with the Wartung table", () => {
     expect(container.querySelector("ol")).toBeNull();
   });
 
-  it("stacks the same tiers as cards for small screens", () => {
+  // Four columns are too tight on a tablet: the table only from lg, cards below.
+  it("shows the table from lg up and cards below", () => {
+    const { container } = render(<LoesungBlock loesung={page("betreuung").loesung} />);
+    const tableWrap = container.querySelector("table")!.parentElement!;
+    expect(tableWrap).toHaveClass("hidden", "lg:block");
+    expect(container.querySelector("[data-wartung-karte]")!.parentElement).toHaveClass("lg:hidden");
+  });
+
+  it("stacks the same tiers as cards for small screens, price after Ergebnis", () => {
     const { container } = render(<LoesungBlock loesung={page("betreuung").loesung} />);
     const cards = container.querySelectorAll("[data-wartung-karte]");
-    expect(cards).toHaveLength(3);
+    expect(cards).toHaveLength(4);
     wartungTiers.forEach((t, i) => {
       expect(cards[i]).toHaveTextContent(t.name);
       expect(cards[i]).toHaveTextContent(t.motto);
       for (const z of wartungZeilen) for (const item of t.zeilen[z.id]) expect(cards[i]).toHaveTextContent(item);
       expect(cards[i].querySelector("[data-ergebnis] li")).toBeNull();
-      expect(cards[i].querySelector("[data-ergebnis]")).toHaveTextContent(t.zeilen.ergebnis[0]);
-      expect(cards[i]).not.toHaveTextContent(preis(t));
-      expect(cards[i]).not.toHaveTextContent("€");
+      expect(cards[i].querySelector("h3")).not.toHaveTextContent(wartungPreis(t));
+      const preis = cards[i].querySelector("[data-preis]")!;
+      expect(preis).toHaveTextContent(wartungPreis(t));
+      expect(cards[i].querySelector("[data-ergebnis]")!.compareDocumentPosition(preis) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     });
-    expect(cards[2].querySelector("[data-grenze]")).toHaveTextContent(wartungTiers[2].grenze!);
+    expect(cards[3]).not.toHaveTextContent("€");
+    expect(cards[3].querySelector("[data-preis]")).toHaveTextContent(wartungTiers[3].grenze!);
   });
 });
 
