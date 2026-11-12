@@ -74,7 +74,7 @@ export function AgentenKreis({
         id="agenten-mitte"
         data-mitte
         aria-live="polite"
-        className="absolute left-1/2 top-1/2 flex aspect-square w-[42%] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full bg-sonnenlicht p-[6%] text-center shadow-deepwater"
+        className="absolute left-1/2 top-1/2 flex aspect-square w-[42%] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border-[3px] border-honig bg-papier p-[6%] text-center shadow-deepwater"
       >
         {gewaehlt ? (
           <>

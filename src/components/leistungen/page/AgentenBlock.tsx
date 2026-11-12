@@ -35,7 +35,7 @@ export function AgentenBlock({
         </div>
 
         <div data-liste className="mt-10 lg:hidden">
-          <div className="rounded-2xl bg-sonnenlicht p-6 text-center shadow-deepwater">
+          <div className="rounded-2xl border-[3px] border-honig bg-papier p-6 text-center shadow-deepwater">
             <p className="text-2xl font-semibold tracking-tight text-tiefes-wasser">{mitte.titel}</p>
             <p className="mt-2 text-pretty text-tinte">{mitte.text}</p>
           </div>

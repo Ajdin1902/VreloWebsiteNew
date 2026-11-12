@@ -87,6 +87,16 @@ describe("/leistungen/ki-agenten", () => {
     });
   });
 
+  // Ajdin 2026-11-12: option B, papier with a honig ring instead of the light amber.
+  it("draws Dein Betrieb on papier with a honig ring, ring and list alike", () => {
+    const { container } = render(<KiAgentenPage />);
+    const mitte = container.querySelector("[data-kreis] [data-mitte]")!;
+    expect(mitte).toHaveClass("bg-papier", "border-honig");
+    expect(mitte).not.toHaveClass("bg-sonnenlicht");
+    const oben = container.querySelector("[data-liste]")!.firstElementChild!;
+    expect(oben).toHaveClass("bg-papier", "border-honig");
+  });
+
   it("names no client on the page's agents", () => {
     const { container } = render(<KiAgentenPage />);
     const block = screen.getByRole("heading", { level: 2, name: KI_AGENTEN.heading }).closest("section")!;
