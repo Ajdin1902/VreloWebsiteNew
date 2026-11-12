@@ -32,7 +32,7 @@ export function Hero() {
       </h1>
       <p className="hero-reveal-sub mt-6 max-w-xl text-pretty text-[1.05rem] leading-relaxed tracking-[-0.005em] text-gletscher md:text-xl md:leading-relaxed">
         {/* Ajdin 2026-11-12: the sub explains the three words; plain text, the button carries the link. */}
-        Wir prüfen deine Prozesse und automatisieren, was dich jeden Tag Zeit kostet. Fang mit der kostenlosen Vorlage für deine Branche an.
+        Ich prüfe deine Prozesse und automatisiere, was dich jeden Tag Zeit kostet. Fang mit der kostenlosen Vorlage für deine Branche an.
       </p>
       <div className="hero-reveal-cta mt-9">
         <CTAButton href={vorlagenHref(CHECK_SRC.homeHero)} tone="dark">

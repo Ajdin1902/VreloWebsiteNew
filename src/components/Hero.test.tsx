@@ -23,10 +23,10 @@ describe("Hero", () => {
     expect(section?.getAttribute("style")).toBeFalsy();
   });
 
-  // Ajdin 2026-11-12: the sub says what we do, plain text (the button carries the link); no guarantee in the hero.
+  // Ajdin 2026-11-12: the sub says what I do (ich, like the rest of the site), plain text (the button carries the link); no guarantee in the hero.
   it("explains the three words in the sub, without a link", () => {
     render(<Hero />);
-    const sub = screen.getByText("Wir prüfen deine Prozesse und automatisieren, was dich jeden Tag Zeit kostet. Fang mit der kostenlosen Vorlage für deine Branche an.");
+    const sub = screen.getByText("Ich prüfe deine Prozesse und automatisiere, was dich jeden Tag Zeit kostet. Fang mit der kostenlosen Vorlage für deine Branche an.");
     expect(sub.tagName).toBe("P");
     expect(sub.querySelector("a")).toBeNull();
     expect(screen.queryByText(/Geld zurück/)).toBeNull();
@@ -53,7 +53,7 @@ describe("Hero", () => {
   it("applies the staggered reveal classes (H1 rise-only, sub + CTA fade-up)", () => {
     render(<Hero />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveClass("hero-reveal-h1");
-    expect(screen.getByText(/^Wir prüfen deine Prozesse/)).toHaveClass("hero-reveal-sub");
+    expect(screen.getByText(/^Ich prüfe deine Prozesse/)).toHaveClass("hero-reveal-sub");
     const ctaWrapper = screen.getByRole("link", { name: "Kostenlose Vorlagen ansehen" }).parentElement as HTMLElement;
     expect(ctaWrapper).toHaveClass("hero-reveal-cta");
   });
