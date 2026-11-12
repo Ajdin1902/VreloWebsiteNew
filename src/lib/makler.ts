@@ -2,8 +2,8 @@
 // page sent by direct link to a scored lead (independent Makler and Finanz-/
 // Versicherungsmakler). Sources of truth for the offers themselves (price,
 // guarantee, rationale) live in HQ and must be changed there first:
-//   ../../../Knowledge/Offers/Termin-Quelle.md
-//   ../../../Knowledge/Strategy/Document_Concierge.md
+//   ../../../Knowledge/_archive/broker/Termin-Quelle.md (archived, Model C)
+//   ../../../Knowledge/_archive/broker/Document_Concierge.md (archived, Model C)
 // Rules: no prices, no invented numbers, no testimonials. German punctuation
 // per Brand.md: German quotes U+201E/U+201C, and NO Gedankenstrich. Use a comma,
 // period or colon instead of any dash. Guarded by makler.test.ts.
