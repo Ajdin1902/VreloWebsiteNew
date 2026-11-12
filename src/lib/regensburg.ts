@@ -46,7 +46,7 @@ export const REGENSBURG = {
   ] satisfies RegensburgBlock[],
   cta: {
     heading: "Wo verlierst du jeden Tag Zeit?",
-    lead: "Fang mit der kostenlosen Vorlage für deine Branche an. Danach reden wir 30 Minuten, gern auch bei dir vor Ort.",
+    lead: "Fang mit der kostenlosen Vorlage für deine Branche an. Danach reden wir 30 Minuten, in Regensburg gern auch bei dir vor Ort.",
   },
   footerLabel: "Automatisierung in Regensburg",
 };

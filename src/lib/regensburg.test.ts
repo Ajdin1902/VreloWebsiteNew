@@ -29,6 +29,13 @@ describe("Regensburg page copy", () => {
     expect(REGENSBURG.hero.line.length).toBeLessThanOrEqual(90);
   });
 
+  // Ajdin 2026-11-12: visits only in Regensburg. The page also speaks to the Oberpfalz,
+  // so every visit promise has to name the city itself.
+  it("promises a visit only together with Regensburg", () => {
+    for (const s of strings)
+      if (/vor Ort|zu dir in den Betrieb|besuche/.test(s)) expect(s, s).toContain("Regensburg");
+  });
+
   it("names no price", () => {
     expect(strings.join(" ")).not.toMatch(/€|Euro/);
   });
