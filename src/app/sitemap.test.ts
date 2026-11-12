@@ -15,6 +15,7 @@ describe("sitemap", () => {
     expect(urls).toContain(`${siteUrl}/faq`);
     expect(urls).toContain(`${siteUrl}/ratgeber`);
     expect(urls).toContain(`${siteUrl}/leistungen/ki-agenten`);
+    expect(urls).toContain(`${siteUrl}/automatisierung-regensburg`);
   });
 
   it("includes the new Kontakt + legal routes", () => {

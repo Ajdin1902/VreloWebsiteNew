@@ -5,6 +5,7 @@ import { getAllArticles } from "@/lib/ratgeber";
 import { leistungenPages } from "@/lib/leistungenPages";
 import { KI_AGENTEN_PATH } from "@/lib/kiAgenten";
 import { VORLAGEN_PATH, vorlageBauplaene } from "@/lib/vorlagen";
+import { REGENSBURG_PATH } from "@/lib/regensburg";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
@@ -13,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...leistungenPages.map((p) => `/leistungen/${p.slug}`),
     KI_AGENTEN_PATH,
     "/referenzen",
+    REGENSBURG_PATH,
     "/prozess-check",
     "/claude-gehirn",
     "/ueber-mich",

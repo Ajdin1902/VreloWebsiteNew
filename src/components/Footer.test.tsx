@@ -13,6 +13,14 @@ describe("Footer", () => {
     expect(screen.getByRole("link", { name: "Vorlagen" })).toHaveAttribute("href", "/vorlagen?src=footer");
   });
 
+  it("links the local Regensburg page so it is never orphaned", () => {
+    render(<Footer />);
+    expect(screen.getByRole("link", { name: "Automatisierung in Regensburg" })).toHaveAttribute(
+      "href",
+      "/automatisierung-regensburg",
+    );
+  });
+
   it("still links the newsletter after it left the top nav", () => {
     render(<Footer />);
     const hrefs = screen.getAllByRole("link").map((a) => a.getAttribute("href"));

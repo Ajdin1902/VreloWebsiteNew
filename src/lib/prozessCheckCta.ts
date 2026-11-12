@@ -29,6 +29,7 @@ export const CHECK_SRC = {
   footer: "footer",
   karte: "karte",
   vorlagen: "vorlagen",
+  regensburg: "regensburg",
 } as const;
 
 export type CheckSrc = (typeof CHECK_SRC)[keyof typeof CHECK_SRC];
