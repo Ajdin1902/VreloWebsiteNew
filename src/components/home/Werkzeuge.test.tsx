@@ -32,13 +32,6 @@ describe("Werkzeuge", () => {
     expect(container.querySelector("section")).toHaveClass("bg-tiefes-wasser");
   });
 
-  it("renders the reassurance heading", () => {
-    render(<Werkzeuge />);
-    expect(
-      screen.getByRole("heading", { level: 2, name: /Läuft mit den Werkzeugen/i }),
-    ).toBeInTheDocument();
-  });
-
   it("renders every cluster label", () => {
     render(<Werkzeuge />);
     for (const label of LABELS) {
@@ -72,5 +65,13 @@ describe("Werkzeuge", () => {
   it("lets the heading answer the objection alone (copy trim 2026-09-26)", () => {
     const { container } = render(<Werkzeuge />);
     expect(container.textContent).not.toContain("Du wechselst nichts");
+  });
+});
+
+// Review 2026-11-12: say the tools can be connected, not that every one is proven.
+describe("Werkzeuge heading", () => {
+  it("says the system connects to the tools", () => {
+    render(<Werkzeuge />);
+    expect(screen.getByRole("heading", { level: 2, name: "Lässt sich an die Werkzeuge anbinden, die du schon nutzt." })).toBeInTheDocument();
   });
 });

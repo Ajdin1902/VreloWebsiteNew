@@ -66,3 +66,18 @@ describe("faq data", () => {
     expect(free!.answer).toMatch(/^Ja\./);
   });
 });
+
+// Ajdin 2026-11-12: AVV + Telegram in the FAQ; every build on the client's own server.
+describe("data protection answers", () => {
+  const all = faqGroups.flatMap((g) => g.entries);
+  it("answers the AVV question right after the data question", () => {
+    const i = all.findIndex((e) => e.question === "Was passiert mit meinen Daten?");
+    expect(all[i + 1].question).toBe("Unterschreibst du einen Vertrag zur Auftragsverarbeitung?");
+    expect(all[i + 1].answer).toBe(
+      "Ja. Verarbeitet dein System personenbezogene Daten, etwa von Kunden oder Mitarbeitern, schließen wir vor dem Start einen Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO. Telegram nutze ich nur, wenn du es willst. Für sensible Daten läuft dein System über E-Mail oder einen Kanal, den dein Betrieb schon nutzt.",
+    );
+  });
+  it("never offers a cloud account instead of the client's own server", () => {
+    expect(JSON.stringify(faqGroups)).not.toMatch(/Cloud-Lösung|n8n Cloud/);
+  });
+});

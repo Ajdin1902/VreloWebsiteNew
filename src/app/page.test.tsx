@@ -10,7 +10,7 @@ describe("homepage", () => {
       "Der Kleinkram frisst deinen Tag.",
       "So fängst du an. Kostenlos.",
       "Prüfen. Bauen. Betreiben.",
-      "Läuft mit den Werkzeugen, die du schon nutzt.",
+      "Lässt sich an die Werkzeuge anbinden, die du schon nutzt.",
       "Sorgfältig gebaut. Verlässlich im Betrieb.",
       "So läuft es in echten Betrieben.",
       "Die Prozesse laufen von selbst. Deine Zeit gehört wieder dir.",

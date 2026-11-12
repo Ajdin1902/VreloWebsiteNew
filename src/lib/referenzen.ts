@@ -68,7 +68,6 @@ export const referenzen: Referenz[] = [
       "**Rechnungsautomatisierung: Rechnung per Chat**, fertig als Word und PDF in OneDrive.",
       "MDZ Core: alle Rechnungen seit 2022 in einer Datenbank.",
       "**Entsorgungsplan:** Stadt und Landkreis, **jeden Monat automatisch**.",
-      "Website modernisiert.",
     ],
     visual: { kind: "clip", mp4: "/video/ki-assistent.mp4", poster: "/video/ki-assistent.webp" },
     werkzeuge: ["Telegram", "n8n", "Hetzner Server", "Notion", "Trello", "E-Mail", "Google Kalender", "OneDrive", "Word"],

@@ -39,7 +39,7 @@ describe("referenzen copy", () => {
   });
 
   it("names the MDZ builds in Ajdin's order", () => {
-    const order = ["Telegram-Assistent", "Rechnungsautomat", "MDZ Core", "Entsorgungsplan", "Website"].map((w) => mdz.ergebnis.findIndex((b) => ohneHervor(b).includes(w)));
+    const order = ["Telegram-Assistent", "Rechnungsautomat", "MDZ Core", "Entsorgungsplan"].map((w) => mdz.ergebnis.findIndex((b) => ohneHervor(b).includes(w)));
     expect(order.every((i) => i >= 0), mdz.ergebnis.join(" | ")).toBe(true);
     expect([...order].sort((a, b) => a - b)).toEqual(order);
   });
@@ -129,5 +129,13 @@ describe("referenzen copy", () => {
 
   it("uses generic masculine, no :innen gendered forms", () => {
     expect(all.filter((s) => /:innen\b/i.test(s))).toEqual([]);
+  });
+});
+
+// Review 2026-11-12: a website line dilutes an automation case.
+describe("MDZ results", () => {
+  it("lists only automation results", () => {
+    const mdz = referenzen.find((r) => r.slug === "mdz")!;
+    expect(mdz.ergebnis).not.toContain("Website modernisiert.");
   });
 });

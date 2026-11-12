@@ -11,6 +11,11 @@ export const impressum: LegalDoc = {
       body: "Ajdin Dzafic\nVrelo, Prozessautomatisierung\nDietrich-Bonhoeffer-Straße 2\n93055 Regensburg\nDeutschland",
     },
     {
+      // Ajdin 2026-11-12: B2B only, said once.
+      heading: "Kunden",
+      body: "Mein Angebot richtet sich ausschließlich an Unternehmen, nicht an Verbraucher.",
+    },
+    {
       heading: "Kontakt",
       body: "E-Mail: kontakt@vrelo-ki.de\nOder über das Kontaktformular auf dieser Website.",
     },

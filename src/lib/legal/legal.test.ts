@@ -63,3 +63,13 @@ describe("legal content", () => {
     expect(nl!.body).toMatch(/Widerruf|abbestellen|Abmeldelink/i);
   });
 });
+
+// Ajdin 2026-11-12: one line that the offer is B2B only.
+describe("B2B line", () => {
+  it("says in the Impressum that the offer is for businesses only", () => {
+    const all = impressum.sections.map((s) => s.body).join(" ");
+    expect(all).toContain("Mein Angebot richtet sich ausschließlich an Unternehmen, nicht an Verbraucher.");
+    const anbieter = impressum.sections.find((s) => s.heading === "Anbieter")!;
+    expect(anbieter.body).not.toContain("Verbraucher");
+  });
+});

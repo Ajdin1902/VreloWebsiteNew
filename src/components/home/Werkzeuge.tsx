@@ -35,7 +35,7 @@ export function Werkzeuge() {
           delayMs={0}
           className="text-balance text-3xl font-semibold tracking-tight text-papier md:text-4xl"
         >
-          Läuft mit den Werkzeugen, die du schon nutzt.
+          Lässt sich an die Werkzeuge anbinden, die du schon nutzt.
         </Reveal>
         {/* One small amber accent — the recurring warm 10% element that threads the
             sections together (echoes the amber step-badges in the Steps section). */}
