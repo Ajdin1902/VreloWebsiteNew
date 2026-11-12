@@ -170,17 +170,27 @@ describe("leistungenPages", () => {
     expect(getLeistungPage("prozess-audit")!.loesung.heading).toBe("So läuft der Audit. Alles kostenlos.");
   });
 
-  it("promises the Fahrplan only conditionally", () => {
+  // Ajdin 2026-11-12: the Fahrplan is always included (was conditional until then).
+  it("promises the Fahrplan without a condition", () => {
     const promises = [
       ...everything().flatMap((p) => [...p.warum.map((w) => w.body), p.cta.lead]),
       ...leistungenPages.flatMap((p) => [p.kurz, p.subline, p.metaDescription, ...(p.loesung.schritte ?? []).map((s) => s.text)]),
     ];
-    for (const s of promises) if (/Fahrplan/.test(s)) expect(s).toMatch(/[Ww]enn|[Ll]ohnt|Bekommst/);
+    for (const s of promises) if (/Fahrplan/.test(s)) expect(s).not.toMatch(/[Ll]ohnt/);
   });
 
   it("looks pages up by slug and builds their href", () => {
     expect(getLeistungPage("ki-automatisierung")?.title).toBe("KI-Automatisierung");
     expect(getLeistungPage("claude")).toBeUndefined();
     expect(leistungHref("betreuung")).toBe("/leistungen/betreuung");
+  });
+});
+
+// Ajdin 2026-11-12: the Fahrplan is always part of the free path, never conditional.
+describe("Fahrplan promise on the Leistungen pages", () => {
+  it("never makes the Fahrplan conditional", () => {
+    expect(JSON.stringify([leistungenPages, leistungenHub])).not.toMatch(/Lohnt sich etwas|Wenn sich etwas lohnt|wenn es sich lohnt/i);
+    const audit = getLeistungPage("prozess-audit")!;
+    expect(JSON.stringify(audit)).toContain("Ein bis zwei Werktage später bekommst du deinen Fahrplan.");
   });
 });

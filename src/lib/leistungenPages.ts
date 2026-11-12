@@ -116,8 +116,8 @@ export const leistungenPages: LeistungPage[] = [
     title: "Prozess-Audit",
     subline: "Kostenlos: Wir finden die Aufgabe, die du zuerst loswerden solltest.",
     metaDescription:
-      "Kostenloser Prozess-Audit und KI-Beratung für Betriebe und Unternehmen: Ich gehe deine Abläufe mit dir durch. Lohnt sich etwas, bekommst du deinen Fahrplan.",
-    kurz: "Kostenlos: Ich gehe deine Abläufe mit dir durch. Lohnt sich etwas, bekommst du einen Fahrplan.",
+      "Kostenloser Prozess-Audit und KI-Beratung für Betriebe und Unternehmen: Ich gehe deine Abläufe mit dir durch und du bekommst deinen Fahrplan.",
+    kurz: "Kostenlos: Ich gehe deine Abläufe mit dir durch und du bekommst deinen Fahrplan.",
     heroImage: "/images/leistung-prozess-audit.webp",
     pain: {
       heading: "Kennst du das?",
@@ -134,7 +134,7 @@ export const leistungenPages: LeistungPage[] = [
       schritte: [
         { title: "Vorlage ansehen", text: "Der Bauplan für deine Branche zeigt dir, wo die Zeit hingeht. Kostenlos." },
         { title: "30 Minuten Gespräch", text: "Wir gehen deine Abläufe zusammen durch. Du bereitest nichts vor." },
-        { title: "Dein Fahrplan", text: "Lohnt sich etwas, bekommst du ein bis zwei Werktage später deinen Fahrplan." },
+        { title: "Dein Fahrplan", text: "Ein bis zwei Werktage später bekommst du deinen Fahrplan." },
       ],
     },
     szenen: BEI_KUNDEN,

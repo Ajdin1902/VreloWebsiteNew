@@ -207,12 +207,10 @@ export const RESULT_UI = {
   profileLabel: "Am meisten kostet dich",
   nervtPrefix: "Du sagst, am meisten nervt dich: ",
   reliefTitle: "Das muss nicht so bleiben.",
-  // Result bridge to the call (shortened 2026-09-26, was the 2026-09-02
-  // dream-outcome bridge). The Fahrplan is still promised only conditionally
-  // („Lohnt sich etwas“): the audit is at Vrelo's discretion
-  // (Knowledge/marketing/prozess-check-funnel.md §1a/§2).
+  // Result bridge to the call (shortened 2026-09-26). The Fahrplan is always part
+  // of the free path since Ajdin 2026-11-12, no condition.
   schedulerPrompt:
-    "Jetzt weißt du, wo du Zeit verlierst. Im Gespräch findest du heraus, wie du sie zurückbekommst. Lohnt sich etwas, zeigt dir ein Fahrplan den Weg. Er ist kostenlos und gehört dir.",
+    "Jetzt weißt du, wo du Zeit verlierst. Im Gespräch findest du heraus, wie du sie zurückbekommst. Danach zeigt dir dein Fahrplan den Weg. Er ist kostenlos und gehört dir.",
   schedulerFallbackHint: "Schreib mir so lange einfach über das Kontaktformular.",
   emailLabel: "Ergebnis lieber per Mail?",
   emailIntro: "Ich schick dir deine Auswertung zu, dann hast du sie in Ruhe.",

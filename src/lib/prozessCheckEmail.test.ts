@@ -94,3 +94,14 @@ describe("evaluateSubmission", () => {
     }
   });
 });
+
+// Ajdin 2026-11-12: the Fahrplan is always part of the free path, never conditional.
+describe("Fahrplan promise in the result mail", () => {
+  it("promises the Fahrplan without a condition, in html and text", () => {
+    const m = buildSummaryEmail({ email: "a@b.de", answers });
+    const line = "Lass uns 30 Minuten drüber sprechen. Danach bekommst du einen Fahrplan von mir, der dir gehört.";
+    expect(m.html).toContain(line);
+    expect(m.text).toContain(line);
+    expect(m.html + m.text).not.toMatch(/Lohnt sich etwas|Wenn sich etwas lohnt|wenn es sich lohnt/i);
+  });
+});

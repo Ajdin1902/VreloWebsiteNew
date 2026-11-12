@@ -129,16 +129,12 @@ describe("hoursLabel", () => {
   });
 });
 
-// Result bridge to the call (shortened 2026-09-26). The Fahrplan stays
-// conditional (funnel doc §1a): the audit is at Vrelo's discretion.
-describe("RESULT_UI.schedulerPrompt", () => {
-  it("is the short bridge from result to call", () => {
+// Ajdin 2026-11-12: the Fahrplan is always part of the free path, never conditional.
+describe("Fahrplan promise", () => {
+  it("promises the Fahrplan without a condition", () => {
     expect(RESULT_UI.schedulerPrompt).toBe(
-      "Jetzt weißt du, wo du Zeit verlierst. Im Gespräch findest du heraus, wie du sie zurückbekommst. Lohnt sich etwas, zeigt dir ein Fahrplan den Weg. Er ist kostenlos und gehört dir.",
+      "Jetzt weißt du, wo du Zeit verlierst. Im Gespräch findest du heraus, wie du sie zurückbekommst. Danach zeigt dir dein Fahrplan den Weg. Er ist kostenlos und gehört dir.",
     );
-  });
-
-  it("promises the Fahrplan only conditionally", () => {
-    expect(RESULT_UI.schedulerPrompt).toContain("Lohnt sich etwas");
+    expect(JSON.stringify(RESULT_UI)).not.toMatch(/Lohnt sich etwas|Wenn sich etwas lohnt|wenn es sich lohnt/i);
   });
 });
