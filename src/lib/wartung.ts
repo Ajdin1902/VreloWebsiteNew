@@ -50,7 +50,7 @@ export const wartungTiers: WartungTier[] = [
       anpassen: ["Nicht enthalten"],
       verbessern: ["Nicht enthalten"],
       team: ["Nicht enthalten"],
-      bericht: ["Nicht enthalten"],
+      bericht: ["Jeden Monat eine kurze Notiz: welche Updates ich eingespielt habe"],
       ergebnis: ["Es bleibt aktuell", "Richtig, wenn dein System einfach aktuell bleiben soll"],
     },
   },

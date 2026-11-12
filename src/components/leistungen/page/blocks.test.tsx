@@ -14,17 +14,17 @@ const page = (s: string) => getLeistungPage(s)!;
 
 describe("PainBlock", () => {
   it("lists every moment under its heading and closes with the hours line", () => {
-    const p = page("prozessautomatisierung");
-    render(<PainBlock pain={p.pain} />);
-    expect(screen.getByRole("heading", { level: 2, name: p.pain.heading })).toBeInTheDocument();
-    expect(screen.getAllByRole("listitem")).toHaveLength(p.pain.moments.length);
-    expect(screen.getByText(p.pain.close)).toBeInTheDocument();
+    const pain = page("prozessautomatisierung").pain!;
+    render(<PainBlock pain={pain} />);
+    expect(screen.getByRole("heading", { level: 2, name: pain.heading })).toBeInTheDocument();
+    expect(screen.getAllByRole("listitem")).toHaveLength(pain.moments.length);
+    expect(screen.getByText(pain.close)).toBeInTheDocument();
   });
 
   it("puts the closing line beside the heading, before the list", () => {
-    const p = page("betreuung");
-    const { container } = render(<PainBlock pain={p.pain} />);
-    const close = screen.getByText(p.pain.close);
+    const pain = page("prozessautomatisierung").pain!;
+    const { container } = render(<PainBlock pain={pain} />);
+    const close = screen.getByText(pain.close);
     const list = container.querySelector("ul")!;
     expect(close.compareDocumentPosition(list) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });

@@ -4,11 +4,10 @@ import { Hero } from "./Hero";
 import { VORLAGEN_CTA } from "@/lib/prozessCheckCta";
 
 describe("Hero", () => {
-  // Ajdin 2026-11-11: the H1 names the free result instead of the pain.
-  it("leads the H1 with the free result", () => {
+  // Ajdin 2026-11-12: three short words, start to finish, ending on the result.
+  it("says the whole path in three words", () => {
     render(<Hero />);
-    const h1 = screen.getByRole("heading", { level: 1 });
-    expect(h1).toHaveTextContent("Dein Fahrplan zum früheren Feierabend. Kostenlos.");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(/^Prüfen\. Bauen\. Läuft\.$/);
   });
 
   it("renders the Merak scene image", () => {
@@ -24,13 +23,13 @@ describe("Hero", () => {
     expect(section?.getAttribute("style")).toBeFalsy();
   });
 
-  // Ajdin 2026-11-11: the hero names what is free; the guarantee left the hero
-  // the same day (it stays on the Proof card and the Leistungen pages).
-  it("sends the sub line to the Vorlagen and names the free Fahrplan, without the guarantee", () => {
+  // Ajdin 2026-11-12: the sub says what we do and links the free start; no guarantee in the hero.
+  it("explains the three words in the sub and links the Vorlage there", () => {
     render(<Hero />);
-    expect(
-      screen.getByText((_, el) => el?.tagName === "P" && el.textContent === "Nimm dir die kostenlose Vorlage für deine Branche. Danach machen wir zusammen deinen Fahrplan, auch kostenlos."),
-    ).toBeInTheDocument();
+    const sub = screen.getByText((_, el) => el?.tagName === "P" && el.textContent === "Wir prüfen deine Prozesse und automatisieren, was dich jeden Tag Zeit kostet. Fang mit der kostenlosen Vorlage für deine Branche an.");
+    const link = screen.getByRole("link", { name: "kostenlosen Vorlage für deine Branche" });
+    expect(sub).toContainElement(link);
+    expect(link).toHaveAttribute("href", "/vorlagen?src=home-hero");
     expect(screen.queryByText(/Geld zurück/)).toBeNull();
   });
 
@@ -55,7 +54,7 @@ describe("Hero", () => {
   it("applies the staggered reveal classes (H1 rise-only, sub + CTA fade-up)", () => {
     render(<Hero />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveClass("hero-reveal-h1");
-    expect(screen.getByText(/^Nimm dir die kostenlose Vorlage/)).toHaveClass("hero-reveal-sub");
+    expect(screen.getByText(/^Wir prüfen deine Prozesse/)).toHaveClass("hero-reveal-sub");
     const ctaWrapper = screen.getByRole("link", { name: "Kostenlose Vorlagen ansehen" }).parentElement as HTMLElement;
     expect(ctaWrapper).toHaveClass("hero-reveal-cta");
   });

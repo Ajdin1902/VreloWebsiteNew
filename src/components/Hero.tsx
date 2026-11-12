@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { CTAButton } from "@/components/CTAButton";
+import Link from "next/link";
 import { VORLAGEN_CTA, CHECK_SRC, vorlagenHref } from "@/lib/prozessCheckCta";
+import { darkLinkClass } from "@/components/kontakt/onDarkLink";
 
 export function Hero() {
   return (
@@ -28,10 +30,15 @@ export function Hero() {
       </div>
 
       <h1 className="hero-reveal-h1 text-balance text-[2.25rem] font-semibold leading-[1.12] tracking-[-0.02em] text-papier md:text-[3.5rem] lg:text-[4rem]">
-        Dein Fahrplan zum früheren Feierabend. Kostenlos.
+        Prüfen. Bauen. Läuft.
       </h1>
       <p className="hero-reveal-sub mt-6 max-w-xl text-pretty text-[1.05rem] leading-relaxed tracking-[-0.005em] text-gletscher md:text-xl md:leading-relaxed">
-        Nimm dir die kostenlose Vorlage für deine Branche. Danach machen wir zusammen deinen Fahrplan, auch kostenlos.
+        {/* Ajdin 2026-11-12: the sub explains the three words; the free start is linked here, the button stays. */}
+        Wir prüfen deine Prozesse und automatisieren, was dich jeden Tag Zeit kostet. Fang mit der{" "}
+        <Link href={vorlagenHref(CHECK_SRC.homeHero)} className={darkLinkClass}>
+          kostenlosen Vorlage für deine Branche
+        </Link>{" "}
+        an.
       </p>
       <div className="hero-reveal-cta mt-9">
         <CTAButton href={vorlagenHref(CHECK_SRC.homeHero)} tone="dark">

@@ -40,12 +40,14 @@ describe("leistungenPages", () => {
     expect(by("betreiben")).toEqual(["betreuung"]);
   });
 
-  it.each(leistungenPages.map((p) => [p.slug, p] as const))("%s fills the six blocks and nothing else", (_s, p) => {
-    expect(Object.keys(p).sort()).toEqual(
-      ["cta", "group", "heroImage", "kurz", "loesung", "metaDescription", "navLabel", "pain", "slug", "subline", "szenen", "title", "warum"],
-    );
-    expect(p.pain.moments.length).toBeGreaterThanOrEqual(3);
-    expect(p.pain.moments.length).toBeLessThanOrEqual(4);
+  // Ajdin 2026-11-12: Betreuung has no Kennst-du-das block; every other page keeps it.
+  it.each(leistungenPages.map((p) => [p.slug, p] as const))("%s fills its blocks and nothing else", (_s, p) => {
+    const keys = ["cta", "group", "heroImage", "kurz", "loesung", "metaDescription", "navLabel", "slug", "subline", "szenen", "title", "warum"];
+    expect(Object.keys(p).sort()).toEqual((p.slug === "betreuung" ? keys : [...keys, "pain"]).sort());
+    if (p.slug !== "betreuung") {
+      expect(p.pain!.moments.length).toBeGreaterThanOrEqual(3);
+      expect(p.pain!.moments.length).toBeLessThanOrEqual(4);
+    }
     if (p.slug === "betreuung") expect(p.loesung).toEqual({ heading: WARTUNG_TITEL, tabelle: "wartung" });
     else expect(p.loesung.schritte).toHaveLength(3);
     expect(p.szenen.items).toHaveLength(2);
@@ -62,6 +64,7 @@ describe("leistungenPages", () => {
 
   it("keeps hero line, pain points and steps short", () => {
     for (const p of everything()) {
+      if (!p.pain) continue;
       for (const m of p.pain.moments) expect(m.length, m).toBeLessThanOrEqual(42);
       expect(p.pain.close.length, p.pain.close).toBeLessThanOrEqual(75);
     }

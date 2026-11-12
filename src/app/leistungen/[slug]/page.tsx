@@ -43,7 +43,7 @@ export default async function LeistungSubpage({ params }: Params) {
   return (
     <>
       <LeistungHero page={page} />
-      <PainBlock pain={page.pain} />
+      {page.pain ? <PainBlock pain={page.pain} /> : null}
       <LoesungBlock loesung={page.loesung} />
       <SzenenBlock szenen={page.szenen} />
       <WarumBlock warum={page.warum} />

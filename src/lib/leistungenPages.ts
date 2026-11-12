@@ -45,7 +45,8 @@ export type LeistungPage = {
   /** One line for the hub's door cards. */
   kurz: string;
   heroImage: string;
-  pain: Pain;
+  /** The Kennst-du-das block; Betreuung has none (Ajdin 2026-11-12). */
+  pain?: Pain;
   loesung: Loesung;
   szenen: Szenen;
   warum: WarumPunkt[];
@@ -251,16 +252,6 @@ export const leistungenPages: LeistungPage[] = [
       "Betreuung und Wartung für Automatisierungen und KI-Systeme: vier Stufen, von Updates bis zur festen Zusammenarbeit. Ab dem 3. Monat monatlich kündbar.",
     kurz: `Vier Stufen, je nachdem, wie viel Zeit du von mir brauchst. ${WARTUNG_KUENDIGUNG}`,
     heroImage: "/images/leistung-betreuung.webp",
-    pain: {
-      heading: "Kennst du das?",
-      moments: [
-        "Fehler fallen erst Wochen später auf",
-        "Schnittstelle geändert, Verbindung tot",
-        "Wer es gebaut hat, ist weg",
-        "Läuft der Server sicher?",
-      ],
-      close: "Eine Automatisierung spart Zeit, solange jemand prüft, dass sie läuft.",
-    },
     loesung: { heading: WARTUNG_TITEL, tabelle: "wartung" },
     szenen: { heading: "Das betreue ich heute", items: [MDZ_ASSISTENT, VELP_PHASEN] },
     warum: [
@@ -278,7 +269,7 @@ export const leistungenPages: LeistungPage[] = [
 ];
 
 // The hub (/leistungen): same order, ServiceGroups (the three doors) is its Lösung.
-export const leistungenHub: Pick<LeistungPage, "pain" | "szenen" | "warum" | "cta"> = {
+export const leistungenHub: Pick<LeistungPage, "szenen" | "warum" | "cta"> & { pain: Pain } = {
   pain: {
     heading: "Kennst du das?",
     moments: [

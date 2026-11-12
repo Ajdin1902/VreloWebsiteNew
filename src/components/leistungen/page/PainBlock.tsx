@@ -1,13 +1,13 @@
 import { Section } from "@/components/Section";
 import { SectionBackdrop } from "@/components/SectionBackdrop";
 import { Reveal } from "@/components/Reveal";
-import type { LeistungPage } from "@/lib/leistungenPages";
+import type { Pain } from "@/lib/leistungenPages";
 
 // „Kennst du das?“ (Ajdin 2026-10-01, variant 3): heading and the closing line
 // on the left, the short pain points as a ruled list on the right, half the
 // height of the old centered panel. The close sits before the list in the DOM,
 // so a screen reader hears heading → close → points, the same order as seen.
-export function PainBlock({ pain }: { pain: LeistungPage["pain"] }) {
+export function PainBlock({ pain }: { pain: Pain }) {
   return (
     <Section tone="cool" className="relative isolate overflow-hidden">
       {/* The dark karst pool, not the homepage's navy dusk sea (Ajdin 2026-10-20). */}

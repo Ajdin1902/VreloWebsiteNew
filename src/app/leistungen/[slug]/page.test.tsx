@@ -18,11 +18,12 @@ describe("/leistungen/[slug]", () => {
   });
 
   // Ajdin 2026-11-11: Hero → Kennst du das? → Lösung → proof → Warum ich → CTA. That is it.
-  it.each(leistungenPages.map((p) => [p.slug, p] as const))("%s renders exactly the six blocks in order", async (slug, p) => {
+  it.each(leistungenPages.map((p) => [p.slug, p] as const))("%s renders its blocks in order", async (slug, p) => {
     const { container } = render(await LeistungSubpage(params(slug)));
     expect(screen.getByRole("heading", { level: 1, name: p.title })).toBeInTheDocument();
     const h2s = [...container.querySelectorAll("h2")].map((h) => h.textContent?.trim());
-    expect(h2s).toEqual([p.pain.heading, p.loesung.heading, p.szenen.heading, "Warum ich", p.cta.heading]);
+    // Betreuung has no Kennst-du-das block (Ajdin 2026-11-12).
+    expect(h2s).toEqual([...(p.pain ? [p.pain.heading] : []), p.loesung.heading, p.szenen.heading, "Warum ich", p.cta.heading]);
     expect(container.textContent).not.toContain("Mehr dazu");
   });
 
@@ -41,6 +42,17 @@ describe("/leistungen/[slug]", () => {
     expect(container.querySelector("table")).not.toBeNull();
     for (const p of ["95 €", "249 €", "945 €", "Auf Anfrage"]) expect(screen.getAllByText(p).length).toBeGreaterThan(0);
     expect(container).not.toHaveTextContent("9.900");
+  });
+
+  // Ajdin 2026-11-12: Betreuung opens straight into the tiers.
+  it("shows no Kennst du das block on Betreuung, but on the other pages", async () => {
+    render(await LeistungSubpage(params("betreuung")));
+    expect(screen.queryByRole("heading", { name: "Kennst du das?" })).toBeNull();
+  });
+
+  it("keeps the Kennst du das block on Prozessautomatisierung", async () => {
+    render(await LeistungSubpage(params("prozessautomatisierung")));
+    expect(screen.getByRole("heading", { name: "Kennst du das?" })).toBeInTheDocument();
   });
 
   it("lands the old KI links on their card", async () => {

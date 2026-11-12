@@ -36,7 +36,9 @@ describe("wartung tiers (Ajdin 2026-11-11, four tiers since 2026-11-12)", () => 
     const m = wartungTiers[0];
     expect(m.motto).toBe("Ich halte dein System aktuell");
     expect(m.zeilen.laeuft).toEqual(["Updates für Server und Programme", "Dein Server bleibt auf deinem Konto"]);
-    for (const z of ["zeit", "anpassen", "verbessern", "team", "bericht"] as const) expect(m.zeilen[z], z).toEqual(["Nicht enthalten"]);
+    for (const z of ["zeit", "anpassen", "verbessern", "team"] as const) expect(m.zeilen[z], z).toEqual(["Nicht enthalten"]);
+    // Ajdin 2026-11-12: a short report, so they always see what I do.
+    expect(m.zeilen.bericht).toEqual(["Jeden Monat eine kurze Notiz: welche Updates ich eingespielt habe"]);
     expect(m.zeilen.ergebnis).toEqual(["Es bleibt aktuell", "Richtig, wenn dein System einfach aktuell bleiben soll"]);
   });
 
