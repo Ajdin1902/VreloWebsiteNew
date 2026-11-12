@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { wartungTiers, wartungZeilen, WARTUNG_HINWEIS, WARTUNG_TITEL, WARTUNG_PREIS_ZUSATZ, WARTUNG_KUENDIGUNG, wartungPreis, wartungPreisSatz } from "./wartung";
+import { wartungTiers, wartungZeilen, WARTUNG_HINWEIS, WARTUNG_TITEL, WARTUNG_KUENDIGUNG, wartungPreisSatz } from "./wartung";
 import { findCopyIssues } from "./ratgeberCopy";
 
 const txt = (items: string[]) => items.join(" ");
@@ -82,12 +82,6 @@ describe("wartung tiers (Ajdin 2026-11-11)", () => {
     for (const t of wartungTiers)
       for (const s of [t.name, t.motto, t.grenze ?? "", ...Object.values(t.zeilen).flat()]) expect(findCopyIssues(s), s).toEqual([]);
     for (const s of [WARTUNG_TITEL, WARTUNG_HINWEIS, ...wartungZeilen.map((z) => z.label)]) expect(findCopyIssues(s), s).toEqual([]);
-  });
-
-  // Ajdin 2026-11-11: the Betreuung page shows the prices in its comparison table.
-  it("labels each tier's price for the Betreuung table", () => {
-    expect(wartungTiers.map(wartungPreis)).toEqual(["249 €", "945 €", "9.900 €"]);
-    expect(WARTUNG_PREIS_ZUSATZ).toBe("im Monat, netto");
   });
 
   it("builds the FAQ price sentence from the tiers", () => {

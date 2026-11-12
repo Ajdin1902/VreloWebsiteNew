@@ -1,13 +1,12 @@
-import { WARTUNG_HINWEIS, WARTUNG_PREIS_LABEL, WARTUNG_PREIS_ZUSATZ, wartungPreis, wartungTiers, wartungZeilen, type WartungTier } from "@/lib/wartung";
+import { WARTUNG_HINWEIS, wartungTiers, wartungZeilen, type WartungTier } from "@/lib/wartung";
 
-// The three Wartung tiers side by side with their prices (Ajdin 2026-11-11:
-// details and prices as a table, so the differences read at a glance). A real
+// The three Wartung tiers side by side (Ajdin 2026-11-11: details as a table, so
+// the differences read at a glance; prices taken off again 2026-11-12). A real
 // table from md up; below md the same content stacks as one card per tier, so
 // the page never scrolls sideways. Standard is the tier to push: it carries the
 // sunlit column and the petrol frame, no beliebt label (that would be a claim).
 // A cell with several lines renders as bullets, a single line as plain text.
-// Ergebnis and Preis close the table as one dark band (Ajdin 2026-11-11: prices
-// at the bottom): the reader first sees what each tier gives, then what it costs.
+// Ergebnis closes the table as one dark band: which tier fits whom.
 const hervor = (t: WartungTier) => t.id === "standard";
 const details = wartungZeilen.filter((z) => z.id !== "ergebnis");
 const ergebnisLabel = wartungZeilen.find((z) => z.id === "ergebnis")!.label;
@@ -46,14 +45,8 @@ function Kopf({ t }: { t: WartungTier }) {
   );
 }
 
-function Preis({ t }: { t: WartungTier }) {
-  return (
-    <>
-      <span className="block text-3xl font-semibold text-papier">{wartungPreis(t)}</span>
-      <span className="block text-sm text-gletscher">{WARTUNG_PREIS_ZUSATZ}</span>
-      {t.grenze ? <span className="mt-2 block text-sm font-semibold text-honig">{t.grenze}</span> : null}
-    </>
-  );
+function Grenze({ t }: { t: WartungTier }) {
+  return t.grenze ? <span data-grenze className="mt-2 block text-sm font-semibold text-ember">{t.grenze}</span> : null;
 }
 
 const bandLabel = "text-sm font-semibold uppercase tracking-wide text-honig";
@@ -73,6 +66,7 @@ export function WartungTabelle() {
                   className={`rounded-t-2xl p-5 align-top font-normal ${hervor(t) ? "border-x-2 border-t-2 border-vrelo-petrol bg-sonnenlicht" : ""}`}
                 >
                   <Kopf t={t} />
+                  <Grenze t={t} />
                 </th>
               ))}
             </tr>
@@ -94,32 +88,17 @@ export function WartungTabelle() {
               </tr>
             ))}
             <tr data-ergebnis>
-              <th scope="row" className={`rounded-tl-2xl bg-tiefes-wasser py-6 pl-5 pr-4 align-top ${bandLabel}`}>
+              <th scope="row" className={`rounded-l-2xl bg-tiefes-wasser py-6 pl-5 pr-4 align-top ${bandLabel}`}>
                 {ergebnisLabel}
               </th>
               {wartungTiers.map((t, i) => (
                 <td
                   key={t.id}
-                  className={`px-5 py-6 align-top ${hervor(t) ? "border-x-2 border-vrelo-petrol bg-vrelo-petrol" : "bg-tiefes-wasser"} ${
-                    i === wartungTiers.length - 1 ? "rounded-tr-2xl" : ""
-                  }`}
+                  className={`px-5 py-6 align-top ${
+                    hervor(t) ? "rounded-b-2xl border-x-2 border-b-2 border-vrelo-petrol bg-vrelo-petrol" : "bg-tiefes-wasser"
+                  } ${i === wartungTiers.length - 1 ? "rounded-r-2xl" : ""}`}
                 >
                   <Ergebnis t={t} />
-                </td>
-              ))}
-            </tr>
-            <tr data-preis>
-              <th scope="row" className={`rounded-bl-2xl border-t border-gletscher/20 bg-tiefes-wasser py-6 pl-5 pr-4 align-top ${bandLabel}`}>
-                {WARTUNG_PREIS_LABEL}
-              </th>
-              {wartungTiers.map((t, i) => (
-                <td
-                  key={t.id}
-                  className={`border-t border-t-gletscher/20 px-5 py-6 align-top ${
-                    hervor(t) ? "rounded-b-2xl border-x-2 border-b-2 border-x-vrelo-petrol border-b-vrelo-petrol bg-vrelo-petrol" : "bg-tiefes-wasser"
-                  } ${i === wartungTiers.length - 1 ? "rounded-br-2xl" : ""}`}
-                >
-                  <Preis t={t} />
                 </td>
               ))}
             </tr>
@@ -137,6 +116,7 @@ export function WartungTabelle() {
             <h3>
               <Kopf t={t} />
             </h3>
+            <Grenze t={t} />
             <dl className="mt-6 flex flex-col gap-4">
               {details.map((z) => (
                 <div key={z.id}>
@@ -153,10 +133,6 @@ export function WartungTabelle() {
                 <div className="mt-2">
                   <Ergebnis t={t} />
                 </div>
-              </div>
-              <div data-preis className="mt-5 border-t border-gletscher/20 pt-5">
-                <p className={`${bandLabel} sr-only`}>{WARTUNG_PREIS_LABEL}</p>
-                <Preis t={t} />
               </div>
             </div>
           </article>

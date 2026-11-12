@@ -35,10 +35,12 @@ describe("/leistungen/[slug]", () => {
     expect(screen.getAllByText(page.subline)).toHaveLength(1);
   });
 
-  it("shows the Wartung tiers with their prices on Betreuung", async () => {
+  // Ajdin 2026-11-12: the tiers stay, the prices come off the page (FAQ keeps them).
+  it("shows the Wartung tiers without prices on Betreuung", async () => {
     const { container } = render(await LeistungSubpage(params("betreuung")));
     expect(container.querySelector("table")).not.toBeNull();
-    for (const p of ["249 €", "945 €", "9.900 €"]) expect(screen.getAllByText(p).length).toBeGreaterThan(0);
+    expect(container).not.toHaveTextContent("€");
+    for (const p of ["249", "945", "9.900"]) expect(container).not.toHaveTextContent(p);
   });
 
   it("lands the old KI links on their card", async () => {
