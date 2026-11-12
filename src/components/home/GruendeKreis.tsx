@@ -8,7 +8,8 @@ export type Grund = { id: string; title: string; body: string; link?: { href: st
 
 // The reasons on a ring around Vrelo (Ajdin 2026-11-12, like the KI-Agenten
 // ring), from lg up on the warm Proof band. Each reason is a frosted papier
-// button; a click shows its text in the dark middle, a second click (or the
+// button; a click shows its text in the light middle (papier with an ember
+// ring, Ajdin 2026-11-12), a second click (or the
 // close button) returns to Vrelo. Only small amber dots move, running along the
 // lines into the middle, motion-safe (keyframes agenten-puls in globals.css).
 // Geometry in percent of a square box, so lines and nodes share one system.
@@ -66,16 +67,16 @@ export function GruendeKreis({
         id="gruende-mitte"
         data-mitte
         aria-live="polite"
-        className="absolute left-1/2 top-1/2 flex aspect-square w-[46%] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full bg-tiefes-wasser p-[6%] text-center shadow-deepwater"
+        className="absolute left-1/2 top-1/2 flex aspect-square w-[46%] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border-[3px] border-ember bg-papier/90 p-[6%] text-center backdrop-blur-sm shadow-deepwater"
       >
         {gewaehlt ? (
           <>
-            <h3 className="text-balance text-lg font-semibold text-honig">{gewaehlt.title}</h3>
-            <p className="mt-2 text-pretty text-sm leading-relaxed text-gletscher">{gewaehlt.body}</p>
+            <h3 className="text-balance text-lg font-semibold text-ember">{gewaehlt.title}</h3>
+            <p className="mt-2 text-pretty text-sm leading-relaxed text-tinte">{gewaehlt.body}</p>
             {gewaehlt.link ? (
               <Link
                 href={gewaehlt.link.href}
-                className="mt-3 text-sm text-honig underline underline-offset-2 transition-colors hover:text-papier"
+                className="mt-3 text-sm text-tiefes-wasser underline underline-offset-2 transition-colors hover:text-vrelo-petrol"
               >
                 {gewaehlt.link.label}
               </Link>
@@ -83,15 +84,15 @@ export function GruendeKreis({
             <button
               type="button"
               onClick={() => setAktiv(null)}
-              className="mt-4 text-sm font-semibold text-papier underline underline-offset-2 transition-colors hover:text-honig focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-honig"
+              className="mt-4 text-sm font-semibold text-vrelo-petrol underline underline-offset-2 transition-colors hover:text-tiefes-wasser focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vrelo-petrol"
             >
               {schliessen}
             </button>
           </>
         ) : (
           <>
-            <BrandWord className="text-6xl text-papier">Vrelo</BrandWord>
-            <p className="mt-4 text-pretty text-sm text-gletscher">{hinweis}</p>
+            <BrandWord className="text-6xl text-tiefes-wasser">Vrelo</BrandWord>
+            <p className="mt-4 text-pretty text-sm text-tinte">{hinweis}</p>
           </>
         )}
       </div>

@@ -62,6 +62,18 @@ describe("Proof", () => {
     expect(mitte).toHaveTextContent("Vrelo");
   });
 
+  // Ajdin 2026-11-12: option D, light papier middle with an ember ring; the
+  // close link in petrol so it reads on the light circle.
+  it("draws the middle light with an ember ring and a petrol close link", () => {
+    const { container } = render(<Proof />);
+    const kreis = container.querySelector("[data-kreis]")!;
+    const mitte = kreis.querySelector("[data-mitte]")!;
+    expect(mitte).toHaveClass("bg-papier/90", "border-ember");
+    expect(mitte.querySelector("span")).toHaveClass("text-tiefes-wasser");
+    fireEvent.click(kreis.querySelector('button[data-knoten="praxis"]')!);
+    expect(screen.getByRole("button", { name: "Zurück zur Übersicht" })).toHaveClass("text-vrelo-petrol");
+  });
+
   it("keeps the guarantee conditions one click away inside the ring", () => {
     const { container } = render(<Proof />);
     const kreis = container.querySelector("[data-kreis]")!;
