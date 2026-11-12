@@ -110,7 +110,7 @@ Author issues as `.md` in `content/newsletter/` (frontmatter `subject`/`previewT
 ## Domain, legal & live services
 - **Live since 2026-08-16** on `vrelo-ki.de` (registrar, DNS and mail at **united-domains**; every DNS record goes in their panel). ⚠️ `NEXT_PUBLIC_*` is inlined at build → a URL change needs a **cache-less** redeploy. ⚠️ `parseInlineLinks` accepts only `http(s)` (no `mailto:`/relative links in legal bodies). ⚠️ After a successful deploy a static page can stay **stale on the CDN for minutes** (`X-Vercel-Cache: HIT`, `/ratgeber` 2026-10-08): check with a `?cb=<random>` query before calling the deploy broken.
 - **Services:** Kontakt (Resend domain verified) · Cal.com (`NEXT_PUBLIC_CAL_LINK` in Production + Development; **Preview unset**, add it for branch previews) · Newsletter (`newsletter@` mailbox monitored).
-- ☐ Open, minor: `*.vercel.app` → apex is **307**, make it **308** (SEO).
+- ✅ `*.vercel.app` → apex answers **308** (checked with curl 2026-11-12).
 
 ## Tech stack
 - **Next.js 16** (App Router, Turbopack) · **TypeScript**
