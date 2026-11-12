@@ -4,6 +4,7 @@
 // internal notification so Ajdin walks into the call already knowing the profile.
 import { EMAIL_RE, isHoneypotTripped, isTooFast } from "./contact";
 import { sourceLabel } from "./source";
+import { signaturHtml, signaturText } from "./email/signatur";
 import {
   resultCopy,
   totalHours,
@@ -68,7 +69,8 @@ export function buildSummaryEmail(p: {
         <p style="${SERIF};color:#f4efe6;font-size:17px;line-height:1.45;margin:0 0 16px">Lass uns 30 Minuten drüber sprechen. Danach bekommst du einen Fahrplan von mir, der dir gehört.</p>
         ${ctaInner}
       </div>
-      <p style="font-size:14.5px;line-height:1.6;margin:0 0 24px">Bis bald<br>Ajdin von <em style="${SERIF};font-style:italic">Vrelo</em></p>
+      <p style="font-size:14.5px;line-height:1.6;margin:0 0 14px">Bis bald</p>
+      ${signaturHtml()}
       <hr style="border:none;border-top:1px solid #e3dccc;margin:0 0 14px" />
       <p style="font-size:12px;color:#696359;margin:0">Du bekommst diese E-Mail einmalig, weil du dir dein Prozess-Check-Ergebnis hast schicken lassen.</p>
     </div>
@@ -88,7 +90,8 @@ export function buildSummaryEmail(p: {
     calUrl ? `30-Minuten-Gespräch buchen: ${calUrl}` : "Antworte einfach auf diese E-Mail. Dann melde ich mich.",
     "",
     "Bis bald",
-    "Ajdin von Vrelo",
+    "",
+    ...signaturText(),
     "",
     "Du bekommst diese E-Mail einmalig, weil du dir dein Prozess-Check-Ergebnis hast schicken lassen.",
   ];

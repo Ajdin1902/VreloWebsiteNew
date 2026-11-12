@@ -7,6 +7,7 @@ import {
   type ProzessCheckFields,
 } from "./prozessCheckEmail";
 import type { ProzessCheckAnswers } from "./prozessCheck";
+import { signaturHtml, signaturText } from "./email/signatur";
 
 const answers: ProzessCheckAnswers = {
   branche: "handwerk",
@@ -35,9 +36,19 @@ describe("buildSummaryEmail", () => {
     expect(m.html).not.toContain("€"); // no price ever
     expect(m.text).toContain("9");
   });
+  // The body links only Cal; the signature (Ajdin 2026-11-12) is the one exception.
   it("falls back to a reply line when no Cal URL is configured", () => {
     const m = buildSummaryEmail({ email: "a@b.de", answers });
-    expect(m.html).not.toContain("http");
+    expect(m.html.replace(signaturHtml(), "")).not.toContain("http");
+  });
+
+  it("ends with the signature in html and text, after a short greeting", () => {
+    const m = buildSummaryEmail({ email: "a@b.de", answers });
+    expect(m.html).toContain(signaturHtml());
+    for (const line of signaturText()) expect(m.text).toContain(line);
+    expect(m.text).toContain("Bis bald");
+    expect(m.text.indexOf("Bis bald")).toBeLessThan(m.text.indexOf("Ajdin Dzafic"));
+    expect(m.html + m.text).not.toContain("Ajdin von Vrelo");
   });
 });
 
