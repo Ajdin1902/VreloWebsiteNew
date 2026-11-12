@@ -8,9 +8,10 @@ describe("Footer", () => {
     expect(container.querySelector('svg path[fill="#f4efe6"]')).not.toBeNull();
   });
 
-  it("links the Prozess-Check outside navLinks (it is a focus route)", () => {
+  // Ajdin 2026-11-12: no Vorlagen line in the footer, every page already ends on the Vorlagen CTA.
+  it("does not repeat the Vorlagen link that every page CTA already carries", () => {
     render(<Footer />);
-    expect(screen.getByRole("link", { name: "Vorlagen" })).toHaveAttribute("href", "/vorlagen?src=footer");
+    expect(screen.queryByRole("link", { name: "Vorlagen" })).toBeNull();
   });
 
   it("links the local Regensburg page so it is never orphaned", () => {

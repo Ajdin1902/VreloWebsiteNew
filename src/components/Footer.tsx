@@ -5,7 +5,6 @@ import { BrandLockup } from "@/components/BrandLockup";
 import { NewsletterForm } from "@/components/newsletter/NewsletterForm";
 import { isNewsletterConfigured } from "@/lib/newsletter";
 import { linkedinUrl, linkedinProfileUrl } from "@/lib/site";
-import { VORLAGEN_CTA, CHECK_SRC, vorlagenHref } from "@/lib/prozessCheckCta";
 import { REGENSBURG, REGENSBURG_PATH } from "@/lib/regensburg";
 
 export function Footer() {
@@ -53,15 +52,6 @@ export function Footer() {
                 </Link>
               </li>
             ))}
-            {/* Not in navLinks: /prozess-check is a focus route (nav.test.ts). */}
-            <li>
-              <Link
-                href={vorlagenHref(CHECK_SRC.footer)}
-                className="rounded-sm text-gletscher hover:text-honig focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-tiefes-wasser focus-visible:ring-honig"
-              >
-                {VORLAGEN_CTA.short}
-              </Link>
-            </li>
             {/* The local SEO page lives only here and in the sitemap. */}
             <li>
               <Link href={REGENSBURG_PATH} className="rounded-sm text-gletscher hover:text-honig focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-tiefes-wasser focus-visible:ring-honig">
