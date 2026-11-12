@@ -44,7 +44,7 @@ describe("Hero", () => {
 
   it("carries no extra line under the button (the sub says it)", () => {
     render(<Hero />);
-    expect(screen.queryByText(VORLAGEN_CTA.microcopy)).toBeNull();
+    expect(screen.queryByText("Bauplan für deine Branche. Danach machen wir zusammen deinen Fahrplan, auch kostenlos.")).toBeNull();
   });
 
   it("has no Erstgespräch link in the hero (Ajdin 2026-11-11)", () => {

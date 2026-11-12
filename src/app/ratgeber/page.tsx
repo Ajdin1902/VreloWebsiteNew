@@ -32,7 +32,7 @@ export default function RatgeberPage() {
       </Section>
       <ClosingCta
         heading="Wie viel Zeit kostet dich das?"
-        lead="Der Prozess-Check zeigt dir in drei Minuten, wie viele Stunden pro Woche bei dir in solchen Aufgaben stecken."
+        lead="Unter den kostenlosen Vorlagen findest du den Prozess-Check. Er zeigt dir in drei Minuten, wie viele Stunden pro Woche bei dir in solchen Aufgaben stecken."
         src={CHECK_SRC.ratgeber}
       />
       <JsonLd

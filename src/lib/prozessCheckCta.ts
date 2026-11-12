@@ -65,7 +65,7 @@ export function withSrc(href: string, raw: string | null | undefined): string {
 export const VORLAGEN_CTA = {
   label: "Kostenlose Vorlagen ansehen",
   short: "Vorlagen",
-  microcopy: "Bauplan für deine Branche. Danach machen wir zusammen deinen Fahrplan, auch kostenlos.",
+  // No line under the Weg button (2026-11-12: it read as a cut-off sentence; the three steps say it).
   // Homepage close only: echoes the free path (DerWeg) at the last decision point.
   closeMicrocopy: "Vorlage, Gespräch und Fahrplan: alles kostenlos.",
 } as const;

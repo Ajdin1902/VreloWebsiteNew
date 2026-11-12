@@ -39,7 +39,7 @@ export default function ReferenzenPage() {
 
       <ClosingCta
         heading="Fang klein an."
-        lead="Der Prozess-Check zeigt dir in drei Minuten, wo deine Zeit hingeht. Wenn du danach reden willst, bin ich da."
+        lead="Nimm dir die kostenlose Vorlage für deine Branche. Wenn du danach reden willst, bin ich da."
         src={CHECK_SRC.referenzen}
       />
 

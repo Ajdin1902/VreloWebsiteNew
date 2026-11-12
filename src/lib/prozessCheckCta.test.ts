@@ -90,7 +90,6 @@ describe("vorlagen front door", () => {
   it("carries the approved CTA copy", () => {
     expect(VORLAGEN_CTA.label).toBe("Kostenlose Vorlagen ansehen");
     expect(VORLAGEN_CTA.short).toBe("Vorlagen");
-    expect(VORLAGEN_CTA.microcopy).toBe("Bauplan für deine Branche. Danach machen wir zusammen deinen Fahrplan, auch kostenlos.");
     expect(VORLAGEN_CTA.closeMicrocopy).toBe("Vorlage, Gespräch und Fahrplan: alles kostenlos.");
   });
 

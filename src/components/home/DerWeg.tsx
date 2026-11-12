@@ -48,7 +48,6 @@ export function DerWeg() {
         <CTAButton tone="dark" href={vorlagenHref(CHECK_SRC.homeWeg)}>
           {VORLAGEN_CTA.label}
         </CTAButton>
-        <p className="mt-3 text-sm text-gletscher">{VORLAGEN_CTA.microcopy}</p>
       </Reveal>
     </Section>
   );
