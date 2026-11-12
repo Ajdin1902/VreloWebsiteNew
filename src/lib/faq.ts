@@ -51,15 +51,14 @@ export const faqGroups: FaqGroup[] = [
         answer: [
           "Server, Konten, Daten und Doku gehören dir",
           "Dein System läuft weiter, auch wenn ich im Urlaub oder krank bin",
-          "Mit Betreuung sage ich dir vorher Bescheid, wann ich weg bin",
         ],
       },
       {
         question: "Müssen meine Mitarbeiter etwas Neues lernen?",
         answer: [
-          "Meistens nicht, höchstens einen kleinen Schritt, etwa eine Nachricht an einer neuen Stelle lesen",
-          "Die Abläufe bleiben, wie dein Team sie kennt",
-          "Zur Übergabe gehört eine Anleitung für deine Mitarbeiter, ohne Fachbegriffe",
+          "Die Prozesse werden intuitiver, weil sie nun automatisiert laufen",
+          "Deine Mitarbeiter müssen nur entscheiden und eventuell einen Button klicken",
+          "Ihr erhaltet eine Einschulung und eine Dokumentation zu den Neuerungen",
         ],
       },
     ],
@@ -72,7 +71,6 @@ export const faqGroups: FaqGroup[] = [
         answer: [
           "Meistens nicht: Ich verbinde die Programme, die du schon nutzt",
           "Löst ein anderes Programm dein Problem an der Wurzel, schlage ich es dir vor",
-          "Du entscheidest",
         ],
       },
       {
@@ -89,7 +87,6 @@ export const faqGroups: FaqGroup[] = [
         answer: [
           "Ja, vor dem Start, nach Art. 28 DSGVO",
           "Sobald dein System personenbezogene Daten verarbeitet, etwa von Kunden oder Mitarbeitern",
-          "Telegram nur, wenn du es willst",
           "Für sensible Daten: E-Mail oder ein Kanal, den dein Betrieb schon nutzt",
         ],
       },

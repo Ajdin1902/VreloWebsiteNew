@@ -61,6 +61,23 @@ describe("faq data", () => {
     expect(kosten.join(" ")).not.toMatch(/219|420|1\.019|nach Absprache|9\.?900/);
   });
 
+  // Ajdin 2026-11-12, second pass.
+  it("uses Ajdin's three points for the staff question", () => {
+    expect(entry("Müssen meine Mitarbeiter etwas Neues lernen?")!.answer).toEqual([
+      "Die Prozesse werden intuitiver, weil sie nun automatisiert laufen",
+      "Deine Mitarbeiter müssen nur entscheiden und eventuell einen Button klicken",
+      "Ihr erhaltet eine Einschulung und eine Dokumentation zu den Neuerungen",
+    ]);
+  });
+
+  it("drops the decision line, the holiday notice and joins the refund lines", () => {
+    expect(entry("Muss ich meine bestehenden Tools wechseln?")!.answer).not.toContain("Du entscheidest");
+    expect(entry("Was ist, wenn du mal nicht erreichbar bist?")!.answer.join(" ")).not.toMatch(/Bescheid/);
+    const g = entry(GARANTIE.faqFrage)!.answer;
+    expect(g).toContain("Läuft der erste Punkt dann nicht, bekommst du alles zurück, was du bis dahin gezahlt hast");
+    expect(g.join(" ")).not.toMatch(/baue ich alles zurück/);
+  });
+
   it("promises first results within the first two weeks", () => {
     expect(entry("Wie lange dauert die Umsetzung?")!.answer[0]).toBe(
       "Erste Ergebnisse siehst du in den ersten zwei Wochen nach dem Onboarding",
@@ -83,7 +100,8 @@ describe("data protection answers", () => {
     const i = all.findIndex((e) => e.question === "Was passiert mit meinen Daten?");
     expect(all[i + 1].question).toBe("Unterschreibst du einen Vertrag zur Auftragsverarbeitung?");
     expect(all[i + 1].answer.join(" ")).toMatch(/Art\. 28 DSGVO/);
-    expect(all[i + 1].answer.join(" ")).toMatch(/Telegram nur, wenn du es willst/);
+    // Ajdin 2026-11-12: the Telegram line is gone.
+    expect(all[i + 1].answer.join(" ")).not.toMatch(/Telegram/);
   });
 
   it("keeps Claude out of the data answer", () => {

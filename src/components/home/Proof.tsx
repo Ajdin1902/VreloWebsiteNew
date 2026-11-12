@@ -4,31 +4,37 @@ import { Reveal } from "@/components/Reveal";
 import Link from "next/link";
 import { GARANTIE } from "@/lib/garantie";
 import { faqHref } from "@/lib/faq";
+import { GruendeKreis, type Grund } from "./GruendeKreis";
 
-const values: { title: string; body: string; link?: { href: string; label: string } }[] = [
+const values: Grund[] = [
   {
+    id: "ansprechpartner",
     title: "Ein Ansprechpartner.",
     body: "Du redest immer mit mir. Kein Team, keine Tickets, keine Warteschleife.",
   },
   {
+    id: "praxis",
     title: "Praxiserprobt.",
     body: "Seit über drei Jahren automatisiere ich professionell Prozesse, mit KI, wo sie wirklich hilft. Diese Erfahrung bekommst du in jedem System.",
   },
   {
+    id: "massarbeit",
     title: "Maßgeschneidert statt von der Stange.",
     body: "Ein System, das zu deinem Betrieb passt, bis ins Detail dokumentiert.",
   },
   {
+    id: "wartung",
     title: "Du wartest nichts.",
     body: "Einrichten, absichern, am Laufen halten. Das übernehme ich, du musst nichts lernen.",
   },
   // Guarantee + ownership moved up from /leistungen step 6 (review 2026-11-04).
   {
+    id: "eigentum",
     title: "Alles gehört dir.",
     body: "Server, Konten, Daten und Doku laufen auf deinen Namen. Hörst du mit mir auf, läuft dein System weiter.",
   },
   // The 2-week first-result guarantee (2026-11-11), same words as the hero and the FAQ.
-  { title: GARANTIE.titel, body: GARANTIE.text, link: { href: faqHref(GARANTIE.faqFrage), label: GARANTIE.faqLink } },
+  { id: "garantie", title: GARANTIE.titel, body: GARANTIE.text, link: { href: faqHref(GARANTIE.faqFrage), label: GARANTIE.faqLink } },
 ];
 
 export function Proof() {
@@ -69,10 +75,17 @@ export function Proof() {
         </Reveal>
       </div>
 
+      {/* From lg: Vrelo in the middle, the reasons on a ring, a click shows the text
+          (Ajdin 2026-11-12, like the KI-Agenten page). Below lg the ring does not fit,
+          so the cards stay a grid. Both are in the DOM; CSS shows one. */}
+      <div className="mt-12 hidden lg:block">
+        <GruendeKreis gruende={values} hinweis="Klick auf einen Punkt, um mehr zu sehen." schliessen="Zurück zur Übersicht" />
+      </div>
+
       {/* Frosted papier glass cards: the light-surface twin of the deep sections' faint
           gletscher tiles — the flowing water glows through, ember titles 4.2:1 / tinte
           body 11.5:1 measured over bg-papier/70. */}
-      <Reveal as="ul" delayMs={160} className="mx-auto mt-10 grid max-w-3xl gap-5 text-left sm:grid-cols-2">
+      <Reveal as="ul" delayMs={160} data-liste className="mx-auto mt-10 grid max-w-3xl gap-5 text-left sm:grid-cols-2 lg:hidden">
         {values.map((v) => (
           <li key={v.title} className="card-depth rounded-2xl border border-papier/50 bg-papier/70 p-6 backdrop-blur-sm">
             <h3 className="text-xl font-semibold text-ember">{v.title}</h3>

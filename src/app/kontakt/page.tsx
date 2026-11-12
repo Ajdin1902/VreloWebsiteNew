@@ -1,7 +1,7 @@
 // src/app/kontakt/page.tsx
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { PageIntro } from "@/components/PageIntro";
+import { CompactHero } from "@/components/CompactHero";
 import { RippleImage } from "@/components/RippleImage";
 import { WaterSection } from "@/components/WaterSection";
 import { JsonLd } from "@/components/JsonLd";
@@ -22,27 +22,45 @@ export const metadata: Metadata = {
     "Schreib mir, was dich täglich Zeit kostet. Ich melde mich und sage dir ehrlich, ob und wie ich helfen kann.",
 };
 
+// The public address (Impressum + Datenschutz name the same one).
+const KONTAKT_MAIL = "kontakt@vrelo-ki.de";
+
 export default function KontaktPage() {
   const configured = isContactConfigured();
   const to = contactTo();
   return (
     <>
-      <PageIntro
+      {/* Ajdin 2026-11-12: Kontakt opens like the other subpages (compact image
+          hero, no button: the page itself is the contact). The evening ripples keep
+          the dawn pond (kontakt-banner) for the close below. */}
+      <CompactHero
+        eyebrow="Kontakt"
         title="Lass uns deine Quelle bauen."
-        lead="Erzähl mir, was dich täglich Zeit kostet. Ich melde mich und sage dir ehrlich, ob und wie ich helfen kann."
+        line="Erzähl mir, was dich täglich Zeit kostet. Ich melde mich persönlich."
+        image="/images/bg-abendwellen.webp"
       />
 
-      {/* The petrol water room holds the two ways to reach me: the booking
-          option floats on the water, the amber form card below it is the main
-          writing surface. The -mt eases it up under the intro (not all the way,
-          so the booking subheadline keeps some breathing room at the top). */}
-      <WaterSection src="/images/bg-horizont.webp" className="-mt-12 md:-mt-16">
+      {/* Who answers and where to write, above the form band (Ajdin 2026-11-12). */}
+      <div data-kontakt-zeile className="bg-papier">
+        <p className="mx-auto max-w-6xl px-6 py-6 text-center text-lg text-tinte">
+          <span className="font-semibold text-tiefes-wasser">Ajdin Dzafic</span>
+          <span aria-hidden className="mx-3 text-stumm">·</span>
+          <a href={`mailto:${KONTAKT_MAIL}`} className={lightLinkClass}>
+            {KONTAKT_MAIL}
+          </a>
+        </p>
+      </div>
+
+      {/* The water room holds the two ways to reach me: the booking option floats
+          on the water, the amber form card below it is the main writing surface.
+          Since 2026-11-12 on the light shaft, which falls onto the form. */}
+      <WaterSection src="/images/bg-lichtschacht.webp">
         <CheckHint />
         <Suspense fallback={<SchedulerEmbed calLink={calLink()} />}>
           <SchedulerFromUrl calLink={calLink()} />
         </Suspense>
 
-        <div className="mx-auto mt-12 max-w-xl rounded-2xl bg-amber p-8 shadow-deepwater md:mt-16 md:p-10">
+        <div className="relative mx-auto mt-12 max-w-xl rounded-2xl bg-amber p-8 shadow-deepwater ring-1 ring-honig/60 md:mt-16 md:p-10">
           {configured ? (
             <ContactForm />
           ) : (
