@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import { getLeistungPage, type LeistungSlug } from "@/lib/leistungenPages";
+import { vorlageBauplaene } from "@/lib/vorlagen";
 
 // "Meinung" holds the founder's opinion pieces, kept apart from the search-driven guides.
 export type RatgeberKategorie = "Grundlagen" | "Praxis" | "Kosten" | "Meinung";
@@ -20,6 +21,7 @@ export type Article = {
   body: string; // raw MDX body, frontmatter stripped
   kategorie?: RatgeberKategorie;
   leistung?: LeistungSlug; // the Leistungen subpage this article explains
+  bauplan?: string; // a vorlageBauplaene slug: the free Bauplan for this article's reader niche
 };
 
 export function readingMinutes(text: string): number {
@@ -55,6 +57,10 @@ export function parseArticle(filename: string, raw: string): Article {
   if (leistung !== undefined && !getLeistungPage(leistung)) {
     throw new Error(`Ratgeber article "${slug}" has an unknown leistung: ${leistung}`);
   }
+  const bauplan = data.bauplan === undefined ? undefined : String(data.bauplan);
+  if (bauplan !== undefined && !(bauplan in vorlageBauplaene)) {
+    throw new Error(`Ratgeber article "${slug}" has an unknown bauplan: ${bauplan}`);
+  }
   return {
     slug,
     title: String(data.title ?? ""),
@@ -68,6 +74,7 @@ export function parseArticle(filename: string, raw: string): Article {
     body: content,
     kategorie: kategorie as RatgeberKategorie | undefined,
     leistung: leistung as LeistungSlug | undefined,
+    bauplan,
   };
 }
 

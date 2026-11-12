@@ -4,6 +4,7 @@ import {
   formatDate,
   parseArticle,
   selectArticles,
+  getArticleBySlug,
   type Article,
 } from "./ratgeber";
 
@@ -133,4 +134,40 @@ Text.`)).toThrow(/kategorie/);
 ---
 Text.`)).toThrow(/leistung/);
   });
+});
+
+describe("bauplan frontmatter", () => {
+  const base = `---
+title: "T"
+description: "D"
+date: "2026-10-01"
+cover: "/images/x.webp"
+coverAlt: "Alt"
+`;
+
+  it("reads a known Bauplan slug", () => {
+    const a = parseArticle("x.mdx", `${base}bauplan: "makler-bauplan"
+---
+Text.`);
+    expect(a.bauplan).toBe("makler-bauplan");
+  });
+
+  it("leaves bauplan undefined when absent", () => {
+    expect(parseArticle("x.mdx", `${base}---
+Text.`).bauplan).toBeUndefined();
+  });
+
+  it("rejects an unknown Bauplan slug instead of rendering a dead link", () => {
+    expect(() => parseArticle("x.mdx", `${base}bauplan: "seo-bauplan"
+---
+Text.`)).toThrow(/has an unknown bauplan/);
+  });
+
+  // The three Makler articles are the only ones whose reader has a Bauplan niche.
+  it.each(["aus-jeder-anfrage-ein-termin", "crm-antwortet-aber-kein-termin", "warum-makler-anfragen-verlieren"])(
+    "%s links to the Makler Bauplan",
+    (slug) => {
+      expect(getArticleBySlug(slug).bauplan).toBe("makler-bauplan");
+    },
+  );
 });

@@ -15,6 +15,7 @@ import { articleLd, breadcrumbLd } from "@/lib/jsonld";
 import { canonical } from "@/lib/site";
 import Link from "next/link";
 import { getLeistungPage } from "@/lib/leistungenPages";
+import { VORLAGEN_PATH, vorlageBauplaene } from "@/lib/vorlagen";
 
 export function generateStaticParams() {
   return getArticleSlugs().map((slug) => ({ slug }));
@@ -75,6 +76,17 @@ export default async function ArticlePage(
                 className="rounded-sm font-medium text-vrelo-petrol underline underline-offset-4 hover:text-tiefes-wasser focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-lesepapier focus-visible:ring-vrelo-petrol"
               >
                 {getLeistungPage(article.leistung)?.navLabel}
+              </Link>
+            </p>
+          ) : null}
+          {article.bauplan ? (
+            <p className="mb-6 text-tinte">
+              Die kostenlose Vorlage für deine Branche:{" "}
+              <Link
+                href={`${VORLAGEN_PATH}/${article.bauplan}`}
+                className="rounded-sm font-medium text-vrelo-petrol underline underline-offset-4 hover:text-tiefes-wasser focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-lesepapier focus-visible:ring-vrelo-petrol"
+              >
+                {vorlageBauplaene[article.bauplan].title}
               </Link>
             </p>
           ) : null}
