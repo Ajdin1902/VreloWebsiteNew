@@ -266,7 +266,7 @@ export const leistungenPages: LeistungPage[] = [
     warum: [
       ANSPRECHPARTNER,
       { title: WARTUNG_KUENDIGUNG, body: "Drei Monate Mindestlaufzeit, danach bleibst du nur, solange es dir etwas bringt." },
-      { title: "Alles gehört dir.", body: "Kündigst du, läuft dein System sicher weiter. Server, Konten, Daten und Doku bleiben bei dir." },
+      { title: "Alles gehört dir.", body: "Kündigst du, läuft dein System weiter, nur ohne Updates und Anpassungen von mir. Server, Konten, Daten und Doku bleiben bei dir." },
     ],
     cta: {
       kind: "vorlagen",

@@ -10,14 +10,18 @@
 // the last row (Ergebnis) tells the reader which tier fits what they want.
 // Each cell is a list of short fragments (no full stops): one item renders as
 // plain text, several as bullets (Ajdin 2026-11-11).
-export type WartungTierId = "minimum" | "standard" | "partner";
+// Ajdin 2026-11-12: four tiers. Minimum (95) is the floor: updates on the client's
+// own server and 72 h fixes, nothing else. The old Minimum is Basis now; Partner
+// shows no price („Auf Anfrage“).
+export type WartungTierId = "minimum" | "basis" | "standard" | "partner";
 export type WartungZeile = "zeit" | "fehler" | "laeuft" | "anpassen" | "verbessern" | "team" | "bericht" | "ergebnis";
 export type WartungTier = {
   id: WartungTierId;
   name: string;
   /** Line under the name: how close I work with them. */
   motto: string;
-  preisNetto: number;
+  /** Monthly net price; none for Partner (on request). */
+  preisNetto?: number;
   grenze?: string;
   zeilen: Record<WartungZeile, string[]>;
 };
@@ -37,12 +41,28 @@ export const wartungTiers: WartungTier[] = [
   {
     id: "minimum",
     name: "Minimum",
+    motto: "Ich halte dein System aktuell",
+    preisNetto: 95,
+    zeilen: {
+      zeit: ["Nicht enthalten"],
+      fehler: ["72 Stunden"],
+      laeuft: ["Updates für Server und Programme", "Dein Server bleibt auf deinem Konto"],
+      anpassen: ["Nicht enthalten"],
+      verbessern: ["Nicht enthalten"],
+      team: ["Nicht enthalten"],
+      bericht: ["Nicht enthalten"],
+      ergebnis: ["Es bleibt aktuell", "Richtig, wenn dein System einfach aktuell bleiben soll"],
+    },
+  },
+  {
+    id: "basis",
+    name: "Basis",
     motto: "Ich passe im Hintergrund auf",
     preisNetto: 249,
     zeilen: {
       zeit: ["Alle 4 Wochen 30 Minuten Call, wenn du ihn brauchst", "Fragen per E-Mail"],
       fehler: ["48 Stunden"],
-      laeuft: ["Überwachung mit echtem Alarm", "Updates und Backup geprüft", "Doku bei jeder Änderung", "KI-Modelle und Prompts aktuell, wenn dein System KI nutzt"],
+      laeuft: ["Alles aus Minimum", "Überwachung mit echtem Alarm", "Backup geprüft", "Doku bei jeder Änderung", "KI-Modelle und Prompts aktuell, wenn dein System KI nutzt"],
       anpassen: ["Ich behebe, was bricht", "Eine Änderung im Monat, etwa ein neues Feld"],
       verbessern: ["Nicht enthalten"],
       team: ["Nicht enthalten"],
@@ -58,7 +78,7 @@ export const wartungTiers: WartungTier[] = [
     zeilen: {
       zeit: ["Alle 2 Wochen 30 Minuten Call", "Antwort auf deine Fragen am selben Werktag"],
       fehler: ["24 Stunden"],
-      laeuft: ["Alles aus Minimum", "Jedes Quartal ein Backup-Test", "Höhere Priorität"],
+      laeuft: ["Alles aus Basis", "Jedes Quartal ein Backup-Test", "Höhere Priorität"],
       anpassen: ["Ich passe an, bevor ein Update etwas kaputt macht", "Drei Änderungen im Monat, etwa ein neues Feld oder eine neue Regel"],
       verbessern: ["Jedes Quartal ein neuer Baustein, etwa eine Erinnerung oder eine Auswertung", "Im Quartalsgespräch planen wir den nächsten Schritt in deinem Fahrplan"],
       team: ["Jedes Quartal weise ich einen neuen Mitarbeiter ein"],
@@ -70,7 +90,6 @@ export const wartungTiers: WartungTier[] = [
     id: "partner",
     name: "Partner",
     motto: "Ich bin Teil von deinem Team",
-    preisNetto: 9900,
     grenze: "Für höchstens zwei Betriebe",
     zeilen: {
       zeit: ["Jede Woche 90 Minuten Arbeitssitzung", "Direkter Draht per Telegram oder WhatsApp, Antwort in 2 Stunden", "Ein Tag im Monat mit deinem Team"],
@@ -85,17 +104,30 @@ export const wartungTiers: WartungTier[] = [
   },
 ];
 
-export const WARTUNG_TITEL = "Die drei Stufen unterscheiden sich darin, wie viel Zeit du von mir bekommst.";
+export const WARTUNG_TITEL = "Die vier Stufen unterscheiden sich darin, wie viel Zeit du von mir bekommst.";
 
 // Ajdin 2026-11-11: three months minimum, then monthly. Every cancellation line says this.
 export const WARTUNG_KUENDIGUNG = "Ab dem 3. Monat monatlich kündbar.";
 
-export const WARTUNG_HINWEIS = `${WARTUNG_KUENDIGUNG} Kündigst du, läuft dein System sicher weiter, nur ohne Anpassungen.`;
+// Ajdin 2026-11-12: without Betreuung nobody updates the system any more; say so
+// („von mir“: the server's own OS auto-patching keeps running).
+export const WARTUNG_HINWEIS = `${WARTUNG_KUENDIGUNG} Kündigst du, läuft dein System weiter, nur ohne Updates und Anpassungen von mir.`;
 
 const eur = new Intl.NumberFormat("de-DE");
 
-/** The FAQ's price sentence (the Betreuung table shows no prices since Ajdin 2026-11-12). */
+/** Price label in the Betreuung table, e.g. 945 €; Partner reads Auf Anfrage. */
+export function wartungPreis(t: WartungTier): string {
+  return t.preisNetto === undefined ? "Auf Anfrage" : `${eur.format(t.preisNetto)} €`;
+}
+
+export const WARTUNG_PREIS_ZUSATZ = "im Monat, netto";
+
+/** Label of the price row, the last row of the Betreuung table. */
+export const WARTUNG_PREIS_LABEL = "Preis";
+
+/** The FAQ's price sentence (the Betreuung table shows the same prices). */
 export function wartungPreisSatz(): string {
-  const [m, s, p] = wartungTiers;
-  return `Drei Stufen, je nach Zeit mit mir und wie viel ich anpasse und verbessere: ${m.name} für ${eur.format(m.preisNetto)}, ${s.name} für ${eur.format(s.preisNetto)} oder ${p.name} für ${eur.format(p.preisNetto)} Euro im Monat, netto und ab dem 3. Monat monatlich kündbar. ${p.name} gibt es für höchstens zwei Betriebe.`;
+  const [m, b, s, p] = wartungTiers;
+  const n = (t: WartungTier) => eur.format(t.preisNetto!);
+  return `Vier Stufen, je nach Zeit mit mir und wie viel ich anpasse und verbessere: ${m.name} für ${n(m)}, ${b.name} für ${n(b)} oder ${s.name} für ${n(s)} Euro im Monat, netto und ab dem 3. Monat monatlich kündbar. ${p.name} gibt es auf Anfrage und für höchstens zwei Betriebe.`;
 }
