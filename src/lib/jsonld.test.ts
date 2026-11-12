@@ -8,11 +8,22 @@ import { siteUrl } from "./site";
 import type { Article } from "./ratgeber";
 
 describe("jsonld builders", () => {
-  it("professionalServiceLd has the right type, name and DACH area", () => {
+  it("professionalServiceLd has the right type and name", () => {
     const ld = professionalServiceLd();
     expect(ld["@type"]).toBe("ProfessionalService");
     expect(ld.name).toBe("Vrelo");
-    expect(ld.areaServed).toEqual(["DE", "AT", "CH"]);
+  });
+
+  it("professionalServiceLd carries the local area, phone, mail and logo", () => {
+    const ld = professionalServiceLd();
+    expect(ld.areaServed).toEqual([
+      { "@type": "City", name: "Regensburg" },
+      { "@type": "AdministrativeArea", name: "Oberpfalz" },
+      "DE", "AT", "CH",
+    ]);
+    expect(ld.telephone).toBe("+49 176 4380 6085");
+    expect(ld.email).toBe("kontakt@vrelo-ki.de");
+    expect(ld.logo).toBe(`${siteUrl}/logo/vrelo-symbol-navy.png`);
   });
 
   it("professionalServiceLd ties the business to its LinkedIn page (sameAs)", () => {

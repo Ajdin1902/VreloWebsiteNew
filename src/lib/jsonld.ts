@@ -1,6 +1,7 @@
 // src/lib/jsonld.ts
 import { siteUrl, siteName, linkedinUrl, linkedinProfileUrl } from "./site";
 import { faqGroups } from "./faq";
+import { KARTE } from "./karte";
 import type { Article } from "./ratgeber";
 
 const FOUNDER = "Ajdin Dzafic";
@@ -12,7 +13,15 @@ export function professionalServiceLd() {
     name: siteName,
     url: siteUrl,
     description: "Maßgeschneiderte Automatisierungen für Betriebe und Unternehmen im DACH-Raum.",
-    areaServed: ["DE", "AT", "CH"],
+    // Local first (Regensburg/Oberpfalz), DACH as the wider reach. Phone + mail match /kontakt and the Google profile.
+    areaServed: [
+      { "@type": "City", name: "Regensburg" },
+      { "@type": "AdministrativeArea", name: "Oberpfalz" },
+      "DE", "AT", "CH",
+    ],
+    telephone: KARTE.phone,
+    email: "kontakt@vrelo-ki.de",
+    logo: `${siteUrl}/logo/vrelo-symbol-navy.png`,
     address: {
       "@type": "PostalAddress",
       streetAddress: "Dietrich-Bonhoeffer-Straße 2",
