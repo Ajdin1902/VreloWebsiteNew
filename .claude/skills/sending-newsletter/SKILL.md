@@ -12,12 +12,13 @@ Client copy is German; the brand voice is calm over hype. Nothing broadcasts by 
 
 ## Read first
 - **Editorial playbook (voice + the four sections + examples):** `Knowledge/marketing/newsletter.md`. Required before writing copy.
-- **Build notes + gotchas:** `Website/CLAUDE.md` -> „Newsletter (send)“.
-- **An existing issue to mirror:** `content/newsletter/2026-06-30-der-kunde-um-22-uhr.md`.
+- **Build notes + gotchas:** the *Gotchas* below (this skill is the home of the send-pipeline detail; `Website/CLAUDE.md` only points here).
+- **An existing issue to mirror:** `content/newsletter/2026-06-30-der-kunde-um-22-uhr.md`. ⚠️ That issue and the 08-08 one stay `draft: true` by decision: never send them.
 
 ## One-time prerequisites (before the first real send)
 - **Resend:** create the Audience + a Segment; note the segment id.
-- **Env** (in `.env.local` and Vercel): `RESEND_API_KEY`, `CONTACT_FROM` (e.g. `Vrelo <kontakt@vrelo-ki.de>`), `NEWSLETTER_SEGMENT_ID`, `NEWSLETTER_SECRET`. Set `NEXT_PUBLIC_SITE_URL` to the live site.
+- **Local CLI env** in `Website/.env.local` (Vercel env doesn't reach the local script): `RESEND_API_KEY`, `NEWSLETTER_FROM` (falls back to `CONTACT_FROM`), `NEWSLETTER_SEGMENT_ID`, `NEXT_PUBLIC_SITE_URL`. Keep `NEXT_PUBLIC_SITE_URL` at `https://vrelo-ki.de`: it builds every image and link URL in the email, and a `vercel.app` host next to a `vrelo-ki.de` sender reads as spam. `NEWSLETTER_SECRET` is **not** needed locally (the site's signup/confirm uses it in Vercel).
+- **Vercel env** is write-only (`vercel env pull` returns these values empty), and **Preview still holds an old segment value**: `vercel env add … preview` loops on its branch prompt, so set Preview in the dashboard.
 - **Node >= 22.9** (the `npm run newsletter` script uses `--env-file-if-exists`).
 - **Site must be deployed** at the public URL: the email's logo and meme are absolute URLs (`<siteUrl>/logo/...`, `<siteUrl>/images/newsletter/...`). If the site is not live, those images are broken in real inboxes.
 
@@ -33,8 +34,9 @@ Client copy is German; the brand voice is calm over hype. Nothing broadcasts by 
    ```
 2. Body = the four fixed sections from the playbook, each a `## ` heading then its text:
    `## Kurz aus der KI-Welt`, `## Der Tipp der Woche`, `## So nutzen wir es`, `## Meme der Woche`. Open with a 1-2 sentence intro; close with a „Bis zum nächsten Mal“ sign-off (next line just `Ajdin`, no dash), then a **`P.S.`** line: the fixed close that carries the one ask (forward-info nugget + soft reply-driven push; see the playbook §5). No body CTA before the sign-off: the P.S. is the only ask.
-   - `## Der Tipp der Woche` auto-renders as the warm sonnenlicht callout card; no extra markup.
-   - The meme is an image line: `![<alt>](/images/newsletter/<file>.png)`. Put the PNG in `public/images/newsletter/`.
+   - `## Der Tipp der Woche` auto-renders as the warm sonnenlicht callout card; no extra markup. ⚠️ It keys on that **exact** heading (an issue headed `## Tipp der Woche` lost the card).
+   - The meme is an image line: `![<alt>](/images/newsletter/<file>.png)`. Put the PNG (1200×670, no KI label) in `public/images/newsletter/`.
+   - The P.S. links a same-day Ratgeber article: publish the article first and `curl` its live URL (and the meme's) before `--send`.
 3. **German typography (verify the bytes).** Rules per Brand.md (it wins on conflict) and the playbook §5: German quotes are „…“ (U+201E open / U+201C close), single quotes ‚…‘ (U+201A / U+2018). **No Gedankenstrich at all**, neither the en-dash (U+2013) nor the em-dash (U+2014): join clauses with comma, period or colon; ranges with „bis“. **No comma before „und“**: rebuild the sentence where grammar would need one. The Write/Edit tools silently downgrade the closing quote, so author the `.md` via a small `node`/`fs` script (or verify right after) instead of trusting Edit. Check:
    ```bash
    node -e 'const s=require("fs").readFileSync("content/newsletter/<slug>.md","utf8");const c=r=>(s.match(r)||[]).length;console.log({open:c(/\u201E/g),close:c(/\u201C/g),dash:c(/[\u2013\u2014]/g),commaUnd:c(/, und /g)})'
@@ -50,9 +52,12 @@ Run from `Website/`:
 
 ## Gotchas
 - **`--send` is single-shot per slug.** It refuses a `draft: true` issue, and refuses a slug already sent/scheduled (it checks `broadcasts.list()`), so you cannot double-email. To re-send on purpose, rename the issue or delete the old broadcast in Resend.
-- **Replies go to `CONTACT_FROM`.** The CTA invites replies, so that inbox must be monitored.
+- **Broadcasts target the Resend segment `NEWSLETTER_SEGMENT_ID`**, not the account's contacts. ⚠️ A wrong or empty segment fails `--send` with 422 „audience … has no contacts“; check membership via `GET /contacts/{id}/segments`.
+- **Sender = `NEWSLETTER_FROM`** (falls back to `CONTACT_FROM`), so issues send from `newsletter@vrelo-ki.de`; replies *and* bounces land there, so that inbox must be monitored.
+- **Test mails** to `ajdin@vrelo-ki.de` land in `INBOX.System`.
+- **Windows:** the CLI may print `Assertion failed … async.c` after „Test sent“/„scheduled“: the mail went out, ignore it.
 - **Images are absolute URLs.** The logo (`/logo/vrelo-lockup-navy.png`) and the meme must be live on the deployed site, or they break in inboxes. A test-send is the real check.
-- **Unsubscribe** is the literal `{{{RESEND_UNSUBSCRIBE_URL}}}` token: Resend fills it on broadcast; it stays literal in preview/test (expected).
+- **Unsubscribe** is the literal `{{{RESEND_UNSUBSCRIBE_URL}}}` merge tag: Resend fills it per recipient **only on `--send`**; preview/test swap it for a real `/newsletter` link. **Don't hardcode a URL on the broadcast path**: Resend needs the literal tag for one-click unsubscribe.
 - Logic is plain `.mjs` under `scripts/newsletter/` (bare `node` cannot import TS or the `@/` alias). Tests: `npx vitest run scripts/newsletter/`.
 
 ## Reference
