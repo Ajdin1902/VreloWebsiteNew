@@ -143,7 +143,7 @@ export const leistungenPages: LeistungPage[] = [
       GARANTIE_PUNKT,
       {
         title: "Der Fahrplan gehört dir.",
-        body: "Bekommst du einen Fahrplan, gehört er dir. Du setzt ihn selbst um, lässt ihn umsetzen oder baust mit mir.",
+        body: "Dein Fahrplan gehört dir. Du setzt ihn selbst um, lässt ihn umsetzen oder baust mit mir.",
       },
     ],
     cta: {
@@ -248,8 +248,8 @@ export const leistungenPages: LeistungPage[] = [
     title: "Betreuung & Wartung",
     subline: "Ich halte deine Automatisierungen am Laufen. Du merkst nur, dass alles läuft.",
     metaDescription:
-      "Betreuung und Wartung für Automatisierungen und KI-Systeme: drei Stufen, Überwachung mit Alarm, Fehlerbehebung, Anpassungen. Ab dem 3. Monat monatlich kündbar.",
-    kurz: `Drei Stufen, je nachdem, wie viel Zeit du von mir brauchst. ${WARTUNG_KUENDIGUNG}`,
+      "Betreuung und Wartung für Automatisierungen und KI-Systeme: vier Stufen, von Updates bis zur festen Zusammenarbeit. Ab dem 3. Monat monatlich kündbar.",
+    kurz: `Vier Stufen, je nachdem, wie viel Zeit du von mir brauchst. ${WARTUNG_KUENDIGUNG}`,
     heroImage: "/images/leistung-betreuung.webp",
     pain: {
       heading: "Kennst du das?",

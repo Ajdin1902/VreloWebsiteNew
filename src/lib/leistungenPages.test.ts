@@ -194,3 +194,18 @@ describe("Fahrplan promise on the Leistungen pages", () => {
     expect(JSON.stringify(audit)).toContain("Ein bis zwei Werktage später bekommst du deinen Fahrplan.");
   });
 });
+
+// Final review 2026-11-12: the hub card and snippet must match the four tiers,
+// and no audit card may make the Fahrplan conditional.
+describe("review fixes 2026-11-12", () => {
+  it("counts four Wartung tiers everywhere and promises no alarm to every tier", () => {
+    const b = getLeistungPage("betreuung")!;
+    expect(JSON.stringify(leistungenPages)).not.toMatch(/[Dd]rei Stufen/);
+    expect(b.kurz).toMatch(/^Vier Stufen/);
+    expect(b.metaDescription).toContain("vier Stufen");
+    expect(b.metaDescription).not.toMatch(/Alarm/);
+  });
+  it("never says Bekommst du einen Fahrplan on the audit page", () => {
+    expect(JSON.stringify(getLeistungPage("prozess-audit"))).not.toMatch(/Bekommst du einen Fahrplan/);
+  });
+});

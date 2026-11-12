@@ -81,3 +81,12 @@ describe("data protection answers", () => {
     expect(JSON.stringify(faqGroups)).not.toMatch(/Cloud-Lösung|n8n Cloud/);
   });
 });
+
+// Final review 2026-11-12: Minimum (95) has no monitoring and no changes.
+describe("Betreuung sentence in the cost answer", () => {
+  it("ties monitoring and changes to the tier", () => {
+    const all = JSON.stringify(faqGroups);
+    expect(all).not.toContain("Ich überwache die Abläufe, behebe Fehler und passe Kleinigkeiten an.");
+    expect(all).toContain("Je nach Stufe halte ich dein System aktuell, überwache die Abläufe, behebe Fehler und passe es an.");
+  });
+});
