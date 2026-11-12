@@ -30,7 +30,7 @@ export const gehirnPage: GehirnPage = {
   meta: {
     title: "Dein Prompt für dein KI-Gehirn mit Claude",
     description:
-      "Ein kostenloser Text für Claude Cowork (ab Pro): Claude legt in einem Ordner ein Gehirn für deinen Betrieb an, lernt aus deinen Unterlagen und hält sein Wissen selbst aktuell.",
+      "Ein kostenloser Text für die Claude-App (ab Pro): Claude legt in einem Ordner ein Gehirn für deinen Betrieb an, lernt aus deinen Unterlagen und hält sein Wissen selbst aktuell.",
   },
   top: {
     title: "Dein Prompt für dein KI-Gehirn",
@@ -41,7 +41,7 @@ export const gehirnPage: GehirnPage = {
   prompt: {
     boxLabel: "Der Text zum Einfügen",
     copyLabel: "Text kopieren",
-    copiedLabel: "Kopiert. Jetzt in Cowork einfügen.",
+    copiedLabel: "Kopiert. Jetzt in Claude einfügen.",
     failedLabel: "Kopieren hat nicht geklappt. Markiere den Text und kopiere ihn von Hand.",
     hintLabel: "Der Button kopiert den ganzen Text.",
   },
@@ -79,14 +79,14 @@ export const gehirnPage: GehirnPage = {
     heading: "So richtest du es ein",
     steps: [
       "Leg einen leeren Ordner an.",
-      "Öffne in der Claude-App Cowork und wähle den Ordner aus.",
+      "Öffne die Claude-App, klick unter dem Eingabefeld auf „Project or folder“, dann auf „Add folder“ und wähl deinen Ordner aus.",
       "Füge den Text ein und schick ihn ab. Claude führt dich durch den Rest.",
     ],
     video: {
       src: "/video/claude-gehirn-anleitung.mp4",
       poster: "/video/claude-gehirn-anleitung.webp",
-      label: "Video: die Einrichtung in Claude Cowork, Schritt für Schritt",
-      caption: "Die Einrichtung in 17 Sekunden, ohne Ton.",
+      label: "Video: die Einrichtung in der Claude-App, Schritt für Schritt",
+      caption: "Die Einrichtung in 18 Sekunden, ohne Ton.",
     },
   },
   speicherort: {
@@ -121,15 +121,15 @@ export const gehirnPage: GehirnPage = {
       { name: "wissen/", note: "eine Seite pro Kunde, Ablauf und Thema" },
     ],
     // Ajdin 2026-10-04: the tool is taste, the structure is the point. Claude Code
-    // reads CLAUDE.md like Cowork; the plain claude.ai chat cannot open a folder.
+    // reads CLAUDE.md like the Claude app; the plain claude.ai chat cannot open a folder.
     andereWegeTitel: "Alternativ",
     andereWege:
-      "Cowork ist nur ein Weg. Ich selbst arbeite mit Claude Code in Visual Studio Code, das ist Geschmackssache. Entscheidend ist dieser Aufbau: Er funktioniert überall, wo Claude direkt in deinem Ordner arbeitet.",
+      "Die Claude-App ist nur ein Weg. Ich selbst arbeite mit Claude Code in Visual Studio Code, das ist Geschmackssache. Entscheidend ist dieser Aufbau: Er funktioniert überall, wo Claude direkt in deinem Ordner arbeitet.",
   },
   beachten: {
     heading: "Dinge zu beachten",
     items: [
-      "Starte Cowork ab jetzt immer in diesem Ordner.",
+      "Starte Claude ab jetzt immer in diesem Ordner.",
       "Claude merkt sich nur, was wichtig ist.",
       "Je mehr Claude weiß, desto besser die Ergebnisse.",
     ],
@@ -138,7 +138,7 @@ export const gehirnPage: GehirnPage = {
     heading: "Gut zu wissen",
     items: [
       "Alles, was du Claude gibst, geht an Anthropic. Passwörter, Gesundheitsdaten und vertrauliche Kundendaten gehören nicht hinein.",
-      "Cowork hat keinen Schreibschutz. Dass Claude hinzugefügte Ordner nicht ändert, steht als Regel im Text.",
+      "Claude hat keinen Schreibschutz für hinzugefügte Ordner. Dass es sie nicht ändert, steht als Regel im Text.",
       "Das Gehirn besteht aus einfachen Textdateien in deinem Ordner. Sie gehören dir.",
     ],
   },

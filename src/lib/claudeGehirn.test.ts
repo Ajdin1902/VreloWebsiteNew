@@ -67,7 +67,7 @@ describe("Claude-Gehirn prompt", () => {
   // 2026-10-03: owners can add an existing folder in Cowork instead of copying;
   // Cowork has no read-only switch, so the prompt carries the never-change rule.
   it("reads added folders in place and never changes them", () => {
-    expect(prompt).toContain("den Pfad zu einem Ordner, den ich in Cowork hinzugefügt habe");
+    expect(prompt).toContain("den Pfad zu einem Ordner, den ich in Claude hinzugefügt habe");
     expect(prompt).toContain("quellen/ und freigegebene Ordner (in CLAUDE.md): mein Rohmaterial. Lesen, nie ändern.");
     expect(prompt).toContain("neue Dateien in quellen/ und freigegebenen Ordnern einarbeiten");
   });

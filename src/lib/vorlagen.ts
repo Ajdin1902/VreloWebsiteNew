@@ -167,7 +167,7 @@ export const vorlagenPage: {
       id: "claude-gehirn",
       gruppe: "alle",
       titel: "Das Claude-Gehirn",
-      text: "Ein fertiger Text für Claude Cowork: Claude legt ein Gehirn für deinen Betrieb an, lernt aus deinen Unterlagen und hält sein Wissen selbst aktuell.",
+      text: "Ein fertiger Text für die Claude-App: Claude legt ein Gehirn für deinen Betrieb an, lernt aus deinen Unterlagen und hält sein Wissen selbst aktuell.",
       umfang: "Ein Prompt · direkt auf der Seite",
       link: { text: "Zum Prompt", href: "/claude-gehirn" },
     },

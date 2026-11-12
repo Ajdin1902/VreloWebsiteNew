@@ -88,7 +88,7 @@ describe("/claude-gehirn copy", () => {
 
   // The clip was cut from 21.6 to 17 s on 2026-10-05; the caption names its length.
   it("names the clip length in the caption", () => {
-    expect(gehirnPage.anleitung.video.caption).toContain("17 Sekunden");
+    expect(gehirnPage.anleitung.video.caption).toBe("Die Einrichtung in 18 Sekunden, ohne Ton.");
   });
 
   it("compares local and cloud folders in four columns, with our own backup", () => {
@@ -109,7 +109,7 @@ describe("/claude-gehirn copy", () => {
     for (const n of names) expect(prompt).toContain(n);
   });
 
-  it("says Cowork is one way and the structure is what counts (Ajdin 2026-10-04)", () => {
+  it("says the Claude app is one way and the structure is what counts (Ajdin 2026-10-04)", () => {
     const a = gehirnPage.ordner.andereWege;
     expect(a).toContain("Claude Code");
     expect(a).toContain("Visual Studio Code");
@@ -131,5 +131,25 @@ describe("/claude-gehirn copy", () => {
 
   it("says Vrelo is not affiliated with Anthropic", () => {
     expect(gehirnPage.hinweis).toContain("nicht mit Anthropic verbunden");
+  });
+});
+
+// Anthropic merged Cowork into the Claude app (2026-09-16); the new clip shows the merged app.
+describe("Claude naming after the Cowork merge", () => {
+  it("never says Cowork on the page, the Vorlagen card or in the prompt", () => {
+    expect(JSON.stringify(gehirnPage)).not.toMatch(/Cowork/);
+    expect(getGehirnPrompt()).not.toMatch(/Cowork/);
+  });
+
+  it("walks through the folder pick the clip shows", () => {
+    expect(gehirnPage.anleitung.steps[1]).toBe(
+      "Öffne die Claude-App, klick unter dem Eingabefeld auf „Project or folder“, dann auf „Add folder“ und wähl deinen Ordner aus.",
+    );
+    expect(gehirnPage.anleitung.video.label).toBe("Video: die Einrichtung in der Claude-App, Schritt für Schritt");
+  });
+
+  it("ships the new clip and its poster", () => {
+    expect(existsSync(join(process.cwd(), "public/video/claude-gehirn-anleitung.mp4"))).toBe(true);
+    expect(existsSync(join(process.cwd(), "public/video/claude-gehirn-anleitung.webp"))).toBe(true);
   });
 });

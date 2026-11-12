@@ -117,7 +117,7 @@ export default function GehirnPage() {
               playsInline
               preload="none"
               width={1600}
-              height={852}
+              height={924}
               className="h-auto w-full rounded-2xl bg-tiefes-wasser shadow-deepwater"
             />
             <figcaption className="mt-3 text-sm text-stumm">{c.anleitung.video.caption}</figcaption>

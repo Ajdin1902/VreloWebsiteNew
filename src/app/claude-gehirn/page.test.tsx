@@ -85,3 +85,13 @@ describe("/claude-gehirn", () => {
     expect(container.textContent).toContain("nicht mit Anthropic verbunden");
   });
 });
+
+// The 2026-11-12 clip is 1600x924; the reserved box must match or the page jumps.
+describe("/claude-gehirn tutorial clip", () => {
+  it("reserves the new clip's size", () => {
+    const { container } = render(<GehirnPage />);
+    const v = container.querySelector("video")!;
+    expect(v.getAttribute("width")).toBe("1600");
+    expect(v.getAttribute("height")).toBe("924");
+  });
+});

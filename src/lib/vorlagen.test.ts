@@ -59,3 +59,12 @@ describe("prozess-check card", () => {
     expect(vorlagenPage.weiter.link.href).toBe("/kontakt?src=vorlagen");
   });
 });
+
+// Anthropic merged Cowork into the Claude app (2026-09-16).
+describe("Claude-Gehirn card naming", () => {
+  it("says Claude-App, not Cowork", () => {
+    const all = JSON.stringify(vorlagenPage);
+    expect(all).not.toMatch(/Cowork/);
+    expect(all).toContain("Ein fertiger Text für die Claude-App:");
+  });
+});
