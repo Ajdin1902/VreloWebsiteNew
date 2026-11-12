@@ -58,7 +58,7 @@ export const faqGroups: FaqGroup[] = [
         answer: [
           "Die Prozesse werden intuitiver, weil sie nun automatisiert laufen",
           "Deine Mitarbeiter müssen nur entscheiden und eventuell einen Button klicken",
-          "Ihr erhaltet eine Einschulung und eine Dokumentation zu den Neuerungen",
+          "Ihr erhaltet eine Einweisung und eine Dokumentation zu den Neuerungen",
         ],
       },
     ],

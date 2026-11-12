@@ -26,6 +26,10 @@ describe("/kontakt", () => {
     const mail = screen.getByRole("link", { name: "kontakt@vrelo-ki.de" });
     expect(mail).toHaveAttribute("href", "mailto:kontakt@vrelo-ki.de");
     expect(zeile).toContainElement(mail);
+    // Ajdin 2026-11-12: the phone number too (overturns „no phone number“ from 2026-11-04).
+    const tel = screen.getByRole("link", { name: "+49 176 4380 6085" });
+    expect(tel).toHaveAttribute("href", "tel:+4917643806085");
+    expect(zeile).toContainElement(tel);
     const formBand = screen.getByRole("form", { name: "Kontaktformular" }).closest("section")!;
     expect(zeile.compareDocumentPosition(formBand) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });

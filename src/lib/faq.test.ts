@@ -66,7 +66,7 @@ describe("faq data", () => {
     expect(entry("Müssen meine Mitarbeiter etwas Neues lernen?")!.answer).toEqual([
       "Die Prozesse werden intuitiver, weil sie nun automatisiert laufen",
       "Deine Mitarbeiter müssen nur entscheiden und eventuell einen Button klicken",
-      "Ihr erhaltet eine Einschulung und eine Dokumentation zu den Neuerungen",
+      "Ihr erhaltet eine Einweisung und eine Dokumentation zu den Neuerungen",
     ]);
   });
 

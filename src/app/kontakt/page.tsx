@@ -13,6 +13,7 @@ import { CheckHint } from "@/components/kontakt/CheckHint";
 import { lightLinkClass } from "@/components/kontakt/onDarkLink";
 import { isContactConfigured, contactTo, calLink } from "@/lib/contact";
 import { breadcrumbLd } from "@/lib/jsonld";
+import { KARTE } from "@/lib/karte";
 import { canonical } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -40,10 +41,15 @@ export default function KontaktPage() {
         image="/images/bg-abendwellen.webp"
       />
 
-      {/* Who answers and where to write, above the form band (Ajdin 2026-11-12). */}
+      {/* Who answers, the number and where to write, above the form band (Ajdin 2026-11-12). */}
       <div data-kontakt-zeile className="bg-papier">
         <p className="mx-auto max-w-6xl px-6 py-6 text-center text-lg text-tinte">
           <span className="font-semibold text-tiefes-wasser">Ajdin Dzafic</span>
+          <span aria-hidden className="mx-3 text-stumm">·</span>
+          {/* Ajdin 2026-11-12: the number on the site after all (one source: the Karte). */}
+          <a href={`tel:${KARTE.phone.replace(/\s+/g, "")}`} className={`${lightLinkClass} whitespace-nowrap`}>
+            {KARTE.phone}
+          </a>
           <span aria-hidden className="mx-3 text-stumm">·</span>
           <a href={`mailto:${KONTAKT_MAIL}`} className={lightLinkClass}>
             {KONTAKT_MAIL}
