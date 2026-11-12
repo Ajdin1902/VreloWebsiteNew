@@ -42,6 +42,8 @@ export type LeistungPage = {
   group: LeistungGroup;
   navLabel: string;
   title: string;
+  /** The <title> in Google: the search term, not the H1 (SEO pass 2026-11-12). */
+  metaTitle: string;
   /** The one line on the hero image. */
   subline: string;
   metaDescription: string;
@@ -118,6 +120,7 @@ export const leistungenPages: LeistungPage[] = [
     group: "pruefen",
     navLabel: "Prozess-Audit",
     title: "Prozess-Audit",
+    metaTitle: "Prozess-Audit: Abläufe kostenlos prüfen lassen",
     subline: "Kostenlos: Wir finden die Aufgabe, die du zuerst loswerden solltest.",
     metaDescription:
       "Kostenloser Prozess-Audit und KI-Beratung für Betriebe und Unternehmen: Ich gehe deine Abläufe mit dir durch und du bekommst deinen Fahrplan.",
@@ -162,6 +165,7 @@ export const leistungenPages: LeistungPage[] = [
     group: "bauen",
     navLabel: "Prozessautomatisierung",
     title: "Prozessautomatisierung",
+    metaTitle: "Prozessautomatisierung für Betriebe und Unternehmen",
     subline: "Was in deinem Betrieb jeden Tag gleich abläuft, läuft ab jetzt von allein.",
     metaDescription:
       "Prozessautomatisierung für Betriebe und Unternehmen: Rechnungen, Angebote, Kunden-Onboarding und Datenübernahme laufen von selbst. Maßgeschneidert und dokumentiert.",
@@ -199,6 +203,7 @@ export const leistungenPages: LeistungPage[] = [
     group: "bauen",
     navLabel: "KI-Automatisierung",
     title: "KI-Automatisierung",
+    metaTitle: "KI-Automatisierung für Betriebe und Unternehmen",
     subline: "Die KI liest, sortiert und bereitet vor. Du gibst frei, bevor etwas rausgeht.",
     metaDescription:
       "KI-Automatisierung für Betriebe und Unternehmen: KI-Assistenten, KI-Betriebssystem, Claude für Unternehmen, KI-Server und KI-Schulung. Auf Wunsch innerhalb der EU.",
@@ -251,6 +256,7 @@ export const leistungenPages: LeistungPage[] = [
     group: "betreiben",
     navLabel: "Betreuung & Wartung",
     title: "Betreuung & Wartung",
+    metaTitle: "Betreuung und Wartung für Automatisierungen",
     subline: "Ich halte deine Automatisierungen am Laufen. Du merkst nur, dass alles läuft.",
     metaDescription:
       "Betreuung und Wartung für Automatisierungen und KI-Systeme: vier Stufen, von Updates bis zur festen Zusammenarbeit. Ab dem 3. Monat monatlich kündbar.",

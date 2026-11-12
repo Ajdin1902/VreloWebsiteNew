@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const page = getLeistungPage(slug);
   if (!page) return {};
   return {
-    title: page.title,
+    title: page.metaTitle,
     description: page.metaDescription,
     alternates: { canonical: canonical(`/leistungen/${page.slug}`) },
   };

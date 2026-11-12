@@ -10,11 +10,11 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Vrelo - Durchdachte Automatisierung für Betriebe und Unternehmen",
+    default: "KI- und Prozessautomatisierung aus Regensburg - Vrelo",
     template: "%s - Vrelo",
   },
   description:
-    "Maßgeschneiderte Automatisierungen für Betriebe und Unternehmen. Du gewinnst Zeit, Ruhe und einen freien Kopf zurück.",
+    "Maßgeschneiderte KI- und Prozessautomatisierung für Betriebe und Unternehmen aus Regensburg und der Oberpfalz. Du gewinnst Zeit, Ruhe und einen freien Kopf zurück.",
   openGraph: {
     type: "website",
     locale: "de_DE",

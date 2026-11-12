@@ -42,7 +42,7 @@ describe("leistungenPages", () => {
 
   // Ajdin 2026-11-12: Betreuung has no Kennst-du-das block; every other page keeps it.
   it.each(leistungenPages.map((p) => [p.slug, p] as const))("%s fills its blocks and nothing else", (_s, p) => {
-    const keys = ["cta", "group", "heroImage", "kurz", "loesung", "metaDescription", "navLabel", "slug", "subline", "szenen", "title", "warum"];
+    const keys = ["cta", "group", "heroImage", "kurz", "loesung", "metaDescription", "metaTitle", "navLabel", "slug", "subline", "szenen", "title", "warum"];
     expect(Object.keys(p).sort()).toEqual((p.slug === "betreuung" ? keys : [...keys, "pain"]).sort());
     if (p.slug !== "betreuung") {
       expect(p.pain!.moments.length).toBeGreaterThanOrEqual(3);
@@ -211,5 +211,22 @@ describe("review fixes 2026-11-12", () => {
   });
   it("never says Bekommst du einen Fahrplan on the audit page", () => {
     expect(JSON.stringify(getLeistungPage("prozess-audit"))).not.toMatch(/Bekommst du einen Fahrplan/);
+  });
+});
+
+describe("Leistungen search titles", () => {
+  const expected: Record<string, string> = {
+    "prozess-audit": "Prozess-Audit: Abläufe kostenlos prüfen lassen",
+    prozessautomatisierung: "Prozessautomatisierung für Betriebe und Unternehmen",
+    "ki-automatisierung": "KI-Automatisierung für Betriebe und Unternehmen",
+    betreuung: "Betreuung und Wartung für Automatisierungen",
+  };
+
+  it("gives every page its own search title, short enough for Google", () => {
+    for (const p of leistungenPages) {
+      expect(p.metaTitle).toBe(expected[p.slug]);
+      expect(`${p.metaTitle} - Vrelo`.length).toBeLessThanOrEqual(60);
+      expect(findCopyIssues(p.metaTitle)).toEqual([]);
+    }
   });
 });

@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import LeistungSubpage, { generateStaticParams, generateMetadata } from "./page";
-import { leistungenPages } from "@/lib/leistungenPages";
+import { leistungenPages, getLeistungPage } from "@/lib/leistungenPages";
 import { canonical } from "@/lib/site";
 
 const params = (slug: string) => ({ params: Promise.resolve({ slug }) });
@@ -13,7 +13,7 @@ describe("/leistungen/[slug]", () => {
 
   it("sets title, description and canonical per page", async () => {
     const meta = await generateMetadata(params("ki-automatisierung"));
-    expect(meta.title).toBe("KI-Automatisierung");
+    expect(meta.title).toBe(getLeistungPage("ki-automatisierung")!.metaTitle);
     expect(meta.alternates?.canonical).toBe(canonical("/leistungen/ki-automatisierung"));
   });
 
