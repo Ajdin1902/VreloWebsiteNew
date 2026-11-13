@@ -35,7 +35,7 @@ Client copy is German; code/comments are English. The article must read like the
 
 6. **Show the draft, then write** `content/ratgeber/<slug>.mdx`.
 
-7. **Emit the cover-image checklist** (below) so the founder can produce the asset.
+7. **Generate the cover yourself** via kie.ai (`nano-banana-pro`, memory `generate-covers-myself`) and run the checklist below; never hand the founder a prompt.
 
 ## Frontmatter spec
 
@@ -56,7 +56,7 @@ draft: true            # ALWAYS true here — publishing is a separate human ste
 ## Slug rule
 Kebab-case the title's key words (shorten a long title to 2 to 5 words, like `terminbestaetigungen-automatisieren`), fold umlauts: `ä→ae · ö→oe · ü→ue · ß→ss`, drop other punctuation. Match the existing style (`taeglich-stunden-zurueckgewinnen`, `durcheinander-oder-saubere-quelle`). The slug must equal the filename stem **and** the `<slug>` inside the `cover` path.
 
-## Cover-image checklist (emit verbatim to the founder)
+## Cover-image checklist (do it yourself)
 1. Generate from the filled prompt (Nano Banana / image tool). Keep it dark, low-contrast, cool-dominant, one small warm accent, lots of negative space.
 2. Optimize to **WebP, quality 80** (the repo converts via `sharp`).
 3. Save as **`public/images/ratgeber-<slug>.webp`** (must match the `cover` path).
