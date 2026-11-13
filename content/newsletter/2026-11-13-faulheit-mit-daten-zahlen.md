@@ -2,7 +2,7 @@
 subject: "Zahle ich meine Faulheit mit meinen Daten?"
 previewText: "Claude darf jetzt aufs Konto schauen, ein Schalter für zwei Minuten, Namen raus aus dem Chat und mein Datenschutz 2015 gegen 2026."
 date: "2026-11-13"
-draft: true
+draft: false
 ---
 Hi,
 
