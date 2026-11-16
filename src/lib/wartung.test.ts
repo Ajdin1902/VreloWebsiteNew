@@ -93,14 +93,22 @@ describe("wartung tiers (Ajdin 2026-11-11, four tiers since 2026-11-12)", () => 
       "Alles aus Minimum",
       "Überwachung mit echtem Alarm",
       "Backup geprüft",
-      "Doku bei jeder Änderung",
-      "KI-Modelle und Prompts aktuell, wenn dein System KI nutzt",
+      "Doku bei jeder Reparatur",
     ]);
     // Ajdin 2026-11-11: the backup line names the test; Standard gets higher priority.
-    expect(s.zeilen.laeuft).toEqual(["Alles aus Basis", "Jedes Quartal ein Backup-Test", "Höhere Priorität"]);
+    // Ajdin 2026-11-16: KI upkeep starts at Standard.
+    expect(s.zeilen.laeuft).toEqual([
+      "Alles aus Basis",
+      "KI-Modelle und Prompts aktuell, wenn dein System KI nutzt",
+      "Jedes Quartal ein Backup-Test",
+      "Höhere Priorität",
+    ]);
     expect(p.zeilen.laeuft).toEqual(["Alles aus Standard", "Höchste Priorität"]);
     expect(txt(s.zeilen.anpassen)).toMatch(/Drei Änderungen im Monat, etwa/);
-    expect(txt(b.zeilen.anpassen)).toMatch(/Eine Änderung im Monat, etwa/);
+    // Ajdin 2026-11-16: Basis only repairs, anything new starts at Standard.
+    expect(b.zeilen.anpassen).toEqual(["Ich behebe, was bricht", "Neues ab Standard"]);
+    expect(txt(s.zeilen.verbessern)).not.toMatch(/Quartalsgespräch/);
+    expect(s.zeilen.team).toEqual(["Ich weise neue Mitarbeiter ein, einen im Quartal"]);
     for (const t of wartungTiers) expect(txt(t.zeilen.anpassen)).not.toMatch(/kleine Änderung/);
     expect(txt(s.zeilen.verbessern)).toMatch(/Baustein, etwa/);
     expect(s.zeilen.bericht).toEqual(["Jeden Monat: was gelaufen ist, was ich geändert habe und was als Nächstes möglich ist"]);
