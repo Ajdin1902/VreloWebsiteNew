@@ -5,6 +5,7 @@ import { HAUS_PDF, VORLAGEN_GRUPPEN, vorlageBauplaene, vorlagenPage } from "./vo
 import { findCopyIssues } from "./ratgeberCopy";
 import { questionCountPhrase } from "./prozessCheckCta";
 import { STEPS } from "./prozessCheck";
+import { leistungHref } from "./leistungenPages";
 
 function strings(value: unknown, out: string[] = []): string[] {
   if (typeof value === "string") out.push(value);
@@ -66,5 +67,35 @@ describe("Claude-Gehirn card naming", () => {
     const all = JSON.stringify(vorlagenPage);
     expect(all).not.toMatch(/Cowork/);
     expect(all).toContain("Ein fertiger Text für die Claude-App:");
+  });
+});
+
+// Ajdin 2026-11-21: one scale from "you do it yourself" to "I do it for you".
+describe("vorlagen skala", () => {
+  const { skala } = vorlagenPage;
+
+  it("orders the stops from most to least own work", () => {
+    expect(skala.stopps.map((s) => s.titel)).toEqual([
+      "Claude-Gehirn", "Baupläne", "KI-Betriebssystem", "Prozess-Check", "Gespräch und Fahrplan", "Umsetzung",
+    ]);
+  });
+
+  it("marks everything up to the Fahrplan as free, the Umsetzung not", () => {
+    expect(skala.stopps.map((s) => s.kostenlos)).toEqual([true, true, true, true, true, false]);
+  });
+
+  it("points every jump link at a card or a group on the page", () => {
+    const targets = [...vorlagenPage.items.map((v) => "#" + v.id), ...VORLAGEN_GRUPPEN.map((g) => "#gruppe-" + g.id)];
+    for (const s of skala.stopps.filter((s) => s.href.startsWith("#"))) expect(targets, s.titel).toContain(s.href);
+  });
+
+  it("books the Gespräch like the closing line and ends at the Prozessautomatisierung page", () => {
+    expect(skala.stopps[4].href).toBe(vorlagenPage.weiter.link.href);
+    expect(skala.stopps[5].href).toBe(leistungHref("prozessautomatisierung"));
+  });
+
+  it("names both ends of the scale", () => {
+    expect(skala.links).toBe("Du machst es selbst");
+    expect(skala.rechts).toBe("Ich mache es für dich");
   });
 });

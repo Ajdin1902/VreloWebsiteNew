@@ -135,6 +135,14 @@ export const vorlagenPage: {
   items: Vorlage[];
   /** The free next step under the cards (2026-11-11): Vorlage, then Gespräch, then Fahrplan. */
   weiter: { text: string; link: { text: string; href: string } };
+  /** Aufwand-Skala under the hero (2026-11-21): left = the visitor does the work, right = Ajdin does. */
+  skala: {
+    titel: string;
+    text: string;
+    links: string;
+    rechts: string;
+    stopps: { titel: string; notiz: string; href: string; kostenlos: boolean }[];
+  };
 } = {
   meta: {
     title: "Kostenlose Vorlagen",
@@ -303,5 +311,20 @@ export const vorlagenPage: {
   weiter: {
     text: "Danach: 30 Minuten Gespräch, dann dein Fahrplan. Kostenlos.",
     link: { text: "Gespräch buchen", href: kontaktHref(CHECK_SRC.vorlagen) },
+  },
+  skala: {
+    titel: "Wer macht die Arbeit?",
+    text: "Links machst du es selbst, rechts übernehme ich. Bis zum Fahrplan ist alles kostenlos.",
+    links: "Du machst es selbst",
+    rechts: "Ich mache es für dich",
+    stopps: [
+      { titel: "Claude-Gehirn", notiz: "Du richtest es ein und pflegst es", href: "#claude-gehirn", kostenlos: true },
+      { titel: "Baupläne", notiz: "Du baust nach Plan", href: "#gruppe-handwerk", kostenlos: true },
+      { titel: "KI-Betriebssystem", notiz: "Du siehst, wo du anfängst", href: "#haus", kostenlos: true },
+      { titel: "Prozess-Check", notiz: "Du bekommst deine Zahl", href: "#prozess-check", kostenlos: true },
+      { titel: "Gespräch und Fahrplan", notiz: "Ich plane, du entscheidest", href: kontaktHref(CHECK_SRC.vorlagen), kostenlos: true },
+      // Literal on purpose: importing leistungenPages here is not needed for one path.
+      { titel: "Umsetzung", notiz: "Ich baue es für dich", href: "/leistungen/prozessautomatisierung", kostenlos: false },
+    ],
   },
 };
