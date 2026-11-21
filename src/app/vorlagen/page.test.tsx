@@ -52,4 +52,19 @@ describe("/vorlagen", () => {
     render(<VorlagenPage />);
     expect(document.getElementById("gruppe-handwerk")).not.toBeNull();
   });
+
+  it("keeps jump targets clear of the sticky header", () => {
+    params.src = null;
+    render(<VorlagenPage />);
+    for (const id of ["gruppe-handwerk", "claude-gehirn", "haus", "prozess-check"]) {
+      expect(document.getElementById(id)!.className, id).toMatch(/(^|\s)scroll-mt-/);
+    }
+  });
+
+  it("wraps the scale in a section named by its heading", () => {
+    params.src = null;
+    render(<VorlagenPage />);
+    const region = screen.getByRole("region", { name: "Wer macht die Arbeit?" });
+    expect(region.tagName).toBe("SECTION");
+  });
 });

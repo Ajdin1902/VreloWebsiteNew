@@ -13,7 +13,7 @@ const stopLink =
 
 export function AufwandSkala({ skala }: { skala: Skala }) {
   return (
-    <div>
+    <section aria-labelledby={TITLE_ID}>
       <h2 id={TITLE_ID} className="text-balance text-2xl font-semibold text-tiefes-wasser md:text-3xl">
         {skala.titel}
       </h2>
@@ -22,7 +22,7 @@ export function AufwandSkala({ skala }: { skala: Skala }) {
         <p className={`${endLabel} lg:col-start-1 lg:row-start-1`}>{skala.links}</p>
         <ol
           aria-labelledby={TITLE_ID}
-          className="relative space-y-6 border-l-2 border-amber pl-6 lg:col-span-2 lg:row-start-2 lg:grid lg:grid-cols-6 lg:gap-4 lg:space-y-0 lg:border-l-0 lg:pl-0 lg:before:absolute lg:before:inset-x-0 lg:before:top-[5px] lg:before:h-0.5 lg:before:bg-linear-to-r lg:before:from-honig lg:before:via-amber lg:before:to-ember lg:before:content-['']"
+          className="relative space-y-6 border-l-2 border-amber pl-6 lg:col-span-2 lg:row-start-2 lg:grid lg:grid-cols-6 lg:gap-4 lg:space-y-0 lg:border-l-0 lg:pl-0 lg:before:absolute lg:before:left-0 lg:before:right-[calc((100%-5rem)/6-6px)] lg:before:top-[5px] lg:before:h-0.5 lg:before:bg-linear-to-r lg:before:from-honig lg:before:to-amber lg:before:content-['']"
         >
           {skala.stopps.map((s) => (
             <li key={s.titel} className="relative">
@@ -50,6 +50,6 @@ export function AufwandSkala({ skala }: { skala: Skala }) {
         </ol>
         <p className={`${endLabel} lg:col-start-2 lg:row-start-1 lg:text-right`}>{skala.rechts}</p>
       </div>
-    </div>
+    </section>
   );
 }

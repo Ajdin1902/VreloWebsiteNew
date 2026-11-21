@@ -42,7 +42,7 @@ export default function VorlagenPage() {
         {VORLAGEN_GRUPPEN.map((g) => {
           const items = c.items.filter((v) => v.gruppe === g.id);
           return items.length === 0 ? null : (
-            <div key={g.id} id={`gruppe-${g.id}`} className="mt-12 scroll-mt-28 first:mt-0">
+            <div key={g.id} id={`gruppe-${g.id}`} className="mt-12 scroll-mt-28">
               <h2 className="text-sm font-semibold uppercase tracking-wide text-vrelo-petrol">
                 {g.titel}
               </h2>
