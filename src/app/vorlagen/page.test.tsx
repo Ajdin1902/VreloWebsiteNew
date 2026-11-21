@@ -39,7 +39,10 @@ describe("/vorlagen", () => {
     expect(list.tagName).toBe("OL");
     expect(within(list).getAllByRole("listitem")).toHaveLength(6);
     expect(within(list).getByRole("link", { name: "Claude-Gehirn" })).toHaveAttribute("href", "#claude-gehirn");
-    expect(within(list).getByRole("link", { name: "Umsetzung" })).toHaveAttribute("href", "/leistungen/prozessautomatisierung");
+    expect(within(list).getByRole("link", { name: "Umsetzung" })).toHaveAttribute("href", "/kontakt?src=vorlagen");
+    expect(within(list).getAllByText("kostenlos")).toHaveLength(5);
+    const umsetzung = within(list).getByRole("link", { name: "Umsetzung" }).closest("li")!;
+    expect(within(umsetzung).queryByText("kostenlos")).toBeNull();
     expect(screen.getByText("Du machst es selbst")).toBeInTheDocument();
     expect(screen.getByText("Ich mache es für dich")).toBeInTheDocument();
   });

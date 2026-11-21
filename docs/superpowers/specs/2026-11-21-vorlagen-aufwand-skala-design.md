@@ -20,7 +20,7 @@ Band directly under `CompactHero`, before the card groups.
 
 ```
 Wer macht die Arbeit?
-Links machst du es selbst, rechts übernehme ich. Bis zum Fahrplan ist alles kostenlos.
+Am Anfang machst du es selbst, am Ende übernehme ich. Bis zum Fahrplan ist alles kostenlos.
 
 Du machst es selbst ●────●────●────●────●────● Ich mache es für dich
      Claude-Gehirn  Baupläne  KI-Betriebssystem  Prozess-Check  Gespräch + Fahrplan  Umsetzung
@@ -33,7 +33,7 @@ Du machst es selbst ●────●────●────●────
 | 3 | KI-Betriebssystem | Du siehst, wo du anfängst | `#haus` |
 | 4 | Prozess-Check | Du bekommst deine Zahl | `#prozess-check` |
 | 5 | Gespräch und Fahrplan | Ich plane, du entscheidest | `kontaktHref(CHECK_SRC.vorlagen)` (same as the closing line) |
-| 6 | Umsetzung | Ich baue es für dich | `leistungHref("prozessautomatisierung")` |
+| 6 | Umsetzung | Ich baue es für dich | `kontaktHref(CHECK_SRC.vorlagen)` (Ajdin 2026-11-21: Umsetzung also goes to Kontakt) |
 
 - Stops 1 to 5 carry a small „kostenlos“ marker; stop 6 carries none and never a price.
 - Markup: `<ol>` (order is the meaning), each stop a link; the line is decorative CSS. md+: horizontal, line runs left to right, amber deepening to the right. Mobile: vertical, most effort on top.

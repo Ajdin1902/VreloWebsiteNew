@@ -315,7 +315,7 @@ export const vorlagenPage: {
   },
   skala: {
     titel: "Wer macht die Arbeit?",
-    text: "Links machst du es selbst, rechts übernehme ich. Bis zum Fahrplan ist alles kostenlos.",
+    text: "Am Anfang machst du es selbst, am Ende übernehme ich. Bis zum Fahrplan ist alles kostenlos.",
     links: "Du machst es selbst",
     rechts: "Ich mache es für dich",
     kostenlosMarke: "kostenlos",
@@ -325,8 +325,7 @@ export const vorlagenPage: {
       { titel: "KI-Betriebssystem", notiz: "Du siehst, wo du anfängst", href: "#haus", kostenlos: true },
       { titel: "Prozess-Check", notiz: "Du bekommst deine Zahl", href: "#prozess-check", kostenlos: true },
       { titel: "Gespräch und Fahrplan", notiz: "Ich plane, du entscheidest", href: kontaktHref(CHECK_SRC.vorlagen), kostenlos: true },
-      // Literal on purpose: importing leistungenPages here is not needed for one path.
-      { titel: "Umsetzung", notiz: "Ich baue es für dich", href: "/leistungen/prozessautomatisierung", kostenlos: false },
+      { titel: "Umsetzung", notiz: "Ich baue es für dich", href: kontaktHref(CHECK_SRC.vorlagen), kostenlos: false },
     ],
   },
 };

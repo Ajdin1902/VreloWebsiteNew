@@ -5,7 +5,6 @@ import { HAUS_PDF, VORLAGEN_GRUPPEN, vorlageBauplaene, vorlagenPage } from "./vo
 import { findCopyIssues } from "./ratgeberCopy";
 import { questionCountPhrase } from "./prozessCheckCta";
 import { STEPS } from "./prozessCheck";
-import { leistungHref } from "./leistungenPages";
 
 function strings(value: unknown, out: string[] = []): string[] {
   if (typeof value === "string") out.push(value);
@@ -89,9 +88,13 @@ describe("vorlagen skala", () => {
     for (const s of skala.stopps.filter((s) => s.href.startsWith("#"))) expect(targets, s.titel).toContain(s.href);
   });
 
-  it("books the Gespräch like the closing line and ends at the Prozessautomatisierung page", () => {
+  it("books the Gespräch and the Umsetzung like the closing line", () => {
     expect(skala.stopps[4].href).toBe(vorlagenPage.weiter.link.href);
-    expect(skala.stopps[5].href).toBe(leistungHref("prozessautomatisierung"));
+    expect(skala.stopps[5].href).toBe(vorlagenPage.weiter.link.href);
+  });
+
+  it("explains the scale without left/right, since phones show it top to bottom", () => {
+    expect(skala.text).not.toMatch(/\b(links|rechts)\b/i);
   });
 
   it("names both ends of the scale", () => {
