@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // A reused Turbopack dev cache made `next dev` fork-bomb PostCSS workers and freeze the laptop (2026-11-21,
+  // docs/incident-2026-11-21-dev-server-runaway.md). Cold start costs a few seconds; drop this once Next fixes it.
+  experimental: { turbopackFileSystemCacheForDev: false },
   // The Bauplan action (used by /bauplan and the public /vorlagen pages) attaches the PDF from disk; ship it with the server function.
   outputFileTracingIncludes: {
     "/bauplan/[code]": ["./public/bauplan/*.pdf"],
