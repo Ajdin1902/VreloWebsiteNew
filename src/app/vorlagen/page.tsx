@@ -7,6 +7,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
 import { SrcLink } from "@/components/vorlagen/SrcLink";
+import { AufwandSkala } from "@/components/vorlagen/AufwandSkala";
 import { CompactHero } from "@/components/CompactHero";
 import { Section } from "@/components/Section";
 import { JsonLd } from "@/components/JsonLd";
@@ -37,10 +38,11 @@ export default function VorlagenPage() {
         image="/images/bg-karst-quelle.webp"
       />
       <Section>
+        <AufwandSkala skala={c.skala} />
         {VORLAGEN_GRUPPEN.map((g) => {
           const items = c.items.filter((v) => v.gruppe === g.id);
           return items.length === 0 ? null : (
-            <div key={g.id} className="mt-12 first:mt-0">
+            <div key={g.id} id={`gruppe-${g.id}`} className="mt-12 scroll-mt-28 first:mt-0">
               <h2 className="text-sm font-semibold uppercase tracking-wide text-vrelo-petrol">
                 {g.titel}
               </h2>
@@ -49,7 +51,7 @@ export default function VorlagenPage() {
                   <li
                     key={v.id}
                     id={v.id}
-                    className="card-depth flex flex-col rounded-2xl border border-faden bg-papier p-6 md:p-8"
+                    className="card-depth flex scroll-mt-28 flex-col rounded-2xl border border-faden bg-papier p-6 md:p-8"
                   >
                     <p className="text-xs font-semibold uppercase tracking-wide text-stumm">
                       {v.umfang}

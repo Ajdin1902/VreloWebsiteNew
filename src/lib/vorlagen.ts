@@ -141,6 +141,7 @@ export const vorlagenPage: {
     text: string;
     links: string;
     rechts: string;
+    kostenlosMarke: string;
     stopps: { titel: string; notiz: string; href: string; kostenlos: boolean }[];
   };
 } = {
@@ -317,6 +318,7 @@ export const vorlagenPage: {
     text: "Links machst du es selbst, rechts übernehme ich. Bis zum Fahrplan ist alles kostenlos.",
     links: "Du machst es selbst",
     rechts: "Ich mache es für dich",
+    kostenlosMarke: "kostenlos",
     stopps: [
       { titel: "Claude-Gehirn", notiz: "Du richtest es ein und pflegst es", href: "#claude-gehirn", kostenlos: true },
       { titel: "Baupläne", notiz: "Du baust nach Plan", href: "#gruppe-handwerk", kostenlos: true },
