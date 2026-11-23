@@ -33,7 +33,8 @@ describe("Result", () => {
     expect(screen.getAllByText(/Rechnungen, Belege/).length).toBeGreaterThan(0);
     for (const name of ["Name", "Firma", "E-Mail", "Telefon"]) expect(screen.getByRole("textbox", { name })).toBeInTheDocument();
     expect(screen.getByText(FORM_UI.consentAnruf)).toBeInTheDocument();
-    expect(screen.getByText(FORM_UI.consentKi)).toBeInTheDocument();
+    // Plan 1 runs no research: the form must not promise a KI (C1).
+    expect(container.textContent).not.toMatch(/\bKI\b|recherchiert/);
     expect(screen.getByRole("checkbox", { name: FORM_UI.checkbox })).toBeInTheDocument();
     const cal = screen.getByRole("link", { name: "Lieber gleich einen Termin?" });
     expect(cal).toHaveAttribute("href", "https://cal.com/x/30min");

@@ -232,15 +232,15 @@ export const PDF_UI = {
 };
 
 // Contact form copy (spec §6). The consent sentence is stored with every lead as proof,
-// so bump CONSENT_VERSION whenever one of these three strings changes.
+// so bump CONSENT_VERSION whenever one of these strings changes. Plan 1 runs no
+// research, so no KI sentence here: Plan 2 adds it back when research goes live.
+// COPY: Ajdin approves
 export const FORM_UI = {
   consentAnruf: "Ich rufe dich einmal an, um die Details für deinen ausführlichen Fahrplan zu klären.",
-  consentKi:
-    "Für deinen Vorab-Fahrplan recherchiert eine KI deine Programme und, wenn du sie angegeben hast, deine Website. Name, E-Mail und Telefon bekommt sie nicht.",
   checkbox: "Ja, ruf mich dafür an.",
 };
-export const CONSENT_VERSION = "pc-call-2026-11-23";
-export const CONSENT_TEXT = `${FORM_UI.consentAnruf} ${FORM_UI.consentKi} ${FORM_UI.checkbox}`;
+export const CONSENT_VERSION = "pc-call-2026-11-24";
+export const CONSENT_TEXT = `${FORM_UI.consentAnruf} ${FORM_UI.checkbox}`;
 
 // Form chrome around the consent block. Not part of the consent proof.
 // COPY: Ajdin approves

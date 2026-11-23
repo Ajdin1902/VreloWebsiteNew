@@ -98,7 +98,9 @@ describe("buildLeadMail", () => {
         "24.11.2026, 00:30",
       ]) expect(part).toContain(s.replace(/'/g, part === m.html ? "&#39;" : "'"));
     }
-    expect(CONSENT_VERSION).toBe("pc-call-2026-11-23");
+    expect(CONSENT_VERSION).toBe("pc-call-2026-11-24");
+    // Plan 1 runs no research: the stored consent proof names no KI (C1).
+    expect(CONSENT_TEXT).not.toMatch(/\bKI\b|recherchiert/);
   });
   it("escapes visitor values", () => {
     const m = lead({ contact: { ...contact, firma: "<b>X</b>" } });

@@ -94,10 +94,7 @@ export function VorabFahrplanForm({ answers, source }: { answers: ProzessCheckAn
         })}
       </div>
 
-      <div className="space-y-2 text-sm text-gletscher/90">
-        <p>{FORM_UI.consentAnruf}</p>
-        <p>{FORM_UI.consentKi}</p>
-      </div>
+      <p className="text-sm text-gletscher/90">{FORM_UI.consentAnruf}</p>
       <div>
         <label className="flex items-start gap-2 text-sm text-gletscher">
           <input
