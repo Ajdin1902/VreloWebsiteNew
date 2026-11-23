@@ -276,3 +276,4 @@ export const CAP_GRUND: Record<"adresse" | "ip" | "tag", string> = {
   tag: "Tageslimit von 50 erreicht",
 };
 export const PDF_FEHLER_GRUND = "Das PDF ließ sich nicht erstellen";
+export const VERSAND_FEHLER_GRUND = "Versand an den Besucher fehlgeschlagen";

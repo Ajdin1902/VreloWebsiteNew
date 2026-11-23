@@ -3,7 +3,7 @@
 import { headers } from "next/headers";
 import { Resend } from "resend";
 import { calBookingUrl, contactFrom, contactTo, isContactConfigured, isHoneypotTripped, isTooFast, resendKey } from "@/lib/contact";
-import { CAP_GRUND, FORM_ERRORS, PDF_FEHLER_GRUND } from "@/lib/vorabFahrplan/blocks";
+import { CAP_GRUND, FORM_ERRORS, PDF_FEHLER_GRUND, VERSAND_FEHLER_GRUND } from "@/lib/vorabFahrplan/blocks";
 import { checkSendCaps } from "@/lib/vorabFahrplan/caps";
 import { buildFallbackPlan } from "@/lib/vorabFahrplan/fallback";
 import { buildLeadMail, buildVisitorMail } from "@/lib/vorabFahrplan/mails";
@@ -39,29 +39,29 @@ export async function submitVorabFahrplan(_prev: VorabFahrplanState, formData: F
   const attachments = pdf ? [{ filename: pdfFilename(contact.firma), content: pdf }] : undefined;
 
   const resend = new Resend(resendKey());
-  const lead = buildLeadMail({
-    contact,
-    answers,
-    source: s.source,
-    submittedAt,
-    ...(!pdf
-      ? { status: "nicht-versendet" as const, grund: PDF_FEHLER_GRUND }
+  const sendLead = (st: { status: "fallback" } | { status: "nicht-versendet"; grund: string }) => {
+    const lead = buildLeadMail({ contact, answers, source: s.source, submittedAt, ...st });
+    return sendLeadMailWithRetry({
+      resend,
+      payload: { from: contactFrom()!, to: contactTo()!, replyTo: lead.replyTo, subject: lead.subject, html: lead.html, text: lead.text, attachments },
+      contact,
+      submittedAt,
+    });
+  };
+  await sendLead(
+    !pdf
+      ? { status: "nicht-versendet", grund: PDF_FEHLER_GRUND }
       : caps.ok
-        ? { status: "fallback" as const }
-        : { status: "nicht-versendet" as const, grund: CAP_GRUND[caps.grund] }),
-  });
-  await sendLeadMailWithRetry({
-    resend,
-    payload: { from: contactFrom()!, to: contactTo()!, replyTo: lead.replyTo, subject: lead.subject, html: lead.html, text: lead.text, attachments },
-    contact,
-    submittedAt,
-  });
+        ? { status: "fallback" }
+        : { status: "nicht-versendet", grund: CAP_GRUND[caps.grund] },
+  );
 
   if (!pdf) return { status: "error", message: FORM_ERRORS.generic };
   // Capped: the visitor sees the normal success state (spec §6), only Ajdin got the mail.
   if (!caps.ok) return { status: "ok" };
 
   const visitor = buildVisitorMail(plan, calBookingUrl());
+  let delivered = false;
   try {
     const sent = await resend.emails.send({
       from: contactFrom()!,
@@ -72,8 +72,13 @@ export async function submitVorabFahrplan(_prev: VorabFahrplanState, formData: F
       text: visitor.text,
       attachments,
     });
-    return sent.error ? { status: "error", message: FORM_ERRORS.generic } : { status: "ok" };
+    delivered = !sent.error;
   } catch {
-    return { status: "error", message: FORM_ERRORS.generic };
+    // handled below
   }
+  if (delivered) return { status: "ok" };
+  // The first lead mail read as sent and the caps already counted this address:
+  // correct the record so Ajdin sends the PDF by hand.
+  await sendLead({ status: "nicht-versendet", grund: VERSAND_FEHLER_GRUND });
+  return { status: "error", message: FORM_ERRORS.generic };
 }

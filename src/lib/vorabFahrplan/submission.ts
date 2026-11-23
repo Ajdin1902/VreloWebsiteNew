@@ -71,7 +71,8 @@ export function parseSubmission(fd: FormData): ParsedSubmission {
   return {
     answers,
     contact: {
-      name: capText(get("name").replace(/\s+/g, " ").trim(), MAX_NAME),
+      // Name reaches the visitor greeting and the PDF: no links or numbers (no address confirmation, no spam relay).
+      name: capText(stripContacts(get("name")), MAX_NAME).trim(),
       firma: capText(stripContacts(get("firma")), MAX_NAME).trim(),
       email: get("email").trim(),
       telefon: normalizePhone(get("telefon")) ?? "",

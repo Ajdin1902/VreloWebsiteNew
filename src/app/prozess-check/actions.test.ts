@@ -20,7 +20,7 @@ vi.mock("next/headers", () => ({ headers: async () => new Headers(Object.fromEnt
 import { submitVorabFahrplan, type VorabFahrplanState } from "./actions";
 import { parseSubmission } from "@/lib/vorabFahrplan/submission";
 import { AREA_LABEL } from "@/lib/prozessCheck";
-import { CAP_GRUND, PDF_FEHLER_GRUND } from "@/lib/vorabFahrplan/blocks";
+import { CAP_GRUND, PDF_FEHLER_GRUND, VERSAND_FEHLER_GRUND } from "@/lib/vorabFahrplan/blocks";
 
 type Entries = Record<string, string | string[] | undefined>;
 function fd(e: Entries): FormData {
@@ -153,10 +153,27 @@ describe("submitVorabFahrplan", () => {
     expect(lead.attachments).toBeUndefined();
   });
 
-  it("a visitor-mail failure is an error", async () => {
-    send.mockResolvedValueOnce({ error: null }).mockResolvedValueOnce({ error: { message: "x" } });
-    expect((await submitVorabFahrplan(idle, fd(good))).status).toBe("error");
-  }, 30000);
+  it("a visitor-mail failure is an error and sends a second lead mail flagged „nicht versendet“ with the PDF", async () => {
+    for (const fail of [() => send.mockResolvedValueOnce({ error: { message: "x" } }), () => send.mockRejectedValueOnce(new Error("down"))]) {
+      send.mockClear();
+      send.mockResolvedValueOnce({ error: null });
+      fail();
+      expect((await submitVorabFahrplan(idle, fd(good))).status).toBe("error");
+      expect(send).toHaveBeenCalledTimes(3);
+      const second = send.mock.calls[2][0];
+      expect(second.to).toBe("me@vrelo-ki.de");
+      expect(second.subject).toMatch(/^\[nicht versendet\] /);
+      expect(second.text).toContain(VERSAND_FEHLER_GRUND);
+      expect(second.attachments).toHaveLength(1);
+      expect(second.attachments[0].filename).toMatch(/^Vrelo-Vorab-Fahrplan-.+\.pdf$/);
+    }
+  }, 60000);
+
+  it("a name that is only contact data is invalid.name and sends nothing", async () => {
+    const s = await submitVorabFahrplan(idle, fd({ ...good, name: "www.spam.example 0941 123456" }));
+    expect(s.status === "invalid" && s.errors.name).toBeTruthy();
+    expect(send).not.toHaveBeenCalled();
+  });
 
   it("the honeypot is a silent ok with no send", async () => {
     const s = await submitVorabFahrplan(idle, fd({ ...good, website: "bot" }));
@@ -200,6 +217,7 @@ describe("parseSubmission", () => {
     expect(p.contact.name).toHaveLength(60);
     expect(p.contact.firma.length).toBeLessThanOrEqual(60);
     expect(p.contact.firma).not.toContain("www");
+    expect(parseSubmission(fd({ ...good, name: "Max www.x.de" })).contact.name).toBe("Max");
     expect(p.contact.telefon).toBe("+49941123456");
     expect(p.answers.website).toBe("https://muster.de/");
     expect(parseSubmission(fd({ ...good, webseite: "http://localhost" })).answers.website).toBeUndefined();

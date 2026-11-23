@@ -43,6 +43,14 @@ describe("Result", () => {
     expect(container.querySelector('input[name="h_rechnungen"]')).toHaveValue("5");
   });
 
+  it("carries the source into the Cal.com booking note", () => {
+    render(<Result answers={answers} copy={resultCopy(answers)} calUrl="https://cal.com/x/30min" source="brief-handwerk" />);
+    expect(screen.getByRole("link", { name: RESULT_UI.calSecondary })).toHaveAttribute(
+      "href",
+      `https://cal.com/x/30min?notes=${encodeURIComponent("Quelle: brief-handwerk")}`,
+    );
+  });
+
   it("shows no Cal.com link without a booking URL", () => {
     render(<Result answers={answers} copy={resultCopy(answers)} calUrl={undefined} />);
     expect(screen.queryByRole("link", { name: RESULT_UI.calSecondary })).not.toBeInTheDocument();

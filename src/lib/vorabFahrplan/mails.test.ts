@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { ParsedAnswers } from "@/lib/prozessCheck";
-import { AREA_IDEE, CAP_GRUND, CONSENT_TEXT, CONSENT_VERSION, FORM_ERRORS, FORM_FIELDS, FORM_UI, PDF_FEHLER_GRUND } from "./blocks";
+import { AREA_IDEE, CAP_GRUND, CONSENT_TEXT, CONSENT_VERSION, FORM_ERRORS, FORM_FIELDS, FORM_UI, PDF_FEHLER_GRUND, VERSAND_FEHLER_GRUND } from "./blocks";
 import { buildLeadMail, buildVisitorMail, MAIL_UI } from "./mails";
 import type { VorabFahrplan } from "./content";
 
@@ -132,7 +132,7 @@ describe("buildLeadMail", () => {
 });
 
 describe("copy guards", () => {
-  const strings = [...Object.values(MAIL_UI), ...Object.values(FORM_UI), ...Object.values(FORM_FIELDS), ...Object.values(FORM_ERRORS), ...Object.values(CAP_GRUND), PDF_FEHLER_GRUND, CONSENT_TEXT];
+  const strings = [...Object.values(MAIL_UI), ...Object.values(FORM_UI), ...Object.values(FORM_FIELDS), ...Object.values(FORM_ERRORS), ...Object.values(CAP_GRUND), PDF_FEHLER_GRUND, VERSAND_FEHLER_GRUND, CONSENT_TEXT];
   it("fixed strings follow the German punctuation rules", () => {
     for (const s of strings) {
       expect(s).not.toMatch(/["–—€]/);

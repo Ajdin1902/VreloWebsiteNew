@@ -76,7 +76,7 @@ export function Result({
           <VorabFahrplanForm answers={answers} source={source} />
           {calUrl ? (
             <p className="mt-8 border-t border-papier/20 pt-6 text-sm">
-              <a href={calUrl} className="text-gletscher underline underline-offset-4 hover:text-papier">
+              <a href={source ? `${calUrl}?notes=${encodeURIComponent(`Quelle: ${source}`)}` : calUrl} className="text-gletscher underline underline-offset-4 hover:text-papier">
                 {RESULT_UI.calSecondary}
               </a>
             </p>
