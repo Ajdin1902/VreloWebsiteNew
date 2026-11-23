@@ -306,3 +306,36 @@ export const LEAD_STATUS = {
   vonHand: "Schick ihn von Hand.",
   gesperrt: "Gesperrt durch Versandlimit, vermutlich kein echter Lead. Prüf kurz, bevor du reagierst.",
 };
+
+// Labels and notes of the internal dossier mail #2 (spec §10): built for scanning, not looks.
+// COPY: Ajdin approves
+export const DOSSIER_UI = {
+  label: "Dossier für das Gespräch",
+  recherchiert: "Vorab-Fahrplan mit Recherche versendet",
+  festeBausteine: "Vorab-Fahrplan aus festen Bausteinen versendet",
+  rechercheUnbrauchbar: "Recherche unbrauchbar",
+  dossierUnbrauchbar: "Dossier unbrauchbar",
+  rechercheAus: "Recherche ohne Ergebnis",
+  keinDossier: "Kein Dossier dabei.",
+  pdfFehlt: "Der Besucher hat noch nichts bekommen, n8n versucht es noch einmal. Kommt kein Dossier mit PDF, schick den Vorab-Fahrplan von Hand.",
+  kontakt: "Kontakt",
+  name: "Name",
+  telefon: "Telefon",
+  status: "Status",
+  programme: "Programme",
+  befunde: "Befunde",
+  unbestaetigt: "Unbestätigt",
+  blocker: "Blocker",
+  n8n: "n8n",
+  api: "API",
+  website: "Website",
+  aufwand: "Aufwand",
+  karte: "Betriebssystem-Karte",
+  fragen: "Fragen für das Gespräch",
+  lauf: "Lauf",
+  kosten: "Kosten",
+  caps: "Caps getroffen",
+  verworfen: "Verworfen",
+  keine: "keine",
+  antworten: "Auf „Antworten“ schreibst du {name} direkt.",
+};

@@ -101,6 +101,12 @@ describe("renderVorabFahrplanPdf", () => {
     expect(pageCount(await renderVorabFahrplanPdf({ ...researched, firma }))).toBeLessThanOrEqual(2);
   });
 
+  // The deliver route and the form action may render at the same time in one instance.
+  it("renders 3 PDFs concurrently", async () => {
+    const bufs = await Promise.all([fallback, researched, { ...fallback, firma: "Zweite GmbH" }].map(renderVorabFahrplanPdf));
+    for (const b of bufs) expect(b.subarray(0, 4).toString("latin1")).toBe("%PDF");
+  });
+
   it("has no price", () => {
     for (const s of [...strings(fallback), ...strings(researched), ...strings(PDF_UI)]) {
       expect(s, s).not.toMatch(/€|\bEUR\b|\bEuro\b/i);
