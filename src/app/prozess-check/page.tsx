@@ -6,10 +6,14 @@ import { ProzessCheck } from "@/components/prozess-check/ProzessCheck";
 import { ProzessCheckFromUrl } from "@/components/prozess-check/ProzessCheckFromUrl";
 import { calBookingUrl } from "@/lib/contact";
 
+// COPY: Ajdin approves
+const HERO_SUBLINE = "Ein paar Fragen, danach kommt dein Vorab-Fahrplan als PDF per Mail.";
+
 export const metadata: Metadata = {
   title: "Prozess-Check",
+  // COPY: Ajdin approves
   description:
-    "In drei Minuten siehst du, wie viele Stunden pro Woche dich wiederkehrende Aufgaben kosten und wo du am meisten Zeit zurückgewinnst. Kein Login, dein Ergebnis sofort.",
+    "In fünf Minuten siehst du, wie viele Stunden pro Woche dich wiederkehrende Aufgaben kosten. Danach bekommst du deinen Vorab-Fahrplan als PDF per Mail. Kein Login.",
   robots: { index: true, follow: true },
   alternates: { canonical: "/prozess-check" },
 };
@@ -29,6 +33,8 @@ export default function ProzessCheckPage() {
           (the band no longer tucks up under a lead, hence no negative margin). */}
       <div className="bg-vrelo-petrol">
         <div className="mx-auto max-w-2xl px-6 pb-24 pt-10 md:pb-32 md:pt-14">
+          {/* One short sub-line under the hero instead of a lead band (keeps question 1 on the first screen). */}
+          <p className="mb-6 text-center text-papier/85">{HERO_SUBLINE}</p>
           {/* ?src=brief-<segment> (letter batches via /brief) is read on the
               client; the fallback renders the same questionnaire without it. */}
           <Suspense fallback={<ProzessCheck calUrl={calBookingUrl()} />}>

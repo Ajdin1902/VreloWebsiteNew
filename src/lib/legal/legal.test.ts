@@ -64,6 +64,25 @@ describe("legal content", () => {
   });
 });
 
+// Prozess-Check v2, Plan 1: contact data, the call on consent, Upstash counters, no AI claim yet.
+describe("datenschutz Prozess-Check section", () => {
+  const pc = datenschutz.sections.find((s) => s.heading === "Prozess-Check")!;
+  it("names the data, the processors and both legal bases", () => {
+    expect(pc.body).toContain("Name, Firma, E-Mail-Adresse und Telefonnummer");
+    expect(pc.body).toMatch(/Resend \(Auftragsverarbeiter\)/);
+    expect(pc.body).toMatch(/Upstash .*EU\/Frankfurt/);
+    expect(pc.body).toMatch(/Hashwerten/);
+    expect(pc.body).toContain("Art. 6 Abs. 1 lit. b DSGVO");
+    expect(pc.body).toContain("Einwilligung (Art. 6 Abs. 1 lit. a DSGVO)");
+    expect(pc.body).toMatch(/jederzeit widerrufen/);
+    expect(pc.body).toContain("(siehe „E-Mail-Kontakt“)");
+  });
+  it("claims no AI processing and drops the old opt-in wording", () => {
+    expect(pc.body).not.toMatch(/KI|Anthropic/);
+    expect(pc.body).not.toContain("Du darfst dich bei mir melden");
+  });
+});
+
 // Ajdin 2026-11-12: one line that the offer is B2B only.
 describe("B2B line", () => {
   it("says in the Impressum that the offer is for businesses only", () => {

@@ -3,7 +3,7 @@ import type { LegalDoc } from "./impressum";
 export const datenschutz: LegalDoc = {
   title: "Datenschutzerklärung",
   intro:
-    "Diese Erklärung informiert über die Verarbeitung personenbezogener Daten auf dieser Website und bei der Kontaktaufnahme per E-Mail. Stand: Oktober 2026.",
+    "Diese Erklärung informiert über die Verarbeitung personenbezogener Daten auf dieser Website und bei der Kontaktaufnahme per E-Mail. Stand: November 2026.",
   sections: [
     {
       heading: "Verantwortlicher",
@@ -23,7 +23,14 @@ export const datenschutz: LegalDoc = {
     },
     {
       heading: "Prozess-Check",
-      body: "Der Fragebogen unter /prozess-check läuft in deinem Browser. Wenn du dir das Ergebnis per E-Mail zuschicken lässt, verarbeite ich die von dir angegebene E-Mail-Adresse und das Ergebnis, um es dir zu senden. Eine Kopie geht an mich. Der Versand erfolgt über den Dienstleister Resend (Auftragsverarbeiter). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO. Setzt du den Haken „Du darfst dich bei mir melden“, nutze ich deine Adresse zusätzlich, um mich bei dir zu melden. Das ist freiwillig. Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Du kannst sie jederzeit widerrufen. Die Kopie an mich bewahre ich zusammen mit den übrigen eingehenden E-Mails auf (siehe „E-Mail-Kontakt“). Sonstige Daten werden gelöscht, sobald sie nicht mehr erforderlich sind.",
+      // COPY: Ajdin approves (Plan 1: no AI processing in this flow yet)
+      body: [
+        "Der Fragebogen unter /prozess-check läuft in deinem Browser. Erst wenn du dir den Vorab-Fahrplan schicken lässt, verarbeite ich deine Angaben: Name, Firma, E-Mail-Adresse und Telefonnummer, optional deine Website sowie deine Antworten im Fragebogen. Daraus erstelle ich auf dem Server dieser Website deinen Vorab-Fahrplan als PDF und schicke ihn dir per E-Mail. Eine Kopie mit allen Angaben und dem PDF geht an mich. Der Versand erfolgt über den Dienstleister Resend (Auftragsverarbeiter). Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO.",
+        "Mit dem Haken „Ja, ruf mich dafür an.“ willigst du ein, dass ich dich einmal anrufe, um die Details für deinen ausführlichen Fahrplan zu klären. Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Du kannst sie jederzeit widerrufen, zum Beispiel mit einer kurzen E-Mail an kontakt@vrelo-ki.de. Als Nachweis halte ich den Wortlaut der Einwilligung und den Zeitpunkt zusammen mit deiner Anfrage fest.",
+        // PLAN 2: the paragraph on the KI research goes here (Anthropic PBC, USA, SCC, wording as in „Interaktive Demo“; reading the given website; n8n on server1 at Hetzner, no contact data there; the delivery record in Upstash, at most 2 hours).
+        "Missbrauchsschutz: Damit über dieses Formular nicht beliebig viele E-Mails verschickt werden, zähle ich die Anfragen über den Dienstleister Upstash (Auftragsverarbeiter, Serverstandort EU/Frankfurt). Gezählt wird nur mit Hashwerten deiner E-Mail-Adresse und deiner IP-Adresse, die Adressen selbst werden dort nicht gespeichert. Der Zähler zur E-Mail-Adresse läuft nach 30 Tagen ab, der zur IP-Adresse nach 24 Stunden. Rechtsgrundlage ist mein berechtigtes Interesse an einem sicheren Betrieb (Art. 6 Abs. 1 lit. f DSGVO).",
+        "Speicherung: Die Kopie an mich bewahre ich zusammen mit den übrigen eingehenden E-Mails auf (siehe „E-Mail-Kontakt“). Sonstige Daten werden gelöscht, sobald sie nicht mehr erforderlich sind.",
+      ].join("\n\n"),
     },
     {
       heading: "Bauplan-PDF anfordern",
