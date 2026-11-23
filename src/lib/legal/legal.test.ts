@@ -72,6 +72,7 @@ describe("datenschutz Prozess-Check section", () => {
     expect(pc.body).toMatch(/Resend \(Auftragsverarbeiter\)/);
     expect(pc.body).toMatch(/Upstash .*EU\/Frankfurt/);
     expect(pc.body).toMatch(/Hashwerten/);
+    expect(pc.body).toContain("Tageszähler ohne Personenbezug");
     expect(pc.body).toContain("Art. 6 Abs. 1 lit. b DSGVO");
     expect(pc.body).toContain("Einwilligung (Art. 6 Abs. 1 lit. a DSGVO)");
     expect(pc.body).toMatch(/jederzeit widerrufen/);
