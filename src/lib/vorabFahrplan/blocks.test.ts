@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { AREA_IDS, PROGRAMM_CHIPS } from "@/lib/prozessCheck";
 import { AREA_IDEE, KANAL_VARIANTE, KANAL_WEG, MENGE_ZEILE, PDF_UI, TIPPS, WER_ZEILE } from "./blocks";
 import { zuerstIdee } from "./fallback";
@@ -52,5 +52,20 @@ describe("blocks copy guards", () => {
       expect(t.abgerufen).toMatch(/^\d{2}\.\d{2}\.\d{4}$/);
       expect(t.text.length).toBeLessThanOrEqual(LIMITS.tipp);
     }
+  });
+});
+
+describe("CAP_GRUND", () => {
+  it("takes its numbers from CAPS", async () => {
+    vi.resetModules();
+    vi.doMock("./content", async (orig) => ({
+      ...(await orig<typeof import("./content")>()),
+      CAPS: { proAdresseTage: 7, proIpTag: 8, proTag: 9 },
+    }));
+    const { CAP_GRUND } = await import("./blocks");
+    expect(CAP_GRUND.adresse).toContain("7 Tagen");
+    expect(CAP_GRUND.ip).toContain("8 ");
+    expect(CAP_GRUND.tag).toContain("9");
+    vi.doUnmock("./content");
   });
 });

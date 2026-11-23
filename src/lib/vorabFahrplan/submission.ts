@@ -4,7 +4,7 @@
 import type { Resend } from "resend";
 import { validateEmail } from "@/lib/prozessCheckEmail";
 import { normalizeSource } from "@/lib/source";
-import { AREA_IDS, STEPS, type ParsedAnswers, type Step, type StepId } from "@/lib/prozessCheck";
+import { AREA_IDS, PROGRAMM_CHIPS, STEPS, totalHours, type ParsedAnswers, type Step, type StepId } from "@/lib/prozessCheck";
 import { FORM_ERRORS } from "./blocks";
 import { capText, normalizePhone, normalizeWebsite, parseProgramme, stripContacts } from "./guards";
 import type { LeadContact } from "./mails";
@@ -18,7 +18,8 @@ export type ParsedSubmission = {
   renderedAt: number;
 };
 
-export type FieldErrors = Partial<Record<"name" | "firma" | "email" | "telefon" | "anruf", string>>;
+// `antworten` is no field: the answers themselves are unusable (crafted post), shown as a generic error.
+export type FieldErrors = Partial<Record<"name" | "firma" | "email" | "telefon" | "anruf" | "antworten", string>>;
 
 function pick<T extends string>(raw: string, allowed: readonly T[], fallback: T): T {
   return (allowed as readonly string[]).includes(raw) ? (raw as T) : fallback;
@@ -47,7 +48,7 @@ export function parseSubmission(fd: FormData): ParsedSubmission {
 
   const bereiche = AREA_IDS.filter((id) => all("bereiche").includes(id));
   const stunden = Object.fromEntries(bereiche.map((id) => [id, clampHours(get(`h_${id}`))]));
-  const programmeChips = all("programmeChips");
+  const programmeChips = PROGRAMM_CHIPS.filter((c) => all("programmeChips").includes(c));
   const programmeText = capText(get("programmeText"), 1000);
   const website = normalizeWebsite(capText(get("webseite"), 300));
 
@@ -90,6 +91,8 @@ export function parseSubmission(fd: FormData): ParsedSubmission {
 export function submissionErrors(s: ParsedSubmission): FieldErrors {
   const c = s.contact;
   const errors: FieldErrors = {};
+  // The wizard never sends this; zero hours is no lead (spec §5), so no PDF and no mail.
+  if (totalHours(s.answers) === 0) errors.antworten = FORM_ERRORS.generic;
   if (!c.name) errors.name = FORM_ERRORS.name;
   if (!c.firma) errors.firma = FORM_ERRORS.firma;
   // The address becomes the lead mail's replyTo. EMAIL_RE rejects any whitespace, so

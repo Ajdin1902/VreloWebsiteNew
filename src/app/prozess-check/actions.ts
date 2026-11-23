@@ -22,6 +22,7 @@ export async function submitVorabFahrplan(_prev: VorabFahrplanState, formData: F
   if (isHoneypotTripped(s.honeypot)) return { status: "ok" };
   if (isTooFast(s.renderedAt, Date.now())) return { status: "error", message: FORM_ERRORS.tooFast };
   const errors = submissionErrors(s);
+  if (errors.antworten) return { status: "error", message: errors.antworten };
   if (Object.keys(errors).length > 0) return { status: "invalid", errors };
   if (!isContactConfigured()) return { status: "error", message: FORM_ERRORS.notConfigured };
 
@@ -29,9 +30,10 @@ export async function submitVorabFahrplan(_prev: VorabFahrplanState, formData: F
   const ip = (await headers()).get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   const caps = await checkSendCaps({ ip, email: contact.email });
 
-  const plan = buildFallbackPlan(answers, contact, submittedAt);
+  let plan: ReturnType<typeof buildFallbackPlan> | undefined;
   let pdf: Buffer | undefined;
   try {
+    plan = buildFallbackPlan(answers, contact, submittedAt);
     pdf = await renderVorabFahrplanPdf(plan);
   } catch {
     // Handled below: the lead mail still goes out, flagged, so Ajdin follows up by hand.
@@ -56,7 +58,7 @@ export async function submitVorabFahrplan(_prev: VorabFahrplanState, formData: F
         : { status: "nicht-versendet", grund: CAP_GRUND[caps.grund] },
   );
 
-  if (!pdf) return { status: "error", message: FORM_ERRORS.generic };
+  if (!pdf || !plan) return { status: "error", message: FORM_ERRORS.generic };
   // Capped: the visitor sees the normal success state (spec §6), only Ajdin got the mail.
   if (!caps.ok) return { status: "ok" };
 

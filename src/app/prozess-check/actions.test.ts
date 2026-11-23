@@ -16,11 +16,22 @@ vi.mock("@/lib/vorabFahrplan/pdf", async (importOriginal) => {
     },
   };
 });
+const planFail = vi.hoisted(() => ({ on: false }));
+vi.mock("@/lib/vorabFahrplan/fallback", async (importOriginal) => {
+  const m = await importOriginal<typeof import("@/lib/vorabFahrplan/fallback")>();
+  return {
+    ...m,
+    buildFallbackPlan: (...a: Parameters<typeof m.buildFallbackPlan>) => {
+      if (planFail.on) throw new Error("plan");
+      return m.buildFallbackPlan(...a);
+    },
+  };
+});
 vi.mock("next/headers", () => ({ headers: async () => new Headers(Object.fromEntries(headerMap.current)) }));
 import { submitVorabFahrplan, type VorabFahrplanState } from "./actions";
 import { parseSubmission } from "@/lib/vorabFahrplan/submission";
 import { AREA_LABEL } from "@/lib/prozessCheck";
-import { CAP_GRUND, PDF_FEHLER_GRUND, VERSAND_FEHLER_GRUND } from "@/lib/vorabFahrplan/blocks";
+import { CAP_GRUND, FORM_ERRORS, PDF_FEHLER_GRUND, VERSAND_FEHLER_GRUND } from "@/lib/vorabFahrplan/blocks";
 
 type Entries = Record<string, string | string[] | undefined>;
 function fd(e: Entries): FormData {
@@ -60,6 +71,7 @@ const good: Entries = {
 
 beforeEach(() => {
   pdfFail.on = false;
+  planFail.on = false;
   send.mockReset();
   send.mockResolvedValue({ error: null });
   checkSendCaps.mockReset();
@@ -169,6 +181,26 @@ describe("submitVorabFahrplan", () => {
     }
   }, 60000);
 
+  it("a plan that fails to build still sends the flagged lead mail, then an error", async () => {
+    planFail.on = true;
+    const s = await submitVorabFahrplan(idle, fd(good));
+    expect(s).toEqual({ status: "error", message: FORM_ERRORS.generic });
+    expect(send).toHaveBeenCalledTimes(1);
+    const lead = send.mock.calls[0][0];
+    expect(lead.subject).toMatch(/^\[nicht versendet\] /);
+    expect(lead.text).toContain(PDF_FEHLER_GRUND);
+  });
+
+  it.each([
+    ["no area", { bereiche: undefined }],
+    ["zero hours", { h_anfragen: "0", h_rechnungen: "0" }],
+  ])("a crafted post with %s is a generic error and sends nothing", async (_, patch: Entries) => {
+    const s = await submitVorabFahrplan(idle, fd({ ...good, ...patch }));
+    expect(s).toEqual({ status: "error", message: FORM_ERRORS.generic });
+    expect(send).not.toHaveBeenCalled();
+    expect(checkSendCaps).not.toHaveBeenCalled();
+  });
+
   it("a name that is only contact data is invalid.name and sends nothing", async () => {
     const s = await submitVorabFahrplan(idle, fd({ ...good, name: "www.spam.example 0941 123456" }));
     expect(s.status === "invalid" && s.errors.name).toBeTruthy();
@@ -221,6 +253,11 @@ describe("parseSubmission", () => {
     expect(p.contact.telefon).toBe("+49941123456");
     expect(p.answers.website).toBe("https://muster.de/");
     expect(parseSubmission(fd({ ...good, webseite: "http://localhost" })).answers.website).toBeUndefined();
+  });
+
+  it("keeps only known program chips", () => {
+    const p = parseSubmission(fd({ ...good, programmeChips: ["Outlook", "<b>x</b>", "y".repeat(5000), "Outlook"] }));
+    expect(p.answers.programmeChips).toEqual(["Outlook"]);
   });
 
   it("caps raw input before stripping: 200k-char fields parse in under 200 ms", () => {

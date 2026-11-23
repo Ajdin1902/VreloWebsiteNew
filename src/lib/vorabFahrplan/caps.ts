@@ -1,8 +1,9 @@
 import { createHash } from "crypto";
 import { Redis } from "@upstash/redis";
 import { hashIp } from "@/lib/demo/ratelimit";
+import { CAPS } from "./content";
 
-export const CAPS = { proAdresseTage: 30, proIpTag: 3, proTag: 50 } as const;
+export { CAPS };
 
 const MAIL_SALT = process.env.PC_HASH_SALT || "vrelo-pc-mail-v1";
 

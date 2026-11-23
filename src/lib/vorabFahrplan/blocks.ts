@@ -3,6 +3,7 @@
 // Danach and Später use `kurz`. Spec: docs/superpowers/specs/2026-11-23-prozess-check-v2-vorab-fahrplan-design.md
 // COPY: Ajdin approves before go-live
 import type { AreaId, Kanal, Menge, Wer } from "@/lib/prozessCheck";
+import { CAPS } from "./content";
 
 // `lang`: the first sentence ends at the first ". " (fallback.ts swaps it), so no
 // abbreviations with a dot in the first sentence.
@@ -271,9 +272,9 @@ export const FORM_ERRORS = {
 // Why the visitor mail did not go out, for the internal lead mail (Ajdin sends by hand then).
 // COPY: Ajdin approves
 export const CAP_GRUND: Record<"adresse" | "ip" | "tag", string> = {
-  adresse: "Diese Adresse hat in den letzten 30 Tagen schon einen bekommen",
-  ip: "Mehr als 3 von dieser Verbindung heute",
-  tag: "Tageslimit von 50 erreicht",
+  adresse: `Diese Adresse hat in den letzten ${CAPS.proAdresseTage} Tagen schon einen bekommen`,
+  ip: `Mehr als ${CAPS.proIpTag} von dieser Verbindung heute`,
+  tag: `Tageslimit von ${CAPS.proTag} erreicht`,
 };
 export const PDF_FEHLER_GRUND = "Das PDF ließ sich nicht erstellen";
 export const VERSAND_FEHLER_GRUND = "Versand an den Besucher fehlgeschlagen";
