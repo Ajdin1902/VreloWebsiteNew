@@ -1,91 +1,79 @@
 "use server";
 
+import { headers } from "next/headers";
 import { Resend } from "resend";
-import { isContactConfigured, contactFrom, contactTo, resendKey, calBookingUrl } from "@/lib/contact";
-import { evaluateSubmission, type ProzessCheckFields } from "@/lib/prozessCheckEmail";
-import { AREA_IDS, type ProzessCheckAnswers } from "@/lib/prozessCheck";
-import { normalizeSource } from "@/lib/source";
+import { calBookingUrl, contactFrom, contactTo, isContactConfigured, isHoneypotTripped, isTooFast, resendKey } from "@/lib/contact";
+import { CAP_GRUND, FORM_ERRORS, PDF_FEHLER_GRUND } from "@/lib/vorabFahrplan/blocks";
+import { checkSendCaps } from "@/lib/vorabFahrplan/caps";
+import { buildFallbackPlan } from "@/lib/vorabFahrplan/fallback";
+import { buildLeadMail, buildVisitorMail } from "@/lib/vorabFahrplan/mails";
+import { pdfFilename, renderVorabFahrplanPdf } from "@/lib/vorabFahrplan/pdf";
+import { parseSubmission, sendLeadMailWithRetry, submissionErrors, type FieldErrors } from "@/lib/vorabFahrplan/submission";
 
-export type ProzessCheckEmailState =
+export type VorabFahrplanState =
   | { status: "idle" }
   | { status: "ok" }
   | { status: "error"; message: string }
-  | { status: "invalid"; error: string };
+  | { status: "invalid"; errors: FieldErrors };
 
-const GENERIC_ERROR = "Da ist etwas schiefgelaufen. Schreib mir gern direkt.";
+// Plan 1 flow (spec §6, §10). Plan 2 inserts the research branch after the caps check.
+export async function submitVorabFahrplan(_prev: VorabFahrplanState, formData: FormData): Promise<VorabFahrplanState> {
+  const s = parseSubmission(formData);
+  if (isHoneypotTripped(s.honeypot)) return { status: "ok" };
+  if (isTooFast(s.renderedAt, Date.now())) return { status: "error", message: FORM_ERRORS.tooFast };
+  const errors = submissionErrors(s);
+  if (Object.keys(errors).length > 0) return { status: "invalid", errors };
+  if (!isContactConfigured()) return { status: "error", message: FORM_ERRORS.notConfigured };
 
-function pick<T extends string>(raw: string, allowed: readonly T[], fallback: T): T {
-  return (allowed as readonly string[]).includes(raw) ? (raw as T) : fallback;
-}
+  const { answers, contact, submittedAt } = s;
+  const ip = (await headers()).get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+  const caps = await checkSendCaps({ ip, email: contact.email });
 
-// Clamp a slider value to 0..10 integer; anything odd falls back to 0.
-function clampHours(raw: string): number {
-  const n = Math.round(Number(raw));
-  if (!Number.isFinite(n) || n < 0) return 0;
-  return n > 10 ? 10 : n;
-}
-
-function parse(formData: FormData): ProzessCheckFields {
-  const get = (k: string) => String(formData.get(k) ?? "");
-  const stunden = Object.fromEntries(
-    AREA_IDS.map((id) => [id, clampHours(get(`h_${id}`))]),
-  ) as ProzessCheckAnswers["stunden"];
-  const answers: ProzessCheckAnswers = {
-    branche: pick(get("branche"), ["handwerk", "immobilien", "reinigung", "agentur", "handel", "anderes"], "anderes"),
-    team: pick(get("team"), ["allein", "2bis5", "6bis20", "ueber20"], "allein"),
-    stunden,
-    nervt: pick(get("nervt"), AREA_IDS, "anfragen"),
-    abende: pick(get("abende"), ["staendig", "abundzu", "nein"], "nein"),
-    versucht: pick(get("versucht"), ["nichts", "toolBrach", "beauftragt"], "nichts"),
-  };
-  return {
-    email: get("email"),
-    honeypot: get("website"),
-    renderedAt: Number(get("renderedAt")) || 0,
-    answers,
-    kontaktErlaubt: formData.get("kontakt") != null,
-    source: normalizeSource(get("src")),
-  };
-}
-
-export async function submitProzessCheckEmail(
-  _prev: ProzessCheckEmailState,
-  formData: FormData,
-): Promise<ProzessCheckEmailState> {
-  const decision = evaluateSubmission(parse(formData), Date.now(), calBookingUrl());
-
-  if (decision.action === "drop") return { status: "ok" };
-  if (decision.action === "reject") return { status: "error", message: decision.message };
-  if (decision.action === "invalid") return { status: "invalid", error: decision.error };
-
-  if (!isContactConfigured()) {
-    return { status: "error", message: "Der Versand ist gerade nicht eingerichtet. Schreib mir bitte direkt." };
-  }
-
+  const plan = buildFallbackPlan(answers, contact, submittedAt);
+  let pdf: Buffer | undefined;
   try {
-    const resend = new Resend(resendKey());
-    const lead = await resend.emails.send({
-      from: contactFrom()!,
-      to: decision.leadEmail.to,
-      subject: decision.leadEmail.subject,
-      html: decision.leadEmail.html,
-      text: decision.leadEmail.text,
-    });
-    if (lead.error) return { status: "error", message: GENERIC_ERROR };
-    try {
-      await resend.emails.send({
-        from: contactFrom()!,
-        to: contactTo()!,
-        replyTo: decision.internalEmail.replyTo,
-        subject: decision.internalEmail.subject,
-        html: decision.internalEmail.html,
-        text: decision.internalEmail.text,
-      });
-    } catch {
-      // Internal-only failure: the lead got their summary; don't fail the UI.
-    }
-    return { status: "ok" };
+    pdf = await renderVorabFahrplanPdf(plan);
   } catch {
-    return { status: "error", message: GENERIC_ERROR };
+    // Handled below: the lead mail still goes out, flagged, so Ajdin follows up by hand.
+  }
+  const attachments = pdf ? [{ filename: pdfFilename(contact.firma), content: pdf }] : undefined;
+
+  const resend = new Resend(resendKey());
+  const lead = buildLeadMail({
+    contact,
+    answers,
+    source: s.source,
+    submittedAt,
+    ...(!pdf
+      ? { status: "nicht-versendet" as const, grund: PDF_FEHLER_GRUND }
+      : caps.ok
+        ? { status: "fallback" as const }
+        : { status: "nicht-versendet" as const, grund: CAP_GRUND[caps.grund] }),
+  });
+  await sendLeadMailWithRetry({
+    resend,
+    payload: { from: contactFrom()!, to: contactTo()!, replyTo: lead.replyTo, subject: lead.subject, html: lead.html, text: lead.text, attachments },
+    contact,
+    submittedAt,
+  });
+
+  if (!pdf) return { status: "error", message: FORM_ERRORS.generic };
+  // Capped: the visitor sees the normal success state (spec §6), only Ajdin got the mail.
+  if (!caps.ok) return { status: "ok" };
+
+  const visitor = buildVisitorMail(plan, calBookingUrl());
+  try {
+    const sent = await resend.emails.send({
+      from: contactFrom()!,
+      to: contact.email,
+      replyTo: contactTo()!,
+      subject: visitor.subject,
+      html: visitor.html,
+      text: visitor.text,
+      attachments,
+    });
+    return sent.error ? { status: "error", message: FORM_ERRORS.generic } : { status: "ok" };
+  } catch {
+    return { status: "error", message: FORM_ERRORS.generic };
   }
 }

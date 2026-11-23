@@ -93,6 +93,14 @@ describe("renderVorabFahrplanPdf", () => {
     expect(pageCount(await renderVorabFahrplanPdf(researched))).toBe(2);
   });
 
+  // parseSubmission caps firma at 60: the longest allowed name must not push a page over.
+  it("a 60-character firma keeps the fallback at 1 page and the researched plan at 2", async () => {
+    const firma = text(60);
+    expect(firma).toHaveLength(60);
+    expect(pageCount(await renderVorabFahrplanPdf({ ...fallback, firma }))).toBe(1);
+    expect(pageCount(await renderVorabFahrplanPdf({ ...researched, firma }))).toBeLessThanOrEqual(2);
+  });
+
   it("has no price", () => {
     for (const s of [...strings(fallback), ...strings(researched), ...strings(PDF_UI)]) {
       expect(s, s).not.toMatch(/€|\bEUR\b|\bEuro\b/i);

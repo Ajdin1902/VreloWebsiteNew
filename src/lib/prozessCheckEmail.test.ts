@@ -1,118 +1,14 @@
 import { describe, it, expect } from "vitest";
-import {
-  validateEmail,
-  buildSummaryEmail,
-  buildInternalEmail,
-  evaluateSubmission,
-  type ProzessCheckFields,
-} from "./prozessCheckEmail";
-import type { ProzessCheckAnswers } from "./prozessCheck";
-import { signaturHtml, signaturText } from "./email/signatur";
-
-const answers: ProzessCheckAnswers = {
-  branche: "handwerk",
-  team: "6bis20",
-  stunden: { anfragen: 3, auftraege: 0, rechnungen: 5, daten: 1, erinnern: 0, orga: 0 },
-  nervt: "rechnungen",
-  abende: "staendig",
-  versucht: "toolBrach",
-};
+import { validateEmail } from "./prozessCheckEmail";
 
 describe("validateEmail", () => {
   it("rejects a malformed address", () => {
     expect(validateEmail("nope")).toBeTruthy();
   });
+  it("rejects an address with a line break inside", () => {
+    expect(validateEmail("a@b.de\r\nBcc: x@y.de")).toBeTruthy();
+  });
   it("accepts a valid address", () => {
     expect(validateEmail("a@b.de")).toBeUndefined();
-  });
-});
-
-describe("buildSummaryEmail", () => {
-  it("puts the summed hours in the summary and links only the Cal URL", () => {
-    const m = buildSummaryEmail({ email: "a@b.de", answers, calUrl: "https://cal.eu/x" });
-    expect(m.to).toBe("a@b.de");
-    expect(m.html).toContain("9"); // 3+5+1
-    expect(m.html).toContain("https://cal.eu/x");
-    expect(m.html).not.toContain("€"); // no price ever
-    expect(m.text).toContain("9");
-  });
-  // The body links only Cal; the signature (Ajdin 2026-11-12) is the one exception.
-  it("falls back to a reply line when no Cal URL is configured", () => {
-    const m = buildSummaryEmail({ email: "a@b.de", answers });
-    expect(m.html.replace(signaturHtml(), "")).not.toContain("http");
-  });
-
-  it("ends with the signature in html and text, after a short greeting", () => {
-    const m = buildSummaryEmail({ email: "a@b.de", answers });
-    expect(m.html).toContain(signaturHtml());
-    for (const line of signaturText()) expect(m.text).toContain(line);
-    expect(m.text).toContain("Bis bald");
-    expect(m.text.indexOf("Bis bald")).toBeLessThan(m.text.indexOf("Ajdin Dzafic"));
-    expect(m.html + m.text).not.toContain("Ajdin von Vrelo");
-  });
-});
-
-describe("buildInternalEmail", () => {
-  it("shows the answers and the contact flag", () => {
-    const m = buildInternalEmail({ email: "a@b.de", answers, kontaktErlaubt: true });
-    expect(m.replyTo).toBe("a@b.de");
-    expect(m.html).toContain("JA");
-    const blocked = buildInternalEmail({ email: "a@b.de", answers, kontaktErlaubt: false });
-    expect(blocked.html).toContain("nicht anschreiben");
-  });
-  it("escapes the lead address in HTML", () => {
-    const m = buildInternalEmail({ email: '<x>@b.de', answers, kontaktErlaubt: false });
-    expect(m.html).not.toContain("<x>@b.de");
-  });
-  it("names the letter batch as Quelle when the visitor came via ?src=", () => {
-    const m = buildInternalEmail({ email: "a@b.de", answers, kontaktErlaubt: true, source: "brief-handwerk" });
-    expect(m.subject).toContain("brief-handwerk");
-    expect(m.text).toContain("Quelle: brief-handwerk");
-    expect(m.html).toContain("brief-handwerk");
-  });
-  it("labels a plain visit as Website", () => {
-    const m = buildInternalEmail({ email: "a@b.de", answers, kontaktErlaubt: true });
-    expect(m.text).toContain("Quelle: Website");
-    expect(m.subject).not.toContain("Website");
-  });
-});
-
-describe("evaluateSubmission", () => {
-  const fields = (over: Partial<ProzessCheckFields> = {}): ProzessCheckFields => ({
-    email: "a@b.de",
-    honeypot: "",
-    renderedAt: 0,
-    answers,
-    kontaktErlaubt: false,
-    ...over,
-  });
-
-  it("drops a honeypot hit", () => {
-    expect(evaluateSubmission(fields({ honeypot: "bot" }), 10_000).action).toBe("drop");
-  });
-  it("rejects a too-fast submit", () => {
-    expect(evaluateSubmission(fields({ renderedAt: 9_999 }), 10_000).action).toBe("reject");
-  });
-  it("invalidates a bad email", () => {
-    expect(evaluateSubmission(fields({ email: "nope" }), 10_000).action).toBe("invalid");
-  });
-  it("sends both mails on a clean submission", () => {
-    const d = evaluateSubmission(fields(), 10_000, "https://cal.eu/x");
-    expect(d.action).toBe("send");
-    if (d.action === "send") {
-      expect(d.leadEmail.to).toBe("a@b.de");
-      expect(d.internalEmail.replyTo).toBe("a@b.de");
-    }
-  });
-});
-
-// Ajdin 2026-11-12: the Fahrplan is always part of the free path, never conditional.
-describe("Fahrplan promise in the result mail", () => {
-  it("promises the Fahrplan without a condition, in html and text", () => {
-    const m = buildSummaryEmail({ email: "a@b.de", answers });
-    const line = "Lass uns 30 Minuten drüber sprechen. Danach bekommst du einen Fahrplan von mir, der dir gehört.";
-    expect(m.html).toContain(line);
-    expect(m.text).toContain(line);
-    expect(m.html + m.text).not.toMatch(/Lohnt sich etwas|Wenn sich etwas lohnt|wenn es sich lohnt/i);
   });
 });

@@ -389,13 +389,13 @@ export const RESULT_UI = {
   profileLabel: "Am meisten kostet dich",
   nervtPrefix: "Du sagst, am meisten nervt dich: ",
   reliefTitle: "Das muss nicht so bleiben.",
-  // Result bridge to the call (shortened 2026-09-26). The Fahrplan is always part
-  // of the free path since Ajdin 2026-11-12, no condition.
-  schedulerPrompt:
-    "Jetzt weißt du, wo du Zeit verlierst. Im Gespräch findest du heraus, wie du sie zurückbekommst. Danach zeigt dir dein Fahrplan den Weg. Er ist kostenlos und gehört dir.",
-  schedulerFallbackHint: "Schreib mir so lange einfach über das Kontaktformular.",
-  emailLabel: "Ergebnis lieber per Mail?",
-  emailIntro: "Ich schick dir deine Auswertung zu, dann hast du sie in Ruhe.",
+  // The form is the primary CTA (spec §5); Cal.com is the secondary link. The
+  // Fahrplan is always part of the free path since Ajdin 2026-11-12, no condition.
+  // COPY: Ajdin approves (formTitle, calSecondary, success)
+  formTitle: "Lass dir deinen Vorab-Fahrplan als PDF schicken. Darin steht, wo ich bei dir anfangen würde.",
+  calSecondary: "Lieber gleich einen Termin?",
+  // Plan 1 sends the fallback PDF right away; spec §6 wording („Ich recherchiere …“) waits for Plan 2.
+  success: "Danke. Dein Vorab-Fahrplan ist unterwegs.",
   exitLead: "Schau dich in Ruhe um. Wenn dich eine Aufgabe doch täglich ausbremst, bin ich da.",
   exitNewsletterPrefix: "Bis dahin: ",
   exitNewsletterLabel: "„Die Quelle“",

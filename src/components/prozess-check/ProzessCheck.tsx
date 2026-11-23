@@ -22,10 +22,10 @@ import { Result } from "./Result";
 type PartialAnswers = Partial<ProzessCheckAnswers>;
 
 export function ProzessCheck({
-  calLink,
+  calUrl,
   source,
 }: {
-  calLink: string | undefined;
+  calUrl: string | undefined;
   /** Attribution slug from `?src=` (e.g. `brief-handwerk`), already normalized. */
   source?: string;
 }) {
@@ -67,7 +67,7 @@ export function ProzessCheck({
       arbeitsort: answers.arbeitsort ?? "buero",
       ...(answers.website ? { website: answers.website } : {}),
     };
-    return <Result answers={final} copy={resultCopy(final)} calLink={calLink} source={source} />;
+    return <Result answers={final} copy={resultCopy(final)} calUrl={calUrl} source={source} />;
   }
 
   const step = steps[index];

@@ -1,17 +1,16 @@
 // The two mails of the /prozess-check v2 flow, in the house mail style of
 // buildSummaryEmail / newsletter-confirm: the visitor mail that carries the
 // Vorab-Fahrplan PDF and the internal lead mail #1 (spec §6, §10).
+import { escapeHtml } from "@/lib/email/escapeHtml";
 import { signaturHtml, signaturText } from "@/lib/email/signatur";
 import { sourceLabel } from "@/lib/source";
 import { AREA_LABEL, STEPS, hoursLabel, rankAreas, totalHours, type ParsedAnswers, type StepId } from "@/lib/prozessCheck";
 import { CONSENT_TEXT, CONSENT_VERSION } from "./blocks";
 import type { VorabFahrplan } from "./content";
 
-// Style constants copied from prozessCheckEmail.ts (Task 8 deletes that file's mail code).
+// Style constants of the former prozessCheckEmail.ts summary mail.
 const BODY_STYLE = "margin:0;background:#f4efe6;padding:24px;font-family:Arial,Helvetica,sans-serif;color:#14181b";
 const SERIF = "font-family:Georgia,'Times New Roman',serif";
-// escapeHtml in prozessCheckEmail.ts is private and that file stays untouched (Task 8 deletes it).
-const escapeHtml = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 const CELL = "padding:7px 8px;border-bottom:1px solid #e3dccc;vertical-align:top";
 
 // COPY: Ajdin approves before go-live
@@ -119,6 +118,8 @@ export function buildLeadMail(x: {
       : x.status === "fallback"
         ? `Fallback${x.grund ? `, weil ${x.grund}` : ""}`
         : `Vorab-Fahrplan nicht versendet${x.grund ? `, Grund: ${x.grund}` : ""}`;
+  // Ajdin has to send the PDF by hand then (attached when it rendered), so this must be unmissable.
+  const banner = x.status === "nicht-versendet" ? `${statusLine}. Schick ihn von Hand.` : "";
   const areas = rankAreas(a).map((id) => `${AREA_LABEL[id]}: ${a.stunden[id] || 0} Std.`);
   const kanaele = a.kanaele.map((k) => optLabel("aufgabe", k)).join(", ") || "-";
   const programme = a.programme.join(", ") || "-";
@@ -157,6 +158,7 @@ export function buildLeadMail(x: {
 <html lang="de">
   <body style="${BODY_STYLE}">
     <div style="max-width:520px;margin:0 auto">
+      ${banner ? `<p style="background:#fbf0d9;border-left:4px solid #d4a24c;padding:12px 14px;margin:0 0 18px;font-size:14.5px;line-height:1.5"><strong>${escapeHtml(banner)}</strong></p>` : ""}
       <table role="presentation" style="width:100%;border-collapse:collapse;font-size:13.5px">
         ${rows.map(tr).join("\n        ")}
       </table>
@@ -165,10 +167,13 @@ export function buildLeadMail(x: {
   </body>
 </html>`;
 
-  const text = rows.map(([k, v]) => `${k}: ${v.includes("\n") ? `\n${v}` : v}`).join("\n");
+  const text = [
+    ...(banner ? [banner, ""] : []),
+    ...rows.map(([k, v]) => `${k}: ${v.includes("\n") ? `\n${v}` : v}`),
+  ].join("\n");
 
   return {
-    subject: `Neuer Lead: ${c.firma.replace(/\s+/g, " ")} · ${AREA_LABEL[a.nervt]}`,
+    subject: `${banner ? "[nicht versendet] " : ""}Neuer Lead: ${c.firma.replace(/\s+/g, " ")} · ${AREA_LABEL[a.nervt]}`,
     html,
     text,
     replyTo: c.email,

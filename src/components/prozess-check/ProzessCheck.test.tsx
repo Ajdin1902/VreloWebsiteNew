@@ -3,10 +3,8 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { ProzessCheck } from "./ProzessCheck";
 import { AREA_LABEL, QUESTION_COUNT } from "@/lib/prozessCheck";
 
-// The Cal embed is heavy and network-y; stub it so the wizard test stays a unit.
-vi.mock("@/components/kontakt/SchedulerEmbed", () => ({
-  SchedulerEmbed: () => <div data-testid="scheduler" />,
-}));
+// The result form posts to a server action; stub it so the wizard test stays a unit.
+vi.mock("@/app/prozess-check/actions", () => ({ submitVorabFahrplan: vi.fn() }));
 
 const click = (name: string | RegExp, role = "button") => fireEvent.click(screen.getByRole(role, { name }));
 const pick = (...ids: (keyof typeof AREA_LABEL)[]) => ids.forEach((id) => click(AREA_LABEL[id], "checkbox"));
@@ -35,14 +33,14 @@ function finishFromAufgabe() {
 
 describe("ProzessCheck wizard", () => {
   it("starts on the intro and its button opens question 1", () => {
-    render(<ProzessCheck calLink={undefined} />);
+    render(<ProzessCheck calUrl={undefined} />);
     expect(screen.getByText("Dein Vorab-Fahrplan in 5 Minuten")).toBeInTheDocument();
     click("Los geht's");
     expect(screen.getByText("Wo möchtest du Hilfe?")).toBeInTheDocument();
   });
 
   it("moves focus into the new step after Los geht's and after Weiter", () => {
-    render(<ProzessCheck calLink={undefined} />);
+    render(<ProzessCheck calUrl={undefined} />);
     expect(document.activeElement).toBe(document.body);
     click("Los geht's");
     expect(document.activeElement).not.toBe(document.body);
@@ -54,7 +52,7 @@ describe("ProzessCheck wizard", () => {
   });
 
   it("disables Weiter until an area is picked", () => {
-    render(<ProzessCheck calLink={undefined} />);
+    render(<ProzessCheck calUrl={undefined} />);
     click("Los geht's");
     expect(screen.getByRole("button", { name: "Weiter" })).toBeDisabled();
     pick("anfragen");
@@ -62,19 +60,19 @@ describe("ProzessCheck wizard", () => {
   });
 
   it("asks hours only for picked areas", () => {
-    render(<ProzessCheck calLink={undefined} />);
+    render(<ProzessCheck calUrl={undefined} />);
     startAndPick("anfragen", "rechnungen");
     expect(screen.getAllByRole("slider")).toHaveLength(2);
   });
 
   it("progress counts the conditional step", () => {
-    render(<ProzessCheck calLink={undefined} />);
+    render(<ProzessCheck calUrl={undefined} />);
     startAndPick("anfragen");
     expect(screen.getByRole("status")).toHaveTextContent(`Frage 2 von ${QUESTION_COUNT - 1}`);
   });
 
   it("dropping an area drops its hours and nervt", () => {
-    render(<ProzessCheck calLink={undefined} />);
+    render(<ProzessCheck calUrl={undefined} />);
     startAndPick("anfragen", "rechnungen");
     fireEvent.change(screen.getByLabelText(AREA_LABEL.anfragen), { target: { value: "4" } });
     fireEvent.change(screen.getByLabelText(AREA_LABEL.rechnungen), { target: { value: "6" } });
@@ -95,7 +93,7 @@ describe("ProzessCheck wizard", () => {
   });
 
   it("asks nervt again when it was dropped and two areas remain", () => {
-    render(<ProzessCheck calLink={undefined} />);
+    render(<ProzessCheck calUrl={undefined} />);
     startAndPick("anfragen", "rechnungen");
     click("Weiter");
     click(AREA_LABEL.rechnungen);
@@ -109,7 +107,7 @@ describe("ProzessCheck wizard", () => {
   });
 
   it("optional steps can be skipped", () => {
-    render(<ProzessCheck calLink={undefined} />);
+    render(<ProzessCheck calUrl={undefined} />);
     startAndPick("anfragen");
     click("Weiter"); // hours
     click("Mail", "checkbox");
@@ -128,13 +126,21 @@ describe("ProzessCheck wizard", () => {
     expect(screen.getByRole("button", { name: "Überspringen" })).toBeInTheDocument();
   });
 
+  it("moves focus to the result heading after the last step", () => {
+    render(<ProzessCheck calUrl={undefined} />);
+    startAndPick("anfragen");
+    fireEvent.change(screen.getByLabelText(AREA_LABEL.anfragen), { target: { value: "4" } });
+    click("Weiter");
+    finishFromAufgabe();
+    expect(document.activeElement).toBe(screen.getByRole("heading", { name: "Dein Ergebnis" }));
+  });
+
   it("one area at zero hours ends on the honest exit without a form", () => {
-    render(<ProzessCheck calLink={undefined} />);
+    render(<ProzessCheck calUrl={undefined} />);
     startAndPick("anfragen");
     click("Weiter"); // hours stay 0
     finishFromAufgabe();
     expect(screen.getByText(/gerade noch nicht nötig/i)).toBeInTheDocument();
-    expect(screen.queryByTestId("scheduler")).not.toBeInTheDocument();
-    expect(screen.queryByRole("textbox", { name: /mail/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
   });
 });

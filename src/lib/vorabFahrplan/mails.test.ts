@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { ParsedAnswers } from "@/lib/prozessCheck";
-import { AREA_IDEE, CONSENT_TEXT, CONSENT_VERSION, FORM_UI } from "./blocks";
+import { AREA_IDEE, CAP_GRUND, CONSENT_TEXT, CONSENT_VERSION, FORM_ERRORS, FORM_FIELDS, FORM_UI, PDF_FEHLER_GRUND } from "./blocks";
 import { buildLeadMail, buildVisitorMail, MAIL_UI } from "./mails";
 import type { VorabFahrplan } from "./content";
 
@@ -114,13 +114,25 @@ describe("buildLeadMail", () => {
       expect(part).toContain("Limit pro Adresse");
     }
   });
+  it("makes „nicht versendet“ unmissable: subject prefix and a bold banner above the table", () => {
+    const m = lead({ status: "nicht-versendet", grund: "Limit pro Adresse" });
+    expect(m.subject).toBe("[nicht versendet] Neuer Lead: Muster GmbH · Anfragen beantworten und Termine ausmachen");
+    const banner = m.html.indexOf("<strong");
+    expect(banner).toBeGreaterThan(-1);
+    expect(banner).toBeLessThan(m.html.indexOf("<table"));
+    expect(m.html.slice(banner, m.html.indexOf("<table"))).toContain("Limit pro Adresse");
+    expect(m.text.split(/\r?\n/)[0]).toContain("nicht versendet");
+    // Other statuses keep the plain subject and no banner.
+    expect(lead().subject).toMatch(/^Neuer Lead/);
+    expect(lead().html).not.toContain("<strong");
+  });
   it("names the fallback reason", () => {
     expect(lead({ status: "fallback", grund: "n8n Timeout" }).text).toContain("Fallback, weil n8n Timeout");
   });
 });
 
 describe("copy guards", () => {
-  const strings = [...Object.values(MAIL_UI), ...Object.values(FORM_UI), CONSENT_TEXT];
+  const strings = [...Object.values(MAIL_UI), ...Object.values(FORM_UI), ...Object.values(FORM_FIELDS), ...Object.values(FORM_ERRORS), ...Object.values(CAP_GRUND), PDF_FEHLER_GRUND, CONSENT_TEXT];
   it("fixed strings follow the German punctuation rules", () => {
     for (const s of strings) {
       expect(s).not.toMatch(/["–—€]/);

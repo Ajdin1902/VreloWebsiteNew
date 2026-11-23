@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import { PageHero } from "@/components/PageHero";
 import { ProzessCheck } from "@/components/prozess-check/ProzessCheck";
 import { ProzessCheckFromUrl } from "@/components/prozess-check/ProzessCheckFromUrl";
-import { calLink } from "@/lib/contact";
+import { calBookingUrl } from "@/lib/contact";
 
 export const metadata: Metadata = {
   title: "Prozess-Check",
@@ -31,8 +31,8 @@ export default function ProzessCheckPage() {
         <div className="mx-auto max-w-2xl px-6 pb-24 pt-10 md:pb-32 md:pt-14">
           {/* ?src=brief-<segment> (letter batches via /brief) is read on the
               client; the fallback renders the same questionnaire without it. */}
-          <Suspense fallback={<ProzessCheck calLink={calLink()} />}>
-            <ProzessCheckFromUrl calLink={calLink()} />
+          <Suspense fallback={<ProzessCheck calUrl={calBookingUrl()} />}>
+            <ProzessCheckFromUrl calUrl={calBookingUrl()} />
           </Suspense>
         </div>
       </div>

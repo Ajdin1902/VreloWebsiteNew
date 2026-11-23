@@ -1,27 +1,34 @@
 // src/components/prozess-check/Result.tsx
 "use client";
 
+import { useEffect, useRef } from "react";
 import Link from "next/link";
-import { SchedulerEmbed } from "@/components/kontakt/SchedulerEmbed";
 import { RESULT_UI, hoursLabel, type ResultCopy, type ProzessCheckAnswers } from "@/lib/prozessCheck";
-import { ResultEmailForm } from "./ResultEmailForm";
+import { VorabFahrplanForm } from "./VorabFahrplanForm";
 
 export function Result({
   answers,
   copy,
-  calLink,
+  calUrl,
   source,
 }: {
   answers: ProzessCheckAnswers;
   copy: ResultCopy;
-  calLink: string | undefined;
-  /** Attribution slug (`?src=`); travels into the booking notes and the result e-mail. */
+  /** Full Cal.com booking URL (calBookingUrl()); no link without it. */
+  calUrl: string | undefined;
+  /** Attribution slug (`?src=`); travels into the lead mail. */
   source?: string;
 }) {
+  // The wizard step that held focus unmounts: move focus to the result heading.
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    headingRef.current?.focus();
+  }, []);
+
   return (
     <div className="space-y-8">
       <div className="card-depth rounded-2xl border border-faden bg-lesepapier p-6 md:p-10">
-        <h2 className="text-sm font-medium uppercase tracking-wider text-stumm">{RESULT_UI.resultLabel}</h2>
+        <h2 ref={headingRef} tabIndex={-1} className="text-sm font-medium uppercase tracking-wider text-stumm outline-none">{RESULT_UI.resultLabel}</h2>
         {copy.fits ? (
           <>
             {/* Pain first, at full size: the visitor's own number, then the same
@@ -65,21 +72,15 @@ export function Result({
       {copy.fits ? (
         <div className="rounded-2xl bg-tiefes-wasser p-8 md:p-10">
           <p className="text-balance font-serif text-2xl text-papier md:text-3xl">{RESULT_UI.reliefTitle}</p>
-          <p className="mt-3 text-pretty text-gletscher">{RESULT_UI.schedulerPrompt}</p>
-          <div className="mt-6">
-            <SchedulerEmbed
-              calLink={calLink}
-              prompt=""
-              fallbackHint={RESULT_UI.schedulerFallbackHint}
-              fallbackHref="/kontakt"
-              notes={source ? `Quelle: ${source}` : undefined}
-            />
-          </div>
-          <div className="mt-8 border-t border-papier/20 pt-6">
-            <p className="text-sm font-medium text-gletscher">{RESULT_UI.emailLabel}</p>
-            <p className="mt-1 text-sm text-gletscher/90">{RESULT_UI.emailIntro}</p>
-            <ResultEmailForm answers={answers} source={source} />
-          </div>
+          <p className="mt-3 text-pretty text-gletscher">{RESULT_UI.formTitle}</p>
+          <VorabFahrplanForm answers={answers} source={source} />
+          {calUrl ? (
+            <p className="mt-8 border-t border-papier/20 pt-6 text-sm">
+              <a href={calUrl} className="text-gletscher underline underline-offset-4 hover:text-papier">
+                {RESULT_UI.calSecondary}
+              </a>
+            </p>
+          ) : null}
         </div>
       ) : (
         <div className="card-depth rounded-2xl border border-faden bg-lesepapier p-6 md:p-10">

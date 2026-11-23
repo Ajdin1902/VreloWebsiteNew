@@ -159,9 +159,8 @@ describe("hoursLabel", () => {
 // Ajdin 2026-11-12: the Fahrplan is always part of the free path, never conditional.
 describe("Fahrplan promise", () => {
   it("promises the Fahrplan without a condition", () => {
-    expect(RESULT_UI.schedulerPrompt).toBe(
-      "Jetzt weißt du, wo du Zeit verlierst. Im Gespräch findest du heraus, wie du sie zurückbekommst. Danach zeigt dir dein Fahrplan den Weg. Er ist kostenlos und gehört dir.",
-    );
+    expect(RESULT_UI.success).toBe("Danke. Dein Vorab-Fahrplan ist unterwegs.");
+    expect(RESULT_UI.calSecondary).toBe("Lieber gleich einen Termin?");
     expect(JSON.stringify(RESULT_UI)).not.toMatch(/Lohnt sich etwas|Wenn sich etwas lohnt|wenn es sich lohnt/i);
   });
 });

@@ -241,3 +241,38 @@ export const FORM_UI = {
 };
 export const CONSENT_VERSION = "pc-call-2026-11-23";
 export const CONSENT_TEXT = `${FORM_UI.consentAnruf} ${FORM_UI.consentKi} ${FORM_UI.checkbox}`;
+
+// Form chrome around the consent block. Not part of the consent proof.
+// COPY: Ajdin approves
+export const FORM_FIELDS = {
+  name: "Name",
+  firma: "Firma",
+  email: "E-Mail",
+  telefon: "Telefon",
+  submit: "Vorab-Fahrplan schicken",
+  pending: "Wird gesendet …",
+  datenschutzPrefix: "Was mit deinen Angaben passiert, steht in der ",
+  datenschutzLabel: "Datenschutzerklärung",
+  datenschutzSuffix: ".",
+};
+
+// Errors the form shows (the e-mail error comes from validateEmail).
+// COPY: Ajdin approves
+export const FORM_ERRORS = {
+  name: "Bitte gib deinen Namen an.",
+  firma: "Bitte gib deine Firma an.",
+  telefon: "Bitte gib eine Telefonnummer an, unter der ich dich erreiche.",
+  anruf: "Bitte setz das Häkchen, damit ich dich anrufen darf.",
+  tooFast: "Bitte versuch es gleich noch einmal.",
+  notConfigured: "Der Versand ist gerade nicht eingerichtet. Schreib mir bitte direkt.",
+  generic: "Da ist etwas schiefgelaufen. Schreib mir gern direkt.",
+};
+
+// Why the visitor mail did not go out, for the internal lead mail (Ajdin sends by hand then).
+// COPY: Ajdin approves
+export const CAP_GRUND: Record<"adresse" | "ip" | "tag", string> = {
+  adresse: "Diese Adresse hat in den letzten 30 Tagen schon einen bekommen",
+  ip: "Mehr als 3 von dieser Verbindung heute",
+  tag: "Tageslimit von 50 erreicht",
+};
+export const PDF_FEHLER_GRUND = "Das PDF ließ sich nicht erstellen";
