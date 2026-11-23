@@ -307,6 +307,12 @@ export function hoursLabel(n: number): string {
   return n === 1 ? "1 Stunde" : `${n} Stunden`;
 }
 
+// 46 work weeks, 8-hour days: a deliberately plain extrapolation the basis
+// line names out loud, so the bigger number stays the visitor's own arithmetic.
+export function jahresArbeitstage(hoursPerWeek: number): number {
+  return Math.round((hoursPerWeek * 46) / 8);
+}
+
 export type ResultCopy = {
   totalHours: number;
   /** false only when the visitor reports zero hours everywhere. */
@@ -356,9 +362,7 @@ export function resultCopy(a: ProzessCheckAnswers): ResultCopy {
     sentence: AREA_SENTENCE[id],
   }));
 
-  // 46 work weeks, 8-hour days: a deliberately plain extrapolation the basis
-  // line names out loud, so the bigger number stays the visitor's own arithmetic.
-  const jahresTage = Math.round((total * 46) / 8);
+  const jahresTage = jahresArbeitstage(total);
 
   return {
     totalHours: total,

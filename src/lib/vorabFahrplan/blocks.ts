@@ -1,0 +1,205 @@
+// Fixed copy for the fallback Vorab-Fahrplan (spec §7.3): no research, no KI.
+// Zuerst uses `lang`, with the channel variant swapped in as its first sentence;
+// Danach and Später use `kurz`. Spec: docs/superpowers/specs/2026-11-23-prozess-check-v2-vorab-fahrplan-design.md
+// COPY: Ajdin approves before go-live
+import type { AreaId, Kanal, Menge, Wer } from "@/lib/prozessCheck";
+
+// `lang`: the first sentence ends at the first ". " (fallback.ts swaps it), so no
+// abbreviations with a dot in the first sentence.
+export const AREA_IDEE: Record<AreaId, { titel: string; lang: string; kurz: string }> = {
+  anfragen: {
+    titel: "Anfragen beantworten",
+    lang: "Jede neue Anfrage bekommt in wenigen Minuten eine Antwort mit zwei Terminvorschlägen. Morgens siehst du nur noch die Termine, die deine Kunden bestätigt haben.",
+    kurz: "Neue Anfragen bekommen in wenigen Minuten eine Antwort mit Terminvorschlägen, auch wenn du gerade beim Kunden bist.",
+  },
+  angebote: {
+    titel: "Angebote schreiben und nachfassen",
+    lang: "Du bekommst aus deinen Notizen einen Angebotsentwurf mit deinen Positionen und Preisen. Du prüfst ihn und schickst ihn ab. Antwortet der Kunde eine Woche lang nicht, bekommt er eine freundliche Nachfrage.",
+    kurz: "Du bekommst aus deinen Notizen einen Angebotsentwurf. Antwortet der Kunde nicht, bekommt er nach einer Woche eine Nachfrage.",
+  },
+  auftraege: {
+    titel: "Aufträge weitergeben",
+    lang: "Aus einem neuen Auftrag wird eine fertige Arbeitsinfo mit Adresse und Aufgabe. Die richtige Person hat sie auf dem Handy, ohne dass du etwas ausdruckst oder abtippst.",
+    kurz: "Neue Aufträge kommen als fertige Arbeitsinfo bei der richtigen Person an, ohne Ausdrucken und ohne Abtippen.",
+  },
+  rechnungen: {
+    titel: "Belege und Rechnungen ablegen",
+    lang: "Eingehende Rechnungen und Belege landen gelesen und zugeordnet im richtigen Ordner. Am Monatsende liegt der Stapel für deinen Steuerberater schon fertig da.",
+    kurz: "Belege landen gelesen und zugeordnet im richtigen Ordner. Du tippst nichts mehr ab.",
+  },
+  postfach: {
+    titel: "Das Postfach vorsortieren",
+    lang: "Neue Mails bekommen ein Etikett wie Anfrage, Rechnung oder Werbung. Zu den Mails, die Arbeit machen, liegt morgens ein Antwortentwurf bereit, den du prüfst und abschickst.",
+    kurz: "Neue Mails kommen sortiert an. Zu den wichtigen liegt ein Antwortentwurf bereit.",
+  },
+  daten: {
+    titel: "Daten nicht mehr abtippen",
+    lang: "Die Angaben aus einer neuen Nachricht stehen von selbst in deiner Liste oder deinem Programm, Feld für Feld. Du schaust nur noch hin, wenn eine Angabe fehlt.",
+    kurz: "Angaben aus Mails und Formularen stehen von selbst im richtigen Programm. Du tippst sie nicht mehr ab.",
+  },
+  erinnern: {
+    titel: "Kunden erinnern",
+    lang: "Deine Kunden bekommen zur richtigen Zeit eine Erinnerung an Termine und offene Rechnungen. Morgens siehst du, wer eine Erinnerung bekommen hat und wer geantwortet hat.",
+    kurz: "Deine Kunden bekommen Erinnerungen an Termine und offene Rechnungen zur richtigen Zeit, ohne dass du daran denkst.",
+  },
+  orga: {
+    titel: "Interne Abläufe ordnen",
+    lang: "Was heute auf Zetteln und per Zuruf läuft, steht an einem Ort: wer was bis wann erledigt. Wiederkehrende Aufgaben legen sich jede Woche von selbst an, du musst nicht mehr daran denken.",
+    kurz: "Aufgaben stehen an einem Ort statt auf Zetteln. Wiederkehrende legen sich jede Woche von selbst an.",
+  },
+};
+
+// Replaces the first sentence of AREA_IDEE[area].lang for the visitor's channel.
+export const KANAL_VARIANTE: Partial<Record<AreaId, Partial<Record<Kanal, string>>>> = {
+  anfragen: {
+    mail: "Jede Anfrage per Mail bekommt in wenigen Minuten eine Antwort mit zwei Terminvorschlägen.",
+    formular: "Wer dein Formular ausfüllt, bekommt in wenigen Minuten eine Antwort mit zwei Terminvorschlägen.",
+    whatsapp: "Jede Anfrage per WhatsApp bekommt in wenigen Minuten eine Antwort mit zwei Terminvorschlägen.",
+    telefon: "Wer anruft und dich nicht erreicht, bekommt eine Nachricht mit einem Link und wählt dort selbst einen Termin.",
+  },
+  angebote: {
+    mail: "Zu jeder Anfrage per Mail liegt ein Angebotsentwurf mit deinen Positionen und Preisen für dich bereit.",
+    formular: "Aus den Angaben im Formular bekommst du einen Angebotsentwurf mit deinen Positionen und Preisen.",
+    telefon: "Aus deinen Notizen vom Telefonat bekommst du einen Angebotsentwurf mit deinen Positionen und Preisen.",
+    papier: "Du fotografierst deinen Notizzettel und bekommst daraus einen Angebotsentwurf mit deinen Positionen und Preisen.",
+  },
+  auftraege: {
+    mail: "Aus einem Auftrag per Mail wird eine fertige Arbeitsinfo mit Adresse und Aufgabe.",
+    whatsapp: "Aus einem Auftrag per WhatsApp wird eine fertige Arbeitsinfo mit Adresse und Aufgabe.",
+    telefon: "Aus deiner Notiz vom Telefonat wird eine fertige Arbeitsinfo mit Adresse und Aufgabe.",
+  },
+  rechnungen: {
+    mail: "Rechnungen und Belege, die per Mail kommen, landen gelesen und zugeordnet im richtigen Ordner.",
+    papier: "Du fotografierst einen Beleg mit dem Handy, er landet gelesen und zugeordnet im richtigen Ordner.",
+  },
+  daten: {
+    mail: "Die Angaben aus einer Mail stehen von selbst in deiner Liste oder deinem Programm, Feld für Feld.",
+    formular: "Was jemand ins Formular schreibt, steht von selbst in deiner Liste oder deinem Programm, Feld für Feld.",
+    papier: "Du fotografierst den Zettel und die Angaben stehen in deiner Liste oder deinem Programm, Feld für Feld.",
+  },
+  erinnern: {
+    mail: "Deine Kunden bekommen zur richtigen Zeit eine Mail, die sie an Termine und offene Rechnungen erinnert.",
+    whatsapp: "Deine Kunden bekommen zur richtigen Zeit eine WhatsApp-Nachricht, die sie an Termine und offene Rechnungen erinnert.",
+  },
+  orga: {
+    papier: "Was heute auf Zetteln steht, findest du an einem Ort: wer was bis wann erledigt.",
+    whatsapp: "Was heute in WhatsApp-Gruppen untergeht, findest du an einem Ort: wer was bis wann erledigt.",
+  },
+};
+
+// „Selbst ausprobieren“ under Zuerst. Each `quelle` is the vendor's own help page,
+// opened and checked on 2026-11-23. `programm` is the chip key (Lexoffice is sold
+// as Lexware Office today). Order decides when several tips match.
+export const TIPPS: { programm: string; bereich: AreaId; text: string; quelle: string }[] = [
+  {
+    programm: "Outlook",
+    bereich: "anfragen",
+    text: "Leg in Outlook eine Regel an, die alle Mails mit „Anfrage“ im Betreff in einen eigenen Ordner verschiebt. Dann siehst du neue Anfragen auf einen Blick.",
+    quelle: "https://support.microsoft.com/de-de/office/verwalten-von-e-mail-nachrichten-mithilfe-von-regeln-in-outlook-c24f5dea-9465-4df4-ad17-a50704d66c59",
+  },
+  {
+    programm: "Outlook",
+    bereich: "postfach",
+    text: "Leg in Outlook Regeln an, die Mails von bestimmten Absendern in eigene Ordner verschieben, etwa Newsletter oder Lieferanten. Im Posteingang bleibt, was Arbeit macht.",
+    quelle: "https://support.microsoft.com/de-de/office/verwalten-von-e-mail-nachrichten-mithilfe-von-regeln-in-outlook-c24f5dea-9465-4df4-ad17-a50704d66c59",
+  },
+  {
+    programm: "Outlook",
+    bereich: "erinnern",
+    text: "Kennzeichne eine Mail in Outlook zur Nachverfolgung und setz eine Erinnerung. Am gewählten Tag meldet sich Outlook und du fasst beim Kunden nach.",
+    quelle: "https://support.microsoft.com/de-de/office/d6e63166-c37a-4b74-9d28-888ab89598a8",
+  },
+  {
+    programm: "Gmail",
+    bereich: "anfragen",
+    text: "Speichere deine Standardantwort auf Anfragen als Vorlage in Gmail. Beim nächsten Mal fügst du sie mit wenigen Klicks ein und ergänzt nur den Namen.",
+    quelle: "https://support.google.com/mail/answer/14864208?hl=de",
+  },
+  {
+    programm: "Gmail",
+    bereich: "postfach",
+    text: "Leg in Gmail Filter an, die Mails von bestimmten Absendern mit einem Label versehen oder archivieren. Im Posteingang bleibt, was Arbeit macht.",
+    quelle: "https://support.google.com/mail/answer/6579?hl=de",
+  },
+  {
+    programm: "Gmail",
+    bereich: "erinnern",
+    text: "Schreib die Erinnerung an den Kunden gleich jetzt und plane in Gmail den Versand für den passenden Tag. Gmail schickt sie dann ab, ohne dass du daran denkst.",
+    quelle: "https://support.google.com/mail/answer/9214606?hl=de&co=GENIE.Platform%3DDesktop",
+  },
+  {
+    programm: "Google Kalender",
+    bereich: "anfragen",
+    text: "Leg in Google Kalender einen Terminplan an. Den Link zur Buchungsseite schickst du mit, deine Kunden wählen dort selbst einen freien Termin.",
+    quelle: "https://support.google.com/calendar/answer/10729749?hl=de",
+  },
+  {
+    programm: "WhatsApp",
+    bereich: "anfragen",
+    text: "Leg in WhatsApp Business Schnellantworten für deine häufigsten Fragen an. Im Chat holst du sie über ein Kürzel hervor, statt jedes Mal neu zu tippen.",
+    quelle: "https://faq.whatsapp.com/1791149784551042/?locale=de_DE&cms_platform=android",
+  },
+  {
+    programm: "Word",
+    bereich: "angebote",
+    text: "Speichere Textblöcke, die in jedem Angebot stehen, in Word als Schnellbaustein. Beim nächsten Angebot fügst du sie mit wenigen Klicks ein.",
+    quelle: "https://support.microsoft.com/de-de/office/7a527697-058f-4967-b8f1-aae0774e4813",
+  },
+  {
+    programm: "Lexoffice",
+    bereich: "rechnungen",
+    text: "In Lexware Office machst du aus einem Angebot über „Weiterführen zur Rechnung“ die Rechnung. Die Positionen übernimmt Lexware Office, du tippst nichts doppelt.",
+    quelle: "https://help.lexware.de/de-form/articles/547986-rechnung-oder-teilrechnung-erstellen-schritt-fur-schritt",
+  },
+  {
+    programm: "Lexoffice",
+    bereich: "erinnern",
+    text: "Lexware Office zeigt dir überfällige Rechnungen in einer eigenen Ansicht. Von dort erstellst du über „Mahnen“ die Zahlungserinnerung.",
+    quelle: "https://help.lexware.de/de-form/articles/547985-zahlungserinnerungen-und-mahnungen-erstellen",
+  },
+  {
+    programm: "sevDesk",
+    bereich: "rechnungen",
+    text: "Leite Belege als Mail-Anhang an die Autobox-Adresse von sevDesk weiter. sevDesk erkennt sie und legt sie als Entwurf an, du tippst nichts ab.",
+    quelle: "https://intercom.help/sevdesk/de/articles/9167258-belege-erfassen",
+  },
+  {
+    programm: "DATEV",
+    bereich: "rechnungen",
+    text: "Mit der App DATEV Upload mobil fotografierst du Papierbelege und lädst sie nach DATEV Unternehmen online hoch. Der Belegstapel auf dem Schreibtisch fällt weg.",
+    quelle: "https://www.datev.de/web/de/shop/produkt-details/99881",
+  },
+  {
+    programm: "Excel",
+    bereich: "daten",
+    text: "Die Blitzvorschau in Excel erkennt ein Muster und füllt die Spalte für dich aus, etwa Vor- und Nachnamen getrennt. Tipp ein Beispiel ein und drück Strg+E.",
+    quelle: "https://support.microsoft.com/de-de/office/verwenden-der-blitzvorschau-in-excel-3f9bcf1e-db93-4890-94a0-1578341f73f7",
+  },
+  {
+    programm: "Notion",
+    bereich: "orga",
+    text: "Leg in einer Notion-Datenbank eine wiederkehrende Vorlage an. Notion erstellt dann jede Woche dieselbe Aufgabenliste, ohne dass jemand daran denkt.",
+    quelle: "https://www.notion.com/help/database-templates",
+  },
+];
+
+// Parts of „Deine nervigste Aufgabe heute“: kommt per Mail rein · 20 bis 50 pro Woche · macht das Büro
+export const KANAL_WEG: Record<Kanal, string> = {
+  mail: "per Mail",
+  formular: "über ein Formular",
+  whatsapp: "per WhatsApp",
+  telefon: "per Telefon",
+  portal: "über ein Portal",
+  papier: "auf Papier",
+};
+export const MENGE_ZEILE: Record<Menge, string> = {
+  bis5: "bis 5 pro Woche",
+  "5bis20": "5 bis 20 pro Woche",
+  "20bis50": "20 bis 50 pro Woche",
+  mehr: "mehr als 50 pro Woche",
+};
+export const WER_ZEILE: Record<Wer, string> = {
+  ich: "machst du selbst",
+  buero: "macht das Büro",
+  alle: "macht jeder ein bisschen",
+};
