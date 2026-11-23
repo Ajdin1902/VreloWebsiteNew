@@ -40,15 +40,20 @@ export function capText(s: string, max: number): string {
   return s.slice(0, max);
 }
 
+// An entry that is exactly one bare domain („monday.com“, „Outlook.com“) names a program, not a contact.
+const DOMAIN_NAME = /^(?!www\.)[\p{L}\d-]+(?:\.[\p{L}\d-]+)*\.[a-z]{2,}$/u;
+const isDomainName = (s: string) => DOMAIN_NAME.test(s.trim());
+
 export function parseProgramme(chips: string[], freeText: string): string[] {
   const names = [
     ...chips.filter((c) => PROGRAMM_CHIPS.includes(c)),
-    ...freeText.split("\n").map(stripContacts).join("\n").split(/[,;/\n]/), // strip before splitting on "/"
+    // strip before splitting on "/", so a URL path never becomes a name
+    ...freeText.split(/[,;\n]/).flatMap((p) => (isDomainName(p) ? [p] : stripContacts(p).split("/"))),
   ];
   const seen = new Set<string>();
   const out: string[] = [];
   for (const n of names) {
-    const name = stripContacts(n).trim().slice(0, 40);
+    const name = (isDomainName(n) ? n : stripContacts(n)).trim().slice(0, 40);
     const key = name.toLowerCase();
     if (!name || seen.has(key)) continue;
     seen.add(key);

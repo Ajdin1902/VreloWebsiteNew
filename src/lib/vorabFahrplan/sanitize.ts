@@ -15,7 +15,7 @@ const URL = /https?:\/\/|\bwww\./i;
 // „ggf.später“ passes because the TLD must end before a letter. „@“ catches mail addresses.
 const DOMAIN = /(?<![\p{L}\d-])[\p{L}\d-]+(?:\.[\p{L}\d-]+)*\.[a-z]{2,}(?![\p{L}\d-])|@/u;
 const PHONE = /\+?\d(?:[\s/().-]{0,3}\d){5,}/;
-const BANNED = /(?<![\p{L}\d-])(?:skalieren|game-changer|ki-magie|revolutionär\p{L}*)(?![\p{L}\d-])/iu;
+const BANNED = /(?<![\p{L}\d-])(?:skalier(?:en|t|te|ten|bar)|game-?changer\p{L}*|ki-magie|revolutionär\p{L}*)(?![\p{L}\d-])/iu;
 
 export type Forbidden = "price" | "percent" | "url" | "domain" | "contact" | "banned";
 
@@ -26,7 +26,7 @@ const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 export function findForbidden(s: string, { allowNames = [] }: { allowNames?: readonly string[] } = {}): Forbidden[] {
   let ohneNamen = s;
   for (const n of allowNames.filter((n) => n.includes("."))) {
-    ohneNamen = ohneNamen.replace(new RegExp(`(?<![\\p{L}\\d.-])${escape(n)}(?![\\p{L}\\d-]|\\.[\\p{L}\\d])`, "giu"), " ");
+    ohneNamen = ohneNamen.replace(new RegExp(`(?<![\\p{L}\\d.-])${escape(n)}(?![\\p{L}\\d-]|\\.[\\p{L}\\d]|\\/)`, "giu"), " ");
   }
   const out: Forbidden[] = [];
   if (PRICE_RES.some((re) => re.test(s))) out.push("price");
@@ -61,20 +61,30 @@ function cut(s: string, max: number): string {
   return (i > 0 ? s.slice(0, i) : s.slice(0, max)).replace(/[\s,;:]+$/, "");
 }
 
+// Any dash (U+2012 to U+2015, spaced or not) or a spaced hyphen.
+const D = String.raw`(?:\s*[\u2012-\u2015]\s*|\s+-\s+)`;
+const RANGE_ZAHL = new RegExp(String.raw`(\d\.?)${D}(?=\d)`, "g"); // 9–17, 1.–3.
+const RANGE_ABK = new RegExp(String.raw`(?<!\p{L})(\p{L}{1,3}\.)${D}(?=\p{L}{1,3}\.)`, "gu"); // Mo. – Fr.
+const SATZ_DASH = new RegExp(String.raw`([.!?])${D}`, "g");
+const DASH = new RegExp(D, "g");
+
 /** German punctuation, whitespace and the word-boundary cut. Never removes a word. */
 export function polish(s: string, max: number): string {
   const out = s
-    .replace(/(\d)\s*[–—]\s*(\d)/g, "$1 bis $2")
-    .replace(/(\d)\s+-\s+(\d)/g, "$1 bis $2")
-    .replace(/(\p{L}\.)[–—](\p{L})/gu, "$1 bis $2") // Mo.–Fr.
-    .replace(/\s*[–—]\s*|\s+-\s+/g, ", ")
+    .replace(RANGE_ZAHL, "$1 bis ")
+    .replace(RANGE_ABK, "$1 bis ")
+    .replace(SATZ_DASH, "$1 ")
+    .replace(DASH, ", ")
     .replace(/„([^"“„]*)"/g, "„$1“")
     .replace(/"([^"]*)"/g, "„$1“")
     .replace(/“([^“”„"]*)”/g, "„$1“")
     .replace(/["”]/g, " ")
+    .replace(/\s+/g, " ");
+  // Last, because removing a quote or a dash can put a comma right before „und“ or another mark.
+  return balanceQuotes(cut(balanceQuotes(out), max))
+    .replace(/([,:;])(?:\s*[,:;])+/g, "$1")
     .replace(/,\s*und\b/g, " und")
     .replace(/\s+/g, " ")
     .replace(/\s+([,.:;!?])/g, "$1")
     .replace(/^[\s,.:;]+|[\s,;:]+$/g, "");
-  return balanceQuotes(cut(balanceQuotes(out), max)).replace(/\s+/g, " ").trim();
 }

@@ -41,7 +41,8 @@ const sub = parseSubmission(
     menge: "5bis20",
     wer: "buero",
     programmeChips: ["Outlook"],
-    programmeText: "Lexoffice, crm.example.com",
+    programmeText: "Lexoffice, crm.example.com/login", // a bare domain would count as a program name
+
     arbeitstag: "Morgens Mails, ruf an: 0170 9876543",
     abende: "abundzu",
     versucht: "nichts",
