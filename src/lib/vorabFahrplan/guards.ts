@@ -6,7 +6,7 @@ const CONTACT_RES = [
   /https?:\/\/\S+/gi,
   /\bwww\.\S+/gi,
   /\b[\w-]+(?:\.[\w-]+)+\/\S*/g, // bare name.tld/path
-  /\+?\d(?:[\s/-]?\d){5,}/g, // phone-like run of >= 6 digits
+  /\(?\+?\d(?:[\s/().-]{0,3}\d){5,}/g, // phone-like run of >= 6 digits
 ];
 
 export function stripContacts(s: string): string {
@@ -39,7 +39,7 @@ export function capText(s: string, max: number): string {
 export function parseProgramme(chips: string[], freeText: string): string[] {
   const names = [
     ...chips.filter((c) => PROGRAMM_CHIPS.includes(c)),
-    ...freeText.split(/[,;/\n]/),
+    ...freeText.split("\n").map(stripContacts).join("\n").split(/[,;/\n]/), // strip before splitting on "/"
   ];
   const seen = new Set<string>();
   const out: string[] = [];

@@ -23,6 +23,15 @@ describe("guards", () => {
     expect(parseProgramme([], "Lexoffice, lexoffice")).toEqual(["Lexoffice"]);
     expect(parseProgramme(["nicht-in-liste"], "")).toEqual([]);
   });
+  it("stripContacts removes phones with mixed separators", () => {
+    for (const x of ["Tel. (0941) 123456", "+49 (941) 12-34 56", "0941 / 123456"]) {
+      expect(stripContacts(x)).not.toMatch(/\d/);
+    }
+  });
+  it("parseProgramme strips URLs and phones before splitting on /", () => {
+    const r = parseProgramme([], "https://x.de/a, mueller.de/kontakt, 0941/123456, Tel 0941 12 34 56");
+    for (const n of r) expect(n).not.toMatch(/\d{4,}|\.de|https/);
+  });
   it("normalizePhone", () => {
     expect(normalizePhone("+49 (941) 12-34 56")).toBe("+49941123456");
     expect(normalizePhone("123")).toBeNull();
