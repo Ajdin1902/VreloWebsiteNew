@@ -88,98 +88,106 @@ export const KANAL_VARIANTE: Partial<Record<AreaId, Partial<Record<Kanal, string
 };
 
 // „Selbst ausprobieren“ under Zuerst. Each `quelle` is the vendor's own help page,
-// opened and checked on 2026-11-23. `programm` is the chip key (Lexoffice is sold
+// opened and checked on `abgerufen`; the text names the edition or setup it needs. `programm` is the chip key (Lexoffice is sold
 // as Lexware Office today). Order decides when several tips match.
-export const TIPPS: { programm: string; bereich: AreaId; text: string; quelle: string }[] = [
+export const TIPPS: { programm: string; bereich: AreaId; text: string; quelle: string; abgerufen: string }[] = [
   {
     programm: "Outlook",
     bereich: "anfragen",
-    text: "Leg in Outlook eine Regel an, die alle Mails mit „Anfrage“ im Betreff in einen eigenen Ordner verschiebt. Dann siehst du neue Anfragen auf einen Blick.",
+    text: "Leg im klassischen Outlook eine Regel an, die Mails mit „Anfrage“ im Betreff in einen eigenen Ordner verschiebt. Dann siehst du neue Anfragen auf einen Blick.",
     quelle: "https://support.microsoft.com/de-de/office/verwalten-von-e-mail-nachrichten-mithilfe-von-regeln-in-outlook-c24f5dea-9465-4df4-ad17-a50704d66c59",
+    abgerufen: "23.11.2026",
   },
   {
     programm: "Outlook",
     bereich: "postfach",
-    text: "Leg in Outlook Regeln an, die Mails von bestimmten Absendern in eigene Ordner verschieben, etwa Newsletter oder Lieferanten. Im Posteingang bleibt, was Arbeit macht.",
+    text: "Leg im klassischen Outlook Regeln an, die Mails bestimmter Absender in eigene Ordner verschieben, etwa Newsletter. Im Posteingang bleibt, was Arbeit macht.",
     quelle: "https://support.microsoft.com/de-de/office/verwalten-von-e-mail-nachrichten-mithilfe-von-regeln-in-outlook-c24f5dea-9465-4df4-ad17-a50704d66c59",
-  },
-  {
-    programm: "Outlook",
-    bereich: "erinnern",
-    text: "Kennzeichne eine Mail in Outlook zur Nachverfolgung und setz eine Erinnerung. Am gewählten Tag meldet sich Outlook und du fasst beim Kunden nach.",
-    quelle: "https://support.microsoft.com/de-de/office/d6e63166-c37a-4b74-9d28-888ab89598a8",
+    abgerufen: "23.11.2026",
   },
   {
     programm: "Gmail",
     bereich: "anfragen",
-    text: "Speichere deine Standardantwort auf Anfragen als Vorlage in Gmail. Beim nächsten Mal fügst du sie mit wenigen Klicks ein und ergänzt nur den Namen.",
+    text: "Schalte in Gmail am Computer einmal die Vorlagen ein (Einstellungen, Erweitert). Dann speicherst du deine Antwort auf Anfragen als Vorlage und fügst sie mit wenigen Klicks ein.",
     quelle: "https://support.google.com/mail/answer/14864208?hl=de",
+    abgerufen: "23.11.2026",
   },
   {
     programm: "Gmail",
     bereich: "postfach",
-    text: "Leg in Gmail Filter an, die Mails von bestimmten Absendern mit einem Label versehen oder archivieren. Im Posteingang bleibt, was Arbeit macht.",
+    text: "Leg in Gmail am Computer Filter an, die Mails bestimmter Absender mit einem Label versehen oder archivieren. Im Posteingang bleibt, was Arbeit macht.",
     quelle: "https://support.google.com/mail/answer/6579?hl=de",
+    abgerufen: "23.11.2026",
   },
   {
     programm: "Gmail",
     bereich: "erinnern",
     text: "Schreib die Erinnerung an den Kunden gleich jetzt und plane in Gmail den Versand für den passenden Tag. Gmail schickt sie dann ab, ohne dass du daran denkst.",
     quelle: "https://support.google.com/mail/answer/9214606?hl=de&co=GENIE.Platform%3DDesktop",
+    abgerufen: "23.11.2026",
   },
   {
     programm: "Google Kalender",
     bereich: "anfragen",
-    text: "Leg in Google Kalender einen Terminplan an. Den Link zur Buchungsseite schickst du mit, deine Kunden wählen dort selbst einen freien Termin.",
+    text: "Leg in Google Kalender am Computer einen Terminplan an. Den Link zur Buchungsseite schickst du mit, deine Kunden wählen dort selbst einen freien Termin.",
     quelle: "https://support.google.com/calendar/answer/10729749?hl=de",
+    abgerufen: "23.11.2026",
   },
   {
     programm: "WhatsApp",
     bereich: "anfragen",
-    text: "Leg in WhatsApp Business Schnellantworten für deine häufigsten Fragen an. Im Chat holst du sie über ein Kürzel hervor, statt jedes Mal neu zu tippen.",
+    text: "Leg in der WhatsApp Business App Schnellantworten für deine häufigsten Fragen an. Im Chat holst du sie über ein Kürzel hervor, statt jedes Mal neu zu tippen.",
     quelle: "https://faq.whatsapp.com/1791149784551042/?locale=de_DE&cms_platform=android",
+    abgerufen: "23.11.2026",
   },
   {
     programm: "Word",
     bereich: "angebote",
-    text: "Speichere Textblöcke, die in jedem Angebot stehen, in Word als Schnellbaustein. Beim nächsten Angebot fügst du sie mit wenigen Klicks ein.",
+    text: "Speichere Textblöcke, die in jedem Angebot stehen, in Word am Computer als Schnellbaustein. Beim nächsten Angebot fügst du sie mit wenigen Klicks ein.",
     quelle: "https://support.microsoft.com/de-de/office/7a527697-058f-4967-b8f1-aae0774e4813",
+    abgerufen: "23.11.2026",
   },
   {
     programm: "Lexoffice",
     bereich: "rechnungen",
-    text: "In Lexware Office machst du aus einem Angebot über „Weiterführen zur Rechnung“ die Rechnung. Die Positionen übernimmt Lexware Office, du tippst nichts doppelt.",
+    text: "Ab Tarif M machst du in Lexware Office aus einem Angebot über „Weiterführen zur Rechnung“ die Rechnung. Die Positionen übernimmt Lexware Office, du tippst nichts doppelt.",
     quelle: "https://help.lexware.de/de-form/articles/547986-rechnung-oder-teilrechnung-erstellen-schritt-fur-schritt",
+    abgerufen: "23.11.2026",
   },
   {
     programm: "Lexoffice",
     bereich: "erinnern",
-    text: "Lexware Office zeigt dir überfällige Rechnungen in einer eigenen Ansicht. Von dort erstellst du über „Mahnen“ die Zahlungserinnerung.",
+    text: "Lexware Office zeigt dir überfällige Rechnungen, die du dort geschrieben hast, in einer eigenen Ansicht. Über „Mahnen“ erstellst du daraus die Zahlungserinnerung.",
     quelle: "https://help.lexware.de/de-form/articles/547985-zahlungserinnerungen-und-mahnungen-erstellen",
+    abgerufen: "23.11.2026",
   },
   {
     programm: "sevDesk",
     bereich: "rechnungen",
-    text: "Leite Belege als Mail-Anhang an die Autobox-Adresse von sevDesk weiter. sevDesk erkennt sie und legt sie als Entwurf an, du tippst nichts ab.",
-    quelle: "https://intercom.help/sevdesk/de/articles/9167258-belege-erfassen",
+    text: "Leite Belege von der Adresse, mit der du bei sevDesk angemeldet bist, an die Autobox-Adresse weiter. sevDesk legt sie als Entwurf an, du tippst nichts ab.",
+    quelle: "https://intercom.help/sevdesk/de/articles/9453113-belege-erfassen",
+    abgerufen: "23.11.2026",
   },
   {
     programm: "DATEV",
     bereich: "rechnungen",
-    text: "Mit der App DATEV Upload mobil fotografierst du Papierbelege und lädst sie nach DATEV Unternehmen online hoch. Der Belegstapel auf dem Schreibtisch fällt weg.",
+    text: "Hat dein Steuerberater dir DATEV Belege online eingerichtet, fotografierst du Papierbelege mit der App DATEV Upload mobil und lädst sie direkt hoch.",
     quelle: "https://www.datev.de/web/de/shop/produkt-details/99881",
+    abgerufen: "23.11.2026",
   },
   {
     programm: "Excel",
     bereich: "daten",
-    text: "Die Blitzvorschau in Excel erkennt ein Muster und füllt die Spalte für dich aus, etwa Vor- und Nachnamen getrennt. Tipp ein Beispiel ein und drück Strg+E.",
+    text: "In Excel am Computer füllt die Blitzvorschau eine Spalte nach deinem Muster aus, etwa Vor- und Nachnamen getrennt. Tipp ein Beispiel ein und wähl unter Daten die Blitzvorschau.",
     quelle: "https://support.microsoft.com/de-de/office/verwenden-der-blitzvorschau-in-excel-3f9bcf1e-db93-4890-94a0-1578341f73f7",
+    abgerufen: "23.11.2026",
   },
   {
     programm: "Notion",
     bereich: "orga",
     text: "Leg in einer Notion-Datenbank eine wiederkehrende Vorlage an. Notion erstellt dann jede Woche dieselbe Aufgabenliste, ohne dass jemand daran denkt.",
     quelle: "https://www.notion.com/help/database-templates",
+    abgerufen: "23.11.2026",
   },
 ];
 

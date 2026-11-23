@@ -45,9 +45,13 @@ describe("buildFallbackPlan", () => {
   });
 
   it("picks the mail variant over papier", () => {
-    const p = buildFallbackPlan({ ...base, kanaele: ["papier", "mail"] }, contact, now);
-    expect(p.schritte[0].idee.startsWith(KANAL_VARIANTE.anfragen!.mail!)).toBe(true);
-    expect(p.schritte[0].idee).toContain(AREA_IDEE.anfragen.lang.slice(AREA_IDEE.anfragen.lang.indexOf(". ") + 2));
+    const v = KANAL_VARIANTE.angebote!;
+    expect(v.mail && v.papier).toBeTruthy(); // both exist, so only the priority decides
+    const a = { ...base, bereiche: ["angebote" as const], stunden: { angebote: 2 }, nervt: "angebote" as const };
+    const p = buildFallbackPlan({ ...a, kanaele: ["papier", "mail"] }, contact, now);
+    expect(p.schritte[0].idee.startsWith(v.mail!)).toBe(true);
+    expect(p.schritte[0].idee).toContain(AREA_IDEE.angebote.lang.slice(AREA_IDEE.angebote.lang.indexOf(". ") + 2));
+    expect(buildFallbackPlan({ ...a, kanaele: ["papier"] }, contact, now).schritte[0].idee.startsWith(v.papier!)).toBe(true);
   });
 
   it("adds a tip only under Zuerst, only for a named program, sourced as [1]", () => {
@@ -62,7 +66,10 @@ describe("buildFallbackPlan", () => {
     const tip = TIPPS.find((t) => t.programm === "Outlook" && t.bereich === "anfragen")!;
     expect(p.schritte[0].tipp).toBe(tip.text);
     expect(p.schritte[0].quellen).toEqual([1]);
-    expect(p.quellen).toEqual([{ n: 1, url: tip.quelle, abgerufen: "24.11.2026" }]);
+    // abgerufen is the day the page was checked by hand, not the PDF date (24.11.2026).
+    expect(p.quellen).toEqual([{ n: 1, url: tip.quelle, abgerufen: tip.abgerufen }]);
+    expect(p.quellen[0].abgerufen).toBe("23.11.2026");
+    expect(p.quellen[0].abgerufen).not.toBe(p.datum);
     expect(p.schritte.slice(1).every((s) => !s.tipp && s.quellen.length === 0)).toBe(true);
   });
 

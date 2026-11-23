@@ -42,7 +42,8 @@ export function buildFallbackPlan(a: ParsedAnswers, contact: { firma: string; na
 
   const programme = new Set(a.programme.map((p) => p.toLowerCase()));
   const tipp = TIPPS.find((t) => t.bereich === order[0] && programme.has(t.programm.toLowerCase()));
-  const quellen: Quelle[] = tipp ? [{ n: 1, url: tipp.quelle, abgerufen: datum }] : [];
+  // abgerufen = the day the tip's page was checked by hand, not the PDF date.
+  const quellen: Quelle[] = tipp ? [{ n: 1, url: tipp.quelle, abgerufen: tipp.abgerufen }] : [];
 
   const schritte: Schritt[] = order.map((bereich, i) => ({
     rang: RANG[i],

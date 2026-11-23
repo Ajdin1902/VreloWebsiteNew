@@ -49,6 +49,7 @@ describe("blocks copy guards", () => {
       expect(PROGRAMM_CHIPS).toContain(t.programm);
       expect(t.programm).not.toBe("Papier und Zettel");
       expect(t.quelle).toMatch(/^https:\/\//);
+      expect(t.abgerufen).toMatch(/^\d{2}\.\d{2}\.\d{4}$/);
       expect(t.text.length).toBeLessThanOrEqual(LIMITS.tipp);
     }
   });
