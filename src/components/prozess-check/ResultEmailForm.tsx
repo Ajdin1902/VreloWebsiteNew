@@ -29,7 +29,7 @@ export function ResultEmailForm({ answers, source }: { answers: ProzessCheckAnsw
       <input type="hidden" name="branche" value={answers.branche} />
       <input type="hidden" name="team" value={answers.team} />
       {AREA_IDS.map((id) => (
-        <input key={id} type="hidden" name={`h_${id}`} value={answers.stunden[id]} />
+        <input key={id} type="hidden" name={`h_${id}`} value={answers.stunden[id] ?? 0} />
       ))}
       <input type="hidden" name="nervt" value={answers.nervt} />
       <input type="hidden" name="abende" value={answers.abende} />

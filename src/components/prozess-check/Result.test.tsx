@@ -8,9 +8,17 @@ vi.mock("@/components/kontakt/SchedulerEmbed", () => ({
 }));
 
 const answers: ProzessCheckAnswers = {
+  bereiche: ["anfragen", "rechnungen", "daten"],
+  stunden: { anfragen: 3, rechnungen: 5, daten: 1 },
+  kanaele: ["mail"],
+  menge: "5bis20",
+  wer: "ich",
+  programmeChips: [],
+  programmeText: "",
+  arbeitstag: "",
+  arbeitsort: "buero",
   branche: "handwerk",
   team: "6bis20",
-  stunden: { anfragen: 3, auftraege: 0, rechnungen: 5, daten: 1, erinnern: 0, orga: 0 },
   nervt: "rechnungen",
   abende: "staendig",
   versucht: "toolBrach",
@@ -29,7 +37,7 @@ describe("Result", () => {
   });
 
   it("shows the soft exit and no scheduler on the zero-state", () => {
-    const zero: ProzessCheckAnswers = { ...answers, stunden: { anfragen: 0, auftraege: 0, rechnungen: 0, daten: 0, erinnern: 0, orga: 0 } };
+    const zero: ProzessCheckAnswers = { ...answers, stunden: { anfragen: 0, rechnungen: 0, daten: 0 } };
     render(<Result answers={zero} copy={resultCopy(zero)} calLink={undefined} />);
     expect(screen.queryByTestId("scheduler")).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Quelle/ })).toBeInTheDocument();

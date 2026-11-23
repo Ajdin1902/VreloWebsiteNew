@@ -398,4 +398,14 @@ export const RESULT_UI = {
   exitNewsletterSuffix: ", mein Newsletter mit einem kleinen Tipp pro Woche, oder stöber im ",
   exitRatgeberLabel: "Ratgeber",
   exitSuffix: ".",
+  // COPY: Ajdin approves
+  privacyLine: "Deine Antworten bleiben in deinem Browser, bis du dir den Vorab-Fahrplan schicken lässt.",
+} as const;
+
+// Wizard chrome (buttons, progress line). COPY: Ajdin approves
+export const WIZARD_UI = {
+  next: "Weiter",
+  skip: "Überspringen",
+  back: "← Zurück",
+  progress: (n: number, total: number) => `Frage ${n} von ${total}`,
 } as const;

@@ -2,14 +2,10 @@
 "use client";
 
 import { useState } from "react";
-import { AREA_IDS, AREA_LABEL, type AreaId } from "@/lib/prozessCheck";
+import { AREA_LABEL, type AreaId } from "@/lib/prozessCheck";
+import { StepNav } from "./StepNav";
 
-const primaryBtn =
-  "inline-flex items-center justify-center rounded-lg bg-tiefes-wasser px-5 py-2.5 text-sm font-semibold text-papier transition-colors hover:bg-vrelo-petrol focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-lesepapier focus-visible:ring-tiefes-wasser";
-
-const zeroState: Record<AreaId, number> = { anfragen: 0, auftraege: 0, rechnungen: 0, daten: 0, erinnern: 0, orga: 0 };
-
-// One accessible range slider per area. Native <input type=range> carries the
+// One accessible range slider per picked area. Native <input type=range> carries the
 // slider role, keyboard support, and touch for free; we add a visible value
 // readout tied to the label via aria. Default 0 is honest: "nothing here" is a
 // valid answer and drives the zero-state result.
@@ -17,6 +13,8 @@ export function HoursGrid({
   label,
   hint,
   max,
+  areas,
+  initial,
   onSubmit,
   onBack,
   showBack,
@@ -24,11 +22,16 @@ export function HoursGrid({
   label: string;
   hint: string;
   max: number;
-  onSubmit: (stunden: Record<AreaId, number>) => void;
+  /** Only the picked areas get a slider. */
+  areas: readonly AreaId[];
+  initial?: Partial<Record<AreaId, number>>;
+  onSubmit: (stunden: Partial<Record<AreaId, number>>) => void;
   onBack: () => void;
   showBack: boolean;
 }) {
-  const [stunden, setStunden] = useState<Record<AreaId, number>>(zeroState);
+  const [stunden, setStunden] = useState<Partial<Record<AreaId, number>>>(() =>
+    Object.fromEntries(areas.map((id) => [id, initial?.[id] ?? 0])),
+  );
 
   const setArea = (id: AreaId, value: number) => setStunden((prev) => ({ ...prev, [id]: value }));
 
@@ -38,9 +41,9 @@ export function HoursGrid({
       <p className="mt-2 text-sm text-stumm">{hint}</p>
 
       <ul className="mt-6 space-y-5">
-        {AREA_IDS.map((id) => {
+        {areas.map((id) => {
           const inputId = `pc-h-${id}`;
-          const val = stunden[id];
+          const val = stunden[id] ?? 0;
           return (
             <li key={id}>
               <div className="flex items-baseline justify-between gap-3">
@@ -67,23 +70,7 @@ export function HoursGrid({
         })}
       </ul>
 
-      {/* Continue sits bottom right (reading direction: forward = right). */}
-      <div className="mt-8 flex items-center justify-between gap-3">
-        {showBack ? (
-          <button
-            type="button"
-            onClick={onBack}
-            className="text-sm text-stumm underline-offset-4 hover:text-tiefes-wasser hover:underline"
-          >
-            {"← Zurück"}
-          </button>
-        ) : (
-          <span />
-        )}
-        <button type="button" className={primaryBtn} onClick={() => onSubmit(stunden)}>
-          Weiter
-        </button>
-      </div>
+      <StepNav onBack={onBack} showBack={showBack} onNext={() => onSubmit(stunden)} />
     </div>
   );
 }

@@ -2,10 +2,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { Step } from "@/lib/prozessCheck";
-
-const optionClass =
-  "w-full rounded-lg border border-vrelo-petrol/70 bg-papier/70 px-4 py-3 text-left text-tinte transition-colors hover:border-vrelo-petrol hover:bg-papier focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vrelo-petrol focus-visible:ring-offset-2 focus-visible:ring-offset-lesepapier";
+import { WIZARD_UI, type Step } from "@/lib/prozessCheck";
+import { backBtn, optionClass } from "./ui";
 
 // Renders a single choice step. Choice clicks advance immediately (the parent
 // appends the answer and moves on). The grid step is handled by the parent via
@@ -60,9 +58,9 @@ export function Question({
         <button
           type="button"
           onClick={onBack}
-          className="mt-6 text-sm text-stumm underline-offset-4 hover:text-tiefes-wasser hover:underline"
+          className={`mt-6 ${backBtn}`}
         >
-          {"← Zurück"}
+          {WIZARD_UI.back}
         </button>
       ) : null}
     </div>
