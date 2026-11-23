@@ -3,6 +3,10 @@ import {
   STEPS,
   AREA_IDS,
   AREA_LABEL,
+  AREA_SENTENCE,
+  PROGRAMM_CHIPS,
+  QUESTION_COUNT,
+  activeSteps,
   totalHours,
   rankAreas,
   resultCopy,
@@ -12,72 +16,92 @@ import {
 } from "./prozessCheck";
 
 const base: ProzessCheckAnswers = {
-  branche: "handwerk",
-  team: "2bis5",
-  stunden: { anfragen: 0, auftraege: 0, rechnungen: 0, daten: 0, erinnern: 0, orga: 0 },
+  bereiche: ["anfragen"],
+  stunden: {},
   nervt: "anfragen",
+  kanaele: ["mail"],
+  menge: "5bis20",
+  wer: "ich",
+  programmeChips: [],
+  programmeText: "",
+  arbeitstag: "",
   abende: "nein",
   versucht: "nichts",
+  branche: "handwerk",
+  team: "2bis5",
+  arbeitsort: "beides",
 };
 
 describe("prozessCheck steps", () => {
-  it("has the six steps in order", () => {
+  it("has eight areas in tie-break order", () => {
+    expect(AREA_IDS).toEqual(["anfragen", "angebote", "auftraege", "rechnungen", "postfach", "daten", "erinnern", "orga"]);
+  });
+
+  it("has the thirteen steps in order", () => {
     expect(STEPS.map((s) => s.id)).toEqual([
-      "branche",
-      "team",
-      "stunden",
-      "nervt",
-      "abende",
-      "versucht",
+      "intro", "bereiche", "stunden", "nervt", "aufgabe", "programme", "arbeitstag",
+      "abende", "versucht", "branche", "team", "arbeitsort", "website",
     ]);
   });
 
-  it("the stunden step is the grid kind and lists all six areas", () => {
-    const grid = STEPS.find((s) => s.id === "stunden");
-    expect(grid?.kind).toBe("grid");
-    expect(AREA_IDS).toEqual(["anfragen", "auftraege", "rechnungen", "daten", "erinnern", "orga"]);
+  it("skips nervt with one picked area", () => {
+    expect(activeSteps({ bereiche: ["anfragen"] }).map((s) => s.id)).not.toContain("nervt");
+    expect(activeSteps({ bereiche: ["anfragen", "orga"] }).map((s) => s.id)).toContain("nervt");
+  });
+
+  it("counts the questions without the intro", () => {
+    expect(QUESTION_COUNT).toBe(12);
+  });
+
+  it("offers at most twelve program chips", () => {
+    expect(PROGRAMM_CHIPS.length).toBeLessThanOrEqual(12);
   });
 });
 
 describe("totalHours + rankAreas", () => {
-  it("sums the six sliders", () => {
-    expect(
-      totalHours({ ...base, stunden: { anfragen: 3, auftraege: 2, rechnungen: 5, daten: 1, erinnern: 2, orga: 1 } }),
-    ).toBe(14);
+  it("ignores hours of areas not picked", () => {
+    const a = { ...base, bereiche: ["anfragen" as const], stunden: { anfragen: 3, orga: 9 } };
+    expect(totalHours(a)).toBe(3);
+    expect(resultCopy(a).topAreas.map((t) => t.id)).toEqual(["anfragen"]);
   });
 
-  it("ranks areas by hours descending, ties broken by area order", () => {
+  it("sums the picked sliders", () => {
     expect(
-      rankAreas({ ...base, stunden: { anfragen: 2, auftraege: 0, rechnungen: 5, daten: 2, erinnern: 0, orga: 0 } }),
-    ).toEqual(["rechnungen", "anfragen", "daten", "auftraege", "erinnern", "orga"]);
+      totalHours({ ...base, bereiche: ["anfragen", "rechnungen", "daten"], stunden: { anfragen: 3, rechnungen: 5, daten: 1 } }),
+    ).toBe(9);
+  });
+
+  it("ranks picked areas by hours descending, ties broken by area order", () => {
+    expect(
+      rankAreas({ ...base, bereiche: ["daten", "anfragen", "rechnungen", "erinnern"], stunden: { anfragen: 2, rechnungen: 5, daten: 2, erinnern: 0 } }),
+    ).toEqual(["rechnungen", "anfragen", "daten", "erinnern"]);
   });
 });
 
 describe("resultCopy", () => {
   it("puts the summed hours in the headline and marks a real load as fitting", () => {
-    const r = resultCopy({ ...base, stunden: { anfragen: 3, auftraege: 0, rechnungen: 5, daten: 1, erinnern: 0, orga: 0 } });
+    const r = resultCopy({ ...base, bereiche: ["anfragen", "rechnungen", "daten"], stunden: { anfragen: 3, rechnungen: 5, daten: 1 } });
     expect(r.fits).toBe(true);
     expect(r.totalHours).toBe(9);
     expect(r.headline).toContain("9");
     // The pain extrapolation: 9 h/week over 46 work weeks at 8 h/day = 52 days.
-    expect(r.yearLine).toContain("52");
-    expect(r.yearLine).toContain("Arbeitstage");
+    expect(r.yearLine).toBe("Aufs Jahr gerechnet sind das rund 52 volle Arbeitstage.");
     expect(r.basis).toContain("46");
-    // Top area leads the profile and carries a calm what-is-automatable sentence.
     expect(r.topAreas[0].id).toBe("rechnungen");
     expect(r.topAreas[0].sentence.length).toBeGreaterThan(0);
   });
 
-  it("returns the honest zero-state when nothing costs time", () => {
-    const r = resultCopy(base); // all sliders 0
+  it("one area at zero hours is the honest exit", () => {
+    const r = resultCopy({ ...base, stunden: { anfragen: 0 } });
     expect(r.fits).toBe(false);
     expect(r.totalHours).toBe(0);
     expect(r.topAreas).toEqual([]);
   });
 
   it("names the area the visitor said annoys him most", () => {
-    const r = resultCopy({ ...base, nervt: "daten", stunden: { anfragen: 1, auftraege: 1, rechnungen: 1, daten: 1, erinnern: 1, orga: 1 } });
+    const r = resultCopy({ ...base, bereiche: ["anfragen", "daten"], nervt: "daten", stunden: { anfragen: 1, daten: 1 } });
     expect(r.nervtLabel).toBe(AREA_LABEL.daten);
+    expect(r.topAreas[0].id).toBe("daten");
   });
 });
 
@@ -90,13 +114,16 @@ function strings(value: unknown, out: string[] = []): string[] {
 }
 
 const SAMPLES: ProzessCheckAnswers[] = [
-  { ...base, stunden: { anfragen: 6, auftraege: 3, rechnungen: 2, daten: 1, erinnern: 0, orga: 0 }, nervt: "anfragen", abende: "staendig", versucht: "toolBrach" },
-  { ...base, stunden: { anfragen: 0, auftraege: 0, rechnungen: 0, daten: 0, erinnern: 0, orga: 0 } }, // zero-state
-  { ...base, stunden: { anfragen: 1, auftraege: 1, rechnungen: 1, daten: 1, erinnern: 1, orga: 1 }, nervt: "orga", abende: "abundzu", versucht: "beauftragt" },
+  { ...base, bereiche: ["anfragen", "auftraege", "rechnungen", "daten"], stunden: { anfragen: 6, auftraege: 3, rechnungen: 2, daten: 1 }, abende: "staendig", versucht: "toolBrach" },
+  { ...base, stunden: { anfragen: 0 } }, // zero-state
+  { ...base, bereiche: [...AREA_IDS], stunden: { anfragen: 1, angebote: 1, auftraege: 1, rechnungen: 1, postfach: 1, daten: 1, erinnern: 1, orga: 1 }, nervt: "orga", abende: "abundzu", versucht: "beauftragt" },
 ];
 
 const corpus: string[] = [];
 strings(STEPS, corpus);
+strings(AREA_LABEL, corpus);
+strings(AREA_SENTENCE, corpus);
+strings(PROGRAMM_CHIPS, corpus);
 strings(RESULT_UI, corpus);
 for (const s of SAMPLES) strings(resultCopy(s), corpus);
 

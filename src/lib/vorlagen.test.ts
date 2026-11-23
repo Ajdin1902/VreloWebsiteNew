@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { HAUS_PDF, VORLAGEN_GRUPPEN, vorlageBauplaene, vorlagenPage } from "./vorlagen";
 import { findCopyIssues } from "./ratgeberCopy";
 import { questionCountPhrase } from "./prozessCheckCta";
-import { STEPS } from "./prozessCheck";
+import { QUESTION_COUNT } from "./prozessCheck";
 
 function strings(value: unknown, out: string[] = []): string[] {
   if (typeof value === "string") out.push(value);
@@ -51,7 +51,10 @@ describe("prozess-check card", () => {
     expect(first.id).toBe("prozess-check");
     expect(first.gruppe).toBe("alle");
     expect(first.link.href).toBe("/prozess-check?src=vorlagen");
-    expect(first.text).toContain(questionCountPhrase(STEPS.length));
+    expect(first.text).toContain(questionCountPhrase(QUESTION_COUNT));
+    expect(first.text).toContain("Fünf Minuten");
+    expect(first.text).toContain("Vorab-Fahrplan");
+    expect(first.umfang).toBe("5 Minuten · direkt auf der Seite");
   });
 
   it("closes the hub with the free next step", () => {

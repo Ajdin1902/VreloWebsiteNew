@@ -5,7 +5,7 @@
 // Ajdin). The coded /bauplan/<code> outreach pages stay separate and noindex.
 import type { BauplanVariant } from "@/lib/bauplan";
 import { CHECK_SRC, kontaktHref, questionCountPhrase } from "@/lib/prozessCheckCta";
-import { STEPS } from "@/lib/prozessCheck";
+import { QUESTION_COUNT } from "@/lib/prozessCheck";
 
 export const VORLAGEN_PATH = "/vorlagen";
 
@@ -160,8 +160,8 @@ export const vorlagenPage: {
       id: "prozess-check",
       gruppe: "alle",
       titel: "Prozess-Check",
-      text: `Drei Minuten, ${questionCountPhrase(STEPS.length)}. Du siehst sofort, wie viele Stunden pro Woche der Kleinkram kostet.`,
-      umfang: "3 Minuten · direkt auf der Seite",
+      text: `Fünf Minuten, ${questionCountPhrase(QUESTION_COUNT)}. Du siehst sofort, wie viele Stunden pro Woche der Kleinkram kostet. Auf Wunsch bekommst du einen Vorab-Fahrplan als PDF per Mail.`, // COPY: Ajdin approves
+      umfang: "5 Minuten · direkt auf der Seite",
       link: { text: "Prozess-Check starten", href: "/prozess-check?src=vorlagen" },
     },
     {
