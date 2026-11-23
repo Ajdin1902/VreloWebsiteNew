@@ -6,7 +6,7 @@ import type { ParsedAnswers } from "@/lib/prozessCheck";
 import { PDF_UI } from "./blocks";
 import { LIMITS, type VorabFahrplan } from "./content";
 import { buildFallbackPlan } from "./fallback";
-import { pdfFilename, renderVorabFahrplanPdf } from "./pdf";
+import { pdfFilename, renderVorabFahrplanPdf, shortUrl } from "./pdf";
 
 // pdfkit writes page objects uncompressed, so a regex counts them.
 function pageCount(buf: Buffer): number {
@@ -103,5 +103,24 @@ describe("renderVorabFahrplanPdf", () => {
 describe("pdfFilename", () => {
   it("is ASCII and names the Betrieb", () => {
     expect(pdfFilename("Müller & Söhne / GmbH")).toBe("Vrelo-Vorab-Fahrplan-Mueller-Soehne-GmbH.pdf");
+  });
+});
+
+describe("shortUrl", () => {
+  it("keeps the part that tells sources apart", () => {
+    // Same first 60 characters, so a cut from the left alone would print both the same.
+    const base = "https://help.lexware.de/de-form/articles/rechnungen-und-mahnungen/";
+    const a = `${base}547985-zahlungserinnerungen-erstellen`;
+    const b = `${base}547986-rechnung-anlegen`;
+    expect(shortUrl(a, 42)).not.toBe(shortUrl(b, 42));
+    expect(shortUrl(b, 42)).toBe("help.lexware.de/…/547986-rechnung-anlegen");
+    const ms = "https://support.microsoft.com/de-de/office/7a527697-058f-4967-b8f1-aae0774e4813";
+    expect(shortUrl(ms, 42)).toBe("support.microsoft.com/…/7a527697-058f-496…");
+    for (const u of [a, b, ms]) expect(shortUrl(u, 42).length).toBeLessThanOrEqual(42);
+    expect(new Set(researched.quellen.map((q) => shortUrl(q.url, 42))).size).toBe(30);
+  });
+
+  it("leaves short URLs whole", () => {
+    expect(shortUrl("https://www.notion.com/help/database-templates", 42)).toBe("notion.com/help/database-templates");
   });
 });

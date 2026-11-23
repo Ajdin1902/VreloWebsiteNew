@@ -40,7 +40,8 @@ const s = StyleSheet.create({
   stunden: { fontWeight: 700, fontSize: 11.5, color: C.petrol, marginTop: 8 },
   section: { marginTop: 12 },
   label: { fontWeight: 700, fontSize: 7.5, color: C.petrol, textTransform: "uppercase", letterSpacing: 0.9, marginBottom: 5 },
-  quote: { fontFamily: "Fraunces", fontStyle: "italic", fontSize: 10, color: C.ember, lineHeight: 1.4 },
+  // Jakarta, not Fraunces: the registered Fraunces is the opsz-144 display cut, unreadable at 10 pt („Recfinungen“).
+  quote: { fontSize: 9.5, color: C.tinte, lineHeight: 1.45, paddingLeft: 9, borderLeftWidth: 1.5, borderLeftColor: C.amber },
   zeitRow: { flexDirection: "row", alignItems: "center" },
   zeitLabel: { flex: 1, fontWeight: 700, color: C.tiefes },
   track: { width: 84, height: 4, backgroundColor: C.gletscher, marginHorizontal: 10 },
@@ -72,13 +73,20 @@ function Marks({ n }: { n: number[] }) {
   return n.length ? <Text style={s.marks}> {n.map((i) => `[${i}]`).join("")}</Text> : null;
 }
 
-/** „lexware.de/…“ as in the spec: no scheme, cut to fit one short line. The link keeps the full URL. */
-function shortUrl(url: string, max: number): string {
+/**
+ * „lexware.de/…/547985-zahlungs…“: no scheme, host plus the last path segment (the part that tells
+ * sources apart; the middle is mostly shared), cut to `max`. The link keeps the full URL.
+ */
+export function shortUrl(url: string, max: number): string {
   const u = url.replace(/^https?:\/\/(www\.)?/, "");
-  return u.length > max ? `${u.slice(0, max - 1)}…` : u;
+  if (u.length <= max) return u;
+  const [host, ...rest] = u.split("/");
+  const tail = rest.filter(Boolean).pop();
+  const out = tail && rest.length > 1 ? `${host}/…/${tail}` : u;
+  return out.length > max ? `${out.slice(0, max - 1)}…` : out;
 }
 
-function QuelleText({ q, max = 34 }: { q: Quelle; max?: number }) {
+function QuelleText({ q, max = 42 }: { q: Quelle; max?: number }) {
   return (
     <Text>
       [{q.n}]{" "}
