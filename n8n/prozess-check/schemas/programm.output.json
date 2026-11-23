@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "description": "Ein pc_tools-Eintrag für genau ein Programm. key, researchedAt und reviewed setzt n8n. Unbekanntes heißt „nicht gefunden“, nie geraten.",
+  "properties": {
+    "gefunden": { "type": "boolean", "description": "false, wenn sich das Programm nicht eindeutig finden ließ (Negativ-Cache)." },
+    "name": { "type": "string", "description": "Offizielle Schreibweise des Herstellers, sonst der Name wie eingegeben." },
+    "aliases": { "type": "array", "description": "Andere übliche Schreibweisen, auch alte Produktnamen.", "items": { "type": "string" } },
+    "vendorUrl": { "type": "string", "description": "Startseite des Herstellers, leer wenn nicht gefunden." },
+    "bordmittel": {
+      "type": "array",
+      "description": "Eingebaute Funktionen, die einem der acht Bereiche helfen. Höchstens sechs.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "feature": { "type": "string", "description": "Name der Funktion, wie der Hersteller sie nennt." },
+          "bereich": {
+            "type": "string",
+            "enum": ["anfragen", "angebote", "auftraege", "rechnungen", "postfach", "daten", "erinnern", "orga"]
+          },
+          "wie": { "type": "string", "description": "Ein Satz für einen Inhaber ohne Technikwissen: wo man es findet und was es tut." },
+          "quelle": { "type": "string", "description": "URL der Seite, die die Funktion belegt." }
+        },
+        "required": ["feature", "bereich", "wie", "quelle"],
+        "additionalProperties": false
+      }
+    },
+    "api": {
+      "type": "object",
+      "properties": {
+        "vorhanden": { "type": "string", "enum": ["ja", "nein", "unbekannt"] },
+        "tarif": { "type": "string", "description": "Ab welchem Tarif (Name, nie ein Preis), sonst „nicht gefunden“." },
+        "auth": { "type": "string", "description": "z. B. API-Schlüssel, OAuth2, sonst „nicht gefunden“." },
+        "doku": { "type": "string", "description": "URL der Entwickler-Doku, leer wenn nicht gefunden." }
+      },
+      "required": ["vorhanden", "tarif", "auth", "doku"],
+      "additionalProperties": false
+    },
+    "webhooks": { "type": "string", "description": "Welche Ereignisse, sonst „nicht gefunden“." },
+    "export": { "type": "string", "description": "Exportformate, z. B. CSV, PDF, sonst „nicht gefunden“." },
+    "n8n": { "type": "string", "enum": ["nativ", "community", "http", "unbekannt"] },
+    "grenzen": { "type": "string", "description": "Grenzen und Blocker, Verwechslungsgefahr, unsichere Punkte." },
+    "quellen": { "type": "array", "description": "Alle URLs, auf die sich der Eintrag stützt.", "items": { "type": "string" } },
+    "confidence": { "type": "string", "enum": ["hoch", "mittel", "niedrig"] }
+  },
+  "required": ["gefunden", "name", "aliases", "vendorUrl", "bordmittel", "api", "webhooks", "export", "n8n", "grenzen", "quellen", "confidence"],
+  "additionalProperties": false
+}

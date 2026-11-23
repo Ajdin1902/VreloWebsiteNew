@@ -1,0 +1,113 @@
+{
+  "type": "object",
+  "description": "Vorab-Fahrplan und internes Dossier. Zeichengrenzen stehen in den Beschreibungen, weil structured outputs maxLength nicht unterstützt; die Website kürzt und prüft selbst.",
+  "properties": {
+    "pdf": {
+      "type": "object",
+      "description": "Was der Besucher sieht. Jede Aussage über ein Programm trägt ihre Quellen als URL.",
+      "properties": {
+        "schritte": {
+          "type": "array",
+          "description": "Ein Schritt pro Bereich aus der vorgegebenen Reihenfolge, in derselben Reihenfolge.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "bereich": {
+                "type": "string",
+                "enum": ["anfragen", "angebote", "auftraege", "rechnungen", "postfach", "daten", "erinnern", "orga"]
+              },
+              "titel": { "type": "string", "description": "Höchstens 40 Zeichen." },
+              "idee": { "type": "string", "description": "Höchstens 260 Zeichen. Eine konkrete Idee für diesen Betrieb, ohne Aussage über ein Programm." },
+              "mitProgrammen": { "type": "string", "description": "Höchstens 180 Zeichen. Nur mit belegter Bibliotheksaussage, sonst weglassen." },
+              "tipp": { "type": "string", "description": "Höchstens 180 Zeichen. Nur beim ersten Schritt und nur aus einem belegten Bordmittel, sonst weglassen." },
+              "quellen": {
+                "type": "array",
+                "description": "Die URLs aus der Bibliothek, die mitProgrammen und tipp belegen. Leer, wenn beides fehlt.",
+                "items": { "type": "string", "format": "uri" }
+              }
+            },
+            "required": ["bereich", "titel", "idee", "quellen"],
+            "additionalProperties": false
+          }
+        },
+        "programme": {
+          "type": "array",
+          "description": "Nur Programme, die der Besucher genannt hat und die in der Bibliothek gefunden wurden.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string", "description": "Genau so geschrieben wie in job.programme." },
+              "zeilen": {
+                "type": "array",
+                "description": "Eine bis drei Zeilen.",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "text": { "type": "string", "description": "Höchstens 160 Zeichen." },
+                    "quellen": { "type": "array", "items": { "type": "string", "format": "uri" } }
+                  },
+                  "required": ["text", "quellen"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["name", "zeilen"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["schritte", "programme"],
+      "additionalProperties": false
+    },
+    "dossier": {
+      "type": "object",
+      "description": "Intern für Ajdin, nie für den Besucher. kostenUsd und capsGetroffen setzt n8n nach dem Aufruf.",
+      "properties": {
+        "programme": {
+          "type": "array",
+          "description": "Jedes Programm aus job.programme, auch die nicht recherchierten.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "befunde": { "type": "string", "description": "Belegte Befunde." },
+              "unbestaetigt": { "type": "string", "description": "Unsicheres oder nur von Dritten Behauptetes." },
+              "blocker": { "type": "string" },
+              "n8n": { "type": "string" },
+              "api": { "type": "string" }
+            },
+            "required": ["name", "befunde", "unbestaetigt", "blocker", "n8n", "api"],
+            "additionalProperties": false
+          }
+        },
+        "website": { "type": "string", "description": "Nur wenn eine Website gelesen wurde." },
+        "aufwand": {
+          "type": "array",
+          "description": "Ein Eintrag pro Schritt.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "bereich": {
+                "type": "string",
+                "enum": ["anfragen", "angebote", "auftraege", "rechnungen", "postfach", "daten", "erinnern", "orga"]
+              },
+              "groesse": { "type": "string", "enum": ["S", "M", "L"] }
+            },
+            "required": ["bereich", "groesse"],
+            "additionalProperties": false
+          }
+        },
+        "kartenStationen": { "type": "array", "items": { "type": "string" } },
+        "fragen": {
+          "type": "array",
+          "description": "Genau fünf Fragen. structured outputs kann die Anzahl nicht erzwingen; n8n prüft sie.",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["programme", "aufwand", "kartenStationen", "fragen"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["pdf", "dossier"],
+  "additionalProperties": false
+}
