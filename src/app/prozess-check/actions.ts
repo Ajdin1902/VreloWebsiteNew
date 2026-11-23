@@ -34,9 +34,11 @@ export async function submitVorabFahrplan(_prev: VorabFahrplanState, formData: F
   const { answers, contact, submittedAt } = s;
   const ip = (await headers()).get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   const caps = await checkSendCaps({ ip, email: contact.email });
-  // Same env check as the page render, so the lead records the consent the form showed.
-  const research = researchConfigured();
-  const consent = consentFor(research);
+  // The static page fixes its consent text at build time; the env may differ now (deploy skew).
+  // Research runs only if the form rendered the KI sentence, and the lead records what it showed.
+  const shownKi = formData.get("consentVersion") === consentFor(true).version;
+  const research = researchConfigured() && shownKi;
+  const consent = consentFor(shownKi);
 
   const resend = new Resend(resendKey());
   // Set once the fallback PDF exists; the research lead mail goes out without it.

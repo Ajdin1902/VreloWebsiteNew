@@ -5,7 +5,7 @@ import { useActionState, useState } from "react";
 import Link from "next/link";
 import { submitVorabFahrplan, type VorabFahrplanState } from "@/app/prozess-check/actions";
 import { RESULT_UI, type ProzessCheckAnswers } from "@/lib/prozessCheck";
-import { FORM_FIELDS, FORM_UI } from "@/lib/vorabFahrplan/blocks";
+import { FORM_FIELDS, FORM_UI, consentFor } from "@/lib/vorabFahrplan/blocks";
 
 const initial: VorabFahrplanState = { status: "idle" };
 
@@ -47,6 +47,8 @@ export function VorabFahrplanForm({
   const errors = state.status === "invalid" ? state.errors : {};
   const hidden: [string, string][] = [
     ["renderedAt", String(renderedAt)],
+    // Which consent text this form showed: the action records it and runs research only for the KI one.
+    ["consentVersion", consentFor(research).version],
     ...answers.bereiche.map((id): [string, string] => ["bereiche", id]),
     ...answers.bereiche.map((id): [string, string] => [`h_${id}`, String(answers.stunden[id] ?? 0)]),
     ["nervt", answers.nervt],

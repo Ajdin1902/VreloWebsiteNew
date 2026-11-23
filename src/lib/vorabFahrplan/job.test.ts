@@ -59,7 +59,7 @@ beforeEach(() => {
   vi.stubEnv("UPSTASH_REDIS_REST_URL", "https://x.upstash.io");
   vi.stubEnv("UPSTASH_REDIS_REST_TOKEN", "tok");
   vi.stubEnv("N8N_PC_WEBHOOK_URL", "https://server1.example/webhook/pc");
-  vi.stubEnv("PC_SHARED_SECRET", "s".repeat(64));
+  vi.stubEnv("PC_SHARED_SECRET", "ab".repeat(32));
 });
 afterEach(() => {
   vi.unstubAllEnvs();
@@ -136,9 +136,19 @@ describe("postJob", () => {
     const [url, init] = fetchMock.mock.calls[0] as unknown as [string, RequestInit];
     expect(url).toBe("https://server1.example/webhook/pc");
     expect(init.method).toBe("POST");
-    expect(new Headers(init.headers).get("x-vrelo-secret")).toBe("s".repeat(64));
+    expect(new Headers(init.headers).get("x-vrelo-secret")).toBe("ab".repeat(32));
+    // The secret header never follows a redirect.
+    expect(init.redirect).toBe("error");
     expect(JSON.parse(String(init.body))).toEqual(job);
     expect(init.signal).toBeInstanceOf(AbortSignal);
+  });
+
+  it("releases the response body", async () => {
+    const res = new Response("ok", { status: 200 });
+    const cancel = vi.spyOn(res.body!, "cancel");
+    vi.stubGlobal("fetch", vi.fn(async () => res));
+    expect(await postJob(job)).toBe(true);
+    expect(cancel).toHaveBeenCalled();
   });
 
   it("false on 500 and on a network error", async () => {
@@ -179,5 +189,14 @@ describe("researchConfigured", () => {
     vi.stubEnv("N8N_PC_WEBHOOK_URL", "https://x");
     vi.stubEnv("PC_SHARED_SECRET", "");
     expect(researchConfigured()).toBe(false);
+  });
+
+  it("needs a secret of at least 64 hex characters (32 random bytes)", () => {
+    vi.stubEnv("PC_SHARED_SECRET", "ab".repeat(31));
+    expect(researchConfigured()).toBe(false);
+    vi.stubEnv("PC_SHARED_SECRET", "s".repeat(64));
+    expect(researchConfigured()).toBe(false);
+    vi.stubEnv("PC_SHARED_SECRET", "AB".repeat(40));
+    expect(researchConfigured()).toBe(true);
   });
 });

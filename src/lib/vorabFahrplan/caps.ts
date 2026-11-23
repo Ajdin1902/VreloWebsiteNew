@@ -83,9 +83,11 @@ const freshKey = (email: string) => `pc:fresh:${hashMail(email)}`;
 export async function checkResearchCaps(email: string): Promise<ResearchCapResult> {
   const redis = redisClient();
   if (!redis) return { research: false, frisch: false, grund: "speicher" };
+  const key = researchDayKey();
+  let counted = false;
   try {
-    const key = researchDayKey();
     const n = await redis.incr(key);
+    counted = true;
     if (n === 1 || (await redis.ttl(key)) === -1) await redis.expire(key, 26 * 3600);
     if (n > RESEARCH_CAPS.proTag) {
       await redis.decr(key);
@@ -94,6 +96,8 @@ export async function checkResearchCaps(email: string): Promise<ResearchCapResul
     const frisch = (await redis.set(freshKey(email), 1, { nx: true, ex: RESEARCH_CAPS.frischTage * 86400 })) === "OK";
     return { research: true, frisch };
   } catch {
+    // A step after INCR failed: give the slot back, else it stays taken all day.
+    if (counted) await redis.decr(key).catch(() => {});
     return { research: false, frisch: false, grund: "speicher" };
   }
 }

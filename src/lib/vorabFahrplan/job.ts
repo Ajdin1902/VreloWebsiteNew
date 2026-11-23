@@ -13,9 +13,9 @@ export type ResearchJob = Pick<
 const JOB_TTL = 7200;
 const jobKey = (jobId: string) => `pc:job:${jobId}`;
 
-/** Research runs only when both are set. The page and the action decide it the same way. */
+/** Research runs only with the webhook URL and a secret of at least 32 random bytes as hex. */
 export function researchConfigured(): boolean {
-  return Boolean(process.env.N8N_PC_WEBHOOK_URL && process.env.PC_SHARED_SECRET);
+  return Boolean(process.env.N8N_PC_WEBHOOK_URL) && /^[0-9a-f]{64,}$/i.test(process.env.PC_SHARED_SECRET ?? "");
 }
 
 // Field by field, never a spread: a new answer field must be added here on purpose.
@@ -68,14 +68,16 @@ export async function takeJob(jobId: string): Promise<ParsedSubmission | null> {
 export async function postJob(job: ResearchJob): Promise<boolean> {
   const url = process.env.N8N_PC_WEBHOOK_URL;
   const secret = process.env.PC_SHARED_SECRET;
-  if (!url || !secret) return false;
+  if (!url || !secret || !researchConfigured()) return false;
   try {
     const res = await fetch(url, {
       method: "POST",
       headers: { "content-type": "application/json", "x-vrelo-secret": secret },
       body: JSON.stringify(job),
       signal: AbortSignal.timeout(5000),
+      redirect: "error", // the secret header never follows a redirect
     });
+    await res.body?.cancel();
     return res.ok;
   } catch {
     return false;

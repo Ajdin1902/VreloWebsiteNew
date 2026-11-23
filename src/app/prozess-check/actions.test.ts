@@ -40,7 +40,8 @@ import { AREA_LABEL } from "@/lib/prozessCheck";
 import { CAP_GRUND, CONSENT_TEXT, CONSENT_VERSION, FORM_ERRORS, FORM_UI, LEAD_STATUS, PDF_FEHLER_GRUND, RECHERCHE_GRUND, VERSAND_FEHLER_GRUND, consentFor } from "@/lib/vorabFahrplan/blocks";
 
 type Entries = Record<string, string | string[] | undefined>;
-function fd(e: Entries): FormData {
+const fd = fdPlain;
+function fdPlain(e: Entries): FormData {
   const f = new FormData();
   for (const [k, v] of Object.entries(e)) {
     if (v === undefined) continue;
@@ -337,9 +338,11 @@ describe("parseSubmission", () => {
 
 describe("submitVorabFahrplan with research (Plan 2)", () => {
   const fetchMock = vi.fn();
+  // The form posts the consent version it rendered; with research env on it renders the KI one.
+  const fd = (e: Entries) => fdPlain({ consentVersion: consentFor(true).version, ...e });
   beforeEach(() => {
     vi.stubEnv("N8N_PC_WEBHOOK_URL", "https://server1.example/webhook/pc");
-    vi.stubEnv("PC_SHARED_SECRET", "a".repeat(64));
+    vi.stubEnv("PC_SHARED_SECRET", "ab".repeat(32));
     fetchMock.mockReset();
     fetchMock.mockResolvedValue(new Response(null, { status: 200 }));
     vi.stubGlobal("fetch", fetchMock);
@@ -365,7 +368,7 @@ describe("submitVorabFahrplan with research (Plan 2)", () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
     const [url, init] = fetchMock.mock.calls[0];
     expect(url).toBe("https://server1.example/webhook/pc");
-    expect(new Headers(init.headers).get("x-vrelo-secret")).toBe("a".repeat(64));
+    expect(new Headers(init.headers).get("x-vrelo-secret")).toBe("ab".repeat(32));
     const job = JSON.parse(String(init.body));
     expect(job.jobId).toBe(jobId);
     expect(job.frischeRecherche).toBe(true);
@@ -382,6 +385,24 @@ describe("submitVorabFahrplan with research (Plan 2)", () => {
     expect(takeJob).not.toHaveBeenCalled();
     expect(releaseResearch).not.toHaveBeenCalled();
   });
+
+  it.each([
+    ["missing", undefined],
+    ["the non-KI version", CONSENT_VERSION],
+    ["an unknown value", "pc-call-ki-forged"],
+  ])("a form posted with %s consent version: no research, the non-KI consent recorded", async (_, consentVersion) => {
+    const s = await submitVorabFahrplan(idle, fd({ ...good, consentVersion }));
+    expect(s).toEqual({ status: "ok", recherche: false });
+    expect(checkResearchCaps).not.toHaveBeenCalled();
+    expect(parkJob).not.toHaveBeenCalled();
+    expect(fetchMock).not.toHaveBeenCalled();
+    const lead = send.mock.calls[0][0];
+    expect(lead.text).toContain(`Einwilligung: ${CONSENT_TEXT}`);
+    expect(lead.text).toContain(`Textversion: ${CONSENT_VERSION}`);
+    expect(lead.text).not.toContain(FORM_UI.consentKi);
+    expect(lead.text).toContain(`Status: ${LEAD_STATUS.fallback}`);
+    expect(send.mock.calls[1][0].to).toBe("max@muster.de");
+  }, 30000);
 
   it("a second submit within 30 days posts frischeRecherche false", async () => {
     checkResearchCaps.mockResolvedValue({ research: true, frisch: false });

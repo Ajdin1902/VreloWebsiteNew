@@ -198,6 +198,12 @@ describe("checkResearchCaps", () => {
     expect(await checkResearchCaps("a@b.de")).toEqual({ research: false, frisch: false, grund: "speicher" });
   });
 
+  it("gives the slot back when a step after INCR throws", async () => {
+    redisCmd.set.mockRejectedValueOnce(new Error("net"));
+    expect(await checkResearchCaps("a@b.de")).toEqual({ research: false, frisch: false, grund: "speicher" });
+    expect(store.get(dayKey())).toBe(0);
+  });
+
   it("releaseResearch gives back the day slot and, if it was set, the fresh key", async () => {
     await checkResearchCaps("a@b.de");
     await releaseResearch("a@b.de", true);

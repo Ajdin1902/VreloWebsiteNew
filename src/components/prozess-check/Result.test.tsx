@@ -84,6 +84,14 @@ describe("Result with research", () => {
   });
 
   it.each([
+    [true, "pc-call-ki-2026-11-24"],
+    [false, "pc-call-2026-11-24"],
+  ])("posts the consent version it rendered (research %s)", (research, version) => {
+    const { container } = render(<Result answers={answers} copy={resultCopy(answers)} calUrl={undefined} research={research} />);
+    expect(container.querySelector('input[type="hidden"][name="consentVersion"]')).toHaveValue(version);
+  });
+
+  it.each([
     [true, RESULT_UI.successRecherche],
     [false, RESULT_UI.success],
   ])("after submit (recherche %s) shows the matching success text", async (recherche, text) => {
