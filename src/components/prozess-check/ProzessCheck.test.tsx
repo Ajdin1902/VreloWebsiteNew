@@ -41,6 +41,18 @@ describe("ProzessCheck wizard", () => {
     expect(screen.getByText("Wo möchtest du Hilfe?")).toBeInTheDocument();
   });
 
+  it("moves focus into the new step after Los geht's and after Weiter", () => {
+    render(<ProzessCheck calLink={undefined} />);
+    expect(document.activeElement).toBe(document.body);
+    click("Los geht's");
+    expect(document.activeElement).not.toBe(document.body);
+    expect(document.activeElement).toContainElement(screen.getByText("Wo möchtest du Hilfe?"));
+    pick("anfragen");
+    click("Weiter");
+    expect(document.activeElement).not.toBe(document.body);
+    expect(document.activeElement).toContainElement(screen.getByText("Wo geht deine Zeit hin?"));
+  });
+
   it("disables Weiter until an area is picked", () => {
     render(<ProzessCheck calLink={undefined} />);
     click("Los geht's");

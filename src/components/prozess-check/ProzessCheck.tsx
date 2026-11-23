@@ -1,7 +1,7 @@
 // src/components/prozess-check/ProzessCheck.tsx
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   RESULT_UI,
   WIZARD_UI,
@@ -33,6 +33,19 @@ export function ProzessCheck({
   const [answers, setAnswers] = useState<PartialAnswers>({});
 
   const steps = activeSteps(answers);
+
+  // The clicked button unmounts on every step change: move focus to the new step.
+  // Skipped on first render so the page does not steal focus on load.
+  const stepRef = useRef<HTMLDivElement | null>(null);
+  const firstRender = useRef(true);
+  const stepId = steps[index]?.id;
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    stepRef.current?.focus();
+  }, [stepId]);
 
   if (index >= steps.length) {
     // Required steps gate their own Weiter, so the defaults only cover skipped optional steps.
@@ -153,7 +166,9 @@ export function ProzessCheck({
         </p>
       )}
       {index === 1 ? <p className="mt-1 text-sm text-stumm">{RESULT_UI.privacyLine}</p> : null}
-      <div className="mt-4">{body}</div>
+      <div ref={stepRef} tabIndex={-1} className="mt-4 outline-none">
+        {body}
+      </div>
     </div>
   );
 }

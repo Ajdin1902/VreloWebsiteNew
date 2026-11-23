@@ -1,7 +1,6 @@
 // src/components/prozess-check/Question.tsx
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { WIZARD_UI, type Step } from "@/lib/prozessCheck";
 import { backBtn, optionClass } from "./ui";
 
@@ -20,27 +19,10 @@ export function Question({
   showBack: boolean;
 }) {
   const headingId = `pc-frage-${step.id}`;
-  const headingRef = useRef<HTMLHeadingElement | null>(null);
-  const isFirstRender = useRef(true);
-  const [seenStepId, setSeenStepId] = useState(step.id);
-  if (step.id !== seenStepId) setSeenStepId(step.id);
-
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-    headingRef.current?.focus();
-  }, [step.id]);
 
   return (
     <div>
-      <h2
-        id={headingId}
-        ref={headingRef}
-        tabIndex={-1}
-        className="text-balance text-2xl font-semibold text-tiefes-wasser outline-none md:text-3xl"
-      >
+      <h2 id={headingId} className="text-balance text-2xl font-semibold text-tiefes-wasser md:text-3xl">
         {step.label}
       </h2>
 
