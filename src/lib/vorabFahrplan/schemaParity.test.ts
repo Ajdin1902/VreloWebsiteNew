@@ -25,7 +25,8 @@ function vergleiche(zs: z.ZodType, js: Json, pfad: string): void {
     const shape = zs.shape as Record<string, z.ZodType>;
     const keys = Object.keys(shape).filter((k) => !(N8N_SETZT[pfad] ?? []).includes(k));
     expect(sorted(Object.keys(js.properties ?? {})), `${pfad}: keys`).toEqual(sorted(keys));
-    const pflicht = keys.filter((k) => !(shape[k] instanceof z.ZodOptional));
+    // A key with .optional() or .default() (in either order) may be missing in the input.
+    const pflicht = keys.filter((k) => !(shape[k] instanceof z.ZodOptional || shape[k] instanceof z.ZodDefault));
     expect(sorted(js.required ?? []), `${pfad}: required`).toEqual(sorted(pflicht));
     for (const k of keys) vergleiche(shape[k], js.properties![k], `${pfad}.${k}`);
   } else if (zs instanceof z.ZodArray) {
@@ -46,6 +47,19 @@ function alleObjekteGeschlossen(js: Json, pfad: string): void {
   for (const [k, v] of Object.entries(js.properties ?? {})) alleObjekteGeschlossen(v, `${pfad}.${k}`);
   if (js.items) alleObjekteGeschlossen(js.items, `${pfad}[]`);
 }
+
+describe("vergleiche", () => {
+  it("treats .default() like .optional(): not required in the JSON Schema", () => {
+    const zs = z.object({ a: z.string().default(""), b: z.string().optional().default("x"), c: z.string() });
+    const js: Json = {
+      type: "object",
+      properties: { a: { type: "string" }, b: { type: "string" }, c: { type: "string" } },
+      required: ["c"],
+      additionalProperties: false,
+    };
+    vergleiche(zs, js, "probe");
+  });
+});
 
 describe("synthese.output.json", () => {
   const js = load("synthese.output.json");

@@ -71,6 +71,7 @@ Intern, sachlich, Fachbegriffe erlaubt. Keine Preise und kein €.
 # Stimme (gilt für alles in „pdf“)
 
 - Klarheit vor Cleverness. Ruhe vor Hype. Ergebnis vor Mechanik.
+- Das Dokument heißt immer „Vorab-Fahrplan“, nie nur „Fahrplan“, auch nicht in „titel“, „idee“ und den Zeilen unter „programme“. „Fahrplan“ allein ist der ausführliche Fahrplan, den Ajdin nach dem Telefonat von Hand schreibt.
 - Du-Form. Kurze Sätze. Der Inhaber ist der Leser, also kein Fachjargon: nicht API, Webhook, n8n, Workflow, Trigger, Tool oder Automatisierung. Sag „Schnittstelle“, „anbinden“, „läuft von selbst“.
 - Keine Hype-Wörter: nicht skalieren, Game-Changer, KI-Magie, revolutionär, nahtlos, mühelos, effizient, optimieren. Kein „KI“ als Verkaufsargument.
 - Kein Ausrufezeichen.

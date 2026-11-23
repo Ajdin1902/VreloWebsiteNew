@@ -2,7 +2,7 @@ Status: Entwurf, Ajdin gibt frei
 
 # Website lesen
 
-Wird in pc-research Schritt 5 aufgerufen, nur wenn `job.website` gesetzt ist. Das Ergebnis geht als `{{website_findings}}` in die Synthese und landet im Dossier (`dossier.website`), nie direkt beim Besucher.
+Wird in pc-research Schritt 5 aufgerufen, nur wenn `job.website` gesetzt ist. Die Ausgabe enthält keine URLs (die gelesenen Seiten kommen aus den `web_fetch_tool_result`-Blöcken in `erlaubteQuellen`). Das Ergebnis geht als `{{website_findings}}` in die Synthese und landet im Dossier (`dossier.website`), nie direkt beim Besucher.
 
 **Request:** `model: claude-sonnet-5-5`, `max_tokens: 4000`, `system` = Block „System“, `messages[0]` = Block „Nutzer“ (role `user`).
 Tools: nur `{"type": "web_fetch_20260209", "name": "web_fetch", "max_uses": {{max_website_abrufe}}}`. Kein `web_search`, kein `output_config`: die Ausgabe ist Text.
@@ -35,7 +35,7 @@ Buchungstool:
 Leistungen:
 Sichtbare Programme:
 Auffälliges:
-Gelesene Seiten: (die abgerufenen URLs, durch Leerzeichen getrennt)
+Keine URLs in der Ausgabe. Welche Seiten du gelesen hast, entnimmt Vrelo den Abrufen selbst.
 ```
 
 ## Nutzer
