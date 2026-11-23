@@ -3,7 +3,7 @@
 // Vorab-Fahrplan PDF and the internal lead mail #1 (spec §6, §10).
 import { signaturHtml, signaturText } from "@/lib/email/signatur";
 import { sourceLabel } from "@/lib/source";
-import { AREA_LABEL, STEPS, rankAreas, totalHours, type ParsedAnswers, type StepId } from "@/lib/prozessCheck";
+import { AREA_LABEL, STEPS, hoursLabel, rankAreas, totalHours, type ParsedAnswers, type StepId } from "@/lib/prozessCheck";
 import { CONSENT_TEXT, CONSENT_VERSION } from "./blocks";
 import type { VorabFahrplan } from "./content";
 
@@ -18,12 +18,12 @@ const CELL = "padding:7px 8px;border-bottom:1px solid #e3dccc;vertical-align:top
 export const MAIL_UI = {
   label: "Dein Vorab-Fahrplan",
   hallo: "Hallo {vorname}, im Anhang ist dein Vorab-Fahrplan.",
-  zuerst: "Zuerst würde ich bei {titel} anfangen.",
-  panel: "Ich rufe dich in den nächsten Tagen an, kläre ein paar Details und mache daraus deinen ausführlichen Fahrplan. Kostenlos, er gehört dir.",
+  zuerst: "Mein erster Schritt wäre: {titel}.",
+  panel: "Ich rufe dich in den nächsten Tagen an und kläre ein paar Details. Danach bekommst du deinen ausführlichen Fahrplan. Er ist kostenlos und gehört dir.",
   termin: "Lieber gleich einen Termin?",
   button: "Termin buchen",
   gruss: "Bis bald",
-  einmalig: "Du bekommst diese E-Mail einmalig, weil du dir deinen Vorab-Fahrplan hast schicken lassen.",
+  einmalig: "Diese E-Mail kommt einmal, weil du dir deinen Vorab-Fahrplan hast schicken lassen.",
   wasser: "Aus einem Tropfen fließt ein Fluss, aus einer Idee deine Zeit zurück.",
 };
 
@@ -32,9 +32,7 @@ export type Mail = { subject: string; html: string; text: string };
 export function buildVisitorMail(p: VorabFahrplan, calUrl?: string): Mail {
   const vorname = p.name.trim().split(/\s+/)[0] || p.name;
   const titel = p.schritte[0]?.titel ?? "";
-  // "Rund 9 Stunden pro Woche · 52 Arbeitstage im Jahr" -> "rund 9 Stunden pro Woche"
-  const stunden = p.stundenZeile.split(" · ")[0].replace(/^R/, "r");
-  const headline = `${p.firma}: ${stunden}`;
+  const headline = `${p.firma}: rund ${hoursLabel(p.stundenProWoche)} pro Woche`;
   const intro = MAIL_UI.hallo.replace("{vorname}", vorname);
   const zuerst = MAIL_UI.zuerst.replace("{titel}", titel);
 

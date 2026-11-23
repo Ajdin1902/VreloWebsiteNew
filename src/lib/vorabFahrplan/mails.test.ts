@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { ParsedAnswers } from "@/lib/prozessCheck";
-import { CONSENT_TEXT, CONSENT_VERSION, FORM_UI } from "./blocks";
+import { AREA_IDEE, CONSENT_TEXT, CONSENT_VERSION, FORM_UI } from "./blocks";
 import { buildLeadMail, buildVisitorMail, MAIL_UI } from "./mails";
 import type { VorabFahrplan } from "./content";
 
@@ -9,6 +9,7 @@ const plan: VorabFahrplan = {
   name: "Max Muster",
   datum: "24.11.2026",
   stundenZeile: "Rund 9 Stunden pro Woche · 52 Arbeitstage im Jahr",
+  stundenProWoche: 9,
   zeitVerteilung: [],
   aufgabeZeile: "kommt per Mail rein · 20 bis 50 pro Woche · macht das Büro",
   schritte: [{ rang: "Zuerst", bereich: "anfragen", titel: "Anfragen beantworten", idee: "x", quellen: [] }],
@@ -47,7 +48,7 @@ describe("buildVisitorMail", () => {
     for (const part of [m.html, m.text]) {
       expect(part).toContain("Ajdin Dzafic");
       expect(part).toContain("Vorab-Fahrplan");
-      expect(part).toContain("Anfragen beantworten");
+      expect(part).toContain("Mein erster Schritt wäre: Anfragen beantworten.");
       expect(part).toContain("Hallo Max,");
       expect(part).toContain("rund 9 Stunden pro Woche");
       expect(part).not.toContain("€");
@@ -129,5 +130,18 @@ describe("copy guards", () => {
   it("rendered visitor mail too", () => {
     const m = buildVisitorMail(plan, "https://cal.com/x");
     expect(m.text).not.toMatch(/[–—€]|, und/);
+  });
+});
+
+describe("visitor headline", () => {
+  it("comes from stundenProWoche, not from stundenZeile", () => {
+    const h = (n: number) => buildVisitorMail({ ...plan, stundenProWoche: n, stundenZeile: "egal" }).text;
+    expect(h(1)).toContain("Muster GmbH: rund 1 Stunde pro Woche");
+    expect(h(9)).toContain("Muster GmbH: rund 9 Stunden pro Woche");
+  });
+  it("the Zuerst sentence works with every area title", () => {
+    for (const { titel } of Object.values(AREA_IDEE)) {
+      expect(buildVisitorMail({ ...plan, schritte: [{ ...plan.schritte[0], titel }] }).text).toContain(`Mein erster Schritt wäre: ${titel}.`);
+    }
   });
 });

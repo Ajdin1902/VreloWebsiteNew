@@ -66,6 +66,7 @@ export function buildFallbackPlan(a: ParsedAnswers, contact: { firma: string; na
     name: contact.name,
     datum,
     // Zero hours in total never reaches the PDF (spec §7.2), so the headline is always the hours line.
+    stundenProWoche: rc.totalHours,
     stundenZeile: `${rc.headline} · ${nf.format(jahresArbeitstage(rc.totalHours))} Arbeitstage im Jahr`,
     ...(arbeitstag ? { arbeitstag: `„${arbeitstag}“` } : {}),
     zeitVerteilung: rc.topAreas.map((t) => ({ label: t.label, stunden: t.hours, satz: t.sentence })),

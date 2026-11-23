@@ -16,6 +16,7 @@ export type ProgrammZeile = { name: string; zeilen: string[] /* ≤ 3 × ≤ 160
 export type VorabFahrplan = {
   firma: string; name: string; datum: string;
   stundenZeile: string;   // "Rund 9 Stunden pro Woche · 52 Arbeitstage im Jahr"
+  stundenProWoche: number; // total hours per week, drives the mail headline
   arbeitstag?: string;    // quoted
   zeitVerteilung: { label: string; stunden: number; satz: string }[]; // ≤ 3
   aufgabeZeile: string;   // "kommt per Mail rein · 20 bis 50 pro Woche · macht das Büro"
