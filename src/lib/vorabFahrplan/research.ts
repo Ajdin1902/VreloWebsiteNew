@@ -12,7 +12,7 @@ export const ResearchResultSchema = z.object({
   jobId: z.string(),
   fallback: z.boolean(),
   grund: z.string().optional(),
-  erlaubteQuellen: z.array(z.string()),
+  erlaubteQuellen: z.array(z.string()).default([]), // the n8n error payload (spec §8.1) sends none
   pdf: z
     .object({
       schritte: z.array(

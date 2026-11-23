@@ -317,6 +317,8 @@ export const DOSSIER_UI = {
   dossierUnbrauchbar: "Dossier unbrauchbar",
   rechercheAus: "Recherche ohne Ergebnis",
   keinDossier: "Kein Dossier dabei.",
+  pdfFehltTeil: "pdf fehlt",
+  versandErneut: "n8n versucht es erneut",
   pdfFehlt: "Der Besucher hat noch nichts bekommen, n8n versucht es noch einmal. Kommt kein Dossier mit PDF, schick den Vorab-Fahrplan von Hand.",
   kontakt: "Kontakt",
   name: "Name",

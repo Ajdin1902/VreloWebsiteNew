@@ -89,7 +89,7 @@ beforeEach(() => {
   parkJob.mockReset();
   parkJob.mockResolvedValue(true);
   takeJob.mockReset();
-  takeJob.mockResolvedValue(null);
+  takeJob.mockResolvedValue({ status: "missing" });
   headerMap.current = new Map([["x-forwarded-for", "1.2.3.4, 10.0.0.1"]]);
   vi.spyOn(console, "error").mockImplementation(() => {});
   process.env.RESEND_API_KEY = "k";

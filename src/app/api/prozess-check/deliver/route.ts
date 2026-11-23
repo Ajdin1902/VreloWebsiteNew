@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import type { z } from "zod";
 import { contactFrom, contactTo, calBookingUrl, resendKey } from "@/lib/contact";
-import { DOSSIER_UI, PDF_FEHLER_GRUND } from "@/lib/vorabFahrplan/blocks";
+import { DOSSIER_UI, PDF_FEHLER_GRUND, VERSAND_FEHLER_GRUND } from "@/lib/vorabFahrplan/blocks";
 import type { VorabFahrplan } from "@/lib/vorabFahrplan/content";
 import { buildDossierMail } from "@/lib/vorabFahrplan/dossier";
 import { buildFallbackPlan } from "@/lib/vorabFahrplan/fallback";
@@ -20,6 +20,8 @@ export const runtime = "nodejs";
 export const maxDuration = 60;
 
 const MAX_BODY = 256 * 1024;
+// actions.ts parks jobs under randomUUID().
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const Envelope = ResearchResultSchema.pick({ fallback: true, grund: true, erlaubteQuellen: true });
 const { pdf: PdfSchema, dossier: DossierSchema } = ResearchResultSchema.shape;
 
@@ -68,11 +70,14 @@ export async function POST(req: Request): Promise<Response> {
     return NextResponse.json({ error: "bad-request" }, { status: 400 });
   }
   const jobId = body && typeof body === "object" && !Array.isArray(body) ? body.jobId : undefined;
-  if (typeof jobId !== "string" || !jobId || jobId.length > 100) return NextResponse.json({ error: "bad-request" }, { status: 400 });
+  if (typeof jobId !== "string" || !UUID.test(jobId)) return NextResponse.json({ error: "bad-request" }, { status: 400 });
 
   // GETDEL: a duplicate, or n8n's late answer after the website already sent the fallback.
-  const s = await takeJob(jobId);
-  if (!s) return NextResponse.json({ status: "already-delivered" });
+  const taken = await takeJob(jobId);
+  if (taken.status === "missing") return NextResponse.json({ status: "already-delivered" });
+  // Upstash unreachable: the job may still be parked, so n8n must retry.
+  if (taken.status === "error") return NextResponse.json({ error: "store" }, { status: 503 });
+  const s = taken.submission;
 
   // Partial parse (spec §8.5): each part fails on its own, the reason goes to the dossier.
   const hinweise: string[] = [];
@@ -82,6 +87,7 @@ export async function POST(req: Request): Promise<Response> {
   if (!env.success) hinweise.push(`${DOSSIER_UI.rechercheUnbrauchbar}: ${kurz(env.error, "")}`);
   else if (env.data.fallback) hinweise.push(`${DOSSIER_UI.rechercheAus}${env.data.grund ? `: ${env.data.grund.slice(0, 300)}` : ""}`);
   else if (!pdf.success) hinweise.push(`${DOSSIER_UI.rechercheUnbrauchbar}: ${kurz(pdf.error, "pdf")}`);
+  else if (!pdf.data) hinweise.push(`${DOSSIER_UI.rechercheUnbrauchbar}: ${DOSSIER_UI.pdfFehltTeil}`);
   if (!dossier.success) hinweise.push(`${DOSSIER_UI.dossierUnbrauchbar}: ${kurz(dossier.error, "dossier")}`);
   const result: ResearchResult = {
     jobId,
@@ -113,7 +119,7 @@ export async function POST(req: Request): Promise<Response> {
   } catch {
     hinweise.push(`${PDF_FEHLER_GRUND}. ${DOSSIER_UI.pdfFehlt}`);
     await sendDossier(undefined, []);
-    await parkJob(jobId, s);
+    await parkJob(jobId, s); // false: the next retry finds nothing and answers already-delivered
     return NextResponse.json({ error: "pdf" }, { status: 502 });
   }
   const attachments = [{ filename: pdfFilename(s.contact.firma), content }];
@@ -135,9 +141,11 @@ export async function POST(req: Request): Promise<Response> {
     // handled below
   }
   if (!delivered) {
-    // Re-park so n8n's retry (3 tries) can deliver. Ruling P: after the last failed try
-    // the parked job expires with its TTL; Ajdin has had lead mail #1 since submit.
-    await parkJob(jobId, s);
+    // Alert Ajdin, then re-park so n8n's retry (3 tries) can deliver. Ruling P: after the
+    // last failed try the parked job expires with its TTL; Ajdin has lead mail #1 and these dossiers.
+    hinweise.push(`${VERSAND_FEHLER_GRUND}, ${DOSSIER_UI.versandErneut}`);
+    await sendDossier(plan, verworfen);
+    await parkJob(jobId, s); // false: the next retry finds nothing and answers already-delivered
     return NextResponse.json({ error: "visitor-mail" }, { status: 502 });
   }
 

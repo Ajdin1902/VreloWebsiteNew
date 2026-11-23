@@ -109,21 +109,23 @@ describe("parkJob / takeJob", () => {
     expect(await parkJob("abc", sub)).toBe(true);
     expect(set).toHaveBeenCalledWith("pc:job:abc", expect.anything(), { ex: 7200 });
     const back = await takeJob("abc");
-    expect(back?.contact).toEqual(sub.contact);
-    expect(back?.answers).toEqual(sub.answers);
-    expect(back?.submittedAt).toBeInstanceOf(Date);
-    expect(back?.submittedAt.getTime()).toBe(sub.submittedAt.getTime());
-    expect(await takeJob("abc")).toBeNull();
+    if (back.status !== "ok") throw new Error(back.status);
+    expect(back.submission.contact).toEqual(sub.contact);
+    expect(back.submission.answers).toEqual(sub.answers);
+    expect(back.submission.submittedAt).toBeInstanceOf(Date);
+    expect(back.submission.submittedAt.getTime()).toBe(sub.submittedAt.getTime());
+    expect(await takeJob("abc")).toEqual({ status: "missing" });
   });
 
-  it("fails soft without Upstash or when Redis throws", async () => {
+  // The deliver route must tell „already delivered“ from „Redis down, retry“.
+  it("fails soft without Upstash or when Redis throws, and says so", async () => {
     set.mockRejectedValueOnce(new Error("net"));
     expect(await parkJob("x", sub)).toBe(false);
     getdel.mockRejectedValueOnce(new Error("net"));
-    expect(await takeJob("x")).toBeNull();
+    expect(await takeJob("x")).toEqual({ status: "error" });
     vi.stubEnv("UPSTASH_REDIS_REST_URL", "");
     expect(await parkJob("x", sub)).toBe(false);
-    expect(await takeJob("x")).toBeNull();
+    expect(await takeJob("x")).toEqual({ status: "error" });
   });
 });
 

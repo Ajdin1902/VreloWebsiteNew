@@ -17,7 +17,7 @@ vi.mock("@/lib/vorabFahrplan/pdf", async (importOriginal) => {
   };
 });
 import { POST } from "./route";
-import { DOSSIER_UI, PDF_FEHLER_GRUND } from "@/lib/vorabFahrplan/blocks";
+import { DOSSIER_UI, PDF_FEHLER_GRUND, VERSAND_FEHLER_GRUND } from "@/lib/vorabFahrplan/blocks";
 import { parseSubmission, type ParsedSubmission } from "@/lib/vorabFahrplan/submission";
 
 const SECRET = "a".repeat(64);
@@ -86,7 +86,7 @@ beforeEach(() => {
   pdfFail.on = false;
   send.mockReset().mockResolvedValue({ error: null });
   parkJob.mockReset().mockResolvedValue(true);
-  takeJob.mockReset().mockResolvedValue(submission);
+  takeJob.mockReset().mockResolvedValue({ status: "ok", submission });
   vi.spyOn(console, "error").mockImplementation(() => {});
   vi.stubEnv("PC_SHARED_SECRET", SECRET);
   vi.stubEnv("N8N_PC_WEBHOOK_URL", "https://server1.example/webhook/pc");
@@ -117,7 +117,7 @@ describe("POST /api/prozess-check/deliver", () => {
 
   it("is 400 for a body over 256 KB, no JSON or no usable jobId", async () => {
     const big = JSON.stringify({ ...good, pad: "x".repeat(256 * 1024) });
-    for (const b of [big, "not json", { ...good, jobId: "" }, { ...good, jobId: 7 }, [1]]) {
+    for (const b of [big, "not json", { ...good, jobId: "" }, { ...good, jobId: 7 }, { ...good, jobId: "j1" }, { ...good, jobId: `${JOB}x` }, [1]]) {
       expect((await POST(post(b))).status).toBe(400);
     }
     expect(takeJob).not.toHaveBeenCalled();
@@ -125,7 +125,7 @@ describe("POST /api/prozess-check/deliver", () => {
   });
 
   it("a second delivery of the same jobId sends nothing and answers already-delivered", async () => {
-    takeJob.mockResolvedValueOnce(null);
+    takeJob.mockResolvedValueOnce({ status: "missing" });
     const res = await POST(post(good));
     expect(res.status).toBe(200);
     expect(await res.json()).toEqual({ status: "already-delivered" });
@@ -187,12 +187,49 @@ describe("POST /api/prozess-check/deliver", () => {
     expect(dossierMail.text).toContain(DOSSIER_UI.keinDossier);
   }, 30000);
 
-  it("the visitor mail fails: 502, the job is re-parked, no dossier yet", async () => {
+  it("the visitor mail fails: 502, re-parked, the dossier goes out flagged without a PDF", async () => {
     send.mockResolvedValueOnce({ error: { message: "down" } });
     const res = await POST(post(good));
     expect(res.status).toBe(502);
     expect(parkJob).toHaveBeenCalledWith(JOB, submission);
-    expect(send).toHaveBeenCalledTimes(1);
+    expect(send).toHaveBeenCalledTimes(2);
+    const d = mails()[1];
+    expect(d.to).toBe("me@vrelo-ki.de");
+    expect(d.text).toContain(`${VERSAND_FEHLER_GRUND}, ${DOSSIER_UI.versandErneut}`);
+    expect(d.attachments).toBeUndefined();
+  }, 30000);
+
+  it("a failed re-park still answers 502", async () => {
+    send.mockResolvedValueOnce({ error: { message: "down" } });
+    parkJob.mockResolvedValueOnce(false);
+    expect((await POST(post(good))).status).toBe(502);
+  }, 30000);
+
+  it("a takeJob error (Upstash down) answers 503 so n8n retries, nothing is sent", async () => {
+    takeJob.mockResolvedValueOnce({ status: "error" });
+    const res = await POST(post(good));
+    expect(res.status).toBe(503);
+    expect(send).not.toHaveBeenCalled();
+    expect(parkJob).not.toHaveBeenCalled();
+  });
+
+  it("the spec error payload without erlaubteQuellen sends the fallback with the reason", async () => {
+    const res = await POST(post({ jobId: JOB, fallback: true, grund: "Kostenlimit erreicht" }));
+    expect(res.status).toBe(200);
+    const [visitor, dossierMail] = mails();
+    expect(pageCount(Buffer.from(visitor.attachments[0].content))).toBe(1);
+    expect(dossierMail.text).toContain(`${DOSSIER_UI.rechercheAus}: Kostenlimit erreicht`);
+    expect(dossierMail.text).not.toContain("erlaubteQuellen");
+  }, 30000);
+
+  it("fallback: false without a pdf part says pdf fehlt", async () => {
+    const { pdf: _pdf, ...ohnePdf } = good;
+    void _pdf;
+    const res = await POST(post(ohnePdf));
+    expect(res.status).toBe(200);
+    const [visitor, dossierMail] = mails();
+    expect(pageCount(Buffer.from(visitor.attachments[0].content))).toBe(1);
+    expect(dossierMail.text).toContain(`${DOSSIER_UI.rechercheUnbrauchbar}: ${DOSSIER_UI.pdfFehltTeil}`);
   }, 30000);
 
   it("the render fails: 502, re-parked, the dossier goes out flagged without a PDF", async () => {

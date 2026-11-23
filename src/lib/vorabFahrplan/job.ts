@@ -53,15 +53,20 @@ export async function parkJob(jobId: string, s: ParsedSubmission): Promise<boole
   }
 }
 
-/** Reads and deletes in one step, so a job is delivered at most once. */
-export async function takeJob(jobId: string): Promise<ParsedSubmission | null> {
+export type TakenJob = { status: "ok"; submission: ParsedSubmission } | { status: "missing" } | { status: "error" };
+
+/**
+ * Reads and deletes in one step, so a job is delivered at most once. „missing“ = no such
+ * job (delivered or expired); „error“ = Redis unreachable, the caller should retry later.
+ */
+export async function takeJob(jobId: string): Promise<TakenJob> {
   const redis = redisClient();
-  if (!redis) return null;
+  if (!redis) return { status: "error" };
   try {
     const s = await redis.getdel<Omit<ParsedSubmission, "submittedAt"> & { submittedAt: string }>(jobKey(jobId));
-    return s ? { ...s, submittedAt: new Date(s.submittedAt) } : null;
+    return s ? { status: "ok", submission: { ...s, submittedAt: new Date(s.submittedAt) } } : { status: "missing" };
   } catch {
-    return null;
+    return { status: "error" };
   }
 }
 
