@@ -7,13 +7,19 @@ const incr = vi.fn(async (k: string) => {
   store.set(k, n);
   return n;
 });
-const expire = vi.fn(async () => 1);
+const ttls = new Map<string, number>();
+const expire = vi.fn(async (k: string, t: number) => {
+  ttls.set(k, t);
+  return 1;
+});
+const ttl = vi.fn(async (k: string) => ttls.get(k) ?? -1);
 
 vi.mock("@upstash/redis", () => ({
   Redis: vi.fn(function (this: Record<string, unknown>) {
     this.get = get;
     this.incr = incr;
     this.expire = expire;
+    this.ttl = ttl;
   }),
 }));
 
@@ -21,6 +27,8 @@ import { checkSendCaps, CAPS } from "./caps";
 
 beforeEach(() => {
   store.clear();
+  ttls.clear();
+  ttl.mockClear();
   get.mockClear();
   incr.mockClear();
   expire.mockClear();
@@ -37,6 +45,31 @@ describe("checkSendCaps", () => {
   it("allows the first send and sets TTLs", async () => {
     expect(await checkSendCaps({ ip: "1.2.3.4", email: "a@b.de" })).toEqual({ ok: true });
     expect(expire).toHaveBeenCalledTimes(3);
+    expect(expire.mock.calls.map((c) => c[1])).toEqual([2592000, 86400, 93600]);
+  });
+
+  it("does not call expire again when a TTL exists", async () => {
+    await checkSendCaps({ ip: "1.2.3.4", email: "a@b.de" });
+    expire.mockClear();
+    await checkSendCaps({ ip: "1.2.3.4", email: "c@b.de" });
+    // only the address key is new; ip and day keys already have a TTL
+    expect(expire).toHaveBeenCalledTimes(1);
+  });
+
+  it("re-applies a TTL to a key left without one", async () => {
+    await checkSendCaps({ ip: "1.2.3.4", email: "a@b.de" });
+    const ipKey = [...ttls.keys()].find((k) => k.startsWith("pc:ip:"))!;
+    ttls.delete(ipKey);
+    expire.mockClear();
+    await checkSendCaps({ ip: "1.2.3.4", email: "c@b.de" });
+    expect(expire).toHaveBeenCalledWith(ipKey, 86400);
+  });
+
+  it.each(["", "  ", "unknown"])("skips the IP cap for ip %j", async (ip) => {
+    for (let i = 0; i < 4; i++) {
+      expect(await checkSendCaps({ ip, email: `u${i}@b.de` })).toEqual({ ok: true });
+    }
+    expect([...store.keys()].some((k) => k.startsWith("pc:ip:"))).toBe(false);
   });
 
   it("blocks a second send to the same address (case/space-insensitive)", async () => {
