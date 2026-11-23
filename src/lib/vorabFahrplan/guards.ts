@@ -1,12 +1,15 @@
 import { parseHttpUrl } from "@/lib/demo/fetchGuard";
 import { PROGRAMM_CHIPS } from "@/lib/prozessCheck";
 
+// A bare domain without a path needs a TLD from this list, so „ggf.später“ or „bzw.danach“
+// survive; lowercase-only keeps „Co.KG“ and „z.B.“. Labels take Unicode letters (müller.de).
+const TLD = "(?:de|com|net|org|eu|at|ch|info|io|biz|shop|online|app|me)";
 const CONTACT_RES = [
-  /[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g, // e-mail
+  /[\p{L}\d._%+-]+@[\p{L}\d-]+(?:\.[\p{L}\d-]+)+/gu, // e-mail
   /https?:\/\/\S+/gi,
   /\bwww\.\S+/gi,
-  /\b[\w-]+(?:\.[\w-]+)+\/\S*/g, // bare name.tld/path
-  /\b[\w-]+(?:\.[\w-]+)*\.[a-z]{2,}\b/g, // bare domain; case-sensitive TLD keeps „Co.KG“
+  /(?<![\p{L}\d-])[\p{L}\d-]+(?:\.[\p{L}\d-]+)*\.[a-z]{2,}\/\S*/gu, // bare name.tld/path, any TLD
+  new RegExp(`(?<![\\p{L}\\d-])[\\p{L}\\d-]+(?:\\.[\\p{L}\\d-]+)*\\.${TLD}(?![\\p{L}\\d-])`, "gu"), // bare domain
   /\(?\+?\d(?:[\s/().-]{0,3}\d){5,}/g, // phone-like run of >= 6 digits
 ];
 

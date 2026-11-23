@@ -23,6 +23,16 @@ describe("guards", () => {
     expect(stripContacts("Müller GmbH & Co. KG")).toBe("Müller GmbH & Co. KG");
     expect(stripContacts("Müller GmbH & Co.KG")).toBe("Müller GmbH & Co.KG");
   });
+  it("stripContacts handles umlaut domains and keeps words after a period", () => {
+    expect(stripContacts("Schau auf müller.de vorbei")).toBe("Schau auf vorbei");
+    expect(stripContacts("siehe müller.de/kontakt jetzt")).toBe("siehe jetzt");
+    expect(stripContacts("Mail an jürgen@müller.de")).toBe("Mail an");
+    expect(stripContacts("ggf.später")).toBe("ggf.später");
+    expect(stripContacts("bzw.danach")).toBe("bzw.danach");
+    expect(stripContacts("z.B. Co.KG")).toBe("z.B. Co.KG");
+    expect(stripContacts("2 Std. am Abend")).toBe("2 Std. am Abend");
+    expect(stripContacts("www.x.de und bitcoin-x.com")).toBe("und");
+  });
   it("parseProgramme caps, dedups, cuts", () => {
     expect(parseProgramme([], "a".repeat(200))).toEqual(["a".repeat(40)]);
     expect(parseProgramme(PROGRAMM_CHIPS.slice(0, 6), "x, y, z, q")).toHaveLength(8);
