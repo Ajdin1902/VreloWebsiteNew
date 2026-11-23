@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { AREA_IDS, PROGRAMM_CHIPS } from "@/lib/prozessCheck";
-import { AREA_IDEE, KANAL_VARIANTE, KANAL_WEG, MENGE_ZEILE, TIPPS, WER_ZEILE } from "./blocks";
+import { AREA_IDEE, KANAL_VARIANTE, KANAL_WEG, MENGE_ZEILE, PDF_UI, TIPPS, WER_ZEILE } from "./blocks";
 import { zuerstIdee } from "./fallback";
 import { LIMITS } from "./content";
 
@@ -10,7 +10,7 @@ function strings(v: unknown): string[] {
   return [];
 }
 
-const ALL = strings({ AREA_IDEE, KANAL_VARIANTE, KANAL_WEG, MENGE_ZEILE, WER_ZEILE, TIPPS: TIPPS.map((t) => t.text) });
+const ALL = strings({ AREA_IDEE, KANAL_VARIANTE, KANAL_WEG, MENGE_ZEILE, WER_ZEILE, PDF_UI, TIPPS: TIPPS.map((t) => t.text) });
 
 describe("blocks copy guards", () => {
   it("keeps the German punctuation and voice rules", () => {

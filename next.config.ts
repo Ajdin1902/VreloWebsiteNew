@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/bauplan/[code]": ["./public/bauplan/*.pdf"],
     "/vorlagen/[slug]": ["./public/bauplan/*.pdf"],
+    // The Vorab-Fahrplan PDF (src/lib/vorabFahrplan/pdf.tsx) reads its fonts from disk at render time.
+    "/prozess-check": ["./src/assets/fonts/*"],
+    "/api/prozess-check/deliver": ["./src/assets/fonts/*"],
   },
   images: {
     // Next 16 locks the image optimizer to an allow-list of quality values.

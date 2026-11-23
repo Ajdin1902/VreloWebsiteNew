@@ -1,9 +1,11 @@
 import "@testing-library/jest-dom/vitest";
 
 // --- jsdom polyfills for browser APIs LazyVideo relies on ---
+// Guarded so files marked `@vitest-environment node` (the react-pdf test) can share this setup.
+const isDom = typeof window !== "undefined";
 
 // matchMedia: default to "no reduced-motion preference".
-if (typeof window.matchMedia !== "function") {
+if (isDom && typeof window.matchMedia !== "function") {
   window.matchMedia = (query: string) =>
     ({
       matches: false,
@@ -36,11 +38,13 @@ if (!("IntersectionObserver" in globalThis)) {
 }
 
 // jsdom does not implement media playback.
-Object.defineProperty(HTMLMediaElement.prototype, "play", {
-  configurable: true,
-  value: () => Promise.resolve(),
-});
-Object.defineProperty(HTMLMediaElement.prototype, "pause", {
-  configurable: true,
-  value: () => {},
-});
+if (isDom) {
+  Object.defineProperty(HTMLMediaElement.prototype, "play", {
+    configurable: true,
+    value: () => Promise.resolve(),
+  });
+  Object.defineProperty(HTMLMediaElement.prototype, "pause", {
+    configurable: true,
+    value: () => {},
+  });
+}

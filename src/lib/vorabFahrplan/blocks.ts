@@ -211,3 +211,22 @@ export const WER_ZEILE: Record<Wer, string> = {
   buero: "macht das Büro",
   alle: "macht jeder ein bisschen",
 };
+
+// Fixed copy of the PDF itself (spec §7.1). `{datum}` is filled in at render time.
+export const PDF_UI = {
+  titel: "Vorab-Fahrplan für",
+  arbeitstag: "Dein Tag, in deinen Worten",
+  zeit: "Wo deine Zeit hingeht",
+  stunden: "Std. pro Woche",
+  aufgabe: "Deine nervigste Aufgabe heute",
+  start: "Wo man anfangen würde",
+  mitProgrammen: "Mit deinen Programmen:",
+  tipp: "Selbst ausprobieren:",
+  weiter: "Was jetzt kommt",
+  weiterText: "Ich rufe dich an, kläre ein paar Details, danach bekommst du deinen ausführlichen Fahrplan. Kostenlos, er gehört dir.",
+  programme: "Deine Programme",
+  quellen: "Quellen",
+  abgerufen: "abgerufen am",
+  kiFooter: "Recherchiert mit KI am {datum}. Angaben ohne Gewähr, Tarife und Funktionen ändern sich.",
+  absender: "Ajdin Dzafic · vrelo-ki.de",
+};
