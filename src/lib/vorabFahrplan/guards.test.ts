@@ -17,6 +17,12 @@ describe("guards", () => {
     expect(stripContacts("siehe mueller.de/kontakt jetzt")).toBe("siehe jetzt");
     expect(stripContacts("https://a.de/x ok")).toBe("ok");
   });
+  it("stripContacts removes bare domains but keeps Co. KG", () => {
+    expect(stripContacts("Gewinn bei bitcoin-x.com")).toBe("Gewinn bei");
+    expect(stripContacts("Schau auf mueller-bau.de vorbei")).toBe("Schau auf vorbei");
+    expect(stripContacts("Müller GmbH & Co. KG")).toBe("Müller GmbH & Co. KG");
+    expect(stripContacts("Müller GmbH & Co.KG")).toBe("Müller GmbH & Co.KG");
+  });
   it("parseProgramme caps, dedups, cuts", () => {
     expect(parseProgramme([], "a".repeat(200))).toEqual(["a".repeat(40)]);
     expect(parseProgramme(PROGRAMM_CHIPS.slice(0, 6), "x, y, z, q")).toHaveLength(8);

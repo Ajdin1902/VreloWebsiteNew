@@ -6,6 +6,9 @@ import { ProzessCheck } from "@/components/prozess-check/ProzessCheck";
 import { ProzessCheckFromUrl } from "@/components/prozess-check/ProzessCheckFromUrl";
 import { calBookingUrl } from "@/lib/contact";
 
+// The form's server action runs in this page's function: PDF render plus two mails need headroom.
+export const maxDuration = 60;
+
 // COPY: Ajdin approves
 const HERO_SUBLINE = "Ein paar Fragen, danach kommt dein Vorab-Fahrplan als PDF per Mail.";
 

@@ -42,12 +42,14 @@ const MAX_NAME = 60;
 export function parseSubmission(fd: FormData): ParsedSubmission {
   const get = (k: string) => String(fd.get(k) ?? "");
   const all = (k: string) => fd.getAll(k).map(String);
+  // stripContacts is slow on huge input and runs before honeypot and caps: cap the raw value first.
+  const clean = (k: string, rawMax: number, max: number) => capText(stripContacts(capText(get(k), rawMax)), max);
 
   const bereiche = AREA_IDS.filter((id) => all("bereiche").includes(id));
   const stunden = Object.fromEntries(bereiche.map((id) => [id, clampHours(get(`h_${id}`))]));
   const programmeChips = all("programmeChips");
-  const programmeText = capText(get("programmeText"), 500);
-  const website = normalizeWebsite(get("webseite"));
+  const programmeText = capText(get("programmeText"), 1000);
+  const website = normalizeWebsite(capText(get("webseite"), 300));
 
   const answers: ParsedAnswers = {
     bereiche,
@@ -59,7 +61,7 @@ export function parseSubmission(fd: FormData): ParsedSubmission {
     programmeChips,
     programmeText,
     programme: parseProgramme(programmeChips, programmeText),
-    arbeitstag: capText(stripContacts(get("arbeitstag")), 500),
+    arbeitstag: clean("arbeitstag", 1000, 500),
     abende: pick(get("abende"), vals(step("abende").options), "nein"),
     versucht: pick(get("versucht"), vals(step("versucht").options), "nichts"),
     branche: pick(get("branche"), vals(step("branche").options), "anderes"),
@@ -72,8 +74,8 @@ export function parseSubmission(fd: FormData): ParsedSubmission {
     answers,
     contact: {
       // Name reaches the visitor greeting and the PDF: no links or numbers (no address confirmation, no spam relay).
-      name: capText(stripContacts(get("name")), MAX_NAME).trim(),
-      firma: capText(stripContacts(get("firma")), MAX_NAME).trim(),
+      name: clean("name", 200, MAX_NAME).trim(),
+      firma: clean("firma", 200, MAX_NAME).trim(),
       email: get("email").trim(),
       telefon: normalizePhone(get("telefon")) ?? "",
       anrufOk: fd.get("anruf") != null,

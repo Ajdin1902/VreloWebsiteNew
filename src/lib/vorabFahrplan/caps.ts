@@ -12,9 +12,26 @@ function hashMail(email: string): string {
 
 export type CapResult = { ok: true } | { ok: false; grund: "adresse" | "ip" | "tag" };
 
+// KEYS[i] has the cap ARGV[i] and the TTL ARGV[n + i]. Returns the 1-based index
+// of the first key at its cap (nothing counted), else counts all and returns 0.
+// One script = one atomic step in Redis, so parallel sends cannot slip past a cap.
+// A key left without TTL (TTL -1) gets it back on the next send.
+const CAPS_SCRIPT = `
+local n = #KEYS
+for i = 1, n do
+  if tonumber(redis.call("GET", KEYS[i]) or "0") >= tonumber(ARGV[i]) then return i end
+end
+for i = 1, n do
+  if redis.call("INCR", KEYS[i]) == 1 or redis.call("TTL", KEYS[i]) == -1 then
+    redis.call("EXPIRE", KEYS[i], ARGV[n + i])
+  end
+end
+return 0
+`;
+
 /**
- * Check-then-count in one call: reads the three counters, blocks (without
- * counting) if one is at its cap, else increments all three. Fails open.
+ * Check-then-count in one atomic call: blocks (without counting) if one
+ * counter is at its cap, else increments all of them. Fails open.
  */
 export async function checkSendCaps(x: { ip: string; email: string }): Promise<CapResult> {
   if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) return { ok: true };
@@ -32,16 +49,13 @@ export async function checkSendCaps(x: { ip: string; email: string }): Promise<C
       ...(ipKnown ? [{ key: `pc:ip:${hashIp(x.ip)}`, max: CAPS.proIpTag, ttl: 86400, grund: "ip" as const }] : []),
       { key: `pc:day:${day}`, max: CAPS.proTag, ttl: 26 * 3600, grund: "tag" as const },
     ];
-    const counts = await Promise.all(checks.map((c) => redis.get<number>(c.key)));
-    const hit = checks.find((c, i) => Number(counts[i] ?? 0) >= c.max);
-    if (hit) return { ok: false, grund: hit.grund };
-    // Small race between read and increment is accepted (caps are abuse brakes, not exact quotas).
-    for (const c of checks) {
-      const n = await redis.incr(c.key);
-      // A crash between INCR and EXPIRE would leave a key without TTL: heal it on the next send.
-      if (n === 1 || (await redis.ttl(c.key)) === -1) await redis.expire(c.key, c.ttl);
-    }
-    return { ok: true };
+    const hit = await redis.eval<number[], number>(
+      CAPS_SCRIPT,
+      checks.map((c) => c.key),
+      [...checks.map((c) => c.max), ...checks.map((c) => c.ttl)],
+    );
+    const capped = checks[Number(hit) - 1];
+    return capped ? { ok: false, grund: capped.grund } : { ok: true };
   } catch {
     return { ok: true };
   }

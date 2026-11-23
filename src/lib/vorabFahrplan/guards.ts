@@ -6,6 +6,7 @@ const CONTACT_RES = [
   /https?:\/\/\S+/gi,
   /\bwww\.\S+/gi,
   /\b[\w-]+(?:\.[\w-]+)+\/\S*/g, // bare name.tld/path
+  /\b[\w-]+(?:\.[\w-]+)*\.[a-z]{2,}\b/g, // bare domain; case-sensitive TLD keeps „Co.KG“
   /\(?\+?\d(?:[\s/().-]{0,3}\d){5,}/g, // phone-like run of >= 6 digits
 ];
 

@@ -49,6 +49,11 @@ describe("prozessCheck steps", () => {
     expect(activeSteps({ bereiche: ["anfragen", "orga"] }).map((s) => s.id)).toContain("nervt");
   });
 
+  it("offers only the picked areas under nervt", () => {
+    const nervt = activeSteps({ bereiche: ["rechnungen", "anfragen"] }).find((s) => s.id === "nervt");
+    expect(nervt && "options" in nervt ? nervt.options.map((o) => o.value) : []).toEqual(["anfragen", "rechnungen"]);
+  });
+
   it("counts the questions without the intro", () => {
     expect(QUESTION_COUNT).toBe(12);
   });

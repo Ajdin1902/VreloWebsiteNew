@@ -92,6 +92,16 @@ describe("ProzessCheck wizard", () => {
     expect(screen.getAllByText(/Anfragen beantworten/).length).toBeGreaterThan(0);
   });
 
+  it("the nervt step shows exactly the picked areas", () => {
+    render(<ProzessCheck calUrl={undefined} />);
+    startAndPick("anfragen", "rechnungen");
+    click("Weiter"); // hours
+    expect(screen.getByText("Was nervt am meisten?")).toBeInTheDocument();
+    const labels = Object.values(AREA_LABEL);
+    const shown = screen.getAllByRole("button").map((b) => b.textContent).filter((t) => labels.includes(t ?? ""));
+    expect(shown).toEqual([AREA_LABEL.anfragen, AREA_LABEL.rechnungen]);
+  });
+
   it("asks nervt again when it was dropped and two areas remain", () => {
     render(<ProzessCheck calUrl={undefined} />);
     startAndPick("anfragen", "rechnungen");

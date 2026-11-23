@@ -284,10 +284,14 @@ export const STEPS: readonly Step[] = [
   },
 ];
 
-/** Steps the visitor actually sees: `nervt` only makes sense with two or more areas. */
+/** Steps the visitor actually sees: `nervt` only with two or more areas, offering just those. */
 export function activeSteps(a: Partial<ProzessCheckAnswers>): Step[] {
-  const multiple = (a.bereiche?.length ?? 0) >= 2;
-  return STEPS.filter((s) => s.id !== "nervt" || multiple);
+  const picked = a.bereiche ?? [];
+  return STEPS.flatMap((s): Step[] =>
+    s.id !== "nervt" ? [s]
+    : picked.length >= 2 ? [{ ...s, options: s.options.filter((o) => picked.includes(o.value)) }]
+    : [],
+  );
 }
 
 /** Question steps (no intro) when `nervt` is shown: the count the public copy promises. */

@@ -223,6 +223,16 @@ describe("parseSubmission", () => {
     expect(parseSubmission(fd({ ...good, webseite: "http://localhost" })).answers.website).toBeUndefined();
   });
 
+  it("caps raw input before stripping: 200k-char fields parse in under 200 ms", () => {
+    const big = (c: string) => c.repeat(200_000);
+    const t = performance.now();
+    const p = parseSubmission(fd({ ...good, name: big("a"), firma: big("b"), arbeitstag: big("c"), programmeText: big("d"), webseite: big("e") }));
+    expect(performance.now() - t).toBeLessThan(200);
+    expect(p.contact.name).toHaveLength(60);
+    expect(p.contact.firma).toHaveLength(60);
+    expect(p.answers.arbeitstag).toHaveLength(500);
+  });
+
   it("strips contacts from the workday text and caps it at 500", () => {
     const p = parseSubmission(fd({ ...good, arbeitstag: `Ruf mich an 0941 123456 ${"x".repeat(600)}` }));
     expect(p.answers.arbeitstag).not.toContain("123456");
