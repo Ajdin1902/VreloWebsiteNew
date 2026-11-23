@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { ParsedAnswers } from "@/lib/prozessCheck";
-import { AREA_IDEE, CAP_GRUND, CONSENT_TEXT, CONSENT_VERSION, FORM_ERRORS, FORM_FIELDS, FORM_UI, PDF_FEHLER_GRUND, VERSAND_FEHLER_GRUND } from "./blocks";
+import { AREA_IDEE, CAP_GRUND, CONSENT_TEXT, CONSENT_VERSION, FORM_ERRORS, FORM_FIELDS, FORM_UI, LEAD_STATUS, PDF_FEHLER_GRUND, VERSAND_FEHLER_GRUND } from "./blocks";
 import { buildLeadMail, buildVisitorMail, MAIL_UI } from "./mails";
 import type { VorabFahrplan } from "./content";
 
@@ -128,13 +128,35 @@ describe("buildLeadMail", () => {
     expect(lead().subject).toMatch(/^Neuer Lead/);
     expect(lead().html).not.toContain("<strong");
   });
-  it("names the fallback reason", () => {
-    expect(lead({ status: "fallback", grund: "n8n Timeout" }).text).toContain("Fallback, weil n8n Timeout");
+  it("names the fallback plainly, with its reason", () => {
+    const m = lead({ status: "fallback" });
+    expect(m.text).toContain(`Status: ${LEAD_STATUS.fallback}`);
+    expect(m.text).not.toContain("Fallback");
+    expect(m.subject).toMatch(/^Neuer Lead/);
+    expect(lead({ status: "fallback", grund: "n8n Timeout" }).text).toContain(`${LEAD_STATUS.fallback}, weil n8n Timeout`);
+  });
+  it("a capped lead says „gesperrt“, never „Schick ihn von Hand“", () => {
+    const m = lead({ status: "gesperrt", grund: CAP_GRUND.ip });
+    expect(m.subject).toMatch(/^\[nicht versendet\] /);
+    for (const part of [m.html, m.text]) {
+      expect(part).toContain(LEAD_STATUS.gesperrt);
+      expect(part).toContain(CAP_GRUND.ip);
+      expect(part).not.toContain(LEAD_STATUS.vonHand);
+    }
+    expect(lead({ status: "nicht-versendet", grund: "x" }).text.split("\n")[0]).toContain(LEAD_STATUS.vonHand);
+  });
+  it("prints the raw input as „Original-Eingabe“, escaped, only when given", () => {
+    const m = lead({ raw: { firma: "<b>Roh</b> www.x.de", arbeitstag: "", programmeText: "crm.example.com" } });
+    expect(m.text).toContain("Original-Eingabe Firma: <b>Roh</b> www.x.de");
+    expect(m.text).toContain("Original-Eingabe Programme: crm.example.com");
+    expect(m.html).toContain("&lt;b&gt;Roh&lt;/b&gt;");
+    expect(m.html).not.toContain("<b>Roh");
+    expect(lead().text).not.toContain("Original-Eingabe");
   });
 });
 
 describe("copy guards", () => {
-  const strings = [...Object.values(MAIL_UI), ...Object.values(FORM_UI), ...Object.values(FORM_FIELDS), ...Object.values(FORM_ERRORS), ...Object.values(CAP_GRUND), PDF_FEHLER_GRUND, VERSAND_FEHLER_GRUND, CONSENT_TEXT];
+  const strings = [...Object.values(MAIL_UI), ...Object.values(FORM_UI), ...Object.values(FORM_FIELDS), ...Object.values(FORM_ERRORS), ...Object.values(CAP_GRUND), ...Object.values(LEAD_STATUS), PDF_FEHLER_GRUND, VERSAND_FEHLER_GRUND, CONSENT_TEXT];
   it("fixed strings follow the German punctuation rules", () => {
     for (const s of strings) {
       expect(s).not.toMatch(/["–—€]/);

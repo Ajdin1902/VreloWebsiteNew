@@ -41,8 +41,8 @@ export async function submitVorabFahrplan(_prev: VorabFahrplanState, formData: F
   const attachments = pdf ? [{ filename: pdfFilename(contact.firma), content: pdf }] : undefined;
 
   const resend = new Resend(resendKey());
-  const sendLead = (st: { status: "fallback" } | { status: "nicht-versendet"; grund: string }) => {
-    const lead = buildLeadMail({ contact, answers, source: s.source, submittedAt, ...st });
+  const sendLead = (st: { status: "fallback" } | { status: "nicht-versendet" | "gesperrt"; grund: string }) => {
+    const lead = buildLeadMail({ contact, answers, raw: s.raw, source: s.source, submittedAt, ...st });
     return sendLeadMailWithRetry({
       resend,
       payload: { from: contactFrom()!, to: contactTo()!, replyTo: lead.replyTo, subject: lead.subject, html: lead.html, text: lead.text, attachments },
@@ -55,7 +55,7 @@ export async function submitVorabFahrplan(_prev: VorabFahrplanState, formData: F
       ? { status: "nicht-versendet", grund: PDF_FEHLER_GRUND }
       : caps.ok
         ? { status: "fallback" }
-        : { status: "nicht-versendet", grund: CAP_GRUND[caps.grund] },
+        : { status: "gesperrt", grund: CAP_GRUND[caps.grund] },
   );
 
   if (!pdf || !plan) return { status: "error", message: FORM_ERRORS.generic };

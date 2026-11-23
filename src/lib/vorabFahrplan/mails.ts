@@ -5,7 +5,7 @@ import { escapeHtml } from "@/lib/email/escapeHtml";
 import { signaturHtml, signaturText } from "@/lib/email/signatur";
 import { sourceLabel } from "@/lib/source";
 import { AREA_LABEL, STEPS, hoursLabel, rankAreas, totalHours, type ParsedAnswers, type StepId } from "@/lib/prozessCheck";
-import { CONSENT_TEXT, CONSENT_VERSION } from "./blocks";
+import { CONSENT_TEXT, CONSENT_VERSION, LEAD_STATUS } from "./blocks";
 import type { VorabFahrplan } from "./content";
 
 // Style constants of the former prozessCheckEmail.ts summary mail.
@@ -83,6 +83,8 @@ export function buildVisitorMail(p: VorabFahrplan, calUrl?: string): Mail {
 }
 
 export type LeadContact = { name: string; firma: string; email: string; telefon: string; anrufOk: boolean };
+/** Visitor text before stripping (spec §6): lead mail only, never the visitor mail or PDF. */
+export type RawInput = { firma: string; arbeitstag: string; programmeText: string };
 
 // Readable label of a choice/aufgabe option from the wizard definition.
 function optLabel(step: StepId, value: string): string {
@@ -108,18 +110,24 @@ export function buildLeadMail(x: {
   answers: ParsedAnswers;
   source?: string;
   submittedAt: Date;
-  status: "recherche" | "fallback" | "nicht-versendet";
+  // gesperrt: a sending cap held the visitor mail back, likely no real lead.
+  status: "recherche" | "fallback" | "nicht-versendet" | "gesperrt";
   grund?: string;
+  raw?: RawInput;
 }): Mail & { replyTo: string } {
   const { contact: c, answers: a } = x;
   const statusLine =
     x.status === "recherche"
-      ? "Recherche läuft"
+      ? LEAD_STATUS.recherche
       : x.status === "fallback"
-        ? `Fallback${x.grund ? `, weil ${x.grund}` : ""}`
-        : `Vorab-Fahrplan nicht versendet${x.grund ? `, Grund: ${x.grund}` : ""}`;
-  // Ajdin has to send the PDF by hand then (attached when it rendered), so this must be unmissable.
-  const banner = x.status === "nicht-versendet" ? `${statusLine}. Schick ihn von Hand.` : "";
+        ? `${LEAD_STATUS.fallback}${x.grund ? `, weil ${x.grund}` : ""}`
+        : `${LEAD_STATUS.nichtVersendet}${x.grund ? `, Grund: ${x.grund}` : ""}`;
+  // Not sent must be unmissable: a failed PDF or visitor mail means Ajdin sends by hand
+  // (PDF attached when it rendered); a cap means check before reacting.
+  const banner =
+    x.status === "nicht-versendet" ? `${statusLine}. ${LEAD_STATUS.vonHand}`
+    : x.status === "gesperrt" ? `${statusLine}. ${LEAD_STATUS.gesperrt}`
+    : "";
   const areas = rankAreas(a).map((id) => `${AREA_LABEL[id]}: ${a.stunden[id] || 0} Std.`);
   const kanaele = a.kanaele.map((k) => optLabel("aufgabe", k)).join(", ") || "-";
   const programme = a.programme.join(", ") || "-";
@@ -150,6 +158,13 @@ export function buildLeadMail(x: {
     ["Zeitpunkt (Server)", berlin.format(x.submittedAt)],
     ["Quelle", sourceLabel(x.source)],
     ["Status", statusLine],
+    ...(x.raw
+      ? ([
+          ["Original-Eingabe Firma", x.raw.firma || "-"],
+          ["Original-Eingabe Arbeitstag", x.raw.arbeitstag || "-"],
+          ["Original-Eingabe Programme", x.raw.programmeText || "-"],
+        ] satisfies Array<[string, string]>)
+      : []),
   ];
 
   const tr = ([k, v]: [string, string]) =>

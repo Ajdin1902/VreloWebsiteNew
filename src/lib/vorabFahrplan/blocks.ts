@@ -278,3 +278,14 @@ export const CAP_GRUND: Record<"adresse" | "ip" | "tag", string> = {
 };
 export const PDF_FEHLER_GRUND = "Das PDF ließ sich nicht erstellen";
 export const VERSAND_FEHLER_GRUND = "Versand an den Besucher fehlgeschlagen";
+
+// Status line and banner of the internal lead mail. `vonHand` only when the PDF or
+// the visitor mail failed; a capped send gets `gesperrt` instead.
+// COPY: Ajdin approves
+export const LEAD_STATUS = {
+  recherche: "Recherche läuft",
+  fallback: "Vorab-Fahrplan aus festen Bausteinen versendet",
+  nichtVersendet: "Vorab-Fahrplan nicht versendet",
+  vonHand: "Schick ihn von Hand.",
+  gesperrt: "Gesperrt durch Versandlimit, vermutlich kein echter Lead. Prüf kurz, bevor du reagierst.",
+};

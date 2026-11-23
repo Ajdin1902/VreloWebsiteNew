@@ -42,6 +42,9 @@ describe("Result", () => {
     expect(container.querySelectorAll('input[type="hidden"][name="programmeChips"]')).toHaveLength(2);
     expect(container.querySelectorAll('input[type="hidden"][name="bereiche"]')).toHaveLength(3);
     expect(container.querySelector('input[name="h_rechnungen"]')).toHaveValue("5");
+    // Honeypot: not called `website`, which password managers may autofill (M1).
+    expect(container.querySelector('input[name="website"]')).toBeNull();
+    expect(container.querySelector('input[name="hp_url"]')).toHaveAttribute("tabindex", "-1");
   });
 
   it("carries the source into the Cal.com booking note", () => {

@@ -31,7 +31,7 @@ vi.mock("next/headers", () => ({ headers: async () => new Headers(Object.fromEnt
 import { submitVorabFahrplan, type VorabFahrplanState } from "./actions";
 import { parseSubmission } from "@/lib/vorabFahrplan/submission";
 import { AREA_LABEL } from "@/lib/prozessCheck";
-import { CAP_GRUND, FORM_ERRORS, PDF_FEHLER_GRUND, VERSAND_FEHLER_GRUND } from "@/lib/vorabFahrplan/blocks";
+import { CAP_GRUND, FORM_ERRORS, LEAD_STATUS, PDF_FEHLER_GRUND, VERSAND_FEHLER_GRUND } from "@/lib/vorabFahrplan/blocks";
 
 type Entries = Record<string, string | string[] | undefined>;
 function fd(e: Entries): FormData {
@@ -138,6 +138,8 @@ describe("submitVorabFahrplan", () => {
     expect(lead.subject).toMatch(/^\[nicht versendet\] /);
     expect(lead.text).toContain("nicht versendet");
     expect(lead.text).toContain(CAP_GRUND.adresse);
+    expect(lead.text).toContain(LEAD_STATUS.gesperrt);
+    expect(lead.text).not.toContain(LEAD_STATUS.vonHand);
     expect(lead.attachments).toHaveLength(1);
   }, 30000);
 
@@ -162,6 +164,7 @@ describe("submitVorabFahrplan", () => {
     const lead = send.mock.calls[0][0];
     expect(lead.subject).toMatch(/^\[nicht versendet\] /);
     expect(lead.text).toContain(PDF_FEHLER_GRUND);
+    expect(lead.text).toContain(LEAD_STATUS.vonHand);
     expect(lead.attachments).toBeUndefined();
   });
 
@@ -176,6 +179,7 @@ describe("submitVorabFahrplan", () => {
       expect(second.to).toBe("me@vrelo-ki.de");
       expect(second.subject).toMatch(/^\[nicht versendet\] /);
       expect(second.text).toContain(VERSAND_FEHLER_GRUND);
+      expect(second.text).toContain(LEAD_STATUS.vonHand);
       expect(second.attachments).toHaveLength(1);
       expect(second.attachments[0].filename).toMatch(/^Vrelo-Vorab-Fahrplan-.+\.pdf$/);
     }
@@ -208,10 +212,29 @@ describe("submitVorabFahrplan", () => {
   });
 
   it("the honeypot is a silent ok with no send", async () => {
-    const s = await submitVorabFahrplan(idle, fd({ ...good, website: "bot" }));
+    const s = await submitVorabFahrplan(idle, fd({ ...good, hp_url: "bot" }));
     expect(s).toEqual({ status: "ok" });
     expect(send).not.toHaveBeenCalled();
   });
+
+  it("an autofilled `website` field is no honeypot hit", async () => {
+    await submitVorabFahrplan(idle, fd({ ...good, website: "https://muster.de" }));
+    expect(send).toHaveBeenCalledTimes(2);
+  }, 30000);
+
+  it("the lead mail carries the raw input as „Original-Eingabe“, the visitor mail does not", async () => {
+    await submitVorabFahrplan(idle, fd({ ...good, firma: "Muster GmbH <b>www.muster.de</b>", arbeitstag: "Ruf an: 0941 123456", programmeText: "Lexoffice, crm.example.com" }));
+    const [lead, visitor] = send.mock.calls.map((c) => c[0]);
+    expect(lead.text).toContain("Original-Eingabe");
+    for (const raw of ["Muster GmbH <b>www.muster.de</b>", "Ruf an: 0941 123456", "Lexoffice, crm.example.com"]) expect(lead.text).toContain(raw);
+    expect(lead.html).toContain("&lt;b&gt;www.muster.de&lt;/b&gt;");
+    expect(lead.html).not.toContain("<b>www");
+    for (const part of [visitor.text, visitor.html, visitor.subject]) {
+      expect(part).not.toContain("www.muster.de");
+      expect(part).not.toContain("123456");
+      expect(part).not.toContain("crm.example.com");
+    }
+  }, 30000);
 
   it("a too-fast submit is an error", async () => {
     const s = await submitVorabFahrplan(idle, fd({ ...good, renderedAt: String(Date.now()) }));
@@ -253,6 +276,14 @@ describe("parseSubmission", () => {
     expect(p.contact.telefon).toBe("+49941123456");
     expect(p.answers.website).toBe("https://muster.de/");
     expect(parseSubmission(fd({ ...good, webseite: "http://localhost" })).answers.website).toBeUndefined();
+  });
+
+  it("keeps the raw firma, workday and program text, capped at 2000", () => {
+    const p = parseSubmission(fd({ ...good, firma: `Muster www.muster.de ${"x".repeat(3000)}`, arbeitstag: "Tel 0941 123456", programmeText: "a.example.com" }));
+    expect(p.raw.firma.startsWith("Muster www.muster.de")).toBe(true);
+    expect(p.raw.firma).toHaveLength(2000);
+    expect(p.raw.arbeitstag).toBe("Tel 0941 123456");
+    expect(p.raw.programmeText).toBe("a.example.com");
   });
 
   it("keeps only known program chips", () => {

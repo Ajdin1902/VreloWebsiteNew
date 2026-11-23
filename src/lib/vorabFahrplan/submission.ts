@@ -7,11 +7,13 @@ import { normalizeSource } from "@/lib/source";
 import { AREA_IDS, PROGRAMM_CHIPS, STEPS, totalHours, type ParsedAnswers, type Step, type StepId } from "@/lib/prozessCheck";
 import { FORM_ERRORS } from "./blocks";
 import { capText, normalizePhone, normalizeWebsite, parseProgramme, stripContacts } from "./guards";
-import type { LeadContact } from "./mails";
+import type { LeadContact, RawInput } from "./mails";
 
 export type ParsedSubmission = {
   answers: ParsedAnswers;
   contact: LeadContact;
+  /** Unstripped text for the internal lead mail only (spec §6). */
+  raw: RawInput;
   source?: string;
   submittedAt: Date;
   honeypot: string;
@@ -81,9 +83,11 @@ export function parseSubmission(fd: FormData): ParsedSubmission {
       telefon: normalizePhone(get("telefon")) ?? "",
       anrufOk: fd.get("anruf") != null,
     },
+    raw: { firma: capText(get("firma"), 2000), arbeitstag: capText(get("arbeitstag"), 2000), programmeText: capText(get("programmeText"), 2000) },
     source: normalizeSource(get("src")),
     submittedAt: new Date(),
-    honeypot: get("website"),
+    // Not `website`: password managers may autofill that name and silently drop a real lead.
+    honeypot: get("hp_url"),
     renderedAt: Number(get("renderedAt")) || 0,
   };
 }

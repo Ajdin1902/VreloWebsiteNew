@@ -18,3 +18,11 @@ describe("/ratgeber", () => {
     expect(container.querySelector("section.-mt-24")).toBeNull();
   });
 });
+
+describe("/ratgeber closing CTA", () => {
+  it("says the Prozess-Check takes five minutes", () => {
+    const { container } = render(<RatgeberPage />);
+    expect(container.textContent).toContain("in fünf Minuten");
+    expect(container.textContent).not.toContain("drei Minuten");
+  });
+});

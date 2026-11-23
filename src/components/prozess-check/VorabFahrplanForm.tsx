@@ -52,7 +52,6 @@ export function VorabFahrplanForm({ answers, source }: { answers: ProzessCheckAn
     ["branche", answers.branche],
     ["team", answers.team],
     ["arbeitsort", answers.arbeitsort],
-    // `website` is the honeypot; the visitor's own website travels as `webseite`.
     ...(answers.website ? [["webseite", answers.website] as [string, string]] : []),
     ...(source ? [["src", source] as [string, string]] : []),
   ];
@@ -62,7 +61,8 @@ export function VorabFahrplanForm({ answers, source }: { answers: ProzessCheckAn
       {hidden.map(([name, value], i) => (
         <input key={`${name}-${i}`} type="hidden" name={name} value={value} />
       ))}
-      <input type="text" name="website" tabIndex={-1} aria-hidden="true" autoComplete="off" className="absolute left-[-9999px] h-0 w-0 opacity-0" />
+      {/* Honeypot. Not named `website`: password managers may autofill that and drop a real lead. */}
+      <input type="text" name="hp_url" tabIndex={-1} aria-hidden="true" autoComplete="off" className="absolute left-[-9999px] h-0 w-0 opacity-0" />
 
       <div className="grid gap-4 sm:grid-cols-2">
         {FIELDS.map((f) => {
