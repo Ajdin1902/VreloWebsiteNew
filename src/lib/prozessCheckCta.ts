@@ -79,10 +79,6 @@ export const CHECK_CTA = {
   closeMicrocopy: "Check, Audit und Fahrplan: alles kostenlos.",
   // Label of the Erstgespräch button on /kontakt-first pages.
   directLabel: "Erstgespräch buchen",
-  // One line above the scheduler on /kontakt.
-  kontaktHintPrefix: "Noch unsicher, ob sich ein Gespräch lohnt?",
-  kontaktHintLink: "Der Prozess-Check",
-  kontaktHintSuffix: "zeigt es dir in drei Minuten.",
 } as const;
 
 // The question count is promised in the FAQ, spelled from STEPS.length there, so adding or removing a quiz step can never leave a stale

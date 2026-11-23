@@ -9,7 +9,6 @@ import { ContactForm } from "@/components/kontakt/ContactForm";
 import { CardHeading } from "@/components/kontakt/CardHeading";
 import { SchedulerEmbed } from "@/components/kontakt/SchedulerEmbed";
 import { SchedulerFromUrl } from "@/components/kontakt/SchedulerFromUrl";
-import { CheckHint } from "@/components/kontakt/CheckHint";
 import { lightLinkClass } from "@/components/kontakt/onDarkLink";
 import { isContactConfigured, contactTo, calLink } from "@/lib/contact";
 import { breadcrumbLd } from "@/lib/jsonld";
@@ -61,8 +60,8 @@ export default function KontaktPage() {
           on the water, the amber form card below it is the main writing surface.
           Since 2026-11-12 on the light shaft, which falls onto the form. */}
       <WaterSection src="/images/bg-lichtschacht.webp">
-        <CheckHint />
-        <Suspense fallback={<SchedulerEmbed calLink={calLink()} />}>
+        {/* Ajdin 2026-11-23: no Prozess-Check hint and no „Lieber direkt sprechen?“ here. */}
+        <Suspense fallback={<SchedulerEmbed calLink={calLink()} prompt="" />}>
           <SchedulerFromUrl calLink={calLink()} />
         </Suspense>
 

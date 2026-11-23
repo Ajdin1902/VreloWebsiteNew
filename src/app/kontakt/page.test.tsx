@@ -2,7 +2,9 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 
 vi.mock("next/navigation", () => ({ useSearchParams: () => new URLSearchParams() }));
-vi.mock("@/components/kontakt/SchedulerEmbed", () => ({ SchedulerEmbed: () => null }));
+vi.mock("@/components/kontakt/SchedulerEmbed", () => ({
+  SchedulerEmbed: ({ prompt }: { prompt?: string }) => <p>{prompt ?? "Lieber direkt sprechen?"}</p>,
+}));
 vi.mock("@/components/kontakt/ContactForm", () => ({ ContactForm: () => <form aria-label="Kontaktformular" /> }));
 vi.mock("@/components/RippleImage", () => ({ RippleImage: () => null }));
 vi.mock("@/lib/contact", () => ({ isContactConfigured: () => true, contactTo: () => "", calLink: () => "x/y" }));
@@ -32,6 +34,13 @@ describe("/kontakt", () => {
     expect(zeile).toContainElement(tel);
     const formBand = screen.getByRole("form", { name: "Kontaktformular" }).closest("section")!;
     expect(zeile.compareDocumentPosition(formBand) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
+  // Ajdin 2026-11-23: neither the Prozess-Check hint nor the scheduler's prompt heading.
+  it("drops the Prozess-Check hint and the „Lieber direkt sprechen?“ heading", () => {
+    const { container } = render(<KontaktPage />);
+    expect(container).not.toHaveTextContent("Noch unsicher");
+    expect(container).not.toHaveTextContent("Lieber direkt sprechen");
   });
 
   it("puts the form on the light-shaft image, the form card in front", () => {

@@ -11,5 +11,5 @@ import { SchedulerEmbed } from "./SchedulerEmbed";
 export function SchedulerFromUrl({ calLink }: { calLink: string | undefined }) {
   const params = useSearchParams();
   const source = normalizeSource(params?.get("src"));
-  return <SchedulerEmbed calLink={calLink} notes={source ? `Quelle: ${source}` : undefined} />;
+  return <SchedulerEmbed calLink={calLink} prompt="" notes={source ? `Quelle: ${source}` : undefined} />;
 }
