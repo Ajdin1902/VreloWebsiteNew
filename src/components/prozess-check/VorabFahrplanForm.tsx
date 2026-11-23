@@ -20,7 +20,16 @@ type FieldName = (typeof FIELDS)[number]["name"];
 const INPUT =
   "w-full rounded-md border border-papier/60 bg-tiefes-wasser/40 px-3 py-2 text-papier placeholder:text-gletscher/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber focus-visible:ring-offset-2 focus-visible:ring-offset-vrelo-petrol";
 
-export function VorabFahrplanForm({ answers, source }: { answers: ProzessCheckAnswers; source?: string }) {
+export function VorabFahrplanForm({
+  answers,
+  source,
+  research,
+}: {
+  answers: ProzessCheckAnswers;
+  source?: string;
+  /** Research configured on the server: show the KI sentence (it is part of the consent proof). */
+  research: boolean;
+}) {
   const [state, formAction, pending] = useActionState(submitVorabFahrplan, initial);
   const [renderedAt] = useState(() => Date.now());
   // Controlled, so React 19's form reset after the action keeps what the visitor typed.
@@ -30,7 +39,7 @@ export function VorabFahrplanForm({ answers, source }: { answers: ProzessCheckAn
   if (state.status === "ok") {
     return (
       <p role="status" className="mt-4 text-gletscher">
-        {RESULT_UI.success}
+        {state.recherche ? RESULT_UI.successRecherche : RESULT_UI.success}
       </p>
     );
   }
@@ -95,6 +104,7 @@ export function VorabFahrplanForm({ answers, source }: { answers: ProzessCheckAn
       </div>
 
       <p className="text-sm text-gletscher/90">{FORM_UI.consentAnruf}</p>
+      {research ? <p className="text-sm text-gletscher/90">{FORM_UI.consentKi}</p> : null}
       <div>
         <label className="flex items-start gap-2 text-sm text-gletscher">
           <input

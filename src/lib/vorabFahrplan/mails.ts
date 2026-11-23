@@ -5,7 +5,7 @@ import { escapeHtml } from "@/lib/email/escapeHtml";
 import { signaturHtml, signaturText } from "@/lib/email/signatur";
 import { sourceLabel } from "@/lib/source";
 import { AREA_LABEL, STEPS, hoursLabel, rankAreas, totalHours, type ParsedAnswers, type StepId } from "@/lib/prozessCheck";
-import { CONSENT_TEXT, CONSENT_VERSION, LEAD_STATUS } from "./blocks";
+import { LEAD_STATUS } from "./blocks";
 import type { VorabFahrplan } from "./content";
 
 // Style constants of the former prozessCheckEmail.ts summary mail.
@@ -114,6 +114,8 @@ export function buildLeadMail(x: {
   status: "recherche" | "fallback" | "nicht-versendet" | "gesperrt";
   grund?: string;
   raw?: RawInput;
+  /** The consent variant the form showed (consentFor). */
+  consent: { text: string; version: string };
 }): Mail & { replyTo: string } {
   const { contact: c, answers: a } = x;
   const statusLine =
@@ -153,8 +155,8 @@ export function buildLeadMail(x: {
     ["Team", optLabel("team", a.team)],
     ["Arbeitsort", optLabel("arbeitsort", a.arbeitsort)],
     ["Website", a.website || "-"],
-    ["Einwilligung", CONSENT_TEXT],
-    ["Textversion", CONSENT_VERSION],
+    ["Einwilligung", x.consent.text],
+    ["Textversion", x.consent.version],
     ["Zeitpunkt (Server)", berlin.format(x.submittedAt)],
     ["Quelle", sourceLabel(x.source)],
     ["Status", statusLine],

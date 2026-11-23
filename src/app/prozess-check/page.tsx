@@ -5,6 +5,7 @@ import { PageHero } from "@/components/PageHero";
 import { ProzessCheck } from "@/components/prozess-check/ProzessCheck";
 import { ProzessCheckFromUrl } from "@/components/prozess-check/ProzessCheckFromUrl";
 import { calBookingUrl } from "@/lib/contact";
+import { researchConfigured } from "@/lib/vorabFahrplan/job";
 
 // The form's server action runs in this page's function: PDF render plus two mails need headroom.
 export const maxDuration = 60;
@@ -40,8 +41,9 @@ export default function ProzessCheckPage() {
           <p className="mb-6 text-center text-papier/85">{HERO_SUBLINE}</p>
           {/* ?src=brief-<segment> (letter batches via /brief) is read on the
               client; the fallback renders the same questionnaire without it. */}
-          <Suspense fallback={<ProzessCheck calUrl={calBookingUrl()} />}>
-            <ProzessCheckFromUrl calUrl={calBookingUrl()} />
+          {/* research: read from env at render (build time on a static page), same check as the action. */}
+          <Suspense fallback={<ProzessCheck calUrl={calBookingUrl()} research={researchConfigured()} />}>
+            <ProzessCheckFromUrl calUrl={calBookingUrl()} research={researchConfigured()} />
           </Suspense>
         </div>
       </div>

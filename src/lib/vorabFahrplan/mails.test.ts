@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { ParsedAnswers } from "@/lib/prozessCheck";
-import { AREA_IDEE, CAP_GRUND, CONSENT_TEXT, CONSENT_VERSION, FORM_ERRORS, FORM_FIELDS, FORM_UI, LEAD_STATUS, PDF_FEHLER_GRUND, VERSAND_FEHLER_GRUND } from "./blocks";
+import { AREA_IDEE, CAP_GRUND, CONSENT_TEXT, CONSENT_VERSION, FORM_ERRORS, FORM_FIELDS, FORM_UI, LEAD_STATUS, PDF_FEHLER_GRUND, RECHERCHE_GRUND, VERSAND_FEHLER_GRUND, consentFor } from "./blocks";
 import { buildLeadMail, buildVisitorMail, MAIL_UI } from "./mails";
 import type { VorabFahrplan } from "./content";
 
@@ -38,7 +38,7 @@ const answers: ParsedAnswers = {
 };
 const contact = { name: "Max Muster", firma: "Muster GmbH", email: "max@muster.de", telefon: "+49941123456", anrufOk: true };
 const lead = (o: object = {}) =>
-  buildLeadMail({ contact, answers, source: "brief-handwerk", submittedAt: new Date("2026-11-23T23:30:00Z"), status: "recherche", ...o });
+  buildLeadMail({ contact, answers, source: "brief-handwerk", submittedAt: new Date("2026-11-23T23:30:00Z"), status: "recherche", consent: consentFor(false), ...o });
 
 describe("buildVisitorMail", () => {
   it("has the Vrelo look, the signature, the Zuerst title and no €", () => {
@@ -99,8 +99,17 @@ describe("buildLeadMail", () => {
       ]) expect(part).toContain(s.replace(/'/g, part === m.html ? "&#39;" : "'"));
     }
     expect(CONSENT_VERSION).toBe("pc-call-2026-11-24");
-    // Plan 1 runs no research: the stored consent proof names no KI (C1).
+    // Without research the stored consent proof names no KI (C1).
     expect(CONSENT_TEXT).not.toMatch(/\bKI\b|recherchiert/);
+  });
+  it("records the consent variant it is given", () => {
+    const ki = consentFor(true);
+    const m = lead({ consent: ki });
+    for (const part of [m.text, m.html]) {
+      expect(part).toContain(ki.version);
+      expect(part).toContain(FORM_UI.consentKi);
+    }
+    expect(m.text).not.toContain(CONSENT_VERSION);
   });
   it("escapes visitor values", () => {
     const m = lead({ contact: { ...contact, firma: "<b>X</b>" } });
@@ -156,7 +165,7 @@ describe("buildLeadMail", () => {
 });
 
 describe("copy guards", () => {
-  const strings = [...Object.values(MAIL_UI), ...Object.values(FORM_UI), ...Object.values(FORM_FIELDS), ...Object.values(FORM_ERRORS), ...Object.values(CAP_GRUND), ...Object.values(LEAD_STATUS), PDF_FEHLER_GRUND, VERSAND_FEHLER_GRUND, CONSENT_TEXT];
+  const strings = [...Object.values(MAIL_UI), ...Object.values(FORM_UI), ...Object.values(FORM_FIELDS), ...Object.values(FORM_ERRORS), ...Object.values(CAP_GRUND), ...Object.values(LEAD_STATUS), ...Object.values(RECHERCHE_GRUND), PDF_FEHLER_GRUND, VERSAND_FEHLER_GRUND, CONSENT_TEXT, consentFor(true).text];
   it("fixed strings follow the German punctuation rules", () => {
     for (const s of strings) {
       expect(s).not.toMatch(/["–—€]/);
@@ -179,5 +188,15 @@ describe("visitor headline", () => {
     for (const { titel } of Object.values(AREA_IDEE)) {
       expect(buildVisitorMail({ ...plan, schritte: [{ ...plan.schritte[0], titel }] }).text).toContain(`Mein erster Schritt wäre: ${titel}.`);
     }
+  });
+});
+
+describe("consentFor", () => {
+  it("has two variants: without KI (Plan 1 version) and with the KI sentence (own version)", () => {
+    expect(consentFor(false)).toEqual({ text: CONSENT_TEXT, version: "pc-call-2026-11-24" });
+    const ki = consentFor(true);
+    expect(ki.version).toBe("pc-call-ki-2026-11-24");
+    expect(ki.text).toBe(`${FORM_UI.consentAnruf} ${FORM_UI.consentKi} ${FORM_UI.checkbox}`);
+    expect(FORM_UI.consentKi).toBe("Für deinen Vorab-Fahrplan recherchiert eine KI deine Programme und, wenn du sie angegeben hast, deine Website. Name, E-Mail und Telefon bekommt sie nicht.");
   });
 });

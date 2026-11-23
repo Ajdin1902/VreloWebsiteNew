@@ -11,6 +11,7 @@ export function Result({
   copy,
   calUrl,
   source,
+  research,
 }: {
   answers: ProzessCheckAnswers;
   copy: ResultCopy;
@@ -18,6 +19,8 @@ export function Result({
   calUrl: string | undefined;
   /** Attribution slug (`?src=`); travels into the lead mail. */
   source?: string;
+  /** Research configured on the server (researchConfigured); passed down to the form. */
+  research: boolean;
 }) {
   // The wizard step that held focus unmounts: move focus to the result heading.
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -73,7 +76,7 @@ export function Result({
         <div className="rounded-2xl bg-tiefes-wasser p-8 md:p-10">
           <p className="text-balance font-serif text-2xl text-papier md:text-3xl">{RESULT_UI.reliefTitle}</p>
           <p className="mt-3 text-pretty text-gletscher">{RESULT_UI.formTitle}</p>
-          <VorabFahrplanForm answers={answers} source={source} />
+          <VorabFahrplanForm answers={answers} source={source} research={research} />
           {calUrl ? (
             <p className="mt-8 border-t border-papier/20 pt-6 text-sm">
               <a href={source ? `${calUrl}?notes=${encodeURIComponent(`Quelle: ${source}`)}` : calUrl} className="text-gletscher underline underline-offset-4 hover:text-papier">

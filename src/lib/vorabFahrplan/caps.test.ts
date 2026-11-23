@@ -20,13 +20,32 @@ const evalScript = vi.fn(async (_script: string, keys: string[], args: (string |
   return 0;
 });
 
+const redisCmd = {
+  incr: vi.fn(async (k: string) => incr(k)),
+  decr: vi.fn(async (k: string) => {
+    const n = (store.get(k) ?? 0) - 1;
+    store.set(k, n);
+    return n;
+  }),
+  ttl: vi.fn(async (k: string) => (!store.has(k) ? -2 : ttls.has(k) ? ttls.get(k)! : -1)),
+  expire: vi.fn(async (k: string, t: number) => (expire(k, t), 1)),
+  set: vi.fn(async (k: string, v: number, o: { nx?: boolean; ex?: number }) => {
+    if (o.nx && store.has(k)) return null;
+    store.set(k, v);
+    if (o.ex) ttls.set(k, o.ex);
+    return "OK";
+  }),
+  del: vi.fn(async (k: string) => (ttls.delete(k), store.delete(k) ? 1 : 0)),
+};
+
 vi.mock("@upstash/redis", () => ({
   Redis: vi.fn(function (this: Record<string, unknown>) {
     this.eval = evalScript;
+    Object.assign(this, redisCmd);
   }),
 }));
 
-import { checkSendCaps, CAPS } from "./caps";
+import { checkResearchCaps, checkSendCaps, CAPS, releaseResearch, RESEARCH_CAPS } from "./caps";
 
 beforeEach(() => {
   store.clear();
@@ -134,5 +153,65 @@ describe("checkSendCaps", () => {
       expect(k.toLowerCase()).not.toContain("firma");
     }
     expect(keys.some((k) => /^pc:mail:[0-9a-f]{64}$/.test(k))).toBe(true);
+  });
+});
+
+describe("checkResearchCaps", () => {
+  const dayKey = () => `pc:research:${new Date().toISOString().slice(0, 10)}`;
+
+  it("exports the spec caps", () => {
+    expect(RESEARCH_CAPS).toEqual({ proTag: 25, frischTage: 30 });
+  });
+
+  it("the first run is fresh, sets the day TTL and the 30-day fresh key", async () => {
+    expect(await checkResearchCaps("a@b.de")).toEqual({ research: true, frisch: true });
+    expect(ttls.get(dayKey())).toBe(93600);
+    const fresh = [...store.keys()].find((k) => k.startsWith("pc:fresh:"))!;
+    expect(fresh).toMatch(/^pc:fresh:[0-9a-f]{64}$/);
+    expect(ttls.get(fresh)).toBe(2592000);
+  });
+
+  it("a second run from the same address within 30 days is not fresh", async () => {
+    await checkResearchCaps("a@b.de");
+    expect(await checkResearchCaps("  A@B.de ")).toEqual({ research: true, frisch: false });
+  });
+
+  it("the 26th research of the day is refused with grund tag and not counted", async () => {
+    for (let i = 0; i < 25; i++) expect((await checkResearchCaps(`u${i}@b.de`)).research).toBe(true);
+    expect(await checkResearchCaps("x@b.de")).toEqual({ research: false, frisch: false, grund: "tag" });
+    expect(store.get(dayKey())).toBe(25);
+    // A refused run leaves no fresh key behind.
+    expect(await checkResearchCaps("x@b.de")).toMatchObject({ research: false });
+  });
+
+  it("re-applies a TTL to a day key left without one", async () => {
+    await checkResearchCaps("a@b.de");
+    ttls.delete(dayKey());
+    await checkResearchCaps("c@b.de");
+    expect(ttls.get(dayKey())).toBe(93600);
+  });
+
+  it("fails closed: no Upstash or a Redis error means no research", async () => {
+    redisCmd.incr.mockRejectedValueOnce(new Error("net"));
+    expect(await checkResearchCaps("a@b.de")).toEqual({ research: false, frisch: false, grund: "speicher" });
+    vi.stubEnv("UPSTASH_REDIS_REST_URL", "");
+    expect(await checkResearchCaps("a@b.de")).toEqual({ research: false, frisch: false, grund: "speicher" });
+  });
+
+  it("releaseResearch gives back the day slot and, if it was set, the fresh key", async () => {
+    await checkResearchCaps("a@b.de");
+    await releaseResearch("a@b.de", true);
+    expect(store.get(dayKey())).toBe(0);
+    expect([...store.keys()].some((k) => k.startsWith("pc:fresh:"))).toBe(false);
+    expect(await checkResearchCaps("a@b.de")).toEqual({ research: true, frisch: true });
+    // Not fresh: the older fresh key stays.
+    await checkResearchCaps("a@b.de");
+    await releaseResearch("a@b.de", false);
+    expect([...store.keys()].some((k) => k.startsWith("pc:fresh:"))).toBe(true);
+  });
+
+  it("never puts the raw e-mail in a key", async () => {
+    await checkResearchCaps("Max@Firma.de");
+    for (const k of store.keys()) expect(k.toLowerCase()).not.toContain("firma");
   });
 });

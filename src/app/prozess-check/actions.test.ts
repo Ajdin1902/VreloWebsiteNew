@@ -2,9 +2,15 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 const send = vi.hoisted(() => vi.fn());
 const checkSendCaps = vi.hoisted(() => vi.fn());
+const checkResearchCaps = vi.hoisted(() => vi.fn());
+const releaseResearch = vi.hoisted(() => vi.fn());
+const parkJob = vi.hoisted(() => vi.fn());
+const takeJob = vi.hoisted(() => vi.fn());
 const headerMap = vi.hoisted(() => ({ current: new Map<string, string>() }));
 vi.mock("resend", () => ({ Resend: class { emails = { send }; } }));
-vi.mock("@/lib/vorabFahrplan/caps", () => ({ checkSendCaps }));
+vi.mock("@/lib/vorabFahrplan/caps", () => ({ checkSendCaps, checkResearchCaps, releaseResearch }));
+// Upstash parking is mocked; toResearchJob, postJob and researchConfigured run for real.
+vi.mock("@/lib/vorabFahrplan/job", async (importOriginal) => ({ ...(await importOriginal<object>()), parkJob, takeJob }));
 const pdfFail = vi.hoisted(() => ({ on: false }));
 vi.mock("@/lib/vorabFahrplan/pdf", async (importOriginal) => {
   const m = await importOriginal<typeof import("@/lib/vorabFahrplan/pdf")>();
@@ -31,7 +37,7 @@ vi.mock("next/headers", () => ({ headers: async () => new Headers(Object.fromEnt
 import { submitVorabFahrplan, type VorabFahrplanState } from "./actions";
 import { parseSubmission } from "@/lib/vorabFahrplan/submission";
 import { AREA_LABEL } from "@/lib/prozessCheck";
-import { CAP_GRUND, FORM_ERRORS, LEAD_STATUS, PDF_FEHLER_GRUND, VERSAND_FEHLER_GRUND } from "@/lib/vorabFahrplan/blocks";
+import { CAP_GRUND, CONSENT_TEXT, CONSENT_VERSION, FORM_ERRORS, FORM_UI, LEAD_STATUS, PDF_FEHLER_GRUND, RECHERCHE_GRUND, VERSAND_FEHLER_GRUND, consentFor } from "@/lib/vorabFahrplan/blocks";
 
 type Entries = Record<string, string | string[] | undefined>;
 function fd(e: Entries): FormData {
@@ -76,18 +82,29 @@ beforeEach(() => {
   send.mockResolvedValue({ error: null });
   checkSendCaps.mockReset();
   checkSendCaps.mockResolvedValue({ ok: true });
+  checkResearchCaps.mockReset();
+  checkResearchCaps.mockResolvedValue({ research: true, frisch: true });
+  releaseResearch.mockReset();
+  parkJob.mockReset();
+  parkJob.mockResolvedValue(true);
+  takeJob.mockReset();
+  takeJob.mockResolvedValue(null);
   headerMap.current = new Map([["x-forwarded-for", "1.2.3.4, 10.0.0.1"]]);
   vi.spyOn(console, "error").mockImplementation(() => {});
   process.env.RESEND_API_KEY = "k";
   process.env.CONTACT_FROM = "Vrelo <a@vrelo-ki.de>";
   process.env.CONTACT_TO = "me@vrelo-ki.de";
 });
-afterEach(() => vi.restoreAllMocks());
+afterEach(() => {
+  vi.restoreAllMocks();
+  vi.unstubAllEnvs();
+  vi.unstubAllGlobals();
+});
 
 describe("submitVorabFahrplan", () => {
   it("sends the lead mail first, then the visitor mail with the PDF", async () => {
     const s = await submitVorabFahrplan(idle, fd(good));
-    expect(s).toEqual({ status: "ok" });
+    expect(s).toEqual({ status: "ok", recherche: false });
     expect(send).toHaveBeenCalledTimes(2);
     const [lead, visitor] = send.mock.calls.map((c) => c[0]);
     expect(lead.to).toBe("me@vrelo-ki.de");
@@ -99,6 +116,16 @@ describe("submitVorabFahrplan", () => {
     expect(Buffer.from(visitor.attachments[0].content).subarray(0, 4).toString("latin1")).toBe("%PDF");
     // The lead mail carries the same PDF.
     expect(lead.attachments[0].filename).toBe(visitor.attachments[0].filename);
+  }, 30000);
+
+  it("without research env: no research caps, no job, the consent without KI", async () => {
+    await submitVorabFahrplan(idle, fd(good));
+    expect(checkResearchCaps).not.toHaveBeenCalled();
+    expect(parkJob).not.toHaveBeenCalled();
+    const lead = send.mock.calls[0][0];
+    expect(lead.text).toContain(`Einwilligung: ${CONSENT_TEXT}`);
+    expect(lead.text).toContain(`Textversion: ${CONSENT_VERSION}`);
+    expect(lead.text).not.toContain(FORM_UI.consentKi);
   }, 30000);
 
   it("passes the first x-forwarded-for entry to the caps, or „unknown“", async () => {
@@ -132,7 +159,7 @@ describe("submitVorabFahrplan", () => {
   it("capped: only the lead mail goes out, flagged „nicht versendet“ with the PDF, status ok", async () => {
     checkSendCaps.mockResolvedValue({ ok: false, grund: "adresse" });
     const s = await submitVorabFahrplan(idle, fd(good));
-    expect(s).toEqual({ status: "ok" });
+    expect(s).toEqual({ status: "ok", recherche: false });
     expect(send).toHaveBeenCalledTimes(1);
     const lead = send.mock.calls[0][0];
     expect(lead.subject).toMatch(/^\[nicht versendet\] /);
@@ -149,7 +176,7 @@ describe("submitVorabFahrplan", () => {
       .mockRejectedValueOnce(new Error("down"))
       .mockResolvedValueOnce({ error: null });
     const s = await submitVorabFahrplan(idle, fd(good));
-    expect(s).toEqual({ status: "ok" });
+    expect(s).toEqual({ status: "ok", recherche: false });
     expect(console.error).toHaveBeenCalledTimes(1);
     expect(String(vi.mocked(console.error).mock.calls[0][0])).toBe("prozess-check lead mail failed");
     expect(send).toHaveBeenCalledTimes(3);
@@ -213,7 +240,7 @@ describe("submitVorabFahrplan", () => {
 
   it("the honeypot is a silent ok with no send", async () => {
     const s = await submitVorabFahrplan(idle, fd({ ...good, hp_url: "bot" }));
-    expect(s).toEqual({ status: "ok" });
+    expect(s).toEqual({ status: "ok", recherche: false });
     expect(send).not.toHaveBeenCalled();
   });
 
@@ -306,4 +333,113 @@ describe("parseSubmission", () => {
     expect(p.answers.arbeitstag).not.toContain("123456");
     expect(p.answers.arbeitstag.length).toBe(500);
   });
+});
+
+describe("submitVorabFahrplan with research (Plan 2)", () => {
+  const fetchMock = vi.fn();
+  beforeEach(() => {
+    vi.stubEnv("N8N_PC_WEBHOOK_URL", "https://server1.example/webhook/pc");
+    vi.stubEnv("PC_SHARED_SECRET", "a".repeat(64));
+    fetchMock.mockReset();
+    fetchMock.mockResolvedValue(new Response(null, { status: 200 }));
+    vi.stubGlobal("fetch", fetchMock);
+  });
+
+  const expectFallback = (grund: string) => {
+    expect(send).toHaveBeenCalledTimes(2);
+    const [lead, visitor] = send.mock.calls.map((c) => c[0]);
+    expect(lead.to).toBe("me@vrelo-ki.de");
+    expect(lead.text).toContain(`Status: ${LEAD_STATUS.fallback}, weil ${grund}`);
+    expect(lead.subject).toMatch(/^Neuer Lead/);
+    expect(visitor.to).toBe("max@muster.de");
+    expect(Buffer.from(visitor.attachments[0].content).subarray(0, 4).toString("latin1")).toBe("%PDF");
+  };
+
+  it("happy path: parks, posts with the secret, one send only (lead mail „Recherche läuft“, no PDF)", async () => {
+    const s = await submitVorabFahrplan(idle, fd(good));
+    expect(s).toEqual({ status: "ok", recherche: true });
+    expect(checkResearchCaps).toHaveBeenCalledWith("max@muster.de");
+    expect(parkJob).toHaveBeenCalledTimes(1);
+    const [jobId, parked] = parkJob.mock.calls[0];
+    expect(parked.contact.email).toBe("max@muster.de");
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    const [url, init] = fetchMock.mock.calls[0];
+    expect(url).toBe("https://server1.example/webhook/pc");
+    expect(new Headers(init.headers).get("x-vrelo-secret")).toBe("a".repeat(64));
+    const job = JSON.parse(String(init.body));
+    expect(job.jobId).toBe(jobId);
+    expect(job.frischeRecherche).toBe(true);
+    for (const secret of ["Max Muster", "max@muster.de", "123456"]) expect(String(init.body)).not.toContain(secret);
+    expect(send).toHaveBeenCalledTimes(1);
+    const lead = send.mock.calls[0][0];
+    expect(lead.to).toBe("me@vrelo-ki.de");
+    expect(lead.text).toContain(`Status: ${LEAD_STATUS.recherche}`);
+    expect(lead.attachments).toBeUndefined();
+    // The lead records the consent variant the form showed: with the KI sentence.
+    const ki = consentFor(true);
+    expect(lead.text).toContain(`Einwilligung: ${ki.text}`);
+    expect(lead.text).toContain(`Textversion: ${ki.version}`);
+    expect(takeJob).not.toHaveBeenCalled();
+    expect(releaseResearch).not.toHaveBeenCalled();
+  });
+
+  it("a second submit within 30 days posts frischeRecherche false", async () => {
+    checkResearchCaps.mockResolvedValue({ research: true, frisch: false });
+    await submitVorabFahrplan(idle, fd(good));
+    expect(JSON.parse(String(fetchMock.mock.calls[0][1].body)).frischeRecherche).toBe(false);
+  });
+
+  it("webhook 500: cleans up the job, gives back the slot, sends the fallback PDF with the reason", async () => {
+    fetchMock.mockResolvedValue(new Response("x", { status: 500 }));
+    const s = await submitVorabFahrplan(idle, fd(good));
+    expect(s).toEqual({ status: "ok", recherche: false });
+    expect(takeJob).toHaveBeenCalledWith(parkJob.mock.calls[0][0]);
+    expect(releaseResearch).toHaveBeenCalledWith("max@muster.de", true);
+    expectFallback(RECHERCHE_GRUND.webhook);
+  }, 30000);
+
+  it("webhook timeout: the same fallback", async () => {
+    const ctl = new AbortController();
+    vi.spyOn(AbortSignal, "timeout").mockReturnValue(ctl.signal);
+    fetchMock.mockImplementation((_u: string, init: RequestInit) => {
+      // Never answers; only the 5000 ms abort ends it (fired here at once).
+      const p = new Promise((_, reject) => init.signal!.addEventListener("abort", () => reject(new Error("aborted"))));
+      ctl.abort();
+      return p;
+    });
+    const s = await submitVorabFahrplan(idle, fd(good));
+    expect(s).toEqual({ status: "ok", recherche: false });
+    expect(AbortSignal.timeout).toHaveBeenCalledWith(5000);
+    expect(takeJob).toHaveBeenCalled();
+    expectFallback(RECHERCHE_GRUND.webhook);
+  }, 30000);
+
+  it("parking fails: no POST, fallback with the storage reason", async () => {
+    parkJob.mockResolvedValue(false);
+    await submitVorabFahrplan(idle, fd(good));
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(takeJob).toHaveBeenCalled();
+    expect(releaseResearch).toHaveBeenCalledWith("max@muster.de", true);
+    expectFallback(RECHERCHE_GRUND.speicher);
+  }, 30000);
+
+  it("the 26th research of the day: fallback with the Tageslimit reason, nothing parked", async () => {
+    checkResearchCaps.mockResolvedValue({ research: false, frisch: false, grund: "tag" });
+    const s = await submitVorabFahrplan(idle, fd(good));
+    expect(s).toEqual({ status: "ok", recherche: false });
+    expect(parkJob).not.toHaveBeenCalled();
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(RECHERCHE_GRUND.tag).toContain("Tageslimit");
+    expectFallback(RECHERCHE_GRUND.tag);
+  }, 30000);
+
+  it("a capped send never starts research, the lead still records the KI consent", async () => {
+    checkSendCaps.mockResolvedValue({ ok: false, grund: "ip" });
+    const s = await submitVorabFahrplan(idle, fd(good));
+    expect(s).toEqual({ status: "ok", recherche: false });
+    expect(checkResearchCaps).not.toHaveBeenCalled();
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(send).toHaveBeenCalledTimes(1);
+    expect(send.mock.calls[0][0].text).toContain(`Textversion: ${consentFor(true).version}`);
+  }, 30000);
 });

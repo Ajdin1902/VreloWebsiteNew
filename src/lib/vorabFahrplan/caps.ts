@@ -1,15 +1,24 @@
 import { createHash } from "crypto";
 import { Redis } from "@upstash/redis";
 import { hashIp } from "@/lib/demo/ratelimit";
-import { CAPS } from "./content";
+import { CAPS, RESEARCH_CAPS } from "./content";
 
-export { CAPS };
+export { CAPS, RESEARCH_CAPS };
 
 const MAIL_SALT = process.env.PC_HASH_SALT || "vrelo-pc-mail-v1";
 
 function hashMail(email: string): string {
   return createHash("sha256").update(`${MAIL_SALT}:${email.trim().toLowerCase()}`).digest("hex");
 }
+
+/** The Upstash client, or null when the env is missing. Shared with job.ts. */
+export function redisClient(): Redis | null {
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  return url && token ? new Redis({ url, token }) : null;
+}
+
+const utcDay = () => new Date().toISOString().slice(0, 10);
 
 export type CapResult = { ok: true } | { ok: false; grund: "adresse" | "ip" | "tag" };
 
@@ -35,13 +44,10 @@ return 0
  * counter is at its cap, else increments all of them. Fails open.
  */
 export async function checkSendCaps(x: { ip: string; email: string }): Promise<CapResult> {
-  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) return { ok: true };
+  const redis = redisClient();
+  if (!redis) return { ok: true };
   try {
-    const redis = new Redis({
-      url: process.env.UPSTASH_REDIS_REST_URL,
-      token: process.env.UPSTASH_REDIS_REST_TOKEN,
-    });
-    const day = new Date().toISOString().slice(0, 10);
+    const day = utcDay();
     // Unknown IP would share one bucket and lock everyone out: skip the IP cap then.
     const ipKnown = !["", "unknown"].includes(x.ip.trim().toLowerCase());
     // Address and IP windows are fixed from the first send, not rolling.
@@ -59,5 +65,47 @@ export async function checkSendCaps(x: { ip: string; email: string }): Promise<C
     return capped ? { ok: false, grund: capped.grund } : { ok: true };
   } catch {
     return { ok: true };
+  }
+}
+
+export type ResearchCapResult = { research: true; frisch: boolean } | { research: false; frisch: false; grund: "tag" | "speicher" };
+
+const researchDayKey = () => `pc:research:${utcDay()}`;
+const freshKey = (email: string) => `pc:fresh:${hashMail(email)}`;
+
+/**
+ * Reserves one of the 25 research runs of the UTC day (INCR is atomic, so no
+ * read/increment race) and claims fresh research for this address once per
+ * 30 days (SET NX). Fails closed: no Upstash or an error means no research.
+ * The action calls releaseResearch when the hand-off to n8n fails, so only
+ * handed-off runs stay counted.
+ */
+export async function checkResearchCaps(email: string): Promise<ResearchCapResult> {
+  const redis = redisClient();
+  if (!redis) return { research: false, frisch: false, grund: "speicher" };
+  try {
+    const key = researchDayKey();
+    const n = await redis.incr(key);
+    if (n === 1 || (await redis.ttl(key)) === -1) await redis.expire(key, 26 * 3600);
+    if (n > RESEARCH_CAPS.proTag) {
+      await redis.decr(key);
+      return { research: false, frisch: false, grund: "tag" };
+    }
+    const frisch = (await redis.set(freshKey(email), 1, { nx: true, ex: RESEARCH_CAPS.frischTage * 86400 })) === "OK";
+    return { research: true, frisch };
+  } catch {
+    return { research: false, frisch: false, grund: "speicher" };
+  }
+}
+
+/** Gives back what checkResearchCaps took for a run that never reached n8n. */
+export async function releaseResearch(email: string, frisch: boolean): Promise<void> {
+  const redis = redisClient();
+  if (!redis) return;
+  try {
+    await redis.decr(researchDayKey());
+    if (frisch) await redis.del(freshKey(email));
+  } catch {
+    // The slot stays taken: one research run fewer today, nothing worse.
   }
 }

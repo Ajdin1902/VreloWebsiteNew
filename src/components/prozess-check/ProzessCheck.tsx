@@ -24,8 +24,11 @@ type PartialAnswers = Partial<ProzessCheckAnswers>;
 export function ProzessCheck({
   calUrl,
   source,
+  research,
 }: {
   calUrl: string | undefined;
+  /** Research configured on the server; decides the consent text of the form. */
+  research: boolean;
   /** Attribution slug from `?src=` (e.g. `brief-handwerk`), already normalized. */
   source?: string;
 }) {
@@ -67,7 +70,7 @@ export function ProzessCheck({
       arbeitsort: answers.arbeitsort ?? "buero",
       ...(answers.website ? { website: answers.website } : {}),
     };
-    return <Result answers={final} copy={resultCopy(final)} calUrl={calUrl} source={source} />;
+    return <Result answers={final} copy={resultCopy(final)} calUrl={calUrl} source={source} research={research} />;
   }
 
   const step = steps[index];

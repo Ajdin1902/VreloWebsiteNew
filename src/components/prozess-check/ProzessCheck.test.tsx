@@ -33,14 +33,14 @@ function finishFromAufgabe() {
 
 describe("ProzessCheck wizard", () => {
   it("starts on the intro and its button opens question 1", () => {
-    render(<ProzessCheck calUrl={undefined} />);
+    render(<ProzessCheck calUrl={undefined} research={false} />);
     expect(screen.getByText("Dein Vorab-Fahrplan in 5 Minuten")).toBeInTheDocument();
     click("Los geht's");
     expect(screen.getByText("Wo möchtest du Hilfe?")).toBeInTheDocument();
   });
 
   it("moves focus into the new step after Los geht's and after Weiter", () => {
-    render(<ProzessCheck calUrl={undefined} />);
+    render(<ProzessCheck calUrl={undefined} research={false} />);
     expect(document.activeElement).toBe(document.body);
     click("Los geht's");
     expect(document.activeElement).not.toBe(document.body);
@@ -52,7 +52,7 @@ describe("ProzessCheck wizard", () => {
   });
 
   it("disables Weiter until an area is picked", () => {
-    render(<ProzessCheck calUrl={undefined} />);
+    render(<ProzessCheck calUrl={undefined} research={false} />);
     click("Los geht's");
     expect(screen.getByRole("button", { name: "Weiter" })).toBeDisabled();
     pick("anfragen");
@@ -60,19 +60,19 @@ describe("ProzessCheck wizard", () => {
   });
 
   it("asks hours only for picked areas", () => {
-    render(<ProzessCheck calUrl={undefined} />);
+    render(<ProzessCheck calUrl={undefined} research={false} />);
     startAndPick("anfragen", "rechnungen");
     expect(screen.getAllByRole("slider")).toHaveLength(2);
   });
 
   it("progress counts the conditional step", () => {
-    render(<ProzessCheck calUrl={undefined} />);
+    render(<ProzessCheck calUrl={undefined} research={false} />);
     startAndPick("anfragen");
     expect(screen.getByRole("status")).toHaveTextContent(`Frage 2 von ${QUESTION_COUNT - 1}`);
   });
 
   it("dropping an area drops its hours and nervt", () => {
-    render(<ProzessCheck calUrl={undefined} />);
+    render(<ProzessCheck calUrl={undefined} research={false} />);
     startAndPick("anfragen", "rechnungen");
     fireEvent.change(screen.getByLabelText(AREA_LABEL.anfragen), { target: { value: "4" } });
     fireEvent.change(screen.getByLabelText(AREA_LABEL.rechnungen), { target: { value: "6" } });
@@ -93,7 +93,7 @@ describe("ProzessCheck wizard", () => {
   });
 
   it("the nervt step shows exactly the picked areas", () => {
-    render(<ProzessCheck calUrl={undefined} />);
+    render(<ProzessCheck calUrl={undefined} research={false} />);
     startAndPick("anfragen", "rechnungen");
     click("Weiter"); // hours
     expect(screen.getByText("Was nervt am meisten?")).toBeInTheDocument();
@@ -103,7 +103,7 @@ describe("ProzessCheck wizard", () => {
   });
 
   it("asks nervt again when it was dropped and two areas remain", () => {
-    render(<ProzessCheck calUrl={undefined} />);
+    render(<ProzessCheck calUrl={undefined} research={false} />);
     startAndPick("anfragen", "rechnungen");
     click("Weiter");
     click(AREA_LABEL.rechnungen);
@@ -117,7 +117,7 @@ describe("ProzessCheck wizard", () => {
   });
 
   it("optional steps can be skipped", () => {
-    render(<ProzessCheck calUrl={undefined} />);
+    render(<ProzessCheck calUrl={undefined} research={false} />);
     startAndPick("anfragen");
     click("Weiter"); // hours
     click("Mail", "checkbox");
@@ -137,7 +137,7 @@ describe("ProzessCheck wizard", () => {
   });
 
   it("moves focus to the result heading after the last step", () => {
-    render(<ProzessCheck calUrl={undefined} />);
+    render(<ProzessCheck calUrl={undefined} research={false} />);
     startAndPick("anfragen");
     fireEvent.change(screen.getByLabelText(AREA_LABEL.anfragen), { target: { value: "4" } });
     click("Weiter");
@@ -146,7 +146,7 @@ describe("ProzessCheck wizard", () => {
   });
 
   it("one area at zero hours ends on the honest exit without a form", () => {
-    render(<ProzessCheck calUrl={undefined} />);
+    render(<ProzessCheck calUrl={undefined} research={false} />);
     startAndPick("anfragen");
     click("Weiter"); // hours stay 0
     finishFromAufgabe();

@@ -398,8 +398,10 @@ export const RESULT_UI = {
   // COPY: Ajdin approves (formTitle, calSecondary, success)
   formTitle: "Lass dir deinen Vorab-Fahrplan als PDF schicken. Darin steht, wo ich bei dir anfangen würde.",
   calSecondary: "Lieber gleich einen Termin?",
-  // Plan 1 sends the fallback PDF right away; spec §6 wording („Ich recherchiere …“) waits for Plan 2.
+  // success: the fallback PDF went out at once; successRecherche: the research run took the job (spec §6).
   success: "Danke. Dein Vorab-Fahrplan ist unterwegs.",
+  // COPY: Ajdin approves
+  successRecherche: "Danke. Ich recherchiere jetzt deine Programme. Dein Vorab-Fahrplan kommt in etwa 10 Minuten per Mail.",
   exitLead: "Schau dich in Ruhe um. Wenn dich eine Aufgabe doch täglich ausbremst, bin ich da.",
   exitNewsletterPrefix: "Bis dahin: ",
   exitNewsletterLabel: "„Die Quelle“",

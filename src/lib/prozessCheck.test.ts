@@ -165,6 +165,7 @@ describe("hoursLabel", () => {
 describe("Fahrplan promise", () => {
   it("promises the Fahrplan without a condition", () => {
     expect(RESULT_UI.success).toBe("Danke. Dein Vorab-Fahrplan ist unterwegs.");
+    expect(RESULT_UI.successRecherche).toBe("Danke. Ich recherchiere jetzt deine Programme. Dein Vorab-Fahrplan kommt in etwa 10 Minuten per Mail.");
     expect(RESULT_UI.calSecondary).toBe("Lieber gleich einen Termin?");
     expect(JSON.stringify(RESULT_UI)).not.toMatch(/Lohnt sich etwas|Wenn sich etwas lohnt|wenn es sich lohnt/i);
   });

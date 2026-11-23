@@ -3,7 +3,7 @@
 // Danach and Später use `kurz`. Spec: docs/superpowers/specs/2026-11-23-prozess-check-v2-vorab-fahrplan-design.md
 // COPY: Ajdin approves before go-live
 import type { AreaId, Kanal, Menge, Wer } from "@/lib/prozessCheck";
-import { CAPS } from "./content";
+import { CAPS, RESEARCH_CAPS } from "./content";
 
 // `lang`: the first sentence ends at the first ". " (fallback.ts swaps it), so no
 // abbreviations with a dot in the first sentence.
@@ -233,15 +233,24 @@ export const PDF_UI = {
 };
 
 // Contact form copy (spec §6). The consent sentence is stored with every lead as proof,
-// so bump CONSENT_VERSION whenever one of these strings changes. Plan 1 runs no
-// research, so no KI sentence here: Plan 2 adds it back when research goes live.
+// so bump both versions whenever one of these strings changes. The KI sentence is
+// shown only when research is configured (researchConfigured in job.ts).
 // COPY: Ajdin approves
 export const FORM_UI = {
   consentAnruf: "Ich rufe dich einmal an, um die Details für deinen ausführlichen Fahrplan zu klären.",
+  consentKi: "Für deinen Vorab-Fahrplan recherchiert eine KI deine Programme und, wenn du sie angegeben hast, deine Website. Name, E-Mail und Telefon bekommt sie nicht.",
   checkbox: "Ja, ruf mich dafür an.",
 };
 export const CONSENT_VERSION = "pc-call-2026-11-24";
 export const CONSENT_TEXT = `${FORM_UI.consentAnruf} ${FORM_UI.checkbox}`;
+const CONSENT_VERSION_KI = "pc-call-ki-2026-11-24";
+
+/** The consent text and version the form shows, with or without the KI sentence. */
+export function consentFor(research: boolean): { text: string; version: string } {
+  return research
+    ? { text: `${FORM_UI.consentAnruf} ${FORM_UI.consentKi} ${FORM_UI.checkbox}`, version: CONSENT_VERSION_KI }
+    : { text: CONSENT_TEXT, version: CONSENT_VERSION };
+}
 
 // Form chrome around the consent block. Not part of the consent proof.
 // COPY: Ajdin approves
@@ -278,6 +287,14 @@ export const CAP_GRUND: Record<"adresse" | "ip" | "tag", string> = {
 };
 export const PDF_FEHLER_GRUND = "Das PDF ließ sich nicht erstellen";
 export const VERSAND_FEHLER_GRUND = "Versand an den Besucher fehlgeschlagen";
+
+// Why research did not run, for the lead mail line „… versendet, weil {grund}“.
+// COPY: Ajdin approves
+export const RECHERCHE_GRUND: Record<"tag" | "webhook" | "speicher", string> = {
+  tag: `das Tageslimit von ${RESEARCH_CAPS.proTag} Recherchen erreicht ist`,
+  webhook: "der Server für die Recherche nicht erreichbar war",
+  speicher: "der Zwischenspeicher für die Recherche nicht erreichbar war",
+};
 
 // Status line and banner of the internal lead mail. `vonHand` only when the PDF or
 // the visitor mail failed; a capped send gets `gesperrt` instead.

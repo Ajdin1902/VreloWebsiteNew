@@ -37,3 +37,5 @@ export const LIMITS: { titel: 40; idee: 260; mitProgrammen: 180; tipp: 180; prog
 // Sending caps (spec §6). Lives here, not in caps.ts, so client-bundled copy can
 // name the numbers without pulling in Redis.
 export const CAPS = { proAdresseTage: 30, proIpTag: 3, proTag: 50 } as const;
+// Research caps (spec §8.3): global runs per UTC day, fresh research once per address.
+export const RESEARCH_CAPS = { proTag: 25, frischTage: 30 } as const;
