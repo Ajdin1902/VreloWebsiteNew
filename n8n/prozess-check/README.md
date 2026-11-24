@@ -23,11 +23,11 @@ All Claude calls are HTTP Request nodes (the Anthropic Chat Model node breaks wi
 - `POST https://api.anthropic.com/v1/messages`
 - Headers: `x-api-key` from the credential „Anthropic prozess-check“, `anthropic-version: 2023-06-01` (plan 2 global constraint), `content-type: application/json`.
 - Body: `model: "claude-sonnet-5-5"` (pinned), `max_tokens` as each prompt file says, `system`, `messages`, `tools`, `output_config`. No `temperature`/`top_p`/`top_k` (non-default values are a 400 on Sonnet 5.5), no `thinking` (Sonnet 5.5 runs adaptive thinking by default; `{"type": "disabled"}` is a 400).
-- Server tools: `{"type": "web_search_20260209", "name": "web_search", "max_uses": N}` and `{"type": "web_fetch_20260209", "name": "web_fetch", "max_uses": N}`. Recommended on web_fetch: `"max_content_tokens": 20000`, so one big page can't eat the run budget.
+- Server tools: `{"type": "web_search_20260209", "name": "web_search", "max_uses": N}` and `{"type": "web_fetch_20260209", "name": "web_fetch", "max_uses": N}`. On web_fetch: `"max_content_tokens": 10000` (`caps.webFetchMaxContentTokens`), so one big page can't eat the run budget; the API accepts it on `web_fetch_20260209` (used in every test run, no 400).
 - Structured output: `"output_config": {"format": {"type": "json_schema", "schema": <the file's JSON>}}`. The answer is the last `text` block of `content`; `JSON.parse` it.
 - `stop_reason`:
   - `end_turn`: done.
-  - `pause_turn`: the server-tool loop paused. **Append** `{"role": "assistant", "content": <response.content unchanged>}` to the message history and re-send. Never replace the earlier assistant turns: the tool result blocks in them carry the URLs for `erlaubteQuellen` and the facts call 2 extracts. Do not add a „continue“ message. At most 3 rounds, then treat as failed. Collect URLs and text blocks from **every** round's content.
+  - `pause_turn`: the server-tool loop paused. **Append** `{"role": "assistant", "content": <response.content unchanged>}` to the message history and re-send. Never replace the earlier assistant turns: the tool result blocks in them carry the URLs for `erlaubteQuellen` and the facts call 2 extracts. Do not add a „continue“ message. At most 3 rounds, then treat as failed. Collect URLs and text blocks from **every** round's content. Each round gets only what is left of each tool's `max_uses` (cap minus `usage.server_tool_use` of the earlier rounds); a tool with nothing left is not sent, and if no tool has anything left, or the cost stop is reached, the research goes to the extraction with the notes so far. The website call runs the same loop.
   - `max_tokens` or `refusal`: the JSON may be incomplete or off-schema. Program research: store nothing, count the program as „nicht recherchiert“. Synthesis: post `{fallback: true, grund: "Synthese: <stop_reason>"}`.
   - Optional, beta: on a refusal the API can retry on another model by itself (`anthropic-beta: server-side-fallback-2026-07-01` header plus `"fallbacks": "default"` in the body). Not needed for the first runs; decide after measuring.
 - Server-tool errors come back as HTTP 200 with an error object inside the result block (`web_search_tool_result.content` is then an object, not a list). Skip those when collecting URLs.
@@ -102,30 +102,33 @@ const reihenfolge = [job.nervt, ...rest].slice(0, 3)
 ```js
 const config = {
   caps: {
-    frischeProgrammeProLead: 3,
-    webSearchProProgramm: 4,
+    // Ajdin 2026-11-24 (Ruling X): one fresh program per lead, because a measured research call costs 0.55 to 0.80 USD.
+    frischeProgrammeProLead: 1,
+    webSearchProProgramm: 3,
     webFetchProProgramm: 3,
+    webFetchMaxContentTokens: 10000, // per fetched page, research and website calls
     websiteFetches: 3,
-    maxRundenPauseTurn: 3, // research call only; the extraction call has no tools
+    maxRundenPauseTurn: 3, // research and website calls; the extraction call has no tools
     runKostenStopUsd: 1.0,
     libraryMaxAlterTage: 120,
   },
-  // Checked 2026-11-23 on platform.claude.com/docs/en/about-claude/pricing; token prices re-checked
-  // 2026-11-24 against the claude-api skill (Sonnet 5.5: 2 / 10 USD, cache read 0.10). Re-check when the model changes.
+  // Budget guard: a program's research (call 1 + extraction) or the website call starts only if kostenUsd + its estimate <= runKostenStopUsd.
+  schaetzungUsd: { recherche: 0.85, website: 0.25 }, // measured 2026-11-24, see „On server1“
   preise: {
-    geprueftAm: "2026-11-24",
     model: "claude-sonnet-5-5",
+    tokenPreiseGeprueftAm: "2026-11-24", // claude-api skill model table
     inputUsdProMTok: 2.0,
     outputUsdProMTok: 10.0,
     cacheWrite5mUsdProMTok: 2.5,
     cacheReadUsdProMTok: 0.1,
+    webSearchPreisGeprueftAm: "2026-11-23", // platform.claude.com/docs/en/about-claude/pricing
     webSearchUsdPro1000: 10.0,
     webFetchUsd: 0, // tokens only
   },
 };
 ```
 
-Cost of one call = `input_tokens`, `output_tokens`, `cache_creation_input_tokens`, `cache_read_input_tokens` from `usage` × their prices + `usage.server_tool_use.web_search_requests` × `webSearchUsdPro1000 / 1000`. Sum it after every call, the extraction call included (it adds roughly the notes plus the system prompt as input and the JSON as output, small next to the search results in call 1). At ≥ `runKostenStopUsd` skip the remaining research and go to the synthesis; a program whose call 1 ran but whose call 2 is skipped stores nothing. The website side holds the daily cap (25 runs) and „fresh research once per e-mail per 30 days“ (`frischeRecherche` in the job). The monthly backstop is the spend limit of the Anthropic workspace „vrelo-vorab-fahrplan“: 30 USD/month, set by Ajdin 2026-11-24.
+Cost of one call = `input_tokens`, `output_tokens`, `cache_creation_input_tokens`, `cache_read_input_tokens` from `usage` × their prices + `usage.server_tool_use.web_search_requests` × `webSearchUsdPro1000 / 1000`. Sum it after every call, the extraction call included (it adds roughly the notes plus the system prompt as input and the JSON as output, small next to the search results in call 1). Before each program's research and before the website call, the guard checks `kostenUsd + schaetzungUsd.<call> <= runKostenStopUsd`; if not, that call and everything after it is skipped (`capsGetroffen: ["kosten"]`) and the synthesis runs, which always runs. Paid research is kept: once a program's call 1 has run, its extraction (call 2, about 0.04 USD) runs too, even past the stop, and the checked entry is stored. The website side holds the daily cap (25 runs) and „fresh research once per e-mail per 30 days“ (`frischeRecherche` in the job). The monthly backstop is the spend limit of the Anthropic workspace „vrelo-vorab-fahrplan“: 30 USD/month, set by Ajdin 2026-11-24.
 
 ## Structured outputs: what was verified
 
@@ -166,19 +169,19 @@ No n8n Variables (licence-gated on self-hosted): the „Config“ Set node at th
 | pc-research (webhook `POST https://server1.n8n-adz.de/webhook/prozess-check` = the website's `N8N_PC_WEBHOOK_URL`) | `rgrZAHzpkZe7BlWM` |
 | pc-error (error workflow of pc-research) | `LHCwSm6lZ4RTJtIi` |
 | pc-sweep | `bKNRGEJEeKPcCGuJ` |
-| Data Table `pc_tools` / `pc_runs` | `T5APItQQ4m9hk0db` / `6jEY13WksCkayshQ` |
+| Data Table `pc_tools` / `pc_runs` | `T5APItQQ4m9hk0db` / `uufMxsjQ3EbiAu1g` |
 | Credential „Anthropic prozess-check“ / „Prozess-Check Secret“ | `iaHm1R79EmeFcgmU` / `SCCkcZm64X10tM4I` |
 
 All three are inactive. The webhook answers `202 {"status":"accepted"}` at once (Webhook „Respond: Immediately“), a wrong `x-vrelo-secret` gets 403.
 
-**Flow of pc-research:** Webhook → Config → „Lauf anlegen“ (pc_runs `running`, with the n8n execution id) → „Bibliothek lesen“ → „Plan“ (checks the job, matches keys and aliases, builds the queue and the step order) → loop „Nächstes Programm“ → „Recherche-Anfrage“ → „Claude Recherche“ → „Recherche auswerten“ → „Weiter?“ (pause_turn round / extraction / give up) → „Claude Extraktion“ → „URLs prüfen“ → „Bibliothek speichern“ (upsert by `key`) → back to „Nächstes Programm“; then „Claude Website“ → „Website auswerten“ → „Synthese vorbereiten“ → „Claude Synthese“ → „Synthese auswerten“ → „Ausliefern“ (4 tries, 60 s apart) → „Lauf abschließen“. The run state travels in the item; each Code node reads the request that fed its HTTP call with `$('<node>').first()` (the last run of that node).
+**Flow of pc-research:** Webhook → Config → „Lauf anlegen“ (pc_runs `running`, with the n8n execution id) → „Bibliothek lesen“ → „Plan“ (checks the job, matches keys and aliases, builds the queue and the step order) → loop „Nächstes Programm“ → „Recherche-Anfrage“ → „Claude Recherche“ → „Recherche auswerten“ → „Weiter?“ (pause_turn round / extraction / give up) → „Claude Extraktion“ → „URLs prüfen“ → „Bibliothek speichern“ (upsert by `key`) → back to „Nächstes Programm“; then the website loop „Website-Anfrage“ → „Claude Website“ → „Website auswerten“ → „Website weiter?“ → „Synthese vorbereiten“ → „Claude Synthese“ → „Synthese auswerten“ → „Ausliefern“ → „Lauf abschließen“. The budget guard sits in „Nächstes Programm“. Workflow timeout: 1500 s, so a run never outlives the sweep's 30 minutes. The run state travels in the item; each Code node reads the request that fed its HTTP call with `$('<node>').first()` (the last run of that node).
 
 **Where the build differs from the sections above, and why:**
 
 - **pc-error only runs while it is active.** n8n 2.30.5 logs „Workflow … is not active and cannot be executed“ for an inactive error workflow. At go-live activate pc-error and pc-sweep together with pc-research; until then error handling is off.
-- **`pc_runs` has an extra column `executionId`.** The Error Trigger only knows the failed execution, not the job; pc-error finds the `jobId` through this column.
-- **Deliver retry:** n8n's own retry waits 5 s at most, so „Ausliefern“ loops through a Wait node (60 s) and an IF on `$runIndex`: 1 try + 3 retries, then „Stop and Error“, which hands over to pc-error. „Ausliefern“ does not follow redirects (the secret header stays on the deliver host).
-- **`web_fetch` carries `max_content_tokens: 20000`** on research and website calls.
+- **`pc_runs` has two extra columns.** `executionId`: the Error Trigger only knows the failed execution, not the job; pc-error finds the `jobId` through it. `aufrufe`: one entry per Messages call (`art`, tokens, searches, fetches, `usd`), for the console check and the cost numbers in the spec.
+- **Deliver retry:** n8n's own retry waits 5 s at most, so „Ausliefern“ loops through a Wait node (60 s) and an IF on `$runIndex`: 1 try + 3 retries on 5xx and network errors, then „Stop and Error“, which hands over to pc-error. A 4xx is not retried: the row is set `failed` („Lauf fehlgeschlagen“) and the run stops. „Ausliefern“ does not follow redirects (the secret header stays on the deliver host).
+- **pc-error and pc-sweep set a row `failed` only after the fallback POST got a 2xx.** Otherwise the row stays `running` and the next sweep tries again.
 - **„Papier und Zettel“ is never researched**; it ends up under „nicht recherchiert“.
 - **A stale library entry (older than 120 days, not reviewed) still goes to the synthesis** when the run does not research it again (cap or no `frischeRecherche`). A fresh research replaces it.
 - **URL collection** walks the whole response for `web_search_result` and `web_fetch_result` objects, because the `_20260209` tools run dynamic filtering through code execution and return extra `code_execution_tool_result` blocks.
@@ -186,7 +189,14 @@ All three are inactive. The webhook answers `202 {"status":"accepted"}` at once 
 - **pc-sweep has a „Manuell testen“ trigger** besides the schedule. `n8n execute --id` on the box cannot run Data Table nodes („the module is disabled“), so the sweep was tested on its real schedule.
 - Failed executions keep the webhook's request headers, the shared secret included. They live in our own n8n database and are pruned after 72 h.
 
-**Cost, measured 2026-11-24 (run 1, ❓ OPEN):** one research call 1 for Lexoffice read 341,847 input tokens (dynamic filtering re-reads the search results in every server-side step) and cost 0.80 USD on its own; Outlook's call 1 another 0.60 USD. The stop works between calls only, so run 1 ended at 1.46 USD, Outlook was dropped after its call 1 and asdfqwer and the website were skipped. With these prices a run affords about one fresh program. Decide before go-live, then measure again: prompt caching on the research call, the basic tool versions without dynamic filtering, fewer searches and fetches, or a guard that starts a research call only when the remaining budget covers one.
+**Cost, measured 2026-11-24.** Run 1 (old caps: 3 fresh programs, 4 searches, 20,000 tokens per page) read 341,847 input tokens in one research call 1 (dynamic filtering re-reads the results in every server-side step), cost 1.46 USD and went over the stop. Ajdin then decided one fresh program per lead (Ruling X) with the budget guard and the trims above. After that:
+
+| Run | Programs | Calls (input / output tokens, searches, fetches, USD) | kostenUsd |
+|---|---|---|---|
+| A | Lexoffice (library), Outlook (fresh), website | research 152,529 / 6,726, 3, 2, 0.402 · extraction 7,285 / 2,613, 0.041 · website 106,328 / 2,460, 0, 3, 0.237 · synthesis 11,893 / 4,708, 0.071 | 0.751 |
+| B | asdfqwer (fresh), no website | research 27,404 / 900, 1, 0, 0.074 · extraction 4,726 / 258, 0.012 · synthesis 7,205 / 2,326, 0.038 | 0.124 |
+
+A run with only library programs costs the synthesis alone (about 0.04 to 0.07 USD). The tool versions stay `_20260209`: with the trims, the fresh Outlook research cost 0.44 USD with its extraction and run A stayed under the stop.
 
 ## Reviewing pc_tools (Ajdin)
 
@@ -198,5 +208,7 @@ After any change in the n8n UI, export all three back into `workflows/` and comm
 
 - UI: open the workflow → ⋯ → Download, save as `workflows/<name>.json`; or
 - on server1: `docker exec <n8n container> n8n export:workflow --id=<id> --output=/tmp/<name>.json --pretty`, then copy it out.
+
+**Copies to keep in step.** The builder copies the prompt texts and both schemas (`const P`, `SCHEMA_PROGRAMM`, `SCHEMA_SYNTHESE` at the top of the code) into five Code nodes of pc-research: „Nächstes Programm“, „Recherche-Anfrage“, „Recherche auswerten“, „Website-Anfrage“, „Synthese vorbereiten“. A prompt or schema change edits all five copies, from the files in `prompts/` and `schemas/`. `deliverUrl` sits in the „Config“ node of all three workflows: pc-research, pc-error, pc-sweep.
 
 Before committing, check the file holds no secrets: credentials appear only as `{id, name}` references, no `pinData` with visitor answers (delete `pinData` if present), no webhook URLs with tokens in them. Keep the workflows inactive in the export (`"active": false`).

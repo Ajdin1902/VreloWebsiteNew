@@ -186,15 +186,15 @@ fallback path: website renders the §7.3 PDF itself and sends both mails at once
 
 | Level | Cap (Claude's proposal, all in config) | When hit |
 |---|---|---|
-| Per lead | max **3 fresh program researches** (rest from library or „im Gespräch klären“); per program web search ≤ 4, web fetch ≤ 3; website ≤ 3 fetches; **hard stop at $1.00 computed run cost** (from `usage` after every call) | stop researching, synthesise with what exists |
+| Per lead | max **1 fresh program research** (rest from library or „im Gespräch klären“; Ajdin decided this on 2026-11-24 because a measured research call costs $0.55 to 0.80); per program web search ≤ 3, web fetch ≤ 3 at ≤ 10,000 tokens per page; website ≤ 3 fetches at the same page cap; **hard stop at $1.00 computed run cost** (from `usage` after every call): a program's research (estimate $0.85) and the website call (estimate $0.25) start only if the run cost plus the estimate stays ≤ $1.00; a started research always gets its extraction (about $0.04), the synthesis always runs | stop researching, synthesise with what exists |
 | Per e-mail | 1 run with fresh research per 30 days | library-only run |
 | Per IP (hashed) | 3 submissions per 24 h | fallback PDF |
 | Per day (global) | 25 research runs | fallback PDF |
-| Per month | **own Anthropic workspace + API key „prozess-check“** with its own spend limit (start: **$20/month**), separate from the key `/demo` and the Postfach-Assistent use | API refuses → fallback PDF |
+| Per month | **own Anthropic workspace + API key „prozess-check“** with its own spend limit (**$30/month**, set by Ajdin 2026-11-24), separate from the key `/demo` and the Postfach-Assistent use | API refuses → fallback PDF |
 
 **Cost computation (Claude's call):** the workflow config holds the prices it computes with (Sonnet 5.5 input/output per MTok, web search per 1,000 searches, web fetch = tokens only), with the date they were checked. The run cost = tokens from `usage` plus `server_tool_use` counts × price. The workspace limit is the backstop, not the per-lead cap.
 
-Estimate (assumption, to be measured on the first 10 runs and noted here): program already in the library ≈ $0.05 to 0.10 per lead (synthesis only); 3 fresh programs + website ≈ $0.40 to 0.80. $20 ≈ 30 to 100 leads a month. The chip programs are **researched before go-live** and reviewed by Ajdin, so the common path is cheap and checked.
+Estimate (assumption, to be measured on the first 10 runs and noted here): program already in the library ≈ $0.05 to 0.10 per lead (synthesis only); 3 fresh programs + website ≈ $0.40 to 0.80. $20 ≈ 30 to 100 leads a month. **Measured 2026-11-24 (test runs, made-up firm):** one research call 1 read 150,000 to 340,000 input tokens and cost $0.40 to 0.80 (dynamic filtering re-reads the results); a run with 3 fresh programs reached $1.46. With 1 fresh program: library program + 1 fresh program + website $0.75, 1 unknown name without website $0.12, synthesis alone $0.04 to 0.07. $30 ≈ 40 runs with a fresh program and a website a month, many more from the library. The chip programs are **researched before go-live** and reviewed by Ajdin, so the common path is cheap and checked.
 
 ### 8.4 Storage and retention
 

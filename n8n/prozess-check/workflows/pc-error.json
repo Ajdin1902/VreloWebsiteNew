@@ -4,7 +4,7 @@
   "active": false,
   "nodes": [
     {
-      "id": "f2721c0b-1d95-4fb6-9e77-01e41d3b9fc9",
+      "id": "a4f068c1-ef93-43d8-8625-dbc577efcb27",
       "name": "Error Trigger",
       "type": "n8n-nodes-base.errorTrigger",
       "typeVersion": 1,
@@ -15,7 +15,7 @@
       "parameters": {}
     },
     {
-      "id": "80eeb9a3-d8f3-4c27-baca-7a00f34c387b",
+      "id": "4fdcb4af-605f-4f17-a295-921abe349151",
       "name": "Config",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
@@ -28,10 +28,10 @@
         "jsonOutput": "{\n  \"deliverUrl\": \"https://vrelo-ki.de/api/prozess-check/deliver\"\n}",
         "options": {}
       },
-      "notes": "PC_DELIVER_URL, caps and prices (no n8n Variables on this licence). Prices: re-check when the model changes."
+      "notes": "PC_DELIVER_URL, caps, estimates and prices (no n8n Variables on this licence). deliverUrl also sits in pc-error and pc-sweep."
     },
     {
-      "id": "c3f140ce-d419-4ddf-8b6c-93e53e266d64",
+      "id": "b50f453f-3132-4a5e-870d-3385f896fa4d",
       "name": "Lauf suchen",
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
@@ -45,7 +45,7 @@
         "dataTableId": {
           "__rl": true,
           "mode": "id",
-          "value": "6jEY13WksCkayshQ",
+          "value": "uufMxsjQ3EbiAu1g",
           "cachedResultName": "pc_runs"
         },
         "filters": {
@@ -62,7 +62,7 @@
       "alwaysOutputData": true
     },
     {
-      "id": "96c12cfb-fb3f-491f-88dc-15384e2cae58",
+      "id": "a9c1e1a0-ba18-4165-a5c9-7aba5c64d301",
       "name": "Lauf gefunden?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
@@ -80,7 +80,7 @@
           },
           "conditions": [
             {
-              "id": "4b3418c1-e652-4df5-bfc4-9c7b8b9e73d0",
+              "id": "edaf0305-3b02-461a-a033-034edaaa3217",
               "leftValue": "={{ !!$json.jobId && $json.status === 'running' }}",
               "rightValue": "",
               "operator": {
@@ -96,7 +96,7 @@
       }
     },
     {
-      "id": "df888247-bb8d-4e91-874b-dc4fcd63078c",
+      "id": "c41e74d4-6bd1-45fb-a49b-229f2111102b",
       "name": "Fallback senden",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
@@ -139,12 +139,46 @@
       "waitBetweenTries": 5000
     },
     {
-      "id": "4bcd60c8-34f0-45cd-9add-b3fc57d5a71c",
+      "id": "264ee47e-da91-4647-9c59-a389a0c38098",
+      "name": "Fallback angekommen?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1440,
+        300
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "7252b3f2-9436-4cef-8b63-c39d201c16e4",
+              "leftValue": "={{ $json.statusCode >= 200 && $json.statusCode < 300 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "f69bbc49-b4ff-40cc-99d9-2fe21a0e0c72",
       "name": "Lauf als failed",
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
       "position": [
-        1440,
+        1680,
         300
       ],
       "parameters": {
@@ -153,7 +187,7 @@
         "dataTableId": {
           "__rl": true,
           "mode": "id",
-          "value": "6jEY13WksCkayshQ",
+          "value": "uufMxsjQ3EbiAu1g",
           "cachedResultName": "pc_runs"
         },
         "filters": {
@@ -200,7 +234,8 @@
           "convertFieldsToString": false
         },
         "options": {}
-      }
+      },
+      "notes": "Only after a 2xx: otherwise the row stays running and pc-sweep tries again."
     }
   ],
   "connections": {
@@ -249,6 +284,17 @@
       ]
     },
     "Fallback senden": {
+      "main": [
+        [
+          {
+            "node": "Fallback angekommen?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fallback angekommen?": {
       "main": [
         [
           {

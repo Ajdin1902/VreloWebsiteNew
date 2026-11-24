@@ -26,6 +26,7 @@
       { "name": "status", "type": "string", "setBy": "n8n", "note": "running | delivered | fallback | failed" },
       { "name": "kostenUsd", "type": "number", "setBy": "n8n" },
       { "name": "capsGetroffen", "type": "string", "json": true, "setBy": "n8n", "note": "JSON-Array, z. B. [\"kosten\", \"programme\"]" },
+      { "name": "aufrufe", "type": "string", "json": true, "setBy": "n8n", "note": "JSON-Array, ein Eintrag pro Messages-Aufruf: {art, in, out, cacheRead, cacheWrite, suchen, abrufe, usd}. Keine Programmnamen." },
       { "name": "startedAt", "type": "date", "setBy": "n8n" },
       { "name": "finishedAt", "type": "date", "setBy": "n8n" }
     ],

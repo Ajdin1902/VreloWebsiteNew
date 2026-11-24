@@ -1,0 +1,149 @@
+{
+  "jobId": "7c2e9a14-5b3d-4f8a-9e6c-1d2b3a4f5e61",
+  "fallback": false,
+  "erlaubteQuellen": [
+    "https://learn.microsoft.com/de-de/answers/questions/5955093/bookings-ber-cksichtigt-seit-update-keine-blockier",
+    "https://support.microsoft.com/de-de/outlook/training/set-up-rules-in-outlook",
+    "https://support.microsoft.com/de-de/outlook/create-or-schedule-an-appointment",
+    "https://support.microsoft.com/de-de/outlook/best-practices-for-outlook",
+    "https://support.microsoft.com/de-de/outlook/mail/manage-email-messages-by-using-rules-in-outlook",
+    "https://support.office.com/de-de/article/festlegen-ihrer-terminplanungsrichtlinien-4b2c84ec-64d3-4027-af4c-40f69e7b37c9",
+    "https://support.microsoft.com/de-de/outlook/calendar/schedule-a-meeting-or-event-in-outlook",
+    "https://learn.microsoft.com/de-de/microsoft-365/bookings/personal-bookings-faq?view=o365-worldwide",
+    "https://support.microsoft.com/de-de/office/festlegen-ihrer-terminplanungsrichtlinien-4b2c84ec-64d3-4027-af4c-40f69e7b37c9",
+    "https://en.wikipedia.org/wiki/Microsoft_Bookings",
+    "https://www.zdh.de",
+    "https://www.zdh.de/service/",
+    "https://www.zdh.de/ueber-uns/ansprechpersonen/",
+    "https://developers.lexware.io/docs/",
+    "https://help.lexware.de/de-form/articles/547985-zahlungserinnerungen-und-mahnungen-erstellen",
+    "https://help.lexware.de/de-form/articles/548860-schnelleinstieg-angebote-e-rechnungen-co-fur-einsteiger",
+    "https://help.lexware.de/de-form/articles/548861-schnelleinstieg-buchhaltung-fur-einsteiger",
+    "https://help.lexware.de/de-form/collections/1335664-rechnungen-angebote",
+    "https://www.lexware.de/funktionen/belegerfassung/"
+  ],
+  "pdf": {
+    "schritte": [
+      {
+        "bereich": "rechnungen",
+        "titel": "Rechnungen und Mahnungen vom Tisch",
+        "idee": "Nach dem Auftrag liegt die Rechnung schon bereit, bevor du abends am Küchentisch sitzt. Du prüfst sie kurz und gibst sie frei. Offene Posten melden sich bei dir, statt dass du sie suchen musst.",
+        "mitProgrammen": "Lexoffice hat eine Schnittstelle, über die sich Rechnungen und Mahnungen als Datei abrufen lassen.",
+        "tipp": "In Lexoffice öffnest du unter Belege die offene Rechnung, wählst Weitere Aktionen und dann Mahnen. Texte und Mahngebühr kannst du anpassen.",
+        "quellen": [
+          "https://developers.lexware.io/docs/",
+          "https://help.lexware.de/de-form/articles/547985-zahlungserinnerungen-und-mahnungen-erstellen"
+        ]
+      },
+      {
+        "bereich": "anfragen",
+        "titel": "Anfragen beantworten, Termine klären",
+        "idee": "Kunden wählen den Besichtigungstermin selbst aus. Anfragen per Mail kommen mit den wichtigsten Angaben bei dir an. Auf der Baustelle musst du seltener zurückrufen.",
+        "mitProgrammen": "Outlook hat eine Buchungsseite: Kunden wählen einen freien Termin, die Buchung landet im Kalender. Dafür braucht es eine Bookings-Lizenz.",
+        "quellen": [
+          "https://learn.microsoft.com/de-de/microsoft-365/bookings/personal-bookings-faq?view=o365-worldwide"
+        ]
+      },
+      {
+        "bereich": "angebote",
+        "titel": "Angebote schreiben und nachfassen",
+        "idee": "Das Angebot entsteht gleich nach der Anfrage, nicht erst am Abend. Du prüfst und gibst frei. Nach ein paar Tagen fragt ein freundlicher Text nach, ob alles passt.",
+        "mitProgrammen": "In Lexoffice teilst du Angebote per Link. Der Kunde kann online annehmen, du siehst sofort seine Reaktion.",
+        "quellen": [
+          "https://help.lexware.de/de-form/collections/1335664-rechnungen-angebote"
+        ]
+      }
+    ],
+    "programme": [
+      {
+        "name": "Lexoffice",
+        "zeilen": [
+          {
+            "text": "Angebote, Rechnungen und E-Rechnungen schreibst du im Programm und verschickst sie direkt per E-Mail.",
+            "quellen": [
+              "https://help.lexware.de/de-form/articles/548860-schnelleinstieg-angebote-e-rechnungen-co-fur-einsteiger"
+            ]
+          },
+          {
+            "text": "Mahnen geht im Programm per Hand, aber nur bei Belegen, die dort erstellt wurden.",
+            "quellen": [
+              "https://help.lexware.de/de-form/articles/547985-zahlungserinnerungen-und-mahnungen-erstellen"
+            ]
+          },
+          {
+            "text": "Es gibt eine Schnittstelle zum Anbinden. Den Schlüssel dafür erzeugst du im eigenen Konto.",
+            "quellen": [
+              "https://developers.lexware.io/docs/"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Outlook",
+        "zeilen": [
+          {
+            "text": "Mit Regeln sortierst du eingehende Mails automatisch in Ordner, etwa nach Absender oder Betreff.",
+            "quellen": [
+              "https://support.microsoft.com/de-de/outlook/mail/manage-email-messages-by-using-rules-in-outlook"
+            ]
+          },
+          {
+            "text": "Eine persönliche Buchungsseite lässt Kunden freie Termine selbst wählen und kann Erinnerungs-Mails schicken.",
+            "quellen": [
+              "https://learn.microsoft.com/de-de/microsoft-365/bookings/personal-bookings-faq?view=o365-worldwide"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "dossier": {
+    "programme": [
+      {
+        "name": "Lexoffice",
+        "befunde": "Heißt seit 27.05.2025 Lexware Office. Cloud-Software mit Angeboten, Rechnungen, E-Rechnungen, Mahnungen (manuell), Kundencenter, Belegsender, DATEV-Export. REST-API mit API-Schlüssel (Bearer), 2 Anfragen pro Sekunde, Event-Subscriptions mit Webhook-Callback vorhanden. Rechnungen, Angebote und Mahnungen per API als PDF abrufbar.",
+        "unbestaetigt": "Tarif der Schnittstelle, welche Webhook-Ereignisse gemeldet werden, OAuth2 für Partner, n8n-Status. Confidence mittel.",
+        "blocker": "Kein automatischer Mahnversand. Mahnen nur bei Belegen, die im Programm erstellt wurden. Gemahnte Rechnung nicht mehr bearbeitbar. Betreff der Mahn-Mail fest. Alte API-Adresse nur bis Dezember 2025 erreichbar.",
+        "n8n": "unbekannt, weder nativer noch Community-Node belegt, Anbindung per HTTP-Request an die API denkbar",
+        "api": "vorhanden, Tarif nicht gefunden, Anmeldung per API-Schlüssel aus dem eigenen Konto"
+      },
+      {
+        "name": "Outlook",
+        "befunde": "Gemeint ist Outlook im Microsoft-365-Geschäftskonto. Regeln, persönliche Buchungsseite (1:1-Termine, Bookings-Lizenz nötig, Kunden brauchen keine), Erinnerungs-Mails, Terminplanungs-Assistent.",
+        "unbestaetigt": "Terminplanungs-Assistent und Bookings-Richtlinien nur aus Suchergebnissen. Ein Forenbeitrag meldet, dass Bookings belegte Outlook-Zeiten nach einem Update nicht berücksichtigt hat. Schnittstelle, Webhooks, Export, Tarife, n8n nicht belegt. Confidence mittel.",
+        "blocker": "Varianten (klassisch, neu, Web) mit unterschiedlichen Menüs. Neues Outlook ohne Regeln für Drittanbieter-Konten. Manche Regeln laufen nur bei geöffnetem Outlook. Bookings-Lizenz fehlt eventuell.",
+        "n8n": "unbekannt, Anbindung über Microsoft-Schnittstelle plausibel, aber nicht belegt",
+        "api": "unbekannt, Tarif und Anmeldung nicht gefunden"
+      }
+    ],
+    "website": "Die angegebene Adresse gehört einem Spitzenverband des Handwerks, nicht einem Elektrobetrieb. Gelesen wurden fast nur Navigation, Login-Bereich und Suche, kein Kontaktformular, kein Buchungstool. Vermutlich falsche Adresse eingetragen, im Gespräch nach der eigenen Seite fragen. Keine Anweisungen an mich auf den Seiten.",
+    "aufwand": [
+      {
+        "bereich": "rechnungen",
+        "groesse": "M"
+      },
+      {
+        "bereich": "anfragen",
+        "groesse": "L"
+      },
+      {
+        "bereich": "angebote",
+        "groesse": "M"
+      }
+    ],
+    "kartenStationen": [
+      "6 Ausgangsrechnung",
+      "1 Anfrage",
+      "2 Angebot/Nachfassen"
+    ],
+    "fragen": [
+      "Du schreibst abends Rechnungen am Küchentisch: Woher nimmst du dann die Angaben, aus Notizen von der Baustelle, aus Mails oder aus dem Kopf?",
+      "Wie läuft es bei dir mit Abschlags- und Schlussrechnungen und gibt es Sonderfälle, bei denen du jede Rechnung von Hand anpasst?",
+      "Mahnst du heute überhaupt, und wenn ja ab wann und mit welchem Text, damit wir Lexoffice entsprechend vorbereiten können?",
+      "Ist Outlook bei dir ein Microsoft-365-Geschäftskonto, und wer im Team hätte Zugriff auf deinen Kalender und die Mails?",
+      "Deine angegebene Website gehört einem Verband: Wie erreichen dich Kunden heute wirklich, über welche Seite, Nummer oder Empfehlung?"
+    ],
+    "kostenUsd": 0.7511,
+    "capsGetroffen": []
+  }
+}

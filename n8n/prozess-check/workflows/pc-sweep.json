@@ -4,7 +4,7 @@
   "active": false,
   "nodes": [
     {
-      "id": "48e7ebf5-341d-4d17-bafc-3b72c2863b7c",
+      "id": "0bed9eac-02bb-4be1-b79a-f2276cd216bd",
       "name": "Alle 15 Minuten",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
@@ -24,7 +24,7 @@
       }
     },
     {
-      "id": "2a5b6225-e4d3-4ca4-b3ec-e07161511183",
+      "id": "36b15034-dd04-40a7-b88b-2bc295bf8dbe",
       "name": "Manuell testen",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
@@ -35,7 +35,7 @@
       "parameters": {}
     },
     {
-      "id": "d54898e7-632f-43b9-9889-1a909df50fa5",
+      "id": "f3fa5cbd-bbef-4694-9056-267772aff102",
       "name": "Config",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
@@ -48,10 +48,10 @@
         "jsonOutput": "{\n  \"deliverUrl\": \"https://vrelo-ki.de/api/prozess-check/deliver\"\n}",
         "options": {}
       },
-      "notes": "PC_DELIVER_URL, caps and prices (no n8n Variables on this licence). Prices: re-check when the model changes."
+      "notes": "PC_DELIVER_URL, caps, estimates and prices (no n8n Variables on this licence). deliverUrl also sits in pc-error and pc-sweep."
     },
     {
-      "id": "13f8a7ba-9124-45ef-a0e3-18b031377813",
+      "id": "a79942ed-e9d6-4b78-b7e9-be1d809f2e15",
       "name": "Hängende Läufe",
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
@@ -65,7 +65,7 @@
         "dataTableId": {
           "__rl": true,
           "mode": "id",
-          "value": "6jEY13WksCkayshQ",
+          "value": "uufMxsjQ3EbiAu1g",
           "cachedResultName": "pc_runs"
         },
         "matchType": "allConditions",
@@ -87,7 +87,7 @@
       }
     },
     {
-      "id": "66aab273-b132-4ca6-a0ba-f743a2e650af",
+      "id": "f377252a-db2b-46eb-8a37-2a0830aff5a0",
       "name": "Fallback senden",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
@@ -130,12 +130,46 @@
       "waitBetweenTries": 5000
     },
     {
-      "id": "777239a7-e79f-4c09-b3e8-07455411735d",
+      "id": "31b5eff0-bda0-484c-9e55-947659de06fd",
+      "name": "Fallback angekommen?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1440,
+        300
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e3dc608d-cb42-4a98-b317-0ff6fb01baba",
+              "leftValue": "={{ $json.statusCode >= 200 && $json.statusCode < 300 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "b1408de8-1685-4bb0-8c42-3f70442ae2a2",
       "name": "Als failed markieren",
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
       "position": [
-        1440,
+        1680,
         300
       ],
       "parameters": {
@@ -144,7 +178,7 @@
         "dataTableId": {
           "__rl": true,
           "mode": "id",
-          "value": "6jEY13WksCkayshQ",
+          "value": "uufMxsjQ3EbiAu1g",
           "cachedResultName": "pc_runs"
         },
         "filters": {
@@ -191,15 +225,16 @@
           "convertFieldsToString": false
         },
         "options": {}
-      }
+      },
+      "notes": "Only after a 2xx: otherwise the row stays running and the next sweep tries again."
     },
     {
-      "id": "7d2451bd-e428-4c93-aa56-2d63e68cf328",
+      "id": "e83a1d02-452e-4e18-b465-bd6c7bd6d66f",
       "name": "Alte Läufe löschen",
       "type": "n8n-nodes-base.dataTable",
       "typeVersion": 1.1,
       "position": [
-        1680,
+        1920,
         500
       ],
       "parameters": {
@@ -208,7 +243,7 @@
         "dataTableId": {
           "__rl": true,
           "mode": "id",
-          "value": "6jEY13WksCkayshQ",
+          "value": "uufMxsjQ3EbiAu1g",
           "cachedResultName": "pc_runs"
         },
         "filters": {
@@ -275,6 +310,17 @@
       ]
     },
     "Fallback senden": {
+      "main": [
+        [
+          {
+            "node": "Fallback angekommen?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fallback angekommen?": {
       "main": [
         [
           {

@@ -7,8 +7,9 @@ import { ResearchResultSchema } from "./research";
 
 const load = (f: string) => JSON.parse(readFileSync(join(__dirname, "__fixtures__", f), "utf8"));
 
-describe("research-run-1.json (n8n pc-research output)", () => {
-  const raw = load("research-run-1.json");
+// run-1: first build (3 fresh programs, cost stop hit); run-a: after Ruling X (1 fresh program, website read).
+describe.each(["research-run-1.json", "research-run-a.json"])("%s (n8n pc-research output)", (f) => {
+  const raw = load(f);
 
   it("parses with ResearchResultSchema as a researched result", () => {
     const r = ResearchResultSchema.parse(raw);
