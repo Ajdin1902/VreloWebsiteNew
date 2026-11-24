@@ -1,0 +1,165 @@
+{
+  "jobId": "3f9a2b7c-8d14-4e6f-a5b2-9c0d1e2f3a41",
+  "fallback": false,
+  "erlaubteQuellen": [
+    "https://help.lexware.de/de-form/collections/1335664-rechnungen-angebote",
+    "https://help.lexware.de/de-form/",
+    "https://www.lexware.de/funktionen/belegerfassung/",
+    "https://help.lexware.de/de-form/collections/1335668-starten-einrichten",
+    "https://help.lexware.de/de-form/articles/547985-zahlungserinnerungen-und-mahnungen-erstellen",
+    "https://help.lexware.de/de-form/articles/548860-schnelleinstieg-angebote-e-rechnungen-co-fur-einsteiger",
+    "https://help.lexware.de/de-form/articles/548861-schnelleinstieg-buchhaltung-fur-einsteiger",
+    "https://simontutorial.de/lexware-office/",
+    "https://automahntion.de/",
+    "https://github.com/api-evangelist/lexoffice",
+    "https://developers.lexware.io/docs/",
+    "https://apps.make.com/lexoffice",
+    "https://apis.io/apis/lexoffice/lexoffice-vouchers-api/",
+    "https://dlthub.com/context/source/lexware-api",
+    "https://www.pragma-code.de/en/blog-lexware-office-features-api-guide",
+    "https://apis.io/providers/lexoffice/",
+    "https://rollout.com/integration-guides/lexoffice/api-essentials",
+    "https://www.agenticfabriq.com/integrations/lexoffice",
+    "https://hexdocs.pm/lexoffice/api-reference.html",
+    "https://support.microsoft.com/de-de/topic/regeln-f%C3%BCr-die-automatische-weiterleitung-von-nachrichten-45aa9664-4911-4f96-9663-ece42816d746",
+    "https://support.microsoft.com/de-de/outlook/working-with-message-folders-in-outlook-com",
+    "https://support.microsoft.com/de-de/outlook/mail/manage-email-messages-by-using-rules-in-outlook",
+    "https://www.as-computer.de/wissen/outlook-regeln-erstellen/",
+    "https://support.microsoft.com/de-de/outlook/mail/focused-inbox-for-outlook",
+    "https://www.swisscom.ch/de/b2bmag/new-way-of-working/mit-outlook-regeln-die-mailflut-bandigen/",
+    "https://www.antwort.net/a/tutorial/vollstaendige-anleitung-e-mails-in-outlook-automatisch-in-bestimmte-ordner-verschieben.html",
+    "https://en.wikipedia.org/wiki/Outlook.com",
+    "https://en.wikipedia.org/wiki/Microsoft_Outlook",
+    "https://www.unipile.com/microsoft-graph-api-email-integration-guide/",
+    "https://prismatic.io/docs/components/ms-outlook/",
+    "https://www.unipile.com/outlook-rest-api-microsoft-graph-migration-2/",
+    "https://cli.nylas.com/guides/microsoft-graph-email-quickstart",
+    "https://rollout.com/integration-guides/microsoft-outlook/api-essentials",
+    "https://www.swarmhit.com/blog/outlook-api",
+    "https://www.anygen.io/showcase/outlook-api/index.html",
+    "https://aiemaily.com/blog/what-is-microsoft-graph-mail-api",
+    "https://learn.microsoft.com/en-MY/graph/outlook-change-notifications-overview",
+    "https://docs.n8n.io/integrations/nodes/n8n-nodes-base.microsoftoutlook/",
+    "https://docs.n8n.io/integrations/builtin/trigger-nodes/n8n-nodes-base.microsoftoutlooktrigger",
+    "https://docs.n8n.io/integrations/builtin/credentials/imap/outlook",
+    "https://docs.n8n.io/integrations/builtin/credentials/send-email/outlook",
+    "https://n8n.io/integrations/http-request/and/microsoft-outlook/",
+    "https://n8n.io/integrations/microsoft-outlook/",
+    "https://n8n.io/integrations/microsoft-entra-id/and/microsoft-outlook/",
+    "https://n8n.io/integrations/microsoft-excel/and/microsoft-outlook/",
+    "https://n8n.io/integrations/microsoft-outlook/and/microsoft-sharepoint/"
+  ],
+  "pdf": {
+    "schritte": [
+      {
+        "bereich": "rechnungen",
+        "titel": "Rechnungen schreiben und mahnen",
+        "idee": "Nach dem Einsatz liegt die Rechnung als fertiger Entwurf bereit. Du schaust kurz drüber und gibst sie frei. Der Küchentisch am Abend bleibt wieder für anderes frei.",
+        "mitProgrammen": "Lexoffice hat eine Schnittstelle, über die sich Rechnungen und Mahnungen als Datei abrufen lassen.",
+        "tipp": "In Lexoffice öffnest du unter Belege die offene Rechnung und wählst Weitere Aktionen und dann Mahnen. Texte und Mahngebühr passt du an.",
+        "quellen": [
+          "https://developers.lexware.io/docs/",
+          "https://help.lexware.de/de-form/articles/547985-zahlungserinnerungen-und-mahnungen-erstellen"
+        ]
+      },
+      {
+        "bereich": "anfragen",
+        "titel": "Anfragen beantworten",
+        "idee": "Anfragen per Mail und Telefon landen an einer Stelle. Du siehst auf der Baustelle in Ruhe, was hereinkam. Eine erste Antwort mit Terminvorschlag steht schon bereit.",
+        "quellen": []
+      },
+      {
+        "bereich": "angebote",
+        "titel": "Angebote schreiben und nachfassen",
+        "idee": "Aus deinen Angaben nach dem Aufmaß entsteht ein Angebotsentwurf, den du nur noch prüfst. Antwortet ein Kunde nicht, meldet sich eine kurze Erinnerung bei dir zum Nachfassen.",
+        "mitProgrammen": "Bei Lexoffice lassen sich Angebote per Link teilen, der Kunde kann sie online annehmen und du siehst sofort, wenn er reagiert.",
+        "quellen": [
+          "https://help.lexware.de/de-form/collections/1335664-rechnungen-angebote"
+        ]
+      }
+    ],
+    "programme": [
+      {
+        "name": "Lexoffice",
+        "zeilen": [
+          {
+            "text": "Rechnungen, Angebote und Mahnungen schreibst du direkt im Programm und verschickst sie per Mail.",
+            "quellen": [
+              "https://help.lexware.de/de-form/articles/548860-schnelleinstieg-angebote-e-rechnungen-co-fur-einsteiger"
+            ]
+          },
+          {
+            "text": "Zahlungserinnerungen und Mahnungen löst du selbst aus, einen automatischen Mahnversand gibt es nicht.",
+            "quellen": [
+              "https://help.lexware.de/de-form/articles/547985-zahlungserinnerungen-und-mahnungen-erstellen"
+            ]
+          },
+          {
+            "text": "Eine Schnittstelle ist vorhanden, über die sich Anbindungen bauen lassen.",
+            "quellen": [
+              "https://developers.lexware.io/docs/"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "dossier": {
+    "programme": [
+      {
+        "name": "Lexoffice",
+        "befunde": "Heißt seit 27.05.2025 Lexware Office. Angebote, Rechnungen, E-Rechnungen und Mahnungen direkt im Programm, Versand per Mail. Mahnen nur bei im Programm erstellten Belegen, kein automatischer Mahnversand. Kundencenter für Angebote per Link. Öffentliche API mit Bearer-Token, Limit 2 Anfragen pro Sekunde. Event Subscriptions mit Webhook-Callback vorhanden. DATEV-Export.",
+        "unbestaetigt": "Confidence mittel. Tarif der Schnittstelle nicht gefunden. Welche Webhook-Ereignisse gemeldet werden ist offen. OAuth2 für Partner unklar. CSV oder Excel Export nicht gefunden.",
+        "blocker": "Keine harten Blocker belegt. Bereits gemahnte Rechnungen lassen sich nicht mehr bearbeiten. Extern erstellte oder importierte Belege lassen sich nicht mahnen. Betreff der Mahn-Mail ist fest vorgegeben.",
+        "n8n": "unbekannt, weder nativer noch Community-Node belegt, Anbindung per HTTP-Request gegen die API denkbar",
+        "api": "vorhanden, Tarif nicht gefunden, Anmeldung per API-Schlüssel aus dem eigenen Konto"
+      },
+      {
+        "name": "Outlook",
+        "befunde": "nicht recherchiert, im Gespräch klären",
+        "unbestaetigt": "Ob Outlook als Microsoft 365, klassisches Desktop-Outlook oder Konto bei einem anderen Anbieter genutzt wird, ist offen.",
+        "blocker": "Unbekannt.",
+        "n8n": "unbekannt",
+        "api": "unbekannt"
+      },
+      {
+        "name": "asdfqwer",
+        "befunde": "nicht recherchiert, im Gespräch klären",
+        "unbestaetigt": "Name ergibt kein erkennbares Programm, vermutlich Fehleingabe oder Platzhalter. Beim Gespräch nachfragen, ob ein weiteres Programm gemeint war.",
+        "blocker": "Unbekannt.",
+        "n8n": "unbekannt",
+        "api": "unbekannt"
+      }
+    ],
+    "aufwand": [
+      {
+        "bereich": "rechnungen",
+        "groesse": "M"
+      },
+      {
+        "bereich": "anfragen",
+        "groesse": "M"
+      },
+      {
+        "bereich": "angebote",
+        "groesse": "M"
+      }
+    ],
+    "kartenStationen": [
+      "1 Anfrage",
+      "2 Angebot/Nachfassen",
+      "6 Ausgangsrechnung"
+    ],
+    "fragen": [
+      "Du schreibst abends Rechnungen und Angebote am Küchentisch: Welche Angaben aus dem Tag auf der Baustelle fehlen dir dann am häufigsten und wo hältst du sie fest?",
+      "Wie kommt ein Auftrag bei dir zur Rechnung: Gibt es vorher ein Angebot in Lexoffice oder tippst du die Rechnung oft neu?",
+      "Bei Anfragen per Mail und Telefon: Was fragst du fast immer als Erstes ab, und welche Anfragen nimmst du gar nicht an?",
+      "Wie läuft dein Outlook: Ist es ein Konto bei Microsoft 365 oder bei einem anderen Anbieter, und wer außer dir hat Zugriff auf das Postfach?",
+      "Wer im Team von zwei bis fünf Personen darf Rechnungen oder Mahnungen freigeben, und wie gehst du heute mit Kunden um, die nicht zahlen?"
+    ],
+    "kostenUsd": 1.464,
+    "capsGetroffen": [
+      "kosten"
+    ]
+  }
+}

@@ -1,4 +1,4 @@
-Status: Entwurf, Ajdin gibt frei
+Status: freigegeben von Ajdin am 24.11.2026
 
 # Programm-Recherche (ein Programm, zwei Aufrufe)
 

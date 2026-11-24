@@ -22,6 +22,7 @@
   "pc_runs": {
     "columns": [
       { "name": "jobId", "type": "string", "setBy": "n8n" },
+      { "name": "executionId", "type": "string", "setBy": "n8n", "note": "Die n8n-Execution von pc-research. pc-error findet darüber den jobId, weil der Error Trigger nur die Execution kennt." },
       { "name": "status", "type": "string", "setBy": "n8n", "note": "running | delivered | fallback | failed" },
       { "name": "kostenUsd", "type": "number", "setBy": "n8n" },
       { "name": "capsGetroffen", "type": "string", "json": true, "setBy": "n8n", "note": "JSON-Array, z. B. [\"kosten\", \"programme\"]" },

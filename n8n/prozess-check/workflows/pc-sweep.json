@@ -1,0 +1,296 @@
+{
+  "name": "pc-sweep",
+  "id": "bKNRGEJEeKPcCGuJ",
+  "active": false,
+  "nodes": [
+    {
+      "id": "48e7ebf5-341d-4d17-bafc-3b72c2863b7c",
+      "name": "Alle 15 Minuten",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        300
+      ],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "2a5b6225-e4d3-4ca4-b3ec-e07161511183",
+      "name": "Manuell testen",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        480,
+        500
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "d54898e7-632f-43b9-9889-1a909df50fa5",
+      "name": "Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        720,
+        300
+      ],
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"deliverUrl\": \"https://vrelo-ki.de/api/prozess-check/deliver\"\n}",
+        "options": {}
+      },
+      "notes": "PC_DELIVER_URL, caps and prices (no n8n Variables on this licence). Prices: re-check when the model changes."
+    },
+    {
+      "id": "13f8a7ba-9124-45ef-a0e3-18b031377813",
+      "name": "Hängende Läufe",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        960,
+        300
+      ],
+      "parameters": {
+        "resource": "row",
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "6jEY13WksCkayshQ",
+          "cachedResultName": "pc_runs"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "status",
+              "condition": "eq",
+              "keyValue": "running"
+            },
+            {
+              "keyName": "startedAt",
+              "condition": "lt",
+              "keyValue": "={{ $now.minus({ minutes: 30 }).toISO() }}"
+            }
+          ]
+        },
+        "returnAll": true
+      }
+    },
+    {
+      "id": "66aab273-b132-4ca6-a0ba-f743a2e650af",
+      "name": "Fallback senden",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1200,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.deliverUrl }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ jobId: $json.jobId, fallback: true, grund: 'n8n-Fehler: Recherche lief über 30 Minuten', erlaubteQuellen: [] }) }}",
+        "options": {
+          "timeout": 60000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          },
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "SCCkcZm64X10tM4I",
+          "name": "Prozess-Check Secret"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "777239a7-e79f-4c09-b3e8-07455411735d",
+      "name": "Als failed markieren",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1440,
+        300
+      ],
+      "parameters": {
+        "resource": "row",
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "6jEY13WksCkayshQ",
+          "cachedResultName": "pc_runs"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Hängende Läufe').item.json.id }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "status": "failed",
+            "finishedAt": "={{ $now.toISO() }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "finishedAt",
+              "displayName": "finishedAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "7d2451bd-e428-4c93-aa56-2d63e68cf328",
+      "name": "Alte Läufe löschen",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1680,
+        500
+      ],
+      "parameters": {
+        "resource": "row",
+        "operation": "deleteRows",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "6jEY13WksCkayshQ",
+          "cachedResultName": "pc_runs"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "startedAt",
+              "condition": "lt",
+              "keyValue": "={{ $now.minus({ days: 30 }).toISO() }}"
+            }
+          ]
+        },
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Alle 15 Minuten": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manuell testen": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Hängende Läufe",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Alte Läufe löschen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hängende Läufe": {
+      "main": [
+        [
+          {
+            "node": "Fallback senden",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fallback senden": {
+      "main": [
+        [
+          {
+            "node": "Als failed markieren",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false,
+    "timezone": "Europe/Berlin"
+  }
+}

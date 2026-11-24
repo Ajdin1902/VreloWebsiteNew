@@ -14,7 +14,7 @@ workflows/                      exports of pc-research, pc-error, pc-sweep (Task
 
 `src/lib/vorabFahrplan/schemaParity.test.ts` keeps the schemas in step with the zod contract and the table: change `ResearchResultSchema`, a schema or `pc_tools.json`, and `npx vitest run` says what drifted.
 
-**The prompts are drafts until Ajdin approves them** (marker „Status: Entwurf, Ajdin gibt frei“ at the top of each file). Paste them into the workflow from these files, never edit them only in n8n.
+**Ajdin approved the prompts on 2026-11-24** (marker „Status: freigegeben von Ajdin am 24.11.2026“ at the top of each file). Paste them into the workflow from these files, never edit them only in n8n.
 
 ## Calling the Messages API from n8n
 
@@ -110,9 +110,10 @@ const config = {
     runKostenStopUsd: 1.0,
     libraryMaxAlterTage: 120,
   },
-  // Checked 2026-11-23 on platform.claude.com/docs/en/about-claude/pricing. Re-check when the model changes.
+  // Checked 2026-11-23 on platform.claude.com/docs/en/about-claude/pricing; token prices re-checked
+  // 2026-11-24 against the claude-api skill (Sonnet 5.5: 2 / 10 USD, cache read 0.10). Re-check when the model changes.
   preise: {
-    geprueftAm: "2026-11-23",
+    geprueftAm: "2026-11-24",
     model: "claude-sonnet-5-5",
     inputUsdProMTok: 2.0,
     outputUsdProMTok: 10.0,
@@ -124,7 +125,7 @@ const config = {
 };
 ```
 
-Cost of one call = `input_tokens`, `output_tokens`, `cache_creation_input_tokens`, `cache_read_input_tokens` from `usage` × their prices + `usage.server_tool_use.web_search_requests` × `webSearchUsdPro1000 / 1000`. Sum it after every call, the extraction call included (it adds roughly the notes plus the system prompt as input and the JSON as output, small next to the search results in call 1). At ≥ `runKostenStopUsd` skip the remaining research and go to the synthesis; a program whose call 1 ran but whose call 2 is skipped stores nothing. The website side holds the daily cap (25 runs) and „fresh research once per e-mail per 30 days“ (`frischeRecherche` in the job). The monthly backstop is the spend limit of the Anthropic workspace „vrelo-vorab-fahrplan“: ❓ OPEN, Ajdin sets it in the Anthropic console. Until then only the org-wide API limit (106 €/month) applies, which `/demo` and the Postfach-Assistent share.
+Cost of one call = `input_tokens`, `output_tokens`, `cache_creation_input_tokens`, `cache_read_input_tokens` from `usage` × their prices + `usage.server_tool_use.web_search_requests` × `webSearchUsdPro1000 / 1000`. Sum it after every call, the extraction call included (it adds roughly the notes plus the system prompt as input and the JSON as output, small next to the search results in call 1). At ≥ `runKostenStopUsd` skip the remaining research and go to the synthesis; a program whose call 1 ran but whose call 2 is skipped stores nothing. The website side holds the daily cap (25 runs) and „fresh research once per e-mail per 30 days“ (`frischeRecherche` in the job). The monthly backstop is the spend limit of the Anthropic workspace „vrelo-vorab-fahrplan“: 30 USD/month, set by Ajdin 2026-11-24.
 
 ## Structured outputs: what was verified
 
@@ -143,10 +144,10 @@ Checked 2026-11-23 against the `claude-api` skill (`shared/tool-use-concepts.md`
 
 | Name in n8n | Type | Holds |
 |---|---|---|
-| Anthropic prozess-check | Header Auth, header `x-api-key` | The key of the separate Anthropic workspace „vrelo-vorab-fahrplan“ (created by Ajdin 2026-11-23; its own spend limit ❓ OPEN). On the laptop it sits in the HQ `.env` as `CLAUDE_VRELO_VORAB_FAHRPLAN`. Never the website's `ANTHROPIC_API_KEY`, never another HQ key. |
+| Anthropic prozess-check | Header Auth, header `x-api-key` | The key of the separate Anthropic workspace „vrelo-vorab-fahrplan“ (created by Ajdin 2026-11-23; spend limit 30 USD/month). On the laptop it sits in the HQ `.env` as `CLAUDE_VRELO_VORAB_FAHRPLAN`. Never the website's `ANTHROPIC_API_KEY`, never another HQ key. |
 | Prozess-Check Secret | Header Auth, header `x-vrelo-secret` | The website's `PC_SHARED_SECRET`. Used twice: the pc-research webhook checks it, and the deliver POST sends it. |
 
-n8n variables (or the config node): `PC_DELIVER_URL` (`https://vrelo-ki.de/api/prozess-check/deliver`, a preview URL while testing), plus the caps and prices above. The website needs `N8N_PC_WEBHOOK_URL` (the pc-research production webhook URL) and the same `PC_SHARED_SECRET`.
+No n8n Variables (licence-gated on self-hosted): the „Config“ Set node at the start of pc-research holds `deliverUrl` (= `PC_DELIVER_URL`, `https://vrelo-ki.de/api/prozess-check/deliver`), `model`, the caps and the prices. pc-error and pc-sweep each have a small „Config“ node with `deliverUrl` only: change the URL in all three. The website needs `N8N_PC_WEBHOOK_URL` (the pc-research production webhook URL) and the same `PC_SHARED_SECRET`.
 
 ## Deploy steps (server1)
 
@@ -154,9 +155,38 @@ n8n variables (or the config node): `PC_DELIVER_URL` (`https://vrelo-ki.de/api/p
 2. Create the Data Tables `pc_tools` and `pc_runs` with the columns in `schemas/pc_tools.json`. If Data Tables are missing on 2.30.5, two Postgres tables in `n8n-postgres` with the same columns; note it here.
 3. Create both credentials above.
 4. Import `workflows/pc-research.json`, `pc-error.json`, `pc-sweep.json`; attach the credentials; set pc-error as the error workflow of pc-research.
-5. Workflow settings of pc-research: save failed executions only, keep successful ones off, prune after 14 days (spec §8.4).
+5. Workflow settings of pc-research: save failed executions only, keep successful ones off (spec §8.4). Pruning is instance-wide on server1, not per workflow: `EXECUTIONS_DATA_MAX_AGE=72` (hours) and `EXECUTIONS_DATA_PRUNE_MAX_COUNT=1000`, stricter than the 14 days of the spec, left as it is.
 6. Paste the approved prompts from `prompts/` and the schemas from `schemas/` into their nodes.
-7. Run the fixed test job (plan 2 Task 5 Step 5). Activate only after Ajdin's go.
+7. Run the fixed test job (plan 2 Task 5 Step 5). Activate only after Ajdin's go, and then activate **pc-error and pc-sweep together with pc-research** (see below).
+
+## On server1 (built 2026-11-24, plan 2 Task 5)
+
+| What | Id |
+|---|---|
+| pc-research (webhook `POST https://server1.n8n-adz.de/webhook/prozess-check` = the website's `N8N_PC_WEBHOOK_URL`) | `rgrZAHzpkZe7BlWM` |
+| pc-error (error workflow of pc-research) | `LHCwSm6lZ4RTJtIi` |
+| pc-sweep | `bKNRGEJEeKPcCGuJ` |
+| Data Table `pc_tools` / `pc_runs` | `T5APItQQ4m9hk0db` / `6jEY13WksCkayshQ` |
+| Credential „Anthropic prozess-check“ / „Prozess-Check Secret“ | `iaHm1R79EmeFcgmU` / `SCCkcZm64X10tM4I` |
+
+All three are inactive. The webhook answers `202 {"status":"accepted"}` at once (Webhook „Respond: Immediately“), a wrong `x-vrelo-secret` gets 403.
+
+**Flow of pc-research:** Webhook → Config → „Lauf anlegen“ (pc_runs `running`, with the n8n execution id) → „Bibliothek lesen“ → „Plan“ (checks the job, matches keys and aliases, builds the queue and the step order) → loop „Nächstes Programm“ → „Recherche-Anfrage“ → „Claude Recherche“ → „Recherche auswerten“ → „Weiter?“ (pause_turn round / extraction / give up) → „Claude Extraktion“ → „URLs prüfen“ → „Bibliothek speichern“ (upsert by `key`) → back to „Nächstes Programm“; then „Claude Website“ → „Website auswerten“ → „Synthese vorbereiten“ → „Claude Synthese“ → „Synthese auswerten“ → „Ausliefern“ (4 tries, 60 s apart) → „Lauf abschließen“. The run state travels in the item; each Code node reads the request that fed its HTTP call with `$('<node>').first()` (the last run of that node).
+
+**Where the build differs from the sections above, and why:**
+
+- **pc-error only runs while it is active.** n8n 2.30.5 logs „Workflow … is not active and cannot be executed“ for an inactive error workflow. At go-live activate pc-error and pc-sweep together with pc-research; until then error handling is off.
+- **`pc_runs` has an extra column `executionId`.** The Error Trigger only knows the failed execution, not the job; pc-error finds the `jobId` through this column.
+- **Deliver retry:** n8n's own retry waits 5 s at most, so „Ausliefern“ loops through a Wait node (60 s) and an IF on `$runIndex`: 1 try + 3 retries, then „Stop and Error“, which hands over to pc-error. „Ausliefern“ does not follow redirects (the secret header stays on the deliver host).
+- **`web_fetch` carries `max_content_tokens: 20000`** on research and website calls.
+- **„Papier und Zettel“ is never researched**; it ends up under „nicht recherchiert“.
+- **A stale library entry (older than 120 days, not reviewed) still goes to the synthesis** when the run does not research it again (cap or no `frischeRecherche`). A fresh research replaces it.
+- **URL collection** walks the whole response for `web_search_result` and `web_fetch_result` objects, because the `_20260209` tools run dynamic filtering through code execution and return extra `code_execution_tool_result` blocks.
+- **One call with tools and `output_config` was not tried** (Ruling S, test budget).
+- **pc-sweep has a „Manuell testen“ trigger** besides the schedule. `n8n execute --id` on the box cannot run Data Table nodes („the module is disabled“), so the sweep was tested on its real schedule.
+- Failed executions keep the webhook's request headers, the shared secret included. They live in our own n8n database and are pruned after 72 h.
+
+**Cost, measured 2026-11-24 (run 1, ❓ OPEN):** one research call 1 for Lexoffice read 341,847 input tokens (dynamic filtering re-reads the search results in every server-side step) and cost 0.80 USD on its own; Outlook's call 1 another 0.60 USD. The stop works between calls only, so run 1 ended at 1.46 USD, Outlook was dropped after its call 1 and asdfqwer and the website were skipped. With these prices a run affords about one fresh program. Decide before go-live, then measure again: prompt caching on the research call, the basic tool versions without dynamic filtering, fewer searches and fetches, or a guard that starts a research call only when the remaining budget covers one.
 
 ## Reviewing pc_tools (Ajdin)
 

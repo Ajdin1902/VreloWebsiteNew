@@ -1,0 +1,270 @@
+{
+  "name": "pc-error",
+  "id": "LHCwSm6lZ4RTJtIi",
+  "active": false,
+  "nodes": [
+    {
+      "id": "f2721c0b-1d95-4fb6-9e77-01e41d3b9fc9",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        240,
+        300
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "80eeb9a3-d8f3-4c27-baca-7a00f34c387b",
+      "name": "Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        480,
+        300
+      ],
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"deliverUrl\": \"https://vrelo-ki.de/api/prozess-check/deliver\"\n}",
+        "options": {}
+      },
+      "notes": "PC_DELIVER_URL, caps and prices (no n8n Variables on this licence). Prices: re-check when the model changes."
+    },
+    {
+      "id": "c3f140ce-d419-4ddf-8b6c-93e53e266d64",
+      "name": "Lauf suchen",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        300
+      ],
+      "parameters": {
+        "resource": "row",
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "6jEY13WksCkayshQ",
+          "cachedResultName": "pc_runs"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "executionId",
+              "condition": "eq",
+              "keyValue": "={{ $('Error Trigger').first().json.execution.id }}"
+            }
+          ]
+        },
+        "returnAll": true
+      },
+      "alwaysOutputData": true
+    },
+    {
+      "id": "96c12cfb-fb3f-491f-88dc-15384e2cae58",
+      "name": "Lauf gefunden?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        960,
+        300
+      ],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4b3418c1-e652-4df5-bfc4-9c7b8b9e73d0",
+              "leftValue": "={{ !!$json.jobId && $json.status === 'running' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "df888247-bb8d-4e91-874b-dc4fcd63078c",
+      "name": "Fallback senden",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1200,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Config').first().json.deliverUrl }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ jobId: $json.jobId, fallback: true, grund: 'n8n-Fehler: ' + ($('Error Trigger').first().json.execution.lastNodeExecuted || 'unbekannt'), erlaubteQuellen: [] }) }}",
+        "options": {
+          "timeout": 60000,
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          },
+          "response": {
+            "response": {
+              "fullResponse": true,
+              "neverError": true
+            }
+          }
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "SCCkcZm64X10tM4I",
+          "name": "Prozess-Check Secret"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 5000
+    },
+    {
+      "id": "4bcd60c8-34f0-45cd-9add-b3fc57d5a71c",
+      "name": "Lauf als failed",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1440,
+        300
+      ],
+      "parameters": {
+        "resource": "row",
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "6jEY13WksCkayshQ",
+          "cachedResultName": "pc_runs"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "id",
+              "condition": "eq",
+              "keyValue": "={{ $('Lauf gefunden?').first().json.id }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "status": "failed",
+            "finishedAt": "={{ $now.toISO() }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "finishedAt",
+              "displayName": "finishedAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Lauf suchen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lauf suchen": {
+      "main": [
+        [
+          {
+            "node": "Lauf gefunden?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lauf gefunden?": {
+      "main": [
+        [
+          {
+            "node": "Fallback senden",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fallback senden": {
+      "main": [
+        [
+          {
+            "node": "Lauf als failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false,
+    "timezone": "Europe/Berlin"
+  }
+}
