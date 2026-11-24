@@ -41,12 +41,11 @@ describe("pc-research seed flag", () => {
     expect(s.queue).toHaveLength(cfg.caps.frischeProgrammeProLead);
     expect(s.capsGetroffen).toContain("programme");
   });
-  it("sets seed only on the operator trigger", () => {
-    expect(plan("Seed (Operator)", job({ seed: true, programme: ["Foo"] })).seed).toBe(true);
-    expect(plan("Seed (Operator)", job({ programme: ["Foo"] })).seed).toBe(false);
+  it("lets the operator trigger alone decide seed mode", () => {
+    expect(plan("Seed (Operator)", job({ programme: ["Foo"] })).seed).toBe(true);
   });
   it("still checks the job on the seed path", () => {
-    expect(() => plan("Seed (Operator)", job({ seed: true, programme: "Foo" }))).toThrow(/programme/);
+    expect(() => plan("Seed (Operator)", job({ programme: "Foo" }))).toThrow(/programme/);
   });
   it("wires seed runs to the library only: no synthesis, no deliver", () => {
     expect(node("Seed (Operator)").type).toBe("n8n-nodes-base.executeWorkflowTrigger");

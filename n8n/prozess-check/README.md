@@ -204,14 +204,14 @@ A run with only library programs costs the synthesis alone (about 0.04 to 0.07 U
 The chip programs are researched once before go-live, so a lead with only chip programs costs the synthesis alone. The route (built 2026-11-24, plan 2 Task 6):
 
 - pc-research has a second trigger, „Seed (Operator)“ (Execute Workflow Trigger). Its settings allow one caller only: `callerPolicy: workflowsFromAList`, `callerIds` = pc-seed. It has no HTTP path of its own.
-- **The seed flag counts only on that trigger.** „Plan“ reads the job from whichever trigger ran (`$('Webhook').isExecuted`), sets `seed = !vomWebhook && job.seed === true` and deletes `seed` from the job. A `seed` key in the public webhook body is dropped. `src/lib/vorabFahrplan/n8nSeed.test.ts` runs the exported Plan code to prove it and checks the wiring.
+- **The seed flag counts only on that trigger.** „Plan“ reads the job from whichever trigger ran (`$('Webhook').isExecuted`), sets `seed = !vomWebhook` (the trigger is the only authority) and deletes any `seed` key from the job, so a `seed` key in the public webhook body changes nothing. `src/lib/vorabFahrplan/n8nSeed.test.ts` runs the exported Plan code to prove it and checks the wiring.
 - A seed run is a normal research run with one program: the normal caps hold (1 fresh program, budget guard, 1.00 USD stop). When the queue is empty, „Seed?“ sends it to „Seed abschließen“ (pc_runs row: status `seed`, cost, `aufrufe`) instead of the website call, the synthesis and the deliver. The row starts as `seed`, never `running`, so pc-sweep never sends a fallback for it.
-- pc-seed: Webhook `POST /webhook/prozess-check-seed` (header `x-vrelo-secret`, same credential, answers 202) → „Seed-Jobs“ (one job per program, random UUID jobId, `frischeRecherche: true`) → Execute Workflow, once per item, waiting for each. It saves no executions, so the request headers are not kept.
+- pc-seed: Webhook `POST /webhook/prozess-check-seed` (header `x-vrelo-secret`, same credential, answers 202) → „Seed-Jobs“ (one job per program, random UUID jobId, `frischeRecherche: true`, no `seed` key) → Execute Workflow, once per item, waiting for each. It saves no executions, so the request headers are not kept.
 
 To seed again (new chips, or after deleting rows):
 
 1. n8n 2.x calls only published sub-workflows: pc-research must be active. Before go-live that briefly opens its public webhook too (still behind the secret). Activate pc-research, then pc-seed.
-2. `POST https://server1.n8n-adz.de/webhook/prozess-check-seed` with `{"programme": ["Name 1", "Name 2"]}` (at most 12) and the header `x-vrelo-secret` = `PC_SHARED_SECRET` from the HQ `.env`. Programs already in the library and fresh (or reviewed) are skipped.
+2. `POST https://server1.n8n-adz.de/webhook/prozess-check-seed` with `{"programme": ["Name 1", "Name 2"]}` (at most 6 per call: each run can overshoot its 1.00 USD stop, because the stop is checked between calls, so a small batch keeps one call well under the 10 USD seed ceiling) and the header `x-vrelo-secret` = `PC_SHARED_SECRET` from the HQ `.env`. Programs already in the library and fresh (or reviewed) are skipped.
 3. Read the cost from `pc_runs` (status `seed`, `kostenUsd`, `aufrufe`), never from execution data. About 0.4 to 0.5 USD per program (2026-11-24).
 4. Deactivate pc-seed, and pc-research too if it is not live yet.
 
