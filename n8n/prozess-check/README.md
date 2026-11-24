@@ -9,7 +9,7 @@ prompts/synthese.md             job + library + website → {pdf, dossier}
 schemas/programm.output.json    output_config.format for programm-recherche
 schemas/synthese.output.json    output_config.format for synthese
 schemas/pc_tools.json           columns of the Data Tables pc_tools and pc_runs
-workflows/                      exports of pc-research, pc-error, pc-sweep (Task 5)
+workflows/                      exports of pc-research, pc-error, pc-sweep (Task 5), pc-seed (Task 6)
 ```
 
 `src/lib/vorabFahrplan/schemaParity.test.ts` keeps the schemas in step with the zod contract and the table: change `ResearchResultSchema`, a schema or `pc_tools.json`, and `npx vitest run` says what drifted.
@@ -171,6 +171,7 @@ No n8n Variables (licence-gated on self-hosted): the „Config“ Set node at th
 | pc-sweep | `bKNRGEJEeKPcCGuJ` |
 | Data Table `pc_tools` / `pc_runs` | `T5APItQQ4m9hk0db` / `uufMxsjQ3EbiAu1g` |
 | Credential „Anthropic prozess-check“ / „Prozess-Check Secret“ | `iaHm1R79EmeFcgmU` / `SCCkcZm64X10tM4I` |
+| pc-seed (operator helper, inactive, plan 2 Task 6) | `9dKd5KiXE0QJRPjC` |
 
 All three are inactive. The webhook answers `202 {"status":"accepted"}` at once (Webhook „Respond: Immediately“), a wrong `x-vrelo-secret` gets 403.
 
@@ -198,13 +199,29 @@ All three are inactive. The webhook answers `202 {"status":"accepted"}` at once 
 
 A run with only library programs costs the synthesis alone (about 0.04 to 0.07 USD). The tool versions stay `_20260209`: with the trims, the fresh Outlook research cost 0.44 USD with its extraction and run A stayed under the stop.
 
+## Seeding pc_tools (operator route)
+
+The chip programs are researched once before go-live, so a lead with only chip programs costs the synthesis alone. The route (built 2026-11-24, plan 2 Task 6):
+
+- pc-research has a second trigger, „Seed (Operator)“ (Execute Workflow Trigger). Its settings allow one caller only: `callerPolicy: workflowsFromAList`, `callerIds` = pc-seed. It has no HTTP path of its own.
+- **The seed flag counts only on that trigger.** „Plan“ reads the job from whichever trigger ran (`$('Webhook').isExecuted`), sets `seed = !vomWebhook && job.seed === true` and deletes `seed` from the job. A `seed` key in the public webhook body is dropped. `src/lib/vorabFahrplan/n8nSeed.test.ts` runs the exported Plan code to prove it and checks the wiring.
+- A seed run is a normal research run with one program: the normal caps hold (1 fresh program, budget guard, 1.00 USD stop). When the queue is empty, „Seed?“ sends it to „Seed abschließen“ (pc_runs row: status `seed`, cost, `aufrufe`) instead of the website call, the synthesis and the deliver. The row starts as `seed`, never `running`, so pc-sweep never sends a fallback for it.
+- pc-seed: Webhook `POST /webhook/prozess-check-seed` (header `x-vrelo-secret`, same credential, answers 202) → „Seed-Jobs“ (one job per program, random UUID jobId, `frischeRecherche: true`) → Execute Workflow, once per item, waiting for each. It saves no executions, so the request headers are not kept.
+
+To seed again (new chips, or after deleting rows):
+
+1. n8n 2.x calls only published sub-workflows: pc-research must be active. Before go-live that briefly opens its public webhook too (still behind the secret). Activate pc-research, then pc-seed.
+2. `POST https://server1.n8n-adz.de/webhook/prozess-check-seed` with `{"programme": ["Name 1", "Name 2"]}` (at most 12) and the header `x-vrelo-secret` = `PC_SHARED_SECRET` from the HQ `.env`. Programs already in the library and fresh (or reviewed) are skipped.
+3. Read the cost from `pc_runs` (status `seed`, `kostenUsd`, `aufrufe`), never from execution data. About 0.4 to 0.5 USD per program (2026-11-24).
+4. Deactivate pc-seed, and pc-research too if it is not live yet.
+
 ## Reviewing pc_tools (Ajdin)
 
 n8n → Overview → Data tables → `pc_tools`. Each row is one program. Open the row, check `bordmittel`, `api` and `grenzen` against the `quellen`, correct a cell if needed, then set `reviewed` to true. A reviewed entry is never re-researched and never overwritten by a run. To force a fresh research: set `reviewed` to false and `researchedAt` to a date more than 120 days ago, or delete the row. The chip programs (`PROGRAMM_CHIPS` in `src/lib/prozessCheck.ts`) are researched and reviewed before go-live (plan 2 Task 6).
 
 ## Re-exporting the workflows
 
-After any change in the n8n UI, export all three back into `workflows/` and commit, so this folder stays the source of truth:
+After any change in the n8n UI, export all three (and pc-seed, if it changed) back into `workflows/` and commit, so this folder stays the source of truth:
 
 - UI: open the workflow → ⋯ → Download, save as `workflows/<name>.json`; or
 - on server1: `docker exec <n8n container> n8n export:workflow --id=<id> --output=/tmp/<name>.json --pretty`, then copy it out.

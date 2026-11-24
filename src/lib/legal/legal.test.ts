@@ -78,9 +78,43 @@ describe("datenschutz Prozess-Check section", () => {
     expect(pc.body).toMatch(/jederzeit widerrufen/);
     expect(pc.body).toContain("(siehe „E-Mail-Kontakt“)");
   });
-  it("claims no AI processing and drops the old opt-in wording", () => {
-    expect(pc.body).not.toMatch(/KI|Anthropic/);
+  it("drops the old opt-in wording and the Plan 2 marker", () => {
     expect(pc.body).not.toContain("Du darfst dich bei mir melden");
+    expect(pc.body).not.toContain("PLAN 2");
+  });
+});
+
+// Prozess-Check v2, Plan 2: the KI research on server1 and Anthropic (spec §8.4, §11).
+describe("datenschutz Prozess-Check KI research", () => {
+  const pc = datenschutz.sections.find((s) => s.heading === "Prozess-Check")!;
+  const demo = datenschutz.sections.find((s) => s.heading === "Interaktive Demo (/demo)")!;
+  const ki = pc.body.split("\n\n").find((p) => p.startsWith("KI-Recherche:")) ?? "";
+  it("uses the /demo wording on SCC and training, plus the 30-day retention", () => {
+    for (const satz of [
+      "Grundlage der Übermittlung sind die EU-Standardvertragsklauseln (SCC), die in den Commercial Terms von Anthropic enthalten sind.",
+      "Anthropic nutzt über die Programmierschnittstelle (API) übermittelte Daten nicht zum Training seiner Modelle",
+    ]) {
+      expect(demo.body).toContain(satz);
+      expect(ki).toContain(satz);
+    }
+    expect(ki).toContain("Anthropic PBC (USA)");
+    expect(ki).toContain("spätestens 30 Tagen");
+  });
+  it("says what goes out and that contact data never does", () => {
+    expect(ki).toContain("Namen deiner Programme, deine Antworten im Fragebogen, den Firmennamen");
+    expect(ki).toContain("Name, E-Mail-Adresse und Telefonnummer bekommen weder n8n noch Anthropic.");
+    expect(ki).toMatch(/Website .*automatisch ausgelesen/);
+  });
+  it("names server1, the retention and the Upstash delivery record", () => {
+    expect(ki).toContain("Hetzner Online GmbH");
+    expect(ki).toContain("Dieser Eintrag wird nach 30 Tagen gelöscht.");
+    expect(ki).toContain("nach drei Tagen gelöscht");
+    expect(ki).toContain("keine personenbezogenen Daten");
+    expect(ki).toMatch(/Upstash .*höchstens 2 Stunden/);
+    expect(ki).toContain("Art. 6 Abs. 1 lit. b DSGVO");
+  });
+  it("never claims an EU location for the AI step", () => {
+    expect(ki).not.toMatch(/innerhalb der EU|Deutschland/);
   });
 });
 

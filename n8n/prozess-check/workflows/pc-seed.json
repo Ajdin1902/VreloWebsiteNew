@@ -1,0 +1,114 @@
+{
+  "name": "pc-seed (operator, temporary)",
+  "id": "9dKd5KiXE0QJRPjC",
+  "active": false,
+  "nodes": [
+    {
+      "id": "0f6b1c2e-5a7d-4e8f-9a1b-2c3d4e5f6a71",
+      "name": "Seed-Auftrag",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        240,
+        300
+      ],
+      "webhookId": "8d2e4f6a-1b3c-4d5e-8f7a-9b0c1d2e3f40",
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "prozess-check-seed",
+        "authentication": "headerAuth",
+        "responseMode": "onReceived",
+        "options": {
+          "responseCode": {
+            "values": {
+              "responseCode": "customCode",
+              "customCode": 202
+            }
+          },
+          "responseData": "{\"status\":\"accepted\"}"
+        }
+      },
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "SCCkcZm64X10tM4I",
+          "name": "Prozess-Check Secret"
+        }
+      }
+    },
+    {
+      "id": "1a7c2d3e-6b8f-4a9b-8c1d-3e4f5a6b7c82",
+      "name": "Seed-Jobs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        300
+      ],
+      "notes": "Why Code: builds one valid ResearchJob per program with a UUID jobId; no native node generates UUID v4 per item from a list. Headers never leave this node.",
+      "parameters": {
+        "jsCode": "// One job per program, so each pc-research run stays under its normal caps (1 fresh program, 1.00 USD stop).\nconst body = $('Seed-Auftrag').first().json.body ?? {};\nconst programme = body.programme;\nif (!Array.isArray(programme) || !programme.length || programme.length > 12 || !programme.every((p) => typeof p === 'string' && p.trim() && p.length <= 80)) throw new Error('Seed: programme ungültig');\nconst uuid = () => 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 3 | 8)).toString(16); });\nreturn programme.map((p) => ({ json: {\n  seed: true, jobId: uuid(), createdAt: new Date().toISOString(), branche: 'seed', team: 'seed', arbeitsort: 'seed', firma: 'Seed',\n  programme: [p.trim()], bereiche: ['anfragen'], stunden: { anfragen: 1 }, nervt: 'anfragen', kanaele: [], menge: 'seed', wer: 'seed',\n  arbeitstag: '', abende: 'seed', versucht: 'seed', frischeRecherche: true,\n} }));"
+      }
+    },
+    {
+      "id": "2b8d3e4f-7c9a-4b1c-9d2e-4f5a6b7c8d93",
+      "name": "pc-research (Seed)",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        720,
+        300
+      ],
+      "parameters": {
+        "source": "database",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "rgrZAHzpkZe7BlWM"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Seed-Auftrag": {
+      "main": [
+        [
+          {
+            "node": "Seed-Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Seed-Jobs": {
+      "main": [
+        [
+          {
+            "node": "pc-research (Seed)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Berlin",
+    "saveDataErrorExecution": "none",
+    "saveDataSuccessExecution": "none",
+    "saveManualExecutions": false
+  }
+}
