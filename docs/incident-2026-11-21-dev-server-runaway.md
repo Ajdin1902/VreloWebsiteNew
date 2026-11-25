@@ -17,7 +17,6 @@
 - Ruled out: Node (25.9.0 since 2026-03), `next`/Tailwind packages (unchanged since 08/2026), Windows updates (last 2026-11-11), large non-ignored files in the repo.
 - Not an option here: `experimental.turbopackPluginRuntimeStrategy: 'workerThreads'` needs Next ≥ 16.4 and falls back to child processes on Node ≥ 24.13.1.
 - Cost of the fix: every `next dev` start compiles from scratch (a few seconds). Undo it once an upgraded Next survives the repro below with the flag removed.
-- ☐ Delete the poisoned evidence copy and `C:\Users\ajdin\next-cache-bak-20261121` once the dev server has run fine for a day.
 
 ## Symptom
 
@@ -46,7 +45,7 @@ That file is Turbopack's **PostCSS worker** (it evaluates `postcss.config.mjs` �
 
 - 1,117 workers / 48.5 GB committed, then **1,960 workers / ~85 GB committed one minute later**. Page file peaked at ~30 GB.
 
-The trigger is the **stale `.next/` cache**. `.next/dev/build/` was dated 2026-08-31 (several Next upgrades old).
+The trigger is the **persisted Turbopack dev task cache** (`.next/dev`), not its age: the first poisoned cache dated from 2026-08-31, but a fresh cache (created 13:09, healthy) was poisoned again by 13:51. Why Turbopack poisons it is unknown (upstream bug, Next 16.2.7).
 
 ## Proof (controlled repro)
 
@@ -59,7 +58,9 @@ The repro started `next dev -p 3123` with a watchdog that killed the tree once n
 
 ## Fix applied
 
-- Moved the old cache out of the repo to `C:\Users\ajdin\next-cache-bak-20261121` (1.2 GB). Next rebuilt `.next/` on its own. ☐ Delete that folder once the dev server has run fine for a day.
+- **The fix is `experimental: { turbopackFileSystemCacheForDev: false }` in `next.config.ts`.** It stops the runaway even on a poisoned cache (see the repro table above). Never remove the flag without the guarded watchdog repro below.
+- Deleting or moving `.next` (done first; old cache moved to `C:\Users\ajdin\next-cache-bak-20261121`, 1.2 GB) helps only once: the fresh cache went bad again within the hour.
+- ☐ Delete that backup folder and the poisoned evidence copy once the dev server has run fine for a day.
 
 ## Gotcha found on the way
 
@@ -69,8 +70,8 @@ Do **not** keep a cache backup inside `Website/` (e.g. `.next.bak-…`). Only `.
 
 1. Check: `(Get-Process node).Count`. Dozens or more with `.next\dev\build\` in the command line means the runaway is back.
 2. Stop it: kill the node processes whose command line contains `Vrelo\Website` or `.next\dev\build` (leave the MCP servers alone).
-3. Delete `Website/.next` (it is only a cache) and start `npm run dev` again.
-4. If it recurs on a fresh cache, it is a new cause: run the repro below with a fresh `.next` and file a Next.js issue.
+3. Confirm `experimental.turbopackFileSystemCacheForDev: false` is still in `next.config.ts`. Deleting `Website/.next` is a one-off relief, not a fix.
+4. If it recurs with the flag set, it is a new cause: run the repro below and file a Next.js issue. Never keep a cache copy inside the repo (see the gotcha above).
 
 **Unconfirmed lead:** the crashed server ran from `c:\Users\…` (lowercase drive), which [CLAUDE.md](../CLAUDE.md) already warns against. The clean repro also used lowercase `c:`, so the drive letter alone does not cause it. A cache written under one casing and read under the other is not ruled out.
 

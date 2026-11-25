@@ -1,9 +1,10 @@
 // src/lib/prozessCheckCta.ts
 //
-// The Prozess-Check is the site's front door (spec 2026-09-26,
+// The Prozess-Check began as the site's front door (spec 2026-09-26,
 // docs/superpowers/specs/2026-09-26-prozess-check-front-door-design.md).
-// Every primary CTA links to /prozess-check with its own ?src= slug, which the
-// page writes into the Cal booking notes and the result e-mail, so each booked
+// Since 2026-11-11 the front door for every primary CTA is /vorlagen (the
+// Prozess-Check is its first card); each CTA carries its own ?src= slug, which the
+// Prozess-Check page writes into the Cal booking notes and the result e-mail, so each booked
 // call shows the button it came from. Components hold no German.
 
 import { normalizeSource } from "@/lib/source";
