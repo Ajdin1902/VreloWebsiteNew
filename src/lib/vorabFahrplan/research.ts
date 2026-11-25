@@ -78,9 +78,11 @@ export function mergeResearch(
     if (gruende.length) return verwerfen(wo, gruende.join(", "), text);
     return t;
   };
-  /** Research text for titel/idee, or the base text when it is forbidden or empty. */
+  /** Research text for titel/idee, or the base text when it is forbidden, names a visitor program, or is empty. */
   const ersetze = (wo: string, text: string, max: number, alt: string): string => {
-    const gruende = findForbidden(text, { allowNames });
+    // A program fact needs a source; titel/idee carry none, so program names there fall back (facts go to mitProgrammen/tipp).
+    const nenntProgramm = programme.some((p) => p.trim() && text.toLowerCase().includes(p.trim().toLowerCase()));
+    const gruende = [...findForbidden(text, { allowNames }), ...(nenntProgramm ? ["programm"] : [])];
     if (gruende.length) {
       verwerfen(wo, gruende.join(", "), text);
       return alt;

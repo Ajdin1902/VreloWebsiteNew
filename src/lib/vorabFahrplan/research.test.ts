@@ -86,7 +86,7 @@ describe("mergeResearch", () => {
   it("keeps base facts and the step order, replaces texts, numbers sources", () => {
     const r = result({
       schritte: [
-        step("rechnungen", { idee: "Rechnungen gehen aus Lexoffice raus.", mitProgrammen: "Lexoffice hat eine Schnittstelle.", quellen: [B] }),
+        step("rechnungen", { idee: "Rechnungen gehen automatisch raus.", mitProgrammen: "Lexoffice hat eine Schnittstelle.", quellen: [B] }),
         step("anfragen", { mitProgrammen: "Outlook lässt sich anbinden.", quellen: [A] }),
       ],
       programme: [],
@@ -101,7 +101,7 @@ describe("mergeResearch", () => {
     const [zuerst, danach, spaeter] = plan.schritte;
     expect(zuerst.titel).toBe("Titel anfragen");
     expect(zuerst.mitProgrammen).toBe("Outlook lässt sich anbinden.");
-    expect(danach.idee).toBe("Rechnungen gehen aus Lexoffice raus.");
+    expect(danach.idee).toBe("Rechnungen gehen automatisch raus.");
     expect(spaeter).toEqual(base.schritte[2]); // no research step: base step stays
     // A is first used (Zuerst), the kept fallback tip next, B under Danach.
     expect(plan.quellen).toEqual([
@@ -245,6 +245,27 @@ describe("mergeResearch", () => {
       expect(plan.programme[0].zeilen, x).toEqual(["Hat Regeln."]);
       expect(verworfen.join(" "), x).toMatch(/price|percent/);
     }
+  });
+
+  it("keeps the base text when titel or idee names a visitor program, and passes one that does not", () => {
+    const r = result({
+      schritte: [
+        step("anfragen", { titel: "Outlook beantwortet Anfragen", idee: "Mit LEXOFFICE geht die Antwort sofort raus.", quellen: [] }),
+        step("rechnungen", { titel: "Rechnungen sofort raus", idee: "Jede Rechnung geht am selben Tag raus.", mitProgrammen: "Lexoffice hat eine API.", quellen: [B] }),
+      ],
+      programme: [],
+    });
+    const { plan, verworfen } = mergeResearch(base, r, AM, PROG);
+    const zuerst = plan.schritte.find((s) => s.bereich === "anfragen")!;
+    const danach = plan.schritte.find((s) => s.bereich === "rechnungen")!;
+    const bAnfragen = base.schritte.find((s) => s.bereich === "anfragen")!;
+    expect(zuerst.titel).toBe(bAnfragen.titel);
+    expect(zuerst.idee).toBe(bAnfragen.idee);
+    expect(danach.titel).toBe("Rechnungen sofort raus");
+    expect(danach.idee).toBe("Jede Rechnung geht am selben Tag raus.");
+    expect(verworfen.join(" ")).toMatch(/anfragen titel \(programm\)/);
+    expect(verworfen.join(" ")).toMatch(/anfragen idee \(programm\)/);
+    expect(verworfen.join(" ")).not.toMatch(/rechnungen/);
   });
 
   it("uses the base text for a forbidden titel or idee, polishes what it keeps (Review Focus 3)", () => {
