@@ -186,7 +186,7 @@ fallback path: website renders the §7.3 PDF itself and sends both mails at once
 
 | Level | Cap (Claude's proposal, all in config) | When hit |
 |---|---|---|
-| Per lead | max **1 fresh program research** (rest from library or „im Gespräch klären“; Ajdin decided this on 2026-11-24 because a measured research call costs $0.55 to 0.80); per program web search ≤ 3, web fetch ≤ 3 at ≤ 10,000 tokens per page; website ≤ 3 fetches at the same page cap; **hard stop at $1.00 computed run cost** (from `usage` after every call): a program's research (estimate $0.85) and the website call (estimate $0.25) start only if the run cost plus the estimate stays ≤ $1.00; a started research always gets its extraction (about $0.04), the synthesis always runs | stop researching, synthesise with what exists |
+| Per lead | max **1 fresh program research** (rest from library or „im Gespräch klären“; Ajdin decided this on 2026-11-24 because a measured research call costs $0.55 to 0.80); per program web search ≤ 3, web fetch ≤ 3 at ≤ 10,000 tokens per page; website ≤ 3 fetches at the same page cap; **hard stop at $1.30 computed run cost** (Ajdin 2026-11-25, raised from $1.00 so a fresh program plus the website fits under the guard) (from `usage` after every call): a program's research (estimate $0.85) and the website call (estimate $0.25) start only if the run cost plus the estimate stays ≤ $1.30; a started research always gets its extraction (about $0.04), the synthesis always runs | stop researching, synthesise with what exists |
 | Per e-mail | 1 run with fresh research per 30 days | library-only run |
 | Per IP (hashed) | 3 submissions per 24 h | fallback PDF |
 | Per day (global) | 25 research runs | fallback PDF |

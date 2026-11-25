@@ -34,6 +34,10 @@ function plan(trigger: "Webhook" | "Seed (Operator)", data: unknown) {
 }
 
 describe("pc-research seed flag", () => {
+  it("keeps the per-lead stop at 1.30 USD, so a fresh program plus the website fits (Ruling X amended 2026-11-25)", () => {
+    expect(cfg.caps.runKostenStopUsd).toBe(1.3);
+    expect(cfg.schaetzungUsd.recherche + cfg.schaetzungUsd.website).toBeLessThanOrEqual(cfg.caps.runKostenStopUsd);
+  });
   it("ignores seed: true on the public webhook and keeps the caps", () => {
     const s = plan("Webhook", job({ seed: true }));
     expect(s.seed).toBe(false);
