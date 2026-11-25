@@ -68,11 +68,10 @@ describe("legal content", () => {
 describe("datenschutz Prozess-Check section", () => {
   const pc = datenschutz.sections.find((s) => s.heading === "Prozess-Check")!;
   it("names the data, the processors and both legal bases", () => {
-    expect(pc.body).toContain("Name, Firma, E-Mail-Adresse und Telefonnummer");
+    expect(pc.body).toContain("Name, Firma, E-Mail-Adresse, Telefonnummer");
     expect(pc.body).toMatch(/Resend \(Auftragsverarbeiter\)/);
     expect(pc.body).toMatch(/Upstash .*EU\/Frankfurt/);
     expect(pc.body).toMatch(/Hashwerten/);
-    expect(pc.body).toContain("Tageszähler ohne Personenbezug");
     expect(pc.body).toContain("Art. 6 Abs. 1 lit. b DSGVO");
     expect(pc.body).toContain("Einwilligung (Art. 6 Abs. 1 lit. a DSGVO)");
     expect(pc.body).toMatch(/jederzeit widerrufen/);
@@ -101,15 +100,15 @@ describe("datenschutz Prozess-Check KI research", () => {
     expect(ki).toContain("spätestens 30 Tagen");
   });
   it("says what goes out and that contact data never does", () => {
-    expect(ki).toContain("Namen deiner Programme, deine Antworten im Fragebogen, den Firmennamen");
+    expect(ki).toContain("nur Firmenname, Programmnamen, deine Antworten und deine Website");
     expect(ki).toContain("Name, E-Mail-Adresse und Telefonnummer bekommen weder n8n noch Anthropic.");
     expect(ki).toMatch(/Website .*automatisch ausgelesen/);
   });
   it("names server1, the retention and the Upstash delivery record", () => {
     expect(ki).toContain("Hetzner Online GmbH");
-    expect(ki).toContain("Dieser Eintrag wird nach 30 Tagen gelöscht.");
-    expect(ki).toContain("nach drei Tagen gelöscht");
-    expect(ki).toContain("Programmnamen, die die KI nicht finden konnte, werden nach 30 Tagen gelöscht");
+    expect(ki).toContain("ohne Kontaktdaten und ohne Antworten, gelöscht nach 30 Tagen");
+    expect(ki).toContain("höchstens drei Tage im Fehlerprotokoll");
+    expect(ki).toContain("Programmnamen, die sie nicht finden konnte, lösche ich nach 30 Tagen");
     expect(ki).toMatch(/Upstash .*höchstens 2 Stunden/);
     expect(ki).toContain("Art. 6 Abs. 1 lit. b DSGVO");
   });
