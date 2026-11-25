@@ -58,7 +58,7 @@ Values go into the prompt text with plain string replacement. **Before inserting
 | Placeholder | Prompt | Value |
 |---|---|---|
 | `{{programm}}` | programm-recherche | One name from `job.programme`, as the visitor wrote it |
-| `{{max_suchen}}` | programm-recherche | `caps.webSearchProProgramm` (4) |
+| `{{max_suchen}}` | programm-recherche | `caps.webSearchProProgramm` (3) |
 | `{{max_abrufe}}` | programm-recherche | `caps.webFetchProProgramm` (3) |
 | `{{schluss}}` | programm-recherche | The closing line for call 1 or call 2, both quoted in the prompt file |
 | `{{recherche_notizen}}` | programm-recherche, call 2 | All text blocks of call 1, all rounds |

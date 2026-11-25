@@ -17,6 +17,7 @@
 - All Claude calls go through the n8n **HTTP Request** node (the Anthropic Chat Model node breaks with 5.5 models on 2.30.5, runbook). Model pinned: `claude-sonnet-5-5`. Header `anthropic-version: 2023-06-01`.
 - Anthropic key: the separate workspace „prozess-check“ key only (Ajdin creates it with a $20/month limit, spec §13). Never the HQ `.env` key and never the website's `ANTHROPIC_API_KEY`.
 - Caps (spec §8.3, all in one config object in the workflow): fresh programs per lead 3, `web_search` `max_uses` 4 per program, `web_fetch` `max_uses` 3 per program, website fetches 3, hard stop at computed run cost $1.00, 25 research runs per UTC day (website side), fresh research once per e-mail per 30 days (website side). Prices for the computation are in the config with the date they were checked. Check them against the `claude-api` skill or the pricing page at build time; do not copy numbers from this plan.
+  - Later ruling: Ruling X (Ajdin 2026-11-24) sets the run stop at 1.30 USD with 1 fresh program per lead (not the 1.00 USD and 3 above); the workflow Config holds the live values.
 - server1: take the Postgres dump + `/home/node/.n8n/config` pair before the first deploy (runbook „Backups“). Never change the n8n image pin.
 - n8n workflow settings: save failed executions only; prune after 14 days (spec §8.4). `pc_runs` rows older than 30 days are deleted by the sweep.
 - Prompts live in `n8n/prozess-check/prompts/*.md` and are pasted into the workflow from there. Ajdin approves them before go-live.
