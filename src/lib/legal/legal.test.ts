@@ -109,7 +109,7 @@ describe("datenschutz Prozess-Check KI research", () => {
     expect(ki).toContain("Hetzner Online GmbH");
     expect(ki).toContain("Dieser Eintrag wird nach 30 Tagen gelöscht.");
     expect(ki).toContain("nach drei Tagen gelöscht");
-    expect(ki).toContain("keine personenbezogenen Daten");
+    expect(ki).toContain("Programmnamen, die die KI nicht finden konnte, werden nach 30 Tagen gelöscht");
     expect(ki).toMatch(/Upstash .*höchstens 2 Stunden/);
     expect(ki).toContain("Art. 6 Abs. 1 lit. b DSGVO");
   });

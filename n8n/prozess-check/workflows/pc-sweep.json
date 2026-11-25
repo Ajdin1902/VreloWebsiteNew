@@ -257,6 +257,42 @@
         },
         "options": {}
       }
+    },
+    {
+      "id": "30bdfe2c-8188-450f-8f38-74abda99445d",
+      "name": "Alte Programme löschen",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        660,
+        520
+      ],
+      "parameters": {
+        "resource": "row",
+        "operation": "deleteRows",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "T5APItQQ4m9hk0db",
+          "cachedResultName": "pc_tools"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "gefunden",
+              "condition": "eq",
+              "keyValue": "={{ false }}"
+            },
+            {
+              "keyName": "researchedAt",
+              "condition": "lt",
+              "keyValue": "={{ $now.minus({ days: 30 }).toISO() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "notes": "Datenschutz: Negativ-Cache-Zeilen (gefunden = false) halten die vom Besucher getippte Schreibweise. Löscht sie 30 Tage nach der letzten Recherche (researchedAt)."
     }
   ],
   "connections": {
@@ -292,6 +328,11 @@
           },
           {
             "node": "Alte Läufe löschen",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Alte Programme löschen",
             "type": "main",
             "index": 0
           }

@@ -1,5 +1,5 @@
 {
-  "_hinweis": "Spalten der zwei n8n Data Tables (spec §8.2, §8.4). JSON-Felder liegen als String (JSON.stringify), weil Data Tables nur string, number, boolean und date kennen. setBy: modell = kommt aus programm.output.json, n8n = setzt der Workflow. Keine personenbezogenen Daten in beiden Tabellen.",
+  "_hinweis": "Spalten der zwei n8n Data Tables (spec §8.2, §8.4). JSON-Felder liegen als String (JSON.stringify), weil Data Tables nur string, number, boolean und date kennen. setBy: modell = kommt aus programm.output.json, n8n = setzt der Workflow. Keine Kontaktdaten in beiden Tabellen. pc_tools hält die Schreibweise des Besuchers als Alias; pc-sweep löscht Zeilen mit gefunden = false 30 Tage nach researchedAt.",
   "pc_tools": {
     "columns": [
       { "name": "key", "type": "string", "setBy": "n8n", "note": "Programmname kleingeschrieben, getrimmt, innere Leerzeichen auf eins reduziert. Eindeutig." },
