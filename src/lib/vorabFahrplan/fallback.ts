@@ -31,6 +31,17 @@ export function zuerstIdee(area: AreaId, kanaele: Kanal[]): string {
   return `${KANAL_VARIANTE[area]![k]} ${lang.slice(lang.indexOf(". ") + 2)}`;
 }
 
+// Page 1 has room for one short line: at most 6 names (each already ≤ 40, contacts stripped in parseProgramme).
+const MAX_PROGRAMM_NAMEN = 6;
+
+/** The visitor's program names in their own spelling for page 1, or undefined when none were picked. */
+export function programmNamen(programme: readonly string[]): string | undefined {
+  const namen = programme.map((p) => p.replace(/["„“]/g, "").trim()).filter(Boolean);
+  if (!namen.length) return undefined;
+  const gezeigt = namen.slice(0, MAX_PROGRAMM_NAMEN).join(", ");
+  return namen.length > MAX_PROGRAMM_NAMEN ? `${gezeigt} und weitere.` : `${gezeigt}.`;
+}
+
 function joinDe(parts: string[]): string {
   return parts.length < 2 ? parts.join("") : `${parts.slice(0, -1).join(", ")} und ${parts[parts.length - 1]}`;
 }
@@ -60,6 +71,7 @@ export function buildFallbackPlan(a: ParsedAnswers, contact: { firma: string; na
     .join(" · ");
 
   const arbeitstag = capText(a.arbeitstag.trim(), LIMITS.arbeitstag);
+  const namen = programmNamen(a.programme);
 
   return {
     firma: contact.firma,
@@ -73,6 +85,7 @@ export function buildFallbackPlan(a: ParsedAnswers, contact: { firma: string; na
     aufgabeZeile,
     schritte,
     programme: [],
+    ...(namen ? { programmNamen: namen } : {}),
     quellen,
     recherchiert: false,
   };

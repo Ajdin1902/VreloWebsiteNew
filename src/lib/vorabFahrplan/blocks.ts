@@ -226,6 +226,7 @@ export const PDF_UI = {
   weiter: "Was jetzt kommt",
   weiterText: "Ich rufe dich an, kläre ein paar Details, danach bekommst du deinen ausführlichen Fahrplan. Kostenlos, er gehört dir.",
   programme: "Deine Programme",
+  programmeImGespraech: "Die schaue ich mir im Gespräch genauer an.",
   quellen: "Quellen",
   abgerufen: "abgerufen am",
   kiFooter: "Recherchiert mit KI am {datum}. Angaben ohne Gewähr, Tarife und Funktionen ändern sich.",

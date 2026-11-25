@@ -98,6 +98,11 @@ function QuelleText({ q, max = 42 }: { q: Quelle; max?: number }) {
   );
 }
 
+/** Page 1 program line of a fallback plan; null for a researched plan (page 2 names the programs there). */
+export function programmZeile(p: VorabFahrplan): string | null {
+  return !p.recherchiert && p.programmNamen ? `${p.programmNamen} ${PDF_UI.programmeImGespraech}` : null;
+}
+
 function Kopf({ p }: { p: VorabFahrplan }) {
   return (
     <View style={s.head}>
@@ -128,6 +133,7 @@ function Fuss({ links }: { links?: string }) {
 }
 
 function VorabFahrplanDoc({ p }: { p: VorabFahrplan }) {
+  const programmText = programmZeile(p);
   const maxH = Math.max(1, ...p.zeitVerteilung.map((z) => z.stunden));
   return (
     <Document title={`${PDF_UI.titel} ${p.firma}`} author="Ajdin Dzafic" language="de">
@@ -168,6 +174,13 @@ function VorabFahrplanDoc({ p }: { p: VorabFahrplan }) {
           <Text style={s.label}>{PDF_UI.aufgabe}</Text>
           <Text>{p.aufgabeZeile}</Text>
         </View>
+
+        {programmText ? (
+          <View style={s.section}>
+            <Text style={s.label}>{PDF_UI.programme}</Text>
+            <Text>{programmText}</Text>
+          </View>
+        ) : null}
 
         <View style={s.section}>
           <Text style={s.label}>{PDF_UI.start}</Text>

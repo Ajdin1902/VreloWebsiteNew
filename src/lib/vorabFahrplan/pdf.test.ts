@@ -6,7 +6,7 @@ import type { ParsedAnswers } from "@/lib/prozessCheck";
 import { PDF_UI } from "./blocks";
 import { LIMITS, type VorabFahrplan } from "./content";
 import { buildFallbackPlan } from "./fallback";
-import { pdfFilename, renderVorabFahrplanPdf, shortUrl } from "./pdf";
+import { pdfFilename, programmZeile, renderVorabFahrplanPdf, shortUrl } from "./pdf";
 
 // pdfkit writes page objects uncompressed, so a regex counts them.
 function pageCount(buf: Buffer): number {
@@ -87,6 +87,20 @@ describe("renderVorabFahrplanPdf", () => {
     expect(fallback.arbeitstag!.length).toBeGreaterThanOrEqual(LIMITS.arbeitstag);
     expect(fallback.schritte[0].tipp).toBeTruthy(); // the tip source line is on the page too
     expect(pageCount(await renderVorabFahrplanPdf(fallback))).toBe(1);
+  });
+
+  it("fallback with 8 programs of the maximum 40 characters still fits one page", async () => {
+    const programme = Array.from({ length: 8 }, (_, i) => `${text(38)} ${i}`);
+    const p = buildFallbackPlan({ ...answers, programme }, { firma: text(60), name: "Jürgen Müller" }, new Date("2026-11-23T10:00:00Z"));
+    expect(p.programmNamen).toMatch(/ und weitere\.$/);
+    expect(pageCount(await renderVorabFahrplanPdf(p))).toBe(1);
+  });
+
+  // The program line is a fallback-only section: page 2 names the programs of a researched plan.
+  it("shows the program line on a fallback plan only", () => {
+    expect(programmZeile(fallback)).toBe("Outlook, Lexoffice. Die schaue ich mir im Gespräch genauer an.");
+    expect(programmZeile({ ...researched, programmNamen: "Outlook, Lexoffice." })).toBeNull();
+    expect(programmZeile({ ...fallback, programmNamen: undefined })).toBeNull();
   });
 
   it("researched plan fits two pages", async () => {

@@ -22,6 +22,7 @@ export type VorabFahrplan = {
   aufgabeZeile: string;   // "kommt per Mail rein · 20 bis 50 pro Woche · macht das Büro"
   schritte: Schritt[];    // 1..3
   programme: ProgrammZeile[]; // empty in fallback
+  programmNamen?: string; // fallback only: the visitor's program names as one line for page 1
   quellen: Quelle[];      // empty in fallback, except tip sources
   recherchiert: boolean;  // false in fallback: no KI footer, no page 2
 };

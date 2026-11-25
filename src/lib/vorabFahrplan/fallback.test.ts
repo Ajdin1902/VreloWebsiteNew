@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { STEPS, type ParsedAnswers } from "@/lib/prozessCheck";
-import { AREA_IDEE, KANAL_VARIANTE, TIPPS } from "./blocks";
-import { buildFallbackPlan, schrittOrder } from "./fallback";
+import { AREA_IDEE, KANAL_VARIANTE, PDF_UI, TIPPS } from "./blocks";
+import { buildFallbackPlan, programmNamen, schrittOrder } from "./fallback";
 
 const base: ParsedAnswers = {
   bereiche: ["anfragen", "rechnungen", "postfach", "orga"],
@@ -78,6 +78,19 @@ describe("buildFallbackPlan", () => {
     expect(p.recherchiert).toBe(false);
     expect(p.programme).toEqual([]);
     expect(p.schritte.every((s) => s.mitProgrammen === undefined)).toBe(true);
+  });
+
+  it("names the picked programs in the visitor's spelling for page 1, and nothing when none were picked", () => {
+    const p = buildFallbackPlan({ ...base, programme: ["Gmail", "Google Kalender", "WhatsApp"] }, contact, now);
+    expect(p.programmNamen).toBe("Gmail, Google Kalender, WhatsApp.");
+    expect(`${p.programmNamen} ${PDF_UI.programmeImGespraech}`).toBe("Gmail, Google Kalender, WhatsApp. Die schaue ich mir im Gespräch genauer an.");
+    expect(buildFallbackPlan(base, contact, now)).not.toHaveProperty("programmNamen");
+  });
+
+  it("caps the program line at 6 names and drops quote marks", () => {
+    expect(programmNamen(["A", "B", "C", "D", "E", "F", "G", "H"])).toBe("A, B, C, D, E, F und weitere.");
+    expect(programmNamen(["\"Craftnote\"", "„monday.com“", "  "])).toBe("Craftnote, monday.com.");
+    expect(programmNamen([])).toBeUndefined();
   });
 
   it("lists every picked channel in aufgabeZeile", () => {
