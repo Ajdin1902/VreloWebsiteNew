@@ -102,11 +102,11 @@ describe("datenschutz Prozess-Check KI research", () => {
   it("says what goes out and that contact data never does", () => {
     expect(ki).toContain("nur Firmenname, Programmnamen, deine Antworten und deine Website");
     expect(ki).toContain("Name, E-Mail-Adresse und Telefonnummer bekommen weder n8n noch Anthropic.");
-    expect(ki).toMatch(/Website .*automatisch ausgelesen/);
+    expect(ki).toContain("Gibst du deine Website an, liest die KI sie dabei aus.");
   });
   it("names server1, the retention and the Upstash delivery record", () => {
     expect(ki).toContain("Hetzner Online GmbH");
-    expect(ki).toContain("ohne Kontaktdaten und ohne Antworten, gelöscht nach 30 Tagen");
+    expect(ki).toContain("ohne Kontaktdaten und ohne Antworten und lösche ihn nach 30 Tagen");
     expect(ki).toContain("höchstens drei Tage im Fehlerprotokoll");
     expect(ki).toContain("Programmnamen, die sie nicht finden konnte, lösche ich nach 30 Tagen");
     expect(ki).toMatch(/Upstash .*höchstens 2 Stunden/);
