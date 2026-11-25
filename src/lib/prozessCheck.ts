@@ -20,7 +20,7 @@ export type Arbeitsort = "buero" | "unterwegs" | "beides";
 
 export type ProzessCheckAnswers = {
   bereiche: AreaId[]; // at least one
-  stunden: Partial<Record<AreaId, number>>; // 0..10, only picked areas count
+  stunden: Partial<Record<AreaId, number>>; // 0..STUNDEN_MAX, only picked areas count
   nervt: AreaId; // one of bereiche
   kanaele: Kanal[];
   menge: Menge;
@@ -150,6 +150,9 @@ export type Step =
   | { id: "website"; kind: "url"; label: string; hint: string };
 
 // COPY: Ajdin approves
+/** Top of the hours slider per area, also the server-side clamp. */
+export const STUNDEN_MAX = 20;
+
 export const STEPS: readonly Step[] = [
   {
     id: "intro",
@@ -171,7 +174,7 @@ export const STEPS: readonly Step[] = [
     kind: "grid",
     label: "Wo geht deine Zeit hin?",
     hint: "Schätz für jede Aufgabe grob, wie viele Stunden pro Woche sie dich kostet. Null ist völlig in Ordnung.",
-    max: 10,
+    max: STUNDEN_MAX,
   },
   {
     id: "nervt",

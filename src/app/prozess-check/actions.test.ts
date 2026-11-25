@@ -279,12 +279,16 @@ describe("submitVorabFahrplan", () => {
 });
 
 describe("parseSubmission", () => {
+  it("keeps hours up to 20 (the slider top), e.g. 15", () => {
+    const p = parseSubmission(fd({ ...good, bereiche: ["anfragen"], h_anfragen: "15", nervt: "anfragen" }));
+    expect(p.answers.stunden).toEqual({ anfragen: 15 });
+  });
   it("re-validates enums, clamps hours, keeps only picked areas", () => {
     const p = parseSubmission(
       fd({ ...good, bereiche: ["anfragen", "bogus"], h_anfragen: "99", h_daten: "4", menge: "x", nervt: "daten", kanaele: ["mail", "fax"] }),
     );
     expect(p.answers.bereiche).toEqual(["anfragen"]);
-    expect(p.answers.stunden).toEqual({ anfragen: 10 });
+    expect(p.answers.stunden).toEqual({ anfragen: 20 });
     expect(p.answers.nervt).toBe("anfragen");
     expect(p.answers.menge).toBe("bis5");
     expect(p.answers.kanaele).toEqual(["mail"]);

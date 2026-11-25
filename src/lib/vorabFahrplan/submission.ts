@@ -4,7 +4,7 @@
 import type { Resend } from "resend";
 import { validateEmail } from "@/lib/prozessCheckEmail";
 import { normalizeSource } from "@/lib/source";
-import { AREA_IDS, PROGRAMM_CHIPS, STEPS, totalHours, type ParsedAnswers, type Step, type StepId } from "@/lib/prozessCheck";
+import { AREA_IDS, PROGRAMM_CHIPS, STEPS, STUNDEN_MAX, totalHours, type ParsedAnswers, type Step, type StepId } from "@/lib/prozessCheck";
 import { FORM_ERRORS } from "./blocks";
 import { capText, normalizePhone, normalizeWebsite, parseProgramme, stripContacts } from "./guards";
 import type { LeadContact, RawInput } from "./mails";
@@ -31,7 +31,7 @@ function pick<T extends string>(raw: string, allowed: readonly T[], fallback: T)
 function clampHours(raw: string): number {
   const n = Math.round(Number(raw));
   if (!Number.isFinite(n) || n < 0) return 0;
-  return n > 10 ? 10 : n;
+  return n > STUNDEN_MAX ? STUNDEN_MAX : n;
 }
 
 // The allowed values come from the wizard definition, so the form and the server never drift.
