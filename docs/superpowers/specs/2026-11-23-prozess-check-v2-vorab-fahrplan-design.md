@@ -190,7 +190,7 @@ fallback path: website renders the §7.3 PDF itself and sends both mails at once
 | Per e-mail | 1 run with fresh research per 30 days | library-only run |
 | Per IP (hashed) | 3 submissions per 24 h | fallback PDF |
 | Per day (global) | 25 research runs | fallback PDF |
-| Per month | **own Anthropic workspace + API key „vrelo-vorab-fahrplan“** with its own spend limit (**$30/month**, set by Ajdin 2026-11-24), separate from the key `/demo` and the Postfach-Assistent use | API refuses → fallback PDF |
+| Per month | **own Anthropic workspace + API key „vrelo-vorab-fahrplan“** with its own spend limit (**$60/month**, set by Ajdin 2026-11-24, raised 2026-11-25), separate from the key `/demo` and the Postfach-Assistent use | API refuses → fallback PDF |
 
 **Cost computation (Claude's call):** the workflow config holds the prices it computes with (Sonnet 5.5 input/output per MTok, web search per 1,000 searches, web fetch = tokens only), with the date they were checked. The run cost = tokens from `usage` plus `server_tool_use` counts × price. The workspace limit is the backstop, not the per-lead cap.
 
@@ -252,6 +252,6 @@ Component split for the new steps; exact chip list; react-pdf layout and font em
 
 - ⚠ Legal check on the call-consent checkbox and on no address confirmation (§6).
 - Ajdin approves all copy blocks, the fallback blocks, the question labels and the prompts.
-- Ajdin creates the Anthropic workspace „vrelo-vorab-fahrplan“ with its key and the $30/month spend limit (console), Claude puts the key into n8n credentials.
+- Ajdin creates the Anthropic workspace „vrelo-vorab-fahrplan“ with its key and the $60/month spend limit (raised from $30 on 2026-11-25) (console), Claude puts the key into n8n credentials.
 - Seed run: research the chip programs, Ajdin reviews the library entries.
 - First 10 real runs: measure cost and quality, write the numbers into §8.3.
