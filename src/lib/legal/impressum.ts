@@ -1,4 +1,5 @@
-export type LegalSection = { heading: string; body: string };
+// subsections: optional subheadings under one section (h3), each with its own body.
+export type LegalSection = { heading: string; body: string; subsections?: { heading: string; body: string }[] };
 export type LegalDoc = { title: string; intro: string; sections: LegalSection[] };
 
 export const impressum: LegalDoc = {

@@ -65,8 +65,22 @@ describe("legal content", () => {
 });
 
 // Prozess-Check v2, Plan 1: contact data, the call on consent, Upstash counters, no AI claim yet.
+// The section body plus all subsection headings and bodies, as one text.
+const pcSection = datenschutz.sections.find((s) => s.heading === "Prozess-Check")!;
+const pcAll = [pcSection.body, ...(pcSection.subsections ?? []).flatMap((u) => [u.heading, u.body])].join("\n\n");
+const pcSub = (h: string) => pcSection.subsections?.find((u) => u.heading === h)?.body ?? "";
+
 describe("datenschutz Prozess-Check section", () => {
-  const pc = datenschutz.sections.find((s) => s.heading === "Prozess-Check")!;
+  const pc = { body: pcAll };
+  it("is split into the five topics in order", () => {
+    expect(pcSection.subsections?.map((u) => u.heading)).toEqual([
+      "Deine Angaben und der Versand",
+      "Anruf",
+      "KI-Recherche",
+      "Speicherdauer",
+      "Missbrauchsschutz",
+    ]);
+  });
   it("names the data, the processors and both legal bases", () => {
     expect(pc.body).toContain("Name, Firma, E-Mail-Adresse, Telefonnummer");
     expect(pc.body).toMatch(/Resend \(Auftragsverarbeiter\)/);
@@ -85,9 +99,9 @@ describe("datenschutz Prozess-Check section", () => {
 
 // Prozess-Check v2, Plan 2: the KI research on server1 and Anthropic (spec §8.4, §11).
 describe("datenschutz Prozess-Check KI research", () => {
-  const pc = datenschutz.sections.find((s) => s.heading === "Prozess-Check")!;
   const demo = datenschutz.sections.find((s) => s.heading === "Interaktive Demo (/demo)")!;
-  const ki = pc.body.split("\n\n").find((p) => p.startsWith("KI-Recherche:")) ?? "";
+  const ki = pcSub("KI-Recherche");
+  const dauer = pcSub("Speicherdauer");
   it("uses the /demo wording on SCC and training, plus the 30-day retention", () => {
     for (const satz of [
       "Grundlage der Übermittlung sind die EU-Standardvertragsklauseln (SCC), die in den Commercial Terms von Anthropic enthalten sind.",
@@ -106,11 +120,11 @@ describe("datenschutz Prozess-Check KI research", () => {
   });
   it("names server1, the retention and the Upstash delivery record", () => {
     expect(ki).toContain("Hetzner Online GmbH");
-    expect(ki).toContain("ohne Kontaktdaten und ohne Antworten und lösche ihn nach 30 Tagen");
-    expect(ki).toContain("höchstens drei Tage im Fehlerprotokoll");
-    expect(ki).toContain("Programmnamen, die sie nicht finden konnte, lösche ich nach 30 Tagen");
-    expect(ki).toMatch(/Upstash .*höchstens 2 Stunden/);
     expect(ki).toContain("Art. 6 Abs. 1 lit. b DSGVO");
+    expect(dauer).toContain("ohne Kontaktdaten und ohne Antworten: 30 Tage");
+    expect(dauer).toContain("im Fehlerprotokoll: höchstens drei Tage");
+    expect(dauer).toContain("Programmnamen, die die KI nicht finden konnte: 30 Tage");
+    expect(dauer).toMatch(/Upstash .*höchstens 2 Stunden/);
   });
   it("never claims an EU location for the AI step", () => {
     expect(ki).not.toMatch(/innerhalb der EU|Deutschland/);

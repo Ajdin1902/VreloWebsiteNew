@@ -19,6 +19,21 @@ describe("LegalPage", () => {
     expect(screen.getByText("Inhalt A")).toBeInTheDocument();
   });
 
+  it("renders subsections as level-3 headings with their bodies", () => {
+    render(
+      <LegalPage
+        doc={{
+          title: "T",
+          intro: "i",
+          sections: [{ heading: "H", body: "Einleitung", subsections: [{ heading: "Unterpunkt", body: "Inhalt U" }] }],
+        }}
+      />,
+    );
+    expect(screen.getByRole("heading", { level: 3, name: "Unterpunkt" })).toBeInTheDocument();
+    expect(screen.getByText("Inhalt U")).toBeInTheDocument();
+    expect(screen.getByText("Einleitung")).toBeInTheDocument();
+  });
+
   it("renders a markdown link in a section body as an external anchor", () => {
     render(
       <LegalPage
