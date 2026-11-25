@@ -94,10 +94,13 @@ describe("Result with research", () => {
   it.each([
     [true, RESULT_UI.successRecherche],
     [false, RESULT_UI.success],
-  ])("after submit (recherche %s) shows the matching success text", async (recherche, text) => {
+  ])("after submit (recherche %s) shows the matching success text and drops the invitation", async (recherche, text) => {
     action.mockResolvedValueOnce({ status: "ok", recherche });
     render(<Result answers={answers} copy={resultCopy(answers)} calUrl={undefined} research />);
+    expect(screen.getByText(RESULT_UI.formTitle)).toBeInTheDocument();
     fireEvent.submit(screen.getByRole("button", { name: "Vorab-Fahrplan schicken" }).closest("form")!);
     expect(await screen.findByRole("status")).toHaveTextContent(text);
+    expect(screen.queryByText(RESULT_UI.formTitle)).not.toBeInTheDocument();
+    expect(screen.getByText(RESULT_UI.reliefTitle)).toBeInTheDocument();
   });
 });

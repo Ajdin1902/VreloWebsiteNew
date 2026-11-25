@@ -75,7 +75,6 @@ export function Result({
       {copy.fits ? (
         <div className="rounded-2xl bg-tiefes-wasser p-8 md:p-10">
           <p className="text-balance font-serif text-2xl text-papier md:text-3xl">{RESULT_UI.reliefTitle}</p>
-          <p className="mt-3 text-pretty text-gletscher">{RESULT_UI.formTitle}</p>
           <VorabFahrplanForm answers={answers} source={source} research={research} />
           {calUrl ? (
             <p className="mt-8 border-t border-papier/20 pt-6 text-sm">

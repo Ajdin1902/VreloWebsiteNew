@@ -67,88 +67,92 @@ export function VorabFahrplanForm({
     ...(source ? [["src", source] as [string, string]] : []),
   ];
 
+  // The invitation sits above the form only: once sent, the success line replaces both.
   return (
-    <form action={formAction} className="mt-6 space-y-4" noValidate>
-      {hidden.map(([name, value], i) => (
-        <input key={`${name}-${i}`} type="hidden" name={name} value={value} />
-      ))}
-      {/* Honeypot. Not named `website`: password managers may autofill that and drop a real lead. */}
-      <input type="text" name="hp_url" tabIndex={-1} aria-hidden="true" autoComplete="off" className="absolute left-[-9999px] h-0 w-0 opacity-0" />
+    <>
+      <p className="mt-3 text-pretty text-gletscher">{RESULT_UI.formTitle}</p>
+      <form action={formAction} className="mt-6 space-y-4" noValidate>
+        {hidden.map(([name, value], i) => (
+          <input key={`${name}-${i}`} type="hidden" name={name} value={value} />
+        ))}
+        {/* Honeypot. Not named `website`: password managers may autofill that and drop a real lead. */}
+        <input type="text" name="hp_url" tabIndex={-1} aria-hidden="true" autoComplete="off" className="absolute left-[-9999px] h-0 w-0 opacity-0" />
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        {FIELDS.map((f) => {
-          const err = errors[f.name];
-          return (
-            <div key={f.name}>
-              <label htmlFor={`vf-${f.name}`} className="block text-sm text-gletscher">
-                {FORM_FIELDS[f.name]}
-              </label>
-              <input
-                id={`vf-${f.name}`}
-                name={f.name}
-                type={f.type}
-                autoComplete={f.autoComplete}
-                required
-                value={values[f.name]}
-                onChange={(e) => setValues((v) => ({ ...v, [f.name]: e.target.value }))}
-                aria-invalid={err ? true : undefined}
-                aria-describedby={err ? `vf-${f.name}-err` : undefined}
-                className={`mt-1 ${INPUT}`}
-              />
-              {err ? (
-                <p id={`vf-${f.name}-err`} className="mt-1 text-sm text-signal">
-                  {err}
-                </p>
-              ) : null}
-            </div>
-          );
-        })}
-      </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {FIELDS.map((f) => {
+            const err = errors[f.name];
+            return (
+              <div key={f.name}>
+                <label htmlFor={`vf-${f.name}`} className="block text-sm text-gletscher">
+                  {FORM_FIELDS[f.name]}
+                </label>
+                <input
+                  id={`vf-${f.name}`}
+                  name={f.name}
+                  type={f.type}
+                  autoComplete={f.autoComplete}
+                  required
+                  value={values[f.name]}
+                  onChange={(e) => setValues((v) => ({ ...v, [f.name]: e.target.value }))}
+                  aria-invalid={err ? true : undefined}
+                  aria-describedby={err ? `vf-${f.name}-err` : undefined}
+                  className={`mt-1 ${INPUT}`}
+                />
+                {err ? (
+                  <p id={`vf-${f.name}-err`} className="mt-1 text-sm text-signal">
+                    {err}
+                  </p>
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
 
-      <p className="text-sm text-gletscher/90">{FORM_UI.consentAnruf}</p>
-      {research ? <p className="text-sm text-gletscher/90">{FORM_UI.consentKi}</p> : null}
-      <div>
-        <label className="flex items-start gap-2 text-sm text-gletscher">
-          <input
-            type="checkbox"
-            name="anruf"
-            required
-            checked={anruf}
-            onChange={(e) => setAnruf(e.target.checked)}
-            aria-invalid={errors.anruf ? true : undefined}
-            aria-describedby={errors.anruf ? "vf-anruf-err" : undefined}
-            className="mt-1"
-          />
-          <span>{FORM_UI.checkbox}</span>
-        </label>
-        {errors.anruf ? (
-          <p id="vf-anruf-err" className="mt-1 text-sm text-signal">
-            {errors.anruf}
+        <p className="text-sm text-gletscher/90">{FORM_UI.consentAnruf}</p>
+        {research ? <p className="text-sm text-gletscher/90">{FORM_UI.consentKi}</p> : null}
+        <div>
+          <label className="flex items-start gap-2 text-sm text-gletscher">
+            <input
+              type="checkbox"
+              name="anruf"
+              required
+              checked={anruf}
+              onChange={(e) => setAnruf(e.target.checked)}
+              aria-invalid={errors.anruf ? true : undefined}
+              aria-describedby={errors.anruf ? "vf-anruf-err" : undefined}
+              className="mt-1"
+            />
+            <span>{FORM_UI.checkbox}</span>
+          </label>
+          {errors.anruf ? (
+            <p id="vf-anruf-err" className="mt-1 text-sm text-signal">
+              {errors.anruf}
+            </p>
+          ) : null}
+        </div>
+
+        <button
+          type="submit"
+          disabled={pending}
+          className="inline-flex items-center justify-center rounded-lg bg-amber px-5 py-2.5 text-sm font-semibold text-tiefes-wasser transition-colors hover:bg-honig disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-vrelo-petrol focus-visible:ring-amber"
+        >
+          {pending ? FORM_FIELDS.pending : FORM_FIELDS.submit}
+        </button>
+
+        {state.status === "error" ? (
+          <p role="alert" className="text-sm text-signal">
+            {state.message}
           </p>
         ) : null}
-      </div>
 
-      <button
-        type="submit"
-        disabled={pending}
-        className="inline-flex items-center justify-center rounded-lg bg-amber px-5 py-2.5 text-sm font-semibold text-tiefes-wasser transition-colors hover:bg-honig disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-vrelo-petrol focus-visible:ring-amber"
-      >
-        {pending ? FORM_FIELDS.pending : FORM_FIELDS.submit}
-      </button>
-
-      {state.status === "error" ? (
-        <p role="alert" className="text-sm text-signal">
-          {state.message}
+        <p className="text-sm text-gletscher/90">
+          {FORM_FIELDS.datenschutzPrefix}
+          <Link href="/datenschutz" className="underline underline-offset-4 hover:text-papier">
+            {FORM_FIELDS.datenschutzLabel}
+          </Link>
+          {FORM_FIELDS.datenschutzSuffix}
         </p>
-      ) : null}
-
-      <p className="text-sm text-gletscher/90">
-        {FORM_FIELDS.datenschutzPrefix}
-        <Link href="/datenschutz" className="underline underline-offset-4 hover:text-papier">
-          {FORM_FIELDS.datenschutzLabel}
-        </Link>
-        {FORM_FIELDS.datenschutzSuffix}
-      </p>
-    </form>
+      </form>
+    </>
   );
 }
