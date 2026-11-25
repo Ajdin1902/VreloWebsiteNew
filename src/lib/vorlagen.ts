@@ -160,7 +160,7 @@ export const vorlagenPage: {
       id: "prozess-check",
       gruppe: "alle",
       titel: "Prozess-Check",
-      text: `Fünf Minuten, ${questionCountPhrase(QUESTION_COUNT)}. Du siehst sofort, wie viele Stunden pro Woche der Kleinkram kostet. Auf Wunsch bekommst du einen Vorab-Fahrplan als PDF per Mail.`, // COPY: Ajdin approves
+      text: `Fünf Minuten, ${questionCountPhrase(QUESTION_COUNT)}. Du weißt sofort, wo deine Stunden verschwinden. Auf Wunsch bekommst du einen Vorab-Fahrplan als PDF per Mail.`, // COPY: Ajdin approves
       umfang: "5 Minuten · direkt auf der Seite",
       link: { text: "Prozess-Check starten", href: "/prozess-check?src=vorlagen" },
     },
