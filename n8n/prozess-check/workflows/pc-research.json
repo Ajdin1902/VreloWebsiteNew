@@ -264,7 +264,7 @@
       "typeVersion": 2,
       "position": [
         1808,
-        688
+        672
       ],
       "notes": "Why Code: Builds the Messages request from the carried history and the tool budget left (pause_turn rounds)."
     },
@@ -296,7 +296,7 @@
       "typeVersion": 4.2,
       "position": [
         2032,
-        624
+        592
       ],
       "retryOnFail": true,
       "maxTries": 2,
@@ -320,7 +320,7 @@
       "typeVersion": 2,
       "position": [
         2256,
-        624
+        592
       ],
       "notes": "Why Code: pause_turn loop, URL collection from nested result blocks and the cost sum: no native node does this."
     },
@@ -336,7 +336,7 @@
       "typeVersion": 3.2,
       "position": [
         2480,
-        752
+        704
       ],
       "notes": "0 = next pause_turn round, 1 = extraction, 2 = give up (store nothing)"
     },
@@ -368,7 +368,7 @@
       "typeVersion": 4.2,
       "position": [
         2704,
-        768
+        720
       ],
       "retryOnFail": true,
       "maxTries": 2,
@@ -392,7 +392,7 @@
       "typeVersion": 2,
       "position": [
         2928,
-        768
+        720
       ],
       "notes": "Why Code: Filters model URLs against the call-1 result blocks before the upsert (spec: no made-up URL in the library)."
     },
@@ -427,7 +427,7 @@
       "typeVersion": 2.2,
       "position": [
         3152,
-        896
+        816
       ]
     },
     {
@@ -645,7 +645,7 @@
       "typeVersion": 1.1,
       "position": [
         3376,
-        960
+        896
       ]
     },
     {
@@ -692,7 +692,7 @@
       "typeVersion": 2,
       "position": [
         2256,
-        272
+        240
       ],
       "notes": "Why Code: Builds the website request from the carried history and the fetch budget left (pause_turn rounds)."
     },
@@ -724,7 +724,7 @@
       "typeVersion": 4.2,
       "position": [
         2480,
-        192
+        160
       ],
       "retryOnFail": true,
       "maxTries": 2,
@@ -748,7 +748,7 @@
       "typeVersion": 2,
       "position": [
         2704,
-        192
+        160
       ],
       "notes": "Why Code: pause_turn loop and fetched-URL collection across rounds, plus the cost."
     },
@@ -783,7 +783,7 @@
       "typeVersion": 2.2,
       "position": [
         2928,
-        272
+        240
       ]
     },
     {
@@ -927,7 +927,7 @@
       "typeVersion": 2.2,
       "position": [
         4048,
-        272
+        240
       ]
     },
     {
@@ -1025,7 +1025,7 @@
       "typeVersion": 1.1,
       "position": [
         4272,
-        176
+        144
       ]
     },
     {
@@ -1059,7 +1059,7 @@
       "typeVersion": 2.2,
       "position": [
         4272,
-        368
+        336
       ]
     },
     {
@@ -1093,7 +1093,7 @@
       "typeVersion": 2.2,
       "position": [
         4496,
-        272
+        240
       ]
     },
     {
@@ -1205,7 +1205,7 @@
       "typeVersion": 1.1,
       "position": [
         4496,
-        512
+        480
       ],
       "notes": "4xx from deliver: retrying can't help; the row is failed so pc-error and pc-sweep leave it alone."
     },

@@ -155,7 +155,7 @@ export const STEPS: readonly Step[] = [
     id: "intro",
     kind: "intro",
     title: "Dein Vorab-Fahrplan in 5 Minuten",
-    text: "Je genauer du antwortest, desto konkreter wird dein Fahrplan. Du bekommst ihn als PDF per Mail.",
+    text: "Je genauer du antwortest, desto konkreter wird dein Vorab-Fahrplan. Du bekommst ihn als PDF per Mail.",
     cta: "Los geht's",
     privacy: "Deine Antworten bleiben in deinem Browser, bis du das PDF anforderst.",
   },
@@ -280,7 +280,7 @@ export const STEPS: readonly Step[] = [
     id: "website",
     kind: "url",
     label: "Deine Website",
-    hint: "Dann schaue ich sie mir für deinen Fahrplan an.",
+    hint: "Dann schaue ich sie mir für deinen Vorab-Fahrplan an.",
   },
 ];
 
@@ -382,7 +382,7 @@ export function resultCopy(a: ProzessCheckAnswers): ResultCopy {
     nervtLabel,
     verdict:
       a.abende === "staendig"
-        ? "Und ein Teil davon nimmst du mit nach Hause. Genau da fangen wir an."
+        ? "Und einen Teil davon nimmst du mit nach Hause. Genau da fangen wir an."
         : "Das ist Zeit, die sich zurückholen lässt.",
   };
 }

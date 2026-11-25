@@ -151,6 +151,9 @@ describe("prozessCheck copy-guard", () => {
   it("never names a price (hours numbers are allowed, currency is not)", () => {
     expect(corpus.filter((s) => CURRENCY.test(s))).toEqual([]);
   });
+  it("calls the PDF Vorab-Fahrplan, never a bare Fahrplan (the ausführliche Fahrplan comes after the call)", () => {
+    expect(corpus.filter((s) => /(?<![A-Za-z-])(?<!ausführlichen )Fahrplan(?![A-Za-z])/.test(s))).toEqual([]);
+  });
 });
 
 describe("hoursLabel", () => {

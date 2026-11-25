@@ -161,6 +161,10 @@ No n8n Variables (licence-gated on self-hosted): the „Config“ Set node at th
 5. Workflow settings of pc-research: save failed executions only, keep successful ones off (spec §8.4). Pruning is instance-wide on server1, not per workflow: `EXECUTIONS_DATA_MAX_AGE=72` (hours) and `EXECUTIONS_DATA_PRUNE_MAX_COUNT=1000`, stricter than the 14 days of the spec, left as it is.
 6. Paste the approved prompts from `prompts/` and the schemas from `schemas/` into their nodes.
 7. Run the fixed test job (plan 2 Task 5 Step 5). Activate only after Ajdin's go, and then activate **pc-error and pc-sweep together with pc-research** (see below).
+8. **Before the first production test, clear the test address in Upstash.** Preview and Production share one Upstash database, so the preview test runs (2026-11-25) left `ajdin@vrelo-ki.de` capped for 30 days: `pc:mail:<hash>` blocks the next send (the visitor sees success, nothing goes out) and `pc:fresh:<hash>` blocks fresh research. Delete exactly these two keys, nothing else:
+   - `<hash>` = sha256 hex of `vrelo-pc-mail-v1:ajdin@vrelo-ki.de` (`PC_HASH_SALT` unset, so the default salt in `src/lib/vorabFahrplan/caps.ts`).
+   - Send `["DEL", "pc:mail:<hash>"]` and `["DEL", "pc:fresh:<hash>"]` as JSON POST bodies to `UPSTASH_REDIS_REST_URL` with `Authorization: Bearer <UPSTASH_REDIS_REST_TOKEN>`, both from the HQ `.env`, from a script that reads the file and prints only the DEL results (the preview test used one, `clear-mail-cap.mjs`, in the session scratchpad). Never echo the URL or the token.
+9. **Before go-live, re-export and diff** (see „Re-exporting the workflows“): the pc-* workflows get edited in the n8n UI, and the go-live state must be the committed one.
 
 ## On server1 (built 2026-11-24, plan 2 Task 5)
 
@@ -220,6 +224,16 @@ To seed again (new chips, or after deleting rows):
 n8n → Overview → Data tables → `pc_tools`. Each row is one program. Open the row, check `bordmittel`, `api` and `grenzen` against the `quellen`, correct a cell if needed, then set `reviewed` to true. A reviewed entry is never re-researched and never overwritten by a run. To force a fresh research: set `reviewed` to false and `researchedAt` to a date more than 120 days ago, or delete the row. The chip programs (`PROGRAMM_CHIPS` in `src/lib/prozessCheck.ts`) are researched and reviewed before go-live (plan 2 Task 6).
 
 ## Re-exporting the workflows
+
+**Re-export and diff before every commit that touches `n8n/` and before go-live.** The pc-* workflows can be (and are) edited in the n8n UI; a UI save also moves nodes and drops parameters that equal their defaults. From the repo root:
+
+```bash
+node n8n/prozess-check/export-workflows.mjs   # pc-research, pc-error, pc-sweep, pc-seed → workflows/
+git diff --stat n8n/prozess-check/workflows/
+```
+
+The script reads the n8n API key from the `n8n-mcp` entry in `~/.claude.json` and never prints it; it writes credentials as `{id, name}`, no pinData, `"active": false`, and refuses an active workflow or any file holding a secret-like string. Read the diff before committing: positions and dropped defaults are harmless (check a dropped parameter against `get_node` when in doubt), any other change was made in the UI and must be understood first. This is how `2ef4738` was produced.
+
 
 After any change in the n8n UI, export all three (and pc-seed, if it changed) back into `workflows/` and commit, so this folder stays the source of truth:
 
